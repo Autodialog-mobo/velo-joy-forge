@@ -319,10 +319,6 @@ button { font-family: inherit; }
 .sf-search input:focus { border-color: var(--green); }
 .sf-search > svg { position: absolute; left: 26px; pointer-events: none; }
 .sf-search input { padding-left: 32px; }
-.sf-filters { display: flex; gap: 6px; padding: 10px 14px; background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 56px; z-index: 1; }
-.sf-chip { flex: 1; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(13,31,60,0.15); background: var(--white); color: #5A7090; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
-.sf-chip:hover { border-color: var(--green); color: var(--navy); }
-.sf-chip.on { background: #E8FAF3; border-color: var(--green); color: #0D1F3C; }
 .sf-list { flex: 1; overflow-y: auto; }
 .sf-item { width: 100%; text-align: left; padding: 14px 16px; border: none; border-bottom: 1px solid var(--border); background: var(--white); cursor: pointer; transition: background 0.15s; }
 .sf-item:hover { background: #FAFAF8; }

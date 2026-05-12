@@ -97,32 +97,26 @@ function ClusterLayer({
 
 export default function ShopFinderMap() {
   const [query, setQuery] = useState("");
-  const [countries, setCountries] = useState<Record<string, boolean>>({ BE: true, NL: true, FR: true });
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [flyTarget, setFlyTarget] = useState<{ lat: number; lng: number; key: number } | null>(null);
   const markerRefs = useRef<Record<number, L.Marker | null>>({});
 
   const shops = shopsData as Shop[];
-  const visibleShops = useMemo(
-    () => shops.map((s, i) => ({ s, i })).filter(({ s }) => s.status === "active" && countries[s.country]),
-    [shops, countries],
-  );
-
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return visibleShops.filter(({ s }) =>
-      !q || s.name.toLowerCase().includes(q) || s.city.toLowerCase().includes(q),
-    );
-  }, [visibleShops, query]);
+    return shops
+      .map((s, i) => ({ s, i }))
+      .filter(({ s }) => s.status === "active")
+      .filter(({ s }) =>
+        !q ||
+        s.name.toLowerCase().includes(q) ||
+        s.city.toLowerCase().includes(q),
+      );
+  }, [shops, query]);
 
   const totalActive = useMemo(
     () => shops.filter((s) => s.status === "active").length,
     [shops],
-  );
-
-  const mapShops = useMemo<Shop[]>(
-    () => shops.map((s) => (s.status === "active" && countries[s.country] ? s : { ...s, status: "hidden" })),
-    [shops, countries],
   );
 
   const handleSelect = (i: number) => {
@@ -131,11 +125,6 @@ export default function ShopFinderMap() {
     setFlyTarget({ lat: s.lat, lng: s.lng, key: Date.now() });
     setTimeout(() => markerRefs.current[i]?.openPopup(), 700);
   };
-
-  const toggleCountry = (c: string) =>
-    setCountries((prev) => ({ ...prev, [c]: !prev[c] }));
-
-  const countryLabels: Record<string, string> = { BE: "België", NL: "Nederland", FR: "Frankrijk" };
 
   return (
     <section className="shop-finder" id="vind-winkel">
@@ -153,19 +142,6 @@ export default function ShopFinderMap() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-          </div>
-          <div className="sf-filters">
-            {(["BE", "NL", "FR"] as const).map((c) => (
-              <button
-                key={c}
-                type="button"
-                className={`sf-chip ${countries[c] ? "on" : ""}`}
-                onClick={() => toggleCountry(c)}
-                aria-pressed={countries[c]}
-              >
-                {countryLabels[c]}
-              </button>
-            ))}
           </div>
           <div className="sf-list">
             {filtered.map(({ s, i }) => (
@@ -200,7 +176,7 @@ export default function ShopFinderMap() {
             />
             <FlyTo target={flyTarget} />
             <ClusterLayer
-              shops={mapShops}
+              shops={shops}
               activeIdx={activeIdx}
               onSelect={setActiveIdx}
               markerRefs={markerRefs}
