@@ -2,6 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
+import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
 
 type Shop = {
@@ -15,14 +18,14 @@ type Shop = {
 };
 
 const markerSvg = (active: boolean) => {
-  const size = active ? 36 : 28;
+  const size = active ? 26 : 18;
   const bg = active ? "#0D1F3C" : "#2ECC8A";
   const stroke = active ? "#2ECC8A" : "#0D1F3C";
-  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="${bg}"/><path d="M24 54 L42 72 L76 30" fill="none" stroke="${stroke}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="${bg}"/><path d="M24 54 L42 72 L76 30" fill="none" stroke="${stroke}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 };
 
 const makeIcon = (active: boolean) => {
-  const size = active ? 36 : 28;
+  const size = active ? 26 : 18;
   return L.divIcon({
     html: markerSvg(active),
     className: "vp-marker-icon",
@@ -37,6 +40,58 @@ function FlyTo({ target }: { target: { lat: number; lng: number; key: number } |
   useEffect(() => {
     if (target) map.flyTo([target.lat, target.lng], 14, { duration: 0.8 });
   }, [target, map]);
+  return null;
+}
+
+function ClusterLayer({
+  shops,
+  activeIdx,
+  onSelect,
+  markerRefs,
+}: {
+  shops: Shop[];
+  activeIdx: number | null;
+  onSelect: (i: number) => void;
+  markerRefs: React.MutableRefObject<Record<number, L.Marker | null>>;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    const cluster = (L as any).markerClusterGroup({
+      showCoverageOnHover: false,
+      spiderfyOnMaxZoom: true,
+      maxClusterRadius: 50,
+      iconCreateFunction: (c: any) => {
+        const count = c.getChildCount();
+        const size = count < 10 ? 32 : count < 100 ? 38 : 46;
+        return L.divIcon({
+          html: `<div class="vp-cluster"><span>${count}</span></div>`,
+          className: "vp-cluster-wrap",
+          iconSize: [size, size],
+        });
+      },
+    });
+
+    shops.forEach((s, i) => {
+      if (s.status !== "active") return;
+      const m = L.marker([s.lat, s.lng], { icon: makeIcon(activeIdx === i) });
+      m.on("click", () => onSelect(i));
+      m.bindPopup(
+        `<div class="sf-popup"><div class="sf-popup-name">${s.name}</div><div class="sf-popup-addr">${s.address}</div><a class="sf-popup-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+          s.address,
+        )}">Routebeschrijving</a></div>`,
+      );
+      markerRefs.current[i] = m;
+      cluster.addLayer(m);
+    });
+
+    map.addLayer(cluster);
+    return () => {
+      map.removeLayer(cluster);
+      markerRefs.current = {};
+    };
+  }, [shops, activeIdx, map, onSelect, markerRefs]);
+
   return null;
 }
 
@@ -68,7 +123,7 @@ export default function ShopFinderMap() {
     setActiveIdx(i);
     const s = shops[i];
     setFlyTarget({ lat: s.lat, lng: s.lng, key: Date.now() });
-    setTimeout(() => markerRefs.current[i]?.openPopup(), 600);
+    setTimeout(() => markerRefs.current[i]?.openPopup(), 700);
   };
 
   return (
@@ -120,36 +175,12 @@ export default function ShopFinderMap() {
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             />
             <FlyTo target={flyTarget} />
-            {shops.map((s, i) =>
-              s.status === "active" ? (
-                <Marker
-                  key={i}
-                  position={[s.lat, s.lng]}
-                  icon={makeIcon(activeIdx === i)}
-                  ref={(ref) => { markerRefs.current[i] = ref; }}
-                  eventHandlers={{ click: () => setActiveIdx(i) }}
-                >
-                  <Popup>
-                    <div className="sf-popup">
-                      <div className="sf-popup-name">{s.name}</div>
-                      <div className="sf-popup-addr">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5A7090" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
-                        {s.address}
-                      </div>
-                      <a
-                        className="sf-popup-btn"
-                        href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(s.address)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11" /></svg>
-                        Routebeschrijving
-                      </a>
-                    </div>
-                  </Popup>
-                </Marker>
-              ) : null,
-            )}
+            <ClusterLayer
+              shops={shops}
+              activeIdx={activeIdx}
+              onSelect={setActiveIdx}
+              markerRefs={markerRefs}
+            />
           </MapContainer>
         </div>
       </div>
