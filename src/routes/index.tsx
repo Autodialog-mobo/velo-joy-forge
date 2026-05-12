@@ -49,7 +49,7 @@ function VelopassHome() {
       {/* HERO */}
       <section className="hero">
         <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
-        <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles geregeld.</em></h1>
+        <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
           Eén sticker op je fiets — en je hebt altijd toegang tot pechhulp, verzekering, diefstalprotectie en je fietswinkel. Wat er ook gebeurt.
         </p>
