@@ -228,16 +228,16 @@ function VelopassHome() {
 
       {/* VOORDELEN (dark) */}
       <section className="voordelen" id="voordelen">
-        <p className="eyebrow">Wat je krijgt</p>
+        <p className="eyebrow">Alles op één plek</p>
         <h2 className="sec-title">Eén sticker. Een heel fietsleven geregeld.</h2>
         <div className="vgrid">
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg></div>
-            <div><h3>Pechhulp</h3><p>Panne onderweg? Hulp is één scan ver. Directe toegang tot pechhulp — zonder zoeken, zonder wachten.</p></div>
+            <div><h3>Pechhulp</h3><p>Activeer pechhulp — directe hulp bij panne, één scan ver. Optionele service via Velopass.</p></div>
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg></div>
-            <div><h3>Verzekering</h3><p>Je fiets verzekerd zonder papierwerk. Activeer rechtstreeks vanuit je Velopass — in enkele klikken.</p></div>
+            <div><h3>Verzekering</h3><p>Sluit een verzekering af — rechtstreeks via je Velopass, in enkele klikken. Optionele service.</p></div>
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
