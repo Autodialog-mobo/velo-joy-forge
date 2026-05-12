@@ -1,0 +1,26 @@
+[
+  { "name": "Cyclo Brussel", "address": "Rue de Flandre 28, 1000 Brussel", "lat": 50.8528, "lng": 4.3471, "city": "Brussel", "country": "BE", "status": "active" },
+  { "name": "Velo Atelier Antwerpen", "address": "Nationalestraat 142, 2000 Antwerpen", "lat": 51.2156, "lng": 4.3992, "city": "Antwerpen", "country": "BE", "status": "active" },
+  { "name": "Fietshandel Gent", "address": "Korenmarkt 7, 9000 Gent", "lat": 51.0543, "lng": 3.7250, "city": "Gent", "country": "BE", "status": "active" },
+  { "name": "BikeStore Leuven", "address": "Bondgenotenlaan 50, 3000 Leuven", "lat": 50.8798, "lng": 4.7005, "city": "Leuven", "country": "BE", "status": "active" },
+  { "name": "Vélo Liège", "address": "Rue Léopold 22, 4000 Liège", "lat": 50.6451, "lng": 5.5736, "city": "Liège", "country": "BE", "status": "active" },
+  { "name": "Brugge Bikes", "address": "Markt 12, 8000 Brugge", "lat": 51.2085, "lng": 3.2247, "city": "Brugge", "country": "BE", "status": "active" },
+  { "name": "Fietspunt Mechelen", "address": "Bruul 75, 2800 Mechelen", "lat": 51.0259, "lng": 4.4776, "city": "Mechelen", "country": "BE", "status": "active" },
+
+  { "name": "Amsterdam Fietswinkel", "address": "Damrak 70, 1012 Amsterdam", "lat": 52.3740, "lng": 4.8952, "city": "Amsterdam", "country": "NL", "status": "active" },
+  { "name": "Rotterdam Bike Hub", "address": "Coolsingel 105, 3012 Rotterdam", "lat": 51.9225, "lng": 4.4791, "city": "Rotterdam", "country": "NL", "status": "active" },
+  { "name": "Utrecht Cycles", "address": "Oudegracht 158, 3511 Utrecht", "lat": 52.0907, "lng": 5.1214, "city": "Utrecht", "country": "NL", "status": "active" },
+  { "name": "Den Haag Velo", "address": "Spuistraat 33, 2511 Den Haag", "lat": 52.0775, "lng": 4.3149, "city": "Den Haag", "country": "NL", "status": "active" },
+  { "name": "Eindhoven Bikes", "address": "Demer 21, 5611 Eindhoven", "lat": 51.4416, "lng": 5.4697, "city": "Eindhoven", "country": "NL", "status": "active" },
+  { "name": "Groningen Fiets", "address": "Vismarkt 40, 9711 Groningen", "lat": 53.2194, "lng": 6.5665, "city": "Groningen", "country": "NL", "status": "active" },
+  { "name": "Maastricht Cycles", "address": "Grote Staat 18, 6211 Maastricht", "lat": 50.8514, "lng": 5.6900, "city": "Maastricht", "country": "NL", "status": "active" },
+
+  { "name": "Vélo Paris République", "address": "12 Rue du Temple, 75004 Paris", "lat": 48.8606, "lng": 2.3522, "city": "Paris", "country": "FR", "status": "active" },
+  { "name": "Cycles Lyon", "address": "Rue de la République 80, 69002 Lyon", "lat": 45.7640, "lng": 4.8357, "city": "Lyon", "country": "FR", "status": "active" },
+  { "name": "Marseille Vélo", "address": "La Canebière 45, 13001 Marseille", "lat": 43.2965, "lng": 5.3698, "city": "Marseille", "country": "FR", "status": "active" },
+  { "name": "Lille Bikes", "address": "Rue Faidherbe 22, 59000 Lille", "lat": 50.6292, "lng": 3.0573, "city": "Lille", "country": "FR", "status": "active" },
+  { "name": "Bordeaux Cycles", "address": "Cours de l'Intendance 50, 33000 Bordeaux", "lat": 44.8378, "lng": -0.5792, "city": "Bordeaux", "country": "FR", "status": "active" },
+  { "name": "Toulouse Vélo", "address": "Rue d'Alsace-Lorraine 30, 31000 Toulouse", "lat": 43.6047, "lng": 1.4442, "city": "Toulouse", "country": "FR", "status": "active" },
+  { "name": "Strasbourg Cycles", "address": "Place Kléber 8, 67000 Strasbourg", "lat": 48.5734, "lng": 7.7521, "city": "Strasbourg", "country": "FR", "status": "active" },
+  { "name": "Nantes Vélo", "address": "Rue Crébillon 15, 44000 Nantes", "lat": 47.2184, "lng": -1.5536, "city": "Nantes", "country": "FR", "status": "active" }
+]
