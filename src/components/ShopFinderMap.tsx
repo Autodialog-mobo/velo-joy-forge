@@ -159,10 +159,10 @@ export default function ShopFinderMap() {
   };
 
   return (
-    <section className="shop-finder" id="vind-winkel">
+    <section className="shop-finder" id="winkels">
       <p className="eyebrow">Vind een Velopass fietswinkel</p>
       <h2 className="sec-title">{totalActive.toLocaleString("nl-BE")} aangesloten fietswinkels</h2>
-      <p className="sec-sub">Zoek een winkel bij jou in de buurt om een sticker te bestellen of je fiets te laten registreren.</p>
+      <p className="sec-sub">Ga langs voor een sticker ter plekke geplakt én je fiets meteen geregistreerd.</p>
 
       <div className="sf-split">
         <aside className="sf-list-wrap">
