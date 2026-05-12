@@ -60,6 +60,8 @@ function ClusterLayer({
     const cluster = (L as any).markerClusterGroup({
       showCoverageOnHover: false,
       spiderfyOnMaxZoom: true,
+      zoomToBoundsOnClick: true,
+      animate: true,
       maxClusterRadius: 50,
       iconCreateFunction: (c: any) => {
         const count = c.getChildCount();
