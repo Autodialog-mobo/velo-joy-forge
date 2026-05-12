@@ -326,7 +326,7 @@ function VelopassHome() {
       <footer className="vp-footer">
         <div>
           <div className="flogo">velopass</div>
-          <div className="ftagline">Every bike. A customer. For life.</div>
+          <div className="ftagline">Altijd op de fiets. Alles geregeld.</div>
           <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 3 }}>
             Stickers beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR
           </div>
