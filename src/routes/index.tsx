@@ -290,6 +290,8 @@ function VelopassHome() {
         </div>
       </section>
 
+      <ShopFinder />
+
       {/* LOGIN */}
       <section className="login-section" id="login">
         <div className="login-wrap">
