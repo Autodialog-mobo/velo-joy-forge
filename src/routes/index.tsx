@@ -272,9 +272,8 @@ function VelopassHome() {
 
       {/* WHY */}
       <section className="why-section">
-        <p className="eyebrow">Why Velopass voor de fietser</p>
-        <h2 className="sec-title" style={{ maxWidth: 560, marginBottom: 16 }}>
-          Eén sticker. <em style={{ fontStyle: "normal", color: "var(--green-mid)" }}>Een heel fietsleven</em> geregeld.
+        <h2 className="sec-title" style={{ maxWidth: 640, marginBottom: 16, fontFamily: "'Syne', sans-serif", fontWeight: 700 }}>
+          Jouw digitale fietspaspoort. <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>Levenslang.</em>
         </h2>
         <p style={{ fontSize: 16, color: "var(--text-muted)", maxWidth: 520, lineHeight: 1.7, marginBottom: 56 }}>
           Jouw digitale fietspaspoort gaat overal mee naartoe. Jouw fietswinkel vergeet je nooit. En jij hoeft nergens meer over na te denken.
