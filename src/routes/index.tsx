@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
+import { ShopFinder } from "@/components/ShopFinder";
 
 export const Route = createFileRoute("/")({
   head: () => ({
