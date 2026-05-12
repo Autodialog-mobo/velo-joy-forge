@@ -62,6 +62,8 @@ function ClusterLayer({
       spiderfyOnMaxZoom: true,
       zoomToBoundsOnClick: true,
       animate: true,
+      chunkedLoading: true,
+      removeOutsideVisibleBounds: true,
       maxClusterRadius: 50,
       iconCreateFunction: (c: any) => {
         const count = c.getChildCount();
@@ -74,6 +76,8 @@ function ClusterLayer({
       },
     });
 
+    // Pre-build markers once, add/remove based on viewport bounds
+    const allMarkers: { i: number; marker: L.Marker; lat: number; lng: number }[] = [];
     shops.forEach((s, i) => {
       if (s.status !== "active") return;
       const m = L.marker([s.lat, s.lng], { icon: makeIcon(activeIdx === i) });
@@ -84,11 +88,37 @@ function ClusterLayer({
         )}">Routebeschrijving</a></div>`,
       );
       markerRefs.current[i] = m;
-      cluster.addLayer(m);
+      allMarkers.push({ i, marker: m, lat: s.lat, lng: s.lng });
     });
 
     map.addLayer(cluster);
+
+    const inCluster = new Set<number>();
+    const sync = () => {
+      const bounds = map.getBounds().pad(0.25); // 25% buffer
+      const toAdd: L.Marker[] = [];
+      const toRemove: L.Marker[] = [];
+      for (const { i, marker, lat, lng } of allMarkers) {
+        const visible = bounds.contains([lat, lng]);
+        if (visible && !inCluster.has(i)) {
+          toAdd.push(marker);
+          inCluster.add(i);
+        } else if (!visible && inCluster.has(i)) {
+          toRemove.push(marker);
+          inCluster.delete(i);
+        }
+      }
+      if (toRemove.length) cluster.removeLayers(toRemove);
+      if (toAdd.length) cluster.addLayers(toAdd);
+    };
+
+    sync();
+    map.on("moveend", sync);
+    map.on("zoomend", sync);
+
     return () => {
+      map.off("moveend", sync);
+      map.off("zoomend", sync);
       map.removeLayer(cluster);
       markerRefs.current = {};
     };
