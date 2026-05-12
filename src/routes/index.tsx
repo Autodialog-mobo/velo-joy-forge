@@ -100,7 +100,7 @@ function VelopassHome() {
           <div className="avatars">
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
           </div>
-          <div className="trust-text"><strong>+150.000 fietsers</strong>&nbsp; al aangesloten via 1.500+ fietswinkels</div>
+          <div className="trust-text"><strong>+150.000 fietsers</strong> in heel Europa&nbsp; ·&nbsp; 1.500+ fietswinkels in BE, NL en FR</div>
         </div>
       </section>
 
@@ -171,24 +171,30 @@ function VelopassHome() {
       {/* PAD 2 */}
       <section className="flow-new" id="nieuwe-sticker">
         <p className="eyebrow">Nog geen sticker</p>
-        <h2 className="sec-title">Zo start je met Velopass</h2>
-        <p className="sec-sub">Vraag een sticker aan bij je fietswinkel of bestel er rechtstreeks een. Eén sticker activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
-        <div className="steps-new">
-          {[
-            { n: 1, t: "Kies hoe je een sticker krijgt", d: "Ga naar je lokale Velopass-fietswinkel of bestel een sticker via onze webshop. De winkel plakt hem professioneel op je fiets." },
-            { n: 2, t: "Je krijgt automatisch een uitnodiging", d: "Zodra de sticker gescand is, ontvang je een e-mail van Velopass. Klik op de link en kies een wachtwoord." },
-            { n: 3, t: "Altijd op de fiets. Alles geregeld.", d: "Jouw Velopass is actief. Pechhulp, verzekering en jouw fietswinkel — één scan van je sticker ver." },
-          ].map((s) => (
-            <div className="sn" key={s.n}>
-              <div className="sn-num">{s.n}</div>
-              <h4>{s.t}</h4>
-              <p>{s.d}</p>
-            </div>
-          ))}
+        <h2 className="sec-title">Twee manieren om te starten</h2>
+        <p className="sec-sub">Kies de weg die bij je past. Eén sticker activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
+        <div className="steps-new two-paths">
+          <div className="sn path-shop">
+            <div className="sn-tag">Pad A · Aanbevolen</div>
+            <h4>Via een fietswinkel</h4>
+            <p>Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft stickers in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.</p>
+            <a href="#winkels" className="btn-p">Vind een fietswinkel bij jou in de buurt</a>
+          </div>
+          <div className="sn path-shop">
+            <div className="sn-tag green">Pad B</div>
+            <h4>Via de Velopass webshop</h4>
+            <p>Bestel een sticker rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
+            <a href="#" className="btn-g">Bestel via de Velopass webshop →</a>
+          </div>
         </div>
-        <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <a href="#" className="btn-g">Vind een Velopass-fietswinkel</a>
-          <a href="#" className="btn-s">Sticker bestellen via webshop →</a>
+        <div className="path-final">
+          <div className="path-final-arrow">
+            <svg width="14" height="14" viewBox="0 0 10 10" fill="none"><path d="M3 5h4M5 3l2 2-2 2" stroke="#0D1F3C" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </div>
+          <div>
+            <h4>Altijd op de fiets. Alles geregeld.</h4>
+            <p>Jouw Velopass is actief. Pechhulp, verzekering en diefstalprotectie — één scan van je sticker ver.</p>
+          </div>
         </div>
       </section>
 
