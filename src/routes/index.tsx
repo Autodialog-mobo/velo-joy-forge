@@ -228,7 +228,7 @@ function VelopassHome() {
 
       {/* VOORDELEN (dark) */}
       <section className="voordelen" id="voordelen">
-        <p className="eyebrow">Wat je krijgt</p>
+        <p className="eyebrow">Alles op één plek</p>
         <h2 className="sec-title">Eén sticker. Een heel fietsleven geregeld.</h2>
         <div className="vgrid">
           <div className="vc">
