@@ -260,6 +260,13 @@ function VelopassHome() {
               <p>Je fiets verzekerd zonder papierwerk. Activeer rechtstreeks vanuit je Velopass — in enkele klikken.</p>
             </div>
           </div>
+          <div className="vc" style={{ gridColumn: "1/-1" }}>
+            <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
+            <div style={{ flex: 1 }}>
+              <div className="vc-head"><h3>Zorgeloos eigenaarschap</h3></div>
+              <p>Alles over je fiets op één plek — specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang.</p>
+            </div>
+          </div>
         </div>
       </section>
 
