@@ -276,7 +276,7 @@ function VelopassHome() {
           Jouw digitale fietspaspoort. <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>Levenslang.</em>
         </h2>
         <p style={{ fontSize: 16, color: "var(--text-muted)", maxWidth: 520, lineHeight: 1.7, marginBottom: 56 }}>
-          Jouw digitale fietspaspoort gaat overal mee naartoe. Jouw fietswinkel vergeet je nooit. En jij hoeft nergens meer over na te denken.
+          Jouw digitale fietspaspoort gaat overal mee naartoe. Alles geregeld, zonder dat je eraan hoeft te denken.
         </p>
         <div className="why-grid">
           <div className="why-card">
