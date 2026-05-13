@@ -297,8 +297,8 @@ function VelopassHome() {
           </div>
           <div className="why-card">
             <div className="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg></div>
-            <h3>Vertrouwen &amp; zekerheid</h3>
-            <p>Jouw fietswinkel vergeet je nooit. Bij pech, diefstal of een vraag is er altijd iemand die jouw fiets kent en direct kan helpen.</p>
+            <h3>Beschermd door een netwerk</h3>
+            <p>Je rijdt nooit alleen. Bij diefstal helpt de hele Velopass-community mee — iedereen die de QR scant ziet dat jouw fiets gezocht wordt en kan anoniem een seintje geven.</p>
             <div className="why-quote">
               <p>&ldquo;Bij diefstal helpt de hele Velopass-community mee. Iedereen die de QR-code scant ziet dat jouw fiets gezocht wordt en kan anoniem een seintje geven.&rdquo;</p>
               <cite>— De Velopass-community · 1.500+ fietswinkels</cite>
