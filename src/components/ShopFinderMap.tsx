@@ -159,7 +159,7 @@ export default function ShopFinderMap() {
   };
 
   return (
-    <section className="shop-finder" id="winkels">
+    <section className="shop-finder" id="community">
       <p className="eyebrow">De Velopass Community</p>
       <h2 className="sec-title">Een gestolen fiets heeft nergens meer te gaan.</h2>
       <p className="sec-sub">Elke aangesloten fietswinkel scant automatisch — samen met politie en iedereen die een QR tegenkomt. {totalActive.toLocaleString("nl-BE")} schakels vandaag. En de community groeit elke dag.</p>
