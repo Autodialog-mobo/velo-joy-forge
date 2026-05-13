@@ -9,7 +9,7 @@ export function ShopFinder() {
   if (!mounted) {
     return (
       <section className="shop-finder" id="winkels">
-        <p className="eyebrow">Het Velopass-netwerk</p>
+        <p className="eyebrow">De Velopass Community</p>
         <h2 className="sec-title">Een gestolen fiets heeft nergens meer te gaan.</h2>
         <p className="sec-sub">Kaart laden...</p>
       </section>
@@ -20,7 +20,7 @@ export function ShopFinder() {
     <Suspense
       fallback={
         <section className="shop-finder" id="winkels">
-          <p className="eyebrow">Het Velopass-netwerk</p>
+          <p className="eyebrow">De Velopass Community</p>
           <p className="sec-sub">Kaart laden...</p>
         </section>
       }
