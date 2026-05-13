@@ -65,7 +65,7 @@ function VelopassPro() {
           <div className="hero-stats">
             <div><div className="stat-num">1.500<span>+</span></div><div className="stat-label">fietswinkels actief</div></div>
             <div><div className="stat-num">+150<span>K</span></div><div className="stat-label">fietsen geregistreerd</div></div>
-            <div><div className="stat-num">3</div><div className="stat-label">landen actief · Europa in aanbouw</div></div>
+            
           </div>
         </div>
         <div className="pro-hero-right">
