@@ -160,7 +160,7 @@ function VelopassPro() {
         </div>
       </section>
 
-      <section className="proof">
+      <section className="proof" id="proof">
         <div className="proof-inner">
           <div>
             <p className="eyebrow">In goede handen</p>
