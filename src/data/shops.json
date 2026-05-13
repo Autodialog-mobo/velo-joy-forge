@@ -1,26 +1,2002 @@
 [
-  { "name": "Cyclo Brussel", "address": "Rue de Flandre 28, 1000 Brussel", "lat": 50.8528, "lng": 4.3471, "city": "Brussel", "country": "BE", "status": "active" },
-  { "name": "Velo Atelier Antwerpen", "address": "Nationalestraat 142, 2000 Antwerpen", "lat": 51.2156, "lng": 4.3992, "city": "Antwerpen", "country": "BE", "status": "active" },
-  { "name": "Fietshandel Gent", "address": "Korenmarkt 7, 9000 Gent", "lat": 51.0543, "lng": 3.7250, "city": "Gent", "country": "BE", "status": "active" },
-  { "name": "BikeStore Leuven", "address": "Bondgenotenlaan 50, 3000 Leuven", "lat": 50.8798, "lng": 4.7005, "city": "Leuven", "country": "BE", "status": "active" },
-  { "name": "Vélo Liège", "address": "Rue Léopold 22, 4000 Liège", "lat": 50.6451, "lng": 5.5736, "city": "Liège", "country": "BE", "status": "active" },
-  { "name": "Brugge Bikes", "address": "Markt 12, 8000 Brugge", "lat": 51.2085, "lng": 3.2247, "city": "Brugge", "country": "BE", "status": "active" },
-  { "name": "Fietspunt Mechelen", "address": "Bruul 75, 2800 Mechelen", "lat": 51.0259, "lng": 4.4776, "city": "Mechelen", "country": "BE", "status": "active" },
-
-  { "name": "Amsterdam Fietswinkel", "address": "Damrak 70, 1012 Amsterdam", "lat": 52.3740, "lng": 4.8952, "city": "Amsterdam", "country": "NL", "status": "active" },
-  { "name": "Rotterdam Bike Hub", "address": "Coolsingel 105, 3012 Rotterdam", "lat": 51.9225, "lng": 4.4791, "city": "Rotterdam", "country": "NL", "status": "active" },
-  { "name": "Utrecht Cycles", "address": "Oudegracht 158, 3511 Utrecht", "lat": 52.0907, "lng": 5.1214, "city": "Utrecht", "country": "NL", "status": "active" },
-  { "name": "Den Haag Velo", "address": "Spuistraat 33, 2511 Den Haag", "lat": 52.0775, "lng": 4.3149, "city": "Den Haag", "country": "NL", "status": "active" },
-  { "name": "Eindhoven Bikes", "address": "Demer 21, 5611 Eindhoven", "lat": 51.4416, "lng": 5.4697, "city": "Eindhoven", "country": "NL", "status": "active" },
-  { "name": "Groningen Fiets", "address": "Vismarkt 40, 9711 Groningen", "lat": 53.2194, "lng": 6.5665, "city": "Groningen", "country": "NL", "status": "active" },
-  { "name": "Maastricht Cycles", "address": "Grote Staat 18, 6211 Maastricht", "lat": 50.8514, "lng": 5.6900, "city": "Maastricht", "country": "NL", "status": "active" },
-
-  { "name": "Vélo Paris République", "address": "12 Rue du Temple, 75004 Paris", "lat": 48.8606, "lng": 2.3522, "city": "Paris", "country": "FR", "status": "active" },
-  { "name": "Cycles Lyon", "address": "Rue de la République 80, 69002 Lyon", "lat": 45.7640, "lng": 4.8357, "city": "Lyon", "country": "FR", "status": "active" },
-  { "name": "Marseille Vélo", "address": "La Canebière 45, 13001 Marseille", "lat": 43.2965, "lng": 5.3698, "city": "Marseille", "country": "FR", "status": "active" },
-  { "name": "Lille Bikes", "address": "Rue Faidherbe 22, 59000 Lille", "lat": 50.6292, "lng": 3.0573, "city": "Lille", "country": "FR", "status": "active" },
-  { "name": "Bordeaux Cycles", "address": "Cours de l'Intendance 50, 33000 Bordeaux", "lat": 44.8378, "lng": -0.5792, "city": "Bordeaux", "country": "FR", "status": "active" },
-  { "name": "Toulouse Vélo", "address": "Rue d'Alsace-Lorraine 30, 31000 Toulouse", "lat": 43.6047, "lng": 1.4442, "city": "Toulouse", "country": "FR", "status": "active" },
-  { "name": "Strasbourg Cycles", "address": "Place Kléber 8, 67000 Strasbourg", "lat": 48.5734, "lng": 7.7521, "city": "Strasbourg", "country": "FR", "status": "active" },
-  { "name": "Nantes Vélo", "address": "Rue Crébillon 15, 44000 Nantes", "lat": 47.2184, "lng": -1.5536, "city": "Nantes", "country": "FR", "status": "active" }
+  {
+    "name": "Loewi",
+    "address": "3 rue Joliot Curie, 91190 Gif sur Yvette, France",
+    "lat": 48.70984,
+    "lng": 2.16242,
+    "city": "Gif sur Yvette",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 106
+  },
+  {
+    "name": "MINT",
+    "address": "215 rue Paul Langevin, 13290 Aix-en-Provence, France",
+    "lat": 43.48001,
+    "lng": 5.37293,
+    "city": "Aix-en-Provence",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 59
+  },
+  {
+    "name": "Morning Cycles",
+    "address": "Titiaanstraat 2, 1000 Brussel, Belgium",
+    "lat": 50.84699,
+    "lng": 4.38839,
+    "city": "Brussel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 37
+  },
+  {
+    "name": "Lucien",
+    "address": "Dynamicalaan, 22610 Antwerp, Belgium",
+    "lat": 51.15536,
+    "lng": 4.37401,
+    "city": "Antwerp",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 27
+  },
+  {
+    "name": "Holland Bikes Paris 15",
+    "address": "79 boulevard Lefebvre, 75015 Paris, France",
+    "lat": 48.83051,
+    "lng": 2.29425,
+    "city": "Paris",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 26
+  },
+  {
+    "name": "Joule Mobiel",
+    "address": "Rooigemlaan 455, 9000 Gent, Belgium",
+    "lat": 51.05358,
+    "lng": 3.69841,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 25
+  },
+  {
+    "name": "Wildiers",
+    "address": "Heidestraat 6, 3500 Hasselt, Belgium",
+    "lat": 50.94233,
+    "lng": 5.36044,
+    "city": "Hasselt",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 25
+  },
+  {
+    "name": "La Roue Liber",
+    "address": "32 Rue Vignon, 75009 Paris, France",
+    "lat": 48.87208,
+    "lng": 2.32656,
+    "city": "Paris",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 24
+  },
+  {
+    "name": "Bike Republic Wijnegem",
+    "address": "Turnhoutsebaan 325, 2110 Wijnegem, Belgium",
+    "lat": 51.22701,
+    "lng": 4.52074,
+    "city": "Wijnegem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 22
+  },
+  {
+    "name": "'t Ventiel",
+    "address": "Mechelsesteenweg 192 A, 2550 KONTICH, Belgium",
+    "lat": 51.12802,
+    "lng": 4.44687,
+    "city": "KONTICH",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 22
+  },
+  {
+    "name": "Van Eyck Sport",
+    "address": "Gentsesteenweg 89, 9300 Aalst, Belgium",
+    "lat": 50.93879,
+    "lng": 4.02297,
+    "city": "Aalst",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 22
+  },
+  {
+    "name": "Cycles SYBIAC",
+    "address": "15 avenue de l' isle, 33230 Guitres, France",
+    "lat": 45.39481,
+    "lng": -0.26966,
+    "city": "Guitres",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 21
+  },
+  {
+    "name": "Fietsen Breuls",
+    "address": "Majoorberbenlaan 2, 3630 Maasmechelen, Belgium",
+    "lat": 50.97358,
+    "lng": 5.67011,
+    "city": "Maasmechelen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 21
+  },
+  {
+    "name": "De Geus",
+    "address": "Th. van Cauwenberghslei 101, 2900 Schoten, Belgium",
+    "lat": 51.26415,
+    "lng": 4.50818,
+    "city": "Schoten",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 20
+  },
+  {
+    "name": "Holland Bikes Lagny/Annet",
+    "address": "1 Rue du Château Fort, 77400 Lagny-sur-Marne, France",
+    "lat": 48.88007,
+    "lng": 2.70465,
+    "city": "Lagny-sur-Marne",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 20
+  },
+  {
+    "name": "COOPERATIVE MARSEILLAISE DU CYCLE",
+    "address": "33 rue Edouard Delanglade, 13006 MARSEILLE, France",
+    "lat": 43.28876,
+    "lng": 5.37361,
+    "city": "MARSEILLE",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 19
+  },
+  {
+    "name": "GinoBikes",
+    "address": "Frère Orbanstraat 46, 8400 Oostende, Belgium",
+    "lat": 51.22076,
+    "lng": 2.91066,
+    "city": "Oostende",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 19
+  },
+  {
+    "name": "Bike Republic Beveren",
+    "address": "Pareinpark 1, 9120 Beveren, Belgium",
+    "lat": 51.21814,
+    "lng": 4.27019,
+    "city": "Beveren",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 18
+  },
+  {
+    "name": "Chamizo Fietsen",
+    "address": "Liersesteenweg 86-88, 2860 Sint-Katelijne-Waver, Belgium",
+    "lat": 51.05824,
+    "lng": 4.48026,
+    "city": "Sint-Katelijne-Waver",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 18
+  },
+  {
+    "name": "My Bike",
+    "address": "Maalse Steenweg 64, 8310 Brugge, Belgium",
+    "lat": 51.21091,
+    "lng": 3.24466,
+    "city": "Brugge",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 18
+  },
+  {
+    "name": "Aerts Action Bike (Bikepro BV)",
+    "address": "Kapellensteenweg 394, 2920 Kalmthout, Belgium",
+    "lat": 51.37344,
+    "lng": 4.47148,
+    "city": "Kalmthout",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 17
+  },
+  {
+    "name": "Bike Republic Antwerpen",
+    "address": "Vlaamsekaai 20, 2000 Antwerpen, Belgium",
+    "lat": 51.21085,
+    "lng": 4.39255,
+    "city": "Antwerpen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 17
+  },
+  {
+    "name": "Bike Republic Diest",
+    "address": "Diestsebaan 12, 3290 Diest, Belgium",
+    "lat": 50.99883,
+    "lng": 5.08307,
+    "city": "Diest",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 17
+  },
+  {
+    "name": "Holland Bikes Paris 05",
+    "address": "17, rue des Ecoles, 75005 Paris, France",
+    "lat": 48.84781,
+    "lng": 2.35117,
+    "city": "Paris",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 17
+  },
+  {
+    "name": "Bike Republic Sint-Denijs-Westrem",
+    "address": "Kortrijksesteenweg 1078, 9051 Gent, Belgium",
+    "lat": 51.02207,
+    "lng": 3.69051,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 16
+  },
+  {
+    "name": "BikeFriend BV",
+    "address": "Aarschotsesteenweg 331, 3012 Leuven, Belgium",
+    "lat": 50.91961,
+    "lng": 4.71826,
+    "city": "Leuven",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 16
+  },
+  {
+    "name": "Fietsen Godenfroot",
+    "address": "Xavier de Cocklaan 36, 9831 Sint-Martens-Latem, Belgium",
+    "lat": 51.00038,
+    "lng": 3.61182,
+    "city": "Sint-Martens-Latem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 16
+  },
+  {
+    "name": "Fietsen Loix",
+    "address": "Luikersteenweg 277, 3800 Sint-Truiden, Belgium",
+    "lat": 50.77564,
+    "lng": 5.25066,
+    "city": "Sint-Truiden",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 16
+  },
+  {
+    "name": "Het Fietslab",
+    "address": "Sint-Maartenstraat 20a, 3000 Leuven, Belgium",
+    "lat": 50.88165,
+    "lng": 4.7054,
+    "city": "Leuven",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 16
+  },
+  {
+    "name": "Smartwheels bvba",
+    "address": "Breeerweg 15, 3950 Bocholt, Belgium",
+    "lat": 51.16944,
+    "lng": 5.58288,
+    "city": "Bocholt",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 16
+  },
+  {
+    "name": "Bike Republic Boechout",
+    "address": "Provinciesteenweg 496, 2530 Boechout, Belgium",
+    "lat": 51.15919,
+    "lng": 4.51049,
+    "city": "Boechout",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Bike Republic Gent Dampoort",
+    "address": "Antwerpsesteenweg 190, 9040 Gent, Belgium",
+    "lat": 51.05881,
+    "lng": 3.7447,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Bike Republic Grimbergen",
+    "address": "Vilvoordsesteenweg 307, 1850 Grimbergen, Belgium",
+    "lat": 50.92679,
+    "lng": 4.39242,
+    "city": "Grimbergen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Bike Republic Leuven",
+    "address": "Kareelveld 8a, 3000 Leuven, Belgium",
+    "lat": 50.89167,
+    "lng": 4.6913,
+    "city": "Leuven",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Bike republic Roeselare",
+    "address": "Westlaan 221 B, 8800 Roeselare, Belgium",
+    "lat": 50.94327,
+    "lng": 3.11316,
+    "city": "Roeselare",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Fietsen Storms",
+    "address": "Blaubergsesteenweg 113, 2230 Herselt, Belgium",
+    "lat": 51.04614,
+    "lng": 4.92015,
+    "city": "Herselt",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Fietsen Velo@Home",
+    "address": "Koosltraat 49, 9300 Aalst, Belgium",
+    "lat": 50.94212,
+    "lng": 4.04692,
+    "city": "Aalst",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Le Hollandais Vélo",
+    "address": "24 Rue de la Barre, 59000 Lille, France",
+    "lat": 50.63881,
+    "lng": 3.05756,
+    "city": "Lille",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 15
+  },
+  {
+    "name": "Bike Republic Hasselt",
+    "address": "Herkenrodesingel 85, 3500 Hasselt, Belgium",
+    "lat": 50.94192,
+    "lng": 5.32861,
+    "city": "Hasselt",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Bike Republic Ninove",
+    "address": "Brakelsesteenweg 240, 9406 Ninove, Belgium",
+    "lat": 50.83386,
+    "lng": 3.99242,
+    "city": "Ninove",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Cycli Imola BV",
+    "address": "Dronckaertstraat 531, 8930 Lauwe, Belgium",
+    "lat": 50.79094,
+    "lng": 3.20104,
+    "city": "Lauwe",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Fiets & Tuincentrum Meirhaeghe - Van Woensel",
+    "address": "Varentstraat 21, 3118 Rotselaar, Belgium",
+    "lat": 50.9748,
+    "lng": 4.71959,
+    "city": "Rotselaar",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Fietsen Gaethofs Genk",
+    "address": "Nieuwstraat 39 & 50, 3600 Genk, Belgium",
+    "lat": 50.96351,
+    "lng": 5.4981,
+    "city": "Genk",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Hello Vélo",
+    "address": "Hoogveldweg 91, 2500 Lier, Belgium",
+    "lat": 51.12465,
+    "lng": 4.58013,
+    "city": "Lier",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Holland Bikes Paris 17",
+    "address": "154 avenue de Wagram, 75017 Paris, France",
+    "lat": 48.88666,
+    "lng": 2.30465,
+    "city": "Paris",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Lucien.",
+    "address": "test, 0000 test, Belgium",
+    "lat": 51.09893,
+    "lng": 3.75589,
+    "city": "test",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Serge Dutouron SAS",
+    "address": "6 IMPASSE DE LATROBE, 82370 LABASTIDE SAINT PIERRE, France",
+    "lat": 43.91519,
+    "lng": 1.31112,
+    "city": "LABASTIDE SAINT PIERRE",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 14
+  },
+  {
+    "name": "Bike Republic Aalst",
+    "address": "Gentse Steenweg 171, 9300 Aalst, Belgium",
+    "lat": 50.94009,
+    "lng": 4.01639,
+    "city": "Aalst",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Bike Republic Gent Rooigem",
+    "address": "Rooigemlaan 2, 9000 Gent, Belgium",
+    "lat": 51.05487,
+    "lng": 3.69726,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Bike Republic Kuurne",
+    "address": "Tramstraat 63, 9052 Zwijnaarde, Belgium",
+    "lat": 51.00831,
+    "lng": 3.70577,
+    "city": "Zwijnaarde",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Bike Republic Merksem",
+    "address": "Bredabaan 809, 2170 Antwerpen, Belgium",
+    "lat": 51.25177,
+    "lng": 4.45915,
+    "city": "Antwerpen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Cycles DEMION",
+    "address": "11 Avenue des Bouillats, 17370 Saint-Trojan-les-Bains, France",
+    "lat": 45.84682,
+    "lng": -1.21085,
+    "city": "Saint-Trojan-les-Bains",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Fietsen Dhollander Kristof Bv",
+    "address": "Nachtegaalstraat 36, 9190 Stekene, Belgium",
+    "lat": 51.21916,
+    "lng": 4.03269,
+    "city": "Stekene",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Fietspaleis",
+    "address": "Bellestraat 57, 9100 Sint-Niklaas, Belgium",
+    "lat": 51.17372,
+    "lng": 4.17138,
+    "city": "Sint-Niklaas",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Fietsservice Bevel",
+    "address": "Laarstraat 3, 2560 Bevel, Belgium",
+    "lat": 51.13463,
+    "lng": 4.68468,
+    "city": "Bevel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Graines de Vélo",
+    "address": "Chaussée de Wavre 39, 5030 Gembloux, Belgium",
+    "lat": 50.57284,
+    "lng": 4.69157,
+    "city": "Gembloux",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Multi Cycles",
+    "address": "5 rue de l'Ortenbourg, 67390 Marckolsheim, France",
+    "lat": 48.17235,
+    "lng": 7.54816,
+    "city": "Marckolsheim",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Powergrid",
+    "address": "Gemeenteheide 19, 2440 Geel, Belgium",
+    "lat": 51.13405,
+    "lng": 5.007,
+    "city": "Geel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Rijwielcenter Hermans",
+    "address": "Antwerpsesteenweg 325, 2390 Malle, Belgium",
+    "lat": 51.29719,
+    "lng": 4.68797,
+    "city": "Malle",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Vélo Soigneur",
+    "address": "Meerdegatstraat 82, 3570 Alken, Belgium",
+    "lat": 50.88454,
+    "lng": 5.31386,
+    "city": "Alken",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Bike Republic Chênée",
+    "address": "Boulevard De Beaufraipont 20 (à côté du Colruyt), 4030 Chênée, Belgium",
+    "lat": 50.6111,
+    "lng": 5.61926,
+    "city": "Chênée",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Bike Republic Groot-Bijgaarden",
+    "address": "Robert Dansaertlaan 9b, 1702 Dilbeek, Belgium",
+    "lat": 50.86666,
+    "lng": 4.27549,
+    "city": "Dilbeek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Bike Republic Oudsbergen",
+    "address": "Weg op Bree 117, 3670 Oudsbergen, Belgium",
+    "lat": 51.1028,
+    "lng": 5.53737,
+    "city": "Oudsbergen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Bike Republic Turnhout",
+    "address": "Parklaan 38/Unit 3, 2300 Turnhout, Belgium",
+    "lat": 51.32897,
+    "lng": 4.94014,
+    "city": "Turnhout",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Bol Bikes",
+    "address": "Brugstraat 19, 3550 Heusden-Zolder, Belgium",
+    "lat": 51.03486,
+    "lng": 5.28453,
+    "city": "Heusden-Zolder",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "De fietsshop",
+    "address": "Mechelsesteenweg 33, 2830 Willebroek, Belgium",
+    "lat": 51.05899,
+    "lng": 4.36683,
+    "city": "Willebroek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Dexters Sport bvba",
+    "address": "Industrieweg-Zuid 2045, 3660 Opglabbeek, Belgium",
+    "lat": 51.03436,
+    "lng": 5.56154,
+    "city": "Opglabbeek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Fietsen Pauwels",
+    "address": "Kerkhovensesteenweg 397, 3920 Lommel, Belgium",
+    "lat": 51.16245,
+    "lng": 5.26817,
+    "city": "Lommel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Manneken Fiets",
+    "address": "Steenweg op Merchtem 62, 1780 Wemmel, Belgium",
+    "lat": 50.90911,
+    "lng": 4.3037,
+    "city": "Wemmel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "mega-cycle",
+    "address": "Vichtesteenweg 169, 8540 Deerlijk, Belgium",
+    "lat": 50.84529,
+    "lng": 3.38349,
+    "city": "Deerlijk",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Mobibikes",
+    "address": "Groendreef 53, 9160 Lokeren, Belgium",
+    "lat": 51.10957,
+    "lng": 3.98475,
+    "city": "Lokeren",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Serneels Bikes BV",
+    "address": "Halveweg 49, 3520 Zonhoven, Belgium",
+    "lat": 50.99214,
+    "lng": 5.34364,
+    "city": "Zonhoven",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "Velodome",
+    "address": "Ferdinand Coosemansstraat 20, 2600 Berchem, Belgium",
+    "lat": 51.19786,
+    "lng": 4.41778,
+    "city": "Berchem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 12
+  },
+  {
+    "name": "62 CYCLES - LE MAGASIN DE VELOS",
+    "address": "62 GRANDE RUE, 89100 SENS, France",
+    "lat": 48.19702,
+    "lng": 3.27982,
+    "city": "SENS",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Bike Republic Retie",
+    "address": "Veldenstraat 22, 2470 Retie, Belgium",
+    "lat": 51.27476,
+    "lng": 5.08044,
+    "city": "Retie",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Bike-inn (The bike factory)",
+    "address": "Meylandtlaan 108, 3550 Heusden-Zolder, Belgium",
+    "lat": 51.01666,
+    "lng": 5.28901,
+    "city": "Heusden-Zolder",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "De Velowinkel",
+    "address": "Brusselsesteenweg 265, 9050 Gent, Belgium",
+    "lat": 51.03804,
+    "lng": 3.74863,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Holland Bikes Lyon",
+    "address": "28 Quai Victor Augagneur, 69003 Lyon, France",
+    "lat": 45.75742,
+    "lng": 4.84089,
+    "city": "Lyon",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Holland Bikes Webshop",
+    "address": "24 rue firmin gillot, 75015 Paris, France",
+    "lat": 48.83188,
+    "lng": 2.29139,
+    "city": "Paris",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "L’etape des pyrenees",
+    "address": "12 Avenue des Pyrénées, 65400 Argelès-Gazost, France",
+    "lat": 43.01101,
+    "lng": -0.09828,
+    "city": "Argelès-Gazost",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Lobikes",
+    "address": "Antwerpse Steenweg 58, 9080 Lochristi, Belgium",
+    "lat": 51.09109,
+    "lng": 3.81465,
+    "city": "Lochristi",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Raida",
+    "address": "De Smet de Naeyerlaan 98, 8370 Blankenberge, Belgium",
+    "lat": 51.31202,
+    "lng": 3.13003,
+    "city": "Blankenberge",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Velophil SPRL",
+    "address": "12 avenue des Celtes, 1040 Etterbeek, Belgium",
+    "lat": 50.83867,
+    "lng": 4.39827,
+    "city": "Etterbeek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Vitesse Fietsen",
+    "address": "Dorpsplein 16, 3110 Rotselaar, Belgium",
+    "lat": 50.9516,
+    "lng": 4.70821,
+    "city": "Rotselaar",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 11
+  },
+  {
+    "name": "Atelier Zaaf Bond",
+    "address": "Bondgenotenlaan 169, 3000 Leuven, Belgium",
+    "lat": 50.88139,
+    "lng": 4.71311,
+    "city": "Leuven",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Bike Republic Oudenaarde",
+    "address": "Westerring 41, 9700 Oudenaarde, Belgium",
+    "lat": 50.87171,
+    "lng": 3.60989,
+    "city": "Oudenaarde",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "BS Bike",
+    "address": "Veerstraat 62, 9290 Berlare, Belgium",
+    "lat": 51.02584,
+    "lng": 3.95036,
+    "city": "Berlare",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Cyclobility",
+    "address": "Kerkstraat 14, 9690 Kluisbergen, Belgium",
+    "lat": 50.79183,
+    "lng": 3.50742,
+    "city": "Kluisbergen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "De Fietsboetiek",
+    "address": "Dorpsstraat 18, 3650 Kortessem, Belgium",
+    "lat": 50.85786,
+    "lng": 5.38825,
+    "city": "Kortessem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "EURL Arnaud Bike",
+    "address": "13 rue Arnaud Bernard, 31000 Toulouse, France",
+    "lat": 43.60992,
+    "lng": 1.43911,
+    "city": "Toulouse",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Brys",
+    "address": "Hoogstraat 27, 2870 Puurs-Sint-Amands, Belgium",
+    "lat": 51.07657,
+    "lng": 4.27809,
+    "city": "Puurs-Sint-Amands",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Fieles BV",
+    "address": "Zuidlaan 150, 9630 Zwalm, Belgium",
+    "lat": 50.87152,
+    "lng": 3.73461,
+    "city": "Zwalm",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Kurt Dams",
+    "address": "Oude Geelsebaan 25, 2431 Veerle, Belgium",
+    "lat": 51.06749,
+    "lng": 4.97798,
+    "city": "Veerle",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Lauryssen Bart BVBA",
+    "address": "Hoogstraatsesteenweg 14, 2310 Rijkevorsel, Belgium",
+    "lat": 51.35111,
+    "lng": 4.76046,
+    "city": "Rijkevorsel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Stevens",
+    "address": "Heulestraat 188, 8560 Gullegem, Belgium",
+    "lat": 50.84364,
+    "lng": 3.22216,
+    "city": "Gullegem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Tim",
+    "address": "Retiesebaan 25, 2460 Kasterlee, Belgium",
+    "lat": 51.24173,
+    "lng": 4.97203,
+    "city": "Kasterlee",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Fietsen Willems",
+    "address": "Heldenplein 18, 3945 Ham, Belgium",
+    "lat": 51.10379,
+    "lng": 5.179,
+    "city": "Ham",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Gunthers fietsen bv",
+    "address": "Bieststraat 130, 8790 Waregem, Belgium",
+    "lat": 50.87586,
+    "lng": 3.4311,
+    "city": "Waregem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Interbikes Tienen",
+    "address": "Leopoldvest 65,, 3300 Tienen, Belgium",
+    "lat": 50.80625,
+    "lng": 4.94671,
+    "city": "Tienen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Lauryssen VELO",
+    "address": "Gistelsteenweg 157b, 8490 Varsenare, Belgium",
+    "lat": 51.18397,
+    "lng": 3.14219,
+    "city": "Varsenare",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "M-bike",
+    "address": "Korte Hofstraat 54, 3530 Houthalen-Helchteren, Belgium",
+    "lat": 51.02577,
+    "lng": 5.38582,
+    "city": "Houthalen-Helchteren",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Pervélo NV",
+    "address": "Rooigemlaan 113/115, 9000 Gent, Belgium",
+    "lat": 51.05358,
+    "lng": 3.69841,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "VELEKTRO",
+    "address": "Dok Noord 7/001B, 9000 Gent, Belgium",
+    "lat": 51.06586,
+    "lng": 3.72534,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Velomaat",
+    "address": "Getouwstraat 17, 9000 Gent, Belgium",
+    "lat": 51.07094,
+    "lng": 3.71294,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Wanneyn BV",
+    "address": "Koolkerksesteenweg 83a, 8000 Brugge, Belgium",
+    "lat": 51.22558,
+    "lng": 3.23534,
+    "city": "Brugge",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 10
+  },
+  {
+    "name": "Bike Center Heist",
+    "address": "Lostraat 33/C, 2220 Heist-op-den-Berg, Belgium",
+    "lat": 51.07078,
+    "lng": 4.73346,
+    "city": "Heist-op-den-Berg",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Bike Project",
+    "address": "Lange Koepoortstraat 47, 2000 Antwerpen, Belgium",
+    "lat": 51.22242,
+    "lng": 4.40224,
+    "city": "Antwerpen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "bike Republic Diksmuide",
+    "address": "Kaaskerkestraat 56, 8600 Diksmuide, Belgium",
+    "lat": 51.03375,
+    "lng": 2.84653,
+    "city": "Diksmuide",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Bike Republic Sint-Pieters-Leeuw",
+    "address": "Bergensesteenweg 734, 1600 Sint-Pieters-Leeuw, Belgium",
+    "lat": 50.76244,
+    "lng": 4.25124,
+    "city": "Sint-Pieters-Leeuw",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Bike Service Pieters bv",
+    "address": "Brusselsestraat 62, 9200 Dendermonde, Belgium",
+    "lat": 51.02704,
+    "lng": 4.09999,
+    "city": "Dendermonde",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Biker Fietsen (Gent)",
+    "address": "Steendam 16, 9000 Gent, Belgium",
+    "lat": 51.05685,
+    "lng": 3.72918,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Bikeshop Chrischou",
+    "address": "Burgemeester philipslaan 80b, 3680 Maaseik, Belgium",
+    "lat": 51.09622,
+    "lng": 5.78612,
+    "city": "Maaseik",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "De Fietsenmaker",
+    "address": "Berkenhagestraat 2, 8210 Zedelgem, Belgium",
+    "lat": 51.14056,
+    "lng": 3.13717,
+    "city": "Zedelgem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "De Tweewieler BV",
+    "address": "Arendonksesteenweg 6B, 2380 Ravels, Belgium",
+    "lat": 51.3733,
+    "lng": 5.044,
+    "city": "Ravels",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen De Zwaluw",
+    "address": "Laarstraat 41b, 2840 Reet, Belgium",
+    "lat": 51.10094,
+    "lng": 4.41587,
+    "city": "Reet",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen Haverbeke",
+    "address": "Gentstraat 129, 8770 Ingelmunster, Belgium",
+    "lat": 50.91169,
+    "lng": 3.27039,
+    "city": "Ingelmunster",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen Jacobs",
+    "address": "Fortstraat 7a, 2560 Nijlen, Belgium",
+    "lat": 51.14956,
+    "lng": 4.62105,
+    "city": "Nijlen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen Loomans (Copman&co BV)",
+    "address": "Kelestraat 23, 1730 Asse, Belgium",
+    "lat": 50.92054,
+    "lng": 4.18246,
+    "city": "Asse",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen Luc",
+    "address": "Hovestraat 25, 2370 Arendonk, Belgium",
+    "lat": 51.31983,
+    "lng": 5.09098,
+    "city": "Arendonk",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen Martens Houthalen",
+    "address": "Guldensporenlaan 52, 3530 Houthalen, Belgium",
+    "lat": 51.03804,
+    "lng": 5.36643,
+    "city": "Houthalen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Fietsen Wauters BV / Soupape",
+    "address": "Leegstraat 6, 9960 Assenede, Belgium",
+    "lat": 51.22859,
+    "lng": 3.75256,
+    "city": "Assenede",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Interbikes Leuven(Fietsen Stephan De Wolf BV)",
+    "address": "Brusselsestraat 182, 3000 Leuven, Belgium",
+    "lat": 50.88101,
+    "lng": 4.69154,
+    "city": "Leuven",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Lievens velo",
+    "address": "Grote Steenweg 1a,, 2440 Geel, Belgium",
+    "lat": 51.1249,
+    "lng": 4.94143,
+    "city": "Geel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Minne Sport",
+    "address": "Pannenhuisstraat 13, 8900 Ieper, Belgium",
+    "lat": 50.83975,
+    "lng": 2.87246,
+    "city": "Ieper",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Niels Albert Bike Store",
+    "address": "Kruisstraat 126, 3120 Tremelo, Belgium",
+    "lat": 50.99504,
+    "lng": 4.69262,
+    "city": "Tremelo",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "NXT Gear",
+    "address": "Nieuwstraat 59, 2920 Essen, Belgium",
+    "lat": 51.46819,
+    "lng": 4.4677,
+    "city": "Essen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "T-bikes Bekkevoort",
+    "address": "Staatsbaan 269, 3460 Bekkevoort, Belgium",
+    "lat": 50.94212,
+    "lng": 4.96375,
+    "city": "Bekkevoort",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Transition Cargo",
+    "address": "6 bis Rue du Lazaret, 64600 Anglet, France",
+    "lat": 43.52414,
+    "lng": -1.49902,
+    "city": "Anglet",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Velo's Vanderbike BV",
+    "address": "Stationsstraat 31, 8470 Gistel, Belgium",
+    "lat": 51.15548,
+    "lng": 2.96475,
+    "city": "Gistel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Velosliko BV",
+    "address": "Keiberg 121 a, 8551 heestert, Belgium",
+    "lat": 50.78252,
+    "lng": 3.38916,
+    "city": "heestert",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 9
+  },
+  {
+    "name": "Beebike",
+    "address": "rue des hauts pavés 2, 44000 Nantes, France",
+    "lat": 47.22196,
+    "lng": -1.56259,
+    "city": "Nantes",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bicyclic",
+    "address": "RUE DES PIEDS D'ALOUETTE 39, 5100 NAMUR, Belgium",
+    "lat": 50.42682,
+    "lng": 4.92426,
+    "city": "NAMUR",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bike Mechanics",
+    "address": "Meersstraat 10, 1770 Liedekerke, Belgium",
+    "lat": 50.87402,
+    "lng": 4.08619,
+    "city": "Liedekerke",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bike Republic Asse",
+    "address": "Brusselsesteenweg 412, 1731 Asse, Belgium",
+    "lat": 50.89437,
+    "lng": 4.24192,
+    "city": "Asse",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bike Republic Boortmeerbeek",
+    "address": "Leuvensesteenweg 356, 3190 Boortmeerbeek, Belgium",
+    "lat": 50.96703,
+    "lng": 4.57443,
+    "city": "Boortmeerbeek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bike Republic Herentals",
+    "address": "Hemeldonk 13, 2200 Herentals, Belgium",
+    "lat": 51.17368,
+    "lng": 4.81953,
+    "city": "Herentals",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bike Republic Veurne",
+    "address": "Vaartstraat 19, 8630 Veurne, Belgium",
+    "lat": 51.0713,
+    "lng": 2.67043,
+    "city": "Veurne",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bike World (Brugge) (VFT BV)",
+    "address": "Baron Ruzettelaan 415, 8310 Assebroek, Belgium",
+    "lat": 51.18338,
+    "lng": 3.23516,
+    "city": "Assebroek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "BikeCareWim",
+    "address": "LEYNSEELSTRAAT 61, 8580 AVELGEM, Belgium",
+    "lat": 50.7751,
+    "lng": 3.43176,
+    "city": "AVELGEM",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Bosh Sport",
+    "address": "Ferdinand Maesstraat 74, 2550 Waarloos, Belgium",
+    "lat": 51.1051,
+    "lng": 4.45453,
+    "city": "Waarloos",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "CD Bikes",
+    "address": "Liersesteenweg 145d, 2220 Heist-op-den-Berg, Belgium",
+    "lat": 51.05138,
+    "lng": 4.73056,
+    "city": "Heist-op-den-Berg",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Cycleo (ABK Maison Boland)",
+    "address": "Rue de la Paix 1/2, 4671 Blégny, Belgium",
+    "lat": 50.66713,
+    "lng": 5.68997,
+    "city": "Blégny",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "De fietser (Holland Bikes)",
+    "address": "place rhin et danube, 92250 LA GARENNE COLOMBES, France",
+    "lat": 48.90307,
+    "lng": 2.24261,
+    "city": "LA GARENNE COLOMBES",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Destrier Bike",
+    "address": "18 rue de l'ancienne prison, 76000 ROUEN, France",
+    "lat": 49.44419,
+    "lng": 1.0892,
+    "city": "ROUEN",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Deva Cycling",
+    "address": "Kortrijksestraat 26, 8501 Heule, Belgium",
+    "lat": 50.84158,
+    "lng": 3.23426,
+    "city": "Heule",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "E-bis BV",
+    "address": "Elf-Novemberstraat 25, 2800 Mechelen, Belgium",
+    "lat": 51.00883,
+    "lng": 4.48634,
+    "city": "Mechelen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Fietsatelier",
+    "address": "Gaslei 28, 2500 Lier, Belgium",
+    "lat": 51.13799,
+    "lng": 4.57443,
+    "city": "Lier",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Fietsen Joost Degraeve",
+    "address": "Sint-Jansstraat 18, 8880 Rollegem-Kapelle, Belgium",
+    "lat": 50.86893,
+    "lng": 3.14721,
+    "city": "Rollegem-Kapelle",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Fietsen Leten",
+    "address": "Villerslei 42-44, 2900 Schoten, Belgium",
+    "lat": 51.25238,
+    "lng": 4.50817,
+    "city": "Schoten",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Fietsen Luc Smets",
+    "address": "Boeretangsedreef 1, 2480 Dessel, Belgium",
+    "lat": 51.23928,
+    "lng": 5.10738,
+    "city": "Dessel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Fietsen Rogiers BV",
+    "address": "Maastrichterstraat 21, 3740 Bilzen, Belgium",
+    "lat": 50.86466,
+    "lng": 5.52723,
+    "city": "Bilzen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Grand Depart",
+    "address": "Nijverheidskaai 3b, 9040 Gent, Belgium",
+    "lat": 51.04786,
+    "lng": 3.7578,
+    "city": "Gent",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Lindor Fietsen BV",
+    "address": "Nestor de tierestraat 8, 9700 Oudenaarde, Belgium",
+    "lat": 50.86387,
+    "lng": 3.61226,
+    "city": "Oudenaarde",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Ride Bikes",
+    "address": "Nijverheidslaan 21, 3290 Diest, Belgium",
+    "lat": 50.98973,
+    "lng": 5.04158,
+    "city": "Diest",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Rijwielen De Meester",
+    "address": "Antwerpsestraat 68, 2845 Niel, Belgium",
+    "lat": 51.1093,
+    "lng": 4.33128,
+    "city": "Niel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "Rijwielen Van den Plas",
+    "address": "Doelen 1, 2980 Zoersel, Belgium",
+    "lat": 51.27048,
+    "lng": 4.71218,
+    "city": "Zoersel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 8
+  },
+  {
+    "name": "4Bikes Westerlo bvba",
+    "address": "Zandberg 34, 2260 Westerlo, Belgium",
+    "lat": 51.09391,
+    "lng": 4.93535,
+    "city": "Westerlo",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Auction Pro",
+    "address": "7 Quai François Mauriac, 75013 Paris, France",
+    "lat": 48.83253,
+    "lng": 2.37908,
+    "city": "Paris",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Biscobike (hello velo)",
+    "address": "Neerstraat 10, 9660 Brakel, Belgium",
+    "lat": 50.80335,
+    "lng": 3.76518,
+    "city": "Brakel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Bruce-Cycling",
+    "address": "Torhoutsesteenweg 139, 8210 Zedelgem, Belgium",
+    "lat": 51.13717,
+    "lng": 3.16043,
+    "city": "Zedelgem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Café Vitesse",
+    "address": "Torhoutsesteenweg 304, 8210 Zedelgem, Belgium",
+    "lat": 51.11355,
+    "lng": 3.14313,
+    "city": "Zedelgem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Consentec",
+    "address": "Kloosterstraat 18/2,, 3910 Pelt, Belgium",
+    "lat": 51.2291,
+    "lng": 5.43203,
+    "city": "Pelt",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Cycle-Passion Melsbroek",
+    "address": "Kalkoven 6, 1820 Steenokkerzeel, Belgium",
+    "lat": 50.91457,
+    "lng": 4.48896,
+    "city": "Steenokkerzeel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "De Coureur BV",
+    "address": "Alfred van Campenhoutlaan 28, 1860 Meise, Belgium",
+    "lat": 50.95871,
+    "lng": 4.3417,
+    "city": "Meise",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Emrin Cycles",
+    "address": "Spenaardstraat 35, 1880 Nieuwenrode, Belgium",
+    "lat": 50.98692,
+    "lng": 4.36874,
+    "city": "Nieuwenrode",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietscenter Luc",
+    "address": "Stationsstraat 33, 2235 Westmeerbeek, Belgium",
+    "lat": 51.05935,
+    "lng": 4.83269,
+    "city": "Westmeerbeek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Devos",
+    "address": "Posterijstraat 11, 8793 Waregem, Belgium",
+    "lat": 50.90557,
+    "lng": 3.40506,
+    "city": "Waregem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Fanu",
+    "address": "Kerkstraat 5, 8420 Wenduine, Belgium",
+    "lat": 51.30079,
+    "lng": 3.07928,
+    "city": "Wenduine",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Franky",
+    "address": "Oostendesteenweg 102, 8480 Ichtegem, Belgium",
+    "lat": 51.10777,
+    "lng": 3.02223,
+    "city": "Ichtegem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Franssens",
+    "address": "Provinciale Steenweg 65, 2627 Schelle, Belgium",
+    "lat": 51.1286,
+    "lng": 4.33779,
+    "city": "Schelle",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Geirnaert",
+    "address": "Franz Wittoucklaan 5, 9060 Zelzate, Belgium",
+    "lat": 51.19876,
+    "lng": 3.81101,
+    "city": "Zelzate",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Jan Zagers NV",
+    "address": "Bredabaan 861, 2930 Brasschaat, Belgium",
+    "lat": 51.31152,
+    "lng": 4.51227,
+    "city": "Brasschaat",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Kim BV",
+    "address": "Kerkstraat 6, 2350 Vosselaar, Belgium",
+    "lat": 51.31311,
+    "lng": 4.889,
+    "city": "Vosselaar",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Koda",
+    "address": "Kreupelstraat 8, 9870 Olsene, Belgium",
+    "lat": 50.93827,
+    "lng": 3.46215,
+    "city": "Olsene",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Kurt",
+    "address": "Kollegestraat 15, 9620 Zottegem, Belgium",
+    "lat": 50.87148,
+    "lng": 3.82149,
+    "city": "Zottegem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Soria",
+    "address": "industrieweg 12, 2330 Merksplas, Belgium",
+    "lat": 51.36504,
+    "lng": 4.84027,
+    "city": "Merksplas",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Fietsen Wim",
+    "address": "Zandvoordedorpstraat 13, 8400 Oostende, Belgium",
+    "lat": 51.20108,
+    "lng": 2.97567,
+    "city": "Oostende",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Henfi bv",
+    "address": "Herenthoutseweg 21, 2200 Herentals, Belgium",
+    "lat": 51.17333,
+    "lng": 4.83464,
+    "city": "Herentals",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "La Maison Du Velo",
+    "address": "Avenue Milcamps 235, 1030 Schaarbeek, Belgium",
+    "lat": 50.85413,
+    "lng": 4.39638,
+    "city": "Schaarbeek",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Rijwielen Smets",
+    "address": "Cogelsplein 7, 2100 Deurne, Belgium",
+    "lat": 51.21994,
+    "lng": 4.45441,
+    "city": "Deurne",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Special-e-Bikes BV",
+    "address": "Provinciebaan 362, 9620 Zottegem, Belgium",
+    "lat": 50.88599,
+    "lng": 3.76222,
+    "city": "Zottegem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "Sport Lieven BV",
+    "address": "Joos de ter Beerstlaan 17, 8740 Pittem, Belgium",
+    "lat": 50.99279,
+    "lng": 3.25927,
+    "city": "Pittem",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "VC Fietsen",
+    "address": "Leuvensesteenweg 52, 3191 Hever, Belgium",
+    "lat": 50.99122,
+    "lng": 4.5367,
+    "city": "Hever",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 7
+  },
+  {
+    "name": "2 Wielers De Causmaecker",
+    "address": "Oosteeklo Dorp 89, 9968 Oosteeklo, Belgium",
+    "lat": 51.18739,
+    "lng": 3.68181,
+    "city": "Oosteeklo",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Air Bike",
+    "address": "23 bis avenue Jean Rebier, 87700 Aixe-sur-Vienne, France",
+    "lat": 45.80095,
+    "lng": 1.14934,
+    "city": "Aixe-sur-Vienne",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "All Bikes Ludwig Wynants bvba",
+    "address": "Mechelbaan 478, 2580 Putte, Belgium",
+    "lat": 51.05412,
+    "lng": 4.62644,
+    "city": "Putte",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Ava Fietsen",
+    "address": "Minderbroedersstraat 6, 1500 Halle, Belgium",
+    "lat": 50.73513,
+    "lng": 4.23358,
+    "city": "Halle",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "bakFIETSgarage",
+    "address": "Rijmenamsesteenweg 30, 2812 Mechelen, Belgium",
+    "lat": 51.00879,
+    "lng": 4.53213,
+    "city": "Mechelen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Bakfietspaleis",
+    "address": "Bellestraat 57, 9100 Sint-Niklaas, Belgium",
+    "lat": 51.17372,
+    "lng": 4.17138,
+    "city": "Sint-Niklaas",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Bik Bikes BV",
+    "address": "Prins Albertlaan 60/61, 8400 Oostende, Belgium",
+    "lat": 51.22319,
+    "lng": 2.9415,
+    "city": "Oostende",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Bike Arena",
+    "address": "Schansstraat 12, 3850 Nieuwerkerken (Hasselt), Belgium",
+    "lat": 50.89754,
+    "lng": 5.22099,
+    "city": "Nieuwerkerken (Hasselt)",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Bike today",
+    "address": "Evence Coppéelaan 3, 3600 Genk, Belgium",
+    "lat": 50.97098,
+    "lng": 5.50092,
+    "city": "Genk",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Buyl Sport bv",
+    "address": "Kasteeldreef 211, 9120 Beveren, Belgium",
+    "lat": 51.22213,
+    "lng": 4.25296,
+    "city": "Beveren",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Cargo Link",
+    "address": "7 rue victor hugo, 59350 Saint-André-Lez-Lille, France",
+    "lat": 50.65348,
+    "lng": 3.05344,
+    "city": "Saint-André-Lez-Lille",
+    "country": "FR",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Davy's Bike Store",
+    "address": "Albertkanaalstraat 75A, 3511 Kuringen, Belgium",
+    "lat": 50.95199,
+    "lng": 5.30549,
+    "city": "Kuringen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "FD bikes",
+    "address": "Hoogstraatsebaan 15C, 2960 Sint-lenaarts, Belgium",
+    "lat": 51.3623,
+    "lng": 4.70241,
+    "city": "Sint-lenaarts",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Fietsen Andy",
+    "address": "Hoogweg 36, 9690 Kluisbergen, Belgium",
+    "lat": 50.7707,
+    "lng": 3.49275,
+    "city": "Kluisbergen",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "Fietsen Brosens BV",
+    "address": "Stevennekens 179, 2310 Rijkevorsel, Belgium",
+    "lat": 51.3294,
+    "lng": 4.77383,
+    "city": "Rijkevorsel",
+    "country": "BE",
+    "status": "active",
+    "brandsCount": 6
+  },
+  {
+    "name": "DrBeykOnline",
+    "address": "Uiterwaardenstraat 171-163, 1079 CL Amsterdam, Netherlands",
+    "lat": 52.34291,
+    "lng": 4.90124,
+    "city": "Amsterdam",
+    "country": "NL",
+    "status": "active",
+    "brandsCount": 13
+  },
+  {
+    "name": "Cycle Grenat",
+    "address": "Route des Jeunes 59, 1212 Grand-Lancy, Switzerland",
+    "lat": 46.1806,
+    "lng": 6.12928,
+    "city": "Grand-Lancy",
+    "country": "CH",
+    "status": "active",
+    "brandsCount": 7
+  }
 ]
