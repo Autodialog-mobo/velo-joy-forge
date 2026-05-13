@@ -55,7 +55,7 @@ function VelopassPro() {
 
       <section className="pro-hero">
         <div className="pro-hero-left">
-          <span className="hero-eyebrow"><span className="eyebrow-dot" />Voor fietswinkels</span>
+          <span className="hero-eyebrow"><span className="eyebrow-dot" />Word deel van een groeiende community</span>
           <h1 className="pro-hero-title">Jouw klanten blijven<br /><em>altijd jouw klanten.</em></h1>
           <p className="pro-hero-sub">Met Velopass blijft elke klant die een fiets koopt automatisch verbonden met jouw winkel — voor altijd.</p>
           <div className="hero-ctas">
