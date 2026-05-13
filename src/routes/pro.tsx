@@ -55,7 +55,7 @@ function VelopassPro() {
 
       <section className="pro-hero">
         <div className="pro-hero-left">
-          <span className="hero-eyebrow"><span className="eyebrow-dot" />Voor fietswinkels</span>
+          <span className="hero-eyebrow"><span className="eyebrow-dot" />Word deel van een groeiende community</span>
           <h1 className="pro-hero-title">Jouw klanten blijven<br /><em>altijd jouw klanten.</em></h1>
           <p className="pro-hero-sub">Met Velopass blijft elke klant die een fiets koopt automatisch verbonden met jouw winkel — voor altijd.</p>
           <div className="hero-ctas">
@@ -65,7 +65,7 @@ function VelopassPro() {
           <div className="hero-stats">
             <div><div className="stat-num">1.500<span>+</span></div><div className="stat-label">fietswinkels actief</div></div>
             <div><div className="stat-num">+150<span>K</span></div><div className="stat-label">fietsen geregistreerd</div></div>
-            <div><div className="stat-num">3</div><div className="stat-label">landen actief · Europa in aanbouw</div></div>
+            
           </div>
         </div>
         <div className="pro-hero-right">
