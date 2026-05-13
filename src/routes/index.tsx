@@ -36,6 +36,7 @@ function VelopassHome() {
           <li><a href="#voordelen">Wat je krijgt</a></li>
           <li><a href="#al-sticker">Al een sticker?</a></li>
           <li><a href="#nieuwe-sticker">Sticker bestellen</a></li>
+          <li><a href="#community">Community</a></li>
           <li><Link to="/pro" style={{ color: "var(--green-mid)" }}>↗ Voor fietswinkels</Link></li>
         </ul>
         <a href="#login" className="btn-login">
