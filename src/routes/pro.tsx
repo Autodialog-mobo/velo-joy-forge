@@ -48,6 +48,7 @@ function VelopassPro() {
           <li><a href="#pijlers">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#registreer">Registreer</a></li>
+          <li><a href="#proof">Community</a></li>
           <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)" }}>↗ velopass.com</Link></li>
         </ul>
         <a href="#registreer" className="btn-nav-cta">Registreer je fietswinkel</a>
