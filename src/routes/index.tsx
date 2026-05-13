@@ -179,7 +179,7 @@ function VelopassHome() {
             <div className="sn-tag">Pad A · Aanbevolen</div>
             <h4>Via een fietswinkel</h4>
             <p>Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft stickers in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.</p>
-            <a href="#winkels" className="btn-p">Vind een fietswinkel bij jou in de buurt</a>
+            <a href="#community" className="btn-p">Vind een fietswinkel bij jou in de buurt</a>
           </div>
           <div className="sn path-shop">
             <div className="sn-tag green">Pad B</div>
