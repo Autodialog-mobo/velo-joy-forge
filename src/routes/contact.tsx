@@ -75,7 +75,7 @@ const WA_NUMBER = "32471601573";
 function ContactPage() {
   const [sent, setSent] = useState(false);
   const [waOpen, setWaOpen] = useState(false);
-  const [waMessage, setWaMessage] = useState("Hallo Velopass, ik heb een vraag over ");
+  const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -89,13 +89,27 @@ function ContactPage() {
     setSent(true);
   };
 
-  const openWa = (prefill?: string) => {
-    setWaMessage(prefill ?? "Hallo Velopass, ik heb een vraag over ");
+  const openWa = (prefillNote?: string) => {
+    setWa({
+      name: form.name,
+      email: form.email,
+      phone: "",
+      note: prefillNote ?? form.message ?? "",
+    });
     setWaOpen(true);
   };
 
+  const canSendWa = wa.name.trim() && wa.email.trim();
+
   const sendWa = () => {
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+    if (!canSendWa) return;
+    const text =
+      `Hallo Velopass,\n\n` +
+      `Naam: ${wa.name}\n` +
+      `E-mail: ${wa.email}\n` +
+      (wa.phone.trim() ? `Telefoon: ${wa.phone}\n` : "") +
+      (wa.note.trim() ? `\n${wa.note}\n` : "");
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     setWaOpen(false);
   };
