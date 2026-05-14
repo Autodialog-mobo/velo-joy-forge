@@ -533,15 +533,18 @@ function ContactPage() {
               </a>
             </p>
           </div>
-          </div>
         </div>
       )}
 
       <style>{`
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .contact-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,31,60,0.08); border-color: rgba(46,204,138,0.4); }
+        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .wa-grid input::placeholder, .wa-grid textarea::placeholder { color: rgba(245,243,238,0.35); }
+        .wa-grid input:focus, .wa-grid textarea:focus { border-color: #2ECC8A; }
         @media (max-width: 768px) {
           .contact-cards { grid-template-columns: 1fr; }
+          .wa-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </>
