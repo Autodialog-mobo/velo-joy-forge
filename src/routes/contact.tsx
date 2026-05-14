@@ -120,6 +120,50 @@ function ContactPage() {
           </p>
         </section>
 
+        {/* WHATSAPP — primaire optie */}
+        <section style={{ padding: "8px 6vw 24px", maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
+          <a
+            href="https://wa.me/32471601573"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 12,
+              width: "100%",
+              maxWidth: 480,
+              background: "#2ECC8A",
+              color: "var(--navy)",
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 600,
+              fontSize: 17,
+              padding: "16px 32px",
+              borderRadius: 12,
+              textDecoration: "none",
+              boxShadow: "0 10px 24px rgba(46,204,138,0.25)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 14px 30px rgba(46,204,138,0.32)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 10px 24px rgba(46,204,138,0.25)"; }}
+          >
+            <MessageCircle size={22} strokeWidth={2} />
+            Chat met ons via WhatsApp
+          </a>
+          <p style={{ marginTop: 12, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>
+            Beschikbaar tijdens kantooruren · Gemiddeld antwoord binnen 2 uur
+          </p>
+        </section>
+
+        {/* DIVIDER */}
+        <section style={{ padding: "8px 6vw", maxWidth: 520, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, color: "var(--text-muted)" }}>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+            <span style={{ fontSize: 12, letterSpacing: 1, textTransform: "uppercase" }}>of</span>
+            <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
+          </div>
+        </section>
+
         {/* SNELKOPPELINGEN */}
         <section style={{ padding: "16px 6vw 40px", maxWidth: 1100, margin: "0 auto" }}>
           <div className="contact-cards">
