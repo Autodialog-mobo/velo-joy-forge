@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2 } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
@@ -42,10 +42,28 @@ export const Route = createFileRoute("/")({
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
+  const QR_STORAGE_KEY = "velopass:qr-overlay";
   const [qrX, setQrX] = useState(46);
   const [qrY, setQrY] = useState(54);
   const [qrSize, setQrSize] = useState(48);
   const [tunerOpen, setTunerOpen] = useState(false);
+  // Hydrate from localStorage on mount (avoids SSR mismatch)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(QR_STORAGE_KEY);
+      if (!raw) return;
+      const v = JSON.parse(raw);
+      if (typeof v.x === "number") setQrX(v.x);
+      if (typeof v.y === "number") setQrY(v.y);
+      if (typeof v.size === "number") setQrSize(v.size);
+    } catch {}
+  }, []);
+  // Persist on change
+  useEffect(() => {
+    try {
+      localStorage.setItem(QR_STORAGE_KEY, JSON.stringify({ x: qrX, y: qrY, size: qrSize }));
+    } catch {}
+  }, [qrX, qrY, qrSize]);
   return (
     <>
       <nav className="vp-nav">
@@ -159,6 +177,7 @@ function VelopassHome() {
                     <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
                     <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
                     <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
+                    <button type="button" className="qr-tuner-toggle" style={{ alignSelf: "flex-start" }} onClick={() => { setQrX(46); setQrY(54); setQrSize(48); try { localStorage.removeItem(QR_STORAGE_KEY); } catch {} }}>Reset</button>
                   </div>
                 )}
               </div>
