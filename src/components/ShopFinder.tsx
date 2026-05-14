@@ -10,7 +10,7 @@ export function ShopFinder() {
     return (
       <section className="shop-finder" id="community">
         <p className="eyebrow">De Velopass Community</p>
-        <h2 className="sec-title">Een gestolen fiets heeft nergens meer te gaan.</h2>
+        <h2 className="sec-title">Nergens welkom. <span style={{ color: "#2ECC8A" }}>Overal herkend.</span></h2>
         <p className="sec-sub">Kaart laden...</p>
       </section>
     );
