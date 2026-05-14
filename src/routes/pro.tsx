@@ -220,7 +220,7 @@ function VelopassPro() {
         <ul className="flinks">
           <li><a href="#">Privacy</a></li>
           <li><a href="#">Voorwaarden</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><Link to="/contact">Contact</Link></li>
           <li><a href="#">Inloggen</a></li>
         </ul>
         <div className="fswitch"><Link to="/" style={{ color: "var(--green)", textDecoration: "none" }}>↗ Voor fietsers</Link></div>
