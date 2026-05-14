@@ -284,6 +284,13 @@ function ContactPage() {
               <MessageCircle size={20} strokeWidth={2.2} />
               Verstuur via WhatsApp →
             </button>
+
+            <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "rgba(245,243,238,0.6)" }}>
+              Liever een e-mail sturen?{" "}
+              <a href="mailto:support@velopass.com" style={{ color: "#2ECC8A", textDecoration: "none", fontWeight: 500 }}>
+                support@velopass.com
+              </a>
+            </p>
           </div>
         </section>
       </main>
