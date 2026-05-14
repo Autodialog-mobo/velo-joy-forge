@@ -334,12 +334,9 @@ function ContactPage() {
                   >
                     Verstuur bericht
                   </button>
-                  <a
-                    href={`https://wa.me/32471601573?text=${encodeURIComponent(
-                      `Hallo Velopass,\n\nOnderwerp: ${form.subject}\n\n${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ""}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => openWa(`Hallo Velopass,\n\nOnderwerp: ${form.subject}\n\n${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ""}`)}
                     style={{
                       width: "100%",
                       display: "inline-flex",
@@ -353,13 +350,14 @@ function ContactPage() {
                       fontFamily: "'DM Sans', sans-serif",
                       fontWeight: 500,
                       fontSize: 15,
-                      textDecoration: "none",
+                      border: "none",
+                      cursor: "pointer",
                       boxSizing: "border-box",
                     }}
                   >
                     <MessageCircle size={18} strokeWidth={2} />
                     Verstuur via WhatsApp
-                  </a>
+                  </button>
                 </div>
               </form>
             )}
