@@ -128,7 +128,7 @@ function ClusterLayer({
 }
 
 function useCountUp(target: number, trigger: boolean, duration = 1400) {
-  const [val, setVal] = useState(0);
+  const [val, setVal] = useState(target);
   useEffect(() => {
     if (!trigger) return;
     const start = performance.now();
