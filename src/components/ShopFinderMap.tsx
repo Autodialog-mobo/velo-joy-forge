@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -18,16 +18,16 @@ type Shop = {
 };
 
 const markerSvg = (active: boolean) => {
-  const size = active ? 26 : 18;
-  const bg = active ? "#0D1F3C" : "#2ECC8A";
-  const stroke = active ? "#2ECC8A" : "#0D1F3C";
+  const size = active ? 30 : 20;
+  const bg = "#2ECC8A";
+  const stroke = "#0D1F3C";
   return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="${bg}"/><path d="M24 54 L42 72 L76 30" fill="none" stroke="${stroke}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 };
 
 const makeIcon = (active: boolean) => {
-  const size = active ? 26 : 18;
+  const size = active ? 30 : 20;
   return L.divIcon({
-    html: markerSvg(active),
+    html: `<div class="vp-pin ${active ? "vp-pin-active" : ""}">${markerSvg(active)}</div>`,
     className: "vp-marker-icon",
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
@@ -35,10 +35,10 @@ const makeIcon = (active: boolean) => {
   });
 };
 
-function FlyTo({ target }: { target: { lat: number; lng: number; key: number } | null }) {
+function FlyTo({ target }: { target: { lat: number; lng: number; zoom?: number; key: number } | null }) {
   const map = useMap();
   useEffect(() => {
-    if (target) map.flyTo([target.lat, target.lng], 14, { duration: 0.8 });
+    if (target) map.flyTo([target.lat, target.lng], target.zoom ?? 14, { duration: 0.8 });
   }, [target, map]);
   return null;
 }
@@ -76,16 +76,14 @@ function ClusterLayer({
       },
     });
 
-    // Pre-build markers once, add/remove based on viewport bounds
     const allMarkers: { i: number; marker: L.Marker; lat: number; lng: number }[] = [];
     shops.forEach((s, i) => {
       if (s.status !== "active") return;
       const m = L.marker([s.lat, s.lng], { icon: makeIcon(activeIdx === i) });
       m.on("click", () => onSelect(i));
-      m.bindPopup(
-        `<div class="sf-popup"><div class="sf-popup-name">${s.name}</div><div class="sf-popup-addr">${s.address}</div><a class="sf-popup-btn" target="_blank" rel="noreferrer" href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-          s.address,
-        )}">Routebeschrijving</a></div>`,
+      m.bindTooltip(
+        `<div class="vp-tip"><div class="vp-tip-name">${s.name}</div><div class="vp-tip-city">${s.city}</div><div class="vp-tip-tag">● Scant automatisch</div></div>`,
+        { direction: "top", offset: [0, -8], opacity: 1, className: "vp-tooltip" },
       );
       markerRefs.current[i] = m;
       allMarkers.push({ i, marker: m, lat: s.lat, lng: s.lng });
@@ -95,7 +93,7 @@ function ClusterLayer({
 
     const inCluster = new Set<number>();
     const sync = () => {
-      const bounds = map.getBounds().pad(0.25); // 25% buffer
+      const bounds = map.getBounds().pad(0.25);
       const toAdd: L.Marker[] = [];
       const toRemove: L.Marker[] = [];
       for (const { i, marker, lat, lng } of allMarkers) {
@@ -127,11 +125,42 @@ function ClusterLayer({
   return null;
 }
 
+function useCountUp(target: number, trigger: boolean, duration = 1400) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!trigger) return;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(Math.round(target * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, trigger, duration]);
+  return val;
+}
+
+function distKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
+  const R = 6371;
+  const dLat = ((b.lat - a.lat) * Math.PI) / 180;
+  const dLng = ((b.lng - a.lng) * Math.PI) / 180;
+  const x =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos((a.lat * Math.PI) / 180) * Math.cos((b.lat * Math.PI) / 180) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(x));
+}
+
 export default function ShopFinderMap() {
   const [query, setQuery] = useState("");
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  const [flyTarget, setFlyTarget] = useState<{ lat: number; lng: number; key: number } | null>(null);
+  const [flyTarget, setFlyTarget] = useState<{ lat: number; lng: number; zoom?: number; key: number } | null>(null);
+  const [inView, setInView] = useState(false);
+  const [geoStatus, setGeoStatus] = useState<"idle" | "loading" | "denied">("idle");
   const markerRefs = useRef<Record<number, L.Marker | null>>({});
+  const sectionRef = useRef<HTMLDivElement | null>(null);
 
   const shops = shopsData as Shop[];
   const filtered = useMemo(() => {
@@ -140,9 +169,7 @@ export default function ShopFinderMap() {
       .map((s, i) => ({ s, i }))
       .filter(({ s }) => s.status === "active")
       .filter(({ s }) =>
-        !q ||
-        s.name.toLowerCase().includes(q) ||
-        s.city.toLowerCase().includes(q),
+        !q || s.name.toLowerCase().includes(q) || s.city.toLowerCase().includes(q),
       );
   }, [shops, query]);
 
@@ -151,19 +178,71 @@ export default function ShopFinderMap() {
     [shops],
   );
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  const animatedCount = useCountUp(totalActive, inView);
+
   const handleSelect = (i: number) => {
     setActiveIdx(i);
     const s = shops[i];
-    setFlyTarget({ lat: s.lat, lng: s.lng, key: Date.now() });
-    setTimeout(() => markerRefs.current[i]?.openPopup(), 700);
+    setFlyTarget({ lat: s.lat, lng: s.lng, zoom: 14, key: Date.now() });
+    setTimeout(() => markerRefs.current[i]?.openTooltip(), 700);
   };
 
+  const handleGeolocate = () => {
+    if (!navigator.geolocation) return;
+    setGeoStatus("loading");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        let best = -1;
+        let bestD = Infinity;
+        shops.forEach((s, i) => {
+          if (s.status !== "active") return;
+          const d = distKm(me, s);
+          if (d < bestD) {
+            bestD = d;
+            best = i;
+          }
+        });
+        setGeoStatus("idle");
+        if (best >= 0) {
+          setActiveIdx(best);
+          setFlyTarget({ lat: me.lat, lng: me.lng, zoom: 11, key: Date.now() });
+          setTimeout(() => markerRefs.current[best]?.openTooltip(), 900);
+        }
+      },
+      () => setGeoStatus("denied"),
+      { timeout: 8000 },
+    );
+  };
+
+  const selectedShop = activeIdx != null ? shops[activeIdx] : null;
+
   return (
-    <section className="shop-finder" id="community">
+    <section className="shop-finder" id="community" ref={sectionRef}>
       <div className="sf-hero">
         <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
         <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
-        <p className="sf-subhead">Overal in de Velopass Community word je meteen verwittigd. {totalActive.toLocaleString("nl-BE")}+ fietswinkels scannen automatisch — en helpen jouw fiets terug te vinden.</p>
+        <p className="sf-subhead">
+          Overal in de Velopass Community word je meteen verwittigd.{" "}
+          <strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{animatedCount}+ fietswinkels</strong>{" "}
+          scannen automatisch — en helpen jouw fiets terug te vinden.
+        </p>
       </div>
 
       <div className="sf-split">
@@ -177,6 +256,10 @@ export default function ShopFinderMap() {
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
+          <button type="button" className="sf-geo" onClick={handleGeolocate} disabled={geoStatus === "loading"}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+            {geoStatus === "loading" ? "Locatie zoeken..." : geoStatus === "denied" ? "Locatie geweigerd" : "Vind een winkel bij jou in de buurt"}
+          </button>
           <div className="sf-list">
             {filtered.map(({ s, i }) => (
               <button
@@ -212,10 +295,24 @@ export default function ShopFinderMap() {
             <ClusterLayer
               shops={shops}
               activeIdx={activeIdx}
-              onSelect={setActiveIdx}
+              onSelect={handleSelect}
               markerRefs={markerRefs}
             />
           </MapContainer>
+
+          {selectedShop && (
+            <div className="sf-panel">
+              <button type="button" className="sf-panel-close" onClick={() => setActiveIdx(null)} aria-label="Sluit paneel">×</button>
+              <div className="sf-panel-tag">● Scant automatisch</div>
+              <h3 className="sf-panel-name">{selectedShop.name}</h3>
+              <p className="sf-panel-addr">{selectedShop.address}</p>
+              <p className="sf-panel-msg">Deze winkel scant jouw fiets automatisch wanneer je langskomt.</p>
+              <div className="sf-panel-actions">
+                <a className="sf-panel-btn primary" href="https://app.velopass.pro" target="_blank" rel="noreferrer">Bekijk in Mijn Velopass</a>
+                <a className="sf-panel-btn ghost" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedShop.address)}`}>Routebeschrijving →</a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="sf-outro">
