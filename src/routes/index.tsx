@@ -128,11 +128,14 @@ function VelopassHome() {
           <div className="sticker-visual">
             <div className="sticker-frame">
               <img src={stickerImg} alt="Velopass sticker op een fietsframe" width={1024} height={1024} />
-              <div className="sticker-hotspot">
-                <div className="hotspot-ring" />
-                <div className="hotspot-dot" />
-                <div className="hotspot-label">Scan → toegang tot alles</div>
+              <div className="scan-overlay" aria-hidden="true">
+                <span className="scan-corner tl" />
+                <span className="scan-corner tr" />
+                <span className="scan-corner bl" />
+                <span className="scan-corner br" />
+                <span className="scan-line" />
               </div>
+              <div className="scan-badge">Scan → toegang tot alles</div>
             </div>
           </div>
           <div className="sticker-content">
