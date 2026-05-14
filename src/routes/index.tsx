@@ -42,10 +42,28 @@ export const Route = createFileRoute("/")({
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
+  const QR_STORAGE_KEY = "velopass:qr-overlay";
   const [qrX, setQrX] = useState(46);
   const [qrY, setQrY] = useState(54);
   const [qrSize, setQrSize] = useState(48);
   const [tunerOpen, setTunerOpen] = useState(false);
+  // Hydrate from localStorage on mount (avoids SSR mismatch)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(QR_STORAGE_KEY);
+      if (!raw) return;
+      const v = JSON.parse(raw);
+      if (typeof v.x === "number") setQrX(v.x);
+      if (typeof v.y === "number") setQrY(v.y);
+      if (typeof v.size === "number") setQrSize(v.size);
+    } catch {}
+  }, []);
+  // Persist on change
+  useEffect(() => {
+    try {
+      localStorage.setItem(QR_STORAGE_KEY, JSON.stringify({ x: qrX, y: qrY, size: qrSize }));
+    } catch {}
+  }, [qrX, qrY, qrSize]);
   return (
     <>
       <nav className="vp-nav">
