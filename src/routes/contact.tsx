@@ -407,13 +407,15 @@ function ContactPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "var(--white)",
-              borderRadius: 16,
-              padding: "28px 28px 24px",
-              maxWidth: 480,
+              background: "#0D1F3C",
+              color: "#F5F3EE",
+              borderRadius: 18,
+              padding: "32px 32px 28px",
+              maxWidth: 640,
               width: "100%",
-              boxShadow: "0 30px 60px rgba(13,31,60,0.25)",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
               position: "relative",
+              fontFamily: "'DM Sans', sans-serif",
             }}
           >
             <button
@@ -422,85 +424,115 @@ function ContactPage() {
               aria-label="Sluiten"
               style={{
                 position: "absolute",
-                top: 14,
-                right: 14,
+                top: 18,
+                right: 18,
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
-                color: "var(--text-muted)",
+                color: "rgba(245,243,238,0.6)",
                 padding: 6,
                 display: "inline-flex",
               }}
             >
-              <X size={20} />
+              <X size={22} />
             </button>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-              <div style={{ ...iconBox, background: "rgba(46,204,138,0.15)" }}>
-                <MessageCircle size={22} strokeWidth={2} />
-              </div>
-              <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, color: "var(--navy)" }}>
-                Bericht via WhatsApp
-              </h3>
-            </div>
-
-            <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.55, marginBottom: 16 }}>
-              Pas je bericht aan en open WhatsApp om het te versturen naar +32 471 60 15 73.
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
+              Stuur ons een bericht
+            </h3>
+            <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
+              Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
             </p>
 
-            <textarea
-              rows={6}
-              value={waMessage}
-              maxLength={2000}
-              onChange={(e) => setWaMessage(e.target.value)}
-              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5, marginBottom: 16 }}
-            />
-
-            <div style={{ display: "flex", gap: 10 }}>
-              <button
-                type="button"
-                onClick={() => setWaOpen(false)}
-                style={{
-                  flex: "0 0 auto",
-                  background: "transparent",
-                  color: "var(--text-mid)",
-                  border: "1.5px solid rgba(13,31,60,0.12)",
-                  padding: "12px 18px",
-                  borderRadius: 10,
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 500,
-                  fontSize: 14,
-                  cursor: "pointer",
-                }}
-              >
-                Annuleren
-              </button>
-              <button
-                type="button"
-                onClick={sendWa}
-                disabled={!waMessage.trim()}
-                style={{
-                  flex: 1,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 10,
-                  background: "#2ECC8A",
-                  color: "var(--navy)",
-                  border: "none",
-                  padding: "12px 18px",
-                  borderRadius: 10,
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  cursor: waMessage.trim() ? "pointer" : "not-allowed",
-                  opacity: waMessage.trim() ? 1 : 0.5,
-                }}
-              >
-                <MessageCircle size={18} />
-                Open WhatsApp
-              </button>
+            <div className="wa-grid">
+              <div>
+                <label htmlFor="wa-name" style={waLabelStyle}>Naam <span style={{ color: "#2ECC8A" }}>*</span></label>
+                <input
+                  id="wa-name"
+                  type="text"
+                  required
+                  maxLength={100}
+                  value={wa.name}
+                  onChange={(e) => setWa({ ...wa, name: e.target.value })}
+                  placeholder="Jan Janssens"
+                  style={waInputStyle}
+                />
+              </div>
+              <div>
+                <label htmlFor="wa-phone" style={waLabelStyle}>Telefoon</label>
+                <input
+                  id="wa-phone"
+                  type="tel"
+                  maxLength={30}
+                  value={wa.phone}
+                  onChange={(e) => setWa({ ...wa, phone: e.target.value })}
+                  placeholder="+32 4..."
+                  style={waInputStyle}
+                />
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <label htmlFor="wa-email" style={waLabelStyle}>E-mail <span style={{ color: "#2ECC8A" }}>*</span></label>
+                <input
+                  id="wa-email"
+                  type="email"
+                  required
+                  maxLength={255}
+                  value={wa.email}
+                  onChange={(e) => setWa({ ...wa, email: e.target.value })}
+                  placeholder="jan@voorbeeld.be"
+                  style={waInputStyle}
+                />
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
+                <textarea
+                  id="wa-note"
+                  rows={4}
+                  maxLength={2000}
+                  value={wa.note}
+                  onChange={(e) => setWa({ ...wa, note: e.target.value })}
+                  placeholder="Vertel ons kort waar je vraag over gaat..."
+                  style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
+                />
+              </div>
             </div>
+
+            <button
+              type="button"
+              onClick={sendWa}
+              disabled={!canSendWa}
+              style={{
+                marginTop: 24,
+                width: "100%",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 12,
+                background: "#2ECC8A",
+                color: "#0D1F3C",
+                border: "none",
+                padding: "16px 24px",
+                borderRadius: 12,
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: 15,
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                cursor: canSendWa ? "pointer" : "not-allowed",
+                opacity: canSendWa ? 1 : 0.5,
+              }}
+            >
+              <MessageCircle size={20} strokeWidth={2.2} />
+              Verstuur via WhatsApp →
+            </button>
+
+            <p style={{ textAlign: "center", marginTop: 16, fontSize: 13, color: "rgba(245,243,238,0.6)" }}>
+              Liever een e-mail sturen?{" "}
+              <a href="mailto:support@velopass.com" style={{ color: "#F5F3EE", textDecoration: "underline" }}>
+                support@velopass.com
+              </a>
+            </p>
+          </div>
           </div>
         </div>
       )}
