@@ -298,26 +298,54 @@ function ContactPage() {
                     style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5 }}
                   />
                 </div>
-                <button
-                  type="submit"
-                  style={{
-                    width: "100%",
-                    background: "var(--navy)",
-                    color: "#fff",
-                    border: "none",
-                    padding: "14px 20px",
-                    borderRadius: 10,
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 500,
-                    fontSize: 15,
-                    cursor: "pointer",
-                    transition: "background 0.2s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--navy-mid)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "var(--navy)")}
-                >
-                  Verstuur bericht
-                </button>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <button
+                    type="submit"
+                    style={{
+                      width: "100%",
+                      background: "var(--navy)",
+                      color: "#fff",
+                      border: "none",
+                      padding: "14px 20px",
+                      borderRadius: 10,
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: 15,
+                      cursor: "pointer",
+                      transition: "background 0.2s",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--navy-mid)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "var(--navy)")}
+                  >
+                    Verstuur bericht
+                  </button>
+                  <a
+                    href={`https://wa.me/32471601573?text=${encodeURIComponent(
+                      `Hallo Velopass,\n\nOnderwerp: ${form.subject}\n\n${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ""}`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      width: "100%",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 10,
+                      background: "#2ECC8A",
+                      color: "var(--navy)",
+                      padding: "14px 20px",
+                      borderRadius: 10,
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 500,
+                      fontSize: 15,
+                      textDecoration: "none",
+                      boxSizing: "border-box",
+                    }}
+                  >
+                    <MessageCircle size={18} strokeWidth={2} />
+                    Verstuur via WhatsApp
+                  </a>
+                </div>
               </form>
             )}
           </div>
