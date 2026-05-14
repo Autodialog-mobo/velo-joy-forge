@@ -41,6 +41,7 @@ export const Route = createFileRoute("/")({
 
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
+  const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   return (
     <>
       <nav className="vp-nav">
