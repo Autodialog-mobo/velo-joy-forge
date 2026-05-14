@@ -9,9 +9,12 @@ export function ShopFinder() {
   if (!mounted) {
     return (
       <section className="shop-finder" id="community">
-        <p className="eyebrow">De Velopass Community</p>
-        <h2 className="sec-title">Nergens welkom. <span style={{ color: "#2ECC8A" }}>Overal herkend.</span></h2>
-        <p className="sec-sub">Kaart laden...</p>
+        <div className="sf-hero">
+          <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
+          <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
+          <p className="sf-subhead">Overal in de Velopass Community word je meteen verwittigd. 200+ fietswinkels scannen automatisch — en helpen jouw fiets terug te vinden.</p>
+        </div>
+        <p className="sec-sub" style={{ marginTop: 32 }}>Kaart laden...</p>
       </section>
     );
   }

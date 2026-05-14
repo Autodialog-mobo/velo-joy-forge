@@ -160,9 +160,11 @@ export default function ShopFinderMap() {
 
   return (
     <section className="shop-finder" id="community">
-      <p className="eyebrow">De Velopass Community</p>
-      <h2 className="sec-title">Nergens welkom. <span style={{ color: "#2ECC8A" }}>Overal herkend.</span></h2>
-      <p className="sec-sub">Elke aangesloten fietswinkel scant automatisch. Wordt jouw fiets ergens gescand? Dan word jij meteen verwittigd. {totalActive.toLocaleString("nl-BE")} schakels in de Velopass Community — en het groeit elke dag.</p>
+      <div className="sf-hero">
+        <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
+        <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
+        <p className="sf-subhead">Overal in de Velopass Community word je meteen verwittigd. {totalActive.toLocaleString("nl-BE")}+ fietswinkels scannen automatisch — en helpen jouw fiets terug te vinden.</p>
+      </div>
 
       <div className="sf-split">
         <aside className="sf-list-wrap">
@@ -215,6 +217,10 @@ export default function ShopFinderMap() {
             />
           </MapContainer>
         </div>
+      </div>
+      <div className="sf-outro">
+        <p className="sf-outro-line">Hoe groter de community, hoe veiliger jouw fiets. <em>En hij groeit elke dag.</em></p>
+        <a href="#nieuwe-sticker" className="sf-cta">Word deel van de community</a>
       </div>
     </section>
   );
