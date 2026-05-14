@@ -240,8 +240,11 @@ function VelopassHome() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 36 }}>
-          <a href="#" className="btn-p">Overdracht starten</a>
+        <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <button type="button" onClick={() => setScanOpen(true)} className="btn-p" style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <QrCode size={16} strokeWidth={2} /> Scan de sticker
+          </button>
+          <a href="#" className="btn-s">Code handmatig invoeren →</a>
         </div>
       </section>
 
