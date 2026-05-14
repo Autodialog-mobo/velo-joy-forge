@@ -218,6 +218,10 @@ export default function ShopFinderMap() {
           </MapContainer>
         </div>
       </div>
+      <div className="sf-outro">
+        <p className="sf-outro-line">Hoe groter de community, hoe veiliger jouw fiets. <em>En hij groeit elke dag.</em></p>
+        <a href="#nieuwe-sticker" className="sf-cta">Word deel van de community</a>
+      </div>
     </section>
   );
 }
