@@ -372,6 +372,125 @@ function ContactPage() {
         </section>
       </main>
 
+      {/* WHATSAPP MODAL */}
+      {waOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setWaOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(13,31,60,0.55)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 20,
+            zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "var(--white)",
+              borderRadius: 16,
+              padding: "28px 28px 24px",
+              maxWidth: 480,
+              width: "100%",
+              boxShadow: "0 30px 60px rgba(13,31,60,0.25)",
+              position: "relative",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setWaOpen(false)}
+              aria-label="Sluiten"
+              style={{
+                position: "absolute",
+                top: 14,
+                right: 14,
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                color: "var(--text-muted)",
+                padding: 6,
+                display: "inline-flex",
+              }}
+            >
+              <X size={20} />
+            </button>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+              <div style={{ ...iconBox, background: "rgba(46,204,138,0.15)" }}>
+                <MessageCircle size={22} strokeWidth={2} />
+              </div>
+              <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, color: "var(--navy)" }}>
+                Bericht via WhatsApp
+              </h3>
+            </div>
+
+            <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.55, marginBottom: 16 }}>
+              Pas je bericht aan en open WhatsApp om het te versturen naar +32 471 60 15 73.
+            </p>
+
+            <textarea
+              rows={6}
+              value={waMessage}
+              maxLength={2000}
+              onChange={(e) => setWaMessage(e.target.value)}
+              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5, marginBottom: 16 }}
+            />
+
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                type="button"
+                onClick={() => setWaOpen(false)}
+                style={{
+                  flex: "0 0 auto",
+                  background: "transparent",
+                  color: "var(--text-mid)",
+                  border: "1.5px solid rgba(13,31,60,0.12)",
+                  padding: "12px 18px",
+                  borderRadius: 10,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  fontSize: 14,
+                  cursor: "pointer",
+                }}
+              >
+                Annuleren
+              </button>
+              <button
+                type="button"
+                onClick={sendWa}
+                disabled={!waMessage.trim()}
+                style={{
+                  flex: 1,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 10,
+                  background: "#2ECC8A",
+                  color: "var(--navy)",
+                  border: "none",
+                  padding: "12px 18px",
+                  borderRadius: 10,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 600,
+                  fontSize: 15,
+                  cursor: waMessage.trim() ? "pointer" : "not-allowed",
+                  opacity: waMessage.trim() ? 1 : 0.5,
+                }}
+              >
+                <MessageCircle size={18} />
+                Open WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <style>{`
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .contact-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,31,60,0.08); border-color: rgba(46,204,138,0.4); }
