@@ -300,7 +300,6 @@ function ContactPage() {
             <button
               type="button"
               onClick={sendWa}
-              disabled={!canSendWa}
               style={{
                 marginTop: 24,
                 width: "100%",
@@ -318,8 +317,7 @@ function ContactPage() {
                 fontSize: 15,
                 letterSpacing: "1.5px",
                 textTransform: "uppercase",
-                cursor: canSendWa ? "pointer" : "not-allowed",
-                opacity: canSendWa ? 1 : 0.5,
+                cursor: "pointer",
               }}
             >
               <MessageCircle size={20} strokeWidth={2.2} />
