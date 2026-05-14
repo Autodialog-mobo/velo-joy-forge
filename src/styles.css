@@ -417,7 +417,9 @@ button { font-family: inherit; }
   .sticker-section { padding: 64px 6vw; }
   .sticker-grid { gap: 36px; }
   .sticker-frame { box-shadow: 0 18px 36px rgba(13,31,60,0.12); border-radius: 16px; }
-  .sticker-title { font-size: clamp(26px, 8vw, 34px); letter-spacing: -0.5px; line-height: 1.15; gap: 2px; margin-bottom: 12px; text-wrap: balance; }
+  .sticker-title { font-size: clamp(26px, 7.4vw, 34px); line-height: 1.12; gap: 6px; margin-bottom: 14px; text-wrap: balance; letter-spacing: -0.4px; }
+  .sticker-title .st-line-1 { line-height: 1.12; letter-spacing: -0.3px; }
+  .sticker-title .st-line-2 { line-height: 1.08; letter-spacing: -0.6px; }
   .sticker-content .sec-sub { font-size: 15px; line-height: 1.55; text-wrap: pretty; }
   .sticker-feats { gap: 22px; margin-top: 20px; }
   .sticker-feat { gap: 14px; }
