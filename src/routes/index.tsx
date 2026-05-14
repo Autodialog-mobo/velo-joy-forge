@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound } from "lucide-react";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
+import shopsData from "@/data/shops.json";
 
 const pathIconBox: React.CSSProperties = {
   width: 48,
@@ -40,6 +41,7 @@ export const Route = createFileRoute("/")({
 
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
+  const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   return (
     <>
       <nav className="vp-nav">
@@ -323,9 +325,9 @@ function VelopassHome() {
           <div className="why-card">
             <div className="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg></div>
             <h3>Beschermd door een netwerk</h3>
-            <p>Je rijdt nooit alleen. Bij diefstal helpt de hele Velopass-community mee — iedereen die de QR scant ziet dat jouw fiets gezocht wordt en kan anoniem een seintje geven.</p>
+            <p>Je rijdt nooit alleen. Bij diefstal helpt de hele Velopass-community mee — iedereen die de QR scant ziet dat jouw fiets gezocht wordt en kan anoniem of op naam een seintje geven.</p>
             <div className="why-quote">
-              <cite>— De Velopass-community · 1.500+ fietswinkels</cite>
+              <cite>— De Velopass-community · {activeShopsCount}+ fietswinkels</cite>
             </div>
           </div>
         </div>
