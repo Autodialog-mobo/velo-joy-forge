@@ -106,7 +106,7 @@ function VelopassHome() {
                 <path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
             </div>
-            <div className="path-title">Zet hem op jouw naam</div>
+            <div className="path-title">Het paspoort gaat mee. Op jouw naam.</div>
             <p className="path-desc">Tweedehands fiets gekocht met een bestaande Velopass sticker? Registreer hem op jouw naam — het paspoort gaat gewoon mee.</p>
             <span className="path-cta">Overdracht starten →</span>
           </a>
