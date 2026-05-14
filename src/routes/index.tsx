@@ -166,7 +166,7 @@ function VelopassHome() {
               </div>
               <div className="scan-badge">Scan → toegang tot alles</div>
             </div>
-            {import.meta.env.DEV && (
+            {import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune") && (
               <div className="qr-tuner">
                 <button type="button" className="qr-tuner-toggle" onClick={() => setTunerOpen((o) => !o)}>
                   {tunerOpen ? "Hide" : "Tune"} QR overlay
