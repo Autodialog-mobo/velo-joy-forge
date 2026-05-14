@@ -154,9 +154,19 @@ function ContactPage() {
           <span className="logo-text">velopass</span>
         </Link>
         <ul className="nav-links">
+          <li><Link to="/" hash="voordelen">Wat je krijgt</Link></li>
+          <li><Link to="/" hash="al-sticker">Al een sticker?</Link></li>
+          <li><Link to="/" hash="nieuwe-sticker">Sticker bestellen</Link></li>
+          <li><Link to="/" hash="community">Community</Link></li>
           <li><Link to="/pro" style={{ color: "var(--green-mid)" }}>↗ Voor fietswinkels</Link></li>
         </ul>
-        <Link to="/" className="btn-login">← Terug</Link>
+        <a href="#login" className="btn-login">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          Inloggen
+        </a>
       </nav>
 
       <main style={{ background: "var(--bg)", paddingTop: 64, minHeight: "100vh" }}>
