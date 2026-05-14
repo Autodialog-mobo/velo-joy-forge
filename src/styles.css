@@ -332,8 +332,34 @@ button { font-family: inherit; }
 .sf-foot { position: sticky; bottom: 0; display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--white); border-top: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-muted); }
 .sf-foot strong { color: var(--navy); font-weight: 600; }
 .sf-foot-mark { display: inline-flex; }
-.sf-map { height: 100%; min-height: 0; }
+.sf-map { height: 100%; min-height: 0; position: relative; }
 .sf-map-loading { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); font-family: 'DM Sans', sans-serif; }
+.vp-pin { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.vp-pin-active::before { content: ""; position: absolute; inset: -10px; border-radius: 50%; background: rgba(46,204,138,0.45); animation: vp-pulse 1.6s ease-out infinite; z-index: -1; }
+@keyframes vp-pulse { 0% { transform: scale(0.6); opacity: 0.7; } 100% { transform: scale(2.2); opacity: 0; } }
+.vp-tooltip { background: #0D1F3C !important; color: #fff !important; border: none !important; border-radius: 10px !important; padding: 10px 12px !important; box-shadow: 0 8px 24px rgba(13,31,60,0.25) !important; font-family: 'DM Sans', sans-serif !important; }
+.vp-tooltip::before { border-top-color: #0D1F3C !important; }
+.vp-tip-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+.vp-tip-city { font-size: 11px; opacity: 0.7; margin-bottom: 6px; }
+.vp-tip-tag { font-size: 11px; color: #2ECC8A; font-weight: 600; }
+.sf-geo { display: flex; align-items: center; gap: 8px; margin: 10px 14px; padding: 10px 12px; background: var(--green-pale); color: var(--navy); border: 1px solid rgba(46,204,138,0.35); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.15s, transform 0.15s; }
+.sf-geo:hover:not(:disabled) { background: #d6f5e6; transform: translateY(-1px); }
+.sf-geo:disabled { opacity: 0.6; cursor: wait; }
+.sf-panel { position: absolute; top: 16px; right: 16px; width: 320px; max-width: calc(100% - 32px); background: var(--white); border-radius: 14px; box-shadow: 0 16px 40px rgba(13,31,60,0.18); padding: 22px; z-index: 1000; animation: sf-panel-in 0.28s ease-out; }
+@keyframes sf-panel-in { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
+.sf-panel-close { position: absolute; top: 10px; right: 12px; background: transparent; border: none; font-size: 24px; line-height: 1; color: var(--text-muted); cursor: pointer; padding: 4px 8px; }
+.sf-panel-close:hover { color: var(--navy); }
+.sf-panel-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; color: #2ECC8A; margin-bottom: 8px; letter-spacing: 0.04em; }
+.sf-panel-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 19px; color: var(--navy); margin-bottom: 6px; line-height: 1.25; }
+.sf-panel-addr { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text-muted); margin-bottom: 14px; }
+.sf-panel-msg { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--navy); background: var(--green-pale); padding: 10px 12px; border-radius: 8px; margin-bottom: 16px; line-height: 1.5; }
+.sf-panel-actions { display: flex; flex-direction: column; gap: 8px; }
+.sf-panel-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; text-decoration: none; transition: transform 0.15s, background 0.15s; }
+.sf-panel-btn.primary { background: #2ECC8A; color: #0D1F3C; }
+.sf-panel-btn.primary:hover { background: #28b87a; transform: translateY(-1px); }
+.sf-panel-btn.ghost { background: transparent; color: var(--navy); border: 1px solid var(--border); }
+.sf-panel-btn.ghost:hover { background: var(--bg); }
+@media (max-width: 768px) { .sf-panel { top: auto; right: 8px; left: 8px; bottom: 8px; width: auto; } }
 .vp-marker-icon { background: transparent !important; border: none !important; }
 .vp-cluster-wrap { background: transparent !important; border: none !important; }
 .vp-cluster {
