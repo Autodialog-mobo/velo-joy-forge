@@ -70,6 +70,29 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
 };
 
+const waLabelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: 11,
+  fontWeight: 500,
+  letterSpacing: 1.2,
+  textTransform: "uppercase",
+  color: "rgba(245,243,238,0.55)",
+  marginBottom: 8,
+};
+
+const waInputStyle: React.CSSProperties = {
+  width: "100%",
+  background: "transparent",
+  border: "1.5px solid rgba(245,243,238,0.18)",
+  borderRadius: 10,
+  padding: "12px 14px",
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 15,
+  color: "#F5F3EE",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
 const WA_NUMBER = "32471601573";
 
 function ContactPage() {
