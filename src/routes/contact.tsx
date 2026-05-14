@@ -70,8 +70,12 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
 };
 
+const WA_NUMBER = "32471601573";
+
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [waOpen, setWaOpen] = useState(false);
+  const [waMessage, setWaMessage] = useState("Hallo Velopass, ik heb een vraag over ");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -83,6 +87,17 @@ function ContactPage() {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) return;
     setSent(true);
+  };
+
+  const openWa = (prefill?: string) => {
+    setWaMessage(prefill ?? "Hallo Velopass, ik heb een vraag over ");
+    setWaOpen(true);
+  };
+
+  const sendWa = () => {
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setWaOpen(false);
   };
 
   return (
