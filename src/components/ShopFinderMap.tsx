@@ -19,14 +19,14 @@ type Shop = {
 };
 
 const markerSvg = (active: boolean) => {
-  const size = active ? 30 : 20;
-  const bg = "#2ECC8A";
-  const stroke = "#0D1F3C";
+  const size = active ? 36 : 28;
+  const bg = active ? "#0D1F3C" : "#2ECC8A";
+  const stroke = active ? "#2ECC8A" : "#0D1F3C";
   return `<svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="22" fill="${bg}"/><path d="M24 54 L42 72 L76 30" fill="none" stroke="${stroke}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 };
 
 const makeIcon = (active: boolean) => {
-  const size = active ? 30 : 20;
+  const size = active ? 36 : 28;
   return L.divIcon({
     html: `<div class="vp-pin ${active ? "vp-pin-active" : ""}">${markerSvg(active)}</div>`,
     className: "vp-marker-icon",
@@ -308,7 +308,7 @@ export default function ShopFinderMap() {
       </div>
       <div className="sf-outro">
         <p className="sf-outro-line">Hoe groter de community, hoe veiliger jouw fiets. <em>En hij groeit elke dag.</em></p>
-        <a href="#nieuwe-sticker" className="sf-cta">Word deel van de community</a>
+        <a href="#nieuwe-sticker" className="sf-cta">Nog geen Velopass? Registreer je fiets →</a>
       </div>
     </section>
   );
