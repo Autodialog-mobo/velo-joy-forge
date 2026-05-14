@@ -256,7 +256,7 @@ export default function ShopFinderMap() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A7090" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
             <input
               type="text"
-              placeholder="Zoek op stad of naam..."
+              placeholder="Zoek op stad, winkel of fietsmerk..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
