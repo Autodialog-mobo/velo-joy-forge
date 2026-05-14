@@ -114,19 +114,11 @@ export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }
           <h3 className="sf-panel-name">{shop.name}</h3>
           <p className="sf-panel-addr">{shop.address}</p>
           <p className="sf-panel-msg">
-            Deze winkel scant jouw fiets automatisch wanneer je langskomt.
+            Deze winkel maakt deel uit van de Velopass Community en scant automatisch.
           </p>
           <div className="sf-panel-actions">
             <a
               className="sf-panel-btn primary"
-              href="https://app.velopass.pro"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Bekijk in Mijn Velopass
-            </a>
-            <a
-              className="sf-panel-btn ghost"
               target="_blank"
               rel="noreferrer"
               href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(shop.address)}`}
