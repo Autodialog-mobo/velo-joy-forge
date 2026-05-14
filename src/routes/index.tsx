@@ -39,6 +39,7 @@ export const Route = createFileRoute("/")({
 });
 
 function VelopassHome() {
+  const [scanOpen, setScanOpen] = useState(false);
   return (
     <>
       <nav className="vp-nav">
