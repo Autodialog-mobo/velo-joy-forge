@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Store, Package, QrCode, ArrowRightLeft } from "lucide-react";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
+import { QrScanDialog } from "@/components/QrScanDialog";
 
 const pathIconBox: React.CSSProperties = {
   width: 48,
@@ -37,6 +39,7 @@ export const Route = createFileRoute("/")({
 });
 
 function VelopassHome() {
+  const [scanOpen, setScanOpen] = useState(false);
   return (
     <>
       <nav className="vp-nav">
@@ -237,8 +240,11 @@ function VelopassHome() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 36 }}>
-          <a href="#" className="btn-p">Overdracht starten</a>
+        <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <button type="button" onClick={() => setScanOpen(true)} className="btn-p" style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <QrCode size={16} strokeWidth={2} /> Scan de sticker
+          </button>
+          <a href="#" className="btn-s">Code handmatig invoeren →</a>
         </div>
       </section>
 
@@ -375,6 +381,8 @@ function VelopassHome() {
         <div className="fpro"><Link to="/pro" style={{ color: "var(--green)", textDecoration: "none" }}>↗ velopass.pro — voor fietswinkels</Link></div>
         <div className="fcopy">© 2026 Velopass</div>
       </footer>
+
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
     </>
   );
 }
