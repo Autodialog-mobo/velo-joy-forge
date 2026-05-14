@@ -196,7 +196,7 @@ function VelopassHome() {
       <section className="flow-new" id="nieuwe-sticker">
         <p className="eyebrow">Nog geen sticker</p>
         <h2 className="sec-title">Bestel een Velopass sticker</h2>
-        <p className="sec-sub">Kies de weg die bij je past. Eén sticker activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
+        <p className="sec-sub">Eén sticker activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
