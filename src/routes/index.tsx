@@ -213,7 +213,7 @@ function VelopassHome() {
         </div>
         <div className="path-final">
           <div className="path-final-arrow">
-            <VelopassMark size={18} />
+            <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} />
           </div>
           <div>
             <h4>Altijd op de fiets. Alles geregeld.</h4>
