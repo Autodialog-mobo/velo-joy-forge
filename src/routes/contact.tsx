@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HelpCircle, Package, ScanLine, MessageCircle } from "lucide-react";
+import { z } from "zod";
+import { toast } from "sonner";
 import { VelopassMark } from "@/components/VelopassMark";
+
+const waSchema = z.object({
+  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100, { message: "Naam mag maximaal 100 tekens zijn." }),
+  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
+  phone: z.string().trim().max(30).optional(),
+  note: z.string().trim().max(2000).optional(),
+});
+
+type WaErrors = Partial<Record<"name" | "email", string>>;
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -97,17 +108,33 @@ const SUGGESTIONS = [
 
 function ContactPage() {
   const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
-
-  const canSendWa = wa.name.trim() && wa.email.trim();
+  const [errors, setErrors] = useState<WaErrors>({});
 
   const sendWa = () => {
-    if (!canSendWa) return;
+    const result = waSchema.safeParse(wa);
+    if (!result.success) {
+      const fieldErrors: WaErrors = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as keyof WaErrors;
+        if ((key === "name" || key === "email") && !fieldErrors[key]) {
+          fieldErrors[key] = issue.message;
+        }
+      }
+      setErrors(fieldErrors);
+      const first = result.error.issues[0]?.message ?? "Controleer het formulier.";
+      toast.error(first);
+      const focusId = fieldErrors.name ? "wa-name" : fieldErrors.email ? "wa-email" : null;
+      if (focusId) document.getElementById(focusId)?.focus();
+      return;
+    }
+    setErrors({});
+    const data = result.data;
     const text =
       `Hallo Velopass,\n\n` +
-      `Naam: ${wa.name}\n` +
-      `E-mail: ${wa.email}\n` +
-      (wa.phone.trim() ? `Telefoon: ${wa.phone}\n` : "") +
-      (wa.note.trim() ? `\n${wa.note}\n` : "");
+      `Naam: ${data.name}\n` +
+      `E-mail: ${data.email}\n` +
+      (data.phone ? `Telefoon: ${data.phone}\n` : "") +
+      (data.note ? `\n${data.note}\n` : "");
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -212,10 +239,17 @@ function ContactPage() {
                   required
                   maxLength={100}
                   value={wa.name}
-                  onChange={(e) => setWa({ ...wa, name: e.target.value })}
+                  onChange={(e) => {
+                    setWa({ ...wa, name: e.target.value });
+                    if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
+                  }}
                   placeholder="Jan Janssens"
-                  style={waInputStyle}
+                  aria-invalid={!!errors.name}
+                  style={{ ...waInputStyle, borderColor: errors.name ? "#ff6b6b" : waInputStyle.border?.toString().includes("rgba") ? undefined : undefined }}
                 />
+                {errors.name && (
+                  <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.name}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="wa-phone" style={waLabelStyle}>Telefoon</label>
@@ -237,10 +271,17 @@ function ContactPage() {
                   required
                   maxLength={255}
                   value={wa.email}
-                  onChange={(e) => setWa({ ...wa, email: e.target.value })}
+                  onChange={(e) => {
+                    setWa({ ...wa, email: e.target.value });
+                    if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+                  }}
                   placeholder="jan@voorbeeld.be"
+                  aria-invalid={!!errors.email}
                   style={waInputStyle}
                 />
+                {errors.email && (
+                  <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.email}</p>
+                )}
               </div>
               <div style={{ gridColumn: "1 / -1" }}>
                 <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
@@ -259,7 +300,6 @@ function ContactPage() {
             <button
               type="button"
               onClick={sendWa}
-              disabled={!canSendWa}
               style={{
                 marginTop: 24,
                 width: "100%",
@@ -277,8 +317,7 @@ function ContactPage() {
                 fontSize: 15,
                 letterSpacing: "1.5px",
                 textTransform: "uppercase",
-                cursor: canSendWa ? "pointer" : "not-allowed",
-                opacity: canSendWa ? 1 : 0.5,
+                cursor: "pointer",
               }}
             >
               <MessageCircle size={20} strokeWidth={2.2} />
