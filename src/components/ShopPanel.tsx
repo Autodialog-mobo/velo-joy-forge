@@ -131,7 +131,7 @@ export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }
               </div>
             </div>
           )}
-          <div className="sf-panel-actions">
+          <div className="sf-panel-actions" style={{ marginTop: 24 }}>
             <a
               className="sf-panel-btn primary"
               target="_blank"
