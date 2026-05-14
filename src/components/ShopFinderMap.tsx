@@ -244,9 +244,7 @@ export default function ShopFinderMap() {
         <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
         <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
         <p className="sf-subhead">
-          Overal in de Velopass Community word je meteen verwittigd.<br />
-          <strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{animatedCount}+ fietswinkels</strong> scannen automatisch via hun kassasysteem of app.<br />
-          Ook politie en andere fietsers kunnen de QR-sticker scannen en jou direct een seintje geven — anoniem of met naam.
+          <strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{animatedCount}+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw sticker? Dan krijg jij meteen een seintje.
         </p>
       </div>
 
