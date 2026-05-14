@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Store, Package } from "lucide-react";
+import { Store, Package, QrCode, ArrowRightLeft, Bike } from "lucide-react";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
