@@ -220,7 +220,7 @@ function VelopassHome() {
       {/* PAD 3 */}
       <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
         <p className="eyebrow">Tweedehands fiets met sticker</p>
-        <h2 className="sec-title">Het paspoort gaat mee. Op jouw naam.</h2>
+        <h2 className="sec-title">Het paspoort gaat mee. <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>Op jouw naam.</em></h2>
         <p className="sec-sub">Heb je een tweedehands fiets gekocht met een bestaande Velopass-sticker? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.</p>
         <div className="steps-flow">
           {[
