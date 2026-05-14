@@ -4,6 +4,7 @@ type Shop = {
   name: string;
   address: string;
   city: string;
+  brands?: string[];
 };
 
 export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }) {
