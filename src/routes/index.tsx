@@ -177,6 +177,7 @@ function VelopassHome() {
                     <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
                     <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
                     <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
+                    <button type="button" className="qr-tuner-toggle" style={{ alignSelf: "flex-start" }} onClick={() => { setQrX(46); setQrY(54); setQrSize(48); try { localStorage.removeItem(QR_STORAGE_KEY); } catch {} }}>Reset</button>
                   </div>
                 )}
               </div>
