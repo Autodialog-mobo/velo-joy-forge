@@ -108,17 +108,33 @@ const SUGGESTIONS = [
 
 function ContactPage() {
   const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
-
-  const canSendWa = wa.name.trim() && wa.email.trim();
+  const [errors, setErrors] = useState<WaErrors>({});
 
   const sendWa = () => {
-    if (!canSendWa) return;
+    const result = waSchema.safeParse(wa);
+    if (!result.success) {
+      const fieldErrors: WaErrors = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as keyof WaErrors;
+        if ((key === "name" || key === "email") && !fieldErrors[key]) {
+          fieldErrors[key] = issue.message;
+        }
+      }
+      setErrors(fieldErrors);
+      const first = result.error.issues[0]?.message ?? "Controleer het formulier.";
+      toast.error(first);
+      const focusId = fieldErrors.name ? "wa-name" : fieldErrors.email ? "wa-email" : null;
+      if (focusId) document.getElementById(focusId)?.focus();
+      return;
+    }
+    setErrors({});
+    const data = result.data;
     const text =
       `Hallo Velopass,\n\n` +
-      `Naam: ${wa.name}\n` +
-      `E-mail: ${wa.email}\n` +
-      (wa.phone.trim() ? `Telefoon: ${wa.phone}\n` : "") +
-      (wa.note.trim() ? `\n${wa.note}\n` : "");
+      `Naam: ${data.name}\n` +
+      `E-mail: ${data.email}\n` +
+      (data.phone ? `Telefoon: ${data.phone}\n` : "") +
+      (data.note ? `\n${data.note}\n` : "");
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
