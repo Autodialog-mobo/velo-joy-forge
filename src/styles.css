@@ -128,7 +128,7 @@ button { font-family: inherit; }
 .sticker-hotspot { position: absolute; top: 56%; left: 46%; transform: translate(-50%,-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .hotspot-ring { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--green); animation: hotspot-pulse 2s infinite; position: absolute; }
 .hotspot-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--green); border: 2.5px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-.hotspot-label { background: var(--navy); color: #fff; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 100px; white-space: nowrap; margin-top: 24px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.hotspot-label { background: var(--navy); color: #fff; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 100px; white-space: nowrap; margin-top: 96px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 @keyframes hotspot-pulse { 0%{transform:scale(1);opacity:0.8} 50%{transform:scale(1.6);opacity:0.2} 100%{transform:scale(1);opacity:0.8} }
 .sticker-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 4px; }
 .sticker-title .st-line-1 { font-weight: 700; color: var(--navy); }
