@@ -393,8 +393,8 @@ button { font-family: inherit; }
 
 @media (max-width: 768px) {
   .sf-split { grid-template-columns: 1fr; height: auto; }
-  .sf-map { height: 300px; order: -1; }
-  .sf-list-wrap { border-right: none; border-top: 1px solid var(--border); height: 400px; }
+  .sf-map { height: 400px; }
+  .sf-list-wrap { border-right: none; border-bottom: 1px solid var(--border); height: 300px; }
 }
 
 @media (max-width: 900px) {
