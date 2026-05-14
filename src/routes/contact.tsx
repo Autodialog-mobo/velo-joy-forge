@@ -137,10 +137,9 @@ function ContactPage() {
 
         {/* WHATSAPP — primaire optie */}
         <section style={{ padding: "8px 6vw 24px", maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
-          <a
-            href="https://wa.me/32471601573"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => openWa("Hallo Velopass, ik heb een vraag over ")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -155,7 +154,8 @@ function ContactPage() {
               fontSize: 17,
               padding: "16px 32px",
               borderRadius: 12,
-              textDecoration: "none",
+              border: "none",
+              cursor: "pointer",
               boxShadow: "0 10px 24px rgba(46,204,138,0.25)",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
@@ -164,7 +164,7 @@ function ContactPage() {
           >
             <MessageCircle size={22} strokeWidth={2} />
             Chat met ons via WhatsApp
-          </a>
+          </button>
           <p style={{ marginTop: 12, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>
             Beschikbaar tijdens kantooruren · Gemiddeld antwoord binnen 2 uur
           </p>
