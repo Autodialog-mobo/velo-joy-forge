@@ -4,6 +4,7 @@ type Shop = {
   name: string;
   address: string;
   city: string;
+  brands?: string[];
 };
 
 export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }) {
@@ -116,6 +117,20 @@ export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }
           <p className="sf-panel-msg">
             Deze winkel maakt deel uit van de Velopass Community en scant automatisch.
           </p>
+          {shop.brands && shop.brands.length > 0 && (
+            <div style={{ marginTop: 14 }}>
+              <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5A7090", marginBottom: 8 }}>
+                Merken
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                {shop.brands.map((b) => (
+                  <span key={b} style={{ fontSize: 12, padding: "4px 10px", borderRadius: 999, background: "#F5F3EE", color: "#0D1F3C", border: "1px solid rgba(13,31,60,0.08)" }}>
+                    {b}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="sf-panel-actions">
             <a
               className="sf-panel-btn primary"
