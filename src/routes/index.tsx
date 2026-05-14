@@ -42,6 +42,10 @@ export const Route = createFileRoute("/")({
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
+  const [qrX, setQrX] = useState(46);
+  const [qrY, setQrY] = useState(54);
+  const [qrSize, setQrSize] = useState(48);
+  const [tunerOpen, setTunerOpen] = useState(false);
   return (
     <>
       <nav className="vp-nav">
@@ -129,10 +133,9 @@ function VelopassHome() {
             <div
               className="sticker-frame"
               style={{
-                // Tune these to align the overlay with the QR in the image (values in % of the frame).
-                ['--qr-x' as any]: '46%',
-                ['--qr-y' as any]: '54%',
-                ['--qr-size' as any]: '48%',
+                ['--qr-x' as any]: `${qrX}%`,
+                ['--qr-y' as any]: `${qrY}%`,
+                ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
               <img src={stickerImg} alt="Velopass sticker op een fietsframe" width={1024} height={1024} />
@@ -145,6 +148,21 @@ function VelopassHome() {
               </div>
               <div className="scan-badge">Scan → toegang tot alles</div>
             </div>
+            {import.meta.env.DEV && (
+              <div className="qr-tuner">
+                <button type="button" className="qr-tuner-toggle" onClick={() => setTunerOpen((o) => !o)}>
+                  {tunerOpen ? "Hide" : "Tune"} QR overlay
+                </button>
+                {tunerOpen && (
+                  <div className="qr-tuner-panel">
+                    <label>X <span>{qrX}%</span><input type="range" min={0} max={100} step={0.5} value={qrX} onChange={(e) => setQrX(parseFloat(e.target.value))} /></label>
+                    <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
+                    <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
+                    <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="sticker-content">
             <p className="eyebrow">De Velopass sticker</p>
