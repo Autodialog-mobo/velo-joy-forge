@@ -213,7 +213,7 @@ function VelopassHome() {
         </div>
         <div className="path-final">
           <div className="path-final-arrow">
-            <svg width="14" height="14" viewBox="0 0 10 10" fill="none"><path d="M3 5h4M5 3l2 2-2 2" stroke="#0D1F3C" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <VelopassMark size={18} />
           </div>
           <div>
             <h4>Altijd op de fiets. Alles geregeld.</h4>
