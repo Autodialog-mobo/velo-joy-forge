@@ -431,7 +431,7 @@ function VelopassHome() {
         <ul className="flinks">
           <li><a href="#">Privacy</a></li>
           <li><a href="#">Voorwaarden</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><Link to="/contact">Contact</Link></li>
         </ul>
         <div className="fpro"><Link to="/pro" style={{ color: "var(--green)", textDecoration: "none" }}>↗ velopass.pro — voor fietswinkels</Link></div>
         <div className="fcopy">© 2026 Velopass</div>
