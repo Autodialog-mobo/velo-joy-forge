@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Store, Package, QrCode, ArrowRightLeft } from "lucide-react";
+import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound } from "lucide-react";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
@@ -159,15 +159,18 @@ function VelopassHome() {
       <section className="flow-sticker" id="al-sticker">
         <p className="eyebrow">Uitnodiging ontvangen?</p>
         <h2 className="sec-title">Jouw Velopass staat klaar</h2>
-        <p className="sec-sub">Je fietswinkel heeft de sticker geplakt en je fiets al in het systeem gezet. Jij hoeft enkel nog je account te activeren.</p>
+        <p className="sec-sub">Je fietswinkel heeft de sticker geplakt en je fiets al in het systeem gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
         <div className="steps-flow">
           {[
-            { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail." },
-            { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je account is actief." },
-            { n: 3, t: "Jouw Velopass is actief", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets." },
+            { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass is actief.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 3, t: "Jouw Velopass is actief", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets.", icon: <VelopassMark size={28} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
-              <div className="sf-num">{s.n}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                <div className="sf-num" style={{ marginBottom: 0 }}>{s.n}</div>
+                {s.icon}
+              </div>
               <h4>{s.t}</h4>
               <p>{s.d}</p>
               {i < arr.length - 1 && (
