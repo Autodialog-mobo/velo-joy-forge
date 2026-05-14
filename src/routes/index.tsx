@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Store, Package } from "lucide-react";
+import { Store, Package, QrCode, ArrowRightLeft, Bike } from "lucide-react";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
@@ -214,16 +214,19 @@ function VelopassHome() {
       {/* PAD 3 */}
       <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
         <p className="eyebrow">Tweedehands fiets met sticker</p>
-        <h2 className="sec-title">Het paspoort gaat mee. Jij ook.</h2>
-        <p className="sec-sub">Heb je een tweedehands fiets gekocht met een bestaande Velopass sticker? De volledige fietshistorie — onderhoud, garantie, services — is al aanwezig. Jij zet hem gewoon op jouw naam.</p>
+        <h2 className="sec-title">Het paspoort gaat mee. Op jouw naam.</h2>
+        <p className="sec-sub">Heb je een tweedehands fiets gekocht met een bestaande Velopass-sticker? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.</p>
         <div className="steps-flow">
           {[
-            { n: 1, t: "Scan de QR-sticker", d: "Scan de sticker op je tweedehands fiets. Je ziet meteen de volledige geschiedenis van die fiets." },
-            { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na bevestiging staat de fiets op jouw naam." },
-            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort — inclusief volledige historie — is nu van jou. Diefstalprotectie, pechhulp en verzekering zijn meteen actief." },
+            { n: 1, t: "Scan de QR-sticker", d: "Scan de sticker op je tweedehands fiets. Je ziet meteen de publieke tijdlijn met onderhoud en garantie.", Icon: QrCode },
+            { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam.", Icon: ArrowRightLeft },
+            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", Icon: Bike },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
-              <div className="sf-num">{s.n}</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                <div className="sf-num" style={{ marginBottom: 0 }}>{s.n}</div>
+                <s.Icon size={22} color="#2ECC8A" strokeWidth={1.8} />
+              </div>
               <h4>{s.t}</h4>
               <p>{s.d}</p>
               {i < arr.length - 1 && (
