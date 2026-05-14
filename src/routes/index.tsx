@@ -1,7 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Store, Package } from "lucide-react";
 import stickerImg from "@/assets/sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
+
+const pathIconBox: React.CSSProperties = {
+  width: 48,
+  height: 48,
+  borderRadius: 12,
+  background: "rgba(13,31,60,0.06)",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginBottom: 16,
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
