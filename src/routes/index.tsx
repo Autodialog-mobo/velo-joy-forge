@@ -325,7 +325,6 @@ function VelopassHome() {
             <h3>Beschermd door een netwerk</h3>
             <p>Je rijdt nooit alleen. Bij diefstal helpt de hele Velopass-community mee — iedereen die de QR scant ziet dat jouw fiets gezocht wordt en kan anoniem een seintje geven.</p>
             <div className="why-quote">
-              <p>&ldquo;Bij diefstal helpt de hele Velopass-community mee. Iedereen die de QR-code scant ziet dat jouw fiets gezocht wordt en kan anoniem een seintje geven.&rdquo;</p>
               <cite>— De Velopass-community · 1.500+ fietswinkels</cite>
             </div>
           </div>
