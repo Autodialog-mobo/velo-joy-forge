@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound } from "lucide-react";
+import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2 } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
@@ -169,7 +169,7 @@ function VelopassHome() {
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass is actief.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Jouw Velopass is actief", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets.", icon: <VelopassMark size={28} /> },
+            { n: 3, t: "Jouw Velopass is actief", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -213,7 +213,7 @@ function VelopassHome() {
         </div>
         <div className="path-final">
           <div className="path-final-arrow">
-            <VelopassMark size={18} />
+            <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} />
           </div>
           <div>
             <h4>Altijd op de fiets. Alles geregeld.</h4>
@@ -231,7 +231,7 @@ function VelopassHome() {
           {[
             { n: 1, t: "Scan de QR-sticker", d: "Scan de sticker op je tweedehands fiets.", icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam.", icon: <ArrowRightLeft size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", icon: <VelopassMark size={28} /> },
+            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
