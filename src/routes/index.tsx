@@ -107,7 +107,7 @@ function VelopassHome() {
               </svg>
             </div>
             <div className="path-title">Jouw Velopass staat klaar</div>
-            <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in twee minuten klaar.</p>
+            <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in 1 minuut klaar.</p>
             <span className="path-cta">Aan de slag →</span>
           </a>
           <a href="#nieuwe-sticker" className="path-card secondary">
