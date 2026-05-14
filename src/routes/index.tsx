@@ -149,7 +149,7 @@ function VelopassHome() {
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Scannen is weten.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering, onderhoudshistoriek en pechhulp heb je zo altijd binnen handbereik.</span></div>
+                <div><strong>Directe toegang tot service.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering en pechhulp heb je altijd bij de hand, en een onderhoudsbeurt bij je fietswinkel plan je voortaan in een paar klikken.</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
