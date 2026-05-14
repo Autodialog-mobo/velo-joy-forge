@@ -359,7 +359,17 @@ button { font-family: inherit; }
 .sf-panel-btn.primary:hover { background: #28b87a; transform: translateY(-1px); }
 .sf-panel-btn.ghost { background: transparent; color: var(--navy); border: 1px solid var(--border); }
 .sf-panel-btn.ghost:hover { background: var(--bg); }
-@media (max-width: 768px) { .sf-panel { top: auto; right: 8px; left: 8px; bottom: 8px; width: auto; } }
+.sf-panel-backdrop { position: fixed; inset: 0; background: rgba(13,31,60,0.45); z-index: 1999; transition: opacity 0.2s ease; backdrop-filter: blur(2px); }
+.sf-panel-sheet { position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important; width: 100% !important; max-width: 100% !important; border-radius: 20px 20px 0 0 !important; padding: 0 22px 28px !important; box-shadow: 0 -12px 40px rgba(13,31,60,0.22) !important; z-index: 2000 !important; animation: sf-sheet-in 0.32s cubic-bezier(0.32,0.72,0,1) !important; padding-bottom: calc(28px + env(safe-area-inset-bottom)) !important; max-height: 85vh; overflow-y: auto; overscroll-behavior: contain; }
+@keyframes sf-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.sf-panel-grab { padding: 12px 0 8px; display: flex; justify-content: center; cursor: grab; touch-action: none; -webkit-user-select: none; user-select: none; }
+.sf-panel-grab:active { cursor: grabbing; }
+.sf-panel-handle { display: block; width: 44px; height: 5px; border-radius: 999px; background: rgba(13,31,60,0.18); }
+.sf-panel-sheet .sf-panel-close { top: 14px; right: 14px; }
+.sf-panel-body { padding-top: 4px; }
+@media (max-width: 768px) {
+  .sf-panel:not(.sf-panel-sheet) { display: none; }
+}
 .vp-marker-icon { background: transparent !important; border: none !important; }
 .vp-cluster-wrap { background: transparent !important; border: none !important; }
 .vp-cluster {

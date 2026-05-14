@@ -6,6 +6,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
+import { ShopPanel } from "./ShopPanel";
 
 type Shop = {
   name: string;
@@ -301,17 +302,7 @@ export default function ShopFinderMap() {
           </MapContainer>
 
           {selectedShop && (
-            <div className="sf-panel">
-              <button type="button" className="sf-panel-close" onClick={() => setActiveIdx(null)} aria-label="Sluit paneel">×</button>
-              <div className="sf-panel-tag">● Scant automatisch</div>
-              <h3 className="sf-panel-name">{selectedShop.name}</h3>
-              <p className="sf-panel-addr">{selectedShop.address}</p>
-              <p className="sf-panel-msg">Deze winkel scant jouw fiets automatisch wanneer je langskomt.</p>
-              <div className="sf-panel-actions">
-                <a className="sf-panel-btn primary" href="https://app.velopass.pro" target="_blank" rel="noreferrer">Bekijk in Mijn Velopass</a>
-                <a className="sf-panel-btn ghost" target="_blank" rel="noreferrer" href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(selectedShop.address)}`}>Routebeschrijving →</a>
-              </div>
-            </div>
+            <ShopPanel shop={selectedShop} onClose={() => setActiveIdx(null)} />
           )}
         </div>
       </div>
