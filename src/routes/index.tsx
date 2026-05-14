@@ -188,14 +188,12 @@ function VelopassHome() {
         <p className="sec-sub">Kies de weg die bij je past. Eén sticker activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
-            <div className="sn-tag">Pad A · Aanbevolen</div>
             <div style={pathIconBox}><Store size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h4>Via een fietswinkel</h4>
             <p>Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft stickers in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.</p>
             <a href="#community" className="btn-p">Vind een fietswinkel bij jou in de buurt</a>
           </div>
           <div className="sn path-shop">
-            <div className="sn-tag green">Pad B</div>
             <div style={pathIconBox}><Package size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h4>Via de Velopass webshop</h4>
             <p>Bestel een sticker rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
