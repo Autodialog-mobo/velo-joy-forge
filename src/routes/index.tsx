@@ -137,20 +137,23 @@ function VelopassHome() {
           </div>
           <div className="sticker-content">
             <p className="eyebrow">De Velopass sticker</p>
-            <h2 className="sec-title" style={{ marginBottom: 16 }}>De fysieke knop naar je digitale fiets.</h2>
-            <p className="sec-sub">Eén sticker, professioneel geplakt. Alles erna gebeurt digitaal.</p>
+            <h2 className="sticker-title">
+              <span className="st-line-1">De digitale sleutel van je fiets.</span>
+              <span className="st-line-2">Eén scan. Alles geregeld.</span>
+            </h2>
+            <p className="sec-sub">Eén sticker op je frame, een wereld aan mogelijkheden in je broekzak.</p>
             <div className="sticker-feats">
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Eén keer plakken</strong><span>Je fietswinkel plakt de sticker op de juiste plek. Eén keer, voor altijd.</span></div>
+                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de sticker nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Eén scan, alles bij de hand</strong><span>Diefstalprotectie, pechhulp, verzekering en fietshistorie — bereikbaar via één QR-scan.</span></div>
+                <div><strong>Scannen is weten.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering, onderhoudshistoriek en pechhulp heb je zo altijd binnen handbereik.</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Levenslang — ook bij verkoop</strong><span>Het paspoort gaat mee naar de volgende eigenaar. De sticker blijft, de data ook.</span></div>
+                <div><strong>Verbonden met het frame.</strong><span>De sticker hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De sticker blijft, de data verhuist mee.</span></div>
               </div>
             </div>
           </div>
