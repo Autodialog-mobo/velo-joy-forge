@@ -1,7 +1,18 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { HelpCircle, Package, ScanLine, MessageCircle } from "lucide-react";
+import { z } from "zod";
+import { toast } from "sonner";
 import { VelopassMark } from "@/components/VelopassMark";
+
+const waSchema = z.object({
+  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100, { message: "Naam mag maximaal 100 tekens zijn." }),
+  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
+  phone: z.string().trim().max(30).optional(),
+  note: z.string().trim().max(2000).optional(),
+});
+
+type WaErrors = Partial<Record<"name" | "email", string>>;
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
