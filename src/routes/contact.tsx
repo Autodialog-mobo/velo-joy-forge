@@ -341,10 +341,6 @@ function ContactPage() {
             BTW: BE0777.359.681 · KBO: 0777359681<br />
             support@velopass.com
           </p>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "var(--text-muted)", marginTop: 20, lineHeight: 1.6 }}>
-            Of stuur ons rechtstreeks een mail:<br />
-            <a href="mailto:support@velopass.com" style={{ color: "var(--text-muted)", textDecoration: "underline" }}>support@velopass.com</a>
-          </p>
         </section>
       </main>
 
