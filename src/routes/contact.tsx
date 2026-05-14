@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HelpCircle, Package, ScanLine, CheckCircle2 } from "lucide-react";
+import { HelpCircle, Package, ScanLine, CheckCircle2, MessageCircle } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 
 export const Route = createFileRoute("/contact")({
