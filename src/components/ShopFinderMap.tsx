@@ -16,6 +16,7 @@ type Shop = {
   city: string;
   country: string;
   status: string;
+  brands?: string[];
 };
 
 const markerSvg = (active: boolean) => {
@@ -170,7 +171,10 @@ export default function ShopFinderMap() {
       .map((s, i) => ({ s, i }))
       .filter(({ s }) => s.status === "active")
       .filter(({ s }) =>
-        !q || s.name.toLowerCase().includes(q) || s.city.toLowerCase().includes(q),
+        !q ||
+        s.name.toLowerCase().includes(q) ||
+        s.city.toLowerCase().includes(q) ||
+        (s.brands ?? []).some((b) => b.toLowerCase().includes(q)),
       );
   }, [shops, query]);
 
