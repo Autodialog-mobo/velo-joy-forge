@@ -381,6 +381,8 @@ function VelopassHome() {
         <div className="fpro"><Link to="/pro" style={{ color: "var(--green)", textDecoration: "none" }}>↗ velopass.pro — voor fietswinkels</Link></div>
         <div className="fcopy">© 2026 Velopass</div>
       </footer>
+
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
     </>
   );
 }
