@@ -239,10 +239,17 @@ function ContactPage() {
                   required
                   maxLength={100}
                   value={wa.name}
-                  onChange={(e) => setWa({ ...wa, name: e.target.value })}
+                  onChange={(e) => {
+                    setWa({ ...wa, name: e.target.value });
+                    if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
+                  }}
                   placeholder="Jan Janssens"
-                  style={waInputStyle}
+                  aria-invalid={!!errors.name}
+                  style={{ ...waInputStyle, borderColor: errors.name ? "#ff6b6b" : waInputStyle.border?.toString().includes("rgba") ? undefined : undefined }}
                 />
+                {errors.name && (
+                  <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.name}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="wa-phone" style={waLabelStyle}>Telefoon</label>
