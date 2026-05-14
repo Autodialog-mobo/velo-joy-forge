@@ -49,7 +49,7 @@ function VelopassPro() {
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#registreer">Registreer</a></li>
           <li><a href="#proof">Community</a></li>
-          <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)" }}>↗ velopass.com</Link></li>
+          <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)" }}>↗ voor Fietsers</Link></li>
         </ul>
         <a href="#registreer" className="btn-nav-cta">Registreer je fietswinkel</a>
       </nav>
@@ -223,7 +223,7 @@ function VelopassPro() {
           <li><a href="#">Contact</a></li>
           <li><a href="#">Inloggen</a></li>
         </ul>
-        <div className="fswitch"><Link to="/" style={{ color: "var(--green)", textDecoration: "none" }}>↗ velopass.com — voor fietsers</Link></div>
+        <div className="fswitch"><Link to="/" style={{ color: "var(--green)", textDecoration: "none" }}>↗ voor Fietsers</Link></div>
         <div className="fcopy">© 2026 Velopass</div>
       </footer>
     </>
