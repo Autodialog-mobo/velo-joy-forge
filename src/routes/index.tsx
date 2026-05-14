@@ -231,7 +231,7 @@ function VelopassHome() {
           {[
             { n: 1, t: "Scan de QR-sticker", d: "Scan de sticker op je tweedehands fiets.", icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam.", icon: <ArrowRightLeft size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", icon: <VelopassMark size={28} /> },
+            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
