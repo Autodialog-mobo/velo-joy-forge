@@ -351,7 +351,7 @@ function VelopassHome() {
             </div>
             <button type="submit" className="btn-submit">Inloggen</button>
             <div className="ldivider">of</div>
-            <button type="button" className="btn-qr">
+            <button type="button" className="btn-qr" onClick={() => setScanOpen(true)}>
               <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
                 <rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
                 <rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
