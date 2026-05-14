@@ -148,6 +148,21 @@ function VelopassHome() {
               </div>
               <div className="scan-badge">Scan → toegang tot alles</div>
             </div>
+            {import.meta.env.DEV && (
+              <div className="qr-tuner">
+                <button type="button" className="qr-tuner-toggle" onClick={() => setTunerOpen((o) => !o)}>
+                  {tunerOpen ? "Hide" : "Tune"} QR overlay
+                </button>
+                {tunerOpen && (
+                  <div className="qr-tuner-panel">
+                    <label>X <span>{qrX}%</span><input type="range" min={0} max={100} step={0.5} value={qrX} onChange={(e) => setQrX(parseFloat(e.target.value))} /></label>
+                    <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
+                    <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
+                    <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           <div className="sticker-content">
             <p className="eyebrow">De Velopass sticker</p>
