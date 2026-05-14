@@ -133,10 +133,9 @@ function VelopassHome() {
             <div
               className="sticker-frame"
               style={{
-                // Tune these to align the overlay with the QR in the image (values in % of the frame).
-                ['--qr-x' as any]: '46%',
-                ['--qr-y' as any]: '54%',
-                ['--qr-size' as any]: '48%',
+                ['--qr-x' as any]: `${qrX}%`,
+                ['--qr-y' as any]: `${qrY}%`,
+                ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
               <img src={stickerImg} alt="Velopass sticker op een fietsframe" width={1024} height={1024} />
