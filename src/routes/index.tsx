@@ -82,9 +82,9 @@ function VelopassHome() {
                 <rect x="14" y="14" width="4" height="4" rx="0.5" fill="#0D1F3C" />
               </svg>
             </div>
-            <div className="path-title">Activeer je account</div>
+            <div className="path-title">Jouw Velopass staat klaar</div>
             <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in twee minuten klaar.</p>
-            <span className="path-cta">Activeer nu →</span>
+            <span className="path-cta">Aan de slag →</span>
           </a>
           <a href="#nieuwe-sticker" className="path-card secondary">
             <div className="path-tag">Nog geen sticker?</div>
@@ -157,8 +157,8 @@ function VelopassHome() {
 
       {/* PAD 1 */}
       <section className="flow-sticker" id="al-sticker">
-        <p className="eyebrow">Sticker al op je fiets</p>
-        <h2 className="sec-title">Je fiets activeren duurt twee minuten</h2>
+        <p className="eyebrow">Uitnodiging ontvangen?</p>
+        <h2 className="sec-title">Jouw Velopass staat klaar</h2>
         <p className="sec-sub">Je fietswinkel heeft de sticker geplakt en je fiets al in het systeem gezet. Jij hoeft enkel nog je account te activeren.</p>
         <div className="steps-flow">
           {[
