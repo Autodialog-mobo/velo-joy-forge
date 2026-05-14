@@ -22,13 +22,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Eén sticker op je fiets en je hebt altijd toegang tot pechhulp, verzekering, diefstalprotectie en je fietswinkel. Het digitale fietspaspoort.",
+          "Eén sticker op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort.",
       },
       { property: "og:title", content: "Velopass — Altijd op de fiets. Alles geregeld." },
       {
         property: "og:description",
         content:
-          "Eén sticker op je fiets en je hebt altijd toegang tot pechhulp, verzekering, diefstalprotectie en je fietswinkel.",
+          "Eén sticker op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -65,7 +65,7 @@ function VelopassHome() {
         <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
         <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
-          Eén sticker op je fiets — en je hebt altijd toegang tot pechhulp, verzekering, diefstalprotectie en je fietswinkel. Wat er ook gebeurt.
+          Eén sticker op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Wat er ook gebeurt.
         </p>
 
         <div className="path-split">
@@ -141,7 +141,7 @@ function VelopassHome() {
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Eén scan, alles bij de hand</strong><span>Pechhulp, verzekering, fietshistorie en je winkel — bereikbaar via één QR-scan.</span></div>
+                <div><strong>Eén scan, alles bij de hand</strong><span>Diefstalprotectie, pechhulp, verzekering en fietshistorie — bereikbaar via één QR-scan.</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
@@ -161,7 +161,7 @@ function VelopassHome() {
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail." },
             { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je account is actief." },
-            { n: 3, t: "Jouw Velopass is actief", d: "Pechhulp, verzekering en fietshistorie — alles bereikbaar via één scan van de QR-sticker op je fiets." },
+            { n: 3, t: "Jouw Velopass is actief", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets." },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div className="sf-num">{s.n}</div>
@@ -206,7 +206,7 @@ function VelopassHome() {
           </div>
           <div>
             <h4>Altijd op de fiets. Alles geregeld.</h4>
-            <p>Jouw Velopass is actief. Pechhulp, verzekering en diefstalprotectie — één scan van je sticker ver.</p>
+            <p>Jouw Velopass is actief. Diefstalprotectie, pechhulp en verzekering — één scan van je sticker ver.</p>
           </div>
         </div>
       </section>
@@ -220,7 +220,7 @@ function VelopassHome() {
           {[
             { n: 1, t: "Scan de QR-sticker", d: "Scan de sticker op je tweedehands fiets. Je ziet meteen de volledige geschiedenis van die fiets." },
             { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na bevestiging staat de fiets op jouw naam." },
-            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort — inclusief volledige historie — is nu van jou. Pechhulp, verzekering en diefstalprotectie zijn meteen actief." },
+            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort — inclusief volledige historie — is nu van jou. Diefstalprotectie, pechhulp en verzekering zijn meteen actief." },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div className="sf-num">{s.n}</div>
