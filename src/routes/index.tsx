@@ -126,7 +126,15 @@ function VelopassHome() {
       <section className="sticker-section" id="sticker">
         <div className="sticker-grid">
           <div className="sticker-visual">
-            <div className="sticker-frame">
+            <div
+              className="sticker-frame"
+              style={{
+                // Tune these to align the overlay with the QR in the image (values in % of the frame).
+                ['--qr-x' as any]: '46%',
+                ['--qr-y' as any]: '54%',
+                ['--qr-size' as any]: '48%',
+              }}
+            >
               <img src={stickerImg} alt="Velopass sticker op een fietsframe" width={1024} height={1024} />
               <div className="scan-overlay" aria-hidden="true">
                 <span className="scan-corner tl" />

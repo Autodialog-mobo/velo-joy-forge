@@ -123,10 +123,10 @@ button { font-family: inherit; }
 /* STICKER SECTION */
 .sticker-section { padding: 100px 8vw; background: var(--white); }
 .sticker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.sticker-frame { position: relative; border-radius: 20px; overflow: visible; box-shadow: 0 32px 64px rgba(13,31,60,0.15); aspect-ratio: 1 / 1; container-type: inline-size; }
+.sticker-frame { position: relative; border-radius: 20px; overflow: visible; box-shadow: 0 32px 64px rgba(13,31,60,0.15); aspect-ratio: 1 / 1; container-type: inline-size; --qr-x: 46%; --qr-y: 54%; --qr-size: 48%; }
 .sticker-frame img { display: block; border-radius: 16px; width: 100%; height: 100%; object-fit: cover; }
-/* Scan overlay on QR sticker — positioned in % so it tracks the QR at any size */
-.scan-overlay { position: absolute; top: 30%; left: 22%; width: 48%; height: 48%; pointer-events: none; }
+/* Scan overlay — driven by --qr-x, --qr-y, --qr-size on .sticker-frame */
+.scan-overlay { position: absolute; left: var(--qr-x); top: var(--qr-y); width: var(--qr-size); height: var(--qr-size); transform: translate(-50%, -50%); pointer-events: none; }
 .scan-corner { position: absolute; width: clamp(14px, 4.5cqi, 26px); height: clamp(14px, 4.5cqi, 26px); border: clamp(2px, 0.5cqi, 3px) solid var(--green); filter: drop-shadow(0 0 6px rgba(46,204,138,0.6)); }
 .scan-corner.tl { top: -1.2cqi; left: -1.2cqi; border-right: none; border-bottom: none; border-top-left-radius: 4px; }
 .scan-corner.tr { top: -1.2cqi; right: -1.2cqi; border-left: none; border-bottom: none; border-top-right-radius: 4px; }
