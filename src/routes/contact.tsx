@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HelpCircle, Package, ScanLine, CheckCircle2, MessageCircle } from "lucide-react";
+import { HelpCircle, Package, ScanLine, CheckCircle2, MessageCircle, X } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 
 export const Route = createFileRoute("/contact")({
@@ -70,8 +70,12 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
 };
 
+const WA_NUMBER = "32471601573";
+
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [waOpen, setWaOpen] = useState(false);
+  const [waMessage, setWaMessage] = useState("Hallo Velopass, ik heb een vraag over ");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -83,6 +87,17 @@ function ContactPage() {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) return;
     setSent(true);
+  };
+
+  const openWa = (prefill?: string) => {
+    setWaMessage(prefill ?? "Hallo Velopass, ik heb een vraag over ");
+    setWaOpen(true);
+  };
+
+  const sendWa = () => {
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
+    setWaOpen(false);
   };
 
   return (
@@ -122,10 +137,9 @@ function ContactPage() {
 
         {/* WHATSAPP — primaire optie */}
         <section style={{ padding: "8px 6vw 24px", maxWidth: 520, margin: "0 auto", textAlign: "center" }}>
-          <a
-            href="https://wa.me/32471601573"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => openWa("Hallo Velopass, ik heb een vraag over ")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -140,7 +154,8 @@ function ContactPage() {
               fontSize: 17,
               padding: "16px 32px",
               borderRadius: 12,
-              textDecoration: "none",
+              border: "none",
+              cursor: "pointer",
               boxShadow: "0 10px 24px rgba(46,204,138,0.25)",
               transition: "transform 0.2s, box-shadow 0.2s",
             }}
@@ -149,7 +164,7 @@ function ContactPage() {
           >
             <MessageCircle size={22} strokeWidth={2} />
             Chat met ons via WhatsApp
-          </a>
+          </button>
           <p style={{ marginTop: 12, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>
             Beschikbaar tijdens kantooruren · Gemiddeld antwoord binnen 2 uur
           </p>
@@ -319,12 +334,9 @@ function ContactPage() {
                   >
                     Verstuur bericht
                   </button>
-                  <a
-                    href={`https://wa.me/32471601573?text=${encodeURIComponent(
-                      `Hallo Velopass,\n\nOnderwerp: ${form.subject}\n\n${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ""}`
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => openWa(`Hallo Velopass,\n\nOnderwerp: ${form.subject}\n\n${form.message}\n\n— ${form.name}${form.email ? ` (${form.email})` : ""}`)}
                     style={{
                       width: "100%",
                       display: "inline-flex",
@@ -338,13 +350,14 @@ function ContactPage() {
                       fontFamily: "'DM Sans', sans-serif",
                       fontWeight: 500,
                       fontSize: 15,
-                      textDecoration: "none",
+                      border: "none",
+                      cursor: "pointer",
                       boxSizing: "border-box",
                     }}
                   >
                     <MessageCircle size={18} strokeWidth={2} />
                     Verstuur via WhatsApp
-                  </a>
+                  </button>
                 </div>
               </form>
             )}
@@ -358,6 +371,125 @@ function ContactPage() {
           </p>
         </section>
       </main>
+
+      {/* WHATSAPP MODAL */}
+      {waOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setWaOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(13,31,60,0.55)",
+            backdropFilter: "blur(4px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 20,
+            zIndex: 1000,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "var(--white)",
+              borderRadius: 16,
+              padding: "28px 28px 24px",
+              maxWidth: 480,
+              width: "100%",
+              boxShadow: "0 30px 60px rgba(13,31,60,0.25)",
+              position: "relative",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setWaOpen(false)}
+              aria-label="Sluiten"
+              style={{
+                position: "absolute",
+                top: 14,
+                right: 14,
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                color: "var(--text-muted)",
+                padding: 6,
+                display: "inline-flex",
+              }}
+            >
+              <X size={20} />
+            </button>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+              <div style={{ ...iconBox, background: "rgba(46,204,138,0.15)" }}>
+                <MessageCircle size={22} strokeWidth={2} />
+              </div>
+              <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, color: "var(--navy)" }}>
+                Bericht via WhatsApp
+              </h3>
+            </div>
+
+            <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.55, marginBottom: 16 }}>
+              Pas je bericht aan en open WhatsApp om het te versturen naar +32 471 60 15 73.
+            </p>
+
+            <textarea
+              rows={6}
+              value={waMessage}
+              maxLength={2000}
+              onChange={(e) => setWaMessage(e.target.value)}
+              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5, marginBottom: 16 }}
+            />
+
+            <div style={{ display: "flex", gap: 10 }}>
+              <button
+                type="button"
+                onClick={() => setWaOpen(false)}
+                style={{
+                  flex: "0 0 auto",
+                  background: "transparent",
+                  color: "var(--text-mid)",
+                  border: "1.5px solid rgba(13,31,60,0.12)",
+                  padding: "12px 18px",
+                  borderRadius: 10,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  fontSize: 14,
+                  cursor: "pointer",
+                }}
+              >
+                Annuleren
+              </button>
+              <button
+                type="button"
+                onClick={sendWa}
+                disabled={!waMessage.trim()}
+                style={{
+                  flex: 1,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 10,
+                  background: "#2ECC8A",
+                  color: "var(--navy)",
+                  border: "none",
+                  padding: "12px 18px",
+                  borderRadius: 10,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 600,
+                  fontSize: 15,
+                  cursor: waMessage.trim() ? "pointer" : "not-allowed",
+                  opacity: waMessage.trim() ? 1 : 0.5,
+                }}
+              >
+                <MessageCircle size={18} />
+                Open WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
