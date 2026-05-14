@@ -271,10 +271,17 @@ function ContactPage() {
                   required
                   maxLength={255}
                   value={wa.email}
-                  onChange={(e) => setWa({ ...wa, email: e.target.value })}
+                  onChange={(e) => {
+                    setWa({ ...wa, email: e.target.value });
+                    if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
+                  }}
                   placeholder="jan@voorbeeld.be"
+                  aria-invalid={!!errors.email}
                   style={waInputStyle}
                 />
+                {errors.email && (
+                  <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.email}</p>
+                )}
               </div>
               <div style={{ gridColumn: "1 / -1" }}>
                 <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
