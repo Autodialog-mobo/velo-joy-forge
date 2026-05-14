@@ -332,6 +332,20 @@ function ContactPage() {
             </p>
           </div>
         </section>
+
+        {/* WETTELIJKE GEGEVENS */}
+        <section style={{ padding: "0 6vw 24px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
+            Velopass BV<br />
+            Stokerijstraat 29/bus a1, 2110 Wijnegem, België<br />
+            BTW: BE0777.359.681 · KBO: 0777359681<br />
+            support@velopass.com
+          </p>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "var(--text-muted)", marginTop: 20, lineHeight: 1.6 }}>
+            Of stuur ons rechtstreeks een mail:<br />
+            <a href="mailto:support@velopass.com" style={{ color: "var(--text-muted)", textDecoration: "underline" }}>support@velopass.com</a>
+          </p>
+        </section>
       </main>
 
       <style>{`

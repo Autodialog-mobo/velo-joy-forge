@@ -435,6 +435,9 @@ function VelopassHome() {
         </ul>
         <div className="fpro"><Link to="/pro" style={{ color: "var(--green)", textDecoration: "none" }}>↗ velopass.pro — voor fietswinkels</Link></div>
         <div className="fcopy">© 2026 Velopass</div>
+        <div style={{ gridColumn: "1 / -1", textAlign: "center", fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 16, fontFamily: "'DM Sans', sans-serif" }}>
+          Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · BTW BE0777.359.681
+        </div>
       </footer>
 
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
