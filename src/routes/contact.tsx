@@ -70,12 +70,35 @@ const inputStyle: React.CSSProperties = {
   outline: "none",
 };
 
+const waLabelStyle: React.CSSProperties = {
+  display: "block",
+  fontSize: 11,
+  fontWeight: 500,
+  letterSpacing: 1.2,
+  textTransform: "uppercase",
+  color: "rgba(245,243,238,0.55)",
+  marginBottom: 8,
+};
+
+const waInputStyle: React.CSSProperties = {
+  width: "100%",
+  background: "transparent",
+  border: "1.5px solid rgba(245,243,238,0.18)",
+  borderRadius: 10,
+  padding: "12px 14px",
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 15,
+  color: "#F5F3EE",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
 const WA_NUMBER = "32471601573";
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
   const [waOpen, setWaOpen] = useState(false);
-  const [waMessage, setWaMessage] = useState("Hallo Velopass, ik heb een vraag over ");
+  const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -89,13 +112,27 @@ function ContactPage() {
     setSent(true);
   };
 
-  const openWa = (prefill?: string) => {
-    setWaMessage(prefill ?? "Hallo Velopass, ik heb een vraag over ");
+  const openWa = (prefillNote?: string) => {
+    setWa({
+      name: form.name,
+      email: form.email,
+      phone: "",
+      note: prefillNote ?? form.message ?? "",
+    });
     setWaOpen(true);
   };
 
+  const canSendWa = wa.name.trim() && wa.email.trim();
+
   const sendWa = () => {
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+    if (!canSendWa) return;
+    const text =
+      `Hallo Velopass,\n\n` +
+      `Naam: ${wa.name}\n` +
+      `E-mail: ${wa.email}\n` +
+      (wa.phone.trim() ? `Telefoon: ${wa.phone}\n` : "") +
+      (wa.note.trim() ? `\n${wa.note}\n` : "");
+    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
     setWaOpen(false);
   };
@@ -393,13 +430,15 @@ function ContactPage() {
           <div
             onClick={(e) => e.stopPropagation()}
             style={{
-              background: "var(--white)",
-              borderRadius: 16,
-              padding: "28px 28px 24px",
-              maxWidth: 480,
+              background: "#0D1F3C",
+              color: "#F5F3EE",
+              borderRadius: 18,
+              padding: "32px 32px 28px",
+              maxWidth: 640,
               width: "100%",
-              boxShadow: "0 30px 60px rgba(13,31,60,0.25)",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
               position: "relative",
+              fontFamily: "'DM Sans', sans-serif",
             }}
           >
             <button
@@ -408,85 +447,114 @@ function ContactPage() {
               aria-label="Sluiten"
               style={{
                 position: "absolute",
-                top: 14,
-                right: 14,
+                top: 18,
+                right: 18,
                 background: "transparent",
                 border: "none",
                 cursor: "pointer",
-                color: "var(--text-muted)",
+                color: "rgba(245,243,238,0.6)",
                 padding: 6,
                 display: "inline-flex",
               }}
             >
-              <X size={20} />
+              <X size={22} />
             </button>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-              <div style={{ ...iconBox, background: "rgba(46,204,138,0.15)" }}>
-                <MessageCircle size={22} strokeWidth={2} />
-              </div>
-              <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, color: "var(--navy)" }}>
-                Bericht via WhatsApp
-              </h3>
-            </div>
-
-            <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.55, marginBottom: 16 }}>
-              Pas je bericht aan en open WhatsApp om het te versturen naar +32 471 60 15 73.
+            <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
+              Stuur ons een bericht
+            </h3>
+            <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
+              Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
             </p>
 
-            <textarea
-              rows={6}
-              value={waMessage}
-              maxLength={2000}
-              onChange={(e) => setWaMessage(e.target.value)}
-              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5, marginBottom: 16 }}
-            />
-
-            <div style={{ display: "flex", gap: 10 }}>
-              <button
-                type="button"
-                onClick={() => setWaOpen(false)}
-                style={{
-                  flex: "0 0 auto",
-                  background: "transparent",
-                  color: "var(--text-mid)",
-                  border: "1.5px solid rgba(13,31,60,0.12)",
-                  padding: "12px 18px",
-                  borderRadius: 10,
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 500,
-                  fontSize: 14,
-                  cursor: "pointer",
-                }}
-              >
-                Annuleren
-              </button>
-              <button
-                type="button"
-                onClick={sendWa}
-                disabled={!waMessage.trim()}
-                style={{
-                  flex: 1,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 10,
-                  background: "#2ECC8A",
-                  color: "var(--navy)",
-                  border: "none",
-                  padding: "12px 18px",
-                  borderRadius: 10,
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 600,
-                  fontSize: 15,
-                  cursor: waMessage.trim() ? "pointer" : "not-allowed",
-                  opacity: waMessage.trim() ? 1 : 0.5,
-                }}
-              >
-                <MessageCircle size={18} />
-                Open WhatsApp
-              </button>
+            <div className="wa-grid">
+              <div>
+                <label htmlFor="wa-name" style={waLabelStyle}>Naam <span style={{ color: "#2ECC8A" }}>*</span></label>
+                <input
+                  id="wa-name"
+                  type="text"
+                  required
+                  maxLength={100}
+                  value={wa.name}
+                  onChange={(e) => setWa({ ...wa, name: e.target.value })}
+                  placeholder="Jan Janssens"
+                  style={waInputStyle}
+                />
+              </div>
+              <div>
+                <label htmlFor="wa-phone" style={waLabelStyle}>Telefoon</label>
+                <input
+                  id="wa-phone"
+                  type="tel"
+                  maxLength={30}
+                  value={wa.phone}
+                  onChange={(e) => setWa({ ...wa, phone: e.target.value })}
+                  placeholder="+32 4..."
+                  style={waInputStyle}
+                />
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <label htmlFor="wa-email" style={waLabelStyle}>E-mail <span style={{ color: "#2ECC8A" }}>*</span></label>
+                <input
+                  id="wa-email"
+                  type="email"
+                  required
+                  maxLength={255}
+                  value={wa.email}
+                  onChange={(e) => setWa({ ...wa, email: e.target.value })}
+                  placeholder="jan@voorbeeld.be"
+                  style={waInputStyle}
+                />
+              </div>
+              <div style={{ gridColumn: "1 / -1" }}>
+                <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
+                <textarea
+                  id="wa-note"
+                  rows={4}
+                  maxLength={2000}
+                  value={wa.note}
+                  onChange={(e) => setWa({ ...wa, note: e.target.value })}
+                  placeholder="Vertel ons kort waar je vraag over gaat..."
+                  style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
+                />
+              </div>
             </div>
+
+            <button
+              type="button"
+              onClick={sendWa}
+              disabled={!canSendWa}
+              style={{
+                marginTop: 24,
+                width: "100%",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 12,
+                background: "#2ECC8A",
+                color: "#0D1F3C",
+                border: "none",
+                padding: "16px 24px",
+                borderRadius: 12,
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: 15,
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                cursor: canSendWa ? "pointer" : "not-allowed",
+                opacity: canSendWa ? 1 : 0.5,
+              }}
+            >
+              <MessageCircle size={20} strokeWidth={2.2} />
+              Verstuur via WhatsApp →
+            </button>
+
+            <p style={{ textAlign: "center", marginTop: 16, fontSize: 13, color: "rgba(245,243,238,0.6)" }}>
+              Liever een e-mail sturen?{" "}
+              <a href="mailto:support@velopass.com" style={{ color: "#F5F3EE", textDecoration: "underline" }}>
+                support@velopass.com
+              </a>
+            </p>
           </div>
         </div>
       )}
@@ -494,8 +562,12 @@ function ContactPage() {
       <style>{`
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .contact-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,31,60,0.08); border-color: rgba(46,204,138,0.4); }
+        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .wa-grid input::placeholder, .wa-grid textarea::placeholder { color: rgba(245,243,238,0.35); }
+        .wa-grid input:focus, .wa-grid textarea:focus { border-color: #2ECC8A; }
         @media (max-width: 768px) {
           .contact-cards { grid-template-columns: 1fr; }
+          .wa-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </>
