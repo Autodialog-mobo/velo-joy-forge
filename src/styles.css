@@ -130,11 +130,14 @@ button { font-family: inherit; }
 .hotspot-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--green); border: 2.5px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 .hotspot-label { background: var(--navy); color: #fff; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 100px; white-space: nowrap; margin-top: 24px; letter-spacing: 0.3px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 @keyframes hotspot-pulse { 0%{transform:scale(1);opacity:0.8} 50%{transform:scale(1.6);opacity:0.2} 100%{transform:scale(1);opacity:0.8} }
-.sticker-feats { display: flex; flex-direction: column; gap: 20px; }
-.sticker-feat { display: flex; gap: 16px; align-items: flex-start; }
-.sfeat-bar { width: 3px; min-height: 60px; background: var(--green); border-radius: 2px; flex-shrink: 0; margin-top: 2px; }
-.sticker-feat strong { display: block; font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
-.sticker-feat span { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.sticker-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 4px; }
+.sticker-title .st-line-1 { font-weight: 700; color: var(--navy); }
+.sticker-title .st-line-2 { font-weight: 800; color: var(--green); }
+.sticker-feats { display: flex; flex-direction: column; gap: 32px; margin-top: 8px; }
+.sticker-feat { display: flex; gap: 18px; align-items: flex-start; }
+.sfeat-bar { width: 3px; min-height: 60px; background: var(--green); border-radius: 2px; flex-shrink: 0; margin-top: 4px; }
+.sticker-feat strong { font-family: 'DM Sans', sans-serif; display: block; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 6px; letter-spacing: -0.1px; }
+.sticker-feat span { font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 14px; color: var(--text-muted); line-height: 1.65; }
 
 /* FLOWS */
 .flow-sticker { padding: 100px 8vw; background: var(--white); }
