@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound } from "lucide-react";
-import stickerImg from "@/assets/sticker.jpg";
+import stickerImg from "@/assets/velopass-sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
