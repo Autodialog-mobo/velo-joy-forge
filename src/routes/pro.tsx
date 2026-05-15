@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 
 export const Route = createFileRoute("/pro")({
