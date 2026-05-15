@@ -161,7 +161,7 @@ function VelopassHome() {
           <div className="avatars">
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
           </div>
-          <div className="trust-text"><strong>+180.000 fietsers</strong> in heel Europa&nbsp; ·&nbsp; {activeShopsCount.toLocaleString("nl-BE")}+ fietswinkels in BE, NL en FR</div>
+          <div className="trust-text"><strong>+180.000 fietsers</strong> in heel Europa&nbsp; ·&nbsp; {activeShopsCount.toLocaleString("nl-BE")}+ fietswinkels</div>
         </div>
       </section>
 
