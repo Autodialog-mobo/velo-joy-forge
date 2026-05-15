@@ -287,7 +287,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
             </div>
           )}
 
-          {!result && (
+          {!result && !manual && (
             <p
               style={{
                 fontFamily: "'DM Sans', sans-serif",
@@ -298,8 +298,103 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
                 lineHeight: 1.5,
               }}
             >
-              Geen camera? <a href="#" style={{ color: "#0D1F3C", textDecoration: "underline" }}>Voer de code handmatig in</a>
+              Geen camera?{" "}
+              <button
+                type="button"
+                onClick={() => { setManual(true); setError(null); }}
+                style={{
+                  color: "#0D1F3C",
+                  textDecoration: "underline",
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  font: "inherit",
+                  cursor: "pointer",
+                }}
+              >
+                Voer de code handmatig in
+              </button>
             </p>
+          )}
+
+          {manual && !result && (
+            <div>
+              <label
+                style={{
+                  display: "block",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 13,
+                  color: "#0D1F3C",
+                  fontWeight: 500,
+                  marginBottom: 8,
+                }}
+              >
+                Stickercode (10 cijfers)
+              </label>
+              <input
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
+                maxLength={10}
+                value={manualCode}
+                onChange={(e) => setManualCode(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                placeholder="0000000000"
+                style={{
+                  width: "100%",
+                  padding: "14px 16px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 18,
+                  letterSpacing: 4,
+                  textAlign: "center",
+                  color: "#0D1F3C",
+                  background: "#F5F7FA",
+                  border: "1px solid rgba(13,31,60,0.14)",
+                  borderRadius: 12,
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
+              />
+              <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                <button
+                  type="button"
+                  onClick={() => { setManual(false); setManualCode(""); }}
+                  style={{
+                    flex: 1,
+                    background: "transparent",
+                    border: "1px solid rgba(13,31,60,0.18)",
+                    borderRadius: 12,
+                    padding: "12px 16px",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 500,
+                    fontSize: 14,
+                    color: "#0D1F3C",
+                    cursor: "pointer",
+                  }}
+                >
+                  Terug naar scanner
+                </button>
+                <button
+                  type="button"
+                  disabled={manualCode.length !== 10}
+                  onClick={() => setResult(manualCode)}
+                  style={{
+                    flex: 1,
+                    background: manualCode.length === 10 ? "#0D1F3C" : "rgba(13,31,60,0.35)",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: 12,
+                    padding: "12px 16px",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 500,
+                    fontSize: 14,
+                    cursor: manualCode.length === 10 ? "pointer" : "not-allowed",
+                  }}
+                >
+                  Bevestigen
+                </button>
+              </div>
+            </div>
           )}
         </div>
         </div>
