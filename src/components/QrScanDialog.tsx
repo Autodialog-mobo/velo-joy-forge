@@ -37,21 +37,22 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
       <DialogContent
-        className="max-w-md p-0 overflow-hidden border-0"
-        style={{ background: "#FFFFFF", borderRadius: 20 }}
+        className="max-w-md p-0 border-0 overflow-hidden flex flex-col"
+        style={{ background: "#FFFFFF", borderRadius: 20, maxHeight: "90vh" }}
       >
         <button
+          type="button"
           onClick={close}
           aria-label="Sluiten"
           style={{
             position: "absolute",
             top: 14,
             right: 14,
-            zIndex: 10,
-            width: 36,
-            height: 36,
+            zIndex: 20,
+            width: 40,
+            height: 40,
             borderRadius: 999,
-            background: "rgba(13,31,60,0.06)",
+            background: "rgba(13,31,60,0.08)",
             border: "none",
             display: "inline-flex",
             alignItems: "center",
@@ -59,8 +60,10 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
             cursor: "pointer",
           }}
         >
-          <X size={18} color="#0D1F3C" />
+          <X size={20} color="#0D1F3C" />
         </button>
+
+        <div style={{ overflowY: "auto", flex: 1, WebkitOverflowScrolling: "touch" }}>
 
         <DialogHeader style={{ padding: "28px 28px 12px" }}>
           <div
