@@ -67,6 +67,7 @@ function VelopassHome() {
   }, [qrX, qrY, qrSize]);
   return (
     <>
+      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
         <a href="/" className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
