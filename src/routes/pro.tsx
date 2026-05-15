@@ -38,21 +38,40 @@ const Check = () => (
 );
 
 function VelopassPro() {
+  const [navOpen, setNavOpen] = useState(false);
   return (
     <>
+      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav dark">
         <Link to="/pro" className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass<span className="logo-pro">pro</span></span>
         </Link>
-        <ul className="nav-links">
+        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href="#pijlers">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#registreer">Registreer</a></li>
           <li><a href="#proof">Community</a></li>
           <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)" }}>↗ Voor fietsers</Link></li>
         </ul>
-        <a href="#registreer" className="btn-nav-cta">Registreer je fietswinkel</a>
+        <div className="nav-actions">
+          <a href="#registreer" className="btn-nav-cta">Registreer je fietswinkel</a>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label="Menu"
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen((o) => !o)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              {navOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              )}
+            </svg>
+          </button>
+        </div>
       </nav>
 
       <section className="pro-hero">
