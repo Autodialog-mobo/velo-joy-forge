@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HelpCircle, Package, ScanLine, MessageCircle } from "lucide-react";
+import { HelpCircle, Package, ScanLine, MessageCircle, ArrowUpRight } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { VelopassMark } from "@/components/VelopassMark";
@@ -160,7 +160,7 @@ function ContactPage() {
           <li><Link to="/" hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
           <li><Link to="/" hash="nieuwe-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
           <li><Link to="/" hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
-          <li><Link to="/pro" style={{ color: "var(--green-mid)" }}>↗ Voor fietswinkels</Link></li>
+          <li><Link to="/pro" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietswinkels</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="#login" className="btn-login">

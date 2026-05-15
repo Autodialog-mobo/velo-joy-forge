@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 
 export const Route = createFileRoute("/pro")({
@@ -52,7 +53,7 @@ function VelopassPro() {
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#registreer">Registreer</a></li>
           <li><a href="#proof">Community</a></li>
-          <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)" }}>↗ Voor fietsers</Link></li>
+          <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="#registreer" className="btn-nav-cta">Registreer je fietswinkel</a>
@@ -243,7 +244,7 @@ function VelopassPro() {
           <li><Link to="/contact">Contact</Link></li>
           <li><a href="#">Inloggen</a></li>
         </ul>
-        <div className="fswitch"><Link to="/" style={{ color: "var(--green)", textDecoration: "none" }}>↗ Voor fietsers</Link></div>
+        <div className="fswitch"><Link to="/" style={{ color: "var(--green)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></div>
         <div className="fcopy">© 2026 Velopass</div>
         <div style={{ gridColumn: "1 / -1", textAlign: "center", fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 16, fontFamily: "'DM Sans', sans-serif" }}>
           Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · BTW BE0777.359.681
