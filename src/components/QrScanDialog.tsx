@@ -298,6 +298,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
             </p>
           )}
         </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
