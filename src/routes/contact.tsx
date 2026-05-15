@@ -109,6 +109,7 @@ const SUGGESTIONS = [
 function ContactPage() {
   const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
   const [errors, setErrors] = useState<WaErrors>({});
+  const [navOpen, setNavOpen] = useState(false);
 
   const sendWa = () => {
     const result = waSchema.safeParse(wa);
