@@ -238,7 +238,7 @@ function VelopassHome() {
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass is actief.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Jouw Velopass is actief", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 3, t: "Je Velopass is open", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -256,7 +256,7 @@ function VelopassHome() {
           ))}
         </div>
         <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <a href="#login" className="btn-p">Inloggen in mijn Velopass</a>
+          <a href="#login" className="btn-p">Open je Velopass</a>
           <a href="#login" className="btn-s">Geen mail ontvangen? →</a>
         </div>
       </section>
