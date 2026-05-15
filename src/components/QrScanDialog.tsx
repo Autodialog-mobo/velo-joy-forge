@@ -111,7 +111,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
         </DialogHeader>
 
         <div style={{ padding: "0 28px 28px" }}>
-          {!result && !error && (
+          {!result && !error && !manual && (
             <div
               style={{
                 position: "relative",
