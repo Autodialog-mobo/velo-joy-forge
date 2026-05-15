@@ -41,7 +41,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
       <DialogContent
-        className="max-w-md p-0 border-0 overflow-hidden flex flex-col z-[300]"
+        className="max-w-md p-0 border-0 overflow-hidden flex flex-col z-[300] [&>button]:hidden"
         style={{ background: "#FFFFFF", borderRadius: 20, maxHeight: "85vh", marginTop: 32 }}
       >
         <button
