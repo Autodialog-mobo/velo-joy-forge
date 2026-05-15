@@ -412,8 +412,8 @@ button { font-family: inherit; }
   .path-split, .steps-flow, .steps-new, .vgrid, .pijler-grid, .why-grid, .sticker-grid { grid-template-columns: 1fr; }
   .sf-arrow { display: none; }
   .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
-  .btn-login span, .btn-login { }
   .vp-nav .btn-login { padding: 7px 12px; font-size: 12px; }
+  .vp-nav .btn-nav-cta { display: none; }
   .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 200; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 6vw 20px; background: rgba(245,243,238,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,31,60,0.08); box-shadow: 0 20px 40px rgba(13,31,60,0.12); max-height: calc(100vh - 64px); overflow-y: auto; }
   .vp-nav.dark .nav-links { background: rgba(13,31,60,0.98); border-bottom: 1px solid rgba(46,204,138,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
   .nav-links.open { display: flex; }
