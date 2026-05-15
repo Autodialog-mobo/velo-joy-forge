@@ -414,12 +414,14 @@ button { font-family: inherit; }
   .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
   .btn-login span, .btn-login { }
   .vp-nav .btn-login { padding: 7px 12px; font-size: 12px; }
-  .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 6vw 20px; background: rgba(245,243,238,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,31,60,0.08); }
-  .vp-nav.dark .nav-links { background: rgba(13,31,60,0.98); border-bottom: 1px solid rgba(46,204,138,0.15); }
+  .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 200; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 6vw 20px; background: rgba(245,243,238,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,31,60,0.08); box-shadow: 0 20px 40px rgba(13,31,60,0.12); max-height: calc(100vh - 64px); overflow-y: auto; }
+  .vp-nav.dark .nav-links { background: rgba(13,31,60,0.98); border-bottom: 1px solid rgba(46,204,138,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
   .nav-links.open { display: flex; }
   .nav-links li { width: 100%; }
   .nav-links a { display: block; padding: 12px 4px; font-size: 15px; border-bottom: 1px solid rgba(13,31,60,0.06); }
   .vp-nav.dark .nav-links a { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-backdrop { display: none; }
+  .nav-backdrop.open { display: block; position: fixed; inset: 64px 0 0 0; background: rgba(13,31,60,0.35); z-index: 150; backdrop-filter: blur(2px); }
   .vp-footer { flex-direction: column; text-align: center; }
   .flinks { flex-wrap: wrap; justify-content: center; }
   .pro-hero, .how-cols, .reg-inner { grid-template-columns: 1fr; }
