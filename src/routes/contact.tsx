@@ -155,10 +155,10 @@ function ContactPage() {
           <span className="logo-text">velopass</span>
         </Link>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><Link to="/" hash="voordelen">Wat je krijgt</Link></li>
-          <li><Link to="/" hash="al-sticker">Al een sticker?</Link></li>
-          <li><Link to="/" hash="nieuwe-sticker">Sticker bestellen</Link></li>
-          <li><Link to="/" hash="community">Community</Link></li>
+          <li><Link to="/" hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
+          <li><Link to="/" hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
+          <li><Link to="/" hash="nieuwe-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
+          <li><Link to="/" hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
           <li><Link to="/pro" style={{ color: "var(--green-mid)" }}>↗ Voor fietswinkels</Link></li>
         </ul>
         <div className="nav-actions">
