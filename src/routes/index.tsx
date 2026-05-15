@@ -41,6 +41,7 @@ export const Route = createFileRoute("/")({
 
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   const QR_STORAGE_KEY = "velopass:qr-overlay";
   const [qrX, setQrX] = useState(46);
