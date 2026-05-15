@@ -77,6 +77,9 @@ button { font-family: inherit; }
 .vp-nav.dark .nav-links a:hover { color: #fff; }
 .btn-login { font-size: 13px; font-weight: 500; background: transparent; color: var(--navy); border: 1.5px solid var(--navy); padding: 7px 18px; border-radius: var(--r-md); cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 7px; }
 .btn-login:hover { background: var(--navy); color: var(--bg); }
+.nav-toggle { display: none; background: transparent; border: none; padding: 8px; cursor: pointer; color: var(--navy); }
+.vp-nav.dark .nav-toggle { color: #fff; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 .btn-nav-cta { font-size: 13px; font-weight: 500; background: var(--green); color: var(--navy); border: none; padding: 8px 18px; border-radius: var(--r-md); cursor: pointer; text-decoration: none; transition: all 0.2s; }
 .btn-nav-cta:hover { background: #25B87A; }
 
@@ -408,7 +411,15 @@ button { font-family: inherit; }
 @media (max-width: 900px) {
   .path-split, .steps-flow, .steps-new, .vgrid, .pijler-grid, .why-grid, .sticker-grid { grid-template-columns: 1fr; }
   .sf-arrow { display: none; }
-  .nav-links { display: none; }
+  .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .btn-login span, .btn-login { }
+  .vp-nav .btn-login { padding: 7px 12px; font-size: 12px; }
+  .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 6vw 20px; background: rgba(245,243,238,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,31,60,0.08); }
+  .vp-nav.dark .nav-links { background: rgba(13,31,60,0.98); border-bottom: 1px solid rgba(46,204,138,0.15); }
+  .nav-links.open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; padding: 12px 4px; font-size: 15px; border-bottom: 1px solid rgba(13,31,60,0.06); }
+  .vp-nav.dark .nav-links a { border-bottom: 1px solid rgba(255,255,255,0.08); }
   .vp-footer { flex-direction: column; text-align: center; }
   .flinks { flex-wrap: wrap; justify-content: center; }
   .pro-hero, .how-cols, .reg-inner { grid-template-columns: 1fr; }
