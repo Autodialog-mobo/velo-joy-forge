@@ -63,7 +63,7 @@ img { max-width: 100%; display: block; }
 button { font-family: inherit; }
 
 /* ============= SHARED NAV ============= */
-.vp-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 6vw; height: 64px; background: rgba(245,243,238,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,31,60,0.08); }
+.vp-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 250; display: flex; align-items: center; justify-content: space-between; padding: 0 6vw; height: 64px; background: rgba(245,243,238,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(13,31,60,0.08); }
 .vp-nav.dark { background: rgba(13,31,60,0.97); border-bottom: 1px solid rgba(46,204,138,0.15); }
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .logo-mark { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
