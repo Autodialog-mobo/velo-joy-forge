@@ -149,6 +149,7 @@ function ContactPage() {
 
   return (
     <>
+      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
         <Link to="/" className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
