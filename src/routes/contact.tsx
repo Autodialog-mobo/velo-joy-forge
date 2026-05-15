@@ -154,20 +154,37 @@ function ContactPage() {
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
-        <ul className="nav-links">
+        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><Link to="/" hash="voordelen">Wat je krijgt</Link></li>
           <li><Link to="/" hash="al-sticker">Al een sticker?</Link></li>
           <li><Link to="/" hash="nieuwe-sticker">Sticker bestellen</Link></li>
           <li><Link to="/" hash="community">Community</Link></li>
           <li><Link to="/pro" style={{ color: "var(--green-mid)" }}>↗ Voor fietswinkels</Link></li>
         </ul>
-        <a href="#login" className="btn-login">
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          Inloggen
-        </a>
+        <div className="nav-actions">
+          <a href="#login" className="btn-login">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            Inloggen
+          </a>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label="Menu"
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen((o) => !o)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              {navOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              )}
+            </svg>
+          </button>
+        </div>
       </nav>
 
       <main style={{ background: "var(--bg)", paddingTop: 64, minHeight: "100vh" }}>
