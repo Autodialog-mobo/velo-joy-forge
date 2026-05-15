@@ -29,6 +29,8 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
   const reset = () => {
     setResult(null);
     setError(null);
+    setManual(false);
+    setManualCode("");
   };
 
   const close = () => {
