@@ -11,6 +11,8 @@ type Props = {
 export function QrScanDialog({ open, onOpenChange }: Props) {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [manual, setManual] = useState(false);
+  const [manualCode, setManualCode] = useState("");
 
   const handleScan = (codes: IDetectedBarcode[]) => {
     if (codes.length > 0) {
