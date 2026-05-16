@@ -41,6 +41,7 @@ export const Route = createFileRoute("/")({
 
 function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
+  const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   const QR_STORAGE_KEY = "velopass:qr-overlay";
@@ -320,10 +321,12 @@ function VelopassHome() {
           ))}
         </div>
         <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <button type="button" onClick={() => setScanOpen(true)} className="btn-p" style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
+          <button type="button" onClick={() => { setScanManual(false); setScanOpen(true); }} className="btn-p" style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
             <QrCode size={16} strokeWidth={2} /> Scan de QR-code
           </button>
-          <a href="#" className="btn-s">Code handmatig invoeren →</a>
+          <button type="button" onClick={() => { setScanManual(true); setScanOpen(true); }} className="btn-s" style={{ border: "none", background: "transparent", cursor: "pointer", font: "inherit" }}>
+            Code handmatig invoeren →
+          </button>
         </div>
       </section>
 
@@ -463,7 +466,7 @@ function VelopassHome() {
         </div>
       </footer>
 
-      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
     </>
   );
 }
