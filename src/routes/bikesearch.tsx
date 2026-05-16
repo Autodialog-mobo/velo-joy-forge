@@ -111,6 +111,7 @@ function BikeSearchPage() {
   const [loadingB, setLoadingB] = useState(false);
   const [result, setResult] = useState<Status | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
 
   const submitA = async (e: React.FormEvent) => {
     e.preventDefault();
