@@ -592,7 +592,7 @@ function BikeSearchPage() {
               Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd. Is dit jouw fiets? Registreer hem nu en bescherm hem meteen.
             </p>
             <a
-              href="https://velopass.com"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               style={{
