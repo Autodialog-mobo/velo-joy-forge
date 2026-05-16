@@ -186,8 +186,6 @@ function BikeSearchPage() {
           </button>
         </div>
       </nav>
-
-      <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
       <section style={{ padding: "64px 6vw 32px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
