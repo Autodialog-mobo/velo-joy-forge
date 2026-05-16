@@ -466,7 +466,7 @@ function VelopassHome() {
         </div>
       </footer>
 
-      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
     </>
   );
 }
