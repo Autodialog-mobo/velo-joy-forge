@@ -15,7 +15,7 @@ const leftFAQs = [
   },
   {
     q: "Hoe werkt Velopass samen met het Belgisch Nationaal Fietsregister (MyBike)?",
-    a: "Je kan je Velopass-code gebruiken om je fiets ook te registreren in MyBike, het Belgisch nationaal fietsregister. Zo ben je dubbel beschermd — in de Velopass Community én in het officiële register.",
+    a: "Je kan je Velopass-code gebruiken om je fiets ook te registreren in MyBike, het Belgisch nationaal fietsregister. Zo ben je dubbel beschermd — in de Velopass Community én in het Beldische register.",
   },
   {
     q: "Wat is het verschil tussen de Velopass-code en het framenummer?",
