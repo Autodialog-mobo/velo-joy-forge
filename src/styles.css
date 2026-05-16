@@ -499,3 +499,5 @@ button { font-family: inherit; }
 .bs-card-primary { border-top: 3px solid #2ECC8A; }
 .bs-spin { animation: bs-spin 0.8s linear infinite; }
 @keyframes bs-spin { to { transform: rotate(360deg); } }
+.bs-status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1080px; margin: 0 auto; }
+@media (max-width: 768px) { .bs-status-grid { grid-template-columns: 1fr; } }
