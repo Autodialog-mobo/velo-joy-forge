@@ -93,7 +93,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
               lineHeight: 1.2,
             }}
           >
-            {result ? "Sticker gescand" : "Scan de Velopass-sticker"}
+            {result ? "Frame-ID gescand" : "Scan de Velopass Frame-ID"}
           </DialogTitle>
           <DialogDescription
             style={{
@@ -106,7 +106,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
           >
             {result
               ? "We hebben de QR-code herkend. Bevestig om de overdracht te starten."
-              : "Richt je camera op de QR-sticker. Houd ongeveer 15 cm afstand."}
+              : "Richt je camera op de QR-code. Houd ongeveer 15 cm afstand."}
           </DialogDescription>
         </DialogHeader>
 
@@ -189,7 +189,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
                   Camera niet beschikbaar
                 </div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
-                  Geef toestemming voor de camera in je browserinstellingen, of voer de stickercode handmatig in.
+                  Geef toestemming voor de camera in je browserinstellingen, of voer de Frame-ID code handmatig in.
                 </div>
                 <button
                   onClick={() => setError(null)}
@@ -227,7 +227,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
                 <CheckCircle2 size={22} color="#2ECC8A" style={{ flexShrink: 0, marginTop: 1 }} />
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
-                    Sticker herkend
+                    Frame-ID herkend
                   </div>
                   <div
                     style={{
@@ -329,7 +329,7 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
                   marginBottom: 8,
                 }}
               >
-                Stickercode (10 cijfers)
+                Frame-ID code (10 cijfers)
               </label>
               <input
                 type="text"

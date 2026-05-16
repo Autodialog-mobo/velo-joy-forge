@@ -25,13 +25,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Eén sticker op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort.",
+          "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort.",
       },
       { property: "og:title", content: "Velopass — Altijd op de fiets. Alles geregeld." },
       {
         property: "og:description",
         content:
-          "Eén sticker op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel.",
+          "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel.",
       },
       { property: "og:type", content: "website" },
     ],
@@ -113,7 +113,7 @@ function VelopassHome() {
         <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
         <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
-          Eén sticker op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Wat er ook gebeurt.
+          Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Wat er ook gebeurt.
         </p>
 
         <div className="path-split">
@@ -132,7 +132,7 @@ function VelopassHome() {
             <span className="path-cta">Open je Velopass →</span>
           </a>
           <a href="#nieuwe-sticker" className="path-card secondary">
-            <div className="path-tag">Nog geen sticker?</div>
+            <div className="path-tag">Nog geen Frame-ID?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10" />
@@ -140,19 +140,19 @@ function VelopassHome() {
                 <line x1="8" y1="12" x2="16" y2="12" />
               </svg>
             </div>
-            <div className="path-title">Bestel een Velopass sticker</div>
-            <p className="path-desc">Vraag een sticker aan bij je lokale fietswinkel of bestel er rechtstreeks een via onze webshop.</p>
+            <div className="path-title">Bestel een Velopass Frame-ID</div>
+            <p className="path-desc">Vraag een Frame-ID aan bij je lokale fietswinkel of bestel er rechtstreeks een via onze webshop.</p>
             <span className="path-cta">Sticker bestellen →</span>
           </a>
           <a href="#tweedehands" className="path-card tertiary">
-            <div className="path-tag">Tweedehands fiets met sticker?</div>
+            <div className="path-tag">Tweedehands fiets met Frame-ID?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
                 <path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
             </div>
             <div className="path-title">Het paspoort gaat mee. Op jouw naam.</div>
-            <p className="path-desc">Tweedehands fiets gekocht met een bestaande Velopass sticker? Registreer hem op jouw naam — het paspoort gaat gewoon mee.</p>
+            <p className="path-desc">Tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Registreer hem op jouw naam — het paspoort gaat gewoon mee.</p>
             <span className="path-cta">Overdracht starten →</span>
           </a>
         </div>
@@ -177,7 +177,7 @@ function VelopassHome() {
                 ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
-              <img src={stickerImg} alt="Velopass sticker op een fietsframe" width={1024} height={1024} />
+              <img src={stickerImg} alt="Velopass Frame-ID op een fietsframe" width={1024} height={1024} />
               <div className="scan-overlay" aria-hidden="true">
                 <span className="scan-corner tl" />
                 <span className="scan-corner tr" />
@@ -205,16 +205,16 @@ function VelopassHome() {
             )}
           </div>
           <div className="sticker-content">
-            <p className="eyebrow">De Velopass sticker</p>
+            <p className="eyebrow">De Velopass Frame-ID</p>
             <h2 className="sticker-title">
               <span className="st-line-1">De digitale sleutel van je fiets.</span>
               <span className="st-line-2">Eén scan. Alles geregeld.</span>
             </h2>
-            <p className="sec-sub">Eén sticker op je frame, een wereld aan mogelijkheden in je broekzak.</p>
+            <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
             <div className="sticker-feats">
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de sticker nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
+                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de Frame-ID nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
@@ -222,7 +222,7 @@ function VelopassHome() {
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Verbonden met het frame.</strong><span>De sticker hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De sticker blijft, de data verhuist mee.</span></div>
+                <div><strong>Verbonden met het frame.</strong><span>De Frame-ID hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De Frame-ID blijft op het frame, de data verhuist mee.</span></div>
               </div>
             </div>
           </div>
@@ -233,12 +233,12 @@ function VelopassHome() {
       <section className="flow-sticker" id="al-sticker">
         <p className="eyebrow">Uitnodiging ontvangen?</p>
         <h2 className="sec-title">Jouw Velopass staat klaar</h2>
-        <p className="sec-sub">Je fietswinkel heeft de sticker geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
+        <p className="sec-sub">Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
         <div className="steps-flow">
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass gaat open.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Je Velopass is klaar", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-sticker op je fiets.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 3, t: "Je Velopass is klaar", d: "Diefstalprotectie, pechhulp en verzekering — alles bereikbaar via één scan van de QR-code op je Frame-ID.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -263,20 +263,20 @@ function VelopassHome() {
 
       {/* PAD 2 */}
       <section className="flow-new" id="nieuwe-sticker">
-        <p className="eyebrow">Nog geen sticker</p>
-        <h2 className="sec-title">Bestel een Velopass sticker</h2>
-        <p className="sec-sub">Eén sticker activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
+        <p className="eyebrow">Nog geen Frame-ID</p>
+        <h2 className="sec-title">Bestel een Velopass Frame-ID</h2>
+        <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h4>Via een fietswinkel</h4>
-            <p>Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft stickers in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.</p>
+            <p>Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft Frame-ID's in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.</p>
             <a href="#community" className="btn-p">Vind een fietswinkel bij jou in de buurt</a>
           </div>
           <div className="sn path-shop">
             <div style={pathIconBox}><Package size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h4>Via de Velopass webshop</h4>
-            <p>Bestel een sticker rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
+            <p>Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
             <a href="#" className="btn-g">Bestel via de Velopass webshop →</a>
           </div>
         </div>
@@ -286,19 +286,19 @@ function VelopassHome() {
           </div>
           <div>
             <h4>Altijd op de fiets. Alles geregeld.</h4>
-            <p>Jouw Velopass is actief. Diefstalprotectie, pechhulp en verzekering — één scan van je sticker ver.</p>
+            <p>Jouw Velopass is actief. Diefstalprotectie, pechhulp en verzekering — één scan van je Frame-ID ver.</p>
           </div>
         </div>
       </section>
 
       {/* PAD 3 */}
       <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
-        <p className="eyebrow">Tweedehands fiets met sticker</p>
+        <p className="eyebrow">Tweedehands fiets met Frame-ID</p>
         <h2 className="sec-title">Het paspoort gaat mee. <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>Op jouw naam.</em></h2>
-        <p className="sec-sub">Heb je een tweedehands fiets gekocht met een bestaande Velopass-sticker? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.</p>
+        <p className="sec-sub">Heb je een tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.</p>
         <div className="steps-flow">
           {[
-            { n: 1, t: "Scan de QR-sticker", d: "Scan de sticker op je tweedehands fiets.", icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 1, t: "Scan de QR-code op de Frame-ID", d: "Scan de QR-code op de Frame-ID van je tweedehands fiets.", icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam.", icon: <ArrowRightLeft size={22} color="#2ECC8A" strokeWidth={1.8} /> },
             { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
@@ -319,7 +319,7 @@ function VelopassHome() {
         </div>
         <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button type="button" onClick={() => setScanOpen(true)} className="btn-p" style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
-            <QrCode size={16} strokeWidth={2} /> Scan de sticker
+            <QrCode size={16} strokeWidth={2} /> Scan de QR-code
           </button>
           <a href="#" className="btn-s">Code handmatig invoeren →</a>
         </div>
@@ -328,7 +328,7 @@ function VelopassHome() {
       {/* VOORDELEN (dark) */}
       <section className="voordelen" id="voordelen">
         <p className="eyebrow">Alles op één plek</p>
-        <h2 className="sec-title">Eén sticker. Een heel fietsleven geregeld.</h2>
+        <h2 className="sec-title">Eén Frame-ID. Een heel fietsleven geregeld.</h2>
         <div className="vgrid">
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
@@ -434,7 +434,7 @@ function VelopassHome() {
                 <rect x="13" y="10" width="2" height="2" fill="currentColor" />
                 <rect x="10" y="13" width="2" height="2" fill="currentColor" />
               </svg>
-              Inloggen via QR-sticker
+              Inloggen via QR-code
             </button>
           </form>
           <p className="lreg">Nog niet geregistreerd? <a href="#nieuwe-sticker">Activeer je Velopass</a></p>
@@ -446,7 +446,7 @@ function VelopassHome() {
           <div className="flogo">velopass</div>
           <div className="ftagline">Altijd op de fiets. Alles geregeld.</div>
           <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 3 }}>
-            Stickers beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR
+            Frame-ID's beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR
           </div>
         </div>
         <ul className="flinks">

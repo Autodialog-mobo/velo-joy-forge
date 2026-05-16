@@ -12,7 +12,7 @@ export function ShopFinder() {
         <div className="sf-hero">
           <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
           <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
-          <p className="sf-subhead"><strong style={{ color: "#0D1F3C", fontWeight: 600 }}>1823+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw sticker? Dan krijg jij meteen een seintje.</p>
+          <p className="sf-subhead"><strong style={{ color: "#0D1F3C", fontWeight: 600 }}>1823+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.</p>
         </div>
         <p className="sec-sub" style={{ marginTop: 32 }}>Kaart laden...</p>
       </section>
