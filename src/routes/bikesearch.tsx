@@ -99,7 +99,7 @@ async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: 
   // Demo rule: digit sum determines status
   const sum = key.split("").reduce((a, c) => a + (c.charCodeAt(0) % 7), 0);
   const mod = sum % 3;
-  const status: Status = mod === 0 ? "secured" : mod === 1 ? "secured_reported" : "not_registered";
+  const status: Status = mod === 0 ? "free" : mod === 1 ? "reported" : "not_registered";
   return { status };
 }
 
