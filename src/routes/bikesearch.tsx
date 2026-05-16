@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
+import { trackRegisterBikeClick } from "@/lib/analytics";
 
 export const Route = createFileRoute("/bikesearch")({
   head: () => ({
