@@ -387,9 +387,9 @@ function BikeSearchPage() {
         {/* RESULT */}
         {result && (
           <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
-            {result === "secured" && <SecuredCard L={L} />}
-            {result === "secured_reported" && <ReportedCard L={L} />}
-            {result === "not_registered" && <NotRegCard L={L} />}
+            {result === "free" && <FreeCard L={L} />}
+            {result === "reported" && <ReportedCard L={L} />}
+            {result === "not_registered" && <NotRegCard L={L} method={lastMethod} />}
           </div>
         )}
       </section>
