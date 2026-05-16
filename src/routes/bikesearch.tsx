@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
+import { trackRegisterBikeClick } from "@/lib/analytics";
 
 export const Route = createFileRoute("/bikesearch")({
   head: () => ({
@@ -593,6 +594,7 @@ function BikeSearchPage() {
             </p>
             <a
               href="/"
+              onClick={() => trackRegisterBikeClick("bikesearch", "status-info-not-registered")}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 13,
@@ -819,6 +821,7 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       <p style={resultBody}>{L.notRegBody}</p>
       <a
         href="/"
+        onClick={() => trackRegisterBikeClick("bikesearch", "search-result-not-registered")}
         style={{
           background: "#0D1F3C",
           color: "#fff",
