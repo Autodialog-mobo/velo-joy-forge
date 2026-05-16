@@ -4,6 +4,7 @@ import { HelpCircle, Package, ScanLine, MessageCircle, ArrowUpRight } from "luci
 import { z } from "zod";
 import { toast } from "sonner";
 import { VelopassMark } from "@/components/VelopassMark";
+import { Footer } from "@/components/Footer";
 
 const waSchema = z.object({
   name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100, { message: "Naam mag maximaal 100 tekens zijn." }),
@@ -372,6 +373,8 @@ function ContactPage() {
           </p>
         </section>
       </main>
+
+      <Footer />
 
       <style>{`
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
