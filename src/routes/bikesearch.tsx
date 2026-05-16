@@ -593,6 +593,8 @@ function BikeSearchPage() {
             </p>
             <a
               href="https://velopass.com"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 13,
@@ -819,6 +821,8 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       <p style={resultBody}>{L.notRegBody}</p>
       <a
         href="https://velopass.com"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
           background: "#0D1F3C",
           color: "#fff",
