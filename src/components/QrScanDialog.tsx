@@ -15,8 +15,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
   const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
 
-  // Sync when dialog re-opens with a different initial mode
-  useState(() => initialManual);
+  // Sync when dialog opens with a different initial mode
+  useEffect(() => {
+    if (open) setManual(initialManual);
+  }, [open, initialManual]);
 
   const handleScan = (codes: IDetectedBarcode[]) => {
     if (codes.length > 0) {
