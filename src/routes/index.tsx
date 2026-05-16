@@ -6,6 +6,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { FaqSection } from "@/components/FaqSection";
+import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
 
 const pathIconBox: React.CSSProperties = {
