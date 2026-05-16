@@ -594,6 +594,7 @@ function BikeSearchPage() {
             </p>
             <a
               href="/"
+              onClick={() => trackRegisterBikeClick("bikesearch", "status-info-not-registered")}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 13,
