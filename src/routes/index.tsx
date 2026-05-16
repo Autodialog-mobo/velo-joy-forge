@@ -5,6 +5,7 @@ import stickerImg from "@/assets/velopass-sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
+import { FaqSection } from "@/components/FaqSection";
 import shopsData from "@/data/shops.json";
 
 const pathIconBox: React.CSSProperties = {
