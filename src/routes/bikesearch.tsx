@@ -456,13 +456,13 @@ function BikeSearchPage() {
           </div>
 
           <div className="bs-secured-grid">
-            {/* CARD 1: FREE */}
+            {/* CARD 1: ALL CLEAR */}
             <div style={statusCardStyle}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <CheckCircle2 size={20} color="#2ECC8A" />
-                <span style={statusBadgeStyle("#2ECC8A")}>FREE</span>
+                <span style={statusBadgeStyle("#2ECC8A")}>ALL CLEAR</span>
               </div>
-              <h3 style={statusTitleStyle}>Vrij en beveiligd</h3>
+              <h3 style={statusTitleStyle}>Vrij en veilig</h3>
               <p style={statusBodyStyle}>
                 Geregistreerd in de Velopass Community en niet gemeld als vermist.
               </p>
