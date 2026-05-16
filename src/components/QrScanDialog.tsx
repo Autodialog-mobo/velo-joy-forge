@@ -6,13 +6,17 @@ import { QrCode, CheckCircle2, AlertCircle, X } from "lucide-react";
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialManual?: boolean;
 };
 
-export function QrScanDialog({ open, onOpenChange }: Props) {
+export function QrScanDialog({ open, onOpenChange, initialManual = false }: Props) {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [manual, setManual] = useState(false);
+  const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
+
+  // Sync when dialog re-opens with a different initial mode
+  useState(() => initialManual);
 
   const handleScan = (codes: IDetectedBarcode[]) => {
     if (codes.length > 0) {
