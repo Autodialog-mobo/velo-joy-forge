@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
+import { QrScanDialog } from "@/components/QrScanDialog";
 
 export const Route = createFileRoute("/bikesearch")({
   head: () => ({
@@ -76,6 +77,8 @@ const t = (lang: Lang) => ({
       : "Deze fiets staat niet in de Velopass-database. Registreer hem om hem te beveiligen.",
   notRegCta: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
   captcha: lang === "fr-fr" ? "Je ne suis pas un robot" : "Ik ben geen robot",
+  scanCta: lang === "fr-fr" ? "Scanner le QR-code" : "Scan de QR-code",
+  manualCta: lang === "fr-fr" ? "Entrer le code manuellement" : "Code handmatig invoeren",
 });
 
 // Mock backend — deterministic based on input
@@ -99,6 +102,8 @@ function BikeSearchPage() {
   const [brand, setBrand] = useState("");
   const [frame, setFrame] = useState("");
   const [captcha, setCaptcha] = useState(false);
+  const [manualOpen, setManualOpen] = useState(false);
+  const [scanOpen, setScanOpen] = useState(false);
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
@@ -222,26 +227,65 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{L.methodA}</h2>
             <p style={cardDesc}>{L.methodAdesc}</p>
 
-            <label style={labelStyle} htmlFor="bs-code">{L.codeLabel}</label>
-            <input
-              id="bs-code"
-              type="text"
-              value={codeA}
-              onChange={(e) => setCodeA(e.target.value)}
-              placeholder="87CH9810171"
-              maxLength={32}
-              style={inputStyle}
-            />
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: manualOpen ? 18 : 0 }}>
+              <button
+                type="button"
+                onClick={() => setScanOpen(true)}
+                style={{
+                  ...navyBtn(false),
+                  marginTop: 0,
+                  width: "auto",
+                  flex: "1 1 200px",
+                  background: "#0D1F3C",
+                }}
+              >
+                <QrCode size={16} strokeWidth={2} /> {L.scanCta}
+              </button>
+              <button
+                type="button"
+                onClick={() => setManualOpen((o) => !o)}
+                style={{
+                  marginTop: 0,
+                  background: "transparent",
+                  color: "#0D1F3C",
+                  border: "1.5px solid rgba(13,31,60,0.2)",
+                  borderRadius: 10,
+                  padding: "14px 20px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  fontSize: 14,
+                  cursor: "pointer",
+                  flex: "1 1 200px",
+                }}
+              >
+                {L.manualCta} {manualOpen ? "↑" : "→"}
+              </button>
+            </div>
 
-            <button type="submit" disabled={loadingA || !codeA.trim()} style={navyBtn(loadingA || !codeA.trim())}>
-              {loadingA ? (
-                <>
-                  <Loader2 size={16} className="bs-spin" /> {L.loading}
-                </>
-              ) : (
-                L.check
-              )}
-            </button>
+            {manualOpen && (
+              <>
+                <label style={{ ...labelStyle, marginTop: 4 }} htmlFor="bs-code">{L.codeLabel}</label>
+                <input
+                  id="bs-code"
+                  type="text"
+                  value={codeA}
+                  onChange={(e) => setCodeA(e.target.value)}
+                  placeholder="87CH9810171"
+                  maxLength={32}
+                  style={inputStyle}
+                  autoFocus
+                />
+                <button type="submit" disabled={loadingA || !codeA.trim()} style={navyBtn(loadingA || !codeA.trim())}>
+                  {loadingA ? (
+                    <>
+                      <Loader2 size={16} className="bs-spin" /> {L.loading}
+                    </>
+                  ) : (
+                    L.check
+                  )}
+                </button>
+              </>
+            )}
           </form>
 
           {/* METHOD B */}
@@ -385,6 +429,8 @@ function BikeSearchPage() {
         .bs-spin { animation: bs-spin 0.8s linear infinite; }
         @keyframes bs-spin { to { transform: rotate(360deg); } }
       `}</style>
+
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
     </div>
   );
 }
