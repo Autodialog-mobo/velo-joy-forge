@@ -821,6 +821,7 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       <p style={resultBody}>{L.notRegBody}</p>
       <a
         href="/"
+        onClick={() => trackRegisterBikeClick("bikesearch", "search-result-not-registered")}
         style={{
           background: "#0D1F3C",
           color: "#fff",
