@@ -78,6 +78,7 @@ function VelopassHome() {
           <li><a href="#al-sticker">Al een sticker?</a></li>
           <li><a href="#nieuwe-sticker">Sticker bestellen</a></li>
           <li><a href="#community">Community</a></li>
+          <li><a href="https://bikesearch.velopass.com/?lng=nl-nl" target="_blank" rel="noopener noreferrer">Fiets controleren</a></li>
           <li><Link to="/pro" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietswinkels</Link></li>
         </ul>
         <div className="nav-actions">
