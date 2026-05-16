@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { QrCode, CheckCircle2, AlertCircle, X } from "lucide-react";
@@ -6,13 +6,19 @@ import { QrCode, CheckCircle2, AlertCircle, X } from "lucide-react";
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialManual?: boolean;
 };
 
-export function QrScanDialog({ open, onOpenChange }: Props) {
+export function QrScanDialog({ open, onOpenChange, initialManual = false }: Props) {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [manual, setManual] = useState(false);
+  const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
+
+  // Sync when dialog opens with a different initial mode
+  useEffect(() => {
+    if (open) setManual(initialManual);
+  }, [open, initialManual]);
 
   const handleScan = (codes: IDetectedBarcode[]) => {
     if (codes.length > 0) {
@@ -355,45 +361,53 @@ export function QrScanDialog({ open, onOpenChange }: Props) {
                   boxSizing: "border-box",
                 }}
               />
-              <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+              <button
+                type="button"
+                disabled={manualCode.length !== 10}
+                onClick={() => setResult(manualCode)}
+                style={{
+                  width: "100%",
+                  marginTop: 14,
+                  background: manualCode.length === 10 ? "#0D1F3C" : "rgba(13,31,60,0.35)",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 12,
+                  padding: "12px 16px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  fontSize: 14,
+                  cursor: manualCode.length === 10 ? "pointer" : "not-allowed",
+                }}
+              >
+                Bevestigen
+              </button>
+              <p
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 12,
+                  color: "#5A7090",
+                  textAlign: "center",
+                  marginTop: 14,
+                  lineHeight: 1.5,
+                }}
+              >
+                Camera bij de hand?{" "}
                 <button
                   type="button"
-                  onClick={() => { setManual(false); setManualCode(""); }}
+                  onClick={() => { setManual(false); setManualCode(""); setError(null); }}
                   style={{
-                    flex: 1,
-                    background: "transparent",
-                    border: "1px solid rgba(13,31,60,0.18)",
-                    borderRadius: 12,
-                    padding: "12px 16px",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 500,
-                    fontSize: 14,
                     color: "#0D1F3C",
+                    textDecoration: "underline",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    font: "inherit",
                     cursor: "pointer",
                   }}
                 >
-                  Terug naar scanner
+                  Scan de QR-code
                 </button>
-                <button
-                  type="button"
-                  disabled={manualCode.length !== 10}
-                  onClick={() => setResult(manualCode)}
-                  style={{
-                    flex: 1,
-                    background: manualCode.length === 10 ? "#0D1F3C" : "rgba(13,31,60,0.35)",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 12,
-                    padding: "12px 16px",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 500,
-                    fontSize: 14,
-                    cursor: manualCode.length === 10 ? "pointer" : "not-allowed",
-                  }}
-                >
-                  Bevestigen
-                </button>
-              </div>
+              </p>
             </div>
           )}
         </div>
