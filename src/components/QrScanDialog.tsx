@@ -408,9 +408,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
                   Scan de QR-code
                 </button>
               </p>
-
-                </button>
-              </div>
             </div>
           )}
         </div>
