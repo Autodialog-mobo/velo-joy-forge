@@ -449,27 +449,7 @@ function VelopassHome() {
 
       <FaqSection />
 
-      <footer className="vp-footer">
-        <div>
-          <div className="flogo">velopass</div>
-          <div className="ftagline">Altijd op de fiets. Alles geregeld.</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 3 }}>
-            Frame-ID's beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR
-          </div>
-        </div>
-        <ul className="flinks">
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Voorwaarden</a></li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/bikesearch">Fiets controleren</Link></li>
-          <li><a href="#faq">Veelgestelde vragen</a></li>
-        </ul>
-        
-        <div className="fcopy">© 2026 Velopass</div>
-        <div style={{ gridColumn: "1 / -1", textAlign: "center", fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 16, fontFamily: "'DM Sans', sans-serif" }}>
-          Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · BTW BE0777.359.681
-        </div>
-      </footer>
+      <Footer />
 
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
     </>
