@@ -113,12 +113,12 @@ export function FaqSection() {
               background: "#FFFFFF",
               border: "1px solid rgba(13,31,60,0.1)",
               borderRadius: 12,
-              padding: "8px 0",
+              padding: "16px 20px",
             }}
           >
             <Accordion type="multiple" className="w-full">
               {leftFAQs.map((faq, i) => (
-                <AccordionItem key={`l-${i}`} value={`l-${i}`} className="border-b border-[rgba(13,31,60,0.1)] px-6">
+                <AccordionItem key={`l-${i}`} value={`l-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
                   <AccordionTrigger
                     className="text-left"
                     style={{
@@ -163,12 +163,12 @@ export function FaqSection() {
               background: "#FFFFFF",
               border: "1px solid rgba(13,31,60,0.1)",
               borderRadius: 12,
-              padding: "8px 0",
+              padding: "16px 20px",
             }}
           >
             <Accordion type="multiple" className="w-full">
               {rightFAQs.map((faq, i) => (
-                <AccordionItem key={`r-${i}`} value={`r-${i}`} className="border-b border-[rgba(13,31,60,0.1)] px-6">
+                <AccordionItem key={`r-${i}`} value={`r-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
                   <AccordionTrigger
                     className="text-left"
                     style={{
