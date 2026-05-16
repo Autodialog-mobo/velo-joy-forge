@@ -186,6 +186,7 @@ function VelopassHome() {
                 <span className="scan-line" />
               </div>
               <div className="scan-badge">Scan → toegang tot alles</div>
+              <div className="secured-tag" aria-label="Secured"><span className="secured-tag-dot" />SECURED</div>
             </div>
             {import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune") && (
               <div className="qr-tuner">
