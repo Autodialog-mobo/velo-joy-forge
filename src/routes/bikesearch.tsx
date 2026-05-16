@@ -23,8 +23,9 @@ export const Route = createFileRoute("/bikesearch")({
   component: BikeSearchPage,
 });
 
-type Status = "secured" | "secured_reported" | "not_registered";
+type Status = "free" | "reported" | "not_registered";
 type Lang = "nl-nl" | "fr-fr";
+type Method = "A" | "B";
 
 const BRANDS = [
   "Trek", "Specialized", "Cube", "Giant", "Cannondale", "Scott", "Bianchi",
