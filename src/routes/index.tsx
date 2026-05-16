@@ -68,6 +68,16 @@ function VelopassHome() {
       localStorage.setItem(QR_STORAGE_KEY, JSON.stringify({ x: qrX, y: qrY, size: qrSize }));
     } catch {}
   }, [qrX, qrY, qrSize]);
+  // Scroll to hash on mount / navigation
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const el = document.querySelector(hash);
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+      }
+    }
+  }, []);
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
