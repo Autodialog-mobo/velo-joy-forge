@@ -94,7 +94,7 @@ const SUGGESTIONS = [
   },
   {
     icon: Package,
-    title: "Vraag over mijn sticker",
+    title: "Vraag over mijn Frame-ID",
     desc: "Frame-ID niet ontvangen, beschadigd of een andere vraag over je bestelling?",
     prefill: "Hallo Velopass, ik heb een vraag over mijn Frame-ID: ",
   },

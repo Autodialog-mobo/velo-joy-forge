@@ -276,7 +276,7 @@ function VelopassHome() {
           <div className="sn path-shop">
             <div style={pathIconBox}><Package size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h4>Via de Velopass webshop</h4>
-            <p>Bestel een sticker rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
+            <p>Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
             <a href="#" className="btn-g">Bestel via de Velopass webshop →</a>
           </div>
         </div>
