@@ -516,6 +516,17 @@ function BikeSearchPage() {
           <p style={statusBodyStyle}>
             Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.
           </p>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 14,
+              fontWeight: 500,
+              color: "#0D1F3C",
+              margin: "16px 0 12px",
+            }}
+          >
+            Is dit jouw fiets?
+          </p>
 
           {lastMethod === "b" ? (
             <>
