@@ -609,6 +609,8 @@ function BikeSearchPage() {
       <style>{`
         .bs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 768px) { .bs-grid { grid-template-columns: 1fr; } }
+        .bs-secured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 768px) { .bs-secured-grid { grid-template-columns: 1fr; } }
         .bs-card {
           background: #fff;
           border: 1px solid rgba(13,31,60,0.1);
