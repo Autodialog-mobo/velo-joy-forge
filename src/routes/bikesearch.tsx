@@ -75,7 +75,7 @@ const t = (lang: Lang) => ({
     lang === "fr-fr"
       ? "Ce vélo ne figure pas dans la base de données Velopass. Enregistrez-le pour le sécuriser."
       : "Deze fiets staat niet in de Velopass-database. Registreer hem om hem te beveiligen.",
-  notRegCta: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
+  notRegCta: lang === "fr-fr" ? "Commandez un Frame ID →" : "Bestel een Frame ID →",
   captcha: lang === "fr-fr" ? "Je ne suis pas un robot" : "Ik ben geen robot",
   scanCta: lang === "fr-fr" ? "Scanner le QR-code" : "Scan de QR-code",
   manualCta: lang === "fr-fr" ? "Entrer le code manuellement" : "Code handmatig invoeren",
@@ -602,7 +602,7 @@ function BikeSearchPage() {
                 fontWeight: 500,
               }}
             >
-              Registreer je fiets →
+              Bestel een Frame ID →
             </a>
           </div>
         </div>
