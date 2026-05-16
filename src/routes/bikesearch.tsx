@@ -756,20 +756,20 @@ const resultBody: React.CSSProperties = {
   marginBottom: 20,
 };
 
-function SecuredCard({ L }: { L: ReturnType<typeof t> }) {
+function FreeCard({ L }: { L: ReturnType<typeof t> }) {
   return (
     <div style={resultCard("#2ECC8A")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>SECURED</span>
+        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>FREE</span>
         <CheckCircle2 color="#2ECC8A" size={24} />
       </div>
-      <h3 style={resultTitle}>{L.securedTitle}</h3>
-      <p style={resultBody}>{L.securedBody}</p>
+      <h3 style={resultTitle}>{L.freeTitle}</h3>
+      <p style={resultBody}>{L.freeBody}</p>
       <a
         href="https://velopass.com"
         style={{ color: "#2ECC8A", fontWeight: 500, textDecoration: "none", fontSize: 14 }}
       >
-        {L.securedCta}
+        {L.freeCta}
       </a>
     </div>
   );
@@ -778,10 +778,9 @@ function SecuredCard({ L }: { L: ReturnType<typeof t> }) {
 function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
   return (
     <div style={resultCard("#F59E0B")}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>SECURED</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>REPORTED</span>
-        <AlertTriangle color="#F59E0B" size={24} style={{ marginLeft: 4 }} />
+        <AlertTriangle color="#F59E0B" size={24} />
       </div>
       <h3 style={resultTitle}>{L.reportedTitle}</h3>
       <p style={resultBody}>{L.reportedBody}</p>
@@ -820,7 +819,8 @@ function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
   );
 }
 
-function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
+function NotRegCard({ L, method }: { L: ReturnType<typeof t>; method: Method | null }) {
+  const isB = method === "B";
   return (
     <div style={resultCard("#CBD5E1")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -830,10 +830,10 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       <h3 style={resultTitle}>{L.notRegTitle}</h3>
       <p style={resultBody}>{L.notRegBody}</p>
       <a
-        href="https://velopass.com"
+        href={isB ? "https://velopass.com/#nieuwe-sticker" : "https://velopass.com"}
         style={{
-          background: "#0D1F3C",
-          color: "#fff",
+          background: isB ? "#2ECC8A" : "#0D1F3C",
+          color: isB ? "#0D1F3C" : "#fff",
           padding: "12px 20px",
           borderRadius: 10,
           textDecoration: "none",
@@ -842,8 +842,11 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
           display: "inline-block",
         }}
       >
-        {L.notRegCta}
+        {isB ? L.notRegCtaB : L.notRegCtaA}
       </a>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#5A7090", marginTop: 12, lineHeight: 1.5 }}>
+        {isB ? L.notRegSubB : L.notRegSubA}
+      </p>
     </div>
   );
 }
