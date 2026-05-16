@@ -334,7 +334,7 @@ function VelopassHome() {
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
             <div>
               <div className="vc-head"><h3>Diefstalprotectie</h3></div>
-              <p>Je fiets staat geregistreerd in Velopass, het internationale fietsregister. Elk kassasysteem van 1.500+ aangesloten fietswinkels scant automatisch — een gestolen fiets heeft nergens meer te gaan.</p>
+              <p>Je fiets staat geregistreerd in Velopass, het internationale fietsregister. Elk kassasysteem van {activeShopsCount.toLocaleString("nl-BE")}+ aangesloten fietswinkels scant automatisch — een gestolen fiets heeft nergens meer te gaan.</p>
               <div className="secured-pill"><span className="sdot" />Jouw fiets. SECURED.</div>
             </div>
           </div>
