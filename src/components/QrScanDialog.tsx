@@ -99,7 +99,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
               lineHeight: 1.2,
             }}
           >
-            {result ? "Frame-ID gescand" : "Scan de Velopass Frame-ID"}
+            {result ? "Frame-ID gescand" : manual ? "Voer de Velopass-code in" : "Scan de Velopass Frame-ID"}
           </DialogTitle>
           <DialogDescription
             style={{
@@ -112,7 +112,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
           >
             {result
               ? "We hebben de QR-code herkend. Bevestig om de overdracht te starten."
-              : "Richt je camera op de QR-code. Houd ongeveer 15 cm afstand."}
+              : manual
+                ? "De Velopass-code staat op de Frame-ID op het frame van de fiets."
+                : "Richt je camera op de QR-code. Houd ongeveer 15 cm afstand."}
           </DialogDescription>
         </DialogHeader>
 
@@ -335,7 +337,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
                   marginBottom: 8,
                 }}
               >
-                Frame-ID code (10 cijfers)
+                Velopass-code (10 cijfers)
               </label>
               <input
                 type="text"
