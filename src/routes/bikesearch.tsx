@@ -227,10 +227,10 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{L.methodA}</h2>
             <p style={cardDesc}>{L.methodAdesc}</p>
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: manualOpen ? 18 : 0 }}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <button
                 type="button"
-                onClick={() => setScanOpen(true)}
+                onClick={() => { setScanManual(false); setScanOpen(true); }}
                 style={{
                   ...navyBtn(false),
                   marginTop: 0,
@@ -243,7 +243,7 @@ function BikeSearchPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setManualOpen((o) => !o)}
+                onClick={() => { setScanManual(true); setScanOpen(true); }}
                 style={{
                   marginTop: 0,
                   background: "transparent",
@@ -258,34 +258,9 @@ function BikeSearchPage() {
                   flex: "1 1 200px",
                 }}
               >
-                {L.manualCta} {manualOpen ? "↑" : "→"}
+                {L.manualCta} →
               </button>
             </div>
-
-            {manualOpen && (
-              <>
-                <label style={{ ...labelStyle, marginTop: 4 }} htmlFor="bs-code">{L.codeLabel}</label>
-                <input
-                  id="bs-code"
-                  type="text"
-                  value={codeA}
-                  onChange={(e) => setCodeA(e.target.value)}
-                  placeholder="87CH9810171"
-                  maxLength={32}
-                  style={inputStyle}
-                  autoFocus
-                />
-                <button type="submit" disabled={loadingA || !codeA.trim()} style={navyBtn(loadingA || !codeA.trim())}>
-                  {loadingA ? (
-                    <>
-                      <Loader2 size={16} className="bs-spin" /> {L.loading}
-                    </>
-                  ) : (
-                    L.check
-                  )}
-                </button>
-              </>
-            )}
           </form>
 
           {/* METHOD B */}
