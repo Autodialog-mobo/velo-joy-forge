@@ -190,7 +190,7 @@ function BikeSearchPage() {
           </button>
         </div>
       </nav>
-      <section style={{ padding: "120px 6vw 32px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
+      <section style={{ padding: "88px 6vw 16px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
@@ -199,7 +199,7 @@ function BikeSearchPage() {
             letterSpacing: 1.5,
             textTransform: "uppercase",
             color: "#2ECC8A",
-            marginBottom: 16,
+            marginBottom: 10,
           }}
         >
           {L.eyebrow}
@@ -208,11 +208,11 @@ function BikeSearchPage() {
           style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(32px, 5vw, 52px)",
+            fontSize: "clamp(28px, 4vw, 42px)",
             lineHeight: 1.1,
             color: "#0D1F3C",
             letterSpacing: "-1px",
-            marginBottom: 18,
+            marginBottom: 12,
           }}
         >
           {L.title}
@@ -221,7 +221,7 @@ function BikeSearchPage() {
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontWeight: 300,
-            fontSize: 17,
+            fontSize: 15,
             color: "#5A7090",
             maxWidth: 480,
             margin: "0 auto",
@@ -233,7 +233,7 @@ function BikeSearchPage() {
       </section>
 
       {/* METHODS */}
-      <section style={{ padding: "16px 6vw 32px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+      <section style={{ padding: "12px 6vw 24px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
         <div className="bs-grid">
           {/* METHOD A */}
           <form onSubmit={submitA} className="bs-card bs-card-primary">
@@ -387,8 +387,8 @@ function BikeSearchPage() {
       </section>
 
       {/* STATUS OVERVIEW */}
-      <section style={{ padding: "80px 6vw", background: "#F5F3EE" }}>
-        <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 48px" }}>
+      <section style={{ padding: "48px 6vw", background: "#F5F3EE" }}>
+        <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 28px" }}>
           <div
             style={{
               fontFamily: "'DM Sans', sans-serif",
@@ -397,7 +397,7 @@ function BikeSearchPage() {
               letterSpacing: 1.5,
               textTransform: "uppercase",
               color: "#2ECC8A",
-              marginBottom: 14,
+              marginBottom: 10,
             }}
           >
             WAT BETEKENT DE STATUS?
@@ -406,10 +406,10 @@ function BikeSearchPage() {
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(26px, 4vw, 36px)",
+              fontSize: "clamp(22px, 3vw, 28px)",
               color: "#0D1F3C",
               lineHeight: 1.15,
-              marginBottom: 12,
+              marginBottom: 8,
             }}
           >
             Drie mogelijke uitkomsten
@@ -417,7 +417,7 @@ function BikeSearchPage() {
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 16,
+              fontSize: 14,
               color: "#5A7090",
               lineHeight: 1.6,
               maxWidth: 480,
@@ -654,7 +654,7 @@ function BikeSearchPage() {
           background: #fff;
           border: 1px solid rgba(13,31,60,0.1);
           border-radius: 14px;
-          padding: 32px;
+          padding: 24px;
           display: flex;
           flex-direction: column;
         }
@@ -672,17 +672,17 @@ function BikeSearchPage() {
 const cardTitle: React.CSSProperties = {
   fontFamily: "'Syne', sans-serif",
   fontWeight: 700,
-  fontSize: 20,
+  fontSize: 18,
   color: "#0D1F3C",
   letterSpacing: "-0.3px",
-  marginBottom: 8,
+  marginBottom: 6,
 };
 const cardDesc: React.CSSProperties = {
   fontFamily: "'DM Sans', sans-serif",
   fontSize: 14,
   color: "#5A7090",
   lineHeight: 1.55,
-  marginBottom: 22,
+  marginBottom: 16,
 };
 const labelStyle: React.CSSProperties = {
   display: "block",
@@ -698,10 +698,10 @@ const statusCardStyle: React.CSSProperties = {
   background: "#FFFFFF",
   border: "1px solid rgba(13,31,60,0.1)",
   borderRadius: 12,
-  padding: 24,
+  padding: 20,
   display: "flex",
   flexDirection: "column",
-  gap: 12,
+  gap: 10,
 };
 const statusTitleStyle: React.CSSProperties = {
   fontFamily: "'Syne', sans-serif",
