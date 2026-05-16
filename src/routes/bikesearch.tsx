@@ -104,6 +104,7 @@ function BikeSearchPage() {
   const [captcha, setCaptcha] = useState(false);
   const [scanOpen, setScanOpen] = useState(false);
   const [scanManual, setScanManual] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
