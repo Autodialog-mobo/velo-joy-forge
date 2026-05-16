@@ -186,7 +186,7 @@ function BikeSearchPage() {
           </button>
         </div>
       </nav>
-      <section style={{ padding: "64px 6vw 32px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
+      <section style={{ padding: "120px 6vw 32px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
