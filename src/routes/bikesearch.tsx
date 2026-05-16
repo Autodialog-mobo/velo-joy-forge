@@ -506,95 +506,122 @@ function BikeSearchPage() {
           <div style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
         </div>
 
-        {/* CARD 3: NOT REGISTERED */}
-        <div style={{ ...statusCardStyle, borderLeft: "4px solid #CBD5E1" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <Search size={20} color="#5A7090" />
-            <span style={statusBadgeStyle("#F1F5F9")}>NOT REGISTERED</span>
-          </div>
-          <h3 style={statusTitleStyle}>Niet geregistreerd</h3>
-          <p style={statusBodyStyle}>
-            Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.
-          </p>
-          <p
+        {/* GROUP 2: NOT SECURED container */}
+        <div
+          style={{
+            background: "rgba(13,31,60,0.03)",
+            border: "0.5px solid rgba(13,31,60,0.1)",
+            borderRadius: 12,
+            padding: 16,
+          }}
+        >
+          <div
             style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
               fontFamily: "'DM Sans', sans-serif",
-              fontSize: 14,
               fontWeight: 500,
-              color: "#0D1F3C",
-              margin: "16px 0 12px",
+              fontSize: 11,
+              textTransform: "uppercase",
+              letterSpacing: 1,
+              color: "#5A7090",
+              marginBottom: 14,
             }}
           >
-            Is dit jouw fiets?
-          </p>
+            <span>NOT SECURED — Niet geregistreerd in Velopass</span>
+          </div>
 
-          {lastMethod === "b" ? (
-            <>
-              <a
-                href="https://velopass.com/#nieuwe-sticker"
-                onClick={() => trackRegisterBikeClick("bikesearch", "status-info-order-frameid")}
-                style={{
-                  background: "#2ECC8A",
-                  color: "#0D1F3C",
-                  padding: "12px 20px",
-                  borderRadius: 10,
-                  textDecoration: "none",
-                  fontSize: 14,
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 500,
-                  display: "inline-block",
-                  alignSelf: "flex-start",
-                  marginTop: 4,
-                }}
-              >
-                Bestel een Frame-ID →
-              </a>
-              <p
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 12,
-                  color: "#5A7090",
-                  lineHeight: 1.6,
-                  margin: "8px 0 0",
-                }}
-              >
-                Bescherm je fiets met een Velopass Frame-ID — verkrijgbaar via een fietswinkel of onze webshop.
-              </p>
-            </>
-          ) : (
-            <>
-              <a
-                href="/"
-                onClick={() => trackRegisterBikeClick("bikesearch", "status-info-register-frameid")}
-                style={{
-                  background: "#0D1F3C",
-                  color: "#FFFFFF",
-                  padding: "12px 20px",
-                  borderRadius: 10,
-                  textDecoration: "none",
-                  fontSize: 14,
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 500,
-                  display: "inline-block",
-                  alignSelf: "flex-start",
-                  marginTop: 4,
-                }}
-              >
-                Registreer je fiets →
-              </a>
-              <p
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 12,
-                  color: "#5A7090",
-                  lineHeight: 1.6,
-                  margin: "8px 0 0",
-                }}
-              >
-                Je hebt al een Frame-ID op je fiets. Registreer hem in enkele stappen.
-              </p>
-            </>
-          )}
+          {/* CARD 3: NOT REGISTERED */}
+          <div style={{ ...statusCardStyle, borderLeft: "4px solid #CBD5E1" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <Search size={20} color="#5A7090" />
+              <span style={statusBadgeStyle("#F1F5F9")}>NOT REGISTERED</span>
+            </div>
+            <h3 style={statusTitleStyle}>Niet geregistreerd</h3>
+            <p style={statusBodyStyle}>
+              Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.
+            </p>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                fontWeight: 500,
+                color: "#0D1F3C",
+                margin: "16px 0 12px",
+              }}
+            >
+              Is dit jouw fiets?
+            </p>
+
+            {lastMethod === "b" ? (
+              <>
+                <a
+                  href="https://velopass.com/#nieuwe-sticker"
+                  onClick={() => trackRegisterBikeClick("bikesearch", "status-info-order-frameid")}
+                  style={{
+                    background: "#2ECC8A",
+                    color: "#0D1F3C",
+                    padding: "12px 20px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    fontSize: 14,
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 500,
+                    display: "inline-block",
+                    alignSelf: "flex-start",
+                    marginTop: 4,
+                  }}
+                >
+                  Bestel een Frame-ID →
+                </a>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 12,
+                    color: "#5A7090",
+                    lineHeight: 1.6,
+                    margin: "8px 0 0",
+                  }}
+                >
+                  Bescherm je fiets met een Velopass Frame-ID — verkrijgbaar via een fietswinkel of onze webshop.
+                </p>
+              </>
+            ) : (
+              <>
+                <a
+                  href="/"
+                  onClick={() => trackRegisterBikeClick("bikesearch", "status-info-register-frameid")}
+                  style={{
+                    background: "#0D1F3C",
+                    color: "#FFFFFF",
+                    padding: "12px 20px",
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    fontSize: 14,
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontWeight: 500,
+                    display: "inline-block",
+                    alignSelf: "flex-start",
+                    marginTop: 4,
+                  }}
+                >
+                  Registreer je fiets →
+                </a>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 12,
+                    color: "#5A7090",
+                    lineHeight: 1.6,
+                    margin: "8px 0 0",
+                  }}
+                >
+                  Je hebt al een Frame-ID op je fiets. Registreer hem in enkele stappen.
+                </p>
+              </>
+            )}
+          </div>
         </div>
       </section>
 
