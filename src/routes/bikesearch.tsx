@@ -252,38 +252,37 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{L.methodA}</h2>
             <p style={cardDesc}>{L.methodAdesc}</p>
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <label style={labelStyle} htmlFor="bs-code">{L.codeLabel}</label>
+            <input
+              id="bs-code"
+              type="text"
+              value={codeA}
+              onChange={(e) => setCodeA(e.target.value)}
+              placeholder="87CH9810171"
+              maxLength={20}
+              style={inputStyle}
+            />
+            <button
+              type="submit"
+              disabled={loadingA || !codeA.trim()}
+              style={navyBtn(loadingA || !codeA.trim())}
+            >
+              {loadingA ? (
+                <>
+                  <Loader2 size={16} className="bs-spin" /> {L.loading}
+                </>
+              ) : (
+                L.check
+              )}
+            </button>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 14, flexWrap: "wrap" }}>
               <button
                 type="button"
                 onClick={() => { setScanManual(false); setScanOpen(true); }}
-                style={{
-                  ...navyBtn(false),
-                  marginTop: 0,
-                  width: "auto",
-                  flex: "1 1 200px",
-                  background: "#0D1F3C",
-                }}
+                style={linkBtn}
               >
-                <QrCode size={16} strokeWidth={2} /> {L.scanCta}
-              </button>
-              <button
-                type="button"
-                onClick={() => { setScanManual(true); setScanOpen(true); }}
-                style={{
-                  marginTop: 0,
-                  background: "transparent",
-                  color: "#0D1F3C",
-                  border: "1.5px solid rgba(13,31,60,0.2)",
-                  borderRadius: 10,
-                  padding: "14px 20px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 500,
-                  fontSize: 14,
-                  cursor: "pointer",
-                  flex: "1 1 200px",
-                }}
-              >
-                {L.manualCta} →
+                <QrCode size={14} strokeWidth={2} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />
+                {L.scanCta}
               </button>
             </div>
           </form>
