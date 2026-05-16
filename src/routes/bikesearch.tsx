@@ -58,25 +58,34 @@ const t = (lang: Lang) => ({
   check: lang === "fr-fr" ? "Vérifier" : "Controleer",
   loading: lang === "fr-fr" ? "Vérification..." : "Controleren...",
   error: lang === "fr-fr" ? "Une erreur s'est produite. Réessayez." : "Er ging iets mis. Probeer het opnieuw.",
-  securedTitle: lang === "fr-fr" ? "Ce vélo est sécurisé" : "Deze fiets is beveiligd",
-  securedBody:
+  freeTitle: lang === "fr-fr" ? "Ce vélo est libre" : "Deze fiets is vrij",
+  freeBody:
     lang === "fr-fr"
       ? "Ce vélo est enregistré dans la Communauté Velopass et n'a pas été signalé comme disparu."
       : "Deze fiets is geregistreerd in de Velopass Community en niet gemeld als vermist.",
-  securedCta: lang === "fr-fr" ? "C'est votre vélo ? Ouvrez votre Velopass →" : "Is dit jouw fiets? Open je Velopass →",
+  freeCta: lang === "fr-fr" ? "C'est votre vélo ? Ouvrez votre Velopass →" : "Is dit jouw fiets? Open je Velopass →",
   reportedTitle: lang === "fr-fr" ? "Ce vélo a été signalé" : "Deze fiets is gemeld",
   reportedBody:
     lang === "fr-fr"
-      ? "Ce vélo est enregistré et activement signalé par son propriétaire. La Communauté Velopass cherche activement."
-      : "Deze fiets is geregistreerd én actief gemeld door de eigenaar. De Velopass Community zoekt actief mee.",
+      ? "Ce vélo est activement signalé par son propriétaire. La Communauté Velopass cherche avec vous."
+      : "Deze fiets is actief gemeld door de eigenaar. De Velopass Community zoekt mee.",
   reportedCtaPrimary: lang === "fr-fr" ? "Signaler un vélo trouvé →" : "Meld een gevonden fiets →",
   reportedCtaSecondary: lang === "fr-fr" ? "Appeler la police : 101" : "Bel politie: 101",
   notRegTitle: lang === "fr-fr" ? "Non enregistré" : "Niet geregistreerd",
   notRegBody:
     lang === "fr-fr"
-      ? "Ce vélo ne figure pas dans la base de données Velopass. Enregistrez-le pour le sécuriser."
-      : "Deze fiets staat niet in de Velopass-database. Registreer hem om hem te beveiligen.",
-  notRegCta: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
+      ? "Ce vélo ne figure pas dans la base de données Velopass. Il n'est pas encore sécurisé."
+      : "Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.",
+  notRegCtaA: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
+  notRegCtaB: lang === "fr-fr" ? "Commander un Frame-ID →" : "Bestel een Frame-ID →",
+  notRegSubA:
+    lang === "fr-fr"
+      ? "Vous avez déjà un Frame-ID sur votre vélo. Enregistrez-le en quelques étapes."
+      : "Je hebt al een Frame-ID op je fiets. Registreer hem in enkele stappen.",
+  notRegSubB:
+    lang === "fr-fr"
+      ? "Protégez votre vélo avec un Frame-ID Velopass — via un magasin de vélos ou notre boutique en ligne."
+      : "Bescherm je fiets met een Velopass Frame-ID — via een fietswinkel of onze webshop.",
   captcha: lang === "fr-fr" ? "Je ne suis pas un robot" : "Ik ben geen robot",
   scanCta: lang === "fr-fr" ? "Scanner le QR-code" : "Scan de QR-code",
   manualCta: lang === "fr-fr" ? "Entrer le code manuellement" : "Code handmatig invoeren",
