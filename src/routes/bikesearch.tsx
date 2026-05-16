@@ -76,6 +76,8 @@ const t = (lang: Lang) => ({
       : "Deze fiets staat niet in de Velopass-database. Registreer hem om hem te beveiligen.",
   notRegCta: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
   captcha: lang === "fr-fr" ? "Je ne suis pas un robot" : "Ik ben geen robot",
+  scanCta: lang === "fr-fr" ? "Scanner le QR-code" : "Scan de QR-code",
+  manualCta: lang === "fr-fr" ? "Entrer le code manuellement" : "Code handmatig invoeren",
 });
 
 // Mock backend — deterministic based on input
