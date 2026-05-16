@@ -405,7 +405,7 @@ function BikeSearchPage() {
         @keyframes bs-spin { to { transform: rotate(360deg); } }
       `}</style>
 
-      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
     </div>
   );
 }
