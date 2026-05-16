@@ -113,8 +113,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
             {result
               ? "We hebben de QR-code herkend. Bevestig om de overdracht te starten."
               : manual
-                ? "De Velopass-code staat op de Frame-ID op het frame van de fiets."
-                : "Richt je camera op de QR-code. Houd ongeveer 15 cm afstand."}
+                ? "De code staat onderaan de Frame-ID op het frame van je fiets."
+                : "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID."}
           </DialogDescription>
         </DialogHeader>
 
