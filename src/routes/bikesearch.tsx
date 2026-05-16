@@ -119,6 +119,7 @@ function BikeSearchPage() {
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
   const [result, setResult] = useState<Status | null>(null);
+  const [lastMethod, setLastMethod] = useState<Method | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const submitA = async (e: React.FormEvent) => {
@@ -130,6 +131,7 @@ function BikeSearchPage() {
     try {
       const res = await mockBikeStatus({ velopass_code: codeA.trim() });
       setResult(res.status);
+      setLastMethod("A");
     } catch {
       setError(L.error);
     } finally {
@@ -146,6 +148,7 @@ function BikeSearchPage() {
     try {
       const res = await mockBikeStatus({ frame_number: `${brand}-${frame.trim()}` });
       setResult(res.status);
+      setLastMethod("B");
     } catch {
       setError(L.error);
     } finally {
