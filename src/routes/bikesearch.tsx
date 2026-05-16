@@ -428,188 +428,162 @@ function BikeSearchPage() {
           </p>
         </div>
 
-        <div className="bs-status-grid">
-          {/* CARD 1: FREE */}
+        {/* GROUP 1: SECURED container */}
+        <div
+          style={{
+            background: "rgba(46,204,138,0.06)",
+            border: "1px solid rgba(46,204,138,0.15)",
+            borderRadius: 12,
+            padding: 16,
+          }}
+        >
           <div
             style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(13,31,60,0.1)",
-              borderRadius: 12,
-              borderLeft: "4px solid #2ECC8A",
-              padding: 24,
               display: "flex",
-              flexDirection: "column",
-              gap: 12,
+              alignItems: "center",
+              gap: 6,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 500,
+              fontSize: 11,
+              textTransform: "uppercase",
+              letterSpacing: 1,
+              color: "#2ECC8A",
+              marginBottom: 14,
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <CheckCircle2 size={20} color="#2ECC8A" />
-              <span
+            <VelopassMark size={12} />
+            <span>SECURED — Geregistreerd in de Velopass Community</span>
+          </div>
+
+          <div className="bs-secured-grid">
+            {/* CARD 1: FREE */}
+            <div style={statusCardStyle}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <CheckCircle2 size={20} color="#2ECC8A" />
+                <span style={statusBadgeStyle("#2ECC8A")}>FREE</span>
+              </div>
+              <h3 style={statusTitleStyle}>Vrij en beveiligd</h3>
+              <p style={statusBodyStyle}>
+                Geregistreerd in de Velopass Community en niet gemeld als vermist.
+              </p>
+            </div>
+
+            {/* CARD 2: REPORTED */}
+            <div style={statusCardStyle}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <AlertTriangle size={20} color="#F59E0B" />
+                <span style={statusBadgeStyle("#F59E0B")}>REPORTED</span>
+              </div>
+              <h3 style={statusTitleStyle}>Gemeld als vermist</h3>
+              <p style={statusBodyStyle}>
+                Geregistreerd én actief gemeld door de eigenaar. De Velopass Community zoekt mee.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider with "of" */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            margin: "32px 0",
+          }}
+          aria-hidden="true"
+        >
+          <div style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
+          <span
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 13,
+              color: "#5A7090",
+              fontStyle: "italic",
+            }}
+          >
+            of
+          </span>
+          <div style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
+        </div>
+
+        {/* CARD 3: NOT REGISTERED */}
+        <div style={{ ...statusCardStyle, borderLeft: "4px solid #CBD5E1" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <Search size={20} color="#5A7090" />
+            <span style={statusBadgeStyle("#F1F5F9")}>NOT REGISTERED</span>
+          </div>
+          <h3 style={statusTitleStyle}>Niet geregistreerd</h3>
+          <p style={statusBodyStyle}>
+            Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.
+          </p>
+
+          {lastMethod === "b" ? (
+            <>
+              <a
+                href="https://velopass.com/#nieuwe-sticker"
+                onClick={() => trackRegisterBikeClick("bikesearch", "status-info-order-frameid")}
                 style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  textTransform: "uppercase",
                   background: "#2ECC8A",
                   color: "#0D1F3C",
-                  padding: "3px 12px",
-                  borderRadius: 100,
-                  letterSpacing: 0.5,
+                  padding: "12px 20px",
+                  borderRadius: 10,
+                  textDecoration: "none",
+                  fontSize: 14,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  display: "inline-block",
+                  alignSelf: "flex-start",
+                  marginTop: 4,
                 }}
               >
-                FREE
-              </span>
-            </div>
-            <h3
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: 16,
-                color: "#0D1F3C",
-                margin: 0,
-              }}
-            >
-              Vrij en beveiligd
-            </h3>
-            <p
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 400,
-                fontSize: 14,
-                color: "#5A7090",
-                lineHeight: 1.7,
-                margin: 0,
-              }}
-            >
-              Deze fiets is geregistreerd in de Velopass Community en niet gemeld als vermist. De eigenaar is actief beschermd door het netwerk.
-            </p>
-          </div>
-
-          {/* CARD 2: REPORTED */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(13,31,60,0.1)",
-              borderRadius: 12,
-              borderLeft: "4px solid #F59E0B",
-              padding: 24,
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <AlertTriangle size={20} color="#F59E0B" />
-              <span
+                Bestel een Frame-ID →
+              </a>
+              <p
                 style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  textTransform: "uppercase",
-                  background: "#F59E0B",
-                  color: "#0D1F3C",
-                  padding: "3px 12px",
-                  borderRadius: 100,
-                  letterSpacing: 0.5,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 12,
+                  color: "#5A7090",
+                  lineHeight: 1.6,
+                  margin: "8px 0 0",
                 }}
               >
-                REPORTED
-              </span>
-            </div>
-            <h3
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: 16,
-                color: "#0D1F3C",
-                margin: 0,
-              }}
-            >
-              Gemeld als vermist
-            </h3>
-            <p
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 400,
-                fontSize: 14,
-                color: "#5A7090",
-                lineHeight: 1.7,
-                margin: 0,
-              }}
-            >
-              De eigenaar heeft deze fiets actief gemeld. De Velopass Community zoekt mee. Heb je deze fiets gevonden? Neem dan contact op via de knop die verschijnt in het resultaat.
-            </p>
-          </div>
-
-          {/* CARD 3: NOT REGISTERED */}
-          <div
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid rgba(13,31,60,0.1)",
-              borderRadius: 12,
-              borderLeft: "4px solid #CBD5E1",
-              padding: 24,
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <Search size={20} color="#5A7090" />
-              <span
+                Bescherm je fiets met een Velopass Frame-ID — verkrijgbaar via een fietswinkel of onze webshop.
+              </p>
+            </>
+          ) : (
+            <>
+              <a
+                href="https://velopass.com"
+                onClick={() => trackRegisterBikeClick("bikesearch", "status-info-register-frameid")}
                 style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  textTransform: "uppercase",
-                  background: "#F1F5F9",
-                  color: "#0D1F3C",
-                  padding: "3px 12px",
-                  borderRadius: 100,
-                  letterSpacing: 0.5,
+                  background: "#0D1F3C",
+                  color: "#FFFFFF",
+                  padding: "12px 20px",
+                  borderRadius: 10,
+                  textDecoration: "none",
+                  fontSize: 14,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  display: "inline-block",
+                  alignSelf: "flex-start",
+                  marginTop: 4,
                 }}
               >
-                NOT REGISTERED
-              </span>
-            </div>
-            <h3
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: 16,
-                color: "#0D1F3C",
-                margin: 0,
-              }}
-            >
-              Niet geregistreerd
-            </h3>
-            <p
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 400,
-                fontSize: 14,
-                color: "#5A7090",
-                lineHeight: 1.7,
-                margin: 0,
-              }}
-            >
-              Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd. Is dit jouw fiets? Registreer hem nu en bescherm hem meteen.
-            </p>
-            <a
-              href="/"
-              onClick={() => trackRegisterBikeClick("bikesearch", "status-info-not-registered")}
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 13,
-                color: "#2ECC8A",
-                textDecoration: "none",
-                marginTop: 4,
-                fontWeight: 500,
-              }}
-            >
-              Registreer je fiets →
-            </a>
-          </div>
+                Registreer je fiets →
+              </a>
+              <p
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 12,
+                  color: "#5A7090",
+                  lineHeight: 1.6,
+                  margin: "8px 0 0",
+                }}
+              >
+                Je hebt al een Frame-ID op je fiets. Registreer hem in enkele stappen.
+              </p>
+            </>
+          )}
         </div>
       </section>
 
