@@ -155,7 +155,7 @@ function VelopassPro() {
           <div>
             <div className="mlabel">Met kassasysteem (POS) <span className="mbadge">Aanbevolen</span></div>
             {[
-              { n: 1, t: "Kleef de sticker en scan de QR", d: "Vanuit je kassasysteem. De fiets is meteen geregistreerd op naam van je winkel." },
+              { n: 1, t: "Kleef de Frame-ID en scan de QR", d: "Vanuit je kassasysteem. De fiets is meteen geregistreerd op naam van je winkel." },
               { n: 2, t: "Klant ontvangt automatisch een uitnodiging", d: "Een Velopass-mail via velopass.com. De klant kiest enkel nog een wachtwoord." },
               { n: 3, t: "Klantrelatie is actief", d: "Velopass beheert de communicatie. Jij focust op fietsen." },
             ].map((s) => (
@@ -169,7 +169,7 @@ function VelopassPro() {
             <div className="mlabel">Geen kassasysteem <span className="mbadge">Gratis app</span></div>
             {[
               { n: 1, t: "Download de gratis Velopass Pro app", d: "Beschikbaar voor iOS en Android. In twee minuten klaar." },
-              { n: 2, t: "Kleef de sticker en scan via de app", d: "Zelfde resultaat als met kassasysteem. Geen extra software nodig." },
+              { n: 2, t: "Kleef de Frame-ID en scan via de app", d: "Zelfde resultaat als met kassasysteem. Geen extra software nodig." },
               { n: 3, t: "Klant ontvangt automatisch zijn uitnodiging", d: "Vanaf hier doet Velopass de rest." },
             ].map((s) => (
               <div className="mstep" key={s.n}>

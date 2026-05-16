@@ -21,7 +21,7 @@ export const Route = createFileRoute("/contact")({
       {
         name: "description",
         content:
-          "Hulp nodig bij activatie, je sticker of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
+          "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
       },
       { property: "og:title", content: "Contact — Velopass" },
       {
@@ -95,14 +95,14 @@ const SUGGESTIONS = [
   {
     icon: Package,
     title: "Vraag over mijn sticker",
-    desc: "Sticker niet ontvangen, beschadigd of een andere vraag over je bestelling?",
-    prefill: "Hallo Velopass, ik heb een vraag over mijn sticker: ",
+    desc: "Frame-ID niet ontvangen, beschadigd of een andere vraag over je bestelling?",
+    prefill: "Hallo Velopass, ik heb een vraag over mijn Frame-ID: ",
   },
   {
     icon: ScanLine,
     title: "Gevonden fiets melden",
-    desc: "Heb je een fiets gevonden met een Velopass-sticker?",
-    prefill: "Hallo Velopass, ik heb een fiets gevonden met een Velopass-sticker. ",
+    desc: "Heb je een fiets gevonden met een Velopass Frame-ID?",
+    prefill: "Hallo Velopass, ik heb een fiets gevonden met een Velopass Frame-ID. ",
   },
 ];
 
