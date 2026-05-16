@@ -327,6 +327,40 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
 
           {manual && !result && (
             <div>
+              {/* Visuele hint: Frame-ID met aanduiding van de code-locatie */}
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: 180,
+                  margin: "0 auto 18px",
+                }}
+              >
+                <svg
+                  viewBox="0 0 200 130"
+                  width="100%"
+                  style={{ display: "block", borderRadius: 8 }}
+                  aria-hidden="true"
+                >
+                  <rect x="2" y="2" width="196" height="126" rx="10" fill="#F5F3EE" stroke="rgba(13,31,60,0.14)" />
+                  {/* QR mock */}
+                  <rect x="16" y="16" width="64" height="64" rx="4" fill="#0D1F3C" />
+                  <rect x="22" y="22" width="14" height="14" fill="#F5F3EE" />
+                  <rect x="60" y="22" width="14" height="14" fill="#F5F3EE" />
+                  <rect x="22" y="60" width="14" height="14" fill="#F5F3EE" />
+                  <rect x="42" y="42" width="6" height="6" fill="#F5F3EE" />
+                  <rect x="52" y="52" width="6" height="6" fill="#F5F3EE" />
+                  {/* Brand */}
+                  <text x="92" y="32" fontFamily="'Syne', sans-serif" fontWeight="700" fontSize="12" fill="#0D1F3C">VELOPASS</text>
+                  <text x="92" y="48" fontFamily="'DM Sans', sans-serif" fontSize="8" fill="#5A7090">Frame-ID</text>
+                  {/* Code regel (gemarkeerd) */}
+                  <rect x="14" y="92" width="172" height="22" rx="4" fill="rgba(46,204,138,0.14)" stroke="#2ECC8A" strokeWidth="1.5" />
+                  <text x="100" y="107" textAnchor="middle" fontFamily="'DM Sans', sans-serif" fontWeight="600" fontSize="11" fill="#0D1F3C" letterSpacing="1.5">87CH9810171</text>
+                  {/* Pijl naar codeveld */}
+                  <path d="M100 122 L100 116" stroke="#2ECC8A" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M96 119 L100 116 L104 119" stroke="#2ECC8A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
+              </div>
+
               <label
                 style={{
                   display: "block",
@@ -337,48 +371,46 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
                   marginBottom: 8,
                 }}
               >
-                Velopass-code (10 cijfers)
+                Velopass-code
               </label>
               <input
                 type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
                 autoComplete="off"
                 maxLength={10}
                 value={manualCode}
-                onChange={(e) => setManualCode(e.target.value.replace(/\D/g, "").slice(0, 10))}
-                placeholder="0000000000"
+                onChange={(e) => setManualCode(e.target.value.slice(0, 10))}
+                placeholder="87CH9810171"
                 style={{
                   width: "100%",
                   padding: "14px 16px",
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: 18,
-                  letterSpacing: 4,
+                  letterSpacing: 2,
                   textAlign: "center",
                   color: "#0D1F3C",
                   background: "#F5F7FA",
                   border: "1px solid rgba(13,31,60,0.14)",
-                  borderRadius: 12,
+                  borderRadius: 10,
                   outline: "none",
                   boxSizing: "border-box",
                 }}
               />
               <button
                 type="button"
-                disabled={manualCode.length !== 10}
+                disabled={manualCode.length === 0}
                 onClick={() => setResult(manualCode)}
                 style={{
                   width: "100%",
                   marginTop: 14,
-                  background: manualCode.length === 10 ? "#0D1F3C" : "rgba(13,31,60,0.35)",
+                  background: manualCode.length > 0 ? "#0D1F3C" : "rgba(13,31,60,0.35)",
                   color: "#fff",
                   border: "none",
-                  borderRadius: 12,
+                  borderRadius: 10,
                   padding: "12px 16px",
                   fontFamily: "'DM Sans', sans-serif",
                   fontWeight: 500,
                   fontSize: 14,
-                  cursor: manualCode.length === 10 ? "pointer" : "not-allowed",
+                  cursor: manualCode.length > 0 ? "pointer" : "not-allowed",
                 }}
               >
                 Bevestigen
