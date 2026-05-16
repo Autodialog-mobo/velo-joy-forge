@@ -144,7 +144,7 @@ function BikeSearchPage() {
   };
 
   return (
-    <>
+    <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
         <a href="/" className="nav-logo">
