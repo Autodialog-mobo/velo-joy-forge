@@ -382,6 +382,232 @@ function BikeSearchPage() {
         )}
       </section>
 
+      {/* STATUS OVERVIEW */}
+      <section style={{ padding: "80px 6vw", background: "#F5F3EE" }}>
+        <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 48px" }}>
+          <div
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 500,
+              fontSize: 11,
+              letterSpacing: 1.5,
+              textTransform: "uppercase",
+              color: "#2ECC8A",
+              marginBottom: 14,
+            }}
+          >
+            WAT BETEKENT DE STATUS?
+          </div>
+          <h2
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 700,
+              fontSize: "clamp(26px, 4vw, 36px)",
+              color: "#0D1F3C",
+              lineHeight: 1.15,
+              marginBottom: 12,
+            }}
+          >
+            Drie mogelijke uitkomsten
+          </h2>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 16,
+              color: "#5A7090",
+              lineHeight: 1.6,
+              maxWidth: 480,
+              margin: "0 auto",
+            }}
+          >
+            Na het zoeken zie je altijd één van deze drie statussen.
+          </p>
+        </div>
+
+        <div className="bs-status-grid">
+          {/* CARD 1: FREE */}
+          <div
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(13,31,60,0.1)",
+              borderRadius: 12,
+              borderLeft: "4px solid #2ECC8A",
+              padding: 24,
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <CheckCircle2 size={20} color="#2ECC8A" />
+              <span
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 11,
+                  textTransform: "uppercase",
+                  background: "#2ECC8A",
+                  color: "#0D1F3C",
+                  padding: "3px 12px",
+                  borderRadius: 100,
+                  letterSpacing: 0.5,
+                }}
+              >
+                FREE
+              </span>
+            </div>
+            <h3
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: 16,
+                color: "#0D1F3C",
+                margin: 0,
+              }}
+            >
+              Vrij en beveiligd
+            </h3>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 400,
+                fontSize: 14,
+                color: "#5A7090",
+                lineHeight: 1.7,
+                margin: 0,
+              }}
+            >
+              Deze fiets is geregistreerd in de Velopass Community en niet gemeld als vermist. De eigenaar is actief beschermd door het netwerk.
+            </p>
+          </div>
+
+          {/* CARD 2: REPORTED */}
+          <div
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(13,31,60,0.1)",
+              borderRadius: 12,
+              borderLeft: "4px solid #F59E0B",
+              padding: 24,
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <AlertTriangle size={20} color="#F59E0B" />
+              <span
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 11,
+                  textTransform: "uppercase",
+                  background: "#F59E0B",
+                  color: "#0D1F3C",
+                  padding: "3px 12px",
+                  borderRadius: 100,
+                  letterSpacing: 0.5,
+                }}
+              >
+                REPORTED
+              </span>
+            </div>
+            <h3
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: 16,
+                color: "#0D1F3C",
+                margin: 0,
+              }}
+            >
+              Gemeld als vermist
+            </h3>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 400,
+                fontSize: 14,
+                color: "#5A7090",
+                lineHeight: 1.7,
+                margin: 0,
+              }}
+            >
+              De eigenaar heeft deze fiets actief gemeld. De Velopass Community zoekt mee. Heb je deze fiets gevonden? Neem dan contact op via de knop die verschijnt in het resultaat.
+            </p>
+          </div>
+
+          {/* CARD 3: NOT REGISTERED */}
+          <div
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(13,31,60,0.1)",
+              borderRadius: 12,
+              borderLeft: "4px solid #CBD5E1",
+              padding: 24,
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <Search size={20} color="#5A7090" />
+              <span
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 11,
+                  textTransform: "uppercase",
+                  background: "#F1F5F9",
+                  color: "#0D1F3C",
+                  padding: "3px 12px",
+                  borderRadius: 100,
+                  letterSpacing: 0.5,
+                }}
+              >
+                NOT REGISTERED
+              </span>
+            </div>
+            <h3
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: 16,
+                color: "#0D1F3C",
+                margin: 0,
+              }}
+            >
+              Niet geregistreerd
+            </h3>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 400,
+                fontSize: 14,
+                color: "#5A7090",
+                lineHeight: 1.7,
+                margin: 0,
+              }}
+            >
+              Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd. Is dit jouw fiets? Registreer hem op velopass.com en bescherm hem meteen.
+            </p>
+            <a
+              href="https://velopass.com"
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "#2ECC8A",
+                textDecoration: "none",
+                marginTop: 4,
+                fontWeight: 500,
+              }}
+            >
+              Registreer je fiets →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer
         style={{
