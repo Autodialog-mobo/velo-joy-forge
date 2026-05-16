@@ -374,6 +374,8 @@ function ContactPage() {
         </section>
       </main>
 
+      <Footer />
+
       <style>{`
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .contact-card { border: 1px solid var(--border); }
