@@ -99,6 +99,8 @@ function BikeSearchPage() {
   const [brand, setBrand] = useState("");
   const [frame, setFrame] = useState("");
   const [captcha, setCaptcha] = useState(false);
+  const [manualOpen, setManualOpen] = useState(false);
+  const [scanOpen, setScanOpen] = useState(false);
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
