@@ -447,6 +447,8 @@ function VelopassHome() {
         </div>
       </section>
 
+      <FaqSection />
+
       <footer className="vp-footer">
         <div>
           <div className="flogo">velopass</div>
@@ -459,6 +461,8 @@ function VelopassHome() {
           <li><a href="#">Privacy</a></li>
           <li><a href="#">Voorwaarden</a></li>
           <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/bikesearch">Fiets controleren</Link></li>
+          <li><a href="#faq">Veelgestelde vragen</a></li>
         </ul>
         
         <div className="fcopy">© 2026 Velopass</div>
