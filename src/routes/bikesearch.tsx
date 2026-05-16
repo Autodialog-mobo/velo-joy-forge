@@ -553,7 +553,7 @@ function BikeSearchPage() {
           ) : (
             <>
               <a
-                href="https://velopass.com"
+                href="/"
                 onClick={() => trackRegisterBikeClick("bikesearch", "status-info-register-frameid")}
                 style={{
                   background: "#0D1F3C",
