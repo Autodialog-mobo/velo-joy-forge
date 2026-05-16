@@ -429,6 +429,8 @@ function BikeSearchPage() {
         .bs-spin { animation: bs-spin 0.8s linear infinite; }
         @keyframes bs-spin { to { transform: rotate(360deg); } }
       `}</style>
+
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} />
     </div>
   );
 }
