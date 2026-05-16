@@ -655,6 +655,41 @@ const labelStyle: React.CSSProperties = {
   letterSpacing: 0.8,
   marginBottom: 6,
 };
+const statusCardStyle: React.CSSProperties = {
+  background: "#FFFFFF",
+  border: "1px solid rgba(13,31,60,0.1)",
+  borderRadius: 12,
+  padding: 24,
+  display: "flex",
+  flexDirection: "column",
+  gap: 12,
+};
+const statusTitleStyle: React.CSSProperties = {
+  fontFamily: "'Syne', sans-serif",
+  fontWeight: 700,
+  fontSize: 16,
+  color: "#0D1F3C",
+  margin: 0,
+};
+const statusBodyStyle: React.CSSProperties = {
+  fontFamily: "'DM Sans', sans-serif",
+  fontWeight: 400,
+  fontSize: 14,
+  color: "#5A7090",
+  lineHeight: 1.7,
+  margin: 0,
+};
+const statusBadgeStyle = (bg: string): React.CSSProperties => ({
+  fontFamily: "'Syne', sans-serif",
+  fontWeight: 700,
+  fontSize: 11,
+  textTransform: "uppercase",
+  background: bg,
+  color: "#0D1F3C",
+  padding: "3px 12px",
+  borderRadius: 100,
+  letterSpacing: 0.5,
+});
 const inputStyle: React.CSSProperties = {
   width: "100%",
   background: "#fff",
