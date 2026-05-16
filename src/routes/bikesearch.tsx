@@ -716,6 +716,16 @@ const navyBtn = (disabled: boolean): React.CSSProperties => ({
   gap: 8,
   transition: "background 0.2s",
 });
+const linkBtn: React.CSSProperties = {
+  background: "none",
+  border: "none",
+  padding: 0,
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 13,
+  color: "#5A7090",
+  textDecoration: "underline",
+  cursor: "pointer",
+};
 
 /* ---------- result cards ---------- */
 const badgeBase: React.CSSProperties = {
