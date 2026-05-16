@@ -23,9 +23,8 @@ export const Route = createFileRoute("/bikesearch")({
   component: BikeSearchPage,
 });
 
-type Status = "free" | "reported" | "not_registered";
+type Status = "secured" | "secured_reported" | "not_registered";
 type Lang = "nl-nl" | "fr-fr";
-type Method = "A" | "B";
 
 const BRANDS = [
   "Trek", "Specialized", "Cube", "Giant", "Cannondale", "Scott", "Bianchi",
@@ -58,34 +57,25 @@ const t = (lang: Lang) => ({
   check: lang === "fr-fr" ? "Vérifier" : "Controleer",
   loading: lang === "fr-fr" ? "Vérification..." : "Controleren...",
   error: lang === "fr-fr" ? "Une erreur s'est produite. Réessayez." : "Er ging iets mis. Probeer het opnieuw.",
-  freeTitle: lang === "fr-fr" ? "Ce vélo est libre" : "Deze fiets is vrij",
-  freeBody:
+  securedTitle: lang === "fr-fr" ? "Ce vélo est sécurisé" : "Deze fiets is beveiligd",
+  securedBody:
     lang === "fr-fr"
       ? "Ce vélo est enregistré dans la Communauté Velopass et n'a pas été signalé comme disparu."
       : "Deze fiets is geregistreerd in de Velopass Community en niet gemeld als vermist.",
-  freeCta: lang === "fr-fr" ? "C'est votre vélo ? Ouvrez votre Velopass →" : "Is dit jouw fiets? Open je Velopass →",
+  securedCta: lang === "fr-fr" ? "C'est votre vélo ? Ouvrez votre Velopass →" : "Is dit jouw fiets? Open je Velopass →",
   reportedTitle: lang === "fr-fr" ? "Ce vélo a été signalé" : "Deze fiets is gemeld",
   reportedBody:
     lang === "fr-fr"
-      ? "Ce vélo est activement signalé par son propriétaire. La Communauté Velopass cherche avec vous."
-      : "Deze fiets is actief gemeld door de eigenaar. De Velopass Community zoekt mee.",
+      ? "Ce vélo est enregistré et activement signalé par son propriétaire. La Communauté Velopass cherche activement."
+      : "Deze fiets is geregistreerd én actief gemeld door de eigenaar. De Velopass Community zoekt actief mee.",
   reportedCtaPrimary: lang === "fr-fr" ? "Signaler un vélo trouvé →" : "Meld een gevonden fiets →",
   reportedCtaSecondary: lang === "fr-fr" ? "Appeler la police : 101" : "Bel politie: 101",
   notRegTitle: lang === "fr-fr" ? "Non enregistré" : "Niet geregistreerd",
   notRegBody:
     lang === "fr-fr"
-      ? "Ce vélo ne figure pas dans la base de données Velopass. Il n'est pas encore sécurisé."
-      : "Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.",
-  notRegCtaA: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
-  notRegCtaB: lang === "fr-fr" ? "Commander un Frame-ID →" : "Bestel een Frame-ID →",
-  notRegSubA:
-    lang === "fr-fr"
-      ? "Vous avez déjà un Frame-ID sur votre vélo. Enregistrez-le en quelques étapes."
-      : "Je hebt al een Frame-ID op je fiets. Registreer hem in enkele stappen.",
-  notRegSubB:
-    lang === "fr-fr"
-      ? "Protégez votre vélo avec un Frame-ID Velopass — via un magasin de vélos ou notre boutique en ligne."
-      : "Bescherm je fiets met een Velopass Frame-ID — via een fietswinkel of onze webshop.",
+      ? "Ce vélo ne figure pas dans la base de données Velopass. Enregistrez-le pour le sécuriser."
+      : "Deze fiets staat niet in de Velopass-database. Registreer hem om hem te beveiligen.",
+  notRegCta: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
   captcha: lang === "fr-fr" ? "Je ne suis pas un robot" : "Ik ben geen robot",
   scanCta: lang === "fr-fr" ? "Scanner le QR-code" : "Scan de QR-code",
   manualCta: lang === "fr-fr" ? "Entrer le code manuellement" : "Code handmatig invoeren",
@@ -99,7 +89,7 @@ async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: 
   // Demo rule: digit sum determines status
   const sum = key.split("").reduce((a, c) => a + (c.charCodeAt(0) % 7), 0);
   const mod = sum % 3;
-  const status: Status = mod === 0 ? "free" : mod === 1 ? "reported" : "not_registered";
+  const status: Status = mod === 0 ? "secured" : mod === 1 ? "secured_reported" : "not_registered";
   return { status };
 }
 
@@ -119,7 +109,6 @@ function BikeSearchPage() {
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
   const [result, setResult] = useState<Status | null>(null);
-  const [lastMethod, setLastMethod] = useState<Method | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const submitA = async (e: React.FormEvent) => {
@@ -131,7 +120,6 @@ function BikeSearchPage() {
     try {
       const res = await mockBikeStatus({ velopass_code: codeA.trim() });
       setResult(res.status);
-      setLastMethod("A");
     } catch {
       setError(L.error);
     } finally {
@@ -148,7 +136,6 @@ function BikeSearchPage() {
     try {
       const res = await mockBikeStatus({ frame_number: `${brand}-${frame.trim()}` });
       setResult(res.status);
-      setLastMethod("B");
     } catch {
       setError(L.error);
     } finally {
@@ -252,37 +239,38 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{L.methodA}</h2>
             <p style={cardDesc}>{L.methodAdesc}</p>
 
-            <label style={labelStyle} htmlFor="bs-code">{L.codeLabel}</label>
-            <input
-              id="bs-code"
-              type="text"
-              value={codeA}
-              onChange={(e) => setCodeA(e.target.value)}
-              placeholder="87CH9810171"
-              maxLength={20}
-              style={inputStyle}
-            />
-            <button
-              type="submit"
-              disabled={loadingA || !codeA.trim()}
-              style={navyBtn(loadingA || !codeA.trim())}
-            >
-              {loadingA ? (
-                <>
-                  <Loader2 size={16} className="bs-spin" /> {L.loading}
-                </>
-              ) : (
-                L.check
-              )}
-            </button>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 14, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <button
                 type="button"
                 onClick={() => { setScanManual(false); setScanOpen(true); }}
-                style={linkBtn}
+                style={{
+                  ...navyBtn(false),
+                  marginTop: 0,
+                  width: "auto",
+                  flex: "1 1 200px",
+                  background: "#0D1F3C",
+                }}
               >
-                <QrCode size={14} strokeWidth={2} style={{ display: "inline", verticalAlign: "-2px", marginRight: 4 }} />
-                {L.scanCta}
+                <QrCode size={16} strokeWidth={2} /> {L.scanCta}
+              </button>
+              <button
+                type="button"
+                onClick={() => { setScanManual(true); setScanOpen(true); }}
+                style={{
+                  marginTop: 0,
+                  background: "transparent",
+                  color: "#0D1F3C",
+                  border: "1.5px solid rgba(13,31,60,0.2)",
+                  borderRadius: 10,
+                  padding: "14px 20px",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 500,
+                  fontSize: 14,
+                  cursor: "pointer",
+                  flex: "1 1 200px",
+                }}
+              >
+                {L.manualCta} →
               </button>
             </div>
           </form>
@@ -387,9 +375,9 @@ function BikeSearchPage() {
         {/* RESULT */}
         {result && (
           <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
-            {result === "free" && <FreeCard L={L} />}
-            {result === "reported" && <ReportedCard L={L} />}
-            {result === "not_registered" && <NotRegCard L={L} method={lastMethod} />}
+            {result === "secured" && <SecuredCard L={L} />}
+            {result === "secured_reported" && <ReportedCard L={L} />}
+            {result === "not_registered" && <NotRegCard L={L} />}
           </div>
         )}
       </section>
@@ -716,16 +704,6 @@ const navyBtn = (disabled: boolean): React.CSSProperties => ({
   gap: 8,
   transition: "background 0.2s",
 });
-const linkBtn: React.CSSProperties = {
-  background: "none",
-  border: "none",
-  padding: 0,
-  fontFamily: "'DM Sans', sans-serif",
-  fontSize: 13,
-  color: "#5A7090",
-  textDecoration: "underline",
-  cursor: "pointer",
-};
 
 /* ---------- result cards ---------- */
 const badgeBase: React.CSSProperties = {
@@ -766,20 +744,20 @@ const resultBody: React.CSSProperties = {
   marginBottom: 20,
 };
 
-function FreeCard({ L }: { L: ReturnType<typeof t> }) {
+function SecuredCard({ L }: { L: ReturnType<typeof t> }) {
   return (
     <div style={resultCard("#2ECC8A")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>FREE</span>
+        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>SECURED</span>
         <CheckCircle2 color="#2ECC8A" size={24} />
       </div>
-      <h3 style={resultTitle}>{L.freeTitle}</h3>
-      <p style={resultBody}>{L.freeBody}</p>
+      <h3 style={resultTitle}>{L.securedTitle}</h3>
+      <p style={resultBody}>{L.securedBody}</p>
       <a
         href="https://velopass.com"
         style={{ color: "#2ECC8A", fontWeight: 500, textDecoration: "none", fontSize: 14 }}
       >
-        {L.freeCta}
+        {L.securedCta}
       </a>
     </div>
   );
@@ -788,9 +766,10 @@ function FreeCard({ L }: { L: ReturnType<typeof t> }) {
 function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
   return (
     <div style={resultCard("#F59E0B")}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>SECURED</span>
         <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>REPORTED</span>
-        <AlertTriangle color="#F59E0B" size={24} />
+        <AlertTriangle color="#F59E0B" size={24} style={{ marginLeft: 4 }} />
       </div>
       <h3 style={resultTitle}>{L.reportedTitle}</h3>
       <p style={resultBody}>{L.reportedBody}</p>
@@ -829,8 +808,7 @@ function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
   );
 }
 
-function NotRegCard({ L, method }: { L: ReturnType<typeof t>; method: Method | null }) {
-  const isB = method === "B";
+function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
   return (
     <div style={resultCard("#CBD5E1")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -840,10 +818,10 @@ function NotRegCard({ L, method }: { L: ReturnType<typeof t>; method: Method | n
       <h3 style={resultTitle}>{L.notRegTitle}</h3>
       <p style={resultBody}>{L.notRegBody}</p>
       <a
-        href={isB ? "https://velopass.com/#nieuwe-sticker" : "https://velopass.com"}
+        href="https://velopass.com"
         style={{
-          background: isB ? "#2ECC8A" : "#0D1F3C",
-          color: isB ? "#0D1F3C" : "#fff",
+          background: "#0D1F3C",
+          color: "#fff",
           padding: "12px 20px",
           borderRadius: 10,
           textDecoration: "none",
@@ -852,11 +830,8 @@ function NotRegCard({ L, method }: { L: ReturnType<typeof t>; method: Method | n
           display: "inline-block",
         }}
       >
-        {isB ? L.notRegCtaB : L.notRegCtaA}
+        {L.notRegCta}
       </a>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 12, color: "#5A7090", marginTop: 12, lineHeight: 1.5 }}>
-        {isB ? L.notRegSubB : L.notRegSubA}
-      </p>
     </div>
   );
 }
