@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProRouteImport } from './routes/pro'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ProRoute = ProRouteImport.update({
@@ -23,6 +24,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BikesearchRoute = BikesearchRouteImport.update({
+  id: '/bikesearch',
+  path: '/bikesearch',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/pro': typeof ProRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/pro': typeof ProRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/pro': typeof ProRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/pro'
+  fullPaths: '/' | '/bikesearch' | '/contact' | '/pro'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/pro'
-  id: '__root__' | '/' | '/contact' | '/pro'
+  to: '/' | '/bikesearch' | '/contact' | '/pro'
+  id: '__root__' | '/' | '/bikesearch' | '/contact' | '/pro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BikesearchRoute: typeof BikesearchRoute
   ContactRoute: typeof ContactRoute
   ProRoute: typeof ProRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bikesearch': {
+      id: '/bikesearch'
+      path: '/bikesearch'
+      fullPath: '/bikesearch'
+      preLoaderRoute: typeof BikesearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BikesearchRoute: BikesearchRoute,
   ContactRoute: ContactRoute,
   ProRoute: ProRoute,
 }
