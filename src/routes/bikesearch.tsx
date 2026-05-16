@@ -403,22 +403,6 @@ function BikeSearchPage() {
         </a>
       </footer>
 
-      <style>{`
-        .bs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .bs-grid { grid-template-columns: 1fr; } }
-        .bs-card {
-          background: #fff;
-          border: 1px solid rgba(13,31,60,0.1);
-          border-radius: 14px;
-          padding: 32px;
-          display: flex;
-          flex-direction: column;
-        }
-        .bs-card-primary { border-top: 3px solid #2ECC8A; }
-        .bs-spin { animation: bs-spin 0.8s linear infinite; }
-        @keyframes bs-spin { to { transform: rotate(360deg); } }
-      `}</style>
-
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
     </div>
   );
