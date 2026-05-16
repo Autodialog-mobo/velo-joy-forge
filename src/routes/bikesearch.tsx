@@ -606,6 +606,6 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       >
         {L.notRegCta}
       </a>
-    </>
+    </div>
   );
 }
