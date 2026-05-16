@@ -420,7 +420,7 @@ function BikeSearchPage() {
       `}</style>
 
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
-    </>
+    </div>
   );
 }
 
