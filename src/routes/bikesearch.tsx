@@ -144,37 +144,50 @@ function BikeSearchPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
-      {/* NAV */}
-      <nav
-        style={{
-          height: 64,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 6vw",
-          background: "#F5F3EE",
-          borderBottom: "1px solid rgba(13,31,60,0.08)",
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-        }}
-      >
-        <a href="https://velopass.com" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <VelopassMark size={32} />
-          <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 17, color: "#0D1F3C", letterSpacing: "-0.3px" }}>
-            velopass
-          </span>
+    <>
+      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
+      <nav className="vp-nav">
+        <a href="/" className="nav-logo">
+          <div className="logo-mark"><VelopassMark /></div>
+          <span className="logo-text">velopass</span>
         </a>
-        <a
-          href="https://velopass.com"
-          style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 14, color: "#5A7090", textDecoration: "none" }}
-        >
-          {L.back}
-        </a>
+        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+          <li><a href="/#voordelen">Wat je krijgt</a></li>
+          <li><a href="/#al-sticker">Al een sticker?</a></li>
+          <li><a href="/#nieuwe-sticker">Sticker bestellen</a></li>
+          <li><a href="/#community">Community</a></li>
+          <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
+          <li><Link to="/pro" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietswinkels</Link></li>
+        </ul>
+        <div className="nav-actions">
+          <a href="/#login" className="btn-login">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+            Inloggen
+          </a>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label="Menu"
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen((o) => !o)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              {navOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              ) : (
+                <>
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
       </nav>
 
-      {/* HERO */}
+      <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
       <section style={{ padding: "64px 6vw 32px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
