@@ -138,8 +138,8 @@ button { font-family: inherit; }
 .scan-line { position: absolute; left: 0; right: 0; height: clamp(1.5px, 0.4cqi, 2.5px); background: linear-gradient(90deg, transparent, var(--green) 20%, var(--green) 80%, transparent); box-shadow: 0 0 12px var(--green), 0 0 24px rgba(46,204,138,0.5); animation: scan-sweep 2.2s ease-in-out infinite; }
 @keyframes scan-sweep { 0%{top:0;opacity:0} 10%{opacity:1} 50%{top:calc(100% - 2px);opacity:1} 60%{opacity:0} 100%{top:0;opacity:0} }
 .scan-badge { position: absolute; left: 50%; bottom: clamp(-28px, -3cqi, -16px); transform: translateX(-50%); background: var(--navy); color: #fff; font-size: clamp(10px, 1.4cqi, 12px); font-weight: 500; padding: 6px 14px; border-radius: 100px; white-space: nowrap; letter-spacing: 0.3px; box-shadow: 0 6px 16px rgba(0,0,0,0.25); }
-.secured-tag { position: absolute; top: clamp(10px, 3cqi, 22px); left: clamp(10px, 3cqi, 22px); display: inline-flex; align-items: center; gap: 6px; background: #2ECC8A; color: #0D1F3C; font-size: clamp(10px, 1.5cqi, 13px); font-weight: 700; letter-spacing: 1.2px; padding: 6px 12px; border-radius: 100px; box-shadow: 0 8px 20px rgba(46,204,138,0.45), 0 0 0 2px rgba(255,255,255,0.9) inset; text-transform: uppercase; }
-.secured-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: #0D1F3C; box-shadow: 0 0 0 3px rgba(13,31,60,0.15); }
+.secured-tag { position: absolute; top: clamp(10px, 3cqi, 22px); left: clamp(10px, 3cqi, 22px); display: inline-flex; align-items: center; gap: 8px; background: #E6F7EE; color: #2ECC8A; font-size: clamp(10px, 1.4cqi, 12px); font-weight: 600; letter-spacing: 0.4px; padding: 7px 14px; border-radius: 100px; box-shadow: 0 4px 12px rgba(13,31,60,0.08); }
+.secured-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: #2ECC8A; }
 .sticker-title { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.1; letter-spacing: -1px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 4px; }
 .sticker-title .st-line-1 { font-weight: 700; color: var(--navy); }
 .sticker-title .st-line-2 { font-weight: 800; color: var(--green); }
