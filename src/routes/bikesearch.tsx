@@ -593,8 +593,6 @@ function BikeSearchPage() {
             </p>
             <a
               href="/"
-              target="_blank"
-              rel="noopener noreferrer"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: 13,
