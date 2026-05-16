@@ -602,7 +602,7 @@ function BikeSearchPage() {
                 fontWeight: 500,
               }}
             >
-              Registreer je fiets →
+              Bestel een Frame ID →
             </a>
           </div>
         </div>
