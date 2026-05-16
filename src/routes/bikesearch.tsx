@@ -627,24 +627,7 @@ function BikeSearchPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer
-        style={{
-          marginTop: "auto",
-          padding: "32px 6vw",
-          textAlign: "center",
-          fontFamily: "'DM Sans', sans-serif",
-          fontWeight: 400,
-          fontSize: 12,
-          color: "#5A7090",
-          borderTop: "1px solid rgba(13,31,60,0.08)",
-        }}
-      >
-        © 2026 Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · BTW BE0777.359.681 ·{" "}
-        <a href="https://velopass.com" style={{ color: "#2ECC8A", textDecoration: "none" }}>
-          velopass.com
-        </a>
-      </footer>
+      <Footer />
 
       <style>{`
         .bs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
