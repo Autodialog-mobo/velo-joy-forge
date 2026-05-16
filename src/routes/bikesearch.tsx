@@ -818,9 +818,7 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       <h3 style={resultTitle}>{L.notRegTitle}</h3>
       <p style={resultBody}>{L.notRegBody}</p>
       <a
-        href="https://velopass.com"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/"
         style={{
           background: "#0D1F3C",
           color: "#fff",
