@@ -119,6 +119,7 @@ function BikeSearchPage() {
     setError(null);
     setResult(null);
     setLoadingA(true);
+    setLastMethod("a");
     try {
       const res = await mockBikeStatus({ velopass_code: codeA.trim() });
       setResult(res.status);
@@ -135,6 +136,7 @@ function BikeSearchPage() {
     setError(null);
     setResult(null);
     setLoadingB(true);
+    setLastMethod("b");
     try {
       const res = await mockBikeStatus({ frame_number: `${brand}-${frame.trim()}` });
       setResult(res.status);
