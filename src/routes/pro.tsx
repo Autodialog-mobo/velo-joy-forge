@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, Tag, FileText, Package } from "lucide-react";
+import { ArrowUpRight, Shield, Tag, FileText, Package, Truck, ScanLine, Receipt, CheckCircle2 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
