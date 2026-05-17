@@ -1,8 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle } from "lucide-react";
+import shopsData from "@/data/shops.json";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
+
+const totalActive = (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length;
 
 export function ShopFinder() {
   const [mounted, setMounted] = useState(false);
