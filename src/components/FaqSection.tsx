@@ -30,7 +30,7 @@ const rightFAQs = [
   },
   {
     q: "Wat is het verschil tussen Velopass en het graveren van mijn rijksregisternummer?",
-    a: "Graveren brengt blijvende schade aan het frame toe — tenzij door de fabrikant zelf gedaan, vervalt hierdoor je garantie. Bovendien maakt een ingegraveerd rijksregisternummer je fiets moeilijk verkoopbaar. De Velopass Frame-ID laat geen sporen na wanneer hij verwijderd wordt en is overdraagbaar bij verkoop.",
+    a: "Graveren brengt blijvende schade aan het frame toe — tenzij door de fabrikant zelf gedaan, vervalt hierdoor je garantie. Bovendien maakt een ingegraveerd rijksregisternummer je fiets moeilijk verkoopbaar. De Velopass Frame-ID is overdraagbaar naar een volgende eigenaar bij verkoop.",
   },
   {
     q: "Ik probeer in te loggen maar het lukt niet.",
