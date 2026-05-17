@@ -201,7 +201,7 @@ function VelopassPro() {
             {[
               { t: "POS-integratie of gratis app", d: "Werkt met je bestaand kassasysteem. Of gebruik de gratis Pro app." },
               { t: "Credits die oplopen", d: "Elke activatie brengt je dichter bij gratis gebruik." },
-              { t: "Onboarding inbegrepen", d: "We helpen je op weg. In jouw taal: NL · FR · EN." },
+              { t: "Onboarding inbegrepen", d: "We helpen je op weg. In jouw taal." },
             ].map((f) => (
               <div className="rfeat" key={f.t}>
                 <div className="rfeat-icon"><Check /></div>
