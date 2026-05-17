@@ -375,9 +375,9 @@ function VelopassHome() {
                 to="/gestolen"
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 400,
+                  fontWeight: 500,
                   fontSize: 12,
-                  color: "rgba(46,204,138,0.7)",
+                  color: "#F59E0B",
                   textDecoration: "none",
                   display: "inline-block",
                   marginTop: 10,
