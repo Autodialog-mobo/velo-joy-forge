@@ -353,7 +353,7 @@ function Fabrikanten() {
             </div>
           ))}
         </div>
-        <div className="fb-flow-closing">Jouw klant zit in jouw ecosysteem voor hij de winkel verlaat.</div>
+        <div className="fb-flow-closing">Geen sticker plakken. Geen data invoeren. Scan bij ontvangst — en de rest gaat vanzelf.</div>
 
         <div className="fb-cta">
           Bent u fabrikant en wil u Velopass integreren in uw productieproces?{" "}
