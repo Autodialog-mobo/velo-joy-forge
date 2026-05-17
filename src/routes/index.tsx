@@ -353,6 +353,9 @@ function VelopassHome() {
               <div className="vc-head"><h3>Diefstalprotectie</h3></div>
               <p>Je fiets staat geregistreerd in Velopass, het internationale fietsregister. Elk kassasysteem van {activeShopsCount.toLocaleString("nl-BE")}+ aangesloten fietswinkels scant automatisch — een gestolen fiets heeft nergens meer te gaan.</p>
               <div className="secured-pill"><span className="sdot" />Jouw fiets. SECURED.</div>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 10, lineHeight: 1.5 }}>
+                Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
+              </p>
             </div>
           </div>
           <div className="vc">
