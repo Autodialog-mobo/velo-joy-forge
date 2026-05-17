@@ -11,6 +11,7 @@ import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { initAnalytics } from "../lib/analytics";
+import { CookieConsent } from "@/components/CookieConsent";
 
 function NotFoundComponent() {
   return (
@@ -113,6 +114,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <CookieConsent />
     </QueryClientProvider>
   );
 }

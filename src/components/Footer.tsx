@@ -16,7 +16,7 @@ export function Footer({ variant = "default" }: FooterProps) {
           <div className="ftagline">Every bike. A customer. For life.</div>
         </div>
         <ul className="flinks">
-          <li><a href="#">Privacy</a></li>
+          <li><Link to="/privacy">Privacy</Link></li>
           <li><a href="#">Voorwaarden</a></li>
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/" hash="faq">Veelgestelde vragen</Link></li>
@@ -58,7 +58,7 @@ export function Footer({ variant = "default" }: FooterProps) {
         </div>
       </div>
       <ul className="flinks">
-        <li><a href="#">Privacy</a></li>
+        <li><Link to="/privacy">Privacy</Link></li>
         <li><a href="#">Voorwaarden</a></li>
         <li><Link to="/contact">Contact</Link></li>
         <li><Link to="/bikesearch">Fiets controleren</Link></li>

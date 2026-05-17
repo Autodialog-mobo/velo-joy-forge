@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProRouteImport } from './routes/pro'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const ProRoute = ProRouteImport.update({
   id: '/pro',
   path: '/pro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bikesearch' | '/contact' | '/pro'
+  fullPaths: '/' | '/bikesearch' | '/contact' | '/privacy' | '/pro'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bikesearch' | '/contact' | '/pro'
-  id: '__root__' | '/' | '/bikesearch' | '/contact' | '/pro'
+  to: '/' | '/bikesearch' | '/contact' | '/privacy' | '/pro'
+  id: '__root__' | '/' | '/bikesearch' | '/contact' | '/privacy' | '/pro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BikesearchRoute: typeof BikesearchRoute
   ContactRoute: typeof ContactRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProRoute: typeof ProRoute
 }
 
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/pro'
       fullPath: '/pro'
       preLoaderRoute: typeof ProRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -106,8 +123,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BikesearchRoute: BikesearchRoute,
   ContactRoute: ContactRoute,
+  PrivacyRoute: PrivacyRoute,
   ProRoute: ProRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
