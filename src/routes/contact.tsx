@@ -388,6 +388,8 @@ function ContactPage() {
       <Footer />
 
       <style>{`
+        .back-btn-wrap { padding: 72px 6vw 0; max-width: 1100px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
         .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .contact-card { border: 1px solid var(--border); }
         .contact-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,31,60,0.08); border-color: rgba(46,204,138,0.4); }
@@ -395,6 +397,8 @@ function ContactPage() {
         .wa-grid input::placeholder, .wa-grid textarea::placeholder { color: rgba(245,243,238,0.35); }
         .wa-grid input:focus, .wa-grid textarea:focus { border-color: #2ECC8A; }
         @media (max-width: 768px) {
+          .back-btn-wrap { padding-top: 64px; }
+          .back-btn { font-size: 12px; }
           .contact-cards { grid-template-columns: 1fr; }
           .wa-grid { grid-template-columns: 1fr; }
         }
