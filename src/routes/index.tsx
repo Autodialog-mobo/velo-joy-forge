@@ -171,6 +171,21 @@ function VelopassHome() {
           </a>
         </div>
 
+        <div style={{ textAlign: "center", marginTop: 20 }}>
+          <Link
+            to="/gestolen"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 400,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.45)",
+              textDecoration: "none",
+            }}
+          >
+            Fiets gestolen of vermist? → Lees wat je nu moet doen
+          </Link>
+        </div>
+
         <div className="hero-trust">
           <div className="avatars">
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
