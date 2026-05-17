@@ -88,7 +88,7 @@ function VelopassPro() {
             <a href="#hoe-werkt-het" className="btn-s dark">Hoe werkt het? →</a>
           </div>
           <div className="hero-stats">
-            <div><div className="stat-num">1.500<span>+</span></div><div className="stat-label">fietswinkels actief</div></div>
+            <div><div className="stat-num">{activeShopsCount.toLocaleString("nl-BE")}<span>+</span></div><div className="stat-label">fietswinkels actief</div></div>
             <div><div className="stat-num">+150<span>K</span></div><div className="stat-label">fietsen geregistreerd</div></div>
             
           </div>
@@ -127,7 +127,7 @@ function VelopassPro() {
 
       <section className="pijlers" id="pijlers">
         <p className="eyebrow">Wat je wint</p>
-        <h2 className="sec-title" style={{ marginBottom: 56, maxWidth: 520 }}>Drie redenen waarom 1.500 fietswinkels vertrouwen op Velopass</h2>
+        <h2 className="sec-title" style={{ marginBottom: 56, maxWidth: 520 }}>Drie redenen waarom {activeShopsCount.toLocaleString("nl-BE")} fietswinkels vertrouwen op Velopass</h2>
         <div className="pijler-grid">
           <div className="pc">
             <div className="pc-num">01</div>
@@ -199,7 +199,7 @@ function VelopassPro() {
             </p>
           </div>
           <div className="proof-numbers">
-            <div><div className="pnum-val">1.500<span>+</span></div><div className="pnum-label">fietswinkels</div></div>
+            <div><div className="pnum-val">{activeShopsCount.toLocaleString("nl-BE")}<span>+</span></div><div className="pnum-label">fietswinkels</div></div>
             <div><div className="pnum-val">+150<span>K</span></div><div className="pnum-label">fietsen geregistreerd</div></div>
           </div>
         </div>
