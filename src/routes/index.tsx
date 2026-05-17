@@ -356,6 +356,20 @@ function VelopassHome() {
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 10, lineHeight: 1.5 }}>
                 Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
               </p>
+              <Link
+                to="/gestolen"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: 12,
+                  color: "rgba(46,204,138,0.7)",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  marginTop: 10,
+                }}
+              >
+                Fiets gestolen of vermist? Lees wat je moet doen →
+              </Link>
             </div>
           </div>
           <div className="vc">
