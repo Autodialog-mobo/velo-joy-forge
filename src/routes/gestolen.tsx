@@ -8,6 +8,10 @@ import {
   Lightbulb,
   ExternalLink,
   Search,
+  AlertTriangle,
+  Smartphone,
+  Database,
+  Shield,
 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
