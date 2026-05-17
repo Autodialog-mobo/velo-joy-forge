@@ -116,7 +116,7 @@ function GestolenPage() {
     { text: "Merk, model, kleur en type fiets", velopass: "Al beschikbaar in je Velopass" },
     { text: "Het framenummer", velopass: "Al beschikbaar in je Velopass" },
     { text: "Graveernummer of fietspas", velopass: "Je Velopass-code volstaat" },
-    { text: "Exacte locatie, datum en uur van de diefstal" },
+    { text: "Exacte locatie, datum en uur van de diefstal", velopass: "Al ingegeven bij je melding in Velopass" },
     { text: "Foto's van de fiets", velopass: "Al opgeslagen in je Velopass" },
     { text: "Aankoopfactuur (indien beschikbaar)", velopass: "Gekoppeld aan je Velopass" },
   ];
