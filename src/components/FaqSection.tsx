@@ -3,7 +3,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 const leftFAQs = [
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
-    a: "Bij de registratie van je fiets bewaren we ook het merk en framenummer. Wordt de Frame-ID verwijderd, dan blijft jouw fiets traceerbaar via die combinatie — net zoals een auto zonder nummerplaat nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het alleen veel eenvoudiger en sneller.",
+    a: "Bij de registratie van je fiets bewaren we ook het merk en framenummer. Wordt de Frame-ID verwijderd, dan blijft jouw fiets traceerbaar via die combinatie — net zoals een auto zonder kenteken/nummerplaat nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het alleen veel eenvoudiger en sneller.",
   },
   {
     q: "Kan ik een nieuwe Frame-ID bestellen als mijn oude verwijderd of beschadigd is?",
