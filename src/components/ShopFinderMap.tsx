@@ -251,6 +251,29 @@ export default function ShopFinderMap() {
         </p>
       </div>
 
+      <div style={{ textAlign: "center", marginBottom: 24 }}>
+        <Link
+          to="/gestolen"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 500,
+            fontSize: 14,
+            color: "#0D1F3C",
+            background: "#FFFFFF",
+            border: "1px solid #0D1F3C",
+            borderRadius: 8,
+            padding: "10px 20px",
+            textDecoration: "none",
+          }}
+        >
+          <AlertTriangle size={16} />
+          Fiets gestolen of vermist? Volg ons stappenplan →
+        </Link>
+      </div>
+
       <div className="sf-split">
         <aside className="sf-list-wrap">
           <div className="sf-search">
