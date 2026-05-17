@@ -62,6 +62,7 @@ export function Footer({ variant = "default" }: FooterProps) {
         <li><a href="#">Voorwaarden</a></li>
         <li><Link to="/contact">Contact</Link></li>
         <li><Link to="/bikesearch">Fiets controleren</Link></li>
+        <li><Link to="/gestolen">Fiets gestolen?</Link></li>
         <li><Link to="/" hash="faq">Veelgestelde vragen</Link></li>
       </ul>
       <div className="fcopy">© 2026 Velopass</div>

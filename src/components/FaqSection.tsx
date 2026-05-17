@@ -1,10 +1,24 @@
+import { Fragment } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Link } from "@tanstack/react-router";
+
+function renderLine(line: string) {
+  const parts = line.split(/(\/gestolen)/g);
+  return parts.map((p, i) =>
+    p === "/gestolen" ? (
+      <Link key={i} to="/gestolen" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
+        /gestolen
+      </Link>
+    ) : (
+      <Fragment key={i}>{p}</Fragment>
+    )
+  );
+}
 
 const leftFAQs = [
   {
     q: "Wat doe ik als mijn fiets gestolen of verloren is?",
-    a: "Meld je fiets zo snel mogelijk via je Velopass-account. Ga naar 'Mijn fiets' en klik op 'Melden als vermist'. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd. Iedereen die jouw Frame-ID scant, ziet dat jouw fiets gezocht wordt en kan je anoniem een seintje geven. Vergeet niet ook aangifte te doen bij de politie.",
+    a: "Meld je fiets zo snel mogelijk via je Velopass-account. Ga naar 'Mijn fiets' en klik op 'Melden als vermist'. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd. Iedereen die jouw Frame-ID scant, ziet dat jouw fiets gezocht wordt en kan je anoniem een seintje geven. Vergeet niet ook aangifte te doen bij de politie.\n\nBekijk het volledige stappenplan op /gestolen.",
   },
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
@@ -157,7 +171,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{line}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
@@ -207,7 +221,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{line}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
