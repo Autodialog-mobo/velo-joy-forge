@@ -1,4 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { AlertTriangle } from "lucide-react";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 
@@ -13,6 +15,28 @@ export function ShopFinder() {
           <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
           <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
           <p className="sf-subhead"><strong style={{ color: "#0D1F3C", fontWeight: 600 }}>1823+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.</p>
+        </div>
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <Link
+            to="/gestolen"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 500,
+              fontSize: 14,
+              color: "#0D1F3C",
+              background: "#FFFFFF",
+              border: "1px solid #0D1F3C",
+              borderRadius: 8,
+              padding: "10px 20px",
+              textDecoration: "none",
+            }}
+          >
+            <AlertTriangle size={16} />
+            Fiets gestolen of vermist? Volg ons stappenplan →
+          </Link>
         </div>
         <p className="sec-sub" style={{ marginTop: 32 }}>Kaart laden...</p>
       </section>

@@ -171,6 +171,21 @@ function VelopassHome() {
           </a>
         </div>
 
+        <div style={{ textAlign: "center", marginTop: 20 }}>
+          <Link
+            to="/gestolen"
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 400,
+              fontSize: 13,
+              color: "rgba(255,255,255,0.45)",
+              textDecoration: "none",
+            }}
+          >
+            Fiets gestolen of vermist? → Lees wat je nu moet doen
+          </Link>
+        </div>
+
         <div className="hero-trust">
           <div className="avatars">
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
@@ -356,6 +371,20 @@ function VelopassHome() {
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 10, lineHeight: 1.5 }}>
                 Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
               </p>
+              <Link
+                to="/gestolen"
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontWeight: 400,
+                  fontSize: 12,
+                  color: "rgba(46,204,138,0.7)",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  marginTop: 10,
+                }}
+              >
+                Fiets gestolen of vermist? Lees wat je moet doen →
+              </Link>
             </div>
           </div>
           <div className="vc">

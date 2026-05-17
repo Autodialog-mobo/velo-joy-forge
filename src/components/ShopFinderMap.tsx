@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
+import { AlertTriangle } from "lucide-react";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
@@ -247,6 +249,29 @@ export default function ShopFinderMap() {
         <p className="sf-subhead">
           <strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{animatedCount}+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.
         </p>
+      </div>
+
+      <div style={{ textAlign: "center", marginBottom: 24 }}>
+        <Link
+          to="/gestolen"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 500,
+            fontSize: 14,
+            color: "#0D1F3C",
+            background: "#FFFFFF",
+            border: "1px solid #0D1F3C",
+            borderRadius: 8,
+            padding: "10px 20px",
+            textDecoration: "none",
+          }}
+        >
+          <AlertTriangle size={16} />
+          Fiets gestolen of vermist? Volg ons stappenplan →
+        </Link>
       </div>
 
       <div className="sf-split">
