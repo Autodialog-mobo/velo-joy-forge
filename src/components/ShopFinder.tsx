@@ -27,7 +27,7 @@ export function ShopFinder() {
               fontWeight: 500,
               fontSize: 14,
               color: "#F59E0B",
-              background: "#FFFFFF",
+              background: "rgba(245,158,11,0.1)",
               border: "1px solid #F59E0B",
               borderRadius: 8,
               padding: "10px 20px",
