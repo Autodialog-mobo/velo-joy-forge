@@ -448,16 +448,29 @@ button { font-family: inherit; }
 }
 
 /* Two-path layout for "nog geen sticker" */
-.steps-new.two-paths { grid-template-columns: repeat(2, 1fr); }
-.sn.path-shop { display: flex; flex-direction: column; gap: 14px; }
+.steps-new.two-paths { grid-template-columns: repeat(2, 1fr); gap: 24px; align-items: stretch; }
+.sn.path-shop { display: flex; flex-direction: column; gap: 16px; padding: 32px 30px; height: 100%; }
+.sn.path-shop > div:first-child { margin-bottom: 0; }
+.sn.path-shop h4 { font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; color: var(--navy); letter-spacing: -0.3px; line-height: 1.25; margin: 0; }
+.sn.path-shop p { font-size: 14px; line-height: 1.65; color: var(--text-muted); margin: 0; }
 .sn-tag { display: inline-block; align-self: flex-start; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); background: rgba(13,31,60,0.06); padding: 5px 10px; border-radius: 999px; }
 .sn-tag.green { color: #0D1F3C; background: var(--green-pale); }
-.sn.path-shop .btn-p, .sn.path-shop .btn-g { margin-top: auto; align-self: flex-start; }
+.sn.path-shop .btn-p,
+.sn.path-shop .btn-g { margin-top: auto; align-self: flex-start; font-size: 14px; font-weight: 600; padding: 13px 22px; letter-spacing: -0.1px; }
 .path-final { margin-top: 24px; display: flex; gap: 16px; align-items: flex-start; background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px 28px; }
-.path-final-arrow { width: 32px; height: 32px; border-radius: 999px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.path-final h4 { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-.path-final p { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
-@media (max-width: 768px) { .steps-new.two-paths { grid-template-columns: 1fr; } }
+.path-final-arrow { width: 32px; height: 32px; border-radius: 999px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.path-final h4 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing: -0.2px; margin-bottom: 6px; }
+.path-final p { font-size: 14px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+@media (max-width: 768px) {
+  .steps-new.two-paths { grid-template-columns: 1fr; gap: 16px; }
+  .sn.path-shop { padding: 26px 22px; gap: 14px; }
+  .sn.path-shop h4 { font-size: 18px; }
+  .sn.path-shop p { font-size: 14px; }
+  .sn.path-shop .btn-p,
+  .sn.path-shop .btn-g { align-self: stretch; justify-content: center; text-align: center; }
+  .path-final { padding: 20px 22px; gap: 14px; }
+  .path-final h4 { font-size: 16px; }
+}
 
 /* Community / shop-finder hero & outro */
 .shop-finder { text-align: center; }

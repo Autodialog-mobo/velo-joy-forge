@@ -17,7 +17,6 @@ const pathIconBox: React.CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  marginBottom: 16,
 };
 
 export const Route = createFileRoute("/")({
