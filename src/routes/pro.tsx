@@ -337,6 +337,24 @@ function Fabrikanten() {
           ))}
         </div>
 
+        <div className="fb-flow">
+          {[
+            { icon: <Truck size={24} />, label: "LEVERING", t: "Fiets arriveert", d: "De fiets wordt geleverd met een Velopass Frame-ID. De fietsdata staat al klaar in Velopass — merk, model, specs." },
+            { icon: <ScanLine size={24} />, label: "ONTVANGST", t: "Scan bij aankomst", d: "Scan de code op de doos of op de fiets na uitpakken. Alle fietsdata wordt automatisch ingevuld in je kassasysteem. Geen manuele invoer." },
+            { icon: <Receipt size={24} />, label: "VERKOOP", t: "Factuur aanmaken", d: "Bij de facturatie stuurt Velopass automatisch een e-mail uit jouw naam naar de klant." },
+            { icon: <CheckCircle2 size={24} />, label: "ACTIVATIE", t: "Klant kiest wachtwoord", d: "De klant kiest enkel een wachtwoord. Zijn Velopass staat al klaar — op zijn naam, met alle fietsdata ingevuld." },
+          ].map((s, i, arr) => (
+            <div className="fb-flow-step" key={s.label}>
+              <div className="fb-flow-icon">{s.icon}</div>
+              <div className="fb-flow-label">{s.label}</div>
+              <h4 className="fb-flow-title">{s.t}</h4>
+              <p className="fb-flow-body">{s.d}</p>
+              {i < arr.length - 1 && <div className="fb-flow-arrow" aria-hidden="true">→</div>}
+            </div>
+          ))}
+        </div>
+        <div className="fb-flow-closing">Jouw klant zit in jouw ecosysteem voor hij de winkel verlaat.</div>
+
         <div className="fb-cta">
           Bent u fabrikant en wil u Velopass integreren in uw productieproces?{" "}
           <a href="/contact">Neem contact op →</a>
