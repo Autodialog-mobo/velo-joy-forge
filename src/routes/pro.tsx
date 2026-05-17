@@ -338,20 +338,45 @@ function Fabrikanten() {
         </div>
 
         <div className="fb-flow">
-          {[
-            { icon: <Truck size={24} />, label: "LEVERING", t: "Fiets arriveert", d: "De fiets wordt geleverd met een Velopass Frame-ID. De fietsdata staat al klaar in Velopass — merk, model, specs." },
-            { icon: <ScanLine size={24} />, label: "ONTVANGST", t: "Scan bij aankomst", d: "Scan de code op de doos of op de fiets na uitpakken. Alle fietsdata wordt automatisch ingevuld in je kassasysteem. Geen manuele invoer." },
-            { icon: <Receipt size={24} />, label: "VERKOOP", t: "Factuur aanmaken", d: "Bij de facturatie stuurt Velopass automatisch een e-mail uit jouw naam naar de klant." },
-            { icon: <CheckCircle2 size={24} />, label: "OPENEN", t: "Klant kiest wachtwoord", d: "De klant kiest enkel een wachtwoord. Zijn Velopass staat al klaar — op zijn naam, met alle fietsdata ingevuld." },
-          ].map((s, i, arr) => (
-            <div className="fb-flow-step" key={s.label}>
-              <div className="fb-flow-icon">{s.icon}</div>
-              <div className="fb-flow-label">{s.label}</div>
-              <h4 className="fb-flow-title">{s.t}</h4>
-              <p className="fb-flow-body">{s.d}</p>
-              {i < arr.length - 1 && <div className="fb-flow-arrow" aria-hidden="true">→</div>}
+          <div className="fb-zone fb-zone-dim">
+            <div className="fb-zone-tag">FABRIKANT</div>
+            <div className="fb-flow-step">
+              <div className="fb-flow-icon"><Truck size={24} /></div>
+              <div className="fb-flow-label">LEVERING</div>
+              <h4 className="fb-flow-title">Fiets arriveert</h4>
+              <p className="fb-flow-body">De fiets wordt geleverd met een Velopass Frame-ID. Fietsdata staat al klaar in Velopass.</p>
             </div>
-          ))}
+            <div className="fb-zone-divider"><span className="fb-zone-badge fb-zone-badge-green">Jouw rol begint hier →</span></div>
+          </div>
+
+          <div className="fb-zone fb-zone-primary">
+            <div className="fb-zone-tag fb-zone-tag-green">JOUW WINKEL — ENKEL DIT</div>
+            <div className="fb-flow-step">
+              <div className="fb-flow-icon fb-flow-icon-lg"><ScanLine size={28} /></div>
+              <div className="fb-flow-label">ONTVANGST</div>
+              <h4 className="fb-flow-title fb-flow-title-lg">Scan bij aankomst</h4>
+              <p className="fb-flow-body fb-flow-body-bright">Scan de code op de doos of op de fiets na uitpakken. Fietsdata staat automatisch klaar in je kassasysteem. Dat is alles.</p>
+            </div>
+            <div className="fb-zone-divider"><span className="fb-zone-badge">Automatisch →</span></div>
+          </div>
+
+          <div className="fb-zone fb-zone-dim">
+            <div className="fb-zone-tag">AUTOMATISCH</div>
+            <div className="fb-substeps">
+              <div className="fb-substep">
+                <div className="fb-flow-icon fb-flow-icon-sm"><Mail size={20} /></div>
+                <div className="fb-flow-label fb-flow-label-sm">BIJ VERKOOP</div>
+                <h5 className="fb-substep-title">Email naar klant</h5>
+                <p className="fb-substep-body">Velopass stuurt automatisch een e-mail uit jouw naam bij de facturatie.</p>
+              </div>
+              <div className="fb-substep">
+                <div className="fb-flow-icon fb-flow-icon-sm"><CheckCircle2 size={20} /></div>
+                <div className="fb-flow-label fb-flow-label-sm">KLANT</div>
+                <h5 className="fb-substep-title">Velopass openen</h5>
+                <p className="fb-substep-body">De klant kiest een wachtwoord. Zijn Velopass staat al klaar.</p>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="fb-flow-closing">Geen sticker plakken. Geen data invoeren. Scan bij ontvangst — en de rest gaat vanzelf.</div>
 
