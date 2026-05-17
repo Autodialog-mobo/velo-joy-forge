@@ -581,8 +581,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .fb-name { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--navy); font-size: 18px; margin-bottom: 12px; }
 .fb-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .fb-badge { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; padding: 4px 8px; border-radius: 999px; }
-.fb-decal { background: var(--navy); color: #fff; }
-.fb-lak { background: var(--green); color: var(--navy); }
+.fb-decal { background: var(--green); color: var(--navy); }
+.fb-lak { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
 .fb-data { background: transparent; color: var(--green-mid); border: 1px solid var(--green); }
 .fb-doos { background: rgba(13,31,60,0.06); color: var(--text-muted); }
 .fb-cardsub { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 12px; line-height: 1.5; }
