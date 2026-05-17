@@ -190,25 +190,11 @@ function ContactPage() {
       </nav>
 
       {/* BACK BUTTON */}
-      <div style={{ padding: "48px 6vw 0", maxWidth: 1100, margin: "0 auto" }}>
+      <div className="back-btn-wrap">
         <button
           type="button"
           onClick={() => { if (window.history.length > 1) { window.history.back(); } else { window.location.href = "/"; } }}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: 13,
-            fontWeight: 500,
-            color: "var(--text-muted)",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 0,
-            textDecoration: "underline",
-            textUnderlineOffset: 3,
-          }}
+          className="back-btn"
         >
           <ArrowLeft size={14} strokeWidth={2} />
           Terug
