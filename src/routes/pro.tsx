@@ -378,7 +378,10 @@ function Fabrikanten() {
             </div>
           </div>
         </div>
-        <div className="fb-flow-closing">Geen sticker plakken. Geen data invoeren. Scan bij ontvangst — en de rest gaat vanzelf.</div>
+        <div className="fb-flow-closing">
+          <span className="fb-flow-closing-dim">Geen sticker plakken. Geen data invoeren.</span>{" "}
+          <span className="fb-flow-closing-green">Scan bij ontvangst — en de rest gaat vanzelf.</span>
+        </div>
 
         <div className="fb-cta-card">
           <h3 className="fb-cta-title">Maak het leven van je dealer eenvoudiger</h3>
