@@ -280,7 +280,7 @@ function VelopassHome() {
       <section className="flow-new" id="nieuwe-sticker">
         <p className="eyebrow">Nog geen Frame-ID</p>
         <h2 className="sec-title">Bestel een Velopass Frame-ID</h2>
-        <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
+        <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
