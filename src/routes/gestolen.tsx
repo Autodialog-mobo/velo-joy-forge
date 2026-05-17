@@ -160,6 +160,54 @@ function GestolenPage() {
     },
   ];
 
+  const nlChecklist: Array<{ text: string; velopass?: string }> = [
+    { text: "Je DigiD (inloggen via digid.nl)" },
+    { text: "Merk, model, kleur en type fiets", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Het framenummer (staat meestal onder het trapplateau of aan de voorkant van het frame)", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Exacte locatie, datum en tijdstip van de diefstal", velopass: "Al ingegeven bij je melding in Velopass" },
+    { text: "Foto's van de fiets", velopass: "Al opgeslagen in je Velopass" },
+    { text: "Aankoopfactuur (indien beschikbaar)", velopass: "Gekoppeld aan je Velopass" },
+  ];
+
+  const nlSteps: Array<{ title: string; body: React.ReactNode; tip?: string }> = [
+    {
+      title: "Surf naar politie.nl",
+      body: (
+        <a
+          href="https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: GREEN, textDecoration: "underline", textUnderlineOffset: 3, display: "inline-flex", alignItems: "center", gap: 6 }}
+        >
+          www.politie.nl/aangifte <ExternalLink size={14} strokeWidth={2} />
+        </a>
+      ),
+    },
+    {
+      title: "Kies fietsdiefstal",
+      body: <>Kies <strong style={{ color: NAVY }}>'Aangifte doen van fietsdiefstal'</strong>.</>,
+    },
+    {
+      title: "Log in met DigiD",
+      body: <>Log in met je DigiD via het CSAM-portaal.</>,
+    },
+    {
+      title: "Vul het formulier in",
+      body: (
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
+          <li>• Persoonsgegevens als eigenaar/aangever</li>
+          <li>• Feiten: waar en wanneer gestolen? Stond de fiets op slot?</li>
+          <li>• Voorwerp: alle details van de fiets — hoe meer details, hoe groter de kans op terugvinden</li>
+        </ul>
+      ),
+      tip: "Open je Velopass om alle fietsgegevens in één oogopslag bij de hand te hebben — inclusief de locatie die je al ingaf bij het melden. Kopieer die direct naar het formulier.",
+    },
+    {
+      title: "Controleer en verstuur",
+      body: <>Controleer de gegevens en verstuur de aangifte.</>,
+    },
+  ];
+
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
