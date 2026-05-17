@@ -280,6 +280,10 @@ function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
             )}
           </div>
         </div>
+
+        <div className="pcm-tagline">
+          Every bike. <span>A customer. For life.</span>
+        </div>
       </div>
     </section>
   );
