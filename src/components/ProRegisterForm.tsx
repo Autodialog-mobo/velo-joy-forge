@@ -116,14 +116,48 @@ export function RegisterForm() {
         )}
       </div>
 
-      <div className="form-row">
-        <label className="flabel" htmlFor="pf">Voornaam</label>
-        <input id="pf" className="finput" type="text" placeholder="Jan" />
-      </div>
       <div className="fgrid">
+        <div className="form-row">
+          <label className="flabel" htmlFor="pf">Voornaam</label>
+          <input id="pf" className="finput" type="text" placeholder="Jan" />
+        </div>
         <div className="form-row">
           <label className="flabel" htmlFor="pl">Naam</label>
           <input id="pl" className="finput" type="text" placeholder="De Smedt" />
+        </div>
+      </div>
+      <div className="form-row">
+        <label className="flabel" htmlFor="ps">Naam fietswinkel</label>
+        <input
+          id="ps"
+          className={`finput${autofilled.shop ? " from-vies" : ""}`}
+          type="text"
+          placeholder="Van Dyck Fietsen"
+          value={shop}
+          onChange={(e) => {
+            setShop(e.target.value);
+            if (autofilled.shop) setAutofilled((s) => ({ ...s, shop: false }));
+          }}
+        />
+      </div>
+      <div className="form-row">
+        <label className="flabel" htmlFor="paddr">Adres</label>
+        <input
+          id="paddr"
+          className={`finput${autofilled.address ? " from-vies" : ""}`}
+          type="text"
+          placeholder="Stokerijstraat 29, 2110 Wijnegem"
+          value={address}
+          onChange={(e) => {
+            setAddress(e.target.value);
+            if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
+          }}
+        />
+      </div>
+      <div className="fgrid">
+        <div className="form-row">
+          <label className="flabel" htmlFor="pe">E-mailadres</label>
+          <input id="pe" className="finput" type="email" placeholder="jan@fietswinkel.be" />
         </div>
         <div className="form-row">
           <label className="flabel" htmlFor="pt">Telefoonnummer</label>
