@@ -191,7 +191,29 @@ function ContactPage() {
 
       <main style={{ background: "var(--bg)", paddingTop: 64, minHeight: "100vh" }}>
         {/* HEADER */}
-        <section style={{ padding: "80px 6vw 32px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+        <section style={{ padding: "48px 6vw 32px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+          <button
+            type="button"
+            onClick={() => { if (window.history.length > 1) { window.history.back(); } else { window.location.href = "/"; } }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 13,
+              fontWeight: 500,
+              color: "var(--text-muted)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: "0 0 16px 0",
+              textDecoration: "underline",
+              textUnderlineOffset: 3,
+            }}
+          >
+            <ArrowLeft size={14} strokeWidth={2} />
+            Terug
+          </button>
           <div className="eyebrow" style={{ color: "var(--green-mid)" }}>Contact</div>
           <h1
             style={{
