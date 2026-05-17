@@ -26,7 +26,7 @@ const leftFAQs = [
 const rightFAQs = [
   {
     q: "Wat betekenen ALL CLEAR, REPORTED en NOT REGISTERED?",
-    a: "Dit zijn de drie statussen in de Velopass Community:\n• ALL CLEAR: de fiets is geregistreerd en niet gemeld als vermist. Alles in orde.\n• REPORTED: de eigenaar heeft de fiets actief gemeld. De community zoekt mee.\n• NOT REGISTERED: de fiets staat niet in de Velopass-database en is nog niet beveiligd.",
+    a: "Dit zijn the drie statussen in de Velopass Community:\n• ALL CLEAR: de fiets is geregistreerd en niet gemeld als vermist. Alles in orde.\n• REPORTED: de eigenaar heeft de fiets actief gemeld als vermist. De community zoekt mee.\n• NOT REGISTERED: de fiets staat niet in de Velopass-database en is nog niet beveiligd.",
   },
   {
     q: "Wat is het verschil tussen Velopass en het graveren van mijn rijksregisternummer?",
