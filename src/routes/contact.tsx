@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HelpCircle, Package, ScanLine, MessageCircle, ArrowUpRight } from "lucide-react";
+import { HelpCircle, Package, ScanLine, MessageCircle, ArrowUpRight, ArrowLeft } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { VelopassMark } from "@/components/VelopassMark";
