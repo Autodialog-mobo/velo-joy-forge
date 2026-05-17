@@ -1,9 +1,11 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
+
+const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
 export const Route = createFileRoute("/pro")({
   head: () => ({
@@ -236,7 +238,65 @@ function VelopassPro() {
         </div>
       </section>
 
+      <ProCommunity activeShopsCount={activeShopsCount} />
+
       <Footer variant="pro" />
     </>
+  );
+}
+
+function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const formatted = activeShopsCount.toLocaleString("nl-BE");
+  return (
+    <section className="pro-community" id="community">
+      <div className="pcm-inner">
+        <div className="pcm-header">
+          <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
+          <h2 className="pcm-title">
+            Word deel van een <em>groeiend netwerk</em>
+          </h2>
+          <p className="pcm-sub">
+            Meer dan {formatted}+ fietswinkels in België, Nederland en Frankrijk zijn al aangesloten.
+            Het netwerk groeit elke dag — en elke nieuwe winkel maakt het systeem sterker voor iedereen.
+          </p>
+        </div>
+
+        <div className="pcm-stats">
+          <div className="pcm-stat">
+            <div className="pcm-stat-num">{formatted}<span>+</span></div>
+            <div className="pcm-stat-label">fietswinkels aangesloten</div>
+          </div>
+          <div className="pcm-stat">
+            <div className="pcm-stat-num">+150<span>K</span></div>
+            <div className="pcm-stat-label">fietsen geregistreerd</div>
+          </div>
+          <div className="pcm-stat">
+            <div className="pcm-stat-num g">Europa</div>
+            <div className="pcm-stat-label">in aanbouw · expanding daily</div>
+          </div>
+        </div>
+
+        <div className="pcm-mapcard">
+          <div className="pcm-mapcard-head">
+            <div>
+              <div className="pcm-mapcard-title">Aangesloten Velopass-fietswinkels</div>
+              <div className="pcm-mapcard-sub">Jij hoort hier ook bij.</div>
+            </div>
+            <a href="#registreer" className="pcm-cta">Sluit je aan →</a>
+          </div>
+          <div className="pcm-map">
+            {mounted ? (
+              <Suspense fallback={<div className="sf-map-loading">Kaart laden...</div>}>
+                <ProCommunityMap />
+              </Suspense>
+            ) : (
+              <div className="sf-map-loading">Kaart laden...</div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
