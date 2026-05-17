@@ -572,7 +572,9 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .fb-inner { max-width: 1200px; margin: 0 auto; }
 .fb-sub { font-family: 'DM Sans', sans-serif; color: var(--text-muted); max-width: 560px; margin: 16px 0 56px; font-size: 16px; line-height: 1.6; }
 .fb-features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 56px; }
-.fb-feat { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.fb-feat { position: relative; background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.fb-feat.fb-feat-premium { background: rgba(46,204,138,0.05); border-color: rgba(46,204,138,0.25); }
+.fb-feat-badge { position: absolute; top: 12px; right: 12px; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--green-mid); background: rgba(46,204,138,0.12); padding: 3px 7px; border-radius: 999px; }
 .fb-feat-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 .fb-feat h4 { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--navy); font-size: 15px; margin: 0 0 6px; }
 .fb-feat p { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 13px; line-height: 1.5; margin: 0; }
@@ -581,8 +583,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .fb-name { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--navy); font-size: 18px; margin-bottom: 12px; }
 .fb-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
 .fb-badge { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; padding: 4px 8px; border-radius: 999px; }
-.fb-decal { background: var(--navy); color: #fff; }
-.fb-lak { background: var(--green); color: var(--navy); }
+.fb-decal { background: var(--green); color: var(--navy); }
+.fb-lak { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
 .fb-data { background: transparent; color: var(--green-mid); border: 1px solid var(--green); }
 .fb-doos { background: rgba(13,31,60,0.06); color: var(--text-muted); }
 .fb-cardsub { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 12px; line-height: 1.5; }

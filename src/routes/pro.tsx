@@ -293,8 +293,8 @@ const BADGE_META: Record<Attr, { label: string; cls: string }> = {
 
 function Fabrikanten() {
   const features = [
-    { icon: <Shield size={20} color="#2ECC8A" />, t: "Decal", d: "De Frame-ID is als decal ingebouwd bij de productie — onder de vernis, net zoals de merknaam en striping. Permanent en onverwijderbaar." },
-    { icon: <Tag size={20} color="#2ECC8A" />, t: "Op de lak", d: "De Frame-ID is zichtbaar aangebracht op het frame bij productie. Direct scanbaar, altijd aanwezig." },
+    { icon: <Shield size={20} color="#2ECC8A" />, t: "Decal", d: "De Frame-ID is als decal ingebouwd bij de productie — onder de vernis, net zoals de merknaam en striping. Permanent en onverwijderbaar.", premium: true, badge: "Beste beveiliging" },
+    { icon: <Tag size={20} color="#0D1F3C" />, t: "Op de lak", d: "De Frame-ID is zichtbaar aangebracht op het frame bij productie. Standaard optie — direct scanbaar, altijd aanwezig." },
     { icon: <FileText size={20} color="#2ECC8A" />, t: "Fietsdata vooringevuld", d: "Merk, model en specificaties staan al in Velopass. De winkel en fietser hoeven niets meer manueel in te voeren." },
     { icon: <Package size={20} color="#2ECC8A" />, t: "Code op de verpakking", d: "De Velopass-code staat ook op de doos — eenvoudig te registreren bij levering, nog voor de fiets uitgestald wordt." },
   ];
@@ -315,7 +315,8 @@ function Fabrikanten() {
 
         <div className="fb-features">
           {features.map((f) => (
-            <div className="fb-feat" key={f.t}>
+            <div className={`fb-feat${f.premium ? " fb-feat-premium" : ""}`} key={f.t}>
+              {f.badge && <span className="fb-feat-badge">{f.badge}</span>}
               <div className="fb-feat-icon">{f.icon}</div>
               <h4>{f.t}</h4>
               <p>{f.d}</p>
