@@ -46,10 +46,10 @@ function VelopassHome() {
   const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
-  const QR_STORAGE_KEY = "velopass:qr-overlay";
-  const [qrX, setQrX] = useState(46);
-  const [qrY, setQrY] = useState(54);
-  const [qrSize, setQrSize] = useState(48);
+  const QR_STORAGE_KEY = "velopass:qr-overlay:v2";
+  const [qrX, setQrX] = useState(50);
+  const [qrY, setQrY] = useState(49);
+  const [qrSize, setQrSize] = useState(26);
   const [tunerOpen, setTunerOpen] = useState(false);
   // Hydrate from localStorage on mount (avoids SSR mismatch)
   useEffect(() => {
@@ -213,7 +213,7 @@ function VelopassHome() {
                     <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
                     <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
                     <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
-                    <button type="button" className="qr-tuner-toggle" style={{ alignSelf: "flex-start" }} onClick={() => { setQrX(46); setQrY(54); setQrSize(48); try { localStorage.removeItem(QR_STORAGE_KEY); } catch {} }}>Reset</button>
+                    <button type="button" className="qr-tuner-toggle" style={{ alignSelf: "flex-start" }} onClick={() => { setQrX(50); setQrY(49); setQrSize(26); try { localStorage.removeItem(QR_STORAGE_KEY); } catch {} }}>Reset</button>
                   </div>
                 )}
               </div>
