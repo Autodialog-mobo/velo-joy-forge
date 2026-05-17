@@ -100,7 +100,7 @@ function VelopassPro() {
         <div className="pro-hero-right">
           <div className="dash">
             <div className="dash-hdr">
-              <span className="dash-title">Van Dyck Fietsen — april 2026</span>
+              <span className="dash-title">Van Dyck Fietsen — {currentMonthYear}</span>
               <span className="dash-date">Velopass Pro</span>
             </div>
             <div className="dash-stats">
