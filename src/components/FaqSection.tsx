@@ -1,4 +1,5 @@
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { Link } from "@tanstack/react-router";
 
 const leftFAQs = [
   {
@@ -89,9 +90,9 @@ export function FaqSection() {
             }}
           >
             Staat jouw vraag er niet bij? Contacteer ons via{" "}
-            <a href="#" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <Link to="/contact" hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
               WhatsApp
-            </a>{" "}
+            </Link>{" "}
             of mail naar{" "}
             <a href="mailto:support@velopass.com" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
               support@velopass.com
