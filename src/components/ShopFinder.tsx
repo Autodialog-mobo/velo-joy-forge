@@ -1,4 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { AlertTriangle } from "lucide-react";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 
