@@ -21,6 +21,8 @@ export function RegisterForm() {
   const [vat, setVat] = useState("");
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
+  const [pos, setPos] = useState("");
+  const [posOther, setPosOther] = useState("");
   const [autofilled, setAutofilled] = useState<{ shop: boolean; address: boolean }>({
     shop: false,
     address: false,
@@ -157,16 +159,38 @@ export function RegisterForm() {
         <input id="pe" className="finput" type="email" placeholder="jan@fietswinkel.be" />
       </div>
       <div className="form-row">
+        <label className="flabel" htmlFor="pt">Telefoonnummer</label>
+        <input id="pt" className="finput" type="tel" placeholder="+32 471 60 15 73" />
+      </div>
+      <div className="form-row">
         <label className="flabel" htmlFor="pk">Kassasysteem</label>
-        <select id="pk" className="finput" defaultValue="">
+        <select
+          id="pk"
+          className="finput"
+          value={pos}
+          onChange={(e) => setPos(e.target.value)}
+        >
           <option value="" disabled>Selecteer je kassasysteem</option>
           <option value="selly">Selly</option>
           <option value="lightspeed">Lightspeed</option>
-          <option value="ccv">CCV</option>
-          <option value="other">Ander systeem</option>
           <option value="none">Geen kassasysteem</option>
+          <option value="other">Ander</option>
         </select>
       </div>
+      {pos === "other" && (
+        <div className="form-row">
+          <label className="flabel" htmlFor="pko">Welk kassasysteem?</label>
+          <input
+            id="pko"
+            className="finput"
+            type="text"
+            placeholder="Typ het merk of type..."
+            value={posOther}
+            onChange={(e) => setPosOther(e.target.value)}
+            required
+          />
+        </div>
+      )}
       <button type="submit" className="btn-submit">Registreer mijn fietswinkel</button>
       <p className="fnote">We nemen binnen 2 werkdagen contact op.</p>
     </form>

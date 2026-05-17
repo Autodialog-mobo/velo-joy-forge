@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, BookOpen } from "lucide-react";
+import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
@@ -90,7 +90,7 @@ function VelopassHome() {
           <li><a href="#al-sticker">Al een sticker?</a></li>
           <li><a href="#nieuwe-sticker">Sticker bestellen</a></li>
           <li><a href="#community">Community</a></li>
-          <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
+          <li><a href="https://bikesearch.velopass.com/?lng=nl-nl" target="_blank" rel="noopener noreferrer">Fiets controleren</a></li>
           <li><Link to="/pro" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietswinkels</Link></li>
         </ul>
         <div className="nav-actions">
@@ -387,13 +387,10 @@ function VelopassHome() {
             </div>
           </div>
           <div className="vc">
-            <div className="vc-icon"><BookOpen size={22} color="rgba(255,255,255,0.85)" strokeWidth={1.8} /></div>
+            <div className="vc-icon"><Store size={22} color="rgba(255,255,255,0.85)" strokeWidth={1.8} /></div>
             <div>
-              <div className="vc-head"><h3>Jouw digitale serviceboekje</h3></div>
-              <p>Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.</p>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 10, fontStyle: "italic", lineHeight: 1.5 }}>
-                Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.
-              </p>
+              <div className="vc-head"><h3>Jouw fietswinkel</h3></div>
+              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor.</p>
             </div>
           </div>
           <div className="vc">
