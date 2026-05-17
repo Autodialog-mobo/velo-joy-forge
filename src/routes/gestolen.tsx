@@ -212,6 +212,63 @@ function GestolenPage() {
     },
   ];
 
+  const frChecklist: Array<{ text: string; velopass?: string; note?: string }> = [
+    { text: "Je paspoort of identiteitskaart" },
+    { text: "FranceConnect-account (optioneel maar aanbevolen)", note: "Zonder FranceConnect: fysieke afspraak vereist bij een Frans politiebureau of gendarmerie" },
+    { text: "Jouw Velopass-code (= FNUCI-identifiant)", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Merk, model, kleur en type fiets", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Het framenummer", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Exacte Franse locatie, datum en tijdstip", velopass: "Al ingegeven bij je melding in Velopass — als toerist herinner je het exacte adres later vaak niet meer" },
+    { text: "Foto's van de fiets", velopass: "Al opgeslagen in je Velopass" },
+  ];
+
+  const frSteps: Array<{ title: string; body: React.ReactNode; tip?: string }> = [
+    {
+      title: "Surf naar Ma Sécurité",
+      body: (
+        <>
+          <a
+            href="https://plainte-en-ligne.masecurite.interieur.gouv.fr/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: GREEN, textDecoration: "underline", textUnderlineOffset: 3, display: "inline-flex", alignItems: "center", gap: 6 }}
+          >
+            plainte-en-ligne.masecurite.interieur.gouv.fr <ExternalLink size={14} strokeWidth={2} />
+          </a>
+          <div style={{ marginTop: 6 }}>Selecteer de Engelse versie rechtsboven.</div>
+        </>
+      ),
+    },
+    {
+      title: "Kies 'Vol' (Diefstal)",
+      body: <>Selecteer <strong style={{ color: NAVY }}>'Vol'</strong> als type delict.</>,
+    },
+    {
+      title: "Log in via FranceConnect of als gast",
+      body: <>Met FranceConnect verloopt alles volledig digitaal. Zonder FranceConnect kan je verdergaan als gast.</>,
+    },
+    {
+      title: "Vul het formulier in",
+      body: (
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
+          <li>• Identifiant unique: jouw Velopass-code</li>
+          <li>• Exacte Franse locatie, datum en tijdstip</li>
+          <li>• Alle kenmerken van de fiets</li>
+        </ul>
+      ),
+      tip: "Open je Velopass — jouw Velopass-code is het identifiant unique dat het formulier vraagt. Alle andere fietsgegevens en de locatie staan er ook al in.",
+    },
+    {
+      title: "Ontvang je procès-verbal of plan een afspraak",
+      body: (
+        <>
+          <div><strong style={{ color: NAVY }}>Met FranceConnect:</strong> je ontvangt het officiële procès-verbal digitaal per mail. Stuur dit door naar je verzekeraar.</div>
+          <div style={{ marginTop: 8 }}><strong style={{ color: NAVY }}>Zonder FranceConnect:</strong> kies een politiebureau of gendarmerie in de buurt van de diefstallocatie en plan een afspraak.</div>
+        </>
+      ),
+    },
+  ];
+
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
