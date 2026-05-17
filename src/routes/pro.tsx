@@ -380,9 +380,10 @@ function Fabrikanten() {
         </div>
         <div className="fb-flow-closing">Geen sticker plakken. Geen data invoeren. Scan bij ontvangst — en de rest gaat vanzelf.</div>
 
-        <div className="fb-cta">
-          Bent u fabrikant en wil u Velopass integreren in uw productieproces?{" "}
-          <a href="/contact">Neem contact op →</a>
+        <div className="fb-cta-card">
+          <h3 className="fb-cta-title">Maak het leven van je dealer eenvoudiger</h3>
+          <p className="fb-cta-body">Fabrikanten die Velopass integreren geven hun dealers een vliegende start. De fiets is klaar voor gebruik voor hij de winkelrekken bereikt. Wil je weten wat Velopass voor jouw merk en je dealernetwerk kan betekenen?</p>
+          <a href="mailto:info@velopass.com" className="fb-cta-btn">Praat met ons →</a>
         </div>
       </div>
     </section>
