@@ -388,10 +388,13 @@ function VelopassHome() {
             </div>
           </div>
           <div className="vc">
-            <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg></div>
+            <div className="vc-icon"><BookOpen size={22} color="rgba(255,255,255,0.85)" strokeWidth={1.8} /></div>
             <div>
-              <div className="vc-head"><h3>Jouw fietswinkel</h3></div>
-              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor. Toon je Velopass Wallet bij elk bezoek — jouw fiets is altijd herkend, ook bij een andere Velopass-fietswinkel als je op reis bent.</p>
+              <div className="vc-head"><h3>Jouw digitale serviceboekje</h3></div>
+              <p>Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.</p>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 10, fontStyle: "italic", lineHeight: 1.5 }}>
+                Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.
+              </p>
             </div>
           </div>
           <div className="vc">
