@@ -171,7 +171,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{line}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
@@ -221,7 +221,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{line}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
