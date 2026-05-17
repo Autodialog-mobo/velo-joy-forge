@@ -280,7 +280,7 @@ function VelopassHome() {
       <section className="flow-new" id="nieuwe-sticker">
         <p className="eyebrow">Nog geen Frame-ID</p>
         <h2 className="sec-title">Bestel een Velopass Frame-ID</h2>
-        <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets.</p>
+        <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#0D1F3C" strokeWidth={1.8} /></div>
@@ -353,13 +353,16 @@ function VelopassHome() {
               <div className="vc-head"><h3>Diefstalprotectie</h3></div>
               <p>Je fiets staat geregistreerd in Velopass, het internationale fietsregister. Elk kassasysteem van {activeShopsCount.toLocaleString("nl-BE")}+ aangesloten fietswinkels scant automatisch — een gestolen fiets heeft nergens meer te gaan.</p>
               <div className="secured-pill"><span className="sdot" />Jouw fiets. SECURED.</div>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 10, lineHeight: 1.5 }}>
+                Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
+              </p>
             </div>
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg></div>
             <div>
               <div className="vc-head"><h3>Jouw fietswinkel</h3></div>
-              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor.</p>
+              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor. Toon je Velopass Wallet bij elk bezoek — jouw fiets is altijd herkend, ook bij een andere Velopass-fietswinkel als je op reis bent.</p>
             </div>
           </div>
           <div className="vc">
