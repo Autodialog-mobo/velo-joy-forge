@@ -139,8 +139,13 @@ export function RegisterForm() {
           onChange={(e) => setPos(e.target.value)}
         >
           <option value="" disabled>Selecteer je kassasysteem</option>
-          <option value="selly">Selly</option>
-          <option value="lightspeed">Lightspeed</option>
+          <option value="cyclesoftware">CycleSoftware</option>
+          <option value="vendit">Vendit</option>
+          <option value="wilmar">Wilmar</option>
+          <option value="tilroy">Tilroy</option>
+          <option value="adcount">Adcount</option>
+          <option value="g8">G8</option>
+          <option value="shifter">Shifter</option>
           <option value="none">Geen kassasysteem</option>
           <option value="other">Ander</option>
         </select>
