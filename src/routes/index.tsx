@@ -359,7 +359,7 @@ function VelopassHome() {
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg></div>
             <div>
               <div className="vc-head"><h3>Jouw fietswinkel</h3></div>
-              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor.</p>
+              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor. Toon je Velopass Wallet bij elk bezoek — jouw fiets is altijd herkend, ook bij een andere Velopass-fietswinkel als je op reis bent.</p>
             </div>
           </div>
           <div className="vc">
