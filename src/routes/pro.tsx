@@ -379,7 +379,7 @@ function Fabrikanten() {
           </div>
         </div>
         <div className="fb-flow-closing">
-          <span className="fb-flow-closing-dim opacity-0">Geen sticker plakken. Geen data invoeren.</span>{" "}
+          <span className="fb-flow-closing-dim text-gray-700 opacity-40">Geen sticker plakken. Geen data invoeren.</span>{" "}
           <span className="fb-flow-closing-green">Scan bij ontvangst — en de rest gaat vanzelf.</span>
         </div>
 
