@@ -7,6 +7,7 @@ import {
   CheckSquare,
   Lightbulb,
   ExternalLink,
+  Search,
 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
@@ -115,7 +116,7 @@ function GestolenPage() {
     { text: "Merk, model, kleur en type fiets", velopass: "Al beschikbaar in je Velopass" },
     { text: "Het framenummer", velopass: "Al beschikbaar in je Velopass" },
     { text: "Graveernummer of fietspas", velopass: "Je Velopass-code volstaat" },
-    { text: "Exacte locatie, datum en uur van de diefstal" },
+    { text: "Exacte locatie, datum en uur van de diefstal", velopass: "Al ingegeven bij je melding in Velopass" },
     { text: "Foto's van de fiets", velopass: "Al opgeslagen in je Velopass" },
     { text: "Aankoopfactuur (indien beschikbaar)", velopass: "Gekoppeld aan je Velopass" },
   ];
@@ -156,6 +157,54 @@ function GestolenPage() {
     {
       title: "Controleer en verzend",
       body: <>Controleer de gegevens en klik op <strong style={{ color: NAVY }}>Verzenden</strong>.</>,
+    },
+  ];
+
+  const nlChecklist: Array<{ text: string; velopass?: string }> = [
+    { text: "Je DigiD (inloggen via digid.nl)" },
+    { text: "Merk, model, kleur en type fiets", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Het framenummer (staat meestal onder het trapplateau of aan de voorkant van het frame)", velopass: "Al beschikbaar in je Velopass" },
+    { text: "Exacte locatie, datum en tijdstip van de diefstal", velopass: "Al ingegeven bij je melding in Velopass" },
+    { text: "Foto's van de fiets", velopass: "Al opgeslagen in je Velopass" },
+    { text: "Aankoopfactuur (indien beschikbaar)", velopass: "Gekoppeld aan je Velopass" },
+  ];
+
+  const nlSteps: Array<{ title: string; body: React.ReactNode; tip?: string }> = [
+    {
+      title: "Surf naar politie.nl",
+      body: (
+        <a
+          href="https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: GREEN, textDecoration: "underline", textUnderlineOffset: 3, display: "inline-flex", alignItems: "center", gap: 6 }}
+        >
+          www.politie.nl/aangifte <ExternalLink size={14} strokeWidth={2} />
+        </a>
+      ),
+    },
+    {
+      title: "Kies fietsdiefstal",
+      body: <>Kies <strong style={{ color: NAVY }}>'Aangifte doen van fietsdiefstal'</strong>.</>,
+    },
+    {
+      title: "Log in met DigiD",
+      body: <>Log in met je DigiD via het CSAM-portaal.</>,
+    },
+    {
+      title: "Vul het formulier in",
+      body: (
+        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 6 }}>
+          <li>• Persoonsgegevens als eigenaar/aangever</li>
+          <li>• Feiten: waar en wanneer gestolen? Stond de fiets op slot?</li>
+          <li>• Voorwerp: alle details van de fiets — hoe meer details, hoe groter de kans op terugvinden</li>
+        </ul>
+      ),
+      tip: "Open je Velopass om alle fietsgegevens in één oogopslag bij de hand te hebben — inclusief de locatie die je al ingaf bij het melden. Kopieer die direct naar het formulier.",
+    },
+    {
+      title: "Controleer en verstuur",
+      body: <>Controleer de gegevens en verstuur de aangifte.</>,
     },
   ];
 
@@ -267,6 +316,7 @@ function GestolenPage() {
                 ["Framenummer", "In je Velopass-paspoort"],
                 ["Foto's van de fiets", "Opgeslagen in je Velopass"],
                 ["Aankoopfactuur", "Gekoppeld aan je Velopass"],
+                ["Exacte locatie van de diefstal", "Al ingegeven bij je melding in Velopass"],
                 ["Bewijs van eigenaarschap", "Je Velopass IS het bewijs"],
               ].map(([left, right]) => (
                 <div key={left} className="vp-compare-row">
@@ -349,7 +399,7 @@ function GestolenPage() {
           >
             {[
               { code: "BE" as const, label: "🇧🇪 België", enabled: true },
-              { code: "NL" as const, label: "🇳🇱 Nederland", enabled: false },
+              { code: "NL" as const, label: "🇳🇱 Nederland", enabled: true },
               { code: "FR" as const, label: "🇫🇷 Frankrijk", enabled: false },
             ].map((t) => {
               const active = country === t.code;
@@ -576,10 +626,220 @@ function GestolenPage() {
             </div>
           )}
 
-          {country !== "BE" && (
+          {country === "NL" && (
+            <div style={{ display: "grid", gap: 24 }}>
+              {/* Intro card */}
+              <div
+                style={{
+                  background: "rgba(46,204,138,0.08)",
+                  border: "1px solid rgba(46,204,138,0.25)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                <CheckCircle2 size={22} strokeWidth={2} color={GREEN} style={{ flexShrink: 0, marginTop: 2 }} />
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: NAVY, lineHeight: 1.6, margin: 0 }}>
+                  In Nederland doe je online aangifte via politie.nl. Je hebt hiervoor een DigiD nodig.
+                </p>
+              </div>
+
+              {/* Check eerst — amber */}
+              <div
+                style={{
+                  background: "rgba(245, 158, 11, 0.08)",
+                  border: "1px solid rgba(245, 158, 11, 0.3)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                <Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                <div>
+                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 6 }}>
+                    Controleer eerst dit
+                  </h4>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                    Is je fiets misschien verplaatst door de gemeente? Fietsen die fout geparkeerd staan worden soms meegenomen naar een depot. Check dit eerst voordat je aangifte doet.
+                  </p>
+                </div>
+              </div>
+
+              {/* Checklist */}
+              <div style={cardStyle}>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 18, color: NAVY, marginBottom: 16 }}>
+                  Wat heb je vooraf nodig?
+                </h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
+                  {nlChecklist.map((item, i) => (
+                    <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                      <CheckSquare size={18} strokeWidth={2} color={NAVY} style={{ flexShrink: 0, marginTop: 2, opacity: 0.7 }} />
+                      <div>
+                        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: NAVY, lineHeight: 1.5 }}>
+                          {item.text}
+                        </div>
+                        {item.velopass && (
+                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, color: GREEN, marginTop: 2, display: "inline-flex", alignItems: "center", gap: 6 }}>
+                            → {item.velopass}
+                          </div>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Voorwaarden online aangifte */}
+              <div
+                style={{
+                  background: "rgba(13,31,60,0.04)",
+                  border: "1px solid rgba(13,31,60,0.08)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                }}
+              >
+                <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 8 }}>
+                  Voorwaarden online aangifte
+                </h4>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.65, margin: "0 0 8px" }}>
+                  Online aangifte via politie.nl is mogelijk als:
+                </p>
+                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 10px", display: "grid", gap: 4 }}>
+                  <li style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.55 }}>• De fiets niet gestolen is uit een woning, schuur of garage</li>
+                  <li style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.55 }}>• De diefstal minder dan een jaar geleden is</li>
+                </ul>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13.5, color: MUTED, lineHeight: 1.6, margin: 0, fontStyle: "italic" }}>
+                  Voldoe je niet? Bel dan 0900-8844 of doe persoonlijk aangifte op een politiebureau.
+                </p>
+              </div>
+
+              {/* Steps */}
+              <div style={{ display: "grid", gap: 14 }}>
+                {nlSteps.map((step, i) => (
+                  <div key={i} style={{ ...cardStyle, padding: "22px 24px", display: "flex", gap: 18 }}>
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        width: 36,
+                        height: 36,
+                        borderRadius: 10,
+                        background: NAVY,
+                        color: "#F5F3EE",
+                        fontFamily: "'Syne', sans-serif",
+                        fontWeight: 700,
+                        fontSize: 16,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {i + 1}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: NAVY, marginBottom: 8 }}>
+                        {step.title}
+                      </h4>
+                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14.5, color: MUTED, lineHeight: 1.6 }}>
+                        {step.body}
+                      </div>
+                      {step.tip && (
+                        <div
+                          style={{
+                            marginTop: 14,
+                            background: "rgba(46,204,138,0.08)",
+                            border: "1px solid rgba(46,204,138,0.25)",
+                            borderRadius: 10,
+                            padding: "10px 14px",
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontSize: 13.5,
+                            color: NAVY,
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          💡 {step.tip}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Na de aangifte */}
+              <div
+                style={{
+                  background: "rgba(13,31,60,0.04)",
+                  border: "1px solid rgba(13,31,60,0.08)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                }}
+              >
+                <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 8 }}>
+                  Wat gebeurt er na de aangifte?
+                </h4>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.65, margin: 0 }}>
+                  Je ontvangt een bevestiging met een zaaknummer. Bewaar dit goed — je hebt het nodig voor je verzekering. Je fiets wordt automatisch opgenomen in het fietsdiefstalregister van de RDW én in StopHeling, zodat handelaren kunnen controleren of een fiets gestolen is. Heb je een fietsverzekering? Meld de diefstal direct bij je verzekeraar en stuur het zaaknummer mee.
+                </p>
+              </div>
+
+              {/* Twee tip-cards naast elkaar */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
+                <div
+                  style={{
+                    background: "rgba(245, 158, 11, 0.08)",
+                    border: "1px solid rgba(245, 158, 11, 0.3)",
+                    borderRadius: 14,
+                    padding: "18px 22px",
+                    display: "flex",
+                    gap: 14,
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <div>
+                    <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 6 }}>
+                      Check gevondenfietsen.be
+                    </h4>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                      Gestolen fietsen worden vaak ergens achtergelaten. Controleer regelmatig{" "}
+                      <a href="https://www.gevondenfietsen.be" target="_blank" rel="noopener noreferrer" style={{ color: NAVY, fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 3 }}>
+                        www.gevondenfietsen.be
+                      </a>.
+                    </p>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    background: "rgba(245, 158, 11, 0.08)",
+                    border: "1px solid rgba(245, 158, 11, 0.3)",
+                    borderRadius: 14,
+                    padding: "18px 22px",
+                    display: "flex",
+                    gap: 14,
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <Search size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                  <div>
+                    <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 6 }}>
+                      Houd Marktplaats in de gaten
+                    </h4>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                      Gestolen fietsen verschijnen soms binnen dagen op tweedehandsplatforms. Herken je jouw fiets? Ga nooit zelf de confrontatie aan — bel de politie via 0900-8844.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {country === "FR" && (
             <div style={{ ...cardStyle, textAlign: "center", padding: "40px 24px" }}>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: MUTED, margin: 0 }}>
-                Het stappenplan voor dit land is binnenkort beschikbaar.
+                Het stappenplan voor Frankrijk is binnenkort beschikbaar.
               </p>
             </div>
           )}
