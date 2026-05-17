@@ -186,26 +186,7 @@ function VelopassPro() {
         </div>
       </section>
 
-      <section className="proof" id="proof">
-        <div className="proof-inner">
-          <div>
-            <p className="eyebrow">In goede handen</p>
-            <h2 className="sec-title" style={{ marginBottom: 8, fontSize: "clamp(26px,3vw,38px)" }}>
-              Vertrouwd door fietswinkels in drie landen
-            </h2>
-            <p style={{ fontSize: 15, color: "var(--text-muted)" }}>
-              Fietswinkels in België · Nederland · Frankrijk<br />
-              <span style={{ fontSize: 13, color: "var(--green-mid)", fontWeight: 500 }}>
-                Fietsers in heel Europa kunnen al een Velopass bestellen
-              </span>
-            </p>
-          </div>
-          <div className="proof-numbers">
-            <div><div className="pnum-val">{activeShopsCount.toLocaleString("nl-BE")}<span>+</span></div><div className="pnum-label">fietswinkels</div></div>
-            <div><div className="pnum-val">+150<span>K</span></div><div className="pnum-label">fietsen geregistreerd</div></div>
-          </div>
-        </div>
-      </section>
+      <ProCommunity activeShopsCount={activeShopsCount} />
 
       <section className="register" id="registreer">
         <div className="reg-inner">
