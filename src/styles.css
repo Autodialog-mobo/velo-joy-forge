@@ -543,3 +543,4 @@ button { font-family: inherit; }
   .pcm-stats { grid-template-columns: 1fr; }
   .pcm-map { height: 380px; }
 }
+.pcm-note { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: #2ECC8A; margin-top: 10px; }

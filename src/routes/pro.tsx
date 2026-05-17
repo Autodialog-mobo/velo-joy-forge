@@ -57,7 +57,7 @@ function VelopassPro() {
           <li><a href="#pijlers">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#registreer">Registreer</a></li>
-          <li><a href="#proof">Community</a></li>
+          <li><a href="#community">Community</a></li>
           <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></li>
         </ul>
         <div className="nav-actions">
@@ -186,26 +186,7 @@ function VelopassPro() {
         </div>
       </section>
 
-      <section className="proof" id="proof">
-        <div className="proof-inner">
-          <div>
-            <p className="eyebrow">In goede handen</p>
-            <h2 className="sec-title" style={{ marginBottom: 8, fontSize: "clamp(26px,3vw,38px)" }}>
-              Vertrouwd door fietswinkels in drie landen
-            </h2>
-            <p style={{ fontSize: 15, color: "var(--text-muted)" }}>
-              Fietswinkels in België · Nederland · Frankrijk<br />
-              <span style={{ fontSize: 13, color: "var(--green-mid)", fontWeight: 500 }}>
-                Fietsers in heel Europa kunnen al een Velopass bestellen
-              </span>
-            </p>
-          </div>
-          <div className="proof-numbers">
-            <div><div className="pnum-val">{activeShopsCount.toLocaleString("nl-BE")}<span>+</span></div><div className="pnum-label">fietswinkels</div></div>
-            <div><div className="pnum-val">+150<span>K</span></div><div className="pnum-label">fietsen geregistreerd</div></div>
-          </div>
-        </div>
-      </section>
+      <ProCommunity activeShopsCount={activeShopsCount} />
 
       <section className="register" id="registreer">
         <div className="reg-inner">
@@ -238,8 +219,6 @@ function VelopassPro() {
         </div>
       </section>
 
-      <ProCommunity activeShopsCount={activeShopsCount} />
-
       <Footer variant="pro" />
     </>
   );
@@ -258,9 +237,10 @@ function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
             Word deel van een <em>groeiend netwerk</em>
           </h2>
           <p className="pcm-sub">
-            {formatted}+ fietswinkels zijn al aangesloten.
+            {formatted}+ fietswinkels in België, Nederland en Frankrijk zijn al aangesloten.
             Het netwerk groeit elke dag — en elke nieuwe winkel maakt het systeem sterker voor iedereen.
           </p>
+          <p className="pcm-note">Fietsers in heel Europa kunnen al een Velopass bestellen.</p>
         </div>
 
         <div className="pcm-stats">
