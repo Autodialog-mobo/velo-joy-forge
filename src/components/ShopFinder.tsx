@@ -1,8 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { AlertTriangle } from "lucide-react";
+import shopsData from "@/data/shops.json";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
+
+const totalActive = (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length;
 
 export function ShopFinder() {
   const [mounted, setMounted] = useState(false);
@@ -14,7 +17,7 @@ export function ShopFinder() {
         <div className="sf-hero">
           <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
           <h2 className="sf-headline">Jouw fiets is <em>nooit alleen.</em></h2>
-          <p className="sf-subhead"><strong style={{ color: "#0D1F3C", fontWeight: 600 }}>1823+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.</p>
+          <p className="sf-subhead"><strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{totalActive.toLocaleString("nl-BE")}+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.</p>
         </div>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <Link
