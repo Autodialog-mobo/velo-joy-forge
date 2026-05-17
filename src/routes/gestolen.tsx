@@ -898,10 +898,256 @@ function GestolenPage() {
           )}
 
           {country === "FR" && (
-            <div style={{ ...cardStyle, textAlign: "center", padding: "40px 24px" }}>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: MUTED, margin: 0 }}>
-                Het stappenplan voor Frankrijk is binnenkort beschikbaar.
-              </p>
+            <div style={{ display: "grid", gap: 24 }}>
+              {/* Velopass & FNUCI — speciale prominente card */}
+              <div
+                style={{
+                  background: "rgba(46,204,138,0.10)",
+                  border: "1px solid rgba(46,204,138,0.35)",
+                  borderRadius: 16,
+                  padding: "28px 28px",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
+                  <VelopassMark size={36} />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: MUTED }}>×</span>
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 600,
+                      fontSize: 12,
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      color: NAVY,
+                      background: "rgba(13,31,60,0.08)",
+                      padding: "6px 10px",
+                      borderRadius: 6,
+                    }}
+                  >
+                    FNUCI · République Française
+                  </span>
+                </div>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, color: NAVY, lineHeight: 1.3, marginBottom: 14 }}>
+                  Velopass is een erkende operator van het Frans nationaal fietsregister
+                </h3>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: NAVY, lineHeight: 1.65, margin: 0 }}>
+                  Als Fransman is jouw Velopass-registratie automatisch gekoppeld aan het <strong>FNUCI</strong> — het <em>Fichier National Unique des Cycles Identifiés</em>. Dit is het officiële staatsregister waarop de politie en gendarmerie zich baseren bij het opsporen van gestolen fietsen.
+                </p>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: NAVY, lineHeight: 1.65, margin: "12px 0 0" }}>
+                  Concreet: zodra je jouw fiets als gestolen meldt in Velopass, wordt de status in het FNUCI automatisch bijgewerkt. De politie ziet dit onmiddellijk.
+                </p>
+              </div>
+
+              {/* Hoe het werkt — 3 stappen flow */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
+                {[
+                  { icon: <Smartphone size={22} color={NAVY} strokeWidth={2} />, title: "Jij meldt in Velopass", body: "Je verandert de status van je fiets naar REPORTED in je Velopass-account." },
+                  { icon: <Database size={22} color={NAVY} strokeWidth={2} />, title: "FNUCI wordt bijgewerkt", body: "Velopass stuurt de statuswijziging door naar het FNUCI. Politie en gendarmerie hebben toegang tot dit register." },
+                  { icon: <Shield size={22} color={NAVY} strokeWidth={2} />, title: "Politie identificeert je fiets", body: "Wordt jouw fiets aangetroffen? De agent scant de Velopass-code en ziet meteen dat hij gestolen is — en wie de eigenaar is." },
+                ].map((s, i) => (
+                  <div key={i} style={{ ...cardStyle, padding: "22px 22px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                      <div style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(13,31,60,0.06)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                        {s.icon}
+                      </div>
+                      <span style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 13, color: GREEN }}>Stap {i + 1}</span>
+                    </div>
+                    <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 6 }}>{s.title}</h4>
+                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>{s.body}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Voor de online aangifte — amber */}
+              <div
+                style={{
+                  background: "rgba(245, 158, 11, 0.08)",
+                  border: "1px solid rgba(245, 158, 11, 0.3)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                <Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: NAVY, lineHeight: 1.6, margin: 0 }}>
+                  <strong>Je Velopass-code IS je FNUCI-identifiant.</strong> Dit is het 10-cijferig nummer dat de politie nodig heeft voor de officiële <em>plainte</em>. Je vindt het in je Velopass-account.
+                </p>
+              </div>
+
+              {/* Intro card */}
+              <div
+                style={{
+                  background: "rgba(46,204,138,0.08)",
+                  border: "1px solid rgba(46,204,138,0.25)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                <CheckCircle2 size={22} strokeWidth={2} color={GREEN} style={{ flexShrink: 0, marginTop: 2 }} />
+                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: NAVY, lineHeight: 1.6, margin: 0 }}>
+                  Doe je aangifte online via Ma Sécurité. Jouw Velopass-code is het <em>identifiant unique</em> dat het formulier vraagt — al beschikbaar in je Velopass.
+                </p>
+              </div>
+
+              {/* Al terug thuis? — amber */}
+              <div
+                style={{
+                  background: "rgba(245, 158, 11, 0.08)",
+                  border: "1px solid rgba(245, 158, 11, 0.3)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                <AlertTriangle size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                <div>
+                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 6 }}>
+                    Al terug thuis?
+                  </h4>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                    Belgische en Nederlandse verzekeraars eisen bijna altijd een Frans politierapport. Start de aangifte zo snel mogelijk via Ma Sécurité, ook als je al thuis bent.
+                  </p>
+                </div>
+              </div>
+
+              {/* Checklist */}
+              <div style={cardStyle}>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 18, color: NAVY, marginBottom: 16 }}>
+                  Wat heb je vooraf nodig?
+                </h3>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
+                  {frChecklist.map((item, i) => (
+                    <li key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                      <CheckSquare size={18} strokeWidth={2} color={NAVY} style={{ flexShrink: 0, marginTop: 2, opacity: 0.7 }} />
+                      <div>
+                        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: NAVY, lineHeight: 1.5 }}>
+                          {item.text}
+                        </div>
+                        {item.velopass && (
+                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, fontSize: 13, color: GREEN, marginTop: 2 }}>
+                            → {item.velopass}
+                          </div>
+                        )}
+                        {item.note && (
+                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: MUTED, marginTop: 2, fontStyle: "italic" }}>
+                            → {item.note}
+                          </div>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Twee manieren cards */}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 14 }}>
+                <div style={{ ...cardStyle, padding: "22px 22px" }}>
+                  <div style={{ marginBottom: 10 }}>
+                    <StatusBadge label="Volledig digitaal" color={GREEN} />
+                  </div>
+                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: NAVY, marginBottom: 8 }}>
+                    Met FranceConnect (aanbevolen)
+                  </h4>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                    Woon je in Frankrijk of heb je een Frans overheidsaccount? Dan doe je de volledige aangifte online en ontvang je het officieel <em>procès-verbal</em> digitaal per mail.
+                  </p>
+                </div>
+                <div style={{ ...cardStyle, padding: "22px 22px" }}>
+                  <div style={{ marginBottom: 10 }}>
+                    <StatusBadge label="Fysieke afspraak vereist" color="#F59E0B" />
+                  </div>
+                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: NAVY, marginBottom: 8 }}>
+                    Zonder FranceConnect (toeristen)
+                  </h4>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                    Vul het formulier online in en plan daarna een afspraak bij een Frans politiebureau (<em>commissariat de police</em>) of de gendarmerie. Ben je al thuis? Vraag via de 24/7 chatfunctie op Ma Sécurité naar alternatieve opties.
+                  </p>
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div style={{ display: "grid", gap: 14 }}>
+                {frSteps.map((step, i) => (
+                  <div key={i} style={{ ...cardStyle, padding: "22px 24px", display: "flex", gap: 18 }}>
+                    <div
+                      style={{
+                        flexShrink: 0,
+                        width: 36,
+                        height: 36,
+                        borderRadius: 10,
+                        background: NAVY,
+                        color: "#F5F3EE",
+                        fontFamily: "'Syne', sans-serif",
+                        fontWeight: 700,
+                        fontSize: 16,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {i + 1}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 16, color: NAVY, marginBottom: 8 }}>
+                        {step.title}
+                      </h4>
+                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14.5, color: MUTED, lineHeight: 1.6 }}>
+                        {step.body}
+                      </div>
+                      {step.tip && (
+                        <div
+                          style={{
+                            marginTop: 14,
+                            background: "rgba(46,204,138,0.08)",
+                            border: "1px solid rgba(46,204,138,0.25)",
+                            borderRadius: 10,
+                            padding: "10px 14px",
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontSize: 13.5,
+                            color: NAVY,
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          💡 {step.tip}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Extra tip — Ma Sécurité chat */}
+              <div
+                style={{
+                  background: "rgba(245, 158, 11, 0.08)",
+                  border: "1px solid rgba(245, 158, 11, 0.3)",
+                  borderRadius: 14,
+                  padding: "18px 22px",
+                  display: "flex",
+                  gap: 14,
+                  alignItems: "flex-start",
+                }}
+              >
+                <Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                <div>
+                  <h4 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: NAVY, marginBottom: 6 }}>
+                    Ma Sécurité heeft een 24/7 chatfunctie
+                  </h4>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: MUTED, lineHeight: 1.6, margin: 0 }}>
+                    Ben je al thuis en lukt het niet om de aangifte volledig online af te ronden? Gebruik de chatfunctie op{" "}
+                    <a href="https://www.masecurite.interieur.gouv.fr/" target="_blank" rel="noopener noreferrer" style={{ color: NAVY, fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 3 }}>
+                      Ma Sécurité
+                    </a>.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </section>
