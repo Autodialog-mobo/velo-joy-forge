@@ -58,7 +58,7 @@ export function Footer({ variant = "default" }: FooterProps) {
         </div>
       </div>
       <ul className="flinks">
-        <li><a href="#">Privacy</a></li>
+        <li><Link to="/privacy">Privacy</Link></li>
         <li><a href="#">Voorwaarden</a></li>
         <li><Link to="/contact">Contact</Link></li>
         <li><Link to="/bikesearch">Fiets controleren</Link></li>
