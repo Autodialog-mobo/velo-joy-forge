@@ -189,34 +189,35 @@ function ContactPage() {
         </div>
       </nav>
 
-      <main style={{ background: "var(--bg)", paddingTop: 64, minHeight: "100vh" }}>
+      {/* BACK BUTTON */}
+      <div style={{ padding: "48px 6vw 0", maxWidth: 1100, margin: "0 auto" }}>
+        <button
+          type="button"
+          onClick={() => { if (window.history.length > 1) { window.history.back(); } else { window.location.href = "/"; } }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 13,
+            fontWeight: 500,
+            color: "var(--text-muted)",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: 0,
+            textDecoration: "underline",
+            textUnderlineOffset: 3,
+          }}
+        >
+          <ArrowLeft size={14} strokeWidth={2} />
+          Terug
+        </button>
+      </div>
+
+      <main style={{ background: "var(--bg)", paddingTop: 16, minHeight: "100vh" }}>
         {/* HEADER */}
-        <section style={{ padding: "48px 6vw 32px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ textAlign: "left", marginBottom: 16 }}>
-            <button
-              type="button"
-              onClick={() => { if (window.history.length > 1) { window.history.back(); } else { window.location.href = "/"; } }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 13,
-                fontWeight: 500,
-                color: "var(--text-muted)",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                textDecoration: "underline",
-                textUnderlineOffset: 3,
-              }}
-            >
-              <ArrowLeft size={14} strokeWidth={2} />
-              Terug
-            </button>
-          </div>
-          <div className="eyebrow" style={{ color: "var(--green-mid)" }}>Contact</div>
+        <section style={{ padding: "24px 6vw 32px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <h1
             style={{
               fontFamily: "'Syne', sans-serif",
