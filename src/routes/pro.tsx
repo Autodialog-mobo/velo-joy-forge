@@ -45,6 +45,8 @@ const Check = () => (
 function VelopassPro() {
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
+  const now = new Date();
+  const currentMonthYear = now.toLocaleDateString("nl-BE", { month: "long", year: "numeric" });
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
@@ -98,7 +100,7 @@ function VelopassPro() {
         <div className="pro-hero-right">
           <div className="dash">
             <div className="dash-hdr">
-              <span className="dash-title">Van Dyck Fietsen — april 2026</span>
+              <span className="dash-title">Van Dyck Fietsen — {currentMonthYear}</span>
               <span className="dash-date">Velopass Pro</span>
             </div>
             <div className="dash-stats">
