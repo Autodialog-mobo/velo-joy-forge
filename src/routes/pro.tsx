@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Shield, Tag, FileText, Package } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -61,6 +61,7 @@ function VelopassPro() {
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href="#pijlers">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
+          <li><a href="#fabrikanten">Fabrikanten</a></li>
           <li><a href="#registreer">Registreer</a></li>
           <li><a href="#community">Community</a></li>
           <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></li>
@@ -157,6 +158,8 @@ function VelopassPro() {
           </div>
         </div>
       </section>
+
+      <Fabrikanten />
 
       <section className="how" id="hoe-werkt-het">
         <p className="eyebrow">Hoe werkt het?</p>
