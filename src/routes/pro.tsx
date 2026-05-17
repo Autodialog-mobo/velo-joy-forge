@@ -258,7 +258,7 @@ function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
             Word deel van een <em>groeiend netwerk</em>
           </h2>
           <p className="pcm-sub">
-            Meer dan {formatted}+ fietswinkels zijn al aangesloten.
+            {formatted}+ fietswinkels zijn al aangesloten.
             Het netwerk groeit elke dag — en elke nieuwe winkel maakt het systeem sterker voor iedereen.
           </p>
         </div>
