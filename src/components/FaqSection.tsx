@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 const leftFAQs = [
   {
     q: "Wat doe ik als mijn fiets gestolen of verloren is?",
-    a: "Meld je fiets zo snel mogelijk via je Velopass-account. Ga naar 'Mijn fiets' en klik op 'Melden als vermist'. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd. Iedereen die jouw Frame-ID scant, ziet dat jouw fiets gezocht wordt en kan je anoniem een seintje geven. Vergeet niet ook aangifte te doen bij de politie.",
+    a: "Meld je fiets zo snel mogelijk via je Velopass-account. Ga naar 'Mijn fiets' en klik op 'Melden als vermist'. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd. Iedereen die jouw Frame-ID scant, ziet dat jouw fiets gezocht wordt en kan je anoniem een seintje geven. Vergeet niet ook aangifte te doen bij de politie.\n\nBekijk het volledige stappenplan op /gestolen.",
   },
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
