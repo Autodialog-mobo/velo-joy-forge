@@ -46,7 +46,7 @@ function VelopassHome() {
   const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
-  const QR_STORAGE_KEY = "velopass:qr-overlay";
+  const QR_STORAGE_KEY = "velopass:qr-overlay:v2";
   const [qrX, setQrX] = useState(50);
   const [qrY, setQrY] = useState(49);
   const [qrSize, setQrSize] = useState(26);
