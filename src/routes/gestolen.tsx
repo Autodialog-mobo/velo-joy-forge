@@ -115,6 +115,15 @@ function GestolenPage() {
   const [navOpen, setNavOpen] = useState(false);
   const [country, setCountry] = useState<"BE" | "NL" | "FR">("BE");
 
+  useEffect(() => {
+    const lang = navigator.language || "fr";
+    const langCountry = lang.split("-")[1]?.toUpperCase();
+    if (langCountry === "BE") setCountry("BE");
+    else if (langCountry === "NL") setCountry("NL");
+    else if (lang.startsWith("fr")) setCountry("FR");
+    else setCountry("FR");
+  }, []);
+
   const policeChecklist: Array<{ text: string; velopass?: string }> = [
     { text: "Je identiteitskaart (eID) of de itsme-app" },
     { text: "Merk, model, kleur en type fiets", velopass: "Al beschikbaar in je Velopass" },
