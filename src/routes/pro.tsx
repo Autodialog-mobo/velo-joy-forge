@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
+import { RegisterForm } from "@/components/ProRegisterForm";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
