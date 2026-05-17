@@ -268,6 +268,7 @@ function GestolenPage() {
                 ["Framenummer", "In je Velopass-paspoort"],
                 ["Foto's van de fiets", "Opgeslagen in je Velopass"],
                 ["Aankoopfactuur", "Gekoppeld aan je Velopass"],
+                ["Exacte locatie van de diefstal", "Al ingegeven bij je melding in Velopass"],
                 ["Bewijs van eigenaarschap", "Je Velopass IS het bewijs"],
               ].map(([left, right]) => (
                 <div key={left} className="vp-compare-row">
