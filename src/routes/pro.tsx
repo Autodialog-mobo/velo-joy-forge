@@ -311,7 +311,7 @@ function Fabrikanten() {
       <div className="fb-inner">
         <p className="eyebrow" style={{ color: "#1AAD70" }}>Geïntegreerd bij productie</p>
         <h2 className="sec-title">Topfabrikanten kiezen Velopass</h2>
-        <p className="fb-sub">Steeds meer fabrikanten leveren hun fietsen al af met een Velopass Frame-ID op het frame. Als Velopass-winkel verkoop je deze fietsen moeiteloos — de klant is al in jouw ecosysteem voor hij de winkel verlaat.</p>
+        <p className="fb-sub">Steeds meer fabrikanten leveren hun fietsen al af met een Velopass Frame-ID op het frame. Scan bij ontvangst — fietsdata staat al klaar in je kassasysteem. Geen sticker plakken, geen data invoeren.</p>
 
         <div className="fb-features">
           {features.map((f) => (
