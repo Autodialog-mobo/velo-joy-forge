@@ -7,6 +7,7 @@ import {
   CheckSquare,
   Lightbulb,
   ExternalLink,
+  Search,
 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
