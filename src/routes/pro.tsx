@@ -209,17 +209,7 @@ function VelopassPro() {
               </div>
             ))}
           </div>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <div className="fgrid">
-              <div className="form-row"><label className="flabel" htmlFor="pf">Voornaam</label><input id="pf" className="finput" type="text" placeholder="Jan" /></div>
-              <div className="form-row"><label className="flabel" htmlFor="pl">Naam</label><input id="pl" className="finput" type="text" placeholder="De Smedt" /></div>
-            </div>
-            <div className="form-row"><label className="flabel" htmlFor="ps">Naam fietswinkel</label><input id="ps" className="finput" type="text" placeholder="Van Dyck Fietsen" /></div>
-            <div className="form-row"><label className="flabel" htmlFor="pe">E-mailadres</label><input id="pe" className="finput" type="email" placeholder="jan@fietswinkel.be" /></div>
-            <div className="form-row"><label className="flabel" htmlFor="pk">Kassasysteem</label><input id="pk" className="finput" type="text" placeholder="Selly, Lightspeed, geen, ..." /></div>
-            <button type="submit" className="btn-submit">Registreer mijn fietswinkel</button>
-            <p className="fnote">We nemen binnen 2 werkdagen contact op.</p>
-          </form>
+          <RegisterForm />
         </div>
       </section>
 
