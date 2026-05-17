@@ -45,6 +45,8 @@ const Check = () => (
 function VelopassPro() {
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
+  const now = new Date();
+  const currentMonthYear = now.toLocaleDateString("nl-BE", { month: "long", year: "numeric" });
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
