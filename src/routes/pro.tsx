@@ -219,8 +219,6 @@ function VelopassPro() {
         </div>
       </section>
 
-      <ProCommunity activeShopsCount={activeShopsCount} />
-
       <Footer variant="pro" />
     </>
   );
@@ -239,9 +237,10 @@ function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
             Word deel van een <em>groeiend netwerk</em>
           </h2>
           <p className="pcm-sub">
-            {formatted}+ fietswinkels zijn al aangesloten.
+            {formatted}+ fietswinkels in België, Nederland en Frankrijk zijn al aangesloten.
             Het netwerk groeit elke dag — en elke nieuwe winkel maakt het systeem sterker voor iedereen.
           </p>
+          <p className="pcm-note">Fietsers in heel Europa kunnen al een Velopass bestellen.</p>
         </div>
 
         <div className="pcm-stats">
