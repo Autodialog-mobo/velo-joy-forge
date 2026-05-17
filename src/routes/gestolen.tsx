@@ -399,7 +399,7 @@ function GestolenPage() {
           >
             {[
               { code: "BE" as const, label: "🇧🇪 België", enabled: true },
-              { code: "NL" as const, label: "🇳🇱 Nederland", enabled: false },
+              { code: "NL" as const, label: "🇳🇱 Nederland", enabled: true },
               { code: "FR" as const, label: "🇫🇷 Frankrijk", enabled: false },
             ].map((t) => {
               const active = country === t.code;
