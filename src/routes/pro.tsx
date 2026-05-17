@@ -282,3 +282,66 @@ function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
     </section>
   );
 }
+
+type Attr = "decal" | "lak" | "data" | "doos";
+const BADGE_META: Record<Attr, { label: string; cls: string }> = {
+  decal: { label: "Decal", cls: "fb-badge fb-decal" },
+  lak: { label: "Op de lak", cls: "fb-badge fb-lak" },
+  data: { label: "Fietsdata", cls: "fb-badge fb-data" },
+  doos: { label: "Code op doos", cls: "fb-badge fb-doos" },
+};
+
+function Fabrikanten() {
+  const features = [
+    { icon: <Shield size={20} color="#2ECC8A" />, t: "Decal", d: "De Frame-ID is als decal ingebouwd bij de productie — onder de vernis, net zoals de merknaam en striping. Permanent en onverwijderbaar." },
+    { icon: <Tag size={20} color="#2ECC8A" />, t: "Op de lak", d: "De Frame-ID is zichtbaar aangebracht op het frame bij productie. Direct scanbaar, altijd aanwezig." },
+    { icon: <FileText size={20} color="#2ECC8A" />, t: "Fietsdata vooringevuld", d: "Merk, model en specificaties staan al in Velopass. De winkel en fietser hoeven niets meer manueel in te voeren." },
+    { icon: <Package size={20} color="#2ECC8A" />, t: "Code op de verpakking", d: "De Velopass-code staat ook op de doos — eenvoudig te registreren bij levering, nog voor de fiets uitgestald wordt." },
+  ];
+  const makers: Array<{ name: string; attrs: Attr[]; sub: string }> = [
+    { name: "Oxford", attrs: ["decal", "lak", "data", "doos"], sub: "Volledige integratie — Frame-ID permanent ingebouwd, data vooringevuld, code op de doos." },
+    { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata." },
+    { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
+    { name: "Bike43", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
+    { name: "Spectre", attrs: ["lak"], sub: "Frame-ID aangebracht bij productie." },
+    { name: "Thompson", attrs: ["lak"], sub: "Frame-ID aangebracht bij productie." },
+  ];
+  return (
+    <section className="fabrikanten" id="fabrikanten">
+      <div className="fb-inner">
+        <p className="eyebrow" style={{ color: "#1AAD70" }}>Geïntegreerd bij productie</p>
+        <h2 className="sec-title">Topfabrikanten kiezen Velopass</h2>
+        <p className="fb-sub">Steeds meer fabrikanten leveren hun fietsen al af met een Velopass Frame-ID op het frame. Als Velopass-winkel verkoop je deze fietsen moeiteloos — de klant is al in jouw ecosysteem voor hij de winkel verlaat.</p>
+
+        <div className="fb-features">
+          {features.map((f) => (
+            <div className="fb-feat" key={f.t}>
+              <div className="fb-feat-icon">{f.icon}</div>
+              <h4>{f.t}</h4>
+              <p>{f.d}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="fb-grid">
+          {makers.map((m) => (
+            <div className="fb-card" key={m.name}>
+              <div className="fb-name">{m.name}</div>
+              <div className="fb-badges">
+                {m.attrs.map((a) => (
+                  <span key={a} className={BADGE_META[a].cls}>{BADGE_META[a].label}</span>
+                ))}
+              </div>
+              <div className="fb-cardsub">{m.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="fb-cta">
+          Bent u fabrikant en wil u Velopass integreren in uw productieproces?{" "}
+          <a href="/contact">Neem contact op →</a>
+        </div>
+      </div>
+    </section>
+  );
+}
