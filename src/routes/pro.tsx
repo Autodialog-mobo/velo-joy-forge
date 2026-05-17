@@ -45,8 +45,10 @@ const Check = () => (
 function VelopassPro() {
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
-  const now = new Date();
-  const currentMonthYear = now.toLocaleDateString("nl-BE", { month: "long", year: "numeric" });
+  const [currentMonthYear, setCurrentMonthYear] = useState("");
+  useEffect(() => {
+    setCurrentMonthYear(new Date().toLocaleDateString("nl-BE", { month: "long", year: "numeric" }));
+  }, []);
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
@@ -93,7 +95,7 @@ function VelopassPro() {
           </div>
           <div className="hero-stats">
             <div><div className="stat-num">{activeShopsCount.toLocaleString("nl-BE")}<span>+</span></div><div className="stat-label">fietswinkels actief</div></div>
-            <div><div className="stat-num">+150<span>K</span></div><div className="stat-label">fietsen geregistreerd</div></div>
+            <div><div className="stat-num">+200<span>K</span></div><div className="stat-label">fietsen geregistreerd</div></div>
             
           </div>
         </div>
@@ -251,7 +253,7 @@ function ProCommunity({ activeShopsCount }: { activeShopsCount: number }) {
             <div className="pcm-stat-label">fietswinkels aangesloten</div>
           </div>
           <div className="pcm-stat">
-            <div className="pcm-stat-num">+150<span>K</span></div>
+            <div className="pcm-stat-num">+200<span>K</span></div>
             <div className="pcm-stat-label">fietsen geregistreerd</div>
           </div>
           <div className="pcm-stat">
