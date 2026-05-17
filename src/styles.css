@@ -301,7 +301,7 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 
 /* PIJLERS */
 .pijlers { padding: 100px 8vw; background: var(--bg); }
-.pijler-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pijler-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .pc { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 32px 26px; transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
 .pc:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(13,31,60,0.08); }
 .pc-num { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--green-mid); letter-spacing: 1px; margin-bottom: 16px; }

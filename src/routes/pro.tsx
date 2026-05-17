@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, Tag, FileText, Package, Truck, ScanLine, Mail, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, Shield, ShieldCheck, Tag, FileText, Package, Truck, ScanLine, Mail, CheckCircle2 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -135,7 +135,7 @@ function VelopassPro() {
 
       <section className="pijlers" id="pijlers">
         <p className="eyebrow">Wat je wint</p>
-        <h2 className="sec-title" style={{ marginBottom: 56, maxWidth: 520 }}>Drie redenen waarom {activeShopsCount.toLocaleString("nl-BE")} fietswinkels vertrouwen op Velopass</h2>
+        <h2 className="sec-title" style={{ marginBottom: 56, maxWidth: 520 }}>Vier redenen waarom {activeShopsCount.toLocaleString("nl-BE")} fietswinkels vertrouwen op Velopass</h2>
         <div className="pijler-grid">
           <div className="pc">
             <div className="pc-num">01</div>
@@ -155,6 +155,12 @@ function VelopassPro() {
             <div className="pc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="3" height="3" rx="0.5" fill="#0D1F3C" /></svg></div>
             <h3>Eén scan, volledig beeld</h3>
             <p>Scan de QR en zie meteen welke fiets het is, de onderhoudshistorie en actieve services. Een onbekende fiets? Automatisch aangemaakt in je kassasysteem.</p>
+          </div>
+          <div className="pc">
+            <div className="pc-num">04</div>
+            <div className="pc-icon"><ShieldCheck size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
+            <h3>Klant ontzorgd. Winkel vertrouwd.</h3>
+            <p>Scan elke Velopass QR — ook van fietsen die je nog nooit hebt verkocht. Je ziet meteen de fietsdata, onderhoudshistorie, actieve services én contractinfo zoals een resterend leasebudget. Alles gaat direct in je kassasysteem. Jouw klant weet: zijn fiets is in goede handen.</p>
           </div>
         </div>
       </section>
