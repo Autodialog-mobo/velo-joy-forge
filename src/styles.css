@@ -679,3 +679,20 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .pl-btn:hover { background: #25b377; transform: translateY(-1px); }
 .pl-foot { color: rgba(255,255,255,0.45); font-family: "DM Sans", sans-serif; font-size: 13px; text-decoration: none; margin-top: 4px; }
 .pl-foot:hover { color: rgba(255,255,255,0.75); }
+
+/* Stakeholder placeholder pages */
+.stk-placeholder { min-height: 100vh; background: #0D1F3C; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; gap: 48px; }
+.stk-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.stk-logo-mark { width: 32px; height: 32px; display: inline-flex; }
+.stk-logo-text { font-family: "Syne", sans-serif; font-weight: 700; font-size: 20px; color: #fff; letter-spacing: -0.01em; }
+.stk-card { max-width: 560px; width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 48px 40px; display: flex; flex-direction: column; gap: 20px; text-align: left; }
+.stk-eyebrow { font-family: "DM Sans", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #2ECC8A; }
+.stk-title { font-family: "Syne", sans-serif; font-weight: 700; font-size: 32px; line-height: 1.15; color: #fff; margin: 0; letter-spacing: -0.02em; }
+.stk-intro { font-family: "DM Sans", sans-serif; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.7); margin: 0; }
+.stk-soon { display: inline-block; align-self: flex-start; font-family: "DM Sans", sans-serif; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: rgba(46,204,138,0.12); color: #2ECC8A; border: 1px solid rgba(46,204,138,0.2); }
+.stk-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.stk-btn { display: inline-flex; align-items: center; padding: 12px 22px; background: #2ECC8A; color: #0D1F3C; font-family: "DM Sans", sans-serif; font-weight: 600; font-size: 14px; border-radius: 10px; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+.stk-btn:hover { background: #25b377; transform: translateY(-1px); }
+.stk-btn-ghost { display: inline-flex; align-items: center; padding: 12px 22px; background: transparent; color: rgba(255,255,255,0.7); font-family: "DM Sans", sans-serif; font-weight: 500; font-size: 14px; border-radius: 10px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); transition: color 0.2s, border-color 0.2s; }
+.stk-btn-ghost:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+@media (max-width: 600px) { .stk-card { padding: 32px 24px; } .stk-title { font-size: 26px; } }
