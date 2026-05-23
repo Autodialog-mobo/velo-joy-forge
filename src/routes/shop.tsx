@@ -51,7 +51,7 @@ function VelopassPro() {
     setCurrentMonthYear(new Date().toLocaleDateString("nl-BE", { month: "long", year: "numeric" }));
   }, []);
   return (
-    <div className="pro-page">
+    <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav dark">
         <Link to="/shop" className="nav-logo">
@@ -244,7 +244,7 @@ function VelopassPro() {
       </section>
 
       <Footer variant="pro" />
-    </div>
+    </>
   );
 }
 
