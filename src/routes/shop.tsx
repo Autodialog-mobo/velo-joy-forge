@@ -212,18 +212,18 @@ function VelopassPro() {
             <div className="reg-package">
               <div className="reg-package-title">Jouw kennismakingspakket</div>
               <div className="reg-package-items">
-                <div className="reg-package-item"><span className="reg-pcheck">✓</span> 5 Velopass Frame-ID's — gratis</div>
-                <div className="reg-package-item"><span className="reg-pcheck">✓</span> Toegang tot het Velopass partnerportaal</div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span><span className="reg-package-text">5 Velopass Frame-ID's — gratis</span></div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span><span className="reg-package-text">Toegang tot het Velopass partnerportaal</span></div>
                 <div className="reg-package-item">
                   <span className="reg-pcheck">✓</span>
-                  <span>Koppeling met je kassasysteem — fietsdata gaat automatisch in en uit</span>
+                  <span className="reg-package-text">Koppeling met je kassasysteem — fietsdata gaat automatisch in en uit</span>
                 </div>
                 <div className="reg-package-sub">CycleSoftware, Vendit, Wilmar en meer</div>
                 <div className="reg-package-item">
                   <span className="reg-pcheck">✓</span>
-                  <span>Gratis toegang tot de Velopass Pro App — voor wie onderweg scant of nog geen kassasysteem heeft</span>
+                  <span className="reg-package-text">Gratis toegang tot de Velopass Pro App — voor wie onderweg scant of nog geen kassasysteem heeft</span>
                 </div>
-                <div className="reg-package-item"><span className="reg-pcheck">✓</span> Onboarding in jouw taal: NL · FR · EN</div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span><span className="reg-package-text">Onboarding in jouw taal: NL · FR · EN</span></div>
               </div>
               <p className="reg-package-note">Na registratie nemen we binnen 2 werkdagen contact op en sturen we je pakket toe.</p>
             </div>
