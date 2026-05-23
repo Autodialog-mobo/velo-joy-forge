@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as ProfessionalsRouteImport } from './routes/professionals'
 import { Route as ProRouteImport } from './routes/pro'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as GestolenRouteImport } from './routes/gestolen'
@@ -21,6 +22,11 @@ import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vie
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfessionalsRoute = ProfessionalsRouteImport.update({
+  id: '/professionals',
+  path: '/professionals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProRoute = ProRouteImport.update({
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/gestolen': typeof GestolenRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
+  '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/gestolen': typeof GestolenRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
+  '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/gestolen': typeof GestolenRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
+  '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/privacy'
     | '/pro'
+    | '/professionals'
     | '/shop'
     | '/api/public/vies-lookup'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/privacy'
     | '/pro'
+    | '/professionals'
     | '/shop'
     | '/api/public/vies-lookup'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/privacy'
     | '/pro'
+    | '/professionals'
     | '/shop'
     | '/api/public/vies-lookup'
   fileRoutesById: FileRoutesById
@@ -130,6 +142,7 @@ export interface RootRouteChildren {
   GestolenRoute: typeof GestolenRoute
   PrivacyRoute: typeof PrivacyRoute
   ProRoute: typeof ProRoute
+  ProfessionalsRoute: typeof ProfessionalsRoute
   ShopRoute: typeof ShopRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
 }
@@ -141,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/professionals': {
+      id: '/professionals'
+      path: '/professionals'
+      fullPath: '/professionals'
+      preLoaderRoute: typeof ProfessionalsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pro': {
@@ -202,9 +222,20 @@ const rootRouteChildren: RootRouteChildren = {
   GestolenRoute: GestolenRoute,
   PrivacyRoute: PrivacyRoute,
   ProRoute: ProRoute,
+  ProfessionalsRoute: ProfessionalsRoute,
   ShopRoute: ShopRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

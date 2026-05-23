@@ -162,7 +162,7 @@ function BikeSearchPage() {
           <li><a href="/#nieuwe-sticker">Sticker bestellen</a></li>
           <li><a href="/#community">Community</a></li>
           <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
-          <li><Link to="/shop" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
+          <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="/#login" className="btn-login">
