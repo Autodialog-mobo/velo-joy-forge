@@ -205,9 +205,21 @@ function VelopassPro() {
       <section className="register" id="registreer">
         <div className="reg-inner">
           <div>
-            <p className="eyebrow">Aan de slag</p>
+            <p className="eyebrow">Gratis starten</p>
             <h2 className="sec-title">Registreer je fietswinkel</h2>
-            <p className="reg-sub">Geen langlopend contract. Geen verplichtingen. Jij bepaalt het tempo.</p>
+            <p className="reg-sub">Registreer gratis en ontvang 5 kennismakingsstickers. Geen contract, geen verplichtingen. Jij bepaalt het tempo.</p>
+
+            <div className="reg-package">
+              <div className="reg-package-title">Jouw kennismakingspakket</div>
+              <div className="reg-package-items">
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span> 5 Velopass Frame-ID's — gratis</div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span> Toegang tot het Velopass partnerportaal</div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span> POS-integratie of gratis Pro App</div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span> Onboarding in jouw taal: NL · FR · EN</div>
+              </div>
+              <p className="reg-package-note">Na registratie nemen we binnen 2 werkdagen contact op en sturen we je pakket toe.</p>
+            </div>
+
             {[
               { t: "POS-integratie of gratis app", d: "Werkt met je bestaand kassasysteem. Of gebruik de gratis Pro app." },
               { t: "Credits die oplopen", d: "Elke activatie brengt je dichter bij gratis gebruik." },

@@ -198,8 +198,8 @@ export function RegisterForm() {
           />
         </div>
       )}
-      <button type="submit" className="btn-submit">Registreer mijn fietswinkel</button>
-      <p className="fnote">We nemen binnen 2 werkdagen contact op.</p>
+      <button type="submit" className="btn-submit">Registreer gratis →</button>
+      <p className="fnote">Gratis te starten. Geen creditcard vereist.</p>
     </form>
   );
 }
