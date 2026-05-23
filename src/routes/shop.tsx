@@ -359,6 +359,12 @@ function Fabrikanten() {
                 ))}
               </div>
               <div className="fb-cardsub">{m.sub}</div>
+              {m.extra && (
+                <div className="fb-card-extra">
+                  <Sparkles size={13} color="#2ECC8A" />
+                  <span>{m.extra}</span>
+                </div>
+              )}
             </div>
           ))}
         </div>
