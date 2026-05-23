@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ProRouteImport } from './routes/pro'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as GestolenRouteImport } from './routes/gestolen'
@@ -17,6 +18,11 @@ import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProRoute = ProRouteImport.update({
   id: '/pro',
   path: '/pro',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/gestolen': typeof GestolenRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
+  '/shop': typeof ShopRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/gestolen': typeof GestolenRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
+  '/shop': typeof ShopRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/gestolen': typeof GestolenRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
+  '/shop': typeof ShopRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/privacy'
     | '/pro'
+    | '/shop'
     | '/api/public/vies-lookup'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/privacy'
     | '/pro'
+    | '/shop'
     | '/api/public/vies-lookup'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/privacy'
     | '/pro'
+    | '/shop'
     | '/api/public/vies-lookup'
   fileRoutesById: FileRoutesById
 }
@@ -118,11 +130,19 @@ export interface RootRouteChildren {
   GestolenRoute: typeof GestolenRoute
   PrivacyRoute: typeof PrivacyRoute
   ProRoute: typeof ProRoute
+  ShopRoute: typeof ShopRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pro': {
       id: '/pro'
       path: '/pro'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   GestolenRoute: GestolenRoute,
   PrivacyRoute: PrivacyRoute,
   ProRoute: ProRoute,
+  ShopRoute: ShopRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
 }
 export const routeTree = rootRouteImport
