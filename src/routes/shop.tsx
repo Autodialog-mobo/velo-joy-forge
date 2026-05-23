@@ -244,7 +244,7 @@ function VelopassPro() {
       </section>
 
       <Footer variant="pro" />
-    </>
+    </div>
   );
 }
 
