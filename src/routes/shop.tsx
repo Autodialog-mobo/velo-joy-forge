@@ -378,7 +378,7 @@ function Fabrikanten() {
               <h4 className="fb-flow-title">Fiets arriveert</h4>
               <p className="fb-flow-body">De fiets wordt geleverd met een Velopass Frame-ID. Fietsdata staat al klaar in Velopass.</p>
             </div>
-            <span className="fb-zone-connector">Jouw rol begint hier →</span>
+            <span className="fb-zone-connector">1 scan →</span>
           </div>
 
           <div className="fb-zone fb-zone-primary">
