@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
@@ -111,18 +111,18 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
   );
 }
 
+function getBrowserCountry(): "BE" | "NL" | "FR" {
+  const lang = typeof navigator !== "undefined" ? navigator.language || "" : "";
+  const region = lang.split("-")[1]?.toUpperCase();
+  if (region === "BE" || region === "NL" || region === "FR") return region;
+  if (lang.startsWith("nl")) return "NL";
+  if (lang.startsWith("fr")) return "FR";
+  return "BE";
+}
+
 function GestolenPage() {
   const [navOpen, setNavOpen] = useState(false);
-  const [country, setCountry] = useState<"BE" | "NL" | "FR">("BE");
-
-  useEffect(() => {
-    const lang = navigator.language || "fr";
-    const langCountry = lang.split("-")[1]?.toUpperCase();
-    if (langCountry === "BE") setCountry("BE");
-    else if (langCountry === "NL") setCountry("NL");
-    else if (lang.startsWith("fr")) setCountry("FR");
-    else setCountry("FR");
-  }, []);
+  const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
 
   const policeChecklist: Array<{ text: string; velopass?: string }> = [
     { text: "Je identiteitskaart (eID) of de itsme-app" },
