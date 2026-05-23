@@ -348,8 +348,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .reg-package { background: var(--green-pale); border-left: 3px solid var(--green); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 20px 22px; margin-bottom: 32px; text-align: left; }
 .reg-package-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--navy); margin-bottom: 12px; }
 .reg-package-items { display: flex; flex-direction: column; gap: 8px; }
-.reg-package-item { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--navy); display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; text-align: left; }
-.reg-package-item > span:last-child { flex: 1; }
+.reg-package-item { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--navy); display: flex; align-items: flex-start; justify-content: flex-start; gap: 8px; line-height: 1.4; text-align: left; }
+.reg-package-text { flex: 1; text-align: left; }
 .reg-pcheck { color: var(--green-mid); font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
 .reg-package-sub { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-muted); font-style: italic; margin-left: 20px; margin-top: -4px; line-height: 1.4; text-align: left; }
 .reg-package-note { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; text-align: left; }
