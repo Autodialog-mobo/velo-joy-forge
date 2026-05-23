@@ -334,7 +334,7 @@ function Fabrikanten() {
             <div className="fb-card" key={m.name}>
               <div className="fb-name">{m.name}</div>
               <div className="fb-badges">
-                {m.attrs.map((a) => (
+                {m.attrs.filter((a) => a !== "lak").map((a) => (
                   <span key={a} className={BADGE_META[a].cls}>{BADGE_META[a].label}</span>
                 ))}
               </div>
