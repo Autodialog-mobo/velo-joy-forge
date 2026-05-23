@@ -91,7 +91,7 @@ function VelopassHome() {
           <li><a href="#nieuwe-sticker">Sticker bestellen</a></li>
           <li><a href="#community">Community</a></li>
           <li><a href="https://bikesearch.velopass.com/?lng=nl-nl" target="_blank" rel="noopener noreferrer">Fiets controleren</a></li>
-          <li><Link to="/pro" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietswinkels</Link></li>
+          <li><Link to="/shop" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="#login" className="btn-login">
