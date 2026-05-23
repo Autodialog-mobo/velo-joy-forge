@@ -13,9 +13,13 @@ import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
 import { Route as ProRouteImport } from './routes/pro'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ManufacturerRouteImport } from './routes/manufacturer'
+import { Route as LeasingRouteImport } from './routes/leasing'
+import { Route as InsuranceRouteImport } from './routes/insurance'
 import { Route as GestolenRouteImport } from './routes/gestolen'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
+import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 
@@ -39,6 +43,21 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManufacturerRoute = ManufacturerRouteImport.update({
+  id: '/manufacturer',
+  path: '/manufacturer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeasingRoute = LeasingRouteImport.update({
+  id: '/leasing',
+  path: '/leasing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsuranceRoute = InsuranceRouteImport.update({
+  id: '/insurance',
+  path: '/insurance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GestolenRoute = GestolenRouteImport.update({
   id: '/gestolen',
   path: '/gestolen',
@@ -54,6 +73,11 @@ const BikesearchRoute = BikesearchRouteImport.update({
   path: '/bikesearch',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistanceRoute = AssistanceRouteImport.update({
+  id: '/assistance',
+  path: '/assistance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,9 +91,13 @@ const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistance': typeof AssistanceRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/gestolen': typeof GestolenRoute
+  '/insurance': typeof InsuranceRoute
+  '/leasing': typeof LeasingRoute
+  '/manufacturer': typeof ManufacturerRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
@@ -78,9 +106,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistance': typeof AssistanceRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/gestolen': typeof GestolenRoute
+  '/insurance': typeof InsuranceRoute
+  '/leasing': typeof LeasingRoute
+  '/manufacturer': typeof ManufacturerRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
@@ -90,9 +122,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assistance': typeof AssistanceRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/gestolen': typeof GestolenRoute
+  '/insurance': typeof InsuranceRoute
+  '/leasing': typeof LeasingRoute
+  '/manufacturer': typeof ManufacturerRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
@@ -103,9 +139,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assistance'
     | '/bikesearch'
     | '/contact'
     | '/gestolen'
+    | '/insurance'
+    | '/leasing'
+    | '/manufacturer'
     | '/privacy'
     | '/pro'
     | '/professionals'
@@ -114,9 +154,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assistance'
     | '/bikesearch'
     | '/contact'
     | '/gestolen'
+    | '/insurance'
+    | '/leasing'
+    | '/manufacturer'
     | '/privacy'
     | '/pro'
     | '/professionals'
@@ -125,9 +169,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assistance'
     | '/bikesearch'
     | '/contact'
     | '/gestolen'
+    | '/insurance'
+    | '/leasing'
+    | '/manufacturer'
     | '/privacy'
     | '/pro'
     | '/professionals'
@@ -137,9 +185,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssistanceRoute: typeof AssistanceRoute
   BikesearchRoute: typeof BikesearchRoute
   ContactRoute: typeof ContactRoute
   GestolenRoute: typeof GestolenRoute
+  InsuranceRoute: typeof InsuranceRoute
+  LeasingRoute: typeof LeasingRoute
+  ManufacturerRoute: typeof ManufacturerRoute
   PrivacyRoute: typeof PrivacyRoute
   ProRoute: typeof ProRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
@@ -177,6 +229,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manufacturer': {
+      id: '/manufacturer'
+      path: '/manufacturer'
+      fullPath: '/manufacturer'
+      preLoaderRoute: typeof ManufacturerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leasing': {
+      id: '/leasing'
+      path: '/leasing'
+      fullPath: '/leasing'
+      preLoaderRoute: typeof LeasingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insurance': {
+      id: '/insurance'
+      path: '/insurance'
+      fullPath: '/insurance'
+      preLoaderRoute: typeof InsuranceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gestolen': {
       id: '/gestolen'
       path: '/gestolen'
@@ -198,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BikesearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistance': {
+      id: '/assistance'
+      path: '/assistance'
+      fullPath: '/assistance'
+      preLoaderRoute: typeof AssistanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -217,9 +297,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssistanceRoute: AssistanceRoute,
   BikesearchRoute: BikesearchRoute,
   ContactRoute: ContactRoute,
   GestolenRoute: GestolenRoute,
+  InsuranceRoute: InsuranceRoute,
+  LeasingRoute: LeasingRoute,
+  ManufacturerRoute: ManufacturerRoute,
   PrivacyRoute: PrivacyRoute,
   ProRoute: ProRoute,
   ProfessionalsRoute: ProfessionalsRoute,
@@ -229,3 +313,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
