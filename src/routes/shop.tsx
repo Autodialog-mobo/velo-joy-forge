@@ -370,7 +370,7 @@ function Fabrikanten() {
         </div>
 
         <div className="fb-flow">
-          <div className="fb-zone fb-zone-dim">
+          <div className="fb-zone fb-zone-dim fb-zone-border">
             <div className="fb-zone-tag">FABRIKANT</div>
             <div className="fb-flow-step">
               <div className="fb-flow-icon"><Truck size={24} /></div>
@@ -378,7 +378,7 @@ function Fabrikanten() {
               <h4 className="fb-flow-title">Fiets arriveert</h4>
               <p className="fb-flow-body">De fiets wordt geleverd met een Velopass Frame-ID. Fietsdata staat al klaar in Velopass.</p>
             </div>
-            <div className="fb-zone-divider"><span className="fb-zone-badge fb-zone-badge-green">Jouw rol begint hier →</span></div>
+            <span className="fb-zone-connector">Jouw rol begint hier →</span>
           </div>
 
           <div className="fb-zone fb-zone-primary">
