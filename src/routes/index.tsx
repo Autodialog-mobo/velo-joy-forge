@@ -389,8 +389,13 @@ function VelopassHome() {
           <div className="vc">
             <div className="vc-icon"><Store size={22} color="rgba(255,255,255,0.85)" strokeWidth={1.8} /></div>
             <div>
-              <div className="vc-head"><h3>Jouw fietswinkel</h3></div>
-              <p>Jouw fietswinkel kent jouw fiets. En zorgt er automatisch voor.</p>
+              <div className="vc-head"><h3>Jouw digitale serviceboekje</h3></div>
+              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.7)", lineHeight: 1.65 }}>
+                Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.
+              </p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", fontStyle: "italic", marginTop: 10, lineHeight: 1.6 }}>
+                Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.
+              </p>
             </div>
           </div>
           <div className="vc">
