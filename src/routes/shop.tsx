@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -323,8 +323,8 @@ function Fabrikanten() {
     { icon: <FileText size={20} color="#2ECC8A" />, t: "Fietsdata vooringevuld", d: "Merk, model en specificaties staan al in Velopass. De winkel en fietser hoeven niets meer manueel in te voeren." },
     { icon: <Package size={20} color="#2ECC8A" />, t: "Code op de verpakking", d: "De Velopass-code staat ook op de doos — eenvoudig te registreren bij levering, nog voor de fiets uitgestald wordt." },
   ];
-  const makers: Array<{ name: string; attrs: Attr[]; sub: string }> = [
-    { name: "Oxford", attrs: ["decal", "data", "doos"], sub: "Volledige integratie — Frame-ID permanent ingebouwd, data vooringevuld, code op de doos." },
+  const makers: Array<{ name: string; attrs: Attr[]; sub: string; extra?: string }> = [
+    { name: "Oxford", attrs: ["decal", "data", "doos"], sub: "Frame-ID als decal ingebouwd — permanent en onverwijderbaar. Data vooringevuld, code op de doos.", extra: "Oxford biedt via Velopass ook Oxford Assistance (by VAB) en garantieregistratie aan — automatisch gekoppeld aan elke verkochte fiets." },
     { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata." },
     { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
     { name: "Bike43", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
@@ -359,6 +359,12 @@ function Fabrikanten() {
                 ))}
               </div>
               <div className="fb-cardsub">{m.sub}</div>
+              {m.extra && (
+                <div className="fb-card-extra">
+                  <Sparkles size={13} color="#2ECC8A" />
+                  <span>{m.extra}</span>
+                </div>
+              )}
             </div>
           ))}
         </div>

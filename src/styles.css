@@ -600,6 +600,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .fb-data { background: transparent; color: var(--green-mid); border: 1px solid var(--green); }
 .fb-doos { background: rgba(13,31,60,0.06); color: var(--text-muted); }
 .fb-cardsub { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 12px; line-height: 1.5; }
+.fb-card-extra { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; padding: 10px 14px; border-left: 2px solid #2ECC8A; background: rgba(46,204,138,0.06); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--navy, #0D1F3C); font-size: 12px; line-height: 1.5; }
+.fb-card-extra svg { flex-shrink: 0; margin-top: 2px; }
 .fb-cta { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 14px; text-align: center; margin-top: 56px; }
 .fb-cta a { color: var(--green-mid); font-weight: 500; text-decoration: none; }
 .fb-cta a:hover { text-decoration: underline; }
