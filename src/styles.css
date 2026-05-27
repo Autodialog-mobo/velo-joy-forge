@@ -724,7 +724,7 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 
 /* Leasing logo strip */
 .leasing-logos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: stretch; }
-.leasing-logos .logo-tile { display: flex; align-items: center; justify-content: center; height: 88px; padding: 16px 20px; background: #F5F3EE; border: 1px solid rgba(13,31,60,0.06); border-radius: var(--r-lg); transition: all 0.25s ease; }
+.leasing-logos .logo-tile { display: flex; align-items: center; justify-content: center; height: 88px; padding: 16px 20px; background: #FFFFFF; border: 1px solid rgba(13,31,60,0.06); border-radius: var(--r-lg); transition: all 0.25s ease; }
 .leasing-logos .logo-tile:hover { background: #FFFFFF; border-color: rgba(46,204,138,0.35); transform: translateY(-2px); box-shadow: 0 8px 20px -12px rgba(13,31,60,0.18); }
 .leasing-logos .logo-tile img { max-height: 40px; max-width: 100%; object-fit: contain; mix-blend-mode: multiply; filter: grayscale(100%); opacity: 0.7; transition: all 0.25s ease; }
 .leasing-logos .logo-tile:hover img { filter: grayscale(0%); opacity: 1; }
