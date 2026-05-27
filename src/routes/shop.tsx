@@ -470,9 +470,9 @@ function Leasing() {
   const scanItems: Array<{ icon: React.ReactNode; title: string; body: string }> = [
     { icon: <Building2 size={18} color={green} />, title: "Welke leasingmaatschappij", body: "Naam en logo van de maatschappij" },
     { icon: <Wallet size={18} color={green} />, title: "Resterend onderhoudsbudget", body: "Beschikbaar bedrag voor onderhoud" },
-    { icon: <CalendarDays size={18} color={green} />, title: "Einddatum leasing", body: "Wanneer het contract afloopt" },
+    { icon: <CalendarDays size={18} color={green} />, title: "Contractnummer en einddatum leasing", body: "Wanneer het contract afloopt" },
     { icon: <ExternalLink size={18} color={green} />, title: "Directe link naar het portaal", body: "Rechtstreeks naar de leasingmaatschappij" },
-    { icon: <ClipboardList size={18} color={green} />, title: "Volledige fietshistorie", body: "Alle vorige onderhoudsbeurten" },
+    { icon: <ClipboardList size={18} color={green} />, title: "Volledige onderhoudshistorie", body: "Alle vorige onderhoudsbeurten" },
   ];
 
   return (
