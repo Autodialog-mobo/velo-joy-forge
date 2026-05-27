@@ -876,7 +876,7 @@ function Leasing() {
                 margin: 0,
               }}
             >
-              Scan je de fiets daarna met de Pro App of kassasysteem? Dan zie je meteen alles: <span style={{ color: green, fontWeight: 600 }}>maatschappij, budget, contractnummer, einddatum.</span>
+              Scan je de fiets daarna met de Pro App of kassasysteem? Dan zie je meteen alles: <span style={{ color: green, fontWeight: 600 }}>maatschappij, budget, contractnummer, einddatum, en meer...</span>
             </p>
           </div>
         </div>
