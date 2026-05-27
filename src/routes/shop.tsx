@@ -574,7 +574,7 @@ function Leasing() {
             style={{
               background: cream,
               borderLeft: "3px solid #E07A4F",
-              borderRadius: 12,
+              borderRadius: 20,
               padding: 24,
             }}
           >
@@ -615,7 +615,7 @@ function Leasing() {
             style={{
               background: "rgba(46,204,138,0.06)",
               borderLeft: `3px solid ${green}`,
-              borderRadius: 12,
+              borderRadius: 20,
               padding: 24,
             }}
           >
