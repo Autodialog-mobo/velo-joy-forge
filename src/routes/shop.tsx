@@ -551,16 +551,7 @@ function Leasing() {
           >
             Compatibel met
           </p>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: 24,
-              alignItems: "center",
-              justifyItems: "center",
-            }}
-            className="leasing-logos"
-          >
+          <div className="leasing-logos">
             <img
               src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/668e8739b353377af0a24598_cyclis-300x112.png"
               alt="Cyclis"
