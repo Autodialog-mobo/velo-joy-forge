@@ -150,6 +150,7 @@ export function FaqSection() {
   };
 
   return (
+    <section id="faq" style={{ background: "#F5F3EE", padding: "80px 6vw" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 56 }}>
