@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle } from "lucide-react";
+import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -153,19 +153,19 @@ function VelopassPro() {
           </div>
           <div className="pc">
             <div className="pc-num">03</div>
-            <div className="pc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="3" height="3" rx="0.5" fill="#0D1F3C" /></svg></div>
+            <div className="pc-icon"><ScanLine size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h3>Eén scan, volledig beeld</h3>
-            <p>Scan de QR en zie meteen welke fiets het is, de onderhoudshistorie en actieve services. Een onbekende fiets? Automatisch aangemaakt in je kassasysteem.</p>
+            <p>Scan de QR bij elke fiets — ook van fietsen die je nog nooit hebt verkocht. Je ziet meteen de onderhoudshistorie, actieve services en contractinfo zoals een resterend leasebudget. Een onbekende fiets? Automatisch aangemaakt in je kassasysteem.</p>
+            <div className="pc-reported-orange">
+              <AlertCircle size={13} color="#F59E0B" strokeWidth={2} />
+              <span>Scan je een <strong style={{ color: "#F59E0B" }}>REPORTED</strong> fiets? Velopass brengt jou automatisch in contact met de eigenaar en/of politie.</span>
+            </div>
           </div>
           <div className="pc">
             <div className="pc-num">04</div>
-            <div className="pc-icon"><ShieldCheck size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
-            <h3>Klant ontzorgd. Winkel vertrouwd.</h3>
-            <p>Scan elke Velopass QR — ook van fietsen die je nog nooit hebt verkocht. De fietsdata gaat direct in je kassasysteem. Via de Velopass Pro App zie je meteen de volledige context: onderhoudshistorie, actieve services en contractinfo zoals een resterend leasebudget. Jouw klant weet: zijn fiets is in goede handen.</p>
-            <div className="pc-reported">
-              <AlertCircle size={16} color="#2ECC8A" strokeWidth={2} />
-              <span>Scan je een <strong>REPORTED</strong> fiets? Dan word jij als onderdeel van de Velopass Community automatisch in contact gebracht met de eigenaar en/of politie.</span>
-            </div>
+            <div className="pc-icon"><Smartphone size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
+            <h3>Gratis tool voor je team</h3>
+            <p>De Velopass Pro App is gratis voor elke technieker in je winkel. Scan, registreer en beheer fietsen van op de werkvloer — zonder extra software, zonder abonnement. Werkt naast je kassasysteem of volledig zelfstandig.</p>
           </div>
         </div>
       </section>

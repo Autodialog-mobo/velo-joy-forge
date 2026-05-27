@@ -311,6 +311,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .pc-reported { display: flex; align-items: flex-start; gap: 10px; background: rgba(46,204,138,0.06); border-left: 3px solid var(--green); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 12px 14px; margin-top: 14px; }
 .pc-reported span { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(13,31,60,0.7); line-height: 1.55; }
 .pc-reported strong { color: var(--navy); font-weight: 600; }
+.pc-reported-orange { display: flex; align-items: flex-start; gap: 10px; background: rgba(245,158,11,0.06); border-left: 3px solid #F59E0B; border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 10px 14px; margin-top: 12px; }
+.pc-reported-orange span { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--navy); line-height: 1.55; }
 .ctag { display: inline-flex; align-items: center; gap: 5px; background: rgba(13,31,60,0.06); color: var(--text-muted); font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 100px; margin-top: 10px; }
 
 /* HOE WERKT */
