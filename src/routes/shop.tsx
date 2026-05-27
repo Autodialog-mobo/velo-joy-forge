@@ -9,7 +9,7 @@ import leasingAppMockup from "@/assets/leasing-app-mockup.png";
 import fabOxford from "@/assets/fab-oxford.jpg";
 import fabBike43 from "@/assets/fab-bike43.jpg";
 import fabFrameId from "@/assets/fab-frameid.jpg";
-import shopHero from "@/assets/shop-hero-v2.jpg";
+
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
@@ -94,7 +94,7 @@ function VelopassPro() {
       <section
         className="pro-hero"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(13,31,60,0.75) 0%, rgba(13,31,60,0.55) 60%, rgba(13,31,60,0.40) 100%), url(${shopHero})`,
+          backgroundImage: `linear-gradient(105deg, rgba(13,31,60,0.88) 0%, rgba(13,31,60,0.80) 45%, rgba(13,31,60,0.55) 100%), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -103,7 +103,7 @@ function VelopassPro() {
         <div className="pro-hero-left">
           <span className="hero-eyebrow"><span className="eyebrow-dot" />Word deel van een groeiende community</span>
           <h1 className="pro-hero-title">Jouw klanten blijven<br /><em>altijd jouw klanten.</em></h1>
-          <p className="pro-hero-sub">Met Velopass blijft elke klant die een fiets koopt automatisch verbonden met jouw winkel — voor altijd.</p>
+          <p className="pro-hero-sub">Met Velopass blijft elke klant automatisch verbonden met jouw winkel — voor altijd.</p>
           <div className="hero-ctas">
             <a href="#registreer" className="btn-g">Registreer je fietswinkel</a>
             <a href="#hoe-werkt-het" className="btn-s dark">Hoe werkt het? →</a>
