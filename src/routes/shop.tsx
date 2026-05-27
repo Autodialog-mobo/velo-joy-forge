@@ -5,7 +5,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
 import { RegisterForm } from "@/components/ProRegisterForm";
-import leasingAppMockup from "@/assets/leasing-app-mockup.png";
+import leasingAppMockup from "@/assets/leasing-app-mockup-v2.png";
 import fabOxford from "@/assets/fab-oxford.jpg";
 import fabBike43 from "@/assets/fab-bike43.jpg";
 import fabFrameId from "@/assets/fab-frameid.jpg";
