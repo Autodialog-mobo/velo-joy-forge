@@ -17,12 +17,8 @@ function renderLine(line: string) {
 
 const leftFAQs = [
   {
-    q: "Wat doe ik als mijn fiets gestolen of verloren is?",
-    a: "Meld je fiets zo snel mogelijk via je Velopass-account. Ga naar 'Mijn fiets' en klik op 'Melden als vermist'. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd. Iedereen die jouw Frame-ID scant, ziet dat jouw fiets gezocht wordt en kan je (anoniem) een seintje geven. Vergeet niet ook aangifte te doen bij de politie.\n\nBekijk het volledige stappenplan op /gestolen.",
-  },
-  {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
-    a: "Bij de registratie van je fiets bewaren we ook het merk en framenummer. Wordt de Frame-ID verwijderd, dan blijft jouw fiets traceerbaar via die combinatie — net zoals een auto zonder kenteken/nummerplaat nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het alleen veel eenvoudiger en sneller.",
+    a: "Bij de registratie van je fiets bewaren we ook het merk en framenummer. Wordt de Frame-ID verwijderd, dan blijft jouw fiets traceerbaar via die combinatie — net zoals een auto zonder nummerplaat nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het alleen veel eenvoudiger en sneller.",
   },
   {
     q: "Kan ik een nieuwe Frame-ID bestellen als mijn oude verwijderd of beschadigd is?",
@@ -34,7 +30,7 @@ const leftFAQs = [
   },
   {
     q: "Hoe werkt Velopass samen met het Belgisch Nationaal Fietsregister (MyBike)?",
-    a: "Je kan je Velopass-code gebruiken om je fiets ook te registreren in MyBike, het Belgisch nationaal fietsregister. Zo ben je dubbel beschermd — in de Internationale Velopass Community én in het Belgische register.",
+    a: "Je kan je Velopass-code gebruiken om je fiets ook te registreren in MyBike, het Belgisch nationaal fietsregister. Zo ben je dubbel beschermd — in de Velopass Community én in het officiële register.",
   },
   {
     q: "Wat is het verschil tussen de Velopass-code en het framenummer?",
@@ -44,16 +40,12 @@ const leftFAQs = [
 
 const rightFAQs = [
   {
-    q: "Mijn fiets is teruggevonden. Wat nu?",
-    a: "Gefeliciteerd! Log in op je Velopass-account en meld je fiets als 'Teruggevonden'. De status verandert automatisch terug naar ALL CLEAR. Controleer daarna of je Frame-ID nog intact is. Is de Frame-ID beschadigd of verwijderd? Bestel een nieuwe via onze webshop of via een Velopass-fietswinkel.",
-  },
-  {
     q: "Wat betekenen ALL CLEAR, REPORTED en NOT REGISTERED?",
-    a: "Dit zijn the drie statussen in de Velopass Community:\n• ALL CLEAR: de fiets is geregistreerd en niet gemeld als vermist. Alles in orde.\n• REPORTED: de eigenaar heeft de fiets actief gemeld als vermist. De community zoekt mee.\n• NOT REGISTERED: de fiets staat niet in de Velopass-database en is nog niet beveiligd.",
+    a: "Dit zijn de drie statussen in de Velopass Community:\n• ALL CLEAR: de fiets is geregistreerd en niet gemeld als vermist. Alles in orde.\n• REPORTED: de eigenaar heeft de fiets actief gemeld. De community zoekt mee.\n• NOT REGISTERED: de fiets staat niet in de Velopass-database en is nog niet beveiligd.",
   },
   {
-    q: "Wat is het verschil tussen Velopass en het graveren van mijn rijksregisternummer?",
-    a: "Graveren brengt blijvende schade aan het frame toe — tenzij door de fabrikant zelf gedaan, vervalt hierdoor je garantie. Bovendien maakt een ingegraveerd rijksregisternummer je fiets moeilijk verkoopbaar. De Velopass Frame-ID is overdraagbaar naar een volgende eigenaar bij verkoop.",
+    q: "Waarom wordt er niet meer gegraveerd en wat is het verschil met Velopass?",
+    a: "Graveren is nagenoeg volledig verdwenen — en dat is logisch. Moderne fietsen van carbon of aluminium worden beschadigd door een graveermachine. Bij carbon is graveren zelfs fataal voor de framestructuur. Bij e-bikes lopen er bovendien interne kabels door de buizen.\n\nVroeger werd je rijksregisternummer ingegraveerd — dat is een privacyrisico. Je persoonlijke ID lag letterlijk zichtbaar op je fiets.\n\nDe Velopass Frame-ID vervangt dit volledig:\n• Geen schade aan het frame — de sticker plakt, krast niet\n• Geen persoonlijke data op de sticker — wie scant ziet enkel de status (vrij of gemeld), nooit jouw gegevens\n• Fraudebestendig — het materiaal brokkelt in stukjes als iemand eraan prutst\n• Overdraagbaar — bij verkoop draag je het digitale paspoort over naar de nieuwe eigenaar, zonder opnieuw te registreren\n• Digitaal paspoort — aankoopbewijs, serienummer en onderhoudshistorie allemaal op één plek",
   },
   {
     q: "Ik probeer in te loggen maar het lukt niet.",
