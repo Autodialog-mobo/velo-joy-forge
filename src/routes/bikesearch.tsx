@@ -195,7 +195,7 @@ function BikeSearchPage() {
         <button
           type="button"
           onClick={() => {
-            if (typeof window !== "undefined" && window.history.length > 1 && document.referrer && new URL(document.referrer).origin === window.location.origin) {
+            if (typeof window !== "undefined" && window.history.length > 1) {
               window.history.back();
             } else {
               window.location.href = "/";
