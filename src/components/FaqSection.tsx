@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Link } from "@tanstack/react-router";
 
@@ -120,6 +120,35 @@ const rightFAQs = [
 ];
 
 export function FaqSection() {
+  const [openLeft, setOpenLeft] = useState<string[]>([]);
+  const [openRight, setOpenRight] = useState<string[]>([]);
+
+  useEffect(() => {
+    const applyHash = () => {
+      const h = window.location.hash.replace("#", "");
+      if (h.startsWith("faq-l-")) setOpenLeft([h]);
+      else if (h.startsWith("faq-r-")) setOpenRight([h]);
+      if (h.startsWith("faq-")) {
+        // give accordion a tick to expand before scrolling
+        requestAnimationFrame(() => {
+          document.getElementById(h)?.scrollIntoView({ block: "center" });
+        });
+      }
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, []);
+
+  const syncHash = (val: string[]) => {
+    const last = val[val.length - 1];
+    if (last) {
+      history.replaceState(null, "", `#${last}`);
+    } else {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  };
+
   return (
     <section id="faq" style={{ background: "#F5F3EE", padding: "80px 6vw" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
@@ -189,9 +218,9 @@ export function FaqSection() {
               padding: "16px 20px",
             }}
           >
-            <Accordion type="multiple" className="w-full">
+            <Accordion type="multiple" className="w-full" value={openLeft} onValueChange={(v) => { setOpenLeft(v); syncHash(v); }}>
               {leftFAQs.map((faq, i) => (
-                <AccordionItem key={`l-${i}`} value={`l-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
+                <AccordionItem key={`faq-l-${i}`} value={`faq-l-${i}`} id={`faq-l-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
                   <AccordionTrigger
                     className="text-left"
                     style={{
@@ -239,9 +268,9 @@ export function FaqSection() {
               padding: "16px 20px",
             }}
           >
-            <Accordion type="multiple" className="w-full">
+            <Accordion type="multiple" className="w-full" value={openRight} onValueChange={(v) => { setOpenRight(v); syncHash(v); }}>
               {rightFAQs.map((faq, i) => (
-                <AccordionItem key={`r-${i}`} value={`r-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
+                <AccordionItem key={`faq-r-${i}`} value={`faq-r-${i}`} id={`faq-r-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
                   <AccordionTrigger
                     className="text-left"
                     style={{
