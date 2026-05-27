@@ -67,6 +67,7 @@ function VelopassPro() {
           <li><a href="#pijlers">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#fabrikanten">Fabrikanten</a></li>
+          <li><a href="#leasing">Leasing</a></li>
           <li><a href="#registreer">Registreer</a></li>
           <li><a href="#community">Community</a></li>
           <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></li>
