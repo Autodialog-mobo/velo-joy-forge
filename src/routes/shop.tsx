@@ -724,12 +724,38 @@ function Leasing() {
               fontWeight: 700,
               fontSize: 28,
               color: navy,
-              marginBottom: 32,
+              marginBottom: 20,
               lineHeight: 1.2,
             }}
           >
-            Koppel een leasefiets in 3 stappen
+            Koppel een leasefiets in 2 stappen
           </h3>
+          {/* Context banner */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              background: "#F5F3EE",
+              borderLeft: "3px solid #D1D5DB",
+              borderRadius: 8,
+              padding: "12px 16px",
+              marginBottom: 24,
+            }}
+          >
+            <CheckCircle2 size={14} color="#6B7280" style={{ flexShrink: 0 }} />
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "#6B7280",
+                lineHeight: 1.5,
+                margin: 0,
+              }}
+            >
+              De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave.
+            </p>
+          </div>
           <div
             style={{
               display: "grid",
@@ -740,26 +766,18 @@ function Leasing() {
             {[
               {
                 n: "01",
-                icon: <Database size={22} color="#9CA3AF" />,
-                title: "Fietsdata staat al klaar",
-                body: "De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave.",
-                tag: "AUTOMATISCH",
-                variant: "neutral" as const,
-              },
-              {
-                n: "02",
                 icon: <Sticker size={22} color={green} />,
                 title: "Plak de sticker",
                 body: "Heeft de fiets nog geen Frame-ID van de fabrikant? Plak dan een Velopass sticker op het frame. Dat duurt 10 seconden.",
-                note: "(Optioneel — veel fabrikanten leveren de fiets al mét Frame-ID)",
+                note: "Optioneel — veel fabrikanten leveren de fiets al mét Frame-ID.",
                 tag: "JOUW ACTIE",
                 variant: "action" as const,
               },
               {
-                n: "03",
+                n: "02",
                 icon: <Link2 size={22} color={green} />,
                 title: "Voer de code in het leaseportaal in",
-                body: "Geef de Velopass-code van de fiets in het portaal van de leasingmaatschappij. Klaar — de fiets, eigenaar en het portaal zijn gekoppeld aan Velopass.",
+                body: "Geef de Velopass-code van de fiets in het portaal van de leasingmaatschappij. Klaar — de fiets, eigenaar en het portaal zijn gekoppeld.",
                 tag: "JOUW ACTIE",
                 variant: "action" as const,
               },
