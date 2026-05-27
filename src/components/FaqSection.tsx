@@ -1,28 +1,82 @@
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Link } from "@tanstack/react-router";
 
-function renderLine(line: string) {
-  const parts = line.split(/(\/gestolen|\[Fiets controleren →\])/g);
-  return parts.map((p, i) =>
-    p === "/gestolen" ? (
-      <Link key={i} to="/gestolen" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
-        /gestolen
+const linkStyle = {
+  color: "#0D1F3C",
+  textDecoration: "underline",
+  textUnderlineOffset: 3,
+  fontWeight: 500,
+} as const;
+
+// Tokens detected (in order of regex alternatives):
+//  1) [label](target)        markdown link
+//  2) mailto:foo@bar         email
+//  3) https?://...           external URL
+//  4) bare domain (e.g. bikesearch.velopass.com[/path])
+//  5) absolute internal path (e.g. /gestolen, /bikesearch#hash)
+const LINK_RE =
+  /(\[[^\]]+\]\([^)]+\))|(mailto:[^\s)]+)|(https?:\/\/[^\s)]+)|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)|(\/[a-zA-Z0-9/_#-]+)/g;
+
+function renderHref(target: string, label: string, key: number): ReactNode {
+  if (target.startsWith("/")) {
+    const [path, hash] = target.split("#");
+    return (
+      <Link key={key} to={path} hash={hash} style={linkStyle}>
+        {label}
       </Link>
-    ) : p === "[Fiets controleren →]" ? (
-      <Link key={i} to="/bikesearch" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
-        Fiets controleren →
-      </Link>
-    ) : (
-      <Fragment key={i}>{p}</Fragment>
-    )
+    );
+  }
+  if (target.startsWith("mailto:") || target.startsWith("tel:")) {
+    return <a key={key} href={target} style={linkStyle}>{label}</a>;
+  }
+  const href = /^https?:\/\//.test(target) ? target : `https://${target}`;
+  return (
+    <a key={key} href={href} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+      {label}
+    </a>
   );
+}
+
+function renderToken(token: string, key: number): ReactNode {
+  const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
+  if (md) return renderHref(md[2], md[1], key);
+  if (token.startsWith("mailto:")) {
+    return <a key={key} href={token} style={linkStyle}>{token.slice(7)}</a>;
+  }
+  if (/^https?:\/\//.test(token)) {
+    return (
+      <a key={key} href={token} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+        {token.replace(/^https?:\/\//, "")}
+      </a>
+    );
+  }
+  if (token.startsWith("/")) return renderHref(token, token, key);
+  return (
+    <a key={key} href={`https://${token}`} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+      {token}
+    </a>
+  );
+}
+
+function renderLine(line: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let last = 0;
+  let i = 0;
+  for (const m of line.matchAll(LINK_RE)) {
+    const start = m.index ?? 0;
+    if (start > last) out.push(<Fragment key={`t-${i++}`}>{line.slice(last, start)}</Fragment>);
+    out.push(renderToken(m[0], i++));
+    last = start + m[0].length;
+  }
+  if (last < line.length) out.push(<Fragment key={`t-${i++}`}>{line.slice(last)}</Fragment>);
+  return out;
 }
 
 const leftFAQs = [
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
-    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.\n\nBovendien blokkeert Velopass elke poging om een al geregistreerde fiets opnieuw te registreren op basis van die merk + framenummer combinatie. Een dief kan jouw fiets dus niet opnieuw registreren op zijn naam.\n\nWil je zelf controleren of jouw fiets geregistreerd is? Zoek via merk + framenummer op [Fiets controleren →]",
+    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.\n\nBovendien blokkeert Velopass elke poging om een al geregistreerde fiets opnieuw te registreren op basis van die merk + framenummer combinatie. Een dief kan jouw fiets dus niet opnieuw registreren op zijn naam.\n\nWil je zelf controleren of jouw fiets geregistreerd is? Zoek via merk + framenummer op [Fiets controleren →](/bikesearch)",
   },
   {
     q: "Kan ik een nieuwe Frame-ID bestellen als mijn oude verwijderd of beschadigd is?",
