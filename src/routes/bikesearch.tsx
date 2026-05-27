@@ -35,7 +35,7 @@ const BRANDS = [
 ];
 
 const t = (lang: Lang) => ({
-  back: lang === "fr-fr" ? "← Retour à velopass.com" : "← Terug naar velopass.com",
+  back: lang === "fr-fr" ? "← Retour" : "← Terug",
   eyebrow: lang === "fr-fr" ? "VÉRIFIER UN VÉLO" : "FIETS CONTROLEREN",
   title: lang === "fr-fr" ? "Vérifiez le statut d'un vélo" : "Check de status van een fiets",
   subtitle:
@@ -195,7 +195,7 @@ function BikeSearchPage() {
         <button
           type="button"
           onClick={() => {
-            if (typeof window !== "undefined" && window.history.length > 1 && document.referrer && new URL(document.referrer).origin === window.location.origin) {
+            if (typeof window !== "undefined" && window.history.length > 1) {
               window.history.back();
             } else {
               window.location.href = "/";
