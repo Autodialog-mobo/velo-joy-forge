@@ -191,7 +191,34 @@ function BikeSearchPage() {
           </button>
         </div>
       </nav>
-      <section style={{ padding: "88px 6vw 16px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
+      <section style={{ padding: "88px 6vw 0", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+        <button
+          type="button"
+          onClick={() => {
+            if (typeof window !== "undefined" && window.history.length > 1 && document.referrer && new URL(document.referrer).origin === window.location.origin) {
+              window.history.back();
+            } else {
+              window.location.href = "/";
+            }
+          }}
+          style={{
+            background: "transparent",
+            border: "none",
+            padding: 0,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 14,
+            color: "#5A7090",
+            cursor: "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 4,
+          }}
+        >
+          {L.back}
+        </button>
+      </section>
+      <section style={{ padding: "16px 6vw 16px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
+
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
