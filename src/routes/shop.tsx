@@ -740,80 +740,147 @@ function Leasing() {
             {[
               {
                 n: "01",
-                icon: <Database size={22} color={green} />,
+                icon: <Database size={22} color="#9CA3AF" />,
                 title: "Fietsdata staat al klaar",
-                body: "De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave. Heeft de fiets nog geen Frame-ID van de fabrikant? Plak dan een Velopass sticker.",
+                body: "De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave.",
+                tag: "AUTOMATISCH",
+                variant: "neutral" as const,
               },
               {
                 n: "02",
-                icon: <Link2 size={22} color={green} />,
-                title: "Voer de Velopass-code in",
-                body: "Geef de Velopass-code van de fiets in het leaseportaal van de leasingmaatschappij in. Dat is alles. De fiets, eigenaar en het portaal zijn nu gekoppeld.",
+                icon: <Sticker size={22} color={green} />,
+                title: "Plak de sticker",
+                body: "Heeft de fiets nog geen Frame-ID van de fabrikant? Plak dan een Velopass sticker op het frame. Dat duurt 10 seconden.",
+                note: "(Optioneel — veel fabrikanten leveren de fiets al mét Frame-ID)",
+                tag: "JOUW ACTIE",
+                variant: "action" as const,
               },
               {
                 n: "03",
-                icon: <ScanLine size={22} color={green} />,
-                title: "Scan. Alles in beeld.",
-                body: "Scant de winkel voortaan met de Pro App of kassasysteem, dan verschijnt meteen de leasingmaatschappij, het beschikbare onderhoudsbudget, contractnummer en einddatum.",
+                icon: <Link2 size={22} color={green} />,
+                title: "Voer de code in het leaseportaal in",
+                body: "Geef de Velopass-code van de fiets in het portaal van de leasingmaatschappij. Klaar — de fiets, eigenaar en het portaal zijn gekoppeld aan Velopass.",
+                tag: "JOUW ACTIE",
+                variant: "action" as const,
               },
-            ].map((s) => (
-              <div
-                key={s.n}
-                style={{
-                  background: cream,
-                  borderRadius: 12,
-                  padding: 24,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 14,
-                }}
-              >
+            ].map((s) => {
+              const isAction = s.variant === "action";
+              return (
                 <div
+                  key={s.n}
                   style={{
-                    width: 56,
-                    height: 56,
-                    borderRadius: "50%",
-                    background: "rgba(46,204,138,0.15)",
+                    background: isAction ? "rgba(46,204,138,0.06)" : "#F5F3EE",
+                    borderRadius: 12,
+                    borderLeft: isAction ? `3px solid ${green}` : "3px solid #D1D5DB",
+                    padding: 24,
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "'Syne', sans-serif",
-                    fontWeight: 700,
-                    fontSize: 22,
-                    color: navy,
+                    flexDirection: "column",
+                    gap: 14,
+                    position: "relative",
                   }}
                 >
-                  {s.n}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  {s.icon}
-                  <h4
+                  <span
                     style={{
+                      position: "absolute",
+                      top: 14,
+                      right: 16,
                       fontFamily: "'DM Sans', sans-serif",
                       fontWeight: 600,
-                      fontSize: 16,
-                      color: navy,
+                      fontSize: 9,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      color: isAction ? green : "#9CA3AF",
+                    }}
+                  >
+                    {s.tag}
+                  </span>
+                  <div
+                    style={{
+                      width: 56,
+                      height: 56,
+                      borderRadius: "50%",
+                      background: isAction ? "rgba(46,204,138,0.15)" : "rgba(156,163,175,0.18)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontFamily: "'Syne', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 22,
+                      color: isAction ? navy : "#6B7280",
+                    }}
+                  >
+                    {s.n}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    {s.icon}
+                    <h4
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontWeight: 600,
+                        fontSize: 16,
+                        color: isAction ? navy : "#6B7280",
+                        margin: 0,
+                      }}
+                    >
+                      {s.title}
+                    </h4>
+                  </div>
+                  <p
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 14,
+                      color: isAction ? muted : "#6B7280",
+                      lineHeight: 1.6,
                       margin: 0,
                     }}
                   >
-                    {s.title}
-                  </h4>
+                    {s.body}
+                  </p>
+                  {s.note && (
+                    <p
+                      style={{
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontStyle: "italic",
+                        fontSize: 11,
+                        color: muted,
+                        margin: 0,
+                      }}
+                    >
+                      {s.note}
+                    </p>
+                  )}
                 </div>
-                <p
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 14,
-                    color: muted,
-                    lineHeight: 1.6,
-                    margin: 0,
-                  }}
-                >
-                  {s.body}
-                </p>
-              </div>
-            ))}
+              );
+            })}
+          </div>
+
+          {/* Resultaat banner */}
+          <div
+            style={{
+              marginTop: 24,
+              background: navy,
+              borderRadius: 12,
+              padding: "18px 22px",
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+            }}
+          >
+            <ScanLine size={22} color={green} style={{ flexShrink: 0 }} />
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                color: "#FFFFFF",
+                lineHeight: 1.6,
+                margin: 0,
+              }}
+            >
+              Scan je de fiets daarna met de Pro App of kassasysteem? Dan zie je meteen alles: <span style={{ color: green, fontWeight: 600 }}>maatschappij, budget, contractnummer, einddatum.</span>
+            </p>
           </div>
         </div>
+
 
         {/* CTA */}
         <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
