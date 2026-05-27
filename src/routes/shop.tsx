@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -166,6 +166,8 @@ function VelopassPro() {
       </section>
 
       <Fabrikanten />
+
+      <Leasing />
 
       <section className="how" id="hoe-werkt-het">
         <p className="eyebrow">Hoe werkt het?</p>
@@ -419,6 +421,298 @@ function Fabrikanten() {
           <h3 className="fb-cta-title">Maak het leven van je dealer eenvoudiger</h3>
           <p className="fb-cta-body">Fabrikanten die Velopass integreren geven hun dealers een vliegende start. De fiets is klaar voor gebruik voor hij de winkelrekken bereikt. Wil je weten wat Velopass voor jouw merk en je dealernetwerk kan betekenen?</p>
           <a href="mailto:info@velopass.com" className="fb-cta-btn">Praat met ons →</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Leasing() {
+  const navy = "#0D1F3C";
+  const green = "#2ECC8A";
+  const muted = "#5A7090";
+  const cream = "#F5F3EE";
+
+  const problems = [
+    "Voorraad bijhouden per leasingmaatschappij",
+    "Risico op verkeerde sticker op verkeerde fiets",
+    "Tijdverlies bij elke leasingfiets",
+  ];
+  const solutions = [
+    "Eén sticker voor leasing, particulier en bedrijfsfietsen",
+    "Betaald door de leasingmaatschappij — met marge voor de dealer",
+    "Compatibel met de meeste leasingmaatschappijen",
+    "Geen voorraadbeheer per maatschappij",
+  ];
+  const scanItems: Array<{ icon: React.ReactNode; title: string; body: string }> = [
+    { icon: <Building2 size={18} color={green} />, title: "Welke leasingmaatschappij", body: "Naam en logo van de maatschappij" },
+    { icon: <Wallet size={18} color={green} />, title: "Resterend onderhoudsbudget", body: "Beschikbaar bedrag voor onderhoud" },
+    { icon: <CalendarDays size={18} color={green} />, title: "Einddatum leasing", body: "Wanneer het contract afloopt" },
+    { icon: <ExternalLink size={18} color={green} />, title: "Directe link naar het portaal", body: "Rechtstreeks naar de leasingmaatschappij" },
+    { icon: <ClipboardList size={18} color={green} />, title: "Volledige fietshistorie", body: "Alle vorige onderhoudsbeurten" },
+  ];
+
+  return (
+    <section id="leasing" style={{ background: "#FFFFFF", padding: "96px 6vw" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+        {/* Header */}
+        <p
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 600,
+            fontSize: 11,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: green,
+            marginBottom: 14,
+          }}
+        >
+          Leasingmaatschappijen
+        </p>
+        <h2
+          style={{
+            fontFamily: "'Syne', sans-serif",
+            fontWeight: 700,
+            fontSize: "clamp(28px, 3.6vw, 40px)",
+            color: navy,
+            lineHeight: 1.15,
+            marginBottom: 16,
+            maxWidth: 720,
+          }}
+        >
+          Eén sticker. Alle leasingmaatschappijen.
+        </h2>
+        <p
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 15,
+            color: muted,
+            lineHeight: 1.65,
+            maxWidth: 600,
+            marginBottom: 48,
+          }}
+        >
+          Vroeger had elke leasingmaatschappij zijn eigen sticker — met alle logistieke rompslomp van dien. Velopass heeft dat geharmoniseerd.
+        </p>
+
+        {/* Problem + Solution cards */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 20,
+            marginBottom: 56,
+          }}
+        >
+          {/* Problem */}
+          <div
+            style={{
+              background: cream,
+              borderLeft: "3px solid #E07A4F",
+              borderRadius: 12,
+              padding: 24,
+            }}
+          >
+            <h3
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 600,
+                fontSize: 14,
+                color: navy,
+                marginBottom: 16,
+              }}
+            >
+              Vroeger: één sticker per leasingmaatschappij
+            </h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 10 }}>
+              {problems.map((p) => (
+                <li
+                  key={p}
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    alignItems: "flex-start",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 14,
+                    color: muted,
+                    lineHeight: 1.55,
+                  }}
+                >
+                  <X size={16} color="#E07A4F" strokeWidth={2.4} style={{ flexShrink: 0, marginTop: 2 }} />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Solution */}
+          <div
+            style={{
+              background: "rgba(46,204,138,0.06)",
+              borderLeft: `3px solid ${green}`,
+              borderRadius: 12,
+              padding: 24,
+            }}
+          >
+            <h3
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 600,
+                fontSize: 14,
+                color: navy,
+                marginBottom: 16,
+              }}
+            >
+              Nu: één Frame-ID voor alle klantsoorten
+            </h3>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 10 }}>
+              {solutions.map((s) => (
+                <li
+                  key={s}
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    alignItems: "flex-start",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 14,
+                    color: muted,
+                    lineHeight: 1.55,
+                  }}
+                >
+                  <CheckIcon size={16} color={green} strokeWidth={2.4} style={{ flexShrink: 0, marginTop: 2 }} />
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Scan reveals */}
+        <div
+          style={{
+            background: navy,
+            borderRadius: 16,
+            padding: "40px clamp(24px, 4vw, 48px)",
+            maxWidth: 800,
+            margin: "0 auto 40px",
+            color: "#FFFFFF",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: green,
+              marginBottom: 12,
+            }}
+          >
+            Via app of kassasysteem
+          </p>
+          <h3
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 700,
+              fontSize: 22,
+              color: "#FFFFFF",
+              marginBottom: 10,
+              lineHeight: 1.25,
+            }}
+          >
+            Eén scan. Alles wat je nodig hebt.
+          </h3>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 14,
+              color: "rgba(255,255,255,0.6)",
+              marginBottom: 28,
+              lineHeight: 1.6,
+            }}
+          >
+            Scan de Frame-ID bij ontvangst en zie onmiddellijk:
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: 18,
+            }}
+          >
+            {scanItems.map((it) => (
+              <div
+                key={it.title}
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "flex-start",
+                  padding: "14px 16px",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: 10,
+                }}
+              >
+                <div style={{ flexShrink: 0, marginTop: 2 }}>{it.icon}</div>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 600,
+                      fontSize: 14,
+                      color: "#FFFFFF",
+                      marginBottom: 3,
+                    }}
+                  >
+                    {it.title}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      color: "rgba(255,255,255,0.55)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {it.body}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontStyle: "italic",
+              fontSize: 13,
+              color: muted,
+              lineHeight: 1.6,
+              marginBottom: 18,
+            }}
+          >
+            Nog geen partner? Registreer gratis en ontvang 5 Frame-ID stickers om uit te proberen.
+          </p>
+          <a
+            href="#registreer"
+            style={{
+              display: "inline-block",
+              background: green,
+              color: navy,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: 14,
+              padding: "14px 24px",
+              borderRadius: 10,
+              textDecoration: "none",
+            }}
+          >
+            Registreer je fietswinkel →
+          </a>
         </div>
       </div>
     </section>
