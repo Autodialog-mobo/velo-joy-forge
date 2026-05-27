@@ -18,7 +18,7 @@ function renderLine(line: string) {
 const leftFAQs = [
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
-    a: "Bij de registratie van je fiets bewaren we ook het merk en framenummer. Wordt de Frame-ID verwijderd, dan blijft jouw fiets traceerbaar via die combinatie — net zoals een auto zonder nummerplaat nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het alleen veel eenvoudiger en sneller.",
+    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.",
   },
   {
     q: "Kan ik een nieuwe Frame-ID bestellen als mijn oude verwijderd of beschadigd is?",
