@@ -120,8 +120,36 @@ const rightFAQs = [
 ];
 
 export function FaqSection() {
+  const [openLeft, setOpenLeft] = useState<string[]>([]);
+  const [openRight, setOpenRight] = useState<string[]>([]);
+
+  useEffect(() => {
+    const applyHash = () => {
+      const h = window.location.hash.replace("#", "");
+      if (h.startsWith("faq-l-")) setOpenLeft([h]);
+      else if (h.startsWith("faq-r-")) setOpenRight([h]);
+      if (h.startsWith("faq-")) {
+        // give accordion a tick to expand before scrolling
+        requestAnimationFrame(() => {
+          document.getElementById(h)?.scrollIntoView({ block: "center" });
+        });
+      }
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, []);
+
+  const syncHash = (val: string[]) => {
+    const last = val[val.length - 1];
+    if (last) {
+      history.replaceState(null, "", `#${last}`);
+    } else {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  };
+
   return (
-    <section id="faq" style={{ background: "#F5F3EE", padding: "80px 6vw" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 56 }}>
