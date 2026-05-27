@@ -105,7 +105,7 @@ function VelopassPro() {
         <div className="pro-hero-left">
           <span className="hero-eyebrow"><span className="eyebrow-dot" />Word deel van een groeiende community</span>
           <h1 className="pro-hero-title">Jouw klanten blijven<br /><em>altijd jouw klanten.</em></h1>
-          <p className="pro-hero-sub">Met Velopass blijft elke klant automatisch verbonden met jouw winkel — voor altijd.</p>
+          <p className="pro-hero-sub">Zolang de fiets rijdt, blijft jouw winkel hun eerste aanspreekpunt.</p>
           <div className="hero-ctas">
             <a href="#registreer" className="btn-g">Registreer je fietswinkel</a>
             <a href="#hoe-werkt-het" className="btn-s dark">Hoe werkt het? →</a>
