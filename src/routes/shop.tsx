@@ -161,7 +161,7 @@ function VelopassPro() {
             <p>Scan de QR bij elke fiets — ook van fietsen die je nog nooit hebt verkocht. Je ziet meteen de onderhoudshistorie, actieve services en contractinfo zoals een resterend leasebudget. Een onbekende fiets? Automatisch aangemaakt in je kassasysteem.</p>
             <div className="pc-reported-orange">
               <AlertCircle size={13} color="#F59E0B" strokeWidth={2} />
-              <span>Scan je een <strong style={{ color: "#F59E0B" }}>REPORTED</strong> fiets? Velopass brengt jou automatisch in contact met de eigenaar en/of politie.</span>
+              <span>Scan je een <strong style={{ color: "#F59E0B" }}>REPORTED</strong> fiets? Via Velopass kan je de eigenaar en/of politie op de hoogte brengen.</span>
             </div>
           </div>
           <div className="pc">
