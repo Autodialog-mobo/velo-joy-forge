@@ -552,10 +552,10 @@ function Leasing() {
             Compatibel met
           </p>
           <div className="leasing-logos">
-            <img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/668e8739b353377af0a24598_cyclis-300x112.png" alt="Cyclis" />
-            <img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c092da9fb59105a991c6ac_KBC%20logo.jpeg" alt="KBC" />
-            <img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/666c50aaf0e1ba5e869a3fc1_Logo_Joule.svg" alt="Joule" />
-            <img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c317c971ffa1b69d08dab5_cycle%20valley%20logo%201.jpg" alt="Cycle Valley" />
+            <div className="logo-tile"><img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/668e8739b353377af0a24598_cyclis-300x112.png" alt="Cyclis" /></div>
+            <div className="logo-tile"><img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c092da9fb59105a991c6ac_KBC%20logo.jpeg" alt="KBC" /></div>
+            <div className="logo-tile"><img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/666c50aaf0e1ba5e869a3fc1_Logo_Joule.svg" alt="Joule" /></div>
+            <div className="logo-tile"><img src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c317c971ffa1b69d08dab5_cycle%20valley%20logo%201.jpg" alt="Cycle Valley" /></div>
           </div>
         </div>
 
