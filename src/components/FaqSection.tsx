@@ -10,7 +10,7 @@ function renderLine(line: string) {
         /gestolen
       </Link>
     ) : p === "[Fiets controleren →]" ? (
-      <Link key={i} to="/fiets-controleren" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
+      <Link key={i} to="/bikesearch" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
         Fiets controleren →
       </Link>
     ) : (
