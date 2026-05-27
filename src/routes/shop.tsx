@@ -526,7 +526,7 @@ function Leasing() {
             marginBottom: 48,
           }}
         >
-          Vroeger had elke leasingmaatschappij zijn eigen sticker — met alle logistieke rompslomp van dien. Velopass heeft dat geharmoniseerd.
+          Elke leasingmaatschappij had zijn eigen sticker met een uniek nummer. Slim in zijn eenvoud — maar voor de dealer betekende dat voorraad per maatschappij en geen digitale info. Velopass harmoniseerde dat.
         </p>
 
         {/* Logo strip */}
