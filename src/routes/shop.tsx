@@ -767,9 +767,9 @@ function Leasing() {
               {
                 n: "01",
                 icon: <Sticker size={22} color={green} />,
-                title: "Plak de sticker",
-                body: "Heeft de fiets nog geen Frame-ID van de fabrikant? Plak dan een Velopass sticker op het frame. Dat duurt 10 seconden.",
-                note: "Optioneel — veel fabrikanten leveren de fiets al mét Frame-ID.",
+                title: "Plak de Velopass Frame-ID",
+                body: "Heeft de fiets nog geen Velopass Frame-ID? Plak er één op het frame. Dat duurt 10 seconden.",
+                note: "Veel fabrikanten leveren de fiets er al mee — dan sla je deze stap over.",
                 tag: "JOUW ACTIE",
                 variant: "action" as const,
               },
