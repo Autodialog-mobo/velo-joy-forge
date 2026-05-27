@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone, Database, Link2, Sticker } from "lucide-react";
+import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone, Link2, Sticker } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -470,9 +470,9 @@ function Leasing() {
   const scanItems: Array<{ icon: React.ReactNode; title: string; body: string }> = [
     { icon: <Building2 size={18} color={green} />, title: "Welke leasingmaatschappij", body: "Naam en logo van de maatschappij" },
     { icon: <Wallet size={18} color={green} />, title: "Resterend onderhoudsbudget", body: "Beschikbaar bedrag voor onderhoud" },
-    { icon: <CalendarDays size={18} color={green} />, title: "Einddatum leasing", body: "Wanneer het contract afloopt" },
+    { icon: <CalendarDays size={18} color={green} />, title: "Contractnummer en einddatum leasing", body: "Wanneer het contract afloopt" },
     { icon: <ExternalLink size={18} color={green} />, title: "Directe link naar het portaal", body: "Rechtstreeks naar de leasingmaatschappij" },
-    { icon: <ClipboardList size={18} color={green} />, title: "Volledige fietshistorie", body: "Alle vorige onderhoudsbeurten" },
+    { icon: <ClipboardList size={18} color={green} />, title: "Volledige onderhoudshistorie", body: "Alle vorige onderhoudsbeurten" },
   ];
 
   return (
@@ -724,12 +724,38 @@ function Leasing() {
               fontWeight: 700,
               fontSize: 28,
               color: navy,
-              marginBottom: 32,
+              marginBottom: 20,
               lineHeight: 1.2,
             }}
           >
-            Koppel een leasefiets in 3 stappen
+            Koppel een leasefiets in 2 stappen
           </h3>
+          {/* Context banner */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              background: "#F5F3EE",
+              borderLeft: "3px solid #D1D5DB",
+              borderRadius: 8,
+              padding: "12px 16px",
+              marginBottom: 24,
+            }}
+          >
+            <CheckCircle2 size={14} color="#6B7280" style={{ flexShrink: 0 }} />
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "#6B7280",
+                lineHeight: 1.5,
+                margin: 0,
+              }}
+            >
+              De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave.
+            </p>
+          </div>
           <div
             style={{
               display: "grid",
@@ -740,26 +766,18 @@ function Leasing() {
             {[
               {
                 n: "01",
-                icon: <Database size={22} color="#9CA3AF" />,
-                title: "Fietsdata staat al klaar",
-                body: "De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave.",
-                tag: "AUTOMATISCH",
-                variant: "neutral" as const,
-              },
-              {
-                n: "02",
                 icon: <Sticker size={22} color={green} />,
                 title: "Plak de sticker",
                 body: "Heeft de fiets nog geen Frame-ID van de fabrikant? Plak dan een Velopass sticker op het frame. Dat duurt 10 seconden.",
-                note: "(Optioneel — veel fabrikanten leveren de fiets al mét Frame-ID)",
+                note: "Optioneel — veel fabrikanten leveren de fiets al mét Frame-ID.",
                 tag: "JOUW ACTIE",
                 variant: "action" as const,
               },
               {
-                n: "03",
+                n: "02",
                 icon: <Link2 size={22} color={green} />,
                 title: "Voer de code in het leaseportaal in",
-                body: "Geef de Velopass-code van de fiets in het portaal van de leasingmaatschappij. Klaar — de fiets, eigenaar en het portaal zijn gekoppeld aan Velopass.",
+                body: "Geef de Velopass-code van de fiets in het portaal van de leasingmaatschappij. Klaar — de fiets, eigenaar en het portaal zijn gekoppeld.",
                 tag: "JOUW ACTIE",
                 variant: "action" as const,
               },
