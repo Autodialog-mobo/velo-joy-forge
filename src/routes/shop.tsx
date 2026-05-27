@@ -5,6 +5,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
 import { RegisterForm } from "@/components/ProRegisterForm";
+import leasingAppMockup from "@/assets/leasing-app-mockup.png";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
@@ -587,101 +588,98 @@ function Leasing() {
           </div>
         </div>
 
-        {/* Scan reveals */}
+        {/* Scan reveals - two column */}
         <div
           style={{
-            background: navy,
-            borderRadius: 16,
-            padding: "40px clamp(24px, 4vw, 48px)",
-            maxWidth: 800,
-            margin: "0 auto 40px",
-            color: "#FFFFFF",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "clamp(32px, 5vw, 64px)",
+            alignItems: "center",
+            marginBottom: 56,
           }}
         >
-          <p
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontWeight: 600,
-              fontSize: 11,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: green,
-              marginBottom: 12,
-            }}
-          >
-            Via app of kassasysteem
-          </p>
-          <h3
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 700,
-              fontSize: 22,
-              color: "#FFFFFF",
-              marginBottom: 10,
-              lineHeight: 1.25,
-            }}
-          >
-            Eén scan. Alles wat je nodig hebt.
-          </h3>
-          <p
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: 14,
-              color: "rgba(255,255,255,0.6)",
-              marginBottom: 28,
-              lineHeight: 1.6,
-            }}
-          >
-            Scan de Frame-ID bij ontvangst en zie onmiddellijk:
-          </p>
+          {/* Left: text + features */}
+          <div>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 600,
+                fontSize: 11,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: green,
+                marginBottom: 12,
+              }}
+            >
+              Via app of kassasysteem
+            </p>
+            <h3
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: 28,
+                color: navy,
+                marginBottom: 12,
+                lineHeight: 1.2,
+              }}
+            >
+              Eén scan. Alles wat je nodig hebt.
+            </h3>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                color: muted,
+                marginBottom: 24,
+                lineHeight: 1.65,
+              }}
+            >
+              Scan de Frame-ID bij ontvangst en zie onmiddellijk alle info over de leasefiets — zonder te bellen, zonder te zoeken.
+            </p>
+            <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
+              {scanItems.map((it) => (
+                <li
+                  key={it.title}
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    alignItems: "flex-start",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 14,
+                    color: navy,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  <CheckIcon size={18} color={green} strokeWidth={2.4} style={{ flexShrink: 0, marginTop: 1 }} />
+                  <span>{it.title}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right: app mockup */}
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-              gap: 18,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {scanItems.map((it) => (
-              <div
-                key={it.title}
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  alignItems: "flex-start",
-                  padding: "14px 16px",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: 10,
-                }}
-              >
-                <div style={{ flexShrink: 0, marginTop: 2 }}>{it.icon}</div>
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      color: "#FFFFFF",
-                      marginBottom: 3,
-                    }}
-                  >
-                    {it.title}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: 13,
-                      color: "rgba(255,255,255,0.55)",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {it.body}
-                  </div>
-                </div>
-              </div>
-            ))}
+            <img
+              src={leasingAppMockup}
+              alt="Velopass Pro app op smartphone met leasinggegevens naast een blauwe e-bike"
+              style={{
+                width: "100%",
+                maxHeight: 520,
+                objectFit: "contain",
+                borderRadius: 12,
+                filter: "drop-shadow(0 20px 40px rgba(13,31,60,0.15))",
+              }}
+            />
           </div>
         </div>
+
+
 
         {/* CTA */}
         <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
