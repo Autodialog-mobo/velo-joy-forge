@@ -268,9 +268,9 @@ export function FaqSection() {
               padding: "16px 20px",
             }}
           >
-            <Accordion type="multiple" className="w-full">
+            <Accordion type="multiple" className="w-full" value={openRight} onValueChange={(v) => { setOpenRight(v); syncHash(v); }}>
               {rightFAQs.map((faq, i) => (
-                <AccordionItem key={`r-${i}`} value={`r-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
+                <AccordionItem key={`faq-r-${i}`} value={`faq-r-${i}`} id={`faq-r-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
                   <AccordionTrigger
                     className="text-left"
                     style={{
