@@ -703,6 +703,118 @@ function Leasing() {
 
 
 
+        {/* Hoe het werkt — 3 stappen */}
+        <div style={{ marginBottom: 56 }}>
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: 11,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: green,
+              marginBottom: 12,
+            }}
+          >
+            Zo simpel is het
+          </p>
+          <h3
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 700,
+              fontSize: 28,
+              color: navy,
+              marginBottom: 32,
+              lineHeight: 1.2,
+            }}
+          >
+            Koppel een leasefiets in 3 stappen
+          </h3>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gap: 20,
+            }}
+          >
+            {[
+              {
+                n: "01",
+                icon: <Database size={22} color={green} />,
+                title: "Fietsdata staat al klaar",
+                body: "De fietsdata zit al in je kassasysteem — via een eerdere scan of manuele ingave. Heeft de fiets nog geen Frame-ID van de fabrikant? Plak dan een Velopass sticker.",
+              },
+              {
+                n: "02",
+                icon: <Link2 size={22} color={green} />,
+                title: "Voer de Velopass-code in",
+                body: "Geef de Velopass-code van de fiets in het leaseportaal van de leasingmaatschappij in. Dat is alles. De fiets, eigenaar en het portaal zijn nu gekoppeld.",
+              },
+              {
+                n: "03",
+                icon: <ScanLine size={22} color={green} />,
+                title: "Scan. Alles in beeld.",
+                body: "Scant de winkel voortaan met de Pro App of kassasysteem, dan verschijnt meteen de leasingmaatschappij, het beschikbare onderhoudsbudget, contractnummer en einddatum.",
+              },
+            ].map((s) => (
+              <div
+                key={s.n}
+                style={{
+                  background: cream,
+                  borderRadius: 12,
+                  padding: 24,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 14,
+                }}
+              >
+                <div
+                  style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: "50%",
+                    background: "rgba(46,204,138,0.15)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "'Syne', sans-serif",
+                    fontWeight: 700,
+                    fontSize: 22,
+                    color: navy,
+                  }}
+                >
+                  {s.n}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  {s.icon}
+                  <h4
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 600,
+                      fontSize: 16,
+                      color: navy,
+                      margin: 0,
+                    }}
+                  >
+                    {s.title}
+                  </h4>
+                </div>
+                <p
+                  style={{
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 14,
+                    color: muted,
+                    lineHeight: 1.6,
+                    margin: 0,
+                  }}
+                >
+                  {s.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* CTA */}
         <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
           <p
