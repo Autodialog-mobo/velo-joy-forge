@@ -5,6 +5,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
 import { RegisterForm } from "@/components/ProRegisterForm";
+import leasingAppMockup from "@/assets/leasing-app-mockup.png";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
