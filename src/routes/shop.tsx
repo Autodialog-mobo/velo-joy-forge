@@ -9,6 +9,7 @@ import leasingAppMockup from "@/assets/leasing-app-mockup.png";
 import fabOxford from "@/assets/fab-oxford.jpg";
 import fabBike43 from "@/assets/fab-bike43.jpg";
 import fabFrameId from "@/assets/fab-frameid.jpg";
+import shopHero from "@/assets/shop-hero.jpg";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
