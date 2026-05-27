@@ -408,8 +408,8 @@ function VelopassHome() {
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.8" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg></div>
             <div>
-              <div className="vc-head"><h3>Verzekering</h3><span className="optional-badge">Optioneel</span></div>
-              <p>Je fiets verzekerd zonder papierwerk. Activeer rechtstreeks vanuit je Velopass — in enkele klikken.</p>
+            <div className="vc-head"><h3>Verzekering</h3><span className="optional-badge">Optioneel</span></div>
+              <p>Sluit een fietsverzekering af rechtstreeks vanuit je Velopass — in enkele klikken. Heb je al een verzekering? Voeg die toe aan je Velopass zodat alles op één plek staat.</p>
             </div>
           </div>
           <div className="vc" style={{ gridColumn: "1/-1" }}>
