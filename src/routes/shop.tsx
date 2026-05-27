@@ -6,6 +6,9 @@ import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
 import { RegisterForm } from "@/components/ProRegisterForm";
 import leasingAppMockup from "@/assets/leasing-app-mockup.png";
+import fabOxford from "@/assets/fab-oxford.jpg";
+import fabBike43 from "@/assets/fab-bike43.jpg";
+import fabFrameId from "@/assets/fab-frameid.jpg";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
@@ -344,6 +347,21 @@ function Fabrikanten() {
         <p className="eyebrow" style={{ color: "#1AAD70" }}>Geïntegreerd bij productie</p>
         <h2 className="sec-title">Topfabrikanten kiezen Velopass</h2>
         <p className="fb-sub">Steeds meer fabrikanten leveren hun fietsen al af met een Velopass Frame-ID op het frame. Scan bij ontvangst — fietsdata staat al klaar in je kassasysteem. Geen sticker plakken, geen data invoeren.</p>
+
+        <div className="fb-gallery">
+          <figure className="fb-shot">
+            <img src={fabOxford} alt="Oxford e-bike frame met Velopass Frame-ID, geïntegreerd bij productie" loading="lazy" />
+            <figcaption>Oxford — Frame-ID geïntegreerd bij productie</figcaption>
+          </figure>
+          <figure className="fb-shot">
+            <img src={fabBike43} alt="Bike43 cargo e-bike met Velopass Frame-ID op het frame" loading="lazy" />
+            <figcaption>Bike43 — Velopass al op het frame bij levering</figcaption>
+          </figure>
+          <figure className="fb-shot">
+            <img src={fabFrameId} alt="Velopass Frame-ID sticker macro met SECURED label en QR-code" loading="lazy" />
+            <figcaption>Eén scan. Fietsdata staat klaar.</figcaption>
+          </figure>
+        </div>
 
         <div className="fb-features">
           {features.map((f) => (
