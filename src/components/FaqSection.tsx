@@ -3,11 +3,15 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Link } from "@tanstack/react-router";
 
 function renderLine(line: string) {
-  const parts = line.split(/(\/gestolen)/g);
+  const parts = line.split(/(\/gestolen|\[Fiets controleren →\])/g);
   return parts.map((p, i) =>
     p === "/gestolen" ? (
       <Link key={i} to="/gestolen" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
         /gestolen
+      </Link>
+    ) : p === "[Fiets controleren →]" ? (
+      <Link key={i} to="/fiets-controleren" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3, fontWeight: 500 }}>
+        Fiets controleren →
       </Link>
     ) : (
       <Fragment key={i}>{p}</Fragment>
