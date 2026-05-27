@@ -9,6 +9,7 @@ import leasingAppMockup from "@/assets/leasing-app-mockup.png";
 import fabOxford from "@/assets/fab-oxford.jpg";
 import fabBike43 from "@/assets/fab-bike43.jpg";
 import fabFrameId from "@/assets/fab-frameid.jpg";
+import shopHero from "@/assets/shop-hero.jpg";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
@@ -90,7 +91,15 @@ function VelopassPro() {
         </div>
       </nav>
 
-      <section className="pro-hero">
+      <section
+        className="pro-hero"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(13,31,60,0.75) 0%, rgba(13,31,60,0.55) 60%, rgba(13,31,60,0.40) 100%), url(${shopHero})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <div className="pro-hero-left">
           <span className="hero-eyebrow"><span className="eyebrow-dot" />Word deel van een groeiende community</span>
           <h1 className="pro-hero-title">Jouw klanten blijven<br /><em>altijd jouw klanten.</em></h1>
