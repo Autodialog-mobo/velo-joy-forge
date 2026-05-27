@@ -679,7 +679,7 @@ function Leasing() {
           </div>
         </div>
 
-        </div>
+
 
         {/* CTA */}
         <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
