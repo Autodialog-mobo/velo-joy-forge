@@ -528,6 +528,70 @@ function Leasing() {
           Vroeger had elke leasingmaatschappij zijn eigen sticker — met alle logistieke rompslomp van dien. Velopass heeft dat geharmoniseerd.
         </p>
 
+        {/* Logo strip */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(13,31,60,0.08)",
+            borderBottom: "1px solid rgba(13,31,60,0.08)",
+            padding: "24px 0",
+            marginBottom: 48,
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 12,
+              fontWeight: 500,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "rgba(13,31,60,0.45)",
+              textAlign: "center",
+              marginBottom: 16,
+            }}
+          >
+            Compatibel met
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: 24,
+              alignItems: "center",
+              justifyItems: "center",
+            }}
+            className="leasing-logos"
+          >
+            <img
+              src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/668e8739b353377af0a24598_cyclis-300x112.png"
+              alt="Cyclis"
+              style={{ maxHeight: 36, objectFit: "contain", filter: "grayscale(100%)", opacity: 0.6, transition: "all 0.2s ease" }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = "grayscale(0%)"; e.currentTarget.style.opacity = "1"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = "grayscale(100%)"; e.currentTarget.style.opacity = "0.6"; }}
+            />
+            <img
+              src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c092da9fb59105a991c6ac_KBC%20logo.jpeg"
+              alt="KBC"
+              style={{ maxHeight: 36, objectFit: "contain", filter: "grayscale(100%)", opacity: 0.6, transition: "all 0.2s ease" }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = "grayscale(0%)"; e.currentTarget.style.opacity = "1"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = "grayscale(100%)"; e.currentTarget.style.opacity = "0.6"; }}
+            />
+            <img
+              src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/666c50aaf0e1ba5e869a3fc1_Logo_Joule.svg"
+              alt="Joule"
+              style={{ maxHeight: 36, objectFit: "contain", filter: "grayscale(100%)", opacity: 0.6, transition: "all 0.2s ease" }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = "grayscale(0%)"; e.currentTarget.style.opacity = "1"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = "grayscale(100%)"; e.currentTarget.style.opacity = "0.6"; }}
+            />
+            <img
+              src="https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c317c971ffa1b69d08dab5_cycle%20valley%20logo%201.jpg"
+              alt="Cycle Valley"
+              style={{ maxHeight: 36, objectFit: "contain", filter: "grayscale(100%)", opacity: 0.6, transition: "all 0.2s ease" }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = "grayscale(0%)"; e.currentTarget.style.opacity = "1"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = "grayscale(100%)"; e.currentTarget.style.opacity = "0.6"; }}
+            />
+          </div>
+        </div>
+
         {/* Problem + Solution cards */}
         <div
           style={{
