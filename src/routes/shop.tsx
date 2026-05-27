@@ -162,6 +162,10 @@ function VelopassPro() {
             <div className="pc-icon"><ShieldCheck size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
             <h3>Klant ontzorgd. Winkel vertrouwd.</h3>
             <p>Scan elke Velopass QR — ook van fietsen die je nog nooit hebt verkocht. De fietsdata gaat direct in je kassasysteem. Via de Velopass Pro App zie je meteen de volledige context: onderhoudshistorie, actieve services en contractinfo zoals een resterend leasebudget. Jouw klant weet: zijn fiets is in goede handen.</p>
+            <div className="pc-reported">
+              <AlertCircle size={16} color="#2ECC8A" strokeWidth={2} />
+              <span>Scan je een <strong>REPORTED</strong> fiets? Dan word jij als onderdeel van de Velopass Community automatisch in contact gebracht met de eigenaar en/of politie.</span>
+            </div>
           </div>
         </div>
       </section>
