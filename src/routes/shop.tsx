@@ -167,6 +167,8 @@ function VelopassPro() {
 
       <Fabrikanten />
 
+      <Leasing />
+
       <section className="how" id="hoe-werkt-het">
         <p className="eyebrow">Hoe werkt het?</p>
         <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
