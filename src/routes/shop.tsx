@@ -361,6 +361,7 @@ function Fabrikanten() {
     { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://www.urbanbiker.com/wp-content/uploads/2023/03/cropped-Icono-principal-sin-fondo-270x270.png" },
     { name: "Specter", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c31ea4b8feecaefcc34807_specter%20logo.png" },
     { name: "Thompson", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c09339ca49535d8bfbd2b0_thompson%20logo.png" },
+    { name: "Flebi", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://flebi.com/wp-content/uploads/2024/10/cropped-Flebi_icono_positivo-270x270.png" },
   ];
   return (
     <section className="fabrikanten" id="fabrikanten">
@@ -406,7 +407,7 @@ function Fabrikanten() {
                 <img
                   src={m.logo}
                   alt={`${m.name} logo`}
-                  className={`fb-card-logo${m.name === "Specter" ? " fb-card-logo--specter" : ""}${m.name === "Granville" ? " fb-card-logo--granville" : ""}`}
+                  className="fb-card-logo"
                   loading="lazy"
                 />
               )}
