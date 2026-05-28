@@ -403,8 +403,8 @@ function RiderTab({
   return (
     <>
       {/* SUGGESTIES */}
-      <section style={{ padding: "8px 6vw 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ textAlign: "center", fontSize: 12, letterSpacing: 1.4, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>
+      <section style={{ padding: "4px 6vw 12px", maxWidth: 1100, margin: "0 auto" }}>
+        <p style={{ textAlign: "center", fontSize: 11, letterSpacing: 1.3, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 8 }}>
           Waarover gaat je vraag?
         </p>
         <div className="contact-cards">
@@ -418,14 +418,14 @@ function RiderTab({
                 style={cardStyle}
                 className="contact-card"
               >
-                <div style={iconBox}><Icon size={22} strokeWidth={1.8} /></div>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 17, color: "var(--navy)", letterSpacing: "-0.2px" }}>
+                <div style={iconBox}><Icon size={18} strokeWidth={1.8} /></div>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--navy)", letterSpacing: "-0.2px", margin: 0 }}>
                   {s.title}
                 </h3>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.6, flex: 1, margin: 0 }}>
+                <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 13, fontWeight: 500, color: "var(--green-mid)" }}>Kies dit onderwerp →</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>Kies dit onderwerp →</span>
               </button>
             );
           })}
