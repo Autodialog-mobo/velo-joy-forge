@@ -65,20 +65,20 @@ const cardStyle: React.CSSProperties = {
   background: "var(--white)",
   border: "1px solid var(--border)",
   borderRadius: "var(--r-lg)",
-  padding: "24px 22px",
+  padding: "14px 16px",
   textAlign: "left",
   cursor: "pointer",
   display: "flex",
   flexDirection: "column",
-  gap: 10,
+  gap: 6,
   transition: "transform 0.2s, box-shadow 0.2s, border-color 0.2s",
   fontFamily: "'DM Sans', sans-serif",
 };
 
 const iconBox: React.CSSProperties = {
-  width: 42,
-  height: 42,
-  borderRadius: 12,
+  width: 34,
+  height: 34,
+  borderRadius: 10,
   background: "rgba(46,204,138,0.12)",
   border: "1px solid rgba(46,204,138,0.25)",
   color: "var(--green-mid)",
@@ -89,26 +89,27 @@ const iconBox: React.CSSProperties = {
 
 const waLabelStyle: React.CSSProperties = {
   display: "block",
-  fontSize: 11,
+  fontSize: 10,
   fontWeight: 500,
-  letterSpacing: 1.2,
+  letterSpacing: 1.1,
   textTransform: "uppercase",
   color: "rgba(245,243,238,0.55)",
-  marginBottom: 8,
+  marginBottom: 4,
 };
 
 const waInputStyle: React.CSSProperties = {
   width: "100%",
   background: "transparent",
   border: "1.5px solid rgba(245,243,238,0.18)",
-  borderRadius: 10,
-  padding: "12px 14px",
+  borderRadius: 8,
+  padding: "8px 12px",
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 15,
+  fontSize: 14,
   color: "#F5F3EE",
   outline: "none",
   boxSizing: "border-box",
 };
+
 
 const SUGGESTIONS = [
   {
@@ -284,30 +285,29 @@ function ContactPage() {
           Terug
         </button>
       </div>
-
-      <main style={{ background: "var(--bg)", paddingTop: 16, minHeight: "100vh" }}>
+      <main style={{ background: "var(--bg)", paddingTop: 8, minHeight: "100vh" }}>
         {/* HEADER */}
-        <section style={{ padding: "24px 6vw 24px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+        <section style={{ padding: "8px 6vw 8px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <h1
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(36px, 5vw, 56px)",
+              fontSize: "clamp(24px, 3vw, 36px)",
               lineHeight: 1.05,
-              letterSpacing: "-1.5px",
+              letterSpacing: "-1px",
               color: "var(--navy)",
-              marginBottom: 16,
+              marginBottom: 6,
             }}
           >
             Hoe kunnen we helpen?
           </h1>
-          <p style={{ fontSize: 17, color: "var(--text-muted)", maxWidth: 560, margin: "0 auto", lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: "var(--text-muted)", maxWidth: 560, margin: "0 auto", lineHeight: 1.5 }}>
             Kies hieronder wie je bent — we sturen je vraag meteen naar de juiste persoon.
           </p>
         </section>
 
         {/* TABS */}
-        <section style={{ padding: "8px 6vw 0", maxWidth: 720, margin: "0 auto" }}>
+        <section style={{ padding: "4px 6vw 0", maxWidth: 720, margin: "0 auto" }}>
           <div className="contact-tabs" role="tablist">
             <button
               type="button"
@@ -330,6 +330,9 @@ function ContactPage() {
           </div>
         </section>
 
+
+
+
         {activeTab === "rider" ? (
           <RiderTab
             wa={wa}
@@ -349,40 +352,39 @@ function ContactPage() {
             shopSent={shopSent}
           />
         )}
-
         {/* WETTELIJKE GEGEVENS */}
-        <section style={{ padding: "0 6vw 48px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
-            Velopass BV<br />
-            Stokerijstraat 29/bus a1, 2110 Wijnegem, België<br />
-            BTW: BE0777.359.681 · KBO: 0777359681<br />
-            {activeTab === "shop" ? "info@velopass.com" : "support@velopass.com"}
+        <section style={{ padding: "0 6vw 20px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "var(--text-muted)", lineHeight: 1.55, margin: 0 }}>
+            Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, België · BTW: BE0777.359.681 · {activeTab === "shop" ? "info@velopass.com" : "support@velopass.com"}
           </p>
         </section>
+
+
+
       </main>
 
-      <Footer />
-
       <style>{`
-        .back-btn-wrap { padding: 72px 6vw 0; max-width: 1100px; margin: 0 auto; }
-        .back-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
-        .contact-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(13,31,60,0.05); padding: 6px; border-radius: 12px; margin-bottom: 16px; }
-        .contact-tab { padding: 12px 16px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; color: rgba(13,31,60,0.55); border-radius: 8px; cursor: pointer; transition: all 0.18s ease; }
+        .back-btn-wrap { padding: 56px 6vw 0; max-width: 1100px; margin: 0 auto; }
+        .back-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+        .contact-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: rgba(13,31,60,0.05); padding: 4px; border-radius: 10px; margin-bottom: 8px; }
+        .contact-tab { padding: 8px 14px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 13px; color: rgba(13,31,60,0.55); border-radius: 8px; cursor: pointer; transition: all 0.18s ease; }
         .contact-tab.active { background: #2ECC8A; color: #0D1F3C; font-weight: 600; box-shadow: 0 4px 12px rgba(46,204,138,0.25); }
-        .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         .contact-card { border: 1px solid var(--border); text-decoration: none; color: inherit; }
         .contact-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,31,60,0.08); border-color: rgba(46,204,138,0.4); }
-        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .wa-grid input::placeholder, .wa-grid textarea::placeholder, .wa-grid select { color: rgba(245,243,238,0.55); }
         .wa-grid input:focus, .wa-grid textarea:focus, .wa-grid select:focus { border-color: #2ECC8A; }
         @media (max-width: 768px) {
-          .back-btn-wrap { padding-top: 64px; }
+          .back-btn-wrap { padding-top: 56px; }
           .back-btn { font-size: 12px; }
           .contact-cards { grid-template-columns: 1fr; }
           .wa-grid { grid-template-columns: 1fr; }
           .contact-tabs { grid-template-columns: 1fr; }
         }
       `}</style>
+
+
     </>
   );
 }
@@ -401,8 +403,8 @@ function RiderTab({
   return (
     <>
       {/* SUGGESTIES */}
-      <section style={{ padding: "8px 6vw 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ textAlign: "center", fontSize: 12, letterSpacing: 1.4, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>
+      <section style={{ padding: "4px 6vw 12px", maxWidth: 1100, margin: "0 auto" }}>
+        <p style={{ textAlign: "center", fontSize: 11, letterSpacing: 1.3, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 8 }}>
           Waarover gaat je vraag?
         </p>
         <div className="contact-cards">
@@ -416,38 +418,39 @@ function RiderTab({
                 style={cardStyle}
                 className="contact-card"
               >
-                <div style={iconBox}><Icon size={22} strokeWidth={1.8} /></div>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 17, color: "var(--navy)", letterSpacing: "-0.2px" }}>
+                <div style={iconBox}><Icon size={18} strokeWidth={1.8} /></div>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--navy)", letterSpacing: "-0.2px", margin: 0 }}>
                   {s.title}
                 </h3>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.6, flex: 1, margin: 0 }}>
+                <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 13, fontWeight: 500, color: "var(--green-mid)" }}>Kies dit onderwerp →</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>Kies dit onderwerp →</span>
               </button>
             );
           })}
         </div>
       </section>
-
       {/* WHATSAPP FORM */}
-      <section id="wa-form" style={{ padding: "24px 6vw 64px", maxWidth: 720, margin: "0 auto" }}>
+      <section id="wa-form" style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             background: "#0D1F3C",
             color: "#F5F3EE",
-            borderRadius: 18,
-            padding: "36px 36px 32px",
-            boxShadow: "0 30px 80px rgba(13,31,60,0.15)",
+            borderRadius: 14,
+            padding: "20px 24px",
+            boxShadow: "0 20px 50px rgba(13,31,60,0.15)",
             fontFamily: "'DM Sans', sans-serif",
           }}
         >
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: "-0.5px", marginBottom: 4, marginTop: 0 }}>
             Stuur ons een bericht
           </h2>
-          <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
+          <p style={{ fontSize: 13, color: "rgba(245,243,238,0.7)", lineHeight: 1.45, marginBottom: 14, marginTop: 0 }}>
             Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
           </p>
+
+
 
           <div className="wa-grid">
             <div>
@@ -502,7 +505,8 @@ function RiderTab({
               <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
               <textarea
                 id="wa-note"
-                rows={5}
+                rows={3}
+
                 maxLength={2000}
                 value={wa.note}
                 onChange={(e) => setWa({ ...wa, note: e.target.value })}
@@ -511,40 +515,41 @@ function RiderTab({
               />
             </div>
           </div>
-
           <button
             type="button"
             onClick={sendWa}
             style={{
-              marginTop: 24,
+              marginTop: 14,
               width: "100%",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 12,
+              gap: 10,
               background: "#2ECC8A",
               color: "#0D1F3C",
               border: "none",
-              padding: "16px 24px",
-              borderRadius: 12,
+              padding: "11px 20px",
+              borderRadius: 10,
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: 15,
-              letterSpacing: "1.5px",
+              fontSize: 13,
+              letterSpacing: "1.4px",
               textTransform: "uppercase",
               cursor: "pointer",
             }}
           >
-            <MessageCircle size={20} strokeWidth={2.2} />
+            <MessageCircle size={16} strokeWidth={2.2} />
             Verstuur via WhatsApp →
           </button>
 
-          <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "rgba(245,243,238,0.6)" }}>
+          <p style={{ marginTop: 10, textAlign: "center", fontSize: 12, color: "rgba(245,243,238,0.6)" }}>
             Liever een e-mail sturen?{" "}
             <a href="mailto:support@velopass.com" style={{ color: "#2ECC8A", textDecoration: "none", fontWeight: 500 }}>
               support@velopass.com
             </a>
           </p>
+
+
         </div>
       </section>
     </>
@@ -566,8 +571,8 @@ function ShopTab({
     <>
 
       {/* SHORTCUTS — identieke card-stijl als Tab 1 */}
-      <section style={{ padding: "8px 6vw 24px", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ textAlign: "center", fontSize: 12, letterSpacing: 1.4, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>
+      <section style={{ padding: "4px 6vw 12px", maxWidth: 1100, margin: "0 auto" }}>
+        <p style={{ textAlign: "center", fontSize: 11, letterSpacing: 1.3, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 8 }}>
           Waarover gaat je vraag?
         </p>
         <div className="contact-cards">
@@ -575,14 +580,14 @@ function ShopTab({
             const Icon = s.icon;
             return (
               <a key={s.title} href={s.href} style={cardStyle} className="contact-card">
-                <div style={iconBox}><Icon size={22} strokeWidth={1.8} /></div>
-                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 17, color: "var(--navy)", letterSpacing: "-0.2px" }}>
+                <div style={iconBox}><Icon size={18} strokeWidth={1.8} /></div>
+                <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--navy)", letterSpacing: "-0.2px", margin: 0 }}>
                   {s.title}
                 </h3>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.6, flex: 1, margin: 0 }}>
+                <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 13, fontWeight: 500, color: "var(--green-mid)" }}>Stuur een e-mail →</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>Stuur een e-mail →</span>
               </a>
             );
           })}
@@ -590,23 +595,25 @@ function ShopTab({
       </section>
 
       {/* FORM — identieke dark navy card als Tab 1 */}
-      <section style={{ padding: "24px 6vw 64px", maxWidth: 720, margin: "0 auto" }}>
+      <section style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             background: "#0D1F3C",
             color: "#F5F3EE",
-            borderRadius: 18,
-            padding: "36px 36px 32px",
-            boxShadow: "0 30px 80px rgba(13,31,60,0.15)",
+            borderRadius: 14,
+            padding: "20px 24px",
+            boxShadow: "0 20px 50px rgba(13,31,60,0.15)",
             fontFamily: "'DM Sans', sans-serif",
           }}
         >
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: "-0.5px", marginBottom: 4, marginTop: 0 }}>
             Stuur ons een bericht
           </h2>
-          <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
+          <p style={{ fontSize: 13, color: "rgba(245,243,238,0.7)", lineHeight: 1.45, marginBottom: 14, marginTop: 0 }}>
             Vul het formulier in — we antwoorden binnen 1 werkdag.
           </p>
+
+
 
           {shopSent && (
             <div
@@ -678,7 +685,8 @@ function ShopTab({
             <div style={{ gridColumn: "1 / -1" }}>
               <label htmlFor="s-message" style={waLabelStyle}>Bericht <span style={{ color: "#2ECC8A" }}>*</span></label>
               <textarea
-                id="s-message" rows={5} maxLength={2000} required value={shop.message}
+                id="s-message" rows={3} maxLength={2000} required value={shop.message}
+
                 onChange={(e) => { setShop({ ...shop, message: e.target.value }); if (shopErrors.message) setShopErrors((p) => ({ ...p, message: undefined })); }}
                 placeholder="Vertel ons kort waar je vraag over gaat..."
                 style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
@@ -686,33 +694,34 @@ function ShopTab({
               {shopErrors.message && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.message}</p>}
             </div>
           </div>
-
           <button
             type="button"
             onClick={sendShop}
             style={{
-              marginTop: 24,
+              marginTop: 14,
               width: "100%",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 12,
+              gap: 10,
               background: "#2ECC8A",
               color: "#0D1F3C",
               border: "none",
-              padding: "16px 24px",
-              borderRadius: 12,
+              padding: "11px 20px",
+              borderRadius: 10,
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: 15,
-              letterSpacing: "1.5px",
+              fontSize: 13,
+              letterSpacing: "1.4px",
               textTransform: "uppercase",
               cursor: "pointer",
             }}
           >
-            <MessageCircle size={20} strokeWidth={2.2} />
+            <MessageCircle size={16} strokeWidth={2.2} />
             Verstuur via WhatsApp →
           </button>
+
+
 
         </div>
       </section>
