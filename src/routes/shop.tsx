@@ -67,7 +67,7 @@ function VelopassPro() {
           <span className="logo-text">velopass<span className="logo-pro">pro</span></span>
         </Link>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href="#pijlers">Voordelen</a></li>
+          <li><a href="#voordelen">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#fabrikanten">Fabrikanten</a></li>
           <li><a href="#leasing">Leasing</a></li>
