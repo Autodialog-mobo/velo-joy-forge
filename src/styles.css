@@ -728,4 +728,7 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .leasing-logos .logo-tile { display: flex; align-items: center; justify-content: center; background: transparent; border: none; padding: 0; transition: none; }
 .leasing-logos .logo-tile img { max-height: 36px; max-width: 100%; object-fit: contain; filter: grayscale(100%); opacity: 0.6; transition: all 0.2s ease; }
 .leasing-logos .logo-tile:hover img { filter: grayscale(0%); opacity: 1; }
-@media (max-width: 600px) { .leasing-logos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; justify-items: center; } }
+@media (max-width: 600px) {
+  .leasing-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 16px; }
+  .leasing-logos .logo-tile { flex: 0 0 calc(33.333% - 11px); max-width: calc(33.333% - 11px); }
+}
