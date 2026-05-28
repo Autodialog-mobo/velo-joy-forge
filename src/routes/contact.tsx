@@ -330,7 +330,8 @@ function ContactPage() {
           </div>
         </section>
 
-        </section>
+
+
 
         {activeTab === "rider" ? (
           <RiderTab
