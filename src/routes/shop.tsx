@@ -349,7 +349,7 @@ function Fabrikanten() {
     { name: "Oxford", attrs: ["decal", "data", "doos"], sub: "Frame-ID als decal ingebouwd — permanent en onverwijderbaar. Data vooringevuld, code op de doos.", extra: "Oxford biedt via Velopass ook Oxford Assistance (by VAB) en garantieregistratie aan — automatisch gekoppeld aan elke verkochte fiets." },
     { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata." },
     { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
-    { name: "Bike43", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
+    { name: "Bike43", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
     { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
     { name: "Spectre", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
     { name: "Thompson", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
