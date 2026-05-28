@@ -150,7 +150,7 @@ function VelopassPro() {
         </div>
       </section>
 
-      <section className="pijlers" id="pijlers">
+      <section className="pijlers" id="voordelen">
         <p className="eyebrow">Wat je wint</p>
         <h2 className="sec-title" style={{ marginBottom: 56, maxWidth: 520 }}>Vier redenen waarom {activeShopsCount.toLocaleString("nl-BE")} fietswinkels vertrouwen op Velopass</h2>
         <div className="pijler-grid">
@@ -186,10 +186,6 @@ function VelopassPro() {
         </div>
       </section>
 
-      <Fabrikanten />
-
-      <Leasing />
-
       <section className="how" id="hoe-werkt-het">
         <p className="eyebrow">Hoe werkt het?</p>
         <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
@@ -223,7 +219,9 @@ function VelopassPro() {
         </div>
       </section>
 
-      <ProCommunity activeShopsCount={activeShopsCount} />
+      <Fabrikanten />
+
+      <Leasing />
 
       <section className="register" id="registreer">
         <div className="reg-inner">
