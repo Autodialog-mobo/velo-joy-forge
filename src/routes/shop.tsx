@@ -199,7 +199,7 @@ function VelopassPro() {
                   <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
                     <Monitor size={16} strokeWidth={2} color="#16a34a" /> Via kassasysteem
                   </h5>
-                  <p style={{ margin: 0, fontSize: 13 }}>Klant- en fietsdata zijn al aanwezig in je kassasysteem. Scan de Frame-ID en alles wordt automatisch gekoppeld. Geen manuele ingave.</p>
+                  <p style={{ margin: 0, fontSize: 13 }}>Fiets- en klantdata zijn al aanwezig in je kassasysteem. Scan de Frame-ID en alles wordt automatisch gekoppeld. Geen manuele ingave.</p>
                 </div>
                 <div style={{ background: "rgba(0,0,0,0.03)", borderRadius: 10, padding: 16, borderLeft: "3px solid #0a2540" }}>
                   <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
