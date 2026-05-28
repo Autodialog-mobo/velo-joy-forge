@@ -91,6 +91,7 @@ function VelopassHome() {
           <li><a href="#nieuwe-sticker">Sticker bestellen</a></li>
           <li><a href="#community">Community</a></li>
           <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
@@ -495,6 +496,37 @@ function VelopassHome() {
       </section>
 
       <FaqSection />
+
+      {/* NOG VRAGEN CTA */}
+      <section style={{ background: "#183A6E", padding: "32px 40px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 20, flexWrap: "wrap" }}>
+          <div>
+            <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: 20, color: "#fff", margin: 0 }}>Nog vragen?</p>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>Ons team helpt je graag verder.</p>
+          </div>
+          <Link
+            to="/contact"
+            style={{
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 700,
+              fontSize: 14,
+              letterSpacing: "1.2px",
+              textTransform: "uppercase",
+              background: "#2ECC8A",
+              color: "#0D1F3C",
+              padding: "12px 24px",
+              borderRadius: 10,
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              whiteSpace: "nowrap",
+            }}
+          >
+            Neem contact op →
+          </Link>
+        </div>
+      </section>
 
       <Footer />
 
