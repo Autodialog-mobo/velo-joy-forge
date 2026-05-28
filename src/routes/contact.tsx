@@ -721,7 +721,7 @@ function ShopTab({
             Verstuur via WhatsApp →
           </button>
 
-          </button>
+
 
         </div>
       </section>
