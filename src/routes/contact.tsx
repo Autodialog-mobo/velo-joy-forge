@@ -549,7 +549,7 @@ function RiderTab({
             </a>
           </p>
 
-          </p>
+
         </div>
       </section>
     </>
