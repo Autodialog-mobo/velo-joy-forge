@@ -1,6 +1,6 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone, Link2, Sticker } from "lucide-react";
+import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone, Link2, Sticker, QrCode, Send, RefreshCw } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import shopsData from "@/data/shops.json";
@@ -189,33 +189,21 @@ function VelopassPro() {
       <section className="how" id="hoe-werkt-het">
         <p className="eyebrow">Hoe werkt het?</p>
         <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
-        <div className="how-cols">
-          <div>
-            <div className="mlabel">Met kassasysteem (POS) <span className="mbadge">Aanbevolen</span></div>
-            {[
-              { n: 1, t: "Kleef de Frame-ID en scan de QR", d: "Vanuit je kassasysteem. De fiets is meteen geregistreerd op naam van je winkel." },
-              { n: 2, t: "Klant ontvangt automatisch een uitnodiging", d: "Een Velopass-mail via velopass.com. De klant kiest enkel nog een wachtwoord." },
-              { n: 3, t: "Klantrelatie is actief", d: "Velopass beheert de communicatie. Jij focust op fietsen." },
-            ].map((s) => (
-              <div className="mstep" key={s.n}>
-                <div className="mnum">{s.n}</div>
-                <div><h4>{s.t}</h4><p>{s.d}</p></div>
+        <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          {[
+            { n: 1, icon: <QrCode size={16} strokeWidth={2} />, t: "Scan of registreer de fiets", d: "Scan de Velopass Frame-ID met de Pro App of je kassasysteem. De fietsdata wordt automatisch ingeladen." },
+            { n: 2, icon: <Mail size={16} strokeWidth={2} />, t: "Geef het e-mailadres van de klant in", d: "Voeg het e-mailadres van de klant toe aan het dossier. Dat is alles wat je van hem nodig hebt." },
+            { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel." },
+            { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact, voor altijd", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen." },
+          ].map((s) => (
+            <div className="mstep" key={s.n}>
+              <div className="mnum">{s.n}</div>
+              <div>
+                <h4 style={{ display: "flex", alignItems: "center", gap: 8 }}>{s.icon} {s.t}</h4>
+                <p>{s.d}</p>
               </div>
-            ))}
-          </div>
-          <div>
-            <div className="mlabel">Geen kassasysteem <span className="mbadge">Gratis app</span></div>
-            {[
-              { n: 1, t: "Download de gratis Velopass Pro app", d: "Beschikbaar voor iOS en Android. In twee minuten klaar." },
-              { n: 2, t: "Kleef de Frame-ID en scan via de app", d: "Zelfde resultaat als met kassasysteem. Geen extra software nodig." },
-              { n: 3, t: "Klant ontvangt automatisch zijn uitnodiging", d: "Vanaf hier doet Velopass de rest." },
-            ].map((s) => (
-              <div className="mstep" key={s.n}>
-                <div className="mnum">{s.n}</div>
-                <div><h4>{s.t}</h4><p>{s.d}</p></div>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
 
