@@ -693,19 +693,27 @@ function ShopTab({
             style={{
               marginTop: 24,
               width: "100%",
-              background: "#0D1F3C",
-              color: "#fff",
-              border: "1.5px solid rgba(245,243,238,0.25)",
-              padding: "14px 24px",
-              borderRadius: 10,
-              fontFamily: "'DM Sans', sans-serif",
-              fontWeight: 600,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 12,
+              background: "#2ECC8A",
+              color: "#0D1F3C",
+              border: "none",
+              padding: "16px 24px",
+              borderRadius: 12,
+              fontFamily: "'Syne', sans-serif",
+              fontWeight: 700,
               fontSize: 15,
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
               cursor: "pointer",
             }}
           >
-            Verstuur bericht
+            <MessageCircle size={20} strokeWidth={2.2} />
+            Verstuur via WhatsApp →
           </button>
+
         </div>
       </section>
     </>
