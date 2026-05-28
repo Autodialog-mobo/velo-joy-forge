@@ -694,32 +694,33 @@ function ShopTab({
               {shopErrors.message && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.message}</p>}
             </div>
           </div>
-
           <button
             type="button"
             onClick={sendShop}
             style={{
-              marginTop: 24,
+              marginTop: 14,
               width: "100%",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 12,
+              gap: 10,
               background: "#2ECC8A",
               color: "#0D1F3C",
               border: "none",
-              padding: "16px 24px",
-              borderRadius: 12,
+              padding: "11px 20px",
+              borderRadius: 10,
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: 15,
-              letterSpacing: "1.5px",
+              fontSize: 13,
+              letterSpacing: "1.4px",
               textTransform: "uppercase",
               cursor: "pointer",
             }}
           >
-            <MessageCircle size={20} strokeWidth={2.2} />
+            <MessageCircle size={16} strokeWidth={2.2} />
             Verstuur via WhatsApp →
+          </button>
+
           </button>
 
         </div>
