@@ -431,23 +431,25 @@ function RiderTab({
           })}
         </div>
       </section>
-
       {/* WHATSAPP FORM */}
-      <section id="wa-form" style={{ padding: "24px 6vw 64px", maxWidth: 720, margin: "0 auto" }}>
+      <section id="wa-form" style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             background: "#0D1F3C",
             color: "#F5F3EE",
-            borderRadius: 18,
-            padding: "36px 36px 32px",
-            boxShadow: "0 30px 80px rgba(13,31,60,0.15)",
+            borderRadius: 14,
+            padding: "20px 24px",
+            boxShadow: "0 20px 50px rgba(13,31,60,0.15)",
             fontFamily: "'DM Sans', sans-serif",
           }}
         >
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: "-0.5px", marginBottom: 4, marginTop: 0 }}>
             Stuur ons een bericht
           </h2>
-          <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
+          <p style={{ fontSize: 13, color: "rgba(245,243,238,0.7)", lineHeight: 1.45, marginBottom: 14, marginTop: 0 }}>
+            Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
+          </p>
+
             Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
           </p>
 
