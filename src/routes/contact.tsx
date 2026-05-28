@@ -65,20 +65,20 @@ const cardStyle: React.CSSProperties = {
   background: "var(--white)",
   border: "1px solid var(--border)",
   borderRadius: "var(--r-lg)",
-  padding: "24px 22px",
+  padding: "14px 16px",
   textAlign: "left",
   cursor: "pointer",
   display: "flex",
   flexDirection: "column",
-  gap: 10,
+  gap: 6,
   transition: "transform 0.2s, box-shadow 0.2s, border-color 0.2s",
   fontFamily: "'DM Sans', sans-serif",
 };
 
 const iconBox: React.CSSProperties = {
-  width: 42,
-  height: 42,
-  borderRadius: 12,
+  width: 34,
+  height: 34,
+  borderRadius: 10,
   background: "rgba(46,204,138,0.12)",
   border: "1px solid rgba(46,204,138,0.25)",
   color: "var(--green-mid)",
@@ -89,26 +89,27 @@ const iconBox: React.CSSProperties = {
 
 const waLabelStyle: React.CSSProperties = {
   display: "block",
-  fontSize: 11,
+  fontSize: 10,
   fontWeight: 500,
-  letterSpacing: 1.2,
+  letterSpacing: 1.1,
   textTransform: "uppercase",
   color: "rgba(245,243,238,0.55)",
-  marginBottom: 8,
+  marginBottom: 4,
 };
 
 const waInputStyle: React.CSSProperties = {
   width: "100%",
   background: "transparent",
   border: "1.5px solid rgba(245,243,238,0.18)",
-  borderRadius: 10,
-  padding: "12px 14px",
+  borderRadius: 8,
+  padding: "8px 12px",
   fontFamily: "'DM Sans', sans-serif",
-  fontSize: 15,
+  fontSize: 14,
   color: "#F5F3EE",
   outline: "none",
   boxSizing: "border-box",
 };
+
 
 const SUGGESTIONS = [
   {
