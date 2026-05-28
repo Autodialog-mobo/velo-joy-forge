@@ -563,7 +563,6 @@ function ShopTab({
   shopSent: boolean;
 }) {
   return (
-  return (
     <>
 
       {/* SHORTCUTS — identieke card-stijl als Tab 1 */}
