@@ -352,15 +352,13 @@ function ContactPage() {
             shopSent={shopSent}
           />
         )}
-
         {/* WETTELIJKE GEGEVENS */}
-        <section style={{ padding: "0 6vw 48px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
-            Velopass BV<br />
-            Stokerijstraat 29/bus a1, 2110 Wijnegem, België<br />
-            BTW: BE0777.359.681 · KBO: 0777359681<br />
-            {activeTab === "shop" ? "info@velopass.com" : "support@velopass.com"}
+        <section style={{ padding: "0 6vw 20px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "var(--text-muted)", lineHeight: 1.55, margin: 0 }}>
+            Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, België · BTW: BE0777.359.681 · {activeTab === "shop" ? "info@velopass.com" : "support@velopass.com"}
           </p>
+        </section>
+
         </section>
       </main>
 
