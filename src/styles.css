@@ -613,7 +613,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .fb-cardsub { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 12px; line-height: 1.5; }
 .fb-card-extra { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; padding: 10px 14px; border-left: 2px solid #2ECC8A; background: rgba(46,204,138,0.06); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-weight: 500; color: var(--navy, #0D1F3C); font-size: 12px; line-height: 1.5; }
 .fb-card-extra svg { flex-shrink: 0; margin-top: 2px; }
-.fb-card-logo { position: absolute; top: 16px; right: 16px; max-height: 28px; max-width: 80px; object-fit: contain; filter: grayscale(60%) opacity(0.7); pointer-events: none; }
+.fb-card-logo { position: absolute; top: 16px; right: 16px; max-height: 28px; max-width: 80px; object-fit: contain; filter: grayscale(60%) opacity(0.7); pointer-events: none; transition: filter 0.2s ease, opacity 0.2s ease; }
+.fb-card:hover .fb-card-logo { filter: grayscale(0%) opacity(1); }
 .fb-card-logo--specter { max-height: 38px; max-width: 110px; }
 .fb-card-logo--granville { max-height: 38px; max-width: 110px; }
 .fb-cta { font-family: 'DM Sans', sans-serif; color: var(--text-muted); font-size: 14px; text-align: center; margin-top: 56px; }
