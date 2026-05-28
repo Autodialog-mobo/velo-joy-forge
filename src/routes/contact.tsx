@@ -227,18 +227,10 @@ function ContactPage() {
       return;
     }
     setShopErrors({});
-    const d = result.data;
-    const body =
-      `Naam: ${d.name}\n` +
-      `Bedrijf: ${d.company}\n` +
-      `E-mail: ${d.email}\n` +
-      (d.phone ? `Telefoon: ${d.phone}\n` : "") +
-      `Onderwerp: ${d.subject}\n\n` +
-      d.message;
-    window.location.href = `mailto:info@velopass.com?subject=${encodeURIComponent("[Pro] " + d.subject)}&body=${encodeURIComponent(body)}`;
     setShopSent(true);
     setShop({ name: "", company: "", email: "", phone: "", subject: "", message: "" });
   };
+
 
   return (
     <>
