@@ -199,6 +199,19 @@ export function RegisterForm() {
         </div>
       )}
       <button type="submit" className="btn-submit">Registreer gratis →</button>
+      <p style={{ textAlign: "center", marginTop: 14, marginBottom: 0 }}>
+        <a
+          href="/contact"
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 13,
+            color: "var(--text-muted)",
+            textDecoration: "none",
+          }}
+        >
+          Liever eerst een demo? →
+        </a>
+      </p>
       <p className="fnote">Gratis te starten. Geen creditcard vereist.</p>
     </form>
   );
