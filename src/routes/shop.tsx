@@ -264,6 +264,8 @@ function VelopassPro() {
         </div>
       </section>
 
+      <ProCommunity activeShopsCount={activeShopsCount} />
+
       <Footer variant="pro" />
     </>
   );
