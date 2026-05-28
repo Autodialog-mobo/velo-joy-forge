@@ -114,7 +114,7 @@ function VelopassPro() {
           <div className="hero-stats">
             <div><div className="stat-num">{activeShopsCount.toLocaleString("nl-BE")}<span>+</span></div><div className="stat-label">fietswinkels actief</div></div>
             <div><div className="stat-num">+200<span>K</span></div><div className="stat-label">fietsen geregistreerd</div></div>
-            
+            <div><div className="stat-num">22<span>%</span></div><div className="stat-label">hogere klantentretentie</div></div>
           </div>
         </div>
         <div className="pro-hero-right">
@@ -347,7 +347,7 @@ function Fabrikanten() {
   ];
   const makers: Array<{ name: string; attrs: Attr[]; sub: string; extra?: string }> = [
     { name: "Oxford", attrs: ["decal", "data", "doos"], sub: "Frame-ID als decal ingebouwd — permanent en onverwijderbaar. Data vooringevuld, code op de doos.", extra: "Oxford biedt via Velopass ook Oxford Assistance (by VAB) en garantieregistratie aan — automatisch gekoppeld aan elke verkochte fiets." },
-    { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata." },
+    { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata.", extra: "Granville activeert de garantie automatisch via Velopass — gekoppeld aan elke nieuwe fiets." },
     { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
     { name: "Bike43", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
     { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
@@ -399,7 +399,7 @@ function Fabrikanten() {
               <div className="fb-cardsub">{m.sub}</div>
               {m.extra && (
                 <div className="fb-card-extra">
-                  <Sparkles size={13} color="#2ECC8A" />
+                  {m.name === "Granville" ? <ShieldCheck size={13} color="#2ECC8A" /> : <Sparkles size={13} color="#2ECC8A" />}
                   <span>{m.extra}</span>
                 </div>
               )}
