@@ -345,14 +345,14 @@ function Fabrikanten() {
     { icon: <FileText size={20} color="#2ECC8A" />, t: "Fietsdata vooringevuld", d: "Merk, model en specificaties staan al in Velopass. De winkel en fietser hoeven niets meer manueel in te voeren." },
     { icon: <Package size={20} color="#2ECC8A" />, t: "Code op de verpakking", d: "De Velopass-code staat ook op de doos — eenvoudig te registreren bij levering, nog voor de fiets uitgestald wordt." },
   ];
-  const makers: Array<{ name: string; attrs: Attr[]; sub: string; extra?: string }> = [
-    { name: "Oxford", attrs: ["decal", "data", "doos"], sub: "Frame-ID als decal ingebouwd — permanent en onverwijderbaar. Data vooringevuld, code op de doos.", extra: "Oxford biedt via Velopass ook Oxford Assistance (by VAB) en garantieregistratie aan — automatisch gekoppeld aan elke verkochte fiets." },
-    { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata.", extra: "Granville activeert de garantie automatisch via Velopass — gekoppeld aan elke nieuwe fiets." },
-    { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
-    { name: "Bike43", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
-    { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
-    { name: "Spectre", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
-    { name: "Thompson", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
+  const makers: Array<{ name: string; attrs: Attr[]; sub: string; extra?: string; logo?: string }> = [
+    { name: "Oxford", attrs: ["decal", "data", "doos"], sub: "Frame-ID als decal ingebouwd — permanent en onverwijderbaar. Data vooringevuld, code op de doos.", extra: "Oxford biedt via Velopass ook Oxford Assistance (by VAB) en garantieregistratie aan — automatisch gekoppeld aan elke verkochte fiets.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/666c4e21b72c3a8feea5c9e8_oxford%20logo.png" },
+    { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata.", extra: "Granville activeert de garantie automatisch via Velopass — gekoppeld aan elke nieuwe fiets.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/67910d67578d775904d1a1de_Granville%20logo.png" },
+    { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/680b77032634561d90f2037b_veloe-logo-black-transparant.png" },
+    { name: "Bike43", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/666c507342c67709752afa70_Bike%2043%20logo.png" },
+    { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://www.urbanbiker.com/wp-content/uploads/2023/03/cropped-Icono-principal-sin-fondo-270x270.png" },
+    { name: "Spectre", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c31ea4b8feecaefcc34807_specter%20logo.png" },
+    { name: "Thompson", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c09339ca49535d8bfbd2b0_thompson%20logo.png" },
   ];
   return (
     <section className="fabrikanten" id="fabrikanten">
@@ -390,6 +390,14 @@ function Fabrikanten() {
         <div className="fb-grid">
           {makers.map((m) => (
             <div className="fb-card" key={m.name}>
+              {m.logo && (
+                <img
+                  src={m.logo}
+                  alt={`${m.name} logo`}
+                  className="fb-card-logo"
+                  loading="lazy"
+                />
+              )}
               <div className="fb-name">{m.name}</div>
               <div className="fb-badges">
                 {m.attrs.filter((a) => a !== "lak").map((a) => (
