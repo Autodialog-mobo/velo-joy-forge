@@ -685,7 +685,8 @@ function ShopTab({
             <div style={{ gridColumn: "1 / -1" }}>
               <label htmlFor="s-message" style={waLabelStyle}>Bericht <span style={{ color: "#2ECC8A" }}>*</span></label>
               <textarea
-                id="s-message" rows={5} maxLength={2000} required value={shop.message}
+                id="s-message" rows={3} maxLength={2000} required value={shop.message}
+
                 onChange={(e) => { setShop({ ...shop, message: e.target.value }); if (shopErrors.message) setShopErrors((p) => ({ ...p, message: undefined })); }}
                 placeholder="Vertel ons kort waar je vraag over gaat..."
                 style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
