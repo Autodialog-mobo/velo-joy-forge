@@ -349,9 +349,9 @@ function Fabrikanten() {
     { name: "Granville", attrs: ["decal", "lak", "data"], sub: "Frame-ID ingebouwd onder de lak, met vooringevulde fietsdata." },
     { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
     { name: "Bike43", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata." },
-    { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID als sticker op het frame — geen fietsdata vooringevuld." },
-    { name: "Spectre", attrs: ["lak"], sub: "Frame-ID aangebracht bij productie." },
-    { name: "Thompson", attrs: ["lak"], sub: "Frame-ID aangebracht bij productie." },
+    { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
+    { name: "Spectre", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
+    { name: "Thompson", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld." },
   ];
   return (
     <section className="fabrikanten" id="fabrikanten">
