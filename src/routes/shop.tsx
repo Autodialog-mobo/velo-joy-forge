@@ -394,7 +394,7 @@ function Fabrikanten() {
                 <img
                   src={m.logo}
                   alt={`${m.name} logo`}
-                  className="fb-card-logo"
+                  className={`fb-card-logo${m.name === "Spectre" ? " fb-card-logo--spectre" : ""}`}
                   loading="lazy"
                 />
               )}
