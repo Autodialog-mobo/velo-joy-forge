@@ -9,6 +9,7 @@ import leasingAppMockup from "@/assets/leasing-app-mockup-v2.png";
 import fabOxford from "@/assets/fab-oxford.jpg";
 import fabBike43 from "@/assets/fab-bike43.jpg";
 import fabFrameId from "@/assets/fab-frameid.jpg";
+import fabGranville from "@/assets/fab-granville.jpg";
 import kbcLogo from "@/assets/kbc-logo.png";
 
 
@@ -365,6 +366,10 @@ function Fabrikanten() {
           <figure className="fb-shot">
             <img src={fabOxford} alt="Oxford e-bike frame met Velopass Frame-ID, geïntegreerd bij productie" loading="lazy" />
             <figcaption>Oxford — Frame-ID geïntegreerd bij productie</figcaption>
+          </figure>
+          <figure className="fb-shot">
+            <img src={fabGranville} alt="Granville e-bike met Velopass Frame-ID sticker op de zadelpen" loading="lazy" />
+            <figcaption>Granville — Frame-ID geïntegreerd bij productie</figcaption>
           </figure>
           <figure className="fb-shot">
             <img src={fabBike43} alt="Bike43 cargo e-bike met Velopass Frame-ID op het frame" loading="lazy" />
