@@ -359,7 +359,8 @@ function ContactPage() {
           </p>
         </section>
 
-        </section>
+
+
       </main>
 
       <Footer />
