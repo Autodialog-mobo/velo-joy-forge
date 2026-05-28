@@ -564,28 +564,6 @@ function ShopTab({
 }) {
   return (
     <>
-      {/* WhatsApp CTA — identiek aan Tab 1 stijl */}
-      <section style={{ padding: "8px 6vw 24px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-        <a
-          href={`https://wa.me/${WA_NUMBER}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            background: "#0D1F3C", color: "#F5F3EE",
-            padding: "14px 24px", borderRadius: 12,
-            fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 14,
-            letterSpacing: "1.2px", textTransform: "uppercase",
-            textDecoration: "none",
-          }}
-        >
-          <MessageCircle size={18} strokeWidth={2.2} />
-          Chat met ons via WhatsApp
-        </a>
-        <p style={{ marginTop: 12, fontSize: 13, color: "var(--text-muted)", fontFamily: "'DM Sans', sans-serif" }}>
-          Beschikbaar tijdens kantooruren · Gemiddeld antwoord binnen 2 uur
-        </p>
-      </section>
 
       {/* SHORTCUTS — identieke card-stijl als Tab 1 */}
       <section style={{ padding: "8px 6vw 24px", maxWidth: 1100, margin: "0 auto" }}>
