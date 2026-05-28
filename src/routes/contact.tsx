@@ -384,7 +384,7 @@ function ContactPage() {
         }
       `}</style>
 
-      `}</style>
+
     </>
   );
 }
