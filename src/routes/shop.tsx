@@ -195,31 +195,36 @@ function VelopassPro() {
             <div style={{ flex: 1 }}>
               <h4>Scan of registreer de fiets</h4>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginTop: 10 }}>
-                <div style={{ background: "rgba(0,0,0,0.03)", borderRadius: 10, padding: 16, borderLeft: "3px solid #16a34a" }}>
-                  <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
-                    <Monitor size={16} strokeWidth={2} color="#16a34a" /> Via kassasysteem
-                  </h5>
-                  <p style={{ margin: 0, fontSize: 13 }}>Fiets- en klantdata zijn al aanwezig in je kassasysteem. Scan de Frame-ID en alles wordt automatisch gekoppeld. Geen manuele ingave.</p>
+                <div style={{ background: "rgba(46,204,138,0.08)", borderRadius: 10, padding: 16, borderLeft: "3px solid #2ECC8A", display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#2ECC8A" }}>
+                    <Monitor size={16} color="#2ECC8A" strokeWidth={2} /> Kassasysteem
+                  </div>
+                  <h5 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>Via kassasysteem</h5>
+                  <p style={{ margin: 0, fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.55 }}>Fiets- en klantdata — inclusief e-mailadres — zijn al aanwezig. Scan de Frame-ID en factureer de fiets. Alles gebeurt automatisch.</p>
+                  <span style={{ marginTop: "auto", alignSelf: "flex-start", fontSize: 11, fontWeight: 600, color: "#2ECC8A", background: "rgba(46,204,138,0.15)", padding: "4px 8px", borderRadius: 6 }}>✓ Enkel scannen en factureren</span>
                 </div>
-                <div style={{ background: "rgba(0,0,0,0.03)", borderRadius: 10, padding: 16, borderLeft: "3px solid #0a2540" }}>
-                  <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
-                    <Smartphone size={16} strokeWidth={2} color="#0a2540" /> Via de Pro App
-                  </h5>
-                  <p style={{ margin: 0, fontSize: 13 }}>De klantdata geef je manueel in. Fietsdata wordt automatisch ingeladen als de fabrikant die heeft vooringevuld — zo niet, geef je die ook manueel in via de app.</p>
+                <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 10, padding: 16, borderLeft: "3px solid rgba(255,255,255,0.3)", display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#fff" }}>
+                    <Smartphone size={16} color="#fff" strokeWidth={2} /> Pro App
+                  </div>
+                  <h5 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>Via de Pro App</h5>
+                  <p style={{ margin: 0, fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.55 }}>Geef de klantdata manueel in, inclusief het e-mailadres. Fietsdata wordt automatisch ingeladen als de fabrikant die heeft vooringevuld — zo niet, geef je die ook manueel in.</p>
+                  <span style={{ marginTop: "auto", alignSelf: "flex-start", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.08)", padding: "4px 8px", borderRadius: 6 }}>↓ Ga naar stap 2</span>
                 </div>
               </div>
             </div>
           </div>
           {[
-            { n: 2, icon: <Mail size={16} strokeWidth={2} />, t: "Geef het e-mailadres van de klant in", d: "Voeg het e-mailadres van de klant toe aan het dossier. Dat is alles wat je van hem nodig hebt." },
-            { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel." },
-            { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact, voor altijd", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen." },
+            { n: 2, icon: <Mail size={16} strokeWidth={2} />, t: "Geef het e-mailadres van de klant in", d: "Voeg het e-mailadres van de klant toe aan het dossier. Dat is alles wat je van hem nodig hebt.", note: "Via kassasysteem? Dit is al aanwezig — sla deze stap over." },
+            { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel.", note: "" },
+            { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen.", note: "" },
           ].map((s) => (
             <div className="mstep" key={s.n}>
               <div className="mnum">{s.n}</div>
               <div>
                 <h4 style={{ display: "flex", alignItems: "center", gap: 8 }}>{s.icon} {s.t}</h4>
                 <p>{s.d}</p>
+                {s.note && <p style={{ marginTop: 6, fontSize: 12, fontStyle: "italic", color: "rgba(255,255,255,0.45)" }}>{s.note}</p>}
               </div>
             </div>
           ))}
