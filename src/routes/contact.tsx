@@ -505,7 +505,8 @@ function RiderTab({
               <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
               <textarea
                 id="wa-note"
-                rows={5}
+                rows={3}
+
                 maxLength={2000}
                 value={wa.note}
                 onChange={(e) => setWa({ ...wa, note: e.target.value })}
