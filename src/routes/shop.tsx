@@ -190,8 +190,27 @@ function VelopassPro() {
         <p className="eyebrow">Hoe werkt het?</p>
         <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
+          <div className="mstep">
+            <div className="mnum">1</div>
+            <div style={{ flex: 1 }}>
+              <h4>Scan of registreer de fiets</h4>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginTop: 10 }}>
+                <div style={{ background: "rgba(0,0,0,0.03)", borderRadius: 10, padding: 16, borderLeft: "3px solid #16a34a" }}>
+                  <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
+                    <Monitor size={16} strokeWidth={2} color="#16a34a" /> Via kassasysteem
+                  </h5>
+                  <p style={{ margin: 0, fontSize: 13 }}>Klant- en fietsdata zijn al aanwezig in je kassasysteem. Scan de Frame-ID en alles wordt automatisch gekoppeld. Geen manuele ingave.</p>
+                </div>
+                <div style={{ background: "rgba(0,0,0,0.03)", borderRadius: 10, padding: 16, borderLeft: "3px solid #0a2540" }}>
+                  <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
+                    <Smartphone size={16} strokeWidth={2} color="#0a2540" /> Via de Pro App
+                  </h5>
+                  <p style={{ margin: 0, fontSize: 13 }}>Heeft de fabrikant de data nog niet vooringevuld? Geef de klant- en fietsdata manueel in via de gratis Velopass Pro App. Werkt volledig zelfstandig, zonder kassasysteem.</p>
+                </div>
+              </div>
+            </div>
+          </div>
           {[
-            { n: 1, icon: <QrCode size={16} strokeWidth={2} />, t: "Scan of registreer de fiets", d: "Gebruik je kassasysteem of de gratis Velopass Pro App. Scan de Frame-ID — de fietsdata wordt automatisch ingeladen. Geen kassasysteem bij de hand? De Pro App werkt volledig zelfstandig." },
             { n: 2, icon: <Mail size={16} strokeWidth={2} />, t: "Geef het e-mailadres van de klant in", d: "Voeg het e-mailadres van de klant toe aan het dossier. Dat is alles wat je van hem nodig hebt." },
             { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel." },
             { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact, voor altijd", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen." },
