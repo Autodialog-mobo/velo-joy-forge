@@ -216,8 +216,8 @@ function VelopassPro() {
           </div>
           {[
             { n: 2, icon: <Mail size={16} strokeWidth={2} />, t: "Geef het e-mailadres van de klant in", d: "Voeg het e-mailadres van de klant toe aan het dossier. Dat is alles wat je van hem nodig hebt.", note: "Via kassasysteem? Dit is al aanwezig — sla deze stap over." },
-            { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel." },
-            { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen." },
+            { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel.", note: "" },
+            { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen.", note: "" },
           ].map((s) => (
             <div className="mstep" key={s.n}>
               <div className="mnum">{s.n}</div>
