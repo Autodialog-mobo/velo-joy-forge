@@ -187,8 +187,11 @@ function VelopassPro() {
       </section>
 
       <section className="how" id="hoe-werkt-het">
-        <p className="eyebrow">Hoe werkt het?</p>
-        <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
+        <p className="eyebrow">HOE WERKT HET?</p>
+        <h2 className="sec-title">
+          Van verkoop tot actieve klantrelatie —{" "}
+          <span style={{ color: "#2ECC8A" }}>in één scan.</span>
+        </h2>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <div className="mstep">
             <div className="mnum">1</div>
