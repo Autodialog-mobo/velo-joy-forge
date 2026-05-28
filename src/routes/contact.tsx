@@ -613,7 +613,7 @@ function ShopTab({
             Vul het formulier in — we antwoorden binnen 1 werkdag.
           </p>
 
-          </p>
+
 
           {shopSent && (
             <div
