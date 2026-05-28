@@ -209,14 +209,14 @@ function VelopassPro() {
                   </div>
                   <h5 style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "#fff", fontFamily: "'DM Sans', sans-serif" }}>Via de Pro App</h5>
                   <p style={{ margin: 0, fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.55 }}>Geef de klantdata manueel in, inclusief het e-mailadres. Fietsdata wordt automatisch ingeladen als de fabrikant die heeft vooringevuld — zo niet, geef je die ook manueel in.</p>
-                  <span style={{ marginTop: "auto", alignSelf: "flex-start", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.08)", padding: "4px 8px", borderRadius: 6 }}>↓ Ga naar stap 2</span>
+                  <span style={{ marginTop: "auto", alignSelf: "flex-start", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.7)", background: "rgba(255,255,255,0.08)", padding: "4px 8px", borderRadius: 6 }}>Gratis te downloaden</span>
                 </div>
               </div>
             </div>
           </div>
           {[
             { n: 2, icon: <Send size={16} strokeWidth={2} />, t: "De klant krijgt een uitnodiging van jouw winkel", d: "Velopass verstuurt automatisch een e-mail namens jouw winkel — met jouw winkelnaam. De klant ziet: 'Jouw Velopass staat klaar.' Hij kiest enkel nog een wachtwoord — in 1 minuut klaar.", note: "" },
-            { n: 3, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen.", note: "" },
+            { n: 3, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. Jij bepaalt zelf welke herinneringen worden verstuurd, wanneer — of helemaal geen. De klant blijft verbonden met jouw winkel zonder dat jij er nog iets voor hoeft te doen.", note: "" },
           ].map((s) => (
             <div className="mstep" key={s.n}>
               <div className="mnum">{s.n}</div>
