@@ -215,7 +215,7 @@ function VelopassPro() {
             </div>
           </div>
           {[
-            { n: 2, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel.", note: "" },
+            { n: 2, icon: <Send size={16} strokeWidth={2} />, t: "De klant krijgt een uitnodiging van jouw winkel", d: "Velopass verstuurt automatisch een e-mail namens jouw winkel — met jouw winkelnaam. De klant ziet: 'Jouw Velopass staat klaar.' Hij kiest enkel nog een wachtwoord — in 1 minuut klaar.", note: "" },
             { n: 3, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen.", note: "" },
           ].map((s) => (
             <div className="mstep" key={s.n}>
