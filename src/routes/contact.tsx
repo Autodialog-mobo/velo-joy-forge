@@ -636,7 +636,7 @@ function ShopTab({
               {shopErrors.name && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.name}</p>}
             </div>
             <div>
-              <label htmlFor="s-company" style={waLabelStyle}>Fietswinkel of bedrijfsnaam <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="s-company" style={{ ...waLabelStyle, whiteSpace: "nowrap", letterSpacing: 0.8 }}>Fietswinkel of bedrijfsnaam <span style={{ color: "#2ECC8A" }}>*</span></label>
               <input
                 id="s-company" type="text" required maxLength={150} value={shop.company}
                 onChange={(e) => { setShop({ ...shop, company: e.target.value }); if (shopErrors.company) setShopErrors((p) => ({ ...p, company: undefined })); }}
