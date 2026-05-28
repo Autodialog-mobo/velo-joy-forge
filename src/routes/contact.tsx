@@ -1,151 +1,166 @@
-import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { HelpCircle, Package, ScanLine, MessageCircle, ArrowUpRight, ArrowLeft } from "lucide-react";
+import { useMemo, useState } from "react";
+import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 
-const waSchema = z.object({
-  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100, { message: "Naam mag maximaal 100 tekens zijn." }),
-  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
-  phone: z.string().trim().max(30).optional(),
-  note: z.string().trim().max(2000).optional(),
+const searchSchema = z.object({
+  type: fallback(z.enum(["rider", "shop"]), "rider").default("rider"),
 });
 
-type WaErrors = Partial<Record<"name" | "email", string>>;
-
 export const Route = createFileRoute("/contact")({
+  validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
       { title: "Contact — Velopass" },
       {
         name: "description",
         content:
-          "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
+          "Stel je vraag aan het Velopass-team. Aparte formulieren voor fietsers en voor fietswinkels of professionals.",
       },
       { property: "og:title", content: "Contact — Velopass" },
       {
         property: "og:description",
         content:
-          "Kies een onderwerp en chat met het Velopass-team via WhatsApp.",
+          "Kies wie je bent — we sturen je vraag meteen naar de juiste persoon.",
       },
     ],
   }),
   component: ContactPage,
 });
 
-const cardStyle: React.CSSProperties = {
-  background: "var(--white)",
-  border: "1px solid var(--border)",
-  borderRadius: "var(--r-lg)",
-  padding: "24px 22px",
-  textAlign: "left",
-  cursor: "pointer",
-  display: "flex",
-  flexDirection: "column",
-  gap: 10,
-  transition: "transform 0.2s, box-shadow 0.2s, border-color 0.2s",
-  fontFamily: "'DM Sans', sans-serif",
-};
+const SUPPORT_EMAIL = "support@velopass.com";
+const PHONE_DISPLAY = "+32 (0)471 60 15 73";
 
-const iconBox: React.CSSProperties = {
-  width: 42,
-  height: 42,
-  borderRadius: 12,
-  background: "rgba(46,204,138,0.12)",
-  border: "1px solid rgba(46,204,138,0.25)",
-  color: "var(--green-mid)",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
+const riderSchema = z.object({
+  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100),
+  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
+  subject: z.string().min(1, { message: "Kies een onderwerp." }).max(120),
+  message: z.string().trim().max(2000).optional(),
+});
 
-const waLabelStyle: React.CSSProperties = {
+const shopSchema = z.object({
+  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100),
+  company: z.string().trim().min(1, { message: "Vul je winkel- of bedrijfsnaam in." }).max(150),
+  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
+  phone: z.string().trim().max(30).optional(),
+  subject: z.string().min(1, { message: "Kies een onderwerp." }).max(120),
+  message: z.string().trim().max(2000).optional(),
+});
+
+const RIDER_SUBJECTS = [
+  "Mijn account",
+  "Frame-ID bestellen of activeren",
+  "Gestolen of verloren fiets",
+  "Pechhulp of verzekering",
+  "Technische vraag",
+  "Andere",
+];
+
+const SHOP_SUBJECTS = [
+  "Demo aanvragen",
+  "Vragen over integratie of kassasysteem",
+  "Al partner — technische vraag",
+  "Pricing of kennismakingspakket",
+  "Leasingmaatschappij of verzekeraar",
+  "Andere",
+];
+
+const labelStyle: React.CSSProperties = {
   display: "block",
-  fontSize: 11,
+  fontFamily: "'DM Sans', sans-serif",
   fontWeight: 500,
-  letterSpacing: 1.2,
-  textTransform: "uppercase",
-  color: "rgba(245,243,238,0.55)",
-  marginBottom: 8,
+  fontSize: 13,
+  color: "#0D1F3C",
+  marginBottom: 6,
 };
 
-const waInputStyle: React.CSSProperties = {
+const inputStyle: React.CSSProperties = {
   width: "100%",
-  background: "transparent",
-  border: "1.5px solid rgba(245,243,238,0.18)",
-  borderRadius: 10,
-  padding: "12px 14px",
+  background: "#fff",
+  border: "1px solid rgba(13,31,60,0.15)",
+  borderRadius: 8,
+  padding: "10px 14px",
   fontFamily: "'DM Sans', sans-serif",
   fontSize: 15,
-  color: "#F5F3EE",
+  color: "#0D1F3C",
   outline: "none",
   boxSizing: "border-box",
 };
 
-const WA_NUMBER = "32471601573";
+const errorTextStyle: React.CSSProperties = {
+  marginTop: 6,
+  fontSize: 12,
+  color: "#c0392b",
+  fontFamily: "'DM Sans', sans-serif",
+};
 
-const SUGGESTIONS = [
-  {
-    icon: HelpCircle,
-    title: "Hulp bij activatie",
-    desc: "Uitnodiging ontvangen maar lukt het niet om in te loggen?",
-    prefill: "Hallo Velopass, ik heb hulp nodig bij de activatie van mijn account. ",
-  },
-  {
-    icon: Package,
-    title: "Vraag over mijn Frame-ID",
-    desc: "Frame-ID niet ontvangen, beschadigd of een andere vraag over je bestelling?",
-    prefill: "Hallo Velopass, ik heb een vraag over mijn Frame-ID: ",
-  },
-  {
-    icon: ScanLine,
-    title: "Gevonden fiets melden",
-    desc: "Heb je een fiets gevonden met een Velopass Frame-ID?",
-    prefill: "Hallo Velopass, ik heb een fiets gevonden met een Velopass Frame-ID. ",
-  },
-];
+const submitBtnStyle: React.CSSProperties = {
+  marginTop: 8,
+  width: "100%",
+  background: "#2ECC8A",
+  color: "#0D1F3C",
+  border: "none",
+  padding: "14px 24px",
+  borderRadius: 10,
+  fontFamily: "'Syne', sans-serif",
+  fontWeight: 700,
+  fontSize: 15,
+  letterSpacing: "1px",
+  textTransform: "uppercase",
+  cursor: "pointer",
+};
 
 function ContactPage() {
-  const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
-  const [errors, setErrors] = useState<WaErrors>({});
+  const { type } = useSearch({ from: "/contact" });
+  const [activeTab, setActiveTab] = useState<"rider" | "shop">(type);
   const [navOpen, setNavOpen] = useState(false);
 
-  const sendWa = () => {
-    const result = waSchema.safeParse(wa);
+  const [rider, setRider] = useState({ name: "", email: "", subject: "", message: "" });
+  const [riderErrors, setRiderErrors] = useState<Record<string, string>>({});
+
+  const [shop, setShop] = useState({ name: "", company: "", email: "", phone: "", subject: "", message: "" });
+  const [shopErrors, setShopErrors] = useState<Record<string, string>>({});
+
+  useMemo(() => setActiveTab(type), [type]);
+
+  const sendRider = () => {
+    const result = riderSchema.safeParse(rider);
     if (!result.success) {
-      const fieldErrors: WaErrors = {};
+      const fe: Record<string, string> = {};
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof WaErrors;
-        if ((key === "name" || key === "email") && !fieldErrors[key]) {
-          fieldErrors[key] = issue.message;
-        }
+        const k = issue.path[0] as string;
+        if (!fe[k]) fe[k] = issue.message;
       }
-      setErrors(fieldErrors);
-      const first = result.error.issues[0]?.message ?? "Controleer het formulier.";
-      toast.error(first);
-      const focusId = fieldErrors.name ? "wa-name" : fieldErrors.email ? "wa-email" : null;
-      if (focusId) document.getElementById(focusId)?.focus();
+      setRiderErrors(fe);
+      toast.error(result.error.issues[0]?.message ?? "Controleer het formulier.");
       return;
     }
-    setErrors({});
-    const data = result.data;
-    const text =
-      `Hallo Velopass,\n\n` +
-      `Naam: ${data.name}\n` +
-      `E-mail: ${data.email}\n` +
-      (data.phone ? `Telefoon: ${data.phone}\n` : "") +
-      (data.note ? `\n${data.note}\n` : "");
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    setRiderErrors({});
+    const d = result.data;
+    const body = `Naam: ${d.name}%0D%0AE-mail: ${d.email}%0D%0AOnderwerp: ${d.subject}%0D%0A%0D%0A${encodeURIComponent(d.message ?? "")}`;
+    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("[Fietser] " + d.subject)}&body=${body}`;
   };
 
-  const pickSuggestion = (prefill: string) => {
-    setWa((w) => ({ ...w, note: prefill }));
-    const el = document.getElementById("wa-form");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    setTimeout(() => document.getElementById("wa-name")?.focus(), 400);
+  const sendShop = () => {
+    const result = shopSchema.safeParse(shop);
+    if (!result.success) {
+      const fe: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const k = issue.path[0] as string;
+        if (!fe[k]) fe[k] = issue.message;
+      }
+      setShopErrors(fe);
+      toast.error(result.error.issues[0]?.message ?? "Controleer het formulier.");
+      return;
+    }
+    setShopErrors({});
+    const d = result.data;
+    const body = `Naam: ${d.name}%0D%0ABedrijf: ${d.company}%0D%0AE-mail: ${d.email}%0D%0ATelefoon: ${d.phone ?? ""}%0D%0AOnderwerp: ${d.subject}%0D%0A%0D%0A${encodeURIComponent(d.message ?? "")}`;
+    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent("[Pro] " + d.subject)}&body=${body}`;
   };
 
   return (
@@ -160,17 +175,10 @@ function ContactPage() {
           <li><Link to="/" hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
           <li><Link to="/" hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
           <li><Link to="/" hash="nieuwe-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
-          <li><Link to="/" hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
           <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
-          <a href="#login" className="btn-login">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-            Inloggen
-          </a>
+          <a href="#login" className="btn-login">Inloggen</a>
           <button
             type="button"
             className="nav-toggle"
@@ -189,7 +197,6 @@ function ContactPage() {
         </div>
       </nav>
 
-      {/* BACK BUTTON */}
       <div className="back-btn-wrap">
         <button
           type="button"
@@ -201,187 +208,144 @@ function ContactPage() {
         </button>
       </div>
 
-      <main style={{ background: "var(--bg)", paddingTop: 16, minHeight: "100vh" }}>
+      <main style={{ background: "#F5F3EE", minHeight: "100vh", paddingBottom: 80 }}>
         {/* HEADER */}
-        <section style={{ padding: "24px 6vw 32px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
-          <h1
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontWeight: 700,
-              fontSize: "clamp(36px, 5vw, 56px)",
-              lineHeight: 1.05,
-              letterSpacing: "-1.5px",
-              color: "var(--navy)",
-              marginBottom: 16,
-            }}
-          >
-            Hoe kunnen we helpen?
-          </h1>
-          <p style={{ fontSize: 17, color: "var(--text-muted)", maxWidth: 560, margin: "0 auto", lineHeight: 1.6 }}>
-            Stuur ons een bericht via WhatsApp — gemiddeld antwoord binnen 2 uur tijdens kantooruren.
-          </p>
-        </section>
-
-        {/* SUGGESTIES */}
-        <section style={{ padding: "8px 6vw 24px", maxWidth: 1100, margin: "0 auto" }}>
-          <p style={{ textAlign: "center", fontSize: 12, letterSpacing: 1.4, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>
-            Waarover gaat je vraag?
-          </p>
-          <div className="contact-cards">
-            {SUGGESTIONS.map((s) => {
-              const Icon = s.icon;
-              return (
-                <button
-                  key={s.title}
-                  type="button"
-                  onClick={() => pickSuggestion(s.prefill)}
-                  style={cardStyle}
-                  className="contact-card"
-                >
-                  <div style={iconBox}><Icon size={22} strokeWidth={1.8} /></div>
-                  <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 17, color: "var(--navy)", letterSpacing: "-0.2px" }}>
-                    {s.title}
-                  </h3>
-                  <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.6, flex: 1, margin: 0 }}>
-                    {s.desc}
-                  </p>
-                  <span style={{ fontSize: 13, fontWeight: 500, color: "var(--green-mid)" }}>Kies dit onderwerp →</span>
-                </button>
-              );
-            })}
+        <section style={{ background: "#0D1F3C", padding: "56px 6vw 64px", textAlign: "center" }}>
+          <div style={{ maxWidth: 720, margin: "0 auto" }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: "uppercase", color: "#2ECC8A", marginBottom: 14 }}>
+              Contact
+            </p>
+            <h1 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: "clamp(28px, 4vw, 40px)", lineHeight: 1.15, letterSpacing: "-0.8px", color: "#fff", marginBottom: 14 }}>
+              Hoe kunnen we je helpen?
+            </h1>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(245,243,238,0.7)", lineHeight: 1.6, margin: 0 }}>
+              Kies hieronder wie je bent — we sturen je vraag meteen naar de juiste persoon.
+            </p>
           </div>
         </section>
 
-        {/* WHATSAPP FORM */}
-        <section id="wa-form" style={{ padding: "24px 6vw 96px", maxWidth: 720, margin: "0 auto" }}>
-          <div
-            style={{
-              background: "#0D1F3C",
-              color: "#F5F3EE",
-              borderRadius: 18,
-              padding: "36px 36px 32px",
-              boxShadow: "0 30px 80px rgba(13,31,60,0.15)",
-              fontFamily: "'DM Sans', sans-serif",
-            }}
-          >
-            <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
-              Stuur ons een bericht
-            </h2>
-            <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
-              Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
-            </p>
-
-            <div className="wa-grid">
-              <div>
-                <label htmlFor="wa-name" style={waLabelStyle}>Naam <span style={{ color: "#2ECC8A" }}>*</span></label>
-                <input
-                  id="wa-name"
-                  type="text"
-                  required
-                  maxLength={100}
-                  value={wa.name}
-                  onChange={(e) => {
-                    setWa({ ...wa, name: e.target.value });
-                    if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
-                  }}
-                  placeholder="Jan Janssens"
-                  aria-invalid={!!errors.name}
-                  style={{ ...waInputStyle, borderColor: errors.name ? "#ff6b6b" : waInputStyle.border?.toString().includes("rgba") ? undefined : undefined }}
-                />
-                {errors.name && (
-                  <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.name}</p>
-                )}
-              </div>
-              <div>
-                <label htmlFor="wa-phone" style={waLabelStyle}>Telefoon</label>
-                <input
-                  id="wa-phone"
-                  type="tel"
-                  maxLength={30}
-                  value={wa.phone}
-                  onChange={(e) => setWa({ ...wa, phone: e.target.value })}
-                  placeholder="+32 4..."
-                  style={waInputStyle}
-                />
-              </div>
-              <div style={{ gridColumn: "1 / -1" }}>
-                <label htmlFor="wa-email" style={waLabelStyle}>E-mail <span style={{ color: "#2ECC8A" }}>*</span></label>
-                <input
-                  id="wa-email"
-                  type="email"
-                  required
-                  maxLength={255}
-                  value={wa.email}
-                  onChange={(e) => {
-                    setWa({ ...wa, email: e.target.value });
-                    if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
-                  }}
-                  placeholder="jan@voorbeeld.be"
-                  aria-invalid={!!errors.email}
-                  style={waInputStyle}
-                />
-                {errors.email && (
-                  <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.email}</p>
-                )}
-              </div>
-              <div style={{ gridColumn: "1 / -1" }}>
-                <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
-                <textarea
-                  id="wa-note"
-                  rows={5}
-                  maxLength={2000}
-                  value={wa.note}
-                  onChange={(e) => setWa({ ...wa, note: e.target.value })}
-                  placeholder="Vertel ons kort waar je vraag over gaat..."
-                  style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
-                />
-              </div>
-            </div>
-
+        {/* TABS + FORM */}
+        <section style={{ maxWidth: 640, margin: "-32px auto 0", padding: "0 16px" }}>
+          <div className="contact-tabs" role="tablist">
             <button
               type="button"
-              onClick={sendWa}
-              style={{
-                marginTop: 24,
-                width: "100%",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 12,
-                background: "#2ECC8A",
-                color: "#0D1F3C",
-                border: "none",
-                padding: "16px 24px",
-                borderRadius: 12,
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: 15,
-                letterSpacing: "1.5px",
-                textTransform: "uppercase",
-                cursor: "pointer",
-              }}
+              role="tab"
+              aria-selected={activeTab === "rider"}
+              onClick={() => setActiveTab("rider")}
+              className={`contact-tab${activeTab === "rider" ? " active" : ""}`}
             >
-              <MessageCircle size={20} strokeWidth={2.2} />
-              Verstuur via WhatsApp →
+              Ik ben een fietser
             </button>
-
-            <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "rgba(245,243,238,0.6)" }}>
-              Liever een e-mail sturen?{" "}
-              <a href="mailto:support@velopass.com" style={{ color: "#2ECC8A", textDecoration: "none", fontWeight: 500 }}>
-                support@velopass.com
-              </a>
-            </p>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === "shop"}
+              onClick={() => setActiveTab("shop")}
+              className={`contact-tab${activeTab === "shop" ? " active" : ""}`}
+            >
+              Ik ben een fietswinkel of professional
+            </button>
           </div>
-        </section>
 
-        {/* WETTELIJKE GEGEVENS */}
-        <section style={{ padding: "0 6vw 24px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
-            Velopass BV<br />
-            Stokerijstraat 29/bus a1, 2110 Wijnegem, België<br />
-            BTW: BE0777.359.681 · KBO: 0777359681<br />
-            support@velopass.com
-          </p>
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: 16,
+              padding: "32px",
+              boxShadow: "0 12px 40px rgba(13,31,60,0.08)",
+              marginTop: 16,
+            }}
+            className="contact-card-wrap"
+          >
+            {activeTab === "rider" ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div>
+                  <label htmlFor="r-name" style={labelStyle}>Naam *</label>
+                  <input id="r-name" type="text" value={rider.name} maxLength={100}
+                    onChange={(e) => setRider({ ...rider, name: e.target.value })}
+                    style={inputStyle} className="vp-input" />
+                  {riderErrors.name && <p style={errorTextStyle}>{riderErrors.name}</p>}
+                </div>
+                <div>
+                  <label htmlFor="r-email" style={labelStyle}>E-mailadres *</label>
+                  <input id="r-email" type="email" value={rider.email} maxLength={255}
+                    onChange={(e) => setRider({ ...rider, email: e.target.value })}
+                    style={inputStyle} className="vp-input" />
+                  {riderErrors.email && <p style={errorTextStyle}>{riderErrors.email}</p>}
+                </div>
+                <div>
+                  <label htmlFor="r-subject" style={labelStyle}>Onderwerp *</label>
+                  <select id="r-subject" value={rider.subject}
+                    onChange={(e) => setRider({ ...rider, subject: e.target.value })}
+                    style={inputStyle} className="vp-input">
+                    <option value="">Kies een onderwerp…</option>
+                    {RIDER_SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  {riderErrors.subject && <p style={errorTextStyle}>{riderErrors.subject}</p>}
+                </div>
+                <div>
+                  <label htmlFor="r-message" style={labelStyle}>Bericht</label>
+                  <textarea id="r-message" rows={5} maxLength={2000} value={rider.message}
+                    onChange={(e) => setRider({ ...rider, message: e.target.value })}
+                    style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5 }} className="vp-input" />
+                </div>
+                <button type="button" onClick={sendRider} style={submitBtnStyle}>Verstuur →</button>
+                <p style={{ fontSize: 12, color: "rgba(13,31,60,0.55)", textAlign: "center", margin: 0, fontFamily: "'DM Sans', sans-serif" }}>
+                  We antwoorden binnen 1 werkdag.
+                </p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <div>
+                  <label htmlFor="s-name" style={labelStyle}>Naam *</label>
+                  <input id="s-name" type="text" value={shop.name} maxLength={100}
+                    onChange={(e) => setShop({ ...shop, name: e.target.value })}
+                    style={inputStyle} className="vp-input" />
+                  {shopErrors.name && <p style={errorTextStyle}>{shopErrors.name}</p>}
+                </div>
+                <div>
+                  <label htmlFor="s-company" style={labelStyle}>Fietswinkel of bedrijfsnaam *</label>
+                  <input id="s-company" type="text" value={shop.company} maxLength={150}
+                    onChange={(e) => setShop({ ...shop, company: e.target.value })}
+                    style={inputStyle} className="vp-input" />
+                  {shopErrors.company && <p style={errorTextStyle}>{shopErrors.company}</p>}
+                </div>
+                <div>
+                  <label htmlFor="s-email" style={labelStyle}>E-mailadres *</label>
+                  <input id="s-email" type="email" value={shop.email} maxLength={255}
+                    onChange={(e) => setShop({ ...shop, email: e.target.value })}
+                    style={inputStyle} className="vp-input" />
+                  {shopErrors.email && <p style={errorTextStyle}>{shopErrors.email}</p>}
+                </div>
+                <div>
+                  <label htmlFor="s-phone" style={labelStyle}>Telefoonnummer</label>
+                  <input id="s-phone" type="tel" value={shop.phone} maxLength={30}
+                    onChange={(e) => setShop({ ...shop, phone: e.target.value })}
+                    style={inputStyle} className="vp-input" />
+                </div>
+                <div>
+                  <label htmlFor="s-subject" style={labelStyle}>Onderwerp *</label>
+                  <select id="s-subject" value={shop.subject}
+                    onChange={(e) => setShop({ ...shop, subject: e.target.value })}
+                    style={inputStyle} className="vp-input">
+                    <option value="">Kies een onderwerp…</option>
+                    {SHOP_SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  {shopErrors.subject && <p style={errorTextStyle}>{shopErrors.subject}</p>}
+                </div>
+                <div>
+                  <label htmlFor="s-message" style={labelStyle}>Bericht</label>
+                  <textarea id="s-message" rows={5} maxLength={2000} value={shop.message}
+                    onChange={(e) => setShop({ ...shop, message: e.target.value })}
+                    style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5 }} className="vp-input" />
+                </div>
+                <button type="button" onClick={sendShop} style={submitBtnStyle}>Verstuur →</button>
+                <p style={{ fontSize: 12, color: "rgba(13,31,60,0.55)", textAlign: "center", margin: 0, fontFamily: "'DM Sans', sans-serif" }}>
+                  We antwoorden binnen 1 werkdag. Liever bellen? {PHONE_DISPLAY}
+                </p>
+              </div>
+            )}
+          </div>
         </section>
       </main>
 
@@ -389,18 +353,15 @@ function ContactPage() {
 
       <style>{`
         .back-btn-wrap { padding: 72px 6vw 0; max-width: 1100px; margin: 0 auto; }
-        .back-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
-        .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .contact-card { border: 1px solid var(--border); }
-        .contact-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(13,31,60,0.08); border-color: rgba(46,204,138,0.4); }
-        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .wa-grid input::placeholder, .wa-grid textarea::placeholder { color: rgba(245,243,238,0.35); }
-        .wa-grid input:focus, .wa-grid textarea:focus { border-color: #2ECC8A; }
-        @media (max-width: 768px) {
-          .back-btn-wrap { padding-top: 64px; }
-          .back-btn { font-size: 12px; }
-          .contact-cards { grid-template-columns: 1fr; }
-          .wa-grid { grid-template-columns: 1fr; }
+        .back-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; margin-bottom: 16px; }
+        .contact-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(13,31,60,0.05); padding: 6px; border-radius: 12px; }
+        .contact-tab { padding: 12px 16px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; color: rgba(13,31,60,0.55); border-radius: 8px; cursor: pointer; transition: all 0.18s ease; }
+        .contact-tab.active { background: #2ECC8A; color: #0D1F3C; font-weight: 600; box-shadow: 0 4px 12px rgba(46,204,138,0.25); }
+        .vp-input:focus { border-color: #2ECC8A !important; }
+        @media (max-width: 640px) {
+          .contact-card-wrap { padding: 24px 16px !important; }
+          .contact-tabs { grid-template-columns: 1fr; }
+          .contact-tab { font-size: 13px; }
         }
       `}</style>
     </>
