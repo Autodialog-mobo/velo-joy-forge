@@ -450,8 +450,7 @@ function RiderTab({
             Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
           </p>
 
-            Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
-          </p>
+
 
           <div className="wa-grid">
             <div>
