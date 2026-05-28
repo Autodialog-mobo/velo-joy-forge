@@ -562,21 +562,9 @@ function ShopTab({
   sendShop: () => void;
   shopSent: boolean;
 }) {
-  const labelStyle: React.CSSProperties = {
-    display: "block", fontFamily: "'DM Sans', sans-serif", fontWeight: 500,
-    fontSize: 13, color: "#0D1F3C", marginBottom: 6,
-  };
-  const inputStyle: React.CSSProperties = {
-    width: "100%", background: "#fff",
-    border: "1px solid rgba(13,31,60,0.15)", borderRadius: 8,
-    padding: "10px 14px", fontFamily: "'DM Sans', sans-serif",
-    fontSize: 15, color: "#0D1F3C", outline: "none", boxSizing: "border-box",
-  };
-  const errorStyle: React.CSSProperties = { marginTop: 6, fontSize: 12, color: "#c0392b", fontFamily: "'DM Sans', sans-serif" };
-
   return (
     <>
-      {/* WhatsApp CTA */}
+      {/* WhatsApp CTA — identiek aan Tab 1 stijl */}
       <section style={{ padding: "8px 6vw 24px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
         <a
           href={`https://wa.me/${WA_NUMBER}`}
@@ -599,10 +587,10 @@ function ShopTab({
         </p>
       </section>
 
-      {/* SHORTCUTS */}
+      {/* SHORTCUTS — identieke card-stijl als Tab 1 */}
       <section style={{ padding: "8px 6vw 24px", maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ textAlign: "center", fontSize: 12, letterSpacing: 1.4, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 16 }}>
-          Snel naar het juiste team
+          Waarover gaat je vraag?
         </p>
         <div className="contact-cards">
           {SHOP_SHORTCUTS.map((s) => {
@@ -623,36 +611,35 @@ function ShopTab({
         </div>
       </section>
 
-      {/* SHOP FORM */}
-      <section style={{ padding: "24px 6vw 64px", maxWidth: 640, margin: "0 auto" }}>
+      {/* FORM — identieke dark navy card als Tab 1 */}
+      <section style={{ padding: "24px 6vw 64px", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
-            background: "#fff",
-            borderRadius: 16,
-            padding: 32,
-            boxShadow: "0 12px 40px rgba(13,31,60,0.08)",
-            border: "1px solid rgba(13,31,60,0.06)",
+            background: "#0D1F3C",
+            color: "#F5F3EE",
+            borderRadius: 18,
+            padding: "36px 36px 32px",
+            boxShadow: "0 30px 80px rgba(13,31,60,0.15)",
+            fontFamily: "'DM Sans', sans-serif",
           }}
-          className="shop-card-wrap"
         >
-          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 24, letterSpacing: "-0.5px", color: "#0D1F3C", marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 28, letterSpacing: "-0.5px", marginBottom: 12 }}>
             Stuur ons een bericht
           </h2>
-          <p style={{ fontSize: 14, color: "var(--text-muted)", marginBottom: 24, fontFamily: "'DM Sans', sans-serif" }}>
-            We antwoorden binnen 1 werkdag.
+          <p style={{ fontSize: 15, color: "rgba(245,243,238,0.7)", lineHeight: 1.55, marginBottom: 24 }}>
+            Vul het formulier in — we antwoorden binnen 1 werkdag.
           </p>
 
           {shopSent && (
             <div
               role="status"
               style={{
-                background: "rgba(46,204,138,0.12)",
-                border: "1px solid rgba(46,204,138,0.4)",
-                color: "#0D1F3C",
-                padding: "12px 14px",
+                background: "rgba(46,204,138,0.18)",
+                border: "1px solid rgba(46,204,138,0.5)",
+                color: "#F5F3EE",
+                padding: "14px 16px",
                 borderRadius: 10,
                 marginBottom: 20,
-                fontFamily: "'DM Sans', sans-serif",
                 fontSize: 14,
               }}
             >
@@ -660,79 +647,89 @@ function ShopTab({
             </div>
           )}
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className="wa-grid">
             <div>
-              <label htmlFor="s-name" style={labelStyle}>Naam *</label>
-              <input id="s-name" type="text" value={shop.name} maxLength={100}
+              <label htmlFor="s-name" style={waLabelStyle}>Naam <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <input
+                id="s-name" type="text" required maxLength={100} value={shop.name}
                 onChange={(e) => { setShop({ ...shop, name: e.target.value }); if (shopErrors.name) setShopErrors((p) => ({ ...p, name: undefined })); }}
-                style={inputStyle} className="vp-input" />
-              {shopErrors.name && <p style={errorStyle}>{shopErrors.name}</p>}
+                placeholder="Jan Janssens" style={waInputStyle}
+              />
+              {shopErrors.name && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.name}</p>}
             </div>
             <div>
-              <label htmlFor="s-company" style={labelStyle}>Fietswinkel of bedrijfsnaam *</label>
-              <input id="s-company" type="text" value={shop.company} maxLength={150}
+              <label htmlFor="s-company" style={waLabelStyle}>Fietswinkel of bedrijfsnaam <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <input
+                id="s-company" type="text" required maxLength={150} value={shop.company}
                 onChange={(e) => { setShop({ ...shop, company: e.target.value }); if (shopErrors.company) setShopErrors((p) => ({ ...p, company: undefined })); }}
-                style={inputStyle} className="vp-input" />
-              {shopErrors.company && <p style={errorStyle}>{shopErrors.company}</p>}
+                placeholder="Fietsen Janssens" style={waInputStyle}
+              />
+              {shopErrors.company && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.company}</p>}
             </div>
             <div>
-              <label htmlFor="s-email" style={labelStyle}>E-mailadres *</label>
-              <input id="s-email" type="email" value={shop.email} maxLength={255}
+              <label htmlFor="s-email" style={waLabelStyle}>E-mail <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <input
+                id="s-email" type="email" required maxLength={255} value={shop.email}
                 onChange={(e) => { setShop({ ...shop, email: e.target.value }); if (shopErrors.email) setShopErrors((p) => ({ ...p, email: undefined })); }}
-                style={inputStyle} className="vp-input" />
-              {shopErrors.email && <p style={errorStyle}>{shopErrors.email}</p>}
+                placeholder="jan@winkel.be" style={waInputStyle}
+              />
+              {shopErrors.email && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.email}</p>}
             </div>
             <div>
-              <label htmlFor="s-phone" style={labelStyle}>Telefoonnummer</label>
-              <input id="s-phone" type="tel" value={shop.phone} maxLength={30}
+              <label htmlFor="s-phone" style={waLabelStyle}>Telefoon</label>
+              <input
+                id="s-phone" type="tel" maxLength={30} value={shop.phone}
                 onChange={(e) => setShop({ ...shop, phone: e.target.value })}
-                style={inputStyle} className="vp-input" />
+                placeholder="+32 4..." style={waInputStyle}
+              />
             </div>
-            <div>
-              <label htmlFor="s-subject" style={labelStyle}>Onderwerp *</label>
-              <select id="s-subject" value={shop.subject}
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label htmlFor="s-subject" style={waLabelStyle}>Onderwerp <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <select
+                id="s-subject" value={shop.subject}
                 onChange={(e) => { setShop({ ...shop, subject: e.target.value }); if (shopErrors.subject) setShopErrors((p) => ({ ...p, subject: undefined })); }}
-                style={inputStyle} className="vp-input">
-                <option value="">Kies een onderwerp…</option>
-                {SHOP_SUBJECTS.map((s) => <option key={s} value={s}>{s}</option>)}
+                style={waInputStyle}
+              >
+                <option value="" style={{ background: "#0D1F3C" }}>Kies een onderwerp…</option>
+                {SHOP_SUBJECTS.map((s) => (
+                  <option key={s} value={s} style={{ background: "#0D1F3C" }}>{s}</option>
+                ))}
               </select>
-              {shopErrors.subject && <p style={errorStyle}>{shopErrors.subject}</p>}
+              {shopErrors.subject && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.subject}</p>}
             </div>
-            <div>
-              <label htmlFor="s-message" style={labelStyle}>Bericht *</label>
-              <textarea id="s-message" rows={5} maxLength={2000} value={shop.message}
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label htmlFor="s-message" style={waLabelStyle}>Bericht <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <textarea
+                id="s-message" rows={5} maxLength={2000} required value={shop.message}
                 onChange={(e) => { setShop({ ...shop, message: e.target.value }); if (shopErrors.message) setShopErrors((p) => ({ ...p, message: undefined })); }}
-                style={{ ...inputStyle, resize: "vertical", lineHeight: 1.5 }} className="vp-input" />
-              {shopErrors.message && <p style={errorStyle}>{shopErrors.message}</p>}
+                placeholder="Vertel ons kort waar je vraag over gaat..."
+                style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
+              />
+              {shopErrors.message && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.message}</p>}
             </div>
-            <button
-              type="button"
-              onClick={sendShop}
-              style={{
-                width: "100%",
-                background: "#0D1F3C",
-                color: "#fff",
-                border: "none",
-                padding: "14px 24px",
-                borderRadius: 10,
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 600,
-                fontSize: 15,
-                cursor: "pointer",
-              }}
-            >
-              Verstuur bericht
-            </button>
           </div>
+
+          <button
+            type="button"
+            onClick={sendShop}
+            style={{
+              marginTop: 24,
+              width: "100%",
+              background: "#0D1F3C",
+              color: "#fff",
+              border: "1.5px solid rgba(245,243,238,0.25)",
+              padding: "14px 24px",
+              borderRadius: 10,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: 15,
+              cursor: "pointer",
+            }}
+          >
+            Verstuur bericht
+          </button>
         </div>
       </section>
-
-      <style>{`
-        .vp-input:focus { border-color: #2ECC8A !important; }
-        @media (max-width: 640px) {
-          .shop-card-wrap { padding: 24px 16px !important; }
-        }
-      `}</style>
     </>
   );
 }
