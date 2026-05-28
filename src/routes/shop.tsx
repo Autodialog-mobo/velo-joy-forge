@@ -191,7 +191,7 @@ function VelopassPro() {
         <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           {[
-            { n: 1, icon: <QrCode size={16} strokeWidth={2} />, t: "Scan of registreer de fiets", d: "Scan de Velopass Frame-ID met de Pro App of je kassasysteem. De fietsdata wordt automatisch ingeladen." },
+            { n: 1, icon: <QrCode size={16} strokeWidth={2} />, t: "Scan of registreer de fiets", d: "Gebruik je kassasysteem of de gratis Velopass Pro App. Scan de Frame-ID — de fietsdata wordt automatisch ingeladen. Geen kassasysteem bij de hand? De Pro App werkt volledig zelfstandig." },
             { n: 2, icon: <Mail size={16} strokeWidth={2} />, t: "Geef het e-mailadres van de klant in", d: "Voeg het e-mailadres van de klant toe aan het dossier. Dat is alles wat je van hem nodig hebt." },
             { n: 3, icon: <Send size={16} strokeWidth={2} />, t: "Velopass stuurt de uitnodiging in jouw naam", d: "De klant ontvangt automatisch een uitnodiging op jouw naam — niet van Velopass. Hij opent zijn digitaal fietspaspoort en is meteen verbonden met jouw winkel." },
             { n: 4, icon: <RefreshCw size={16} strokeWidth={2} />, t: "Automatisch contact, voor altijd", d: "Velopass stuurt onderhoudsherinneringen in jouw naam. De klant blijft verbonden met jouw winkel — zonder dat jij er nog iets voor hoeft te doen." },
