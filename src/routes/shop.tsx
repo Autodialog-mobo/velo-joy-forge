@@ -67,7 +67,7 @@ function VelopassPro() {
           <span className="logo-text">velopass<span className="logo-pro">pro</span></span>
         </Link>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href="#pijlers">Voordelen</a></li>
+          <li><a href="#voordelen">Voordelen</a></li>
           <li><a href="#hoe-werkt-het">Hoe werkt het?</a></li>
           <li><a href="#fabrikanten">Fabrikanten</a></li>
           <li><a href="#leasing">Leasing</a></li>
@@ -150,7 +150,7 @@ function VelopassPro() {
         </div>
       </section>
 
-      <section className="pijlers" id="pijlers">
+      <section className="pijlers" id="voordelen">
         <p className="eyebrow">Wat je wint</p>
         <h2 className="sec-title" style={{ marginBottom: 56, maxWidth: 520 }}>Vier redenen waarom {activeShopsCount.toLocaleString("nl-BE")} fietswinkels vertrouwen op Velopass</h2>
         <div className="pijler-grid">
@@ -186,10 +186,6 @@ function VelopassPro() {
         </div>
       </section>
 
-      <Fabrikanten />
-
-      <Leasing />
-
       <section className="how" id="hoe-werkt-het">
         <p className="eyebrow">Hoe werkt het?</p>
         <h2 className="sec-title">Van verkoop tot actieve klantrelatie — in één scan.</h2>
@@ -223,7 +219,9 @@ function VelopassPro() {
         </div>
       </section>
 
-      <ProCommunity activeShopsCount={activeShopsCount} />
+      <Fabrikanten />
+
+      <Leasing />
 
       <section className="register" id="registreer">
         <div className="reg-inner">
@@ -265,6 +263,8 @@ function VelopassPro() {
           <RegisterForm />
         </div>
       </section>
+
+      <ProCommunity activeShopsCount={activeShopsCount} />
 
       <Footer variant="pro" />
     </>
