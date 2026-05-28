@@ -76,7 +76,7 @@ function renderLine(line: string): ReactNode[] {
 const leftFAQs = [
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
-    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.\n\nBovendien blokkeert Velopass elke poging om een al geregistreerde fiets opnieuw te registreren op basis van die merk + framenummer combinatie. Een dief kan jouw fiets dus niet opnieuw registreren op zijn naam.\n\nWil je zelf controleren of jouw fiets geregistreerd is? Zoek via merk + framenummer op [Fiets controleren →](/bikesearch)",
+    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.\n\nBovendien blokkeert Velopass elke poging om een al geregistreerde fiets opnieuw te registreren op basis van die merk + framenummer combinatie. Een dief kan jouw fiets dus niet opnieuw registreren op zijn naam.\n\nWil je zelf controleren of jouw fiets geregistreerd is? Zoek via merk + framenummer op [Fiets controleren →](/fiets-controleren)",
   },
   {
     q: "Kan ik een nieuwe Frame-ID bestellen als mijn oude verwijderd of beschadigd is?",
@@ -84,7 +84,7 @@ const leftFAQs = [
   },
   {
     q: "Hoe draag ik mijn fiets over aan een nieuwe eigenaar?",
-    a: "Log in op je Velopass, selecteer de fiets en klik op 'eigendom overdragen'. De nieuwe eigenaar ontvangt een uitnodiging en zet de fiets op zijn naam. De volledige fietshistorie gaat mee — enkel jouw persoonlijke gegevens en privéfoto's blijven privé.",
+    a: "Log in op je Velopass, selecteer de fiets en klik op 'eigendom overdragen'. Je ontvangt een pincode via e-mail. Geef die pincode aan de nieuwe eigenaar — hij voert die in en zet de fiets op zijn naam. De volledige fietshistorie gaat mee — enkel jouw persoonlijke gegevens en privéfoto's blijven privé.",
   },
   {
     q: "Hoe werkt Velopass samen met het Belgisch Nationaal Fietsregister (MyBike)?",
