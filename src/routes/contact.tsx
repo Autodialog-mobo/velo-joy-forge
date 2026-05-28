@@ -515,39 +515,40 @@ function RiderTab({
               />
             </div>
           </div>
-
           <button
             type="button"
             onClick={sendWa}
             style={{
-              marginTop: 24,
+              marginTop: 14,
               width: "100%",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 12,
+              gap: 10,
               background: "#2ECC8A",
               color: "#0D1F3C",
               border: "none",
-              padding: "16px 24px",
-              borderRadius: 12,
+              padding: "11px 20px",
+              borderRadius: 10,
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: 15,
-              letterSpacing: "1.5px",
+              fontSize: 13,
+              letterSpacing: "1.4px",
               textTransform: "uppercase",
               cursor: "pointer",
             }}
           >
-            <MessageCircle size={20} strokeWidth={2.2} />
+            <MessageCircle size={16} strokeWidth={2.2} />
             Verstuur via WhatsApp →
           </button>
 
-          <p style={{ marginTop: 20, textAlign: "center", fontSize: 14, color: "rgba(245,243,238,0.6)" }}>
+          <p style={{ marginTop: 10, textAlign: "center", fontSize: 12, color: "rgba(245,243,238,0.6)" }}>
             Liever een e-mail sturen?{" "}
             <a href="mailto:support@velopass.com" style={{ color: "#2ECC8A", textDecoration: "none", fontWeight: 500 }}>
               support@velopass.com
             </a>
+          </p>
+
           </p>
         </div>
       </section>
