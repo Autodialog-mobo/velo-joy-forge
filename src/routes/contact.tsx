@@ -285,30 +285,29 @@ function ContactPage() {
           Terug
         </button>
       </div>
-
-      <main style={{ background: "var(--bg)", paddingTop: 16, minHeight: "100vh" }}>
+      <main style={{ background: "var(--bg)", paddingTop: 8, minHeight: "100vh" }}>
         {/* HEADER */}
-        <section style={{ padding: "24px 6vw 24px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
+        <section style={{ padding: "8px 6vw 8px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <h1
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(36px, 5vw, 56px)",
+              fontSize: "clamp(24px, 3vw, 36px)",
               lineHeight: 1.05,
-              letterSpacing: "-1.5px",
+              letterSpacing: "-1px",
               color: "var(--navy)",
-              marginBottom: 16,
+              marginBottom: 6,
             }}
           >
             Hoe kunnen we helpen?
           </h1>
-          <p style={{ fontSize: 17, color: "var(--text-muted)", maxWidth: 560, margin: "0 auto", lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: "var(--text-muted)", maxWidth: 560, margin: "0 auto", lineHeight: 1.5 }}>
             Kies hieronder wie je bent — we sturen je vraag meteen naar de juiste persoon.
           </p>
         </section>
 
         {/* TABS */}
-        <section style={{ padding: "8px 6vw 0", maxWidth: 720, margin: "0 auto" }}>
+        <section style={{ padding: "4px 6vw 0", maxWidth: 720, margin: "0 auto" }}>
           <div className="contact-tabs" role="tablist">
             <button
               type="button"
@@ -329,6 +328,8 @@ function ContactPage() {
               Ik ben een fietswinkel
             </button>
           </div>
+        </section>
+
         </section>
 
         {activeTab === "rider" ? (
