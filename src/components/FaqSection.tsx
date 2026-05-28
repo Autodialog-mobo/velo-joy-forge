@@ -117,6 +117,10 @@ const rightFAQs = [
     q: "Hoe koppel ik een fietswinkel aan mijn Velopass?",
     a: "Als je fiets via een Velopass-fietswinkel geregistreerd werd, is die winkel al automatisch gekoppeld. Wil je een andere winkel kiezen of een winkel toevoegen? Dat doe je in je Velopass-account onder 'Mijn fietswinkel'. Je kan dit op elk moment wijzigen.",
   },
+  {
+    q: "Ik kan mijn fiets niet registreren.",
+    a: "Er zijn drie situaties waarvoor de registratie anders verloopt:\n\nBen je woonachtig in Frankrijk? In Frankrijk moet de registratie gebeuren bij de verkoper van de fiets — online registreren is niet mogelijk. Bekijk de kaart op onze website om de dichtstbijzijnde Velopass-fietswinkel te vinden.\n\nIs het een leasefiets? Leasefietsen zijn geregistreerd op naam van de leasingmaatschappij (bij Joule is dit een uitzondering — daar heb je wel een eigen account). Je hebt in dat geval geen eigen Velopass-account, maar de fietswinkel kan je fiets uitlezen en onderhoud toevoegen. Is je fiets verloren of gestolen? Geef dit door aan de leasingmaatschappij — zij kunnen de fiets als verloren melden.\n\nBegint je Velopass-code met VP? Codes die beginnen met VP zijn APIC-codes. Die fiets moet geregistreerd worden door een Velopass-fietswinkel. Breng je fiets mee naar een aangesloten winkel om de registratie te voltooien.",
+  },
 ];
 
 export function FaqSection() {
