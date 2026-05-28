@@ -205,7 +205,7 @@ function VelopassPro() {
                   <h5 style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 6px", fontSize: 14 }}>
                     <Smartphone size={16} strokeWidth={2} color="#0a2540" /> Via de Pro App
                   </h5>
-                  <p style={{ margin: 0, fontSize: 13 }}>Heeft de fabrikant de data nog niet vooringevuld? Geef de klant- en fietsdata manueel in via de gratis Velopass Pro App. Werkt volledig zelfstandig, zonder kassasysteem.</p>
+                  <p style={{ margin: 0, fontSize: 13 }}>De klantdata geef je manueel in. Fietsdata wordt automatisch ingeladen als de fabrikant die heeft vooringevuld — zo niet, geef je die ook manueel in via de app.</p>
                 </div>
               </div>
             </div>
