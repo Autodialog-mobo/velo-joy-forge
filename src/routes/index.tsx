@@ -145,7 +145,7 @@ function VelopassHome() {
             <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in 1 minuut klaar.</p>
             <span className="path-cta">Open je Velopass →</span>
           </a>
-          <a href="#nieuwe-sticker" className="path-card secondary">
+          <Link to="/bestellen" className="path-card secondary">
             <div className="path-tag">Nog geen Frame-ID?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
@@ -155,9 +155,9 @@ function VelopassHome() {
               </svg>
             </div>
             <div className="path-title">Bestel een Velopass Frame-ID</div>
-            <p className="path-desc">Vraag een Frame-ID aan bij je lokale fietswinkel of bestel er rechtstreeks een via onze webshop.</p>
+            <p className="path-desc">Vanaf €12,95. Gratis verzending. Direct beschermd via je digitaal fietspaspoort.</p>
             <span className="path-cta">Sticker bestellen →</span>
-          </a>
+          </Link>
           <a href="#tweedehands" className="path-card tertiary">
             <div className="path-tag">Tweedehands fiets met Frame-ID?</div>
             <div className="path-icon">
