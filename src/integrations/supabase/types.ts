@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          amount_subtotal: number
+          amount_tax: number
+          amount_total: number
+          created_at: string
+          currency: string
+          customer_email: string
+          environment: string
+          id: string
+          price_id: string
+          product_name: string
+          quantity: number
+          shipping_city: string | null
+          shipping_country: string | null
+          shipping_line1: string | null
+          shipping_line2: string | null
+          shipping_name: string | null
+          shipping_postal_code: string | null
+          shipping_state: string | null
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount_subtotal: number
+          amount_tax?: number
+          amount_total: number
+          created_at?: string
+          currency?: string
+          customer_email: string
+          environment?: string
+          id?: string
+          price_id: string
+          product_name: string
+          quantity?: number
+          shipping_city?: string | null
+          shipping_country?: string | null
+          shipping_line1?: string | null
+          shipping_line2?: string | null
+          shipping_name?: string | null
+          shipping_postal_code?: string | null
+          shipping_state?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount_subtotal?: number
+          amount_tax?: number
+          amount_total?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string
+          environment?: string
+          id?: string
+          price_id?: string
+          product_name?: string
+          quantity?: number
+          shipping_city?: string | null
+          shipping_country?: string | null
+          shipping_line1?: string | null
+          shipping_line2?: string | null
+          shipping_name?: string | null
+          shipping_postal_code?: string | null
+          shipping_state?: string | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

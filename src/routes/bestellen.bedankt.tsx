@@ -1,0 +1,135 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { CheckCircle2, Truck, Mail, ArrowLeft } from "lucide-react";
+import { VelopassMark } from "@/components/VelopassMark";
+import { Footer } from "@/components/Footer";
+import { getOrderBySession } from "@/utils/payments.functions";
+import { getStripeEnvironment } from "@/lib/stripe";
+
+export const Route = createFileRoute("/bestellen/bedankt")({
+  validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
+    session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+  }),
+  head: () => ({
+    meta: [
+      { title: "Bedankt voor je bestelling — Velopass" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
+  component: BedanktPage,
+});
+
+function BedanktPage() {
+  const { session_id } = Route.useSearch();
+  const [order, setOrder] = useState<{
+    status: string | null;
+    paymentStatus: string | null;
+    email: string | null;
+    amountTotal: number;
+    productName: string | null;
+    quantity: number;
+  } | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!session_id) {
+      setLoading(false);
+      return;
+    }
+    getOrderBySession({ data: { sessionId: session_id, environment: getStripeEnvironment() } })
+      .then((res) => {
+        if ("error" in res) setError(res.error ?? "Onbekende fout");
+        else setOrder(res);
+      })
+      .catch((e) => setError(e?.message ?? "Onbekende fout"))
+      .finally(() => setLoading(false));
+  }, [session_id]);
+
+  return (
+    <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
+      <header style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1200, margin: "0 auto" }}>
+        <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
+          <VelopassMark size={28} />
+          <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18 }}>Velopass</span>
+        </Link>
+        <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none" }}>
+          <ArrowLeft size={16} /> Terug naar home
+        </Link>
+      </header>
+
+      <main style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px 72px" }}>
+        <div style={{ background: "#fff", borderRadius: 16, padding: 36, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", textAlign: "center" }}>
+          {loading ? (
+            <p>Bestelling laden…</p>
+          ) : error ? (
+            <>
+              <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 26, margin: 0 }}>Hmm, er ging iets mis</h1>
+              <p style={{ color: "rgba(13,31,60,0.7)", marginTop: 12 }}>{error}</p>
+            </>
+          ) : !order ? (
+            <p>Geen bestelinformatie gevonden.</p>
+          ) : (
+            <>
+              <div style={{ width: 72, height: 72, borderRadius: 999, background: "rgba(46,204,138,0.15)", margin: "0 auto 20px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                <CheckCircle2 size={40} color="#2ECC8A" strokeWidth={2} />
+              </div>
+              <p style={{ color: "#2ECC8A", fontWeight: 600, fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>
+                Bestelling ontvangen
+              </p>
+              <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 30, margin: "10px 0 12px", color: "#0D1F3C" }}>
+                Bedankt voor je bestelling
+              </h1>
+              <p style={{ color: "rgba(13,31,60,0.7)", fontSize: 15, margin: "0 0 28px", lineHeight: 1.5 }}>
+                We hebben je bestelling van <strong>{order.productName} × {order.quantity}</strong> goed ontvangen.
+                Je Frame-ID{order.quantity > 1 ? "'s worden" : " wordt"} verzonden binnen 2 werkdagen.
+              </p>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, textAlign: "left", margin: "0 0 24px" }}>
+                <div style={{ background: "#F5F3EE", borderRadius: 12, padding: 16 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: "rgba(13,31,60,0.6)", textTransform: "uppercase", letterSpacing: 1.5 }}>
+                    <Mail size={14} /> Bevestiging
+                  </div>
+                  <p style={{ margin: "6px 0 0", fontWeight: 600, fontSize: 14, color: "#0D1F3C", wordBreak: "break-word" }}>
+                    {order.email ?? "—"}
+                  </p>
+                </div>
+                <div style={{ background: "#F5F3EE", borderRadius: 12, padding: 16 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: "rgba(13,31,60,0.6)", textTransform: "uppercase", letterSpacing: 1.5 }}>
+                    <Truck size={14} /> Verzending
+                  </div>
+                  <p style={{ margin: "6px 0 0", fontWeight: 600, fontSize: 14, color: "#0D1F3C" }}>Gratis · 2 werkdagen</p>
+                </div>
+              </div>
+
+              <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, margin: 0, color: "#0D1F3C" }}>
+                {new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(order.amountTotal / 100)} betaald
+              </p>
+              <p style={{ fontSize: 13, color: "rgba(13,31,60,0.55)", margin: "6px 0 28px" }}>
+                Een betalingsbevestiging staat in je mailbox. Status: {order.paymentStatus}.
+              </p>
+
+              <Link
+                to="/"
+                style={{
+                  display: "inline-block",
+                  padding: "12px 24px",
+                  borderRadius: 12,
+                  background: "#0D1F3C",
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  fontSize: 14,
+                }}
+              >
+                Terug naar Velopass
+              </Link>
+            </>
+          )}
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
