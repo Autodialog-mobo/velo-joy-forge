@@ -39,7 +39,7 @@ function BedanktPage() {
     }
     getOrderBySession({ data: { sessionId: session_id, environment: getStripeEnvironment() } })
       .then((res) => {
-        if ("error" in res) setError(res.error);
+        if ("error" in res) setError(res.error ?? "Onbekende fout");
         else setOrder(res);
       })
       .catch((e) => setError(e?.message ?? "Onbekende fout"))
