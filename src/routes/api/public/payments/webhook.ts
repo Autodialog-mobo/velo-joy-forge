@@ -28,7 +28,7 @@ async function handleCheckoutCompleted(sessionLite: any, env: StripeEnv) {
   const productName = session.metadata?.product_name ?? "Velopass Frame-ID";
   const quantity = Number(session.metadata?.quantity ?? "1");
 
-  await getSupabase().from("orders").upsert(
+  await (getSupabase().from("orders") as any).upsert(
     {
       stripe_session_id: session.id,
       stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id ?? null,
