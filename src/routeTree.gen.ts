@@ -19,8 +19,10 @@ import { Route as InsuranceRouteImport } from './routes/insurance'
 import { Route as GestolenRouteImport } from './routes/gestolen'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
+import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
@@ -74,6 +76,11 @@ const BikesearchRoute = BikesearchRouteImport.update({
   path: '/bikesearch',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BestellenRoute = BestellenRouteImport.update({
+  id: '/bestellen',
+  path: '/bestellen',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssistanceRoute = AssistanceRouteImport.update({
   id: '/assistance',
   path: '/assistance',
@@ -83,6 +90,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
+  id: '/bedankt',
+  path: '/bedankt',
+  getParentRoute: () => BestellenRoute,
 } as any)
 const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   id: '/api/public/vies-lookup',
@@ -99,6 +111,7 @@ const ApiPublicPaymentsWebhookRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistance': typeof AssistanceRoute
+  '/bestellen': typeof BestellenRouteWithChildren
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/gestolen': typeof GestolenRoute
@@ -109,12 +122,14 @@ export interface FileRoutesByFullPath {
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
+  '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistance': typeof AssistanceRoute
+  '/bestellen': typeof BestellenRouteWithChildren
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/gestolen': typeof GestolenRoute
@@ -125,6 +140,7 @@ export interface FileRoutesByTo {
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
+  '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -132,6 +148,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assistance': typeof AssistanceRoute
+  '/bestellen': typeof BestellenRouteWithChildren
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
   '/gestolen': typeof GestolenRoute
@@ -142,6 +159,7 @@ export interface FileRoutesById {
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
+  '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -150,6 +168,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/assistance'
+    | '/bestellen'
     | '/bikesearch'
     | '/contact'
     | '/gestolen'
@@ -160,12 +179,14 @@ export interface FileRouteTypes {
     | '/pro'
     | '/professionals'
     | '/shop'
+    | '/bestellen/bedankt'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/assistance'
+    | '/bestellen'
     | '/bikesearch'
     | '/contact'
     | '/gestolen'
@@ -176,12 +197,14 @@ export interface FileRouteTypes {
     | '/pro'
     | '/professionals'
     | '/shop'
+    | '/bestellen/bedankt'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
     | '/assistance'
+    | '/bestellen'
     | '/bikesearch'
     | '/contact'
     | '/gestolen'
@@ -192,6 +215,7 @@ export interface FileRouteTypes {
     | '/pro'
     | '/professionals'
     | '/shop'
+    | '/bestellen/bedankt'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -199,6 +223,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssistanceRoute: typeof AssistanceRoute
+  BestellenRoute: typeof BestellenRouteWithChildren
   BikesearchRoute: typeof BikesearchRoute
   ContactRoute: typeof ContactRoute
   GestolenRoute: typeof GestolenRoute
@@ -285,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BikesearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bestellen': {
+      id: '/bestellen'
+      path: '/bestellen'
+      fullPath: '/bestellen'
+      preLoaderRoute: typeof BestellenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/assistance': {
       id: '/assistance'
       path: '/assistance'
@@ -298,6 +330,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/bestellen/bedankt': {
+      id: '/bestellen/bedankt'
+      path: '/bedankt'
+      fullPath: '/bestellen/bedankt'
+      preLoaderRoute: typeof BestellenBedanktRouteImport
+      parentRoute: typeof BestellenRoute
     }
     '/api/public/vies-lookup': {
       id: '/api/public/vies-lookup'
@@ -316,9 +355,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BestellenRouteChildren {
+  BestellenBedanktRoute: typeof BestellenBedanktRoute
+}
+
+const BestellenRouteChildren: BestellenRouteChildren = {
+  BestellenBedanktRoute: BestellenBedanktRoute,
+}
+
+const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
+  BestellenRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssistanceRoute: AssistanceRoute,
+  BestellenRoute: BestellenRouteWithChildren,
   BikesearchRoute: BikesearchRoute,
   ContactRoute: ContactRoute,
   GestolenRoute: GestolenRoute,
@@ -335,3 +387,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
