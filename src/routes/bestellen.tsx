@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { QrCode, Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag } from "lucide-react";
+import { QrCode, Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
