@@ -329,7 +329,7 @@ function VelopassHome() {
       <section className="flow-sticker" id="al-een-sticker">
         <p className="eyebrow">Uitnodiging ontvangen?</p>
         <h2 className="sec-title">Jouw Velopass staat klaar</h2>
-        <p className="sec-sub">Je fiets staat al op jouw naam gezet. Jij hoeft enkel de Frame-ID te kleven en een wachtwoord te kiezen — dan is je Velopass klaar.</p>
+        <p className="sec-sub">Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
         <div className="steps-flow">
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
