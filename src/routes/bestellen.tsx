@@ -67,7 +67,7 @@ export const Route = createFileRoute("/bestellen")({
 });
 
 function BestellenPage() {
-  const [selected, setSelected] = useState<BundleKey>("frameid_duo_onetime");
+  const [selected, setSelected] = useState<BundleKey>("frameid_2_onetime");
   const [quantity, setQuantity] = useState(1);
   const [email, setEmail] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
