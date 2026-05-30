@@ -56,6 +56,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         return_url: data.returnUrl,
         payment_method_types: ["card"],
         automatic_tax: { enabled: true },
+        adaptive_pricing: { enabled: true },
         shipping_address_collection: {
           allowed_countries: [
             "BE",
