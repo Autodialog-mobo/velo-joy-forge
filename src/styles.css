@@ -194,9 +194,9 @@ button { font-family: inherit; }
 .optional-badge { font-size: 10px; color: var(--text-muted); background: rgba(13,31,60,0.06); border-radius: 100px; padding: 2px 8px; letter-spacing: 0.3px; font-weight: 500; }
 
 /* WHY section cards */
-.why-section { padding: 100px 8vw; background: var(--bg); }
+.why-section { padding: 100px 8vw; background: var(--white); }
 .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.why-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 32px; }
+.why-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 32px; }
 .why-card h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 10px; letter-spacing: -0.2px; }
 .why-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
 .why-icon { width: 48px; height: 48px; background: rgba(13,31,60,0.06); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
