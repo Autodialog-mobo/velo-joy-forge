@@ -30,16 +30,13 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       const bundle = BUNDLES[data.priceId];
       const quantity = Math.max(1, Math.min(10, data.quantity || 1));
 
+      // Resolve the human-readable priceId (lookup_key) to the Stripe price ID.
+      const prices = await stripe.prices.list({ lookup_keys: [data.priceId], limit: 1 });
+      if (!prices.data.length) throw new Error(`Price not found for lookup_key '${data.priceId}'`);
+      const stripePrice = prices.data[0];
+
       const session = await stripe.checkout.sessions.create({
-        line_items: [{
-          quantity,
-          price_data: {
-            currency: "eur",
-            product: bundle.productId,
-            unit_amount: bundle.amount,
-            tax_behavior: "inclusive",
-          },
-        }],
+        line_items: [{ price: stripePrice.id, quantity }],
         mode: "payment",
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
