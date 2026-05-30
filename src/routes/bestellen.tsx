@@ -175,8 +175,8 @@ function BestellenPage() {
                           POPULAIRSTE
                         </span>
                       )}
-                      <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(46,204,138,0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-                        <QrCode size={22} color="#2ECC8A" strokeWidth={2} />
+                      <div style={{ width: 44, height: 44, borderRadius: 12, background: isFeatured ? "#2ECC8A" : "rgba(46,204,138,0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
+                        <QrCode size={22} color={isFeatured ? "#0D1F3C" : "#2ECC8A"} strokeWidth={2} />
                       </div>
                       <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: "0 0 6px", color: "#0D1F3C" }}>
                         {b.name}
