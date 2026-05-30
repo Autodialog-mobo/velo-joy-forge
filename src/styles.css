@@ -752,7 +752,8 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 
 /* Tooltip voor disabled betaalknop */
 .pay-btn-wrap:hover .pay-tooltip,
-.pay-btn-wrap:focus-within .pay-tooltip {
+.pay-btn-wrap:focus-within .pay-tooltip,
+.pay-btn-wrap--open .pay-tooltip {
   opacity: 1 !important;
 }
 .pay-btn-wrap .pay-tooltip {
