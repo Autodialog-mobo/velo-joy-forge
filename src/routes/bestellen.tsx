@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { QrCode, Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
+import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
@@ -175,12 +175,12 @@ function BestellenPage() {
                           POPULAIRSTE
                         </span>
                       )}
-                      <div style={{ width: 44, height: 44, borderRadius: 12, background: isFeatured ? "#2ECC8A" : "rgba(46,204,138,0.12)", display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: 14 }}>
-                        <QrCode size={22} color={isFeatured ? "#0D1F3C" : "#2ECC8A"} strokeWidth={2} />
+                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#2ECC8A" }}>
+                        {b.stickers}
                       </div>
-                      <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: "0 0 6px", color: "#0D1F3C" }}>
-                        {b.name}
-                      </p>
+                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 16, color: "#0D1F3C", marginTop: 2 }}>
+                        {b.stickers === 1 ? "Frame-ID" : "Frame-ID's"}
+                      </div>
                       <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
