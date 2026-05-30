@@ -162,7 +162,7 @@ function BestellenPage() {
                         borderRadius: "0 16px 16px 0",
                         padding: 24,
                         border: isFeatured ? "2px solid #2ECC8A" : "1px solid rgba(13,31,60,0.06)",
-                        borderLeft: "6px solid #2ECC8A",
+                        borderLeft: `${b.stickers === 1 ? 4 : b.stickers === 2 ? 10 : 22}px solid #2ECC8A`,
                         boxShadow: "0 4px 20px rgba(13,31,60,0.08)",
                         position: "relative",
                         fontFamily: "DM Sans, sans-serif",
