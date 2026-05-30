@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { getOrderBySession } from "@/utils/payments.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
 
-export const Route = createFileRoute("/bestellen/bedankt")({
+export const Route = createFileRoute("/order/thanks")({
   validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
     session_id: typeof search.session_id === "string" ? search.session_id : undefined,
   }),
