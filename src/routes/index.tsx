@@ -333,8 +333,9 @@ function VelopassHome() {
         <div className="steps-flow">
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass gaat open.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Je Velopass is klaar", d: "Diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 2, t: "Klef je Frame-ID op het frame", d: "Ontvette het oppervlak eerst voor een optimale hechting. Kies een zichtbare plek — bij voorkeur net onder de zadelpen. Zo is de QR makkelijk scanbaar én zien dieven meteen dat jouw fiets beschermd is.", icon: <Sticker size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 3, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass gaat open.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 4, t: "Je Velopass is klaar", d: "Diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
