@@ -40,10 +40,24 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         mode: "payment",
         ui_mode: "embedded_page",
         return_url: data.returnUrl,
+        payment_method_types: ["card"],
         automatic_tax: { enabled: true },
         shipping_address_collection: {
           allowed_countries: ["BE", "NL", "LU", "FR", "DE", "AT", "ES", "IT", "PT", "IE", "DK", "SE", "FI", "PL"],
         },
+        shipping_options: [
+          {
+            shipping_rate_data: {
+              type: "fixed_amount",
+              fixed_amount: { amount: 0, currency: "eur" },
+              display_name: "Gratis verzending",
+              delivery_estimate: {
+                minimum: { unit: "business_day", value: 2 },
+                maximum: { unit: "business_day", value: 5 },
+              },
+            },
+          },
+        ],
         billing_address_collection: "auto",
         ...(data.customerEmail && { customer_email: data.customerEmail }),
         payment_intent_data: { description: `${bundle.name} × ${quantity}` },
