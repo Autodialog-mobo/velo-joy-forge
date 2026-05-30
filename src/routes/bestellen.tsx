@@ -320,6 +320,15 @@ function BestellenPage() {
               >
                 {hasItems ? `Betalen — ${eur(total)} →` : "Betalen →"}
               </button>
+              {!hasItems ? (
+                <p style={{ fontSize: 12, color: "rgba(13,31,60,0.7)", margin: "6px 0 0", textAlign: "center", fontFamily: "DM Sans, sans-serif" }}>
+                  Kies minstens één bundel om te kunnen betalen.
+                </p>
+              ) : !emailValid ? (
+                <p style={{ fontSize: 12, color: "rgba(13,31,60,0.7)", margin: "6px 0 0", textAlign: "center", fontFamily: "DM Sans, sans-serif" }}>
+                  Vul een geldig e-mailadres in om verder te gaan.
+                </p>
+              ) : null}
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
                 Veilig betalen via Stripe · SSL-beveiligd
               </p>
