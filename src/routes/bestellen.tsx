@@ -50,13 +50,13 @@ const eur = (cents: number) =>
 export const Route = createFileRoute("/bestellen")({
   head: () => ({
     meta: [
-      { title: "Bestel een Velopass Frame-ID — vanaf €12,95" },
+      { title: "Bestel een Velopass Frame-ID — vanaf €12,99" },
       {
         name: "description",
         content:
           "Bestel je Velopass Frame-ID. Eén sticker beschermt je fiets met diefstalprotectie, pechhulp en je digitaal fietspaspoort. Gratis verzending.",
       },
-      { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,95" },
+      { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,99" },
       {
         property: "og:description",
         content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Stripe.",
