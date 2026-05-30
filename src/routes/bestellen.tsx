@@ -159,9 +159,10 @@ function BestellenPage() {
                       key={b.key}
                       style={{
                         background: isFeatured ? "rgba(46,204,138,0.06)" : "#fff",
-                        borderRadius: 16,
+                        borderRadius: "0 16px 16px 0",
                         padding: 24,
                         border: isFeatured ? "2px solid #2ECC8A" : "1px solid rgba(13,31,60,0.06)",
+                        borderLeft: "6px solid #2ECC8A",
                         boxShadow: "0 4px 20px rgba(13,31,60,0.08)",
                         position: "relative",
                         fontFamily: "DM Sans, sans-serif",
