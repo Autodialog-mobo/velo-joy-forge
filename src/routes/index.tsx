@@ -131,7 +131,7 @@ function VelopassHome() {
         </p>
 
         <div className="path-split">
-          <a href="#al-sticker" className="path-card primary">
+          <a href="#al-een-sticker" className="path-card primary">
             <div className="path-tag">Uitnodiging ontvangen van je fietswinkel?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round">
