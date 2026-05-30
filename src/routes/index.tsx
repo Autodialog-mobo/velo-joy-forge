@@ -491,7 +491,7 @@ function VelopassHome() {
               Inloggen via QR-code
             </button>
           </form>
-          <p className="lreg">Nog niet geregistreerd? <a href="#nieuwe-sticker">Activeer je Velopass</a></p>
+          <p className="lreg">Nog niet geregistreerd? <a href="#sticker-bestellen">Activeer je Velopass</a></p>
         </div>
       </section>
 
