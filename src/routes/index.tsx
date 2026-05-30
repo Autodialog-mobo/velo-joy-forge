@@ -123,7 +123,7 @@ function VelopassHome() {
       </nav>
 
       {/* HERO */}
-      <section className="hero">
+      <section className="hero" id="hero">
         <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
         <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
