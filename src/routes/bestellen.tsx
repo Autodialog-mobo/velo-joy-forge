@@ -102,7 +102,7 @@ function BestellenPage() {
             Bestel een Frame-ID
           </p>
           <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 36, lineHeight: 1.15, margin: "12px 0 14px", maxWidth: 720 }}>
-            Bescherm je fiets. Vanaf €12,95.
+            Bescherm je fiets. Vanaf €12,99.
           </h1>
           <p style={{ fontFamily: "DM Sans, sans-serif", color: "rgba(255,255,255,0.72)", fontSize: 14, lineHeight: 1.6, margin: 0, maxWidth: 620 }}>
             Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Gratis verzending in heel de EU.
