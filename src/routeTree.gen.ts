@@ -24,6 +24,7 @@ import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
+import { Route as ApiPublicArchiveOldProductsRouteImport } from './routes/api/public/archive-old-products'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const ShopRoute = ShopRouteImport.update({
@@ -101,6 +102,12 @@ const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   path: '/api/public/vies-lookup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicArchiveOldProductsRoute =
+  ApiPublicArchiveOldProductsRouteImport.update({
+    id: '/api/public/archive-old-products',
+    path: '/api/public/archive-old-products',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -123,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -141,6 +149,7 @@ export interface FileRoutesByTo {
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -160,6 +169,7 @@ export interface FileRoutesById {
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -180,6 +190,7 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/shop'
     | '/bestellen/bedankt'
+    | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/shop'
     | '/bestellen/bedankt'
+    | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   id:
@@ -216,6 +228,7 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/shop'
     | '/bestellen/bedankt'
+    | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -234,6 +247,7 @@ export interface RootRouteChildren {
   ProRoute: typeof ProRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
   ShopRoute: typeof ShopRoute
+  ApiPublicArchiveOldProductsRoute: typeof ApiPublicArchiveOldProductsRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
@@ -345,6 +359,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/archive-old-products': {
+      id: '/api/public/archive-old-products'
+      path: '/api/public/archive-old-products'
+      fullPath: '/api/public/archive-old-products'
+      preLoaderRoute: typeof ApiPublicArchiveOldProductsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -381,9 +402,20 @@ const rootRouteChildren: RootRouteChildren = {
   ProRoute: ProRoute,
   ProfessionalsRoute: ProfessionalsRoute,
   ShopRoute: ShopRoute,
+  ApiPublicArchiveOldProductsRoute: ApiPublicArchiveOldProductsRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
