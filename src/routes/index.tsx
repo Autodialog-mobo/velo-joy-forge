@@ -123,7 +123,7 @@ function VelopassHome() {
       </nav>
 
       {/* HERO */}
-      <section className="hero">
+      <section className="hero" id="hero">
         <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
         <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
@@ -191,6 +191,71 @@ function VelopassHome() {
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
           </div>
           <div className="trust-text">+180.000 fietsers&nbsp; ·&nbsp; <strong>{activeShopsCount.toLocaleString("nl-BE")}+ fietswinkels</strong></div>
+        </div>
+      </section>
+
+      {/* FRAME-ID UITLEG */}
+      <section className="sticker-section" id="frame-id">
+        <div className="sticker-grid">
+          <div className="sticker-visual">
+            <div
+              className="sticker-frame"
+              style={{
+                ['--qr-x' as any]: `${qrX}%`,
+                ['--qr-y' as any]: `${qrY}%`,
+                ['--qr-size' as any]: `${qrSize}%`,
+              }}
+            >
+              <img src={stickerImg} alt="Velopass Frame-ID op een fietsframe" width={1024} height={1024} />
+              <div className="scan-overlay" aria-hidden="true">
+                <span className="scan-corner tl" />
+                <span className="scan-corner tr" />
+                <span className="scan-corner bl" />
+                <span className="scan-corner br" />
+                <span className="scan-line" />
+              </div>
+              <div className="scan-badge">Scan → toegang tot alles</div>
+              <div className="secured-tag" aria-label="Secured"><span className="secured-tag-dot" />SECURED</div>
+            </div>
+            {import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune") && (
+              <div className="qr-tuner">
+                <button type="button" className="qr-tuner-toggle" onClick={() => setTunerOpen((o) => !o)}>
+                  {tunerOpen ? "Hide" : "Tune"} QR overlay
+                </button>
+                {tunerOpen && (
+                  <div className="qr-tuner-panel">
+                    <label>X <span>{qrX}%</span><input type="range" min={0} max={100} step={0.5} value={qrX} onChange={(e) => setQrX(parseFloat(e.target.value))} /></label>
+                    <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
+                    <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
+                    <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
+                    <button type="button" className="qr-tuner-toggle" style={{ alignSelf: "flex-start" }} onClick={() => { setQrX(50); setQrY(49); setQrSize(26); try { localStorage.removeItem(QR_STORAGE_KEY); } catch {} }}>Reset</button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="sticker-content">
+            <p className="eyebrow">De Velopass Frame-ID</p>
+            <h2 className="sticker-title">
+              <span className="st-line-1">De digitale sleutel van je fiets.</span>
+              <span className="st-line-2">Eén scan. Alles geregeld.</span>
+            </h2>
+            <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
+            <div className="sticker-feats">
+              <div className="sticker-feat">
+                <div className="sfeat-bar" />
+                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de Frame-ID nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
+              </div>
+              <div className="sticker-feat">
+                <div className="sfeat-bar" />
+                <div><strong>Directe toegang tot alles.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering en pechhulp heb je altijd bij de hand, en een onderhoudsbeurt bij je fietswinkel plan je voortaan in een paar klikken.</span></div>
+              </div>
+              <div className="sticker-feat">
+                <div className="sfeat-bar" />
+                <div><strong>Verbonden met het frame.</strong><span>De Frame-ID hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De Frame-ID blijft op het frame, de data verhuist mee.</span></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -323,71 +388,6 @@ function VelopassHome() {
       </section>
 
       <ShopFinder />
-
-      {/* STICKER */}
-      <section className="sticker-section" id="sticker">
-        <div className="sticker-grid">
-          <div className="sticker-visual">
-            <div
-              className="sticker-frame"
-              style={{
-                ['--qr-x' as any]: `${qrX}%`,
-                ['--qr-y' as any]: `${qrY}%`,
-                ['--qr-size' as any]: `${qrSize}%`,
-              }}
-            >
-              <img src={stickerImg} alt="Velopass Frame-ID op een fietsframe" width={1024} height={1024} />
-              <div className="scan-overlay" aria-hidden="true">
-                <span className="scan-corner tl" />
-                <span className="scan-corner tr" />
-                <span className="scan-corner bl" />
-                <span className="scan-corner br" />
-                <span className="scan-line" />
-              </div>
-              <div className="scan-badge">Scan → toegang tot alles</div>
-              <div className="secured-tag" aria-label="Secured"><span className="secured-tag-dot" />SECURED</div>
-            </div>
-            {import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune") && (
-              <div className="qr-tuner">
-                <button type="button" className="qr-tuner-toggle" onClick={() => setTunerOpen((o) => !o)}>
-                  {tunerOpen ? "Hide" : "Tune"} QR overlay
-                </button>
-                {tunerOpen && (
-                  <div className="qr-tuner-panel">
-                    <label>X <span>{qrX}%</span><input type="range" min={0} max={100} step={0.5} value={qrX} onChange={(e) => setQrX(parseFloat(e.target.value))} /></label>
-                    <label>Y <span>{qrY}%</span><input type="range" min={0} max={100} step={0.5} value={qrY} onChange={(e) => setQrY(parseFloat(e.target.value))} /></label>
-                    <label>Size <span>{qrSize}%</span><input type="range" min={10} max={90} step={0.5} value={qrSize} onChange={(e) => setQrSize(parseFloat(e.target.value))} /></label>
-                    <code>--qr-x:{qrX}% --qr-y:{qrY}% --qr-size:{qrSize}%</code>
-                    <button type="button" className="qr-tuner-toggle" style={{ alignSelf: "flex-start" }} onClick={() => { setQrX(50); setQrY(49); setQrSize(26); try { localStorage.removeItem(QR_STORAGE_KEY); } catch {} }}>Reset</button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-          <div className="sticker-content">
-            <p className="eyebrow">De Velopass Frame-ID</p>
-            <h2 className="sticker-title">
-              <span className="st-line-1">De digitale sleutel van je fiets.</span>
-              <span className="st-line-2">Eén scan. Alles geregeld.</span>
-            </h2>
-            <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
-            <div className="sticker-feats">
-              <div className="sticker-feat">
-                <div className="sfeat-bar" />
-                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de Frame-ID nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
-              </div>
-              <div className="sticker-feat">
-                <div className="sfeat-bar" />
-                <div><strong>Directe toegang tot alles.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering en pechhulp heb je altijd bij de hand, en een onderhoudsbeurt bij je fietswinkel plan je voortaan in een paar klikken.</span></div>
-              </div>
-              <div className="sticker-feat">
-                <div className="sfeat-bar" />
-                <div><strong>Verbonden met het frame.</strong><span>De Frame-ID hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De Frame-ID blijft op het frame, de data verhuist mee.</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* PAD 3 */}
       <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
