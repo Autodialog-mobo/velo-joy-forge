@@ -14,7 +14,7 @@ const linkStyle = {
 //  2) mailto:foo@bar         email
 //  3) https?://...           external URL
 //  4) bare domain (e.g. bikesearch.velopass.com[/path])
-//  5) absolute internal path (e.g. /gestolen, /bikesearch#hash)
+//  5) absolute internal path (e.g. /stolen, /bike-check#hash)
 const LINK_RE =
   /(\[[^\]]+\]\([^)]+\))|(mailto:[^\s)]+)|(https?:\/\/[^\s)]+)|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)|(\/[a-zA-Z0-9/_#-]+)/g;
 
@@ -76,7 +76,7 @@ function renderLine(line: string): ReactNode[] {
 const leftFAQs = [
   {
     q: "Wat als iemand de Frame-ID van mijn fiets verwijdert?",
-    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.\n\nBovendien blokkeert Velopass elke poging om een al geregistreerde fiets opnieuw te registreren op basis van die merk + framenummer combinatie. Een dief kan jouw fiets dus niet opnieuw registreren op zijn naam.\n\nWil je zelf controleren of jouw fiets geregistreerd is? Zoek via merk + framenummer op [Fiets controleren →](/fiets-controleren)",
+    a: "Ten eerste is dat niet eenvoudig: de Frame-ID is ontworpen om te beschadigen bij een verwijderingspoging — het materiaal brokkelt in stukjes uiteen en beschadigt ook de lak van het frame. Elke poging laat duidelijke sporen achter.\n\nMaar ook al zou iemand erin slagen: bij de registratie bewaren we ook het merk en framenummer van je fiets. Je fiets blijft altijd traceerbaar via die combinatie — net zoals een auto zonder kenteken nog steeds gevonden kan worden via het chassisnummer. De Frame-ID maakt het enkel sneller en eenvoudiger.\n\nBovendien blokkeert Velopass elke poging om een al geregistreerde fiets opnieuw te registreren op basis van die merk + framenummer combinatie. Een dief kan jouw fiets dus niet opnieuw registreren op zijn naam.\n\nWil je zelf controleren of jouw fiets geregistreerd is? Zoek via merk + framenummer op [Fiets controleren →](/bike-check)",
   },
   {
     q: "Kan ik een nieuwe Frame-ID bestellen als mijn oude verwijderd of beschadigd is?",

@@ -87,10 +87,10 @@ function VelopassHome() {
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href="#wat-je-krijgt">Wat je krijgt</a></li>
-          <li><a href="#al-een-sticker">Al een sticker?</a></li>
-          <li><a href="#sticker-bestellen">Sticker bestellen</a></li>
+          <li><a href="#already-have-one">Al een sticker?</a></li>
+          <li><a href="#order-sticker">Sticker bestellen</a></li>
           <li><a href="#community">Community</a></li>
-          <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
+          <li><Link to="/bike-check" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
@@ -131,7 +131,7 @@ function VelopassHome() {
         </p>
 
         <div className="path-split">
-          <a href="#al-een-sticker" className="path-card primary">
+          <a href="#already-have-one" className="path-card primary">
             <div className="path-tag">Uitnodiging ontvangen van je fietswinkel?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round">
@@ -145,7 +145,7 @@ function VelopassHome() {
             <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in 1 minuut klaar.</p>
             <span className="path-cta">Open je Velopass →</span>
           </a>
-          <Link to="/bestellen" className="path-card secondary">
+          <Link to="/order" className="path-card secondary">
             <div className="path-tag">Nog geen Frame-ID?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
@@ -173,7 +173,7 @@ function VelopassHome() {
 
         <div style={{ textAlign: "center", marginTop: 20 }}>
           <Link
-            to="/gestolen"
+            to="/stolen"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,
@@ -274,7 +274,7 @@ function VelopassHome() {
                 Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
               </p>
               <Link
-                to="/gestolen"
+                to="/stolen"
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontWeight: 500,
@@ -326,7 +326,7 @@ function VelopassHome() {
       </section>
 
       {/* PAD 1 */}
-      <section className="flow-sticker" id="al-een-sticker">
+      <section className="flow-sticker" id="already-have-one">
         <p className="eyebrow">Uitnodiging ontvangen?</p>
         <h2 className="sec-title">Jouw Velopass staat klaar</h2>
         <p className="sec-sub">Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
@@ -359,7 +359,7 @@ function VelopassHome() {
       </section>
 
       {/* PAD 2 */}
-      <section className="flow-new" id="sticker-bestellen">
+      <section className="flow-new" id="order-sticker">
         <p className="eyebrow">Nog geen Frame-ID</p>
         <h2 className="sec-title">Bestel een Velopass Frame-ID</h2>
         <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.</p>
@@ -374,7 +374,7 @@ function VelopassHome() {
             <div style={pathIconBox}><Package size={24} color="#fff" strokeWidth={1.8} /></div>
             <h4>Via de Velopass webshop</h4>
             <p>Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
-            <Link to="/bestellen" className="btn-g">Bestel via de Velopass webshop →</Link>
+            <Link to="/order" className="btn-g">Bestel via de Velopass webshop →</Link>
           </div>
         </div>
         <div className="path-final">
@@ -493,7 +493,7 @@ function VelopassHome() {
               Inloggen via QR-code
             </button>
           </form>
-          <p className="lreg">Nog niet geregistreerd? <a href="#sticker-bestellen">Activeer je Velopass</a></p>
+          <p className="lreg">Nog niet geregistreerd? <a href="#order-sticker">Activeer je Velopass</a></p>
         </div>
       </section>
 

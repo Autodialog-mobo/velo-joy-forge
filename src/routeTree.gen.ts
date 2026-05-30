@@ -9,24 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StolenRouteImport } from './routes/stolen'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
 import { Route as ProRouteImport } from './routes/pro'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as OrderRouteImport } from './routes/order'
 import { Route as ManufacturerRouteImport } from './routes/manufacturer'
 import { Route as LeasingRouteImport } from './routes/leasing'
 import { Route as InsuranceRouteImport } from './routes/insurance'
 import { Route as GestolenRouteImport } from './routes/gestolen'
+import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
+import { Route as BikeCheckRouteImport } from './routes/bike-check'
 import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AssistanceRouteImport } from './routes/assistance'
+import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrderThanksRouteImport } from './routes/order.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicArchiveOldProductsRouteImport } from './routes/api/public/archive-old-products'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
+const StolenRoute = StolenRouteImport.update({
+  id: '/stolen',
+  path: '/stolen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
@@ -45,6 +62,11 @@ const ProRoute = ProRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrderRoute = OrderRouteImport.update({
+  id: '/order',
+  path: '/order',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ManufacturerRoute = ManufacturerRouteImport.update({
@@ -67,6 +89,11 @@ const GestolenRoute = GestolenRouteImport.update({
   path: '/gestolen',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FietsControlerenRoute = FietsControlerenRouteImport.update({
+  id: '/fiets-controleren',
+  path: '/fiets-controleren',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -75,6 +102,11 @@ const ContactRoute = ContactRouteImport.update({
 const BikesearchRoute = BikesearchRouteImport.update({
   id: '/bikesearch',
   path: '/bikesearch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BikeCheckRoute = BikeCheckRouteImport.update({
+  id: '/bike-check',
+  path: '/bike-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BestellenRoute = BestellenRouteImport.update({
@@ -87,10 +119,20 @@ const AssistanceRoute = AssistanceRouteImport.update({
   path: '/assistance',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlEenStickerRoute = AlEenStickerRouteImport.update({
+  id: '/al-een-sticker',
+  path: '/al-een-sticker',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const OrderThanksRoute = OrderThanksRouteImport.update({
+  id: '/thanks',
+  path: '/thanks',
+  getParentRoute: () => OrderRoute,
 } as any)
 const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   id: '/bedankt',
@@ -117,38 +159,52 @@ const ApiPublicPaymentsWebhookRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
   '/bestellen': typeof BestellenRouteWithChildren
+  '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
+  '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/insurance': typeof InsuranceRoute
   '/leasing': typeof LeasingRoute
   '/manufacturer': typeof ManufacturerRoute
+  '/order': typeof OrderRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/order/thanks': typeof OrderThanksRoute
   '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
   '/bestellen': typeof BestellenRouteWithChildren
+  '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
+  '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/insurance': typeof InsuranceRoute
   '/leasing': typeof LeasingRoute
   '/manufacturer': typeof ManufacturerRoute
+  '/order': typeof OrderRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/order/thanks': typeof OrderThanksRoute
   '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -156,19 +212,26 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
   '/bestellen': typeof BestellenRouteWithChildren
+  '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
   '/contact': typeof ContactRoute
+  '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/insurance': typeof InsuranceRoute
   '/leasing': typeof LeasingRoute
   '/manufacturer': typeof ManufacturerRoute
+  '/order': typeof OrderRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/order/thanks': typeof OrderThanksRoute
   '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
@@ -177,57 +240,78 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/al-een-sticker'
     | '/assistance'
     | '/bestellen'
+    | '/bike-check'
     | '/bikesearch'
     | '/contact'
+    | '/fiets-controleren'
     | '/gestolen'
     | '/insurance'
     | '/leasing'
     | '/manufacturer'
+    | '/order'
     | '/privacy'
     | '/pro'
     | '/professionals'
     | '/shop'
+    | '/sitemap.xml'
+    | '/stolen'
     | '/bestellen/bedankt'
+    | '/order/thanks'
     | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/al-een-sticker'
     | '/assistance'
     | '/bestellen'
+    | '/bike-check'
     | '/bikesearch'
     | '/contact'
+    | '/fiets-controleren'
     | '/gestolen'
     | '/insurance'
     | '/leasing'
     | '/manufacturer'
+    | '/order'
     | '/privacy'
     | '/pro'
     | '/professionals'
     | '/shop'
+    | '/sitemap.xml'
+    | '/stolen'
     | '/bestellen/bedankt'
+    | '/order/thanks'
     | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
+    | '/al-een-sticker'
     | '/assistance'
     | '/bestellen'
+    | '/bike-check'
     | '/bikesearch'
     | '/contact'
+    | '/fiets-controleren'
     | '/gestolen'
     | '/insurance'
     | '/leasing'
     | '/manufacturer'
+    | '/order'
     | '/privacy'
     | '/pro'
     | '/professionals'
     | '/shop'
+    | '/sitemap.xml'
+    | '/stolen'
     | '/bestellen/bedankt'
+    | '/order/thanks'
     | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
@@ -235,18 +319,24 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlEenStickerRoute: typeof AlEenStickerRoute
   AssistanceRoute: typeof AssistanceRoute
   BestellenRoute: typeof BestellenRouteWithChildren
+  BikeCheckRoute: typeof BikeCheckRoute
   BikesearchRoute: typeof BikesearchRoute
   ContactRoute: typeof ContactRoute
+  FietsControlerenRoute: typeof FietsControlerenRoute
   GestolenRoute: typeof GestolenRoute
   InsuranceRoute: typeof InsuranceRoute
   LeasingRoute: typeof LeasingRoute
   ManufacturerRoute: typeof ManufacturerRoute
+  OrderRoute: typeof OrderRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   ProRoute: typeof ProRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
   ShopRoute: typeof ShopRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StolenRoute: typeof StolenRoute
   ApiPublicArchiveOldProductsRoute: typeof ApiPublicArchiveOldProductsRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -254,6 +344,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/stolen': {
+      id: '/stolen'
+      path: '/stolen'
+      fullPath: '/stolen'
+      preLoaderRoute: typeof StolenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
@@ -280,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/order': {
+      id: '/order'
+      path: '/order'
+      fullPath: '/order'
+      preLoaderRoute: typeof OrderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/manufacturer': {
@@ -310,6 +421,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GestolenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fiets-controleren': {
+      id: '/fiets-controleren'
+      path: '/fiets-controleren'
+      fullPath: '/fiets-controleren'
+      preLoaderRoute: typeof FietsControlerenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -322,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/bikesearch'
       fullPath: '/bikesearch'
       preLoaderRoute: typeof BikesearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bike-check': {
+      id: '/bike-check'
+      path: '/bike-check'
+      fullPath: '/bike-check'
+      preLoaderRoute: typeof BikeCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bestellen': {
@@ -338,12 +463,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssistanceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/al-een-sticker': {
+      id: '/al-een-sticker'
+      path: '/al-een-sticker'
+      fullPath: '/al-een-sticker'
+      preLoaderRoute: typeof AlEenStickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/order/thanks': {
+      id: '/order/thanks'
+      path: '/thanks'
+      fullPath: '/order/thanks'
+      preLoaderRoute: typeof OrderThanksRouteImport
+      parentRoute: typeof OrderRoute
     }
     '/bestellen/bedankt': {
       id: '/bestellen/bedankt'
@@ -388,20 +527,36 @@ const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
   BestellenRouteChildren,
 )
 
+interface OrderRouteChildren {
+  OrderThanksRoute: typeof OrderThanksRoute
+}
+
+const OrderRouteChildren: OrderRouteChildren = {
+  OrderThanksRoute: OrderThanksRoute,
+}
+
+const OrderRouteWithChildren = OrderRoute._addFileChildren(OrderRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlEenStickerRoute: AlEenStickerRoute,
   AssistanceRoute: AssistanceRoute,
   BestellenRoute: BestellenRouteWithChildren,
+  BikeCheckRoute: BikeCheckRoute,
   BikesearchRoute: BikesearchRoute,
   ContactRoute: ContactRoute,
+  FietsControlerenRoute: FietsControlerenRoute,
   GestolenRoute: GestolenRoute,
   InsuranceRoute: InsuranceRoute,
   LeasingRoute: LeasingRoute,
   ManufacturerRoute: ManufacturerRoute,
+  OrderRoute: OrderRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   ProRoute: ProRoute,
   ProfessionalsRoute: ProfessionalsRoute,
   ShopRoute: ShopRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StolenRoute: StolenRoute,
   ApiPublicArchiveOldProductsRoute: ApiPublicArchiveOldProductsRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
