@@ -310,7 +310,7 @@ function BestellenPage() {
                   padding: "14px 18px",
                   borderRadius: 12,
                   border: "none",
-                  background: !hasItems || !emailValid ? "rgba(13,31,60,0.15)" : "#2ECC8A",
+                  background: !hasItems || !emailValid ? "rgba(46,204,138,0.25)" : "#2ECC8A",
                   color: "#0D1F3C",
                   fontFamily: "DM Sans, sans-serif",
                   fontWeight: 700,
