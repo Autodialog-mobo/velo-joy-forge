@@ -21,7 +21,7 @@ export function ShopFinder() {
         </div>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <Link
-            to="/gestolen"
+            to="/stolen"
             style={{
               display: "inline-flex",
               alignItems: "center",

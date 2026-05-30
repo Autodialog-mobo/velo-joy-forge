@@ -6,7 +6,7 @@ import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 
-export const Route = createFileRoute("/bikesearch")({
+export const Route = createFileRoute("/bike-check")({
   head: () => ({
     meta: [
       { title: "Check de status van een fiets — Velopass" },
@@ -158,10 +158,10 @@ function BikeSearchPage() {
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href="/#wat-je-krijgt">Wat je krijgt</a></li>
-          <li><a href="/#al-een-sticker">Al een sticker?</a></li>
-          <li><a href="/#sticker-bestellen">Sticker bestellen</a></li>
+          <li><a href="/#already-have-one">Al een sticker?</a></li>
+          <li><a href="/#order-sticker">Sticker bestellen</a></li>
           <li><a href="/#community">Community</a></li>
-          <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
+          <li><Link to="/bike-check" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
           <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
@@ -586,7 +586,7 @@ function BikeSearchPage() {
             {lastMethod === "b" ? (
               <>
                 <a
-                  href="https://velopass.com/#sticker-bestellen"
+                  href="https://velopass.com/#order-sticker"
                   onClick={() => trackRegisterBikeClick("bikesearch", "status-info-order-frameid")}
                   style={{
                     background: "#2ECC8A",

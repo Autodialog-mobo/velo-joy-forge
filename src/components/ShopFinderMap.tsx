@@ -253,7 +253,7 @@ export default function ShopFinderMap() {
 
       <div style={{ textAlign: "center", marginBottom: 24 }}>
         <Link
-          to="/gestolen"
+          to="/stolen"
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -337,7 +337,7 @@ export default function ShopFinderMap() {
       <div className="sf-outro">
         <p className="sf-outro-line">Hoe groter de community, hoe veiliger jouw fiets. <em>En hij groeit elke dag.</em></p>
         <a
-          href="#sticker-bestellen"
+          href="#order-sticker"
           className="sf-cta"
           onClick={() => trackRegisterBikeClick("shopfinder", "outro-map")}
         >

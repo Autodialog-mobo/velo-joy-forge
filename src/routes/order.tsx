@@ -99,8 +99,8 @@ function BestellenPage() {
 
   const returnUrl =
     typeof window !== "undefined"
-      ? `${window.location.origin}/bestellen/bedankt?session_id={CHECKOUT_SESSION_ID}`
-      : "/bestellen/bedankt?session_id={CHECKOUT_SESSION_ID}";
+      ? `${window.location.origin}/order/thanks?session_id={CHECKOUT_SESSION_ID}`
+      : "/order/thanks?session_id={CHECKOUT_SESSION_ID}";
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C" }}>
