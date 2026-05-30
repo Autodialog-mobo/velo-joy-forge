@@ -13,7 +13,7 @@ const pathIconBox: React.CSSProperties = {
   width: 48,
   height: 48,
   borderRadius: 12,
-  background: "rgba(255,255,255,0.08)",
+  background: "#0D1F3C",
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
