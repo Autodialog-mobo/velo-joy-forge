@@ -66,9 +66,31 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   return brandedErrorResponse();
 }
 
+// Permanent (301) redirects from old NL URLs to new EN URLs.
+// Handled at the edge so search engines see a real HTTP 301.
+const PERMANENT_REDIRECTS: Record<string, string> = {
+  "/bestellen": "/order",
+  "/bestellen/bedankt": "/order/thanks",
+  "/gestolen": "/stolen",
+  "/bikesearch": "/bike-check",
+  "/fiets-controleren": "/bike-check",
+  "/al-een-sticker": "/#already-have-one",
+};
+
+function maybeRedirect(request: Request): Response | null {
+  const url = new URL(request.url);
+  const target = PERMANENT_REDIRECTS[url.pathname];
+  if (!target) return null;
+  const [targetPath, targetHash] = target.split("#");
+  const location = `${targetPath}${url.search}${targetHash ? `#${targetHash}` : ""}`;
+  return new Response(null, { status: 301, headers: { Location: location } });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const redirectResponse = maybeRedirect(request);
+      if (redirectResponse) return redirectResponse;
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
