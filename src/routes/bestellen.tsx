@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
-type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_familie_onetime";
+type BundleKey = "frameid_1_onetime" | "frameid_2_onetime" | "frameid_5_onetime";
 
 const BUNDLES: Array<{
   key: BundleKey;
@@ -18,29 +18,29 @@ const BUNDLES: Array<{
   featured?: boolean;
 }> = [
   {
-    key: "frameid_solo_onetime",
-    name: "Solo",
+    key: "frameid_1_onetime",
+    name: "1",
     stickers: 1,
-    price: 1295,
+    price: 1299,
     tagline: "1 Frame-ID voor één fiets",
     highlights: ["Digitaal fietspaspoort", "Diefstalprotectie via QR", "Permanent kleefbaar"],
   },
   {
-    key: "frameid_duo_onetime",
-    name: "Duo",
+    key: "frameid_2_onetime",
+    name: "2",
     stickers: 2,
-    price: 1995,
+    price: 2199,
     tagline: "2 Frame-ID's voor twee fietsen",
-    highlights: ["Alles uit Solo", "Voordeligste per sticker bij koppels", "Eén bestelling, één levering"],
+    highlights: ["Alles uit Frame-ID 1", "Voordeliger per sticker bij koppels", "Eén bestelling, één levering"],
     featured: true,
   },
   {
-    key: "frameid_familie_onetime",
-    name: "Familie",
-    stickers: 4,
-    price: 3495,
-    tagline: "4 Frame-ID's voor het hele gezin",
-    highlights: ["Alles uit Duo", "Beste prijs per sticker", "Ideaal voor 3 tot 4 fietsen"],
+    key: "frameid_5_onetime",
+    name: "5",
+    stickers: 5,
+    price: 4495,
+    tagline: "5 Frame-ID's voor het hele gezin",
+    highlights: ["Alles uit Frame-ID 2", "Beste prijs per sticker", "Ideaal voor 3 tot 5 fietsen"],
   },
 ];
 
@@ -50,13 +50,13 @@ const eur = (cents: number) =>
 export const Route = createFileRoute("/bestellen")({
   head: () => ({
     meta: [
-      { title: "Bestel een Velopass Frame-ID — vanaf €12,95" },
+      { title: "Bestel een Velopass Frame-ID — vanaf €12,99" },
       {
         name: "description",
         content:
           "Bestel je Velopass Frame-ID. Eén sticker beschermt je fiets met diefstalprotectie, pechhulp en je digitaal fietspaspoort. Gratis verzending.",
       },
-      { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,95" },
+      { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,99" },
       {
         property: "og:description",
         content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Stripe.",
@@ -67,7 +67,7 @@ export const Route = createFileRoute("/bestellen")({
 });
 
 function BestellenPage() {
-  const [selected, setSelected] = useState<BundleKey>("frameid_duo_onetime");
+  const [selected, setSelected] = useState<BundleKey>("frameid_2_onetime");
   const [quantity, setQuantity] = useState(1);
   const [email, setEmail] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
@@ -102,7 +102,7 @@ function BestellenPage() {
             Bestel een Frame-ID
           </p>
           <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 36, lineHeight: 1.15, margin: "12px 0 14px", maxWidth: 720 }}>
-            Bescherm je fiets. Vanaf €12,95.
+            Bescherm je fiets. Vanaf €12,99.
           </h1>
           <p style={{ fontFamily: "DM Sans, sans-serif", color: "rgba(255,255,255,0.72)", fontSize: 14, lineHeight: 1.6, margin: 0, maxWidth: 620 }}>
             Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Gratis verzending in heel de EU.
