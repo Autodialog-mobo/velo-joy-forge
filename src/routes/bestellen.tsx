@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 
-type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_familie_onetime";
+type BundleKey = "frameid_1_onetime" | "frameid_2_onetime" | "frameid_5_onetime";
 
 const BUNDLES: Array<{
   key: BundleKey;
@@ -18,29 +18,29 @@ const BUNDLES: Array<{
   featured?: boolean;
 }> = [
   {
-    key: "frameid_solo_onetime",
-    name: "Solo",
+    key: "frameid_1_onetime",
+    name: "1",
     stickers: 1,
-    price: 1295,
+    price: 1299,
     tagline: "1 Frame-ID voor één fiets",
     highlights: ["Digitaal fietspaspoort", "Diefstalprotectie via QR", "Permanent kleefbaar"],
   },
   {
-    key: "frameid_duo_onetime",
-    name: "Duo",
+    key: "frameid_2_onetime",
+    name: "2",
     stickers: 2,
-    price: 1995,
+    price: 2199,
     tagline: "2 Frame-ID's voor twee fietsen",
-    highlights: ["Alles uit Solo", "Voordeligste per sticker bij koppels", "Eén bestelling, één levering"],
+    highlights: ["Alles uit Frame-ID 1", "Voordeliger per sticker bij koppels", "Eén bestelling, één levering"],
     featured: true,
   },
   {
-    key: "frameid_familie_onetime",
-    name: "Familie",
-    stickers: 4,
-    price: 3495,
-    tagline: "4 Frame-ID's voor het hele gezin",
-    highlights: ["Alles uit Duo", "Beste prijs per sticker", "Ideaal voor 3 tot 4 fietsen"],
+    key: "frameid_5_onetime",
+    name: "5",
+    stickers: 5,
+    price: 4495,
+    tagline: "5 Frame-ID's voor het hele gezin",
+    highlights: ["Alles uit Frame-ID 2", "Beste prijs per sticker", "Ideaal voor 3 tot 5 fietsen"],
   },
 ];
 
