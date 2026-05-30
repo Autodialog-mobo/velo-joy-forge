@@ -337,7 +337,7 @@ export default function ShopFinderMap() {
       <div className="sf-outro">
         <p className="sf-outro-line">Hoe groter de community, hoe veiliger jouw fiets. <em>En hij groeit elke dag.</em></p>
         <a
-          href="#nieuwe-sticker"
+          href="#sticker-bestellen"
           className="sf-cta"
           onClick={() => trackRegisterBikeClick("shopfinder", "outro-map")}
         >

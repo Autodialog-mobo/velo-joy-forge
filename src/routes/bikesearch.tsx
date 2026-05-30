@@ -586,7 +586,7 @@ function BikeSearchPage() {
             {lastMethod === "b" ? (
               <>
                 <a
-                  href="https://velopass.com/#nieuwe-sticker"
+                  href="https://velopass.com/#sticker-bestellen"
                   onClick={() => trackRegisterBikeClick("bikesearch", "status-info-order-frameid")}
                   style={{
                     background: "#2ECC8A",
