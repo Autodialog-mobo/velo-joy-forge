@@ -125,7 +125,7 @@ function BestellenPage() {
             Bescherm je fiets. Vanaf €12,95.
           </h1>
           <p style={{ fontFamily: "DM Sans, sans-serif", color: "rgba(255,255,255,0.72)", fontSize: 14, lineHeight: 1.6, margin: 0, maxWidth: 620 }}>
-            Eén Frame-ID op je fiets — en elke onderhoudsbeurt, elke herstelling staat gedocumenteerd in jouw digitaal serviceboekje. Altijd bij de hand, ook bij een andere winkel. Gratis verzending in heel de EU.
+            Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje. Gratis verzending in heel de EU.
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 24, fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> Gratis verzending in heel de EU</span>
