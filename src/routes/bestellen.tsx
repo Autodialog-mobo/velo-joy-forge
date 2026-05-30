@@ -162,24 +162,12 @@ function BestellenPage() {
                         borderRadius: 16,
                         padding: 24,
                         border: isFeatured ? "2px solid #2ECC8A" : "1px solid rgba(13,31,60,0.06)",
-                        boxShadow: isFeatured
-                          ? "0 32px 64px -16px rgba(46,204,138,0.35), 0 8px 24px rgba(13,31,60,0.08)"
-                          : "0 4px 20px rgba(13,31,60,0.08)",
+                        boxShadow: "0 4px 20px rgba(13,31,60,0.08)",
                         position: "relative",
                         fontFamily: "DM Sans, sans-serif",
                         color: "#0D1F3C",
                         display: "flex",
                         flexDirection: "column",
-                        transform: isFeatured ? "scale(1.04)" : "none",
-                        opacity: isFeatured ? 1 : 0.78,
-                        zIndex: isFeatured ? 2 : 1,
-                        transition: "transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isFeatured) e.currentTarget.style.opacity = "1";
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isFeatured) e.currentTarget.style.opacity = "0.78";
                       }}
                     >
                       {isFeatured && (
