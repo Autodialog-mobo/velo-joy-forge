@@ -301,34 +301,69 @@ function BestellenPage() {
                 />
               </div>
 
-              <button
-                type="button"
-                onClick={() => setStage("checkout")}
-                disabled={!hasItems || !emailValid}
-                style={{
-                  width: "100%",
-                  padding: "14px 18px",
-                  borderRadius: 12,
-                  border: "none",
-                  background: !hasItems || !emailValid ? "rgba(46,204,138,0.25)" : "#2ECC8A",
-                  color: "#0D1F3C",
-                  fontFamily: "DM Sans, sans-serif",
-                  fontWeight: 700,
-                  fontSize: 15,
-                  cursor: !hasItems || !emailValid ? "not-allowed" : "pointer",
-                }}
-              >
-                {hasItems ? `Betalen — ${eur(total)} →` : "Betalen →"}
-              </button>
-              {!hasItems ? (
-                <p style={{ fontSize: 12, color: "rgba(13,31,60,0.7)", margin: "6px 0 0", textAlign: "center", fontFamily: "DM Sans, sans-serif" }}>
-                  Kies minstens één bundel om te kunnen betalen.
-                </p>
-              ) : !emailValid ? (
-                <p style={{ fontSize: 12, color: "rgba(13,31,60,0.7)", margin: "6px 0 0", textAlign: "center", fontFamily: "DM Sans, sans-serif" }}>
-                  Vul een geldig e-mailadres in om verder te gaan.
-                </p>
-              ) : null}
+              <div style={{ position: "relative" }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!hasItems || !emailValid) return;
+                    setStage("checkout");
+                  }}
+                  aria-disabled={!hasItems || !emailValid}
+                  style={{
+                    width: "100%",
+                    padding: "14px 18px",
+                    borderRadius: 12,
+                    border: "none",
+                    background: !hasItems || !emailValid ? "rgba(46,204,138,0.25)" : "#2ECC8A",
+                    color: "#0D1F3C",
+                    fontFamily: "DM Sans, sans-serif",
+                    fontWeight: 700,
+                    fontSize: 15,
+                    cursor: !hasItems || !emailValid ? "not-allowed" : "pointer",
+                    opacity: !hasItems || !emailValid ? 0.7 : 1,
+                  }}
+                >
+                  {hasItems ? `Betalen — ${eur(total)} →` : "Betalen →"}
+                </button>
+                {(!hasItems || !emailValid) && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      bottom: "calc(100% + 8px)",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      background: "#0D1F3C",
+                      color: "#fff",
+                      fontSize: 12,
+                      fontFamily: "DM Sans, sans-serif",
+                      fontWeight: 500,
+                      padding: "8px 12px",
+                      borderRadius: 8,
+                      whiteSpace: "nowrap",
+                      zIndex: 10,
+                      pointerEvents: "none",
+                      opacity: 0,
+                      transition: "opacity 150ms ease",
+                    }}
+                    className="pay-tooltip"
+                  >
+                    {!hasItems
+                      ? "Kies minstens één bundel om te kunnen betalen."
+                      : "Vul een geldig e-mailadres in om verder te gaan."}
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: "100%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        borderWidth: 6,
+                        borderStyle: "solid",
+                        borderColor: "#0D1F3C transparent transparent transparent",
+                      }}
+                    />
+                  </span>
+                )}
+              </div>
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
                 Veilig betalen via Stripe · SSL-beveiligd
               </p>
