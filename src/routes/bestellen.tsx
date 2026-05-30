@@ -364,6 +364,11 @@ function BestellenPage() {
                   </span>
                 )}
               </div>
+              {(!hasItems || !emailValid) && (
+                <p style={{ fontSize: 11, color: "rgba(13,31,60,0.45)", margin: "6px 0 0", textAlign: "center", fontFamily: "DM Sans, sans-serif" }}>
+                  Druk <kbd style={{ background: "rgba(13,31,60,0.08)", border: "1px solid rgba(13,31,60,0.15)", borderRadius: 4, padding: "1px 5px", fontSize: 10, fontFamily: "inherit", color: "rgba(13,31,60,0.7)" }}>Tab</kbd> om de knop te focussen en de uitleg te zien
+                </p>
+              )}
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
                 Veilig betalen via Stripe · SSL-beveiligd
               </p>
