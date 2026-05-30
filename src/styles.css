@@ -749,3 +749,13 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
   .leasing-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 16px; }
   .leasing-logos .logo-tile { flex: 0 0 calc(33.333% - 11px); max-width: calc(33.333% - 11px); }
 }
+
+/* Tooltip voor disabled betaalknop */
+.pay-btn-wrap:hover .pay-tooltip,
+.pay-btn-wrap:focus-within .pay-tooltip {
+  opacity: 1 !important;
+}
+.pay-btn-wrap .pay-tooltip {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
