@@ -3,16 +3,15 @@ import { getStripe, getStripeEnvironment } from "@/lib/stripe";
 import { createCheckoutSession } from "@/utils/payments.functions";
 
 interface Props {
-  priceId: string;
-  quantity?: number;
+  items: Array<{ priceId: string; quantity: number }>;
   customerEmail?: string;
   returnUrl: string;
 }
 
-export function StripeEmbeddedCheckoutForm({ priceId, quantity, customerEmail, returnUrl }: Props) {
+export function StripeEmbeddedCheckoutForm({ items, customerEmail, returnUrl }: Props) {
   const fetchClientSecret = async (): Promise<string> => {
     const result = await createCheckoutSession({
-      data: { priceId, quantity, customerEmail, returnUrl, environment: getStripeEnvironment() },
+      data: { items, customerEmail, returnUrl, environment: getStripeEnvironment() },
     });
     if ("error" in result) throw new Error(result.error);
     if (!result.clientSecret) throw new Error("Stripe gaf geen client secret terug");

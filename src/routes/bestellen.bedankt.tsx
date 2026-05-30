@@ -19,6 +19,12 @@ export const Route = createFileRoute("/bestellen/bedankt")({
   component: BedanktPage,
 });
 
+const BUNDLE_NAMES: Record<string, string> = {
+  frameid_solo_onetime: "Velopass Frame-ID Solo",
+  frameid_duo_onetime: "Velopass Frame-ID Duo",
+  frameid_family_onetime: "Velopass Frame-ID Familie",
+};
+
 function BedanktPage() {
   const { session_id } = Route.useSearch();
   const [order, setOrder] = useState<{
@@ -26,8 +32,7 @@ function BedanktPage() {
     paymentStatus: string | null;
     email: string | null;
     amountTotal: number;
-    productName: string | null;
-    quantity: number;
+    items: Array<{ priceId: string; quantity: number }>;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,11 +45,23 @@ function BedanktPage() {
     getOrderBySession({ data: { sessionId: session_id, environment: getStripeEnvironment() } })
       .then((res) => {
         if ("error" in res) setError(res.error ?? "Onbekende fout");
-        else setOrder(res);
+        else setOrder({
+          status: res.status ?? null,
+          paymentStatus: res.paymentStatus ?? null,
+          email: res.email,
+          amountTotal: res.amountTotal,
+          items: res.items,
+        });
       })
       .catch((e) => setError(e?.message ?? "Onbekende fout"))
       .finally(() => setLoading(false));
   }, [session_id]);
+
+  const totalStickers = order?.items.reduce((sum, i) => {
+    const n = i.priceId === "frameid_family_onetime" ? 5 : i.priceId === "frameid_duo_onetime" ? 2 : 1;
+    return sum + n * i.quantity;
+  }, 0) ?? 0;
+
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
@@ -80,10 +97,16 @@ function BedanktPage() {
               <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 30, margin: "10px 0 12px", color: "#0D1F3C" }}>
                 Bedankt voor je bestelling
               </h1>
-              <p style={{ color: "rgba(13,31,60,0.7)", fontSize: 15, margin: "0 0 28px", lineHeight: 1.5 }}>
-                We hebben je bestelling van <strong>{order.productName} × {order.quantity}</strong> goed ontvangen.
-                Je Frame-ID{order.quantity > 1 ? "'s worden" : " wordt"} verzonden binnen 2 werkdagen.
-              </p>
+              <div style={{ color: "rgba(13,31,60,0.75)", fontSize: 15, margin: "0 0 28px", lineHeight: 1.6 }}>
+                <p style={{ margin: "0 0 8px" }}>We hebben je bestelling goed ontvangen:</p>
+                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 12px", display: "grid", gap: 4 }}>
+                  {order.items.map((i) => (
+                    <li key={i.priceId}><strong>{BUNDLE_NAMES[i.priceId] ?? i.priceId}</strong> × {i.quantity}</li>
+                  ))}
+                </ul>
+                <p style={{ margin: 0 }}>Je Frame-ID{totalStickers > 1 ? "'s worden" : " wordt"} verzonden binnen 2 werkdagen.</p>
+              </div>
+
 
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, textAlign: "left", margin: "0 0 24px" }}>
                 <div style={{ background: "#F5F3EE", borderRadius: 12, padding: 16 }}>
