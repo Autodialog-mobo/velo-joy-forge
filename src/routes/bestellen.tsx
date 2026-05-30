@@ -301,7 +301,7 @@ function BestellenPage() {
                 />
               </div>
 
-              <div style={{ position: "relative" }}>
+              <div style={{ position: "relative" }} className="pay-btn-wrap">
                 <button
                   type="button"
                   onClick={() => {
