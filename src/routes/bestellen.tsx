@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { QrCode, Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag } from "lucide-react";
+import { QrCode, Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
@@ -226,6 +226,31 @@ function BestellenPage() {
               <p style={{ fontSize: 12, color: "rgba(13,31,60,0.55)", margin: 0, fontFamily: "DM Sans, sans-serif" }}>
                 Combineer gerust meerdere bundels in één bestelling. BTW en eventuele lokale belastingen worden automatisch berekend bij de checkout.
               </p>
+
+              {/* PRO TIP — klevinstructies */}
+              <div style={{ background: "rgba(46,204,138,0.06)", border: "1px solid rgba(46,204,138,0.2)", borderRadius: 12, padding: "20px 24px", fontFamily: "DM Sans, sans-serif" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                  <Lightbulb size={16} color="#2ECC8A" />
+                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>Pro tip</span>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
+                  <div>
+                    <Droplets size={28} color="#2ECC8A" strokeWidth={1.8} />
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Ontvetten eerst</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Reinig het frameoppervlak eerst met een ontvettingsmiddel voor een optimale hechting.</p>
+                  </div>
+                  <div>
+                    <Eye size={28} color="#2ECC8A" strokeWidth={1.8} />
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Zichtbaar plaatsen</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Plaats de Frame-ID in het zicht — bij voorkeur net onder de zadelpen. Zo is de QR makkelijk scanbaar.</p>
+                  </div>
+                  <div>
+                    <ShieldCheck size={28} color="#2ECC8A" strokeWidth={1.8} />
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Afschrikking voor dieven</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Een zichtbare Frame-ID laat dieven meteen weten dat jouw fiets beschermd en geregistreerd is.</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Cart sidebar */}
