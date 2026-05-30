@@ -171,7 +171,7 @@ function BestellenPage() {
                       }}
                     >
                       {isFeatured && (
-                        <span style={{ position: "absolute", top: 14, right: 14, background: "#2ECC8A", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", padding: "4px 12px", borderRadius: 999 }}>
+                        <span style={{ position: "absolute", top: -14, right: 12, zIndex: 2, background: "#2ECC8A", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", padding: "4px 12px", borderRadius: 999, boxShadow: "0 2px 8px rgba(46,204,138,0.4)" }}>
                           POPULAIRSTE
                         </span>
                       )}
