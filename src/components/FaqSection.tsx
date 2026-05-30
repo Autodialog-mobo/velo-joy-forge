@@ -14,7 +14,7 @@ const linkStyle = {
 //  2) mailto:foo@bar         email
 //  3) https?://...           external URL
 //  4) bare domain (e.g. bikesearch.velopass.com[/path])
-//  5) absolute internal path (e.g. /gestolen, /bike-check#hash)
+//  5) absolute internal path (e.g. /stolen, /bike-check#hash)
 const LINK_RE =
   /(\[[^\]]+\]\([^)]+\))|(mailto:[^\s)]+)|(https?:\/\/[^\s)]+)|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)|(\/[a-zA-Z0-9/_#-]+)/g;
 
