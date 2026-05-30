@@ -4,26 +4,40 @@ import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib
 type CheckoutSessionResult = { clientSecret: string } | { error: string };
 
 const BUNDLES: Record<string, { name: string; amount: number; productId: string }> = {
-  frameid_solo_onetime: { name: "Velopass Frame-ID Solo", amount: 1295, productId: "frameid_solo" },
-  frameid_duo_onetime: { name: "Velopass Frame-ID Duo", amount: 1995, productId: "frameid_duo" },
-  frameid_familie_onetime: { name: "Velopass Frame-ID Familie", amount: 3495, productId: "frameid_familie" },
+  frameid_1_onetime: {
+    name: "Velopass Frame-ID 1",
+    amount: 1299,
+    productId: "velopass_frameid_1",
+  },
+  frameid_2_onetime: {
+    name: "Velopass Frame-ID 2",
+    amount: 2199,
+    productId: "velopass_frameid_2",
+  },
+  frameid_5_onetime: {
+    name: "Velopass Frame-ID 5",
+    amount: 4495,
+    productId: "velopass_frameid_5",
+  },
 };
 
 export const createCheckoutSession = createServerFn({ method: "POST" })
-  .inputValidator((data: {
-    priceId: string;
-    quantity?: number;
-    customerEmail?: string;
-    returnUrl: string;
-    environment: StripeEnv;
-  }) => {
-    if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error("Invalid priceId");
-    if (!BUNDLES[data.priceId]) throw new Error("Unknown priceId");
-    if (data.environment !== "sandbox" && data.environment !== "live") {
-      throw new Error("Invalid environment");
-    }
-    return data;
-  })
+  .inputValidator(
+    (data: {
+      priceId: string;
+      quantity?: number;
+      customerEmail?: string;
+      returnUrl: string;
+      environment: StripeEnv;
+    }) => {
+      if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error("Invalid priceId");
+      if (!BUNDLES[data.priceId]) throw new Error("Unknown priceId");
+      if (data.environment !== "sandbox" && data.environment !== "live") {
+        throw new Error("Invalid environment");
+      }
+      return data;
+    },
+  )
   .handler(async ({ data }): Promise<CheckoutSessionResult> => {
     try {
       const stripe = createStripeClient(data.environment);
@@ -43,7 +57,22 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         payment_method_types: ["card"],
         automatic_tax: { enabled: true },
         shipping_address_collection: {
-          allowed_countries: ["BE", "NL", "LU", "FR", "DE", "AT", "ES", "IT", "PT", "IE", "DK", "SE", "FI", "PL"],
+          allowed_countries: [
+            "BE",
+            "NL",
+            "LU",
+            "FR",
+            "DE",
+            "AT",
+            "ES",
+            "IT",
+            "PT",
+            "IE",
+            "DK",
+            "SE",
+            "FI",
+            "PL",
+          ],
         },
         shipping_options: [
           {
