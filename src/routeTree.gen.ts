@@ -24,7 +24,6 @@ import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
-import { Route as ApiPublicUpdateTaxCodesRouteImport } from './routes/api/public/update-tax-codes'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const ShopRoute = ShopRouteImport.update({
@@ -102,11 +101,6 @@ const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   path: '/api/public/vies-lookup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicUpdateTaxCodesRoute = ApiPublicUpdateTaxCodesRouteImport.update({
-  id: '/api/public/update-tax-codes',
-  path: '/api/public/update-tax-codes',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -129,7 +123,6 @@ export interface FileRoutesByFullPath {
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/api/public/update-tax-codes': typeof ApiPublicUpdateTaxCodesRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -148,7 +141,6 @@ export interface FileRoutesByTo {
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/api/public/update-tax-codes': typeof ApiPublicUpdateTaxCodesRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -168,7 +160,6 @@ export interface FileRoutesById {
   '/professionals': typeof ProfessionalsRoute
   '/shop': typeof ShopRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/api/public/update-tax-codes': typeof ApiPublicUpdateTaxCodesRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -189,7 +180,6 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/shop'
     | '/bestellen/bedankt'
-    | '/api/public/update-tax-codes'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -208,7 +198,6 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/shop'
     | '/bestellen/bedankt'
-    | '/api/public/update-tax-codes'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   id:
@@ -227,7 +216,6 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/shop'
     | '/bestellen/bedankt'
-    | '/api/public/update-tax-codes'
     | '/api/public/vies-lookup'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -246,7 +234,6 @@ export interface RootRouteChildren {
   ProRoute: typeof ProRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
   ShopRoute: typeof ShopRoute
-  ApiPublicUpdateTaxCodesRoute: typeof ApiPublicUpdateTaxCodesRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
@@ -358,13 +345,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/update-tax-codes': {
-      id: '/api/public/update-tax-codes'
-      path: '/api/public/update-tax-codes'
-      fullPath: '/api/public/update-tax-codes'
-      preLoaderRoute: typeof ApiPublicUpdateTaxCodesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -401,10 +381,19 @@ const rootRouteChildren: RootRouteChildren = {
   ProRoute: ProRoute,
   ProfessionalsRoute: ProfessionalsRoute,
   ShopRoute: ShopRoute,
-  ApiPublicUpdateTaxCodesRoute: ApiPublicUpdateTaxCodesRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
