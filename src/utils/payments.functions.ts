@@ -4,9 +4,9 @@ import { type StripeEnv, createStripeClient, getStripeErrorMessage } from "@/lib
 type CheckoutSessionResult = { clientSecret: string } | { error: string };
 
 const BUNDLES: Record<string, { name: string; amount: number; productId: string }> = {
-  frameid_solo_onetime: { name: "Velopass Frame-ID Solo", amount: 1295, productId: "frameid_solo" },
-  frameid_duo_onetime: { name: "Velopass Frame-ID Duo", amount: 1995, productId: "frameid_duo" },
-  frameid_familie_onetime: { name: "Velopass Frame-ID Familie", amount: 3495, productId: "frameid_familie" },
+  frameid_1_onetime: { name: "Velopass Frame-ID 1", amount: 1299, productId: "velopass_frameid_1" },
+  frameid_2_onetime: { name: "Velopass Frame-ID 2", amount: 2199, productId: "velopass_frameid_2" },
+  frameid_5_onetime: { name: "Velopass Frame-ID 5", amount: 4495, productId: "velopass_frameid_5" },
 };
 
 export const createCheckoutSession = createServerFn({ method: "POST" })
