@@ -336,7 +336,7 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .pnum-val span { color: var(--green-mid); }
 .pnum-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 .proof-numbers { display: flex; gap: 48px; }
-.register { padding: 100px 8vw; background: var(--bg); }
+.register { padding: 100px 8vw; background: var(--navy); }
 .reg-inner { background: var(--navy); border-radius: var(--r-xl); padding: 72px 8%; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; overflow: hidden; }
 .reg-inner .eyebrow { color: var(--green); }
 .reg-inner .sec-title { color: #fff; margin-bottom: 16px; font-size: clamp(26px, 3vw, 38px); }
