@@ -79,6 +79,7 @@ function BestellenPage() {
   });
   const [email, setEmail] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const items = useMemo(
     () =>
@@ -301,11 +302,15 @@ function BestellenPage() {
                 />
               </div>
 
-              <div style={{ position: "relative" }} className="pay-btn-wrap">
+              <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
                 <button
                   type="button"
                   onClick={() => {
-                    if (!hasItems || !emailValid) return;
+                    if (!hasItems || !emailValid) {
+                      setTooltipOpen(true);
+                      window.setTimeout(() => setTooltipOpen(false), 2500);
+                      return;
+                    }
                     setStage("checkout");
                   }}
                   aria-disabled={!hasItems || !emailValid}
