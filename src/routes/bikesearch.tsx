@@ -157,9 +157,9 @@ function BikeSearchPage() {
           <span className="logo-text">velopass</span>
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href="/#voordelen">Wat je krijgt</a></li>
-          <li><a href="/#al-sticker">Al een sticker?</a></li>
-          <li><a href="/#nieuwe-sticker">Sticker bestellen</a></li>
+          <li><a href="/#wat-je-krijgt">Wat je krijgt</a></li>
+          <li><a href="/#al-een-sticker">Al een sticker?</a></li>
+          <li><a href="/#sticker-bestellen">Sticker bestellen</a></li>
           <li><a href="/#community">Community</a></li>
           <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
           <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
@@ -586,7 +586,7 @@ function BikeSearchPage() {
             {lastMethod === "b" ? (
               <>
                 <a
-                  href="https://velopass.com/#nieuwe-sticker"
+                  href="https://velopass.com/#sticker-bestellen"
                   onClick={() => trackRegisterBikeClick("bikesearch", "status-info-order-frameid")}
                   style={{
                     background: "#2ECC8A",
