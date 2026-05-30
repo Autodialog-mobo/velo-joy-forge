@@ -79,6 +79,7 @@ function BestellenPage() {
   });
   const [email, setEmail] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const items = useMemo(
     () =>
