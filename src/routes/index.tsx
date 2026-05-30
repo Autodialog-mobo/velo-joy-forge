@@ -127,7 +127,7 @@ function VelopassHome() {
         <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
         <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
-          Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Wat er ook gebeurt.
+          Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje. Wat er ook gebeurt.
         </p>
 
         <div className="path-split">
