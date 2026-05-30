@@ -86,9 +86,9 @@ function VelopassHome() {
           <span className="logo-text">velopass</span>
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href="#voordelen">Wat je krijgt</a></li>
-          <li><a href="#al-sticker">Al een sticker?</a></li>
-          <li><a href="#nieuwe-sticker">Sticker bestellen</a></li>
+          <li><a href="#wat-je-krijgt">Wat je krijgt</a></li>
+          <li><a href="#al-een-sticker">Al een sticker?</a></li>
+          <li><a href="#sticker-bestellen">Sticker bestellen</a></li>
           <li><a href="#community">Community</a></li>
           <li><Link to="/bikesearch" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
           <li><Link to="/contact">Contact</Link></li>
