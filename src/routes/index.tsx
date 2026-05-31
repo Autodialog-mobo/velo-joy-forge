@@ -124,11 +124,17 @@ function VelopassHome() {
 
       {/* HERO */}
       <section className="hero" id="hero">
-        <span className="hero-eyebrow"><span className="eyebrow-dot" />Het digitale fietspaspoort</span>
+        <span className="hero-eyebrow"><span className="eyebrow-dot" />Diefstalbescherming + digitaal fietspaspoort</span>
         <h1 className="hero-title">Altijd op de fiets.<br /><em>Alles<br />geregeld.</em></h1>
         <p className="hero-sub">
           Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje. Wat er ook gebeurt.
         </p>
+
+        <div className="hero-cta-wrap">
+          <Link to="/order" className="hero-cta-primary">Bestel je Frame-ID →</Link>
+          <div className="hero-cta-sub">Vanaf €12,95 — gratis verzending in heel de EU</div>
+        </div>
+
 
         <div className="path-split">
           <a href="#already-have-one" className="path-card primary">
