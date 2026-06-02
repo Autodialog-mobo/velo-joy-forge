@@ -469,40 +469,6 @@ function VelopassHome() {
       </section>
 
 
-      {/* LOGIN */}
-      <section className="login-section" id="login">
-        <div className="login-wrap">
-          <p className="eyebrow" style={{ textAlign: "center" }}>Mijn Velopass</p>
-          <h2 className="sec-title">Inloggen</h2>
-          <p className="login-sub">Toegang tot je fietsgeschiedenis, pechhulp en al je diensten.</p>
-          <form className="lform" onSubmit={(e) => e.preventDefault()}>
-            <div className="form-row">
-              <label className="flabel" htmlFor="vp-email">E-mailadres</label>
-              <input id="vp-email" className="finput" type="email" placeholder="jouw@email.be" />
-            </div>
-            <div className="form-row">
-              <label className="flabel" htmlFor="vp-pw">Wachtwoord</label>
-              <input id="vp-pw" className="finput" type="password" placeholder="••••••••" />
-              <a href="#" className="forgot">Wachtwoord vergeten?</a>
-            </div>
-            <button type="submit" className="btn-submit">Inloggen</button>
-            <div className="ldivider">of</div>
-            <button type="button" className="btn-qr" onClick={() => setScanOpen(true)}>
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                <rect x="1" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                <rect x="9" y="1" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                <rect x="1" y="9" width="6" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                <rect x="10" y="10" width="2" height="2" fill="currentColor" />
-                <rect x="13" y="10" width="2" height="2" fill="currentColor" />
-                <rect x="10" y="13" width="2" height="2" fill="currentColor" />
-              </svg>
-              Inloggen via QR-code
-            </button>
-          </form>
-          <p className="lreg">Nog niet geregistreerd? <a href="#order-sticker">Activeer je Velopass</a></p>
-        </div>
-      </section>
-
       <FaqSection />
 
       {/* NOG VRAGEN CTA */}
