@@ -432,41 +432,6 @@ function VelopassHome() {
         </div>
       </section>
 
-      {/* WHY */}
-      <section className="why-section">
-        <h2 className="sec-title" style={{ maxWidth: 640, marginBottom: 16, fontFamily: "'Syne', sans-serif", fontWeight: 700 }}>
-          Jouw digitale fietspaspoort. <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>Levenslang.</em>
-        </h2>
-        <p style={{ fontSize: 16, color: "var(--text-muted)", maxWidth: 520, lineHeight: 1.7, marginBottom: 56 }}>
-          Jouw digitale fietspaspoort gaat overal mee naartoe. Alles geregeld, zonder dat je eraan hoeft te denken.
-        </p>
-        <div className="why-grid">
-          <div className="why-card">
-            <div className="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
-            <h3>Eén plek voor alles</h3>
-            <p>Geen facturen meer zoeken. Geen gissen naar onderhoudsintervallen. Specificaties, garantie, onderhoudshistorie, verzekering en diefstalprotectie — veilig in je digitaal fietspaspoort. Eén scan en je hebt alles bij de hand.</p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <div className="why-check"><span>✓</span> Specificaties &amp; garantie</div>
-              <div className="why-check"><span>✓</span> Volledige fietsgeschiedenis</div>
-              <div className="why-check"><span>✓</span> Overdragen bij verkoop</div>
-            </div>
-          </div>
-          <div className="why-card">
-            <div className="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg></div>
-            <h3>Zorgeloos eigenaarschap</h3>
-            <p>Automatische onderhoudsherinneringen, praktische tips en directe toegang tot jouw fietswinkel — de mensen die jouw fiets écht kennen. Of het een e-bike van €5.000 is of je dagelijkse stadsfiets: je investering blijft langer in topconditie en behoudt zijn waarde.</p>
-            <div className="why-tag">Ideaal voor e-bikes — hogere restwaarde bij verkoop</div>
-          </div>
-          <div className="why-card">
-            <div className="why-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg></div>
-            <h3>Beschermd door een netwerk</h3>
-            <p>Je rijdt nooit alleen. Bij diefstal helpt de hele Velopass-community mee — iedereen die de QR scant ziet dat jouw fiets gezocht wordt en kan anoniem of op naam een seintje geven.</p>
-            <div className="why-quote">
-              <cite>— De Velopass-community · <strong>{activeShopsCount}+ fietswinkels</strong>, fietsers en politie</cite>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
       <FaqSection />
