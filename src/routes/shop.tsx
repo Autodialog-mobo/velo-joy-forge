@@ -397,6 +397,7 @@ function Fabrikanten() {
     { name: "Veloe", attrs: ["lak", "data"], sub: "Frame-ID op de lak met vooringevulde fietsdata.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/680b77032634561d90f2037b_veloe-logo-black-transparant.png" },
     { name: "Bike43", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/666c507342c67709752afa70_Bike%2043%20logo.png" },
     { name: "UrbanBiker", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://www.urbanbiker.com/wp-content/uploads/2023/03/cropped-Icono-principal-sin-fondo-270x270.png" },
+    { name: "Golev", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://www.golev.eu/apple-touch-icon.png" },
     { name: "Specter", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c31ea4b8feecaefcc34807_specter%20logo.png" },
     { name: "Thompson", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://cdn.prod.website-files.com/66538f2ad65b2084a18d9d09/66c09339ca49535d8bfbd2b0_thompson%20logo.png" },
     { name: "Flebi", attrs: ["lak"], sub: "Frame-ID op het frame aangebracht — geen fietsdata vooringevuld.", logo: "https://flebi.com/wp-content/uploads/2024/10/cropped-Flebi_icono_positivo-270x270.png" },
