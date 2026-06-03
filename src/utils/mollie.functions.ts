@@ -10,16 +10,32 @@ const BUNDLES: Record<BundleKey, { name: string; amountCents: number }> = {
 
 const formatAmount = (cents: number) => (cents / 100).toFixed(2);
 
-async function getMollie() {
+const MOLLIE_API = "https://api.mollie.com/v2";
+
+async function mollieFetch(path: string, init: RequestInit = {}) {
   const apiKey = process.env.MOLLIE_API_KEY;
   if (!apiKey) throw new Error("MOLLIE_API_KEY is not configured");
-  // Dynamic import keeps the Node-only SDK out of any client-reachable bundle.
-  const mod: any = await import("@mollie/api-client");
-  const createClient = mod.createMollieClient ?? mod.default?.createMollieClient ?? mod.default;
-  if (typeof createClient !== "function") {
-    throw new Error("Mollie SDK kon niet worden geladen");
+  const res = await fetch(`${MOLLIE_API}${path}`, {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      ...(init.headers || {}),
+    },
+  });
+  const text = await res.text();
+  let json: any = null;
+  try {
+    json = text ? JSON.parse(text) : null;
+  } catch {
+    // ignore
   }
-  return createClient({ apiKey });
+  if (!res.ok) {
+    const msg = json?.detail || json?.title || `Mollie HTTP ${res.status}`;
+    throw new Error(msg);
+  }
+  return json;
 }
 
 export type MollieCheckoutResult = { checkoutUrl: string; paymentId: string } | { error: string };
@@ -49,7 +65,6 @@ export const createMolliePayment = createServerFn({ method: "POST" })
   )
   .handler(async ({ data }): Promise<MollieCheckoutResult> => {
     try {
-      const mollie = await getMollie();
       const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
       const totalCents = data.items.reduce(
@@ -61,23 +76,25 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         .join(", ");
       const environment = process.env.MOLLIE_API_KEY?.startsWith("live_") ? "live" : "sandbox";
 
-      const payment = await mollie.payments.create({
-        amount: { currency: "EUR", value: formatAmount(totalCents) },
-        description: `Velopass — ${description}`,
-        redirectUrl: `${data.origin}/order/thanks?payment_id={id}`.replace(
-          "{id}",
-          "REPLACE_ME",
-        ),
-        webhookUrl: `${data.origin}/api/public/payments/mollie-webhook`,
-        billingEmail: data.customerEmail,
-        locale: "nl_NL",
-        metadata: { items: data.items, email: data.customerEmail },
-      } as any);
+      // Create payment with placeholder redirect; we'll patch with real ID after.
+      const payment = await mollieFetch("/payments", {
+        method: "POST",
+        body: JSON.stringify({
+          amount: { currency: "EUR", value: formatAmount(totalCents) },
+          description: `Velopass — ${description}`,
+          redirectUrl: `${data.origin}/order/thanks?payment_id=pending`,
+          webhookUrl: `${data.origin}/api/public/payments/mollie-webhook`,
+          billingEmail: data.customerEmail,
+          locale: "nl_NL",
+          metadata: { items: data.items, email: data.customerEmail },
+        }),
+      });
 
-      // Mollie does not substitute {id} like Stripe; rebuild the redirectUrl
-      // with the real payment id and update the payment.
       const realRedirect = `${data.origin}/order/thanks?payment_id=${payment.id}`;
-      await mollie.payments.update(payment.id, { redirectUrl: realRedirect } as any);
+      await mollieFetch(`/payments/${payment.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ redirectUrl: realRedirect }),
+      });
 
       const totalsByBundle = data.items
         .map((i) => `${BUNDLES[i.priceId as BundleKey].name} × ${i.quantity}`)
@@ -101,7 +118,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         { onConflict: "mollie_payment_id" },
       );
 
-      const checkoutUrl = (payment as any)._links?.checkout?.href ?? (payment as any).getCheckoutUrl?.();
+      const checkoutUrl = payment?._links?.checkout?.href;
       if (!checkoutUrl) throw new Error("Mollie gaf geen checkout-URL terug");
       return { checkoutUrl, paymentId: payment.id };
     } catch (error) {
@@ -118,15 +135,14 @@ export const getOrderByMolliePayment = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }) => {
     try {
-      const mollie = await getMollie();
-      const payment = await mollie.payments.get(data.paymentId);
-      const metadata: any = (payment as any).metadata ?? {};
+      const payment = await mollieFetch(`/payments/${data.paymentId}`);
+      const metadata: any = payment?.metadata ?? {};
       const items: Array<{ priceId: string; quantity: number }> = Array.isArray(metadata.items)
         ? metadata.items
         : [];
-      const amountCents = Math.round(parseFloat((payment as any).amount.value) * 100);
+      const amountCents = Math.round(parseFloat(payment.amount.value) * 100);
       return {
-        status: (payment as any).status as string,
+        status: payment.status as string,
         email: metadata.email ?? null,
         amountTotal: amountCents,
         items,
