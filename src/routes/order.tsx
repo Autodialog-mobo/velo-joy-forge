@@ -79,6 +79,7 @@ function BestellenPage() {
   const [email, setEmail] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const items = useMemo(
     () =>
@@ -96,14 +97,31 @@ function BestellenPage() {
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
 
-  const returnUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/order/thanks?session_id={CHECKOUT_SESSION_ID}`
-      : "/order/thanks?session_id={CHECKOUT_SESSION_ID}";
+  const startCheckout = async () => {
+    setStage("checkout");
+    setCheckoutError(null);
+    try {
+      const result = await createMolliePayment({
+        data: {
+          items: items.map((i) => ({ priceId: i.priceId, quantity: i.quantity })),
+          customerEmail: email,
+          origin: window.location.origin,
+        },
+      });
+      if ("error" in result) {
+        setCheckoutError(result.error);
+        return;
+      }
+      window.location.href = result.checkoutUrl;
+    } catch (e) {
+      setCheckoutError(e instanceof Error ? e.message : "Onbekende fout");
+    }
+  };
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C" }}>
-      <PaymentTestModeBanner />
+
+
 
       <header style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1200, margin: "0 auto" }}>
         <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
