@@ -329,7 +329,7 @@ function BestellenPage() {
                       window.setTimeout(() => setTooltipOpen(false), 2500);
                       return;
                     }
-                    setStage("checkout");
+                    void startCheckout();
                   }}
                   aria-disabled={!hasItems || !emailValid}
                   style={{
@@ -388,7 +388,7 @@ function BestellenPage() {
                 )}
               </div>
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
-                Veilig betalen via Stripe · SSL-beveiligd
+                Veilig betalen via Mollie · Bancontact · iDEAL · Kaart
               </p>
             </aside>
           </div>
@@ -413,11 +413,15 @@ function BestellenPage() {
                 <ArrowLeft size={14} /> Wijzig bestelling
               </button>
             </div>
-            <StripeEmbeddedCheckoutForm
-              items={items.map((i) => ({ priceId: i.priceId, quantity: i.quantity }))}
-              customerEmail={email}
-              returnUrl={returnUrl}
-            />
+            {checkoutError ? (
+              <div style={{ color: "#b00020", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
+                Er ging iets mis bij het starten van de betaling: {checkoutError}
+              </div>
+            ) : (
+              <p style={{ margin: 0, color: "rgba(13,31,60,0.7)", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
+                Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…
+              </p>
+            )}
           </div>
         )}
       </main>
