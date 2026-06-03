@@ -31,8 +31,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrderThanksRouteImport } from './routes/order.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
-import { Route as ApiPublicArchiveOldProductsRouteImport } from './routes/api/public/archive-old-products'
-import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
 
 const StolenRoute = StolenRouteImport.update({
   id: '/stolen',
@@ -144,16 +143,10 @@ const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   path: '/api/public/vies-lookup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicArchiveOldProductsRoute =
-  ApiPublicArchiveOldProductsRouteImport.update({
-    id: '/api/public/archive-old-products',
-    path: '/api/public/archive-old-products',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const ApiPublicPaymentsWebhookRoute =
-  ApiPublicPaymentsWebhookRouteImport.update({
-    id: '/api/public/payments/webhook',
-    path: '/api/public/payments/webhook',
+const ApiPublicPaymentsMollieWebhookRoute =
+  ApiPublicPaymentsMollieWebhookRouteImport.update({
+    id: '/api/public/payments/mollie-webhook',
+    path: '/api/public/payments/mollie-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
 
@@ -179,9 +172,8 @@ export interface FileRoutesByFullPath {
   '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
-  '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
-  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -205,9 +197,8 @@ export interface FileRoutesByTo {
   '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
-  '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
-  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -232,9 +223,8 @@ export interface FileRoutesById {
   '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
-  '/api/public/archive-old-products': typeof ApiPublicArchiveOldProductsRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
-  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -260,9 +250,8 @@ export interface FileRouteTypes {
     | '/stolen'
     | '/bestellen/bedankt'
     | '/order/thanks'
-    | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
-    | '/api/public/payments/webhook'
+    | '/api/public/payments/mollie-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -286,9 +275,8 @@ export interface FileRouteTypes {
     | '/stolen'
     | '/bestellen/bedankt'
     | '/order/thanks'
-    | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
-    | '/api/public/payments/webhook'
+    | '/api/public/payments/mollie-webhook'
   id:
     | '__root__'
     | '/'
@@ -312,9 +300,8 @@ export interface FileRouteTypes {
     | '/stolen'
     | '/bestellen/bedankt'
     | '/order/thanks'
-    | '/api/public/archive-old-products'
     | '/api/public/vies-lookup'
-    | '/api/public/payments/webhook'
+    | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -337,9 +324,8 @@ export interface RootRouteChildren {
   ShopRoute: typeof ShopRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StolenRoute: typeof StolenRoute
-  ApiPublicArchiveOldProductsRoute: typeof ApiPublicArchiveOldProductsRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
-  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
+  ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -498,18 +484,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/archive-old-products': {
-      id: '/api/public/archive-old-products'
-      path: '/api/public/archive-old-products'
-      fullPath: '/api/public/archive-old-products'
-      preLoaderRoute: typeof ApiPublicArchiveOldProductsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/public/payments/webhook': {
-      id: '/api/public/payments/webhook'
-      path: '/api/public/payments/webhook'
-      fullPath: '/api/public/payments/webhook'
-      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+    '/api/public/payments/mollie-webhook': {
+      id: '/api/public/payments/mollie-webhook'
+      path: '/api/public/payments/mollie-webhook'
+      fullPath: '/api/public/payments/mollie-webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsMollieWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -557,20 +536,9 @@ const rootRouteChildren: RootRouteChildren = {
   ShopRoute: ShopRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StolenRoute: StolenRoute,
-  ApiPublicArchiveOldProductsRoute: ApiPublicArchiveOldProductsRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
-  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
+  ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -24,6 +24,7 @@ export type Database = {
           customer_email: string
           environment: string
           id: string
+          mollie_payment_id: string | null
           price_id: string
           product_name: string
           quantity: number
@@ -36,7 +37,7 @@ export type Database = {
           shipping_state: string | null
           status: string
           stripe_payment_intent_id: string | null
-          stripe_session_id: string
+          stripe_session_id: string | null
           updated_at: string
         }
         Insert: {
@@ -48,6 +49,7 @@ export type Database = {
           customer_email: string
           environment?: string
           id?: string
+          mollie_payment_id?: string | null
           price_id: string
           product_name: string
           quantity?: number
@@ -60,7 +62,7 @@ export type Database = {
           shipping_state?: string | null
           status?: string
           stripe_payment_intent_id?: string | null
-          stripe_session_id: string
+          stripe_session_id?: string | null
           updated_at?: string
         }
         Update: {
@@ -72,6 +74,7 @@ export type Database = {
           customer_email?: string
           environment?: string
           id?: string
+          mollie_payment_id?: string | null
           price_id?: string
           product_name?: string
           quantity?: number
@@ -84,7 +87,7 @@ export type Database = {
           shipping_state?: string | null
           status?: string
           stripe_payment_intent_id?: string | null
-          stripe_session_id?: string
+          stripe_session_id?: string | null
           updated_at?: string
         }
         Relationships: []

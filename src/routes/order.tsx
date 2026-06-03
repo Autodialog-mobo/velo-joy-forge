@@ -3,8 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
-import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
-import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { createMolliePayment } from "@/utils/mollie.functions";
 
 type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_family_onetime";
 
@@ -64,7 +63,7 @@ export const Route = createFileRoute("/order")({
       { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,95" },
       {
         property: "og:description",
-        content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Stripe.",
+        content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie.",
       },
     ],
   }),
@@ -80,6 +79,7 @@ function BestellenPage() {
   const [email, setEmail] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const items = useMemo(
     () =>
@@ -97,14 +97,31 @@ function BestellenPage() {
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
 
-  const returnUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/order/thanks?session_id={CHECKOUT_SESSION_ID}`
-      : "/order/thanks?session_id={CHECKOUT_SESSION_ID}";
+  const startCheckout = async () => {
+    setStage("checkout");
+    setCheckoutError(null);
+    try {
+      const result = await createMolliePayment({
+        data: {
+          items: items.map((i) => ({ priceId: i.priceId, quantity: i.quantity })),
+          customerEmail: email,
+          origin: window.location.origin,
+        },
+      });
+      if ("error" in result) {
+        setCheckoutError(result.error);
+        return;
+      }
+      window.location.href = result.checkoutUrl;
+    } catch (e) {
+      setCheckoutError(e instanceof Error ? e.message : "Onbekende fout");
+    }
+  };
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C" }}>
-      <PaymentTestModeBanner />
+
+
 
       <header style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1200, margin: "0 auto" }}>
         <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
@@ -140,7 +157,7 @@ function BestellenPage() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 24, fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> Gratis verzending in heel de EU</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> Veilig betalen via Stripe</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> Veilig betalen via Mollie</span>
           </div>
         </div>
       </section>
@@ -312,7 +329,7 @@ function BestellenPage() {
                       window.setTimeout(() => setTooltipOpen(false), 2500);
                       return;
                     }
-                    setStage("checkout");
+                    void startCheckout();
                   }}
                   aria-disabled={!hasItems || !emailValid}
                   style={{
@@ -371,7 +388,7 @@ function BestellenPage() {
                 )}
               </div>
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
-                Veilig betalen via Stripe · SSL-beveiligd
+                Veilig betalen via Mollie · Bancontact · iDEAL · Kaart
               </p>
             </aside>
           </div>
@@ -396,11 +413,15 @@ function BestellenPage() {
                 <ArrowLeft size={14} /> Wijzig bestelling
               </button>
             </div>
-            <StripeEmbeddedCheckoutForm
-              items={items.map((i) => ({ priceId: i.priceId, quantity: i.quantity }))}
-              customerEmail={email}
-              returnUrl={returnUrl}
-            />
+            {checkoutError ? (
+              <div style={{ color: "#b00020", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
+                Er ging iets mis bij het starten van de betaling: {checkoutError}
+              </div>
+            ) : (
+              <p style={{ margin: 0, color: "rgba(13,31,60,0.7)", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
+                Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…
+              </p>
+            )}
           </div>
         )}
       </main>
