@@ -63,7 +63,7 @@ export const Route = createFileRoute("/order")({
       { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,95" },
       {
         property: "og:description",
-        content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Stripe.",
+        content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie.",
       },
     ],
   }),
@@ -157,7 +157,7 @@ function BestellenPage() {
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 24, fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> Gratis verzending in heel de EU</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> Veilig betalen via Stripe</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> Veilig betalen via Mollie</span>
           </div>
         </div>
       </section>
