@@ -4,8 +4,10 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 async function getMollie() {
   const apiKey = process.env.MOLLIE_API_KEY;
   if (!apiKey) throw new Error("MOLLIE_API_KEY is not configured");
-  const mod = await import("@mollie/api-client");
-  return mod.default({ apiKey });
+  const mod: any = await import("@mollie/api-client");
+  const createClient = mod.createMollieClient ?? mod.default?.createMollieClient ?? mod.default;
+  if (typeof createClient !== "function") throw new Error("Mollie SDK kon niet worden geladen");
+  return createClient({ apiKey });
 }
 
 export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
