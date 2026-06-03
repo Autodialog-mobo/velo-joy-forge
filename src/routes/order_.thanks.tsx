@@ -5,7 +5,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { getOrderByMolliePayment } from "@/utils/mollie.functions";
 
-export const Route = createFileRoute("/order/thanks")({
+export const Route = createFileRoute("/order_/thanks")({
   validateSearch: (search: Record<string, unknown>): { payment_id?: string } => ({
     payment_id: typeof search.payment_id === "string" ? search.payment_id : undefined,
   }),
