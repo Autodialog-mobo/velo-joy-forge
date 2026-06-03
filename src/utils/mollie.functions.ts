@@ -10,11 +10,16 @@ const BUNDLES: Record<BundleKey, { name: string; amountCents: number }> = {
 
 const formatAmount = (cents: number) => (cents / 100).toFixed(2);
 
-function getMollie() {
+async function getMollie() {
   const apiKey = process.env.MOLLIE_API_KEY;
   if (!apiKey) throw new Error("MOLLIE_API_KEY is not configured");
   // Dynamic import keeps the Node-only SDK out of any client-reachable bundle.
-  return import("@mollie/api-client").then((m) => m.default({ apiKey }));
+  const mod: any = await import("@mollie/api-client");
+  const createClient = mod.createMollieClient ?? mod.default?.createMollieClient ?? mod.default;
+  if (typeof createClient !== "function") {
+    throw new Error("Mollie SDK kon niet worden geladen");
+  }
+  return createClient({ apiKey });
 }
 
 export type MollieCheckoutResult = { checkoutUrl: string; paymentId: string } | { error: string };
