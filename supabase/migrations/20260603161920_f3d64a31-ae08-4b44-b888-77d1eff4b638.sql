@@ -1,0 +1,1 @@
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS mollie_payment_id text UNIQUE; ALTER TABLE public.orders ALTER COLUMN stripe_session_id DROP NOT NULL;
