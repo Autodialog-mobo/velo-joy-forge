@@ -3,8 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
-import { StripeEmbeddedCheckoutForm } from "@/components/StripeEmbeddedCheckout";
-import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { createMolliePayment } from "@/utils/mollie.functions";
 
 type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_family_onetime";
 
