@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, Truck, Mail, ArrowLeft } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
-import { getOrderBySession } from "@/utils/payments.functions";
-import { getStripeEnvironment } from "@/lib/stripe";
+import { getOrderByMolliePayment } from "@/utils/mollie.functions";
 
 export const Route = createFileRoute("/order/thanks")({
-  validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
-    session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+  validateSearch: (search: Record<string, unknown>): { payment_id?: string } => ({
+    payment_id: typeof search.payment_id === "string" ? search.payment_id : undefined,
   }),
   head: () => ({
     meta: [
@@ -26,7 +25,7 @@ const BUNDLE_NAMES: Record<string, string> = {
 };
 
 function BedanktPage() {
-  const { session_id } = Route.useSearch();
+  const { payment_id } = Route.useSearch();
   const [order, setOrder] = useState<{
     status: string | null;
     paymentStatus: string | null;
@@ -38,24 +37,25 @@ function BedanktPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!session_id) {
+    if (!payment_id) {
       setLoading(false);
       return;
     }
-    getOrderBySession({ data: { sessionId: session_id, environment: getStripeEnvironment() } })
+    getOrderByMolliePayment({ data: { paymentId: payment_id } })
       .then((res) => {
         if ("error" in res) setError(res.error ?? "Onbekende fout");
-        else setOrder({
-          status: res.status ?? null,
-          paymentStatus: res.paymentStatus ?? null,
-          email: res.email,
-          amountTotal: res.amountTotal,
-          items: res.items,
-        });
+        else
+          setOrder({
+            status: res.status,
+            paymentStatus: res.status,
+            email: res.email,
+            amountTotal: res.amountTotal,
+            items: res.items,
+          });
       })
-      .catch((e) => setError(e?.message ?? "Onbekende fout"))
+      .catch((e: unknown) => setError(e instanceof Error ? e.message : "Onbekende fout"))
       .finally(() => setLoading(false));
-  }, [session_id]);
+  }, [payment_id]);
 
   const totalStickers = order?.items.reduce((sum, i) => {
     const n = i.priceId === "frameid_family_onetime" ? 5 : i.priceId === "frameid_duo_onetime" ? 2 : 1;
