@@ -28,7 +28,7 @@ import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as OrderThanksRouteImport } from './routes/order.thanks'
+import { Route as OrderThanksRouteImport } from './routes/order_.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -129,9 +129,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderThanksRoute = OrderThanksRouteImport.update({
-  id: '/thanks',
-  path: '/thanks',
-  getParentRoute: () => OrderRoute,
+  id: '/order_/thanks',
+  path: '/order/thanks',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   id: '/bedankt',
@@ -163,7 +163,7 @@ export interface FileRoutesByFullPath {
   '/insurance': typeof InsuranceRoute
   '/leasing': typeof LeasingRoute
   '/manufacturer': typeof ManufacturerRoute
-  '/order': typeof OrderRouteWithChildren
+  '/order': typeof OrderRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
@@ -188,7 +188,7 @@ export interface FileRoutesByTo {
   '/insurance': typeof InsuranceRoute
   '/leasing': typeof LeasingRoute
   '/manufacturer': typeof ManufacturerRoute
-  '/order': typeof OrderRouteWithChildren
+  '/order': typeof OrderRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
@@ -214,7 +214,7 @@ export interface FileRoutesById {
   '/insurance': typeof InsuranceRoute
   '/leasing': typeof LeasingRoute
   '/manufacturer': typeof ManufacturerRoute
-  '/order': typeof OrderRouteWithChildren
+  '/order': typeof OrderRoute
   '/privacy': typeof PrivacyRoute
   '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
@@ -222,7 +222,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stolen': typeof StolenRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/order/thanks': typeof OrderThanksRoute
+  '/order_/thanks': typeof OrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -299,7 +299,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stolen'
     | '/bestellen/bedankt'
-    | '/order/thanks'
+    | '/order_/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
@@ -317,13 +317,14 @@ export interface RootRouteChildren {
   InsuranceRoute: typeof InsuranceRoute
   LeasingRoute: typeof LeasingRoute
   ManufacturerRoute: typeof ManufacturerRoute
-  OrderRoute: typeof OrderRouteWithChildren
+  OrderRoute: typeof OrderRoute
   PrivacyRoute: typeof PrivacyRoute
   ProRoute: typeof ProRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
   ShopRoute: typeof ShopRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StolenRoute: typeof StolenRoute
+  OrderThanksRoute: typeof OrderThanksRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -463,12 +464,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/order/thanks': {
-      id: '/order/thanks'
-      path: '/thanks'
+    '/order_/thanks': {
+      id: '/order_/thanks'
+      path: '/order/thanks'
       fullPath: '/order/thanks'
       preLoaderRoute: typeof OrderThanksRouteImport
-      parentRoute: typeof OrderRoute
+      parentRoute: typeof rootRouteImport
     }
     '/bestellen/bedankt': {
       id: '/bestellen/bedankt'
@@ -506,16 +507,6 @@ const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
   BestellenRouteChildren,
 )
 
-interface OrderRouteChildren {
-  OrderThanksRoute: typeof OrderThanksRoute
-}
-
-const OrderRouteChildren: OrderRouteChildren = {
-  OrderThanksRoute: OrderThanksRoute,
-}
-
-const OrderRouteWithChildren = OrderRoute._addFileChildren(OrderRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AlEenStickerRoute: AlEenStickerRoute,
@@ -529,13 +520,14 @@ const rootRouteChildren: RootRouteChildren = {
   InsuranceRoute: InsuranceRoute,
   LeasingRoute: LeasingRoute,
   ManufacturerRoute: ManufacturerRoute,
-  OrderRoute: OrderRouteWithChildren,
+  OrderRoute: OrderRoute,
   PrivacyRoute: PrivacyRoute,
   ProRoute: ProRoute,
   ProfessionalsRoute: ProfessionalsRoute,
   ShopRoute: ShopRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StolenRoute: StolenRoute,
+  OrderThanksRoute: OrderThanksRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
 }
