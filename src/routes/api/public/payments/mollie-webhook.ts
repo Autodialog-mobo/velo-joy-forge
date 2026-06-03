@@ -25,8 +25,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             return new Response("Invalid id", { status: 400 });
           }
 
-          const mollie = await getMollie();
-          const payment = await mollie.payments.get(id);
+          const payment = await fetchMolliePayment(id);
           const p: any = payment;
           const status: string = p.status;
           const amountCents = Math.round(parseFloat(p.amount.value) * 100);
