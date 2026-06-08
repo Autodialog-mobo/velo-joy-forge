@@ -25,11 +25,14 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as BikeCheckRouteImport } from './routes/bike-check'
 import { Route as BestellenRouteImport } from './routes/bestellen'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrderThanksRouteImport } from './routes/order_.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
 
@@ -113,6 +116,11 @@ const BestellenRoute = BestellenRouteImport.update({
   path: '/bestellen',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AssistanceRoute = AssistanceRouteImport.update({
   id: '/assistance',
   path: '/assistance',
@@ -121,6 +129,10 @@ const AssistanceRoute = AssistanceRouteImport.update({
 const AlEenStickerRoute = AlEenStickerRouteImport.update({
   id: '/al-een-sticker',
   path: '/al-een-sticker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -138,6 +150,11 @@ const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   path: '/bedankt',
   getParentRoute: () => BestellenRoute,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   id: '/api/public/vies-lookup',
   path: '/api/public/vies-lookup',
@@ -154,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
+  '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
   '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
@@ -170,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stolen': typeof StolenRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
@@ -179,6 +198,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
+  '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
   '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
@@ -195,6 +215,7 @@ export interface FileRoutesByTo {
   '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stolen': typeof StolenRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
@@ -203,8 +224,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
+  '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
   '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
@@ -221,6 +244,7 @@ export interface FileRoutesById {
   '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stolen': typeof StolenRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order_/thanks': typeof OrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
@@ -232,6 +256,7 @@ export interface FileRouteTypes {
     | '/'
     | '/al-een-sticker'
     | '/assistance'
+    | '/auth'
     | '/bestellen'
     | '/bike-check'
     | '/bikesearch'
@@ -248,6 +273,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/sitemap.xml'
     | '/stolen'
+    | '/admin'
     | '/bestellen/bedankt'
     | '/order/thanks'
     | '/api/public/vies-lookup'
@@ -257,6 +283,7 @@ export interface FileRouteTypes {
     | '/'
     | '/al-een-sticker'
     | '/assistance'
+    | '/auth'
     | '/bestellen'
     | '/bike-check'
     | '/bikesearch'
@@ -273,6 +300,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/sitemap.xml'
     | '/stolen'
+    | '/admin'
     | '/bestellen/bedankt'
     | '/order/thanks'
     | '/api/public/vies-lookup'
@@ -280,8 +308,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/al-een-sticker'
     | '/assistance'
+    | '/auth'
     | '/bestellen'
     | '/bike-check'
     | '/bikesearch'
@@ -298,6 +328,7 @@ export interface FileRouteTypes {
     | '/shop'
     | '/sitemap.xml'
     | '/stolen'
+    | '/_authenticated/admin'
     | '/bestellen/bedankt'
     | '/order_/thanks'
     | '/api/public/vies-lookup'
@@ -306,8 +337,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AlEenStickerRoute: typeof AlEenStickerRoute
   AssistanceRoute: typeof AssistanceRoute
+  AuthRoute: typeof AuthRoute
   BestellenRoute: typeof BestellenRouteWithChildren
   BikeCheckRoute: typeof BikeCheckRoute
   BikesearchRoute: typeof BikesearchRoute
@@ -443,6 +476,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestellenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/assistance': {
       id: '/assistance'
       path: '/assistance'
@@ -455,6 +495,13 @@ declare module '@tanstack/react-router' {
       path: '/al-een-sticker'
       fullPath: '/al-een-sticker'
       preLoaderRoute: typeof AlEenStickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -478,6 +525,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestellenBedanktRouteImport
       parentRoute: typeof BestellenRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/vies-lookup': {
       id: '/api/public/vies-lookup'
       path: '/api/public/vies-lookup'
@@ -495,6 +549,17 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 interface BestellenRouteChildren {
   BestellenBedanktRoute: typeof BestellenBedanktRoute
 }
@@ -509,8 +574,10 @@ const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AlEenStickerRoute: AlEenStickerRoute,
   AssistanceRoute: AssistanceRoute,
+  AuthRoute: AuthRoute,
   BestellenRoute: BestellenRouteWithChildren,
   BikeCheckRoute: BikeCheckRoute,
   BikesearchRoute: BikesearchRoute,
