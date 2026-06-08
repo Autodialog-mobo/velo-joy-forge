@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      order_lines: {
+        Row: {
+          bundle_key: string
+          bundle_sku: string
+          created_at: string
+          id: string
+          order_id: string
+          quantity: number
+          sticker_count: number
+          unit_price_cents: number
+        }
+        Insert: {
+          bundle_key: string
+          bundle_sku: string
+          created_at?: string
+          id?: string
+          order_id: string
+          quantity: number
+          sticker_count: number
+          unit_price_cents: number
+        }
+        Update: {
+          bundle_key?: string
+          bundle_sku?: string
+          created_at?: string
+          id?: string
+          order_id?: string
+          quantity?: number
+          sticker_count?: number
+          unit_price_cents?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_lines_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_lines_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders_for_fulfillment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           amount_subtotal: number
@@ -94,7 +142,90 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      orders_for_fulfillment: {
+        Row: {
+          amount_subtotal: number | null
+          amount_tax: number | null
+          amount_total: number | null
+          bundle_sku: string | null
+          created_at: string | null
+          currency: string | null
+          customer_email: string | null
+          environment: string | null
+          id: string | null
+          mollie_payment_id: string | null
+          price_id: string | null
+          product_name: string | null
+          quantity: number | null
+          shipping_city: string | null
+          shipping_country: string | null
+          shipping_line1: string | null
+          shipping_line2: string | null
+          shipping_name: string | null
+          shipping_postal_code: string | null
+          shipping_state: string | null
+          status: string | null
+          stickers_per_bundle: number | null
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          amount_subtotal?: number | null
+          amount_tax?: number | null
+          amount_total?: number | null
+          bundle_sku?: never
+          created_at?: string | null
+          currency?: string | null
+          customer_email?: string | null
+          environment?: string | null
+          id?: string | null
+          mollie_payment_id?: string | null
+          price_id?: string | null
+          product_name?: string | null
+          quantity?: number | null
+          shipping_city?: string | null
+          shipping_country?: string | null
+          shipping_line1?: string | null
+          shipping_line2?: string | null
+          shipping_name?: string | null
+          shipping_postal_code?: string | null
+          shipping_state?: string | null
+          status?: string | null
+          stickers_per_bundle?: never
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          amount_subtotal?: number | null
+          amount_tax?: number | null
+          amount_total?: number | null
+          bundle_sku?: never
+          created_at?: string | null
+          currency?: string | null
+          customer_email?: string | null
+          environment?: string | null
+          id?: string | null
+          mollie_payment_id?: string | null
+          price_id?: string | null
+          product_name?: string | null
+          quantity?: number | null
+          shipping_city?: string | null
+          shipping_country?: string | null
+          shipping_line1?: string | null
+          shipping_line2?: string | null
+          shipping_name?: string | null
+          shipping_postal_code?: string | null
+          shipping_state?: string | null
+          status?: string | null
+          stickers_per_bundle?: never
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

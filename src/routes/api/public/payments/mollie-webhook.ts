@@ -14,6 +14,12 @@ async function fetchMolliePayment(id: string) {
   return res.json();
 }
 
+const BUNDLE_META: Record<string, { sku: string; stickersPerBundle: number; unitPriceCents: number }> = {
+  frameid_solo_onetime: { sku: "VP-FID-1", stickersPerBundle: 1, unitPriceCents: 1295 },
+  frameid_duo_onetime: { sku: "VP-FID-2", stickersPerBundle: 2, unitPriceCents: 2195 },
+  frameid_family_onetime: { sku: "VP-FID-5", stickersPerBundle: 5, unitPriceCents: 4995 },
+};
+
 export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
   server: {
     handlers: {
@@ -38,22 +44,21 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? `${shipping.givenName ?? ""} ${shipping.familyName ?? ""}`.trim()
             : "";
 
-          await (supabaseAdmin.from("orders") as any).upsert(
+          const items: Array<{ priceId: string; quantity: number }> = Array.isArray(p.metadata?.items)
+            ? p.metadata.items
+            : [];
+
+          const { data: upserted } = await (supabaseAdmin.from("orders") as any).upsert(
             {
               mollie_payment_id: p.id,
               customer_email:
                 p.metadata?.email ?? p.billingEmail ?? p.customerEmail ?? "",
-              price_id: p.metadata?.items?.[0]?.priceId ?? "unknown",
-              product_name: Array.isArray(p.metadata?.items)
-                ? p.metadata.items
-                    .map((i: any) => `${i.priceId} × ${i.quantity}`)
-                    .join(", ")
+              price_id: items[0]?.priceId ?? "unknown",
+              product_name: items.length
+                ? items.map((i) => `${i.priceId} × ${i.quantity}`).join(", ")
                 : "Velopass Frame-ID",
-              quantity: Array.isArray(p.metadata?.items)
-                ? p.metadata.items.reduce(
-                    (s: number, i: any) => s + (i.quantity ?? 1),
-                    0,
-                  )
+              quantity: items.length
+                ? items.reduce((s, i) => s + (i.quantity ?? 1), 0)
                 : 1,
               amount_subtotal: amountCents,
               amount_tax: 0,
@@ -69,7 +74,29 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               updated_at: new Date().toISOString(),
             },
             { onConflict: "mollie_payment_id" },
-          );
+          ).select("id").single();
+
+          const orderId = upserted?.id;
+          if (orderId && items.length) {
+            // Replace lines for idempotency on webhook retries
+            await (supabaseAdmin.from("order_lines") as any).delete().eq("order_id", orderId);
+            const rows = items
+              .filter((i) => i.priceId in BUNDLE_META)
+              .map((i) => {
+                const meta = BUNDLE_META[i.priceId];
+                return {
+                  order_id: orderId,
+                  bundle_key: i.priceId,
+                  bundle_sku: meta.sku,
+                  quantity: i.quantity,
+                  sticker_count: i.quantity * meta.stickersPerBundle,
+                  unit_price_cents: meta.unitPriceCents,
+                };
+              });
+            if (rows.length) {
+              await (supabaseAdmin.from("order_lines") as any).insert(rows);
+            }
+          }
 
           return new Response("ok", { status: 200 });
         } catch (e) {
