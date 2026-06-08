@@ -12,16 +12,18 @@ async function assertAdmin(supabase: any, userId: string) {
   if (!data) throw new Error("Forbidden: admin role required");
 }
 
-export const listOrders = createServerFn({ method: "GET" })
+export const listOrders = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
+  .inputValidator((d: { environment?: "live" | "sandbox" } = {}) => d ?? {})
+  .handler(async ({ data, context }) => {
     const { supabase, userId } = context as any;
     await assertAdmin(supabase, userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const env = data?.environment ?? "live";
     const { data: orders, error } = await supabaseAdmin
       .from("orders")
       .select("*")
-      .eq("environment", "live")
+      .eq("environment", env)
       .order("created_at", { ascending: false })
       .limit(500);
     if (error) throw new Error(error.message);
