@@ -20,12 +20,13 @@ function AdminPage() {
   const doShip = useServerFn(markShipped);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
+  const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
 
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ["admin-orders"],
-    queryFn: () => fetchOrders(),
+    queryKey: ["admin-orders", environment],
+    queryFn: () => fetchOrders({ data: { environment } }),
   });
 
   const orders = data?.orders ?? [];
