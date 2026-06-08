@@ -228,7 +228,11 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      mark_order_printed: { Args: { p_order_id: string }; Returns: undefined }
+      mark_order_shipped: {
+        Args: { p_order_id: string; p_tracking_code?: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
