@@ -33,6 +33,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? "live"
             : "sandbox";
 
+          const shipping = p.shippingAddress ?? p.metadata?.shipping ?? null;
+          const shippingName = shipping
+            ? `${shipping.givenName ?? ""} ${shipping.familyName ?? ""}`.trim()
+            : "";
+
           await (supabaseAdmin.from("orders") as any).upsert(
             {
               mollie_payment_id: p.id,
@@ -41,10 +46,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               price_id: p.metadata?.items?.[0]?.priceId ?? "unknown",
               product_name: Array.isArray(p.metadata?.items)
                 ? p.metadata.items
-                    .map(
-                      (i: any) =>
-                        `${i.priceId} × ${i.quantity}`,
-                    )
+                    .map((i: any) => `${i.priceId} × ${i.quantity}`)
                     .join(", ")
                 : "Velopass Frame-ID",
               quantity: Array.isArray(p.metadata?.items)
@@ -59,6 +61,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               currency: (p.amount.currency ?? "EUR").toLowerCase(),
               status,
               environment,
+              shipping_name: shippingName,
+              shipping_line1: shipping?.streetAndNumber ?? "",
+              shipping_postal_code: shipping?.postalCode ?? "",
+              shipping_city: shipping?.city ?? "",
+              shipping_country: shipping?.country ?? "",
               updated_at: new Date().toISOString(),
             },
             { onConflict: "mollie_payment_id" },

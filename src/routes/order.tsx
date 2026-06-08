@@ -77,6 +77,12 @@ function BestellenPage() {
     frameid_family_onetime: 0,
   });
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("BE");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -93,6 +99,14 @@ function BestellenPage() {
   const total = items.reduce((sum, i) => sum + i.bundle.price * i.quantity, 0);
   const hasItems = items.length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const shippingValid =
+    firstName.trim().length > 0 &&
+    lastName.trim().length > 0 &&
+    address.trim().length > 0 &&
+    postalCode.trim().length > 0 &&
+    city.trim().length > 0 &&
+    /^(BE|NL|FR|LU|DE)$/.test(country);
+  const canCheckout = hasItems && emailValid && shippingValid;
 
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
@@ -106,6 +120,14 @@ function BestellenPage() {
           items: items.map((i) => ({ priceId: i.priceId, quantity: i.quantity })),
           customerEmail: email,
           origin: window.location.origin,
+          shipping: {
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            address: address.trim(),
+            postalCode: postalCode.trim(),
+            city: city.trim(),
+            country,
+          },
         },
       });
       if ("error" in result) {
@@ -320,35 +342,62 @@ function BestellenPage() {
                 />
               </div>
 
+              <div style={{ display: "grid", gap: 10, margin: "0 0 12px" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                  <LabeledInput label="Voornaam" value={firstName} onChange={setFirstName} placeholder="Jan" />
+                  <LabeledInput label="Achternaam" value={lastName} onChange={setLastName} placeholder="Janssens" />
+                </div>
+                <LabeledInput label="Straat + huisnummer" value={address} onChange={setAddress} placeholder="Kerkstraat 12" />
+                <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 8 }}>
+                  <LabeledInput label="Postcode" value={postalCode} onChange={setPostalCode} placeholder="9000" />
+                  <LabeledInput label="Stad" value={city} onChange={setCity} placeholder="Gent" />
+                </div>
+                <div style={{ display: "grid", gap: 6 }}>
+                  <label htmlFor="country" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>Land</label>
+                  <select
+                    id="country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff" }}
+                  >
+                    <option value="BE">België</option>
+                    <option value="NL">Nederland</option>
+                    <option value="FR">Frankrijk</option>
+                    <option value="LU">Luxemburg</option>
+                    <option value="DE">Duitsland</option>
+                  </select>
+                </div>
+              </div>
+
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
                 <button
                   type="button"
                   onClick={() => {
-                    if (!hasItems || !emailValid) {
+                    if (!canCheckout) {
                       setTooltipOpen(true);
                       window.setTimeout(() => setTooltipOpen(false), 2500);
                       return;
                     }
                     void startCheckout();
                   }}
-                  aria-disabled={!hasItems || !emailValid}
+                  aria-disabled={!canCheckout}
                   style={{
                     width: "100%",
                     padding: "14px 18px",
                     borderRadius: 12,
                     border: "none",
-                    background: !hasItems || !emailValid ? "rgba(46,204,138,0.25)" : "#2ECC8A",
+                    background: !canCheckout ? "rgba(46,204,138,0.25)" : "#2ECC8A",
                     color: "#0D1F3C",
                     fontFamily: "DM Sans, sans-serif",
                     fontWeight: 700,
                     fontSize: 15,
-                    cursor: !hasItems || !emailValid ? "not-allowed" : "pointer",
-                    opacity: !hasItems || !emailValid ? 0.7 : 1,
+                    cursor: !canCheckout ? "not-allowed" : "pointer",
+                    opacity: !canCheckout ? 0.7 : 1,
                   }}
                 >
                   {hasItems ? `Betalen — ${eur(total)} →` : "Betalen →"}
                 </button>
-                {(!hasItems || !emailValid) && (
+                {!canCheckout && (
                   <span
                     style={{
                       position: "absolute",
@@ -372,7 +421,9 @@ function BestellenPage() {
                   >
                     {!hasItems
                       ? "Kies minstens één bundel om te kunnen betalen."
-                      : "Vul een geldig e-mailadres in om verder te gaan."}
+                      : !emailValid
+                      ? "Vul een geldig e-mailadres in om verder te gaan."
+                      : "Vul je verzendadres in om verder te gaan."}
                     <span
                       style={{
                         position: "absolute",
@@ -449,3 +500,28 @@ const qtyBtn: React.CSSProperties = {
   alignItems: "center",
   justifyContent: "center",
 };
+
+function LabeledInput({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}) {
+  return (
+    <div style={{ display: "grid", gap: 6 }}>
+      <label style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{label}</label>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff" }}
+      />
+    </div>
+  );
+}
