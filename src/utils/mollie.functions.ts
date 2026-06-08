@@ -46,6 +46,14 @@ export const createMolliePayment = createServerFn({ method: "POST" })
       items: Array<{ priceId: string; quantity: number }>;
       customerEmail: string;
       origin: string;
+      shipping: {
+        firstName: string;
+        lastName: string;
+        address: string;
+        postalCode: string;
+        city: string;
+        country: string;
+      };
     }) => {
       if (!Array.isArray(data.items) || data.items.length === 0) {
         throw new Error("Minstens één bundel is vereist");
@@ -60,6 +68,12 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         throw new Error("Ongeldig e-mailadres");
       }
       if (!/^https?:\/\//.test(data.origin)) throw new Error("Ongeldige origin");
+      const s = data.shipping;
+      if (!s || !s.firstName?.trim() || !s.lastName?.trim() || !s.address?.trim()
+          || !s.postalCode?.trim() || !s.city?.trim()) {
+        throw new Error("Verzendadres is onvolledig");
+      }
+      if (!/^[A-Z]{2}$/.test(s.country)) throw new Error("Ongeldig land (ISO 2-letter vereist)");
       return data;
     },
   )
@@ -76,6 +90,16 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         .join(", ");
       const environment = process.env.MOLLIE_API_KEY?.startsWith("live_") ? "live" : "sandbox";
 
+      const shippingAddress = {
+        givenName: data.shipping.firstName.trim(),
+        familyName: data.shipping.lastName.trim(),
+        streetAndNumber: data.shipping.address.trim(),
+        postalCode: data.shipping.postalCode.trim(),
+        city: data.shipping.city.trim(),
+        country: data.shipping.country,
+        email: data.customerEmail,
+      };
+
       // Create payment with placeholder redirect; we'll patch with real ID after.
       const payment = await mollieFetch("/payments", {
         method: "POST",
@@ -85,8 +109,9 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           redirectUrl: `${data.origin}/order/thanks?payment_id=pending`,
           webhookUrl: `${data.origin}/api/public/payments/mollie-webhook`,
           billingEmail: data.customerEmail,
+          shippingAddress,
           locale: "nl_NL",
-          metadata: { items: data.items, email: data.customerEmail },
+          metadata: { items: data.items, email: data.customerEmail, shipping: shippingAddress },
         }),
       });
 
@@ -113,6 +138,11 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           currency: "eur",
           status: "pending",
           environment,
+          shipping_name: `${shippingAddress.givenName} ${shippingAddress.familyName}`.trim(),
+          shipping_line1: shippingAddress.streetAndNumber,
+          shipping_postal_code: shippingAddress.postalCode,
+          shipping_city: shippingAddress.city,
+          shipping_country: shippingAddress.country,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "mollie_payment_id" },
