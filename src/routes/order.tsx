@@ -427,9 +427,6 @@ function BestellenPage() {
                     <span
                       style={{
                         position: "absolute",
-                    <span
-                      style={{
-                        position: "absolute",
                         top: "100%",
                         left: "50%",
                         transform: "translateX(-50%)",
