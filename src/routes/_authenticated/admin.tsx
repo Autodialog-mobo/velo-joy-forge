@@ -136,12 +136,34 @@ function AdminPage() {
           <h1 className="text-xl font-bold" style={{ fontFamily: "Syne, sans-serif" }}>
             Velopass · Fulfillment
           </h1>
-          <button
-            onClick={signOut}
-            className="text-sm text-muted-foreground hover:text-foreground"
-          >
-            Uitloggen
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="inline-flex rounded-lg border overflow-hidden text-sm">
+              {(["live", "sandbox"] as const).map((env) => (
+                <button
+                  key={env}
+                  onClick={() => {
+                    setEnvironment(env);
+                    setSelected(new Set());
+                  }}
+                  className={`px-3 py-1.5 transition ${
+                    environment === env
+                      ? env === "live"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-yellow-500 text-yellow-950"
+                      : "bg-card hover:bg-accent/10"
+                  }`}
+                >
+                  {env === "live" ? "Live" : "Sandbox"}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={signOut}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Uitloggen
+            </button>
+          </div>
         </div>
       </header>
 
