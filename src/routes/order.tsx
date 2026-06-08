@@ -77,6 +77,12 @@ function BestellenPage() {
     frameid_family_onetime: 0,
   });
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("BE");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -93,6 +99,14 @@ function BestellenPage() {
   const total = items.reduce((sum, i) => sum + i.bundle.price * i.quantity, 0);
   const hasItems = items.length > 0;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const shippingValid =
+    firstName.trim().length > 0 &&
+    lastName.trim().length > 0 &&
+    address.trim().length > 0 &&
+    postalCode.trim().length > 0 &&
+    city.trim().length > 0 &&
+    /^(BE|NL|FR|LU|DE)$/.test(country);
+  const canCheckout = hasItems && emailValid && shippingValid;
 
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
@@ -106,6 +120,14 @@ function BestellenPage() {
           items: items.map((i) => ({ priceId: i.priceId, quantity: i.quantity })),
           customerEmail: email,
           origin: window.location.origin,
+          shipping: {
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            address: address.trim(),
+            postalCode: postalCode.trim(),
+            city: city.trim(),
+            country,
+          },
         },
       });
       if ("error" in result) {
