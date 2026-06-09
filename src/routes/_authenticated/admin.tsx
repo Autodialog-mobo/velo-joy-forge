@@ -37,6 +37,10 @@ function AdminPage() {
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
+  const [sort, setSort] = useState<{ column: "date" | "amount"; dir: "asc" | "desc" }>({
+    column: "date",
+    dir: "desc",
+  });
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
@@ -55,7 +59,21 @@ function AdminPage() {
     return m;
   }, [lines]);
 
-  const filtered = orders.filter((o: any) => filter === "all" || o.status === filter);
+  const filtered = useMemo(() => {
+    const arr = orders.filter((o: any) => filter === "all" || o.status === filter);
+    arr.sort((a: any, b: any) => {
+      if (sort.column === "date") {
+        const da = new Date(a.created_at).getTime();
+        const db = new Date(b.created_at).getTime();
+        return sort.dir === "asc" ? da - db : db - da;
+      }
+      if (sort.column === "amount") {
+        return sort.dir === "asc" ? a.amount_total - b.amount_total : b.amount_total - a.amount_total;
+      }
+      return 0;
+    });
+    return arr;
+  }, [orders, filter, sort]);
 
   const toggle = (id: string) => {
     setSelected((prev) => {
