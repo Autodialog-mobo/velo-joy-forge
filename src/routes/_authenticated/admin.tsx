@@ -89,6 +89,15 @@ function AdminPage() {
     else setSelected(new Set(filtered.map((o: any) => o.id)));
   };
 
+  const handleSort = (column: "date" | "amount") => {
+    setSort((prev) => {
+      if (prev.column === column) {
+        return { column, dir: prev.dir === "asc" ? "desc" : "asc" };
+      }
+      return { column, dir: "desc" };
+    });
+  };
+
   const selectedOrders = filtered.filter((o: any) => selected.has(o.id));
 
   const generateLabels = () => {
