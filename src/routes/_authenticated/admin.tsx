@@ -291,12 +291,40 @@ function AdminPage() {
                         onChange={toggleAll}
                       />
                     </th>
-                    <th className="px-4 py-3 font-semibold">Datum</th>
+                    <th
+                      className="px-4 py-3 font-semibold cursor-pointer select-none group"
+                      onClick={() => handleSort("date")}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        Datum
+                        {sort.column === "date" && (
+                          sort.dir === "asc" ? (
+                            <ArrowUp className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          ) : (
+                            <ArrowDown className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          )
+                        )}
+                      </span>
+                    </th>
                     <th className="px-4 py-3 font-semibold">Status</th>
                     <th className="px-4 py-3 font-semibold">Klant</th>
                     <th className="px-4 py-3 font-semibold hidden md:table-cell">Adres</th>
                     <th className="px-4 py-3 font-semibold hidden md:table-cell">Items</th>
-                    <th className="px-4 py-3 font-semibold text-right">€</th>
+                    <th
+                      className="px-4 py-3 font-semibold text-right cursor-pointer select-none group"
+                      onClick={() => handleSort("amount")}
+                    >
+                      <span className="inline-flex items-center gap-1 justify-end">
+                        €
+                        {sort.column === "amount" && (
+                          sort.dir === "asc" ? (
+                            <ArrowUp className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          ) : (
+                            <ArrowDown className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          )
+                        )}
+                      </span>
+                    </th>
                     <th className="px-4 py-3 font-semibold hidden md:table-cell">Order</th>
                   </tr>
                 </thead>
