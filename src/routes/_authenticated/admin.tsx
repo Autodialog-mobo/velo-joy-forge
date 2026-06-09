@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { Inbox } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox } from "lucide-react";
 import { listOrders, markPrinted, markShipped } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
@@ -37,6 +37,10 @@ function AdminPage() {
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
+  const [sort, setSort] = useState<{ column: "date" | "amount"; dir: "asc" | "desc" }>({
+    column: "date",
+    dir: "desc",
+  });
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
@@ -55,7 +59,21 @@ function AdminPage() {
     return m;
   }, [lines]);
 
-  const filtered = orders.filter((o: any) => filter === "all" || o.status === filter);
+  const filtered = useMemo(() => {
+    const arr = orders.filter((o: any) => filter === "all" || o.status === filter);
+    arr.sort((a: any, b: any) => {
+      if (sort.column === "date") {
+        const da = new Date(a.created_at).getTime();
+        const db = new Date(b.created_at).getTime();
+        return sort.dir === "asc" ? da - db : db - da;
+      }
+      if (sort.column === "amount") {
+        return sort.dir === "asc" ? a.amount_total - b.amount_total : b.amount_total - a.amount_total;
+      }
+      return 0;
+    });
+    return arr;
+  }, [orders, filter, sort]);
 
   const toggle = (id: string) => {
     setSelected((prev) => {
@@ -69,6 +87,15 @@ function AdminPage() {
   const toggleAll = () => {
     if (selected.size === filtered.length) setSelected(new Set());
     else setSelected(new Set(filtered.map((o: any) => o.id)));
+  };
+
+  const handleSort = (column: "date" | "amount") => {
+    setSort((prev) => {
+      if (prev.column === column) {
+        return { column, dir: prev.dir === "asc" ? "desc" : "asc" };
+      }
+      return { column, dir: "desc" };
+    });
   };
 
   const selectedOrders = filtered.filter((o: any) => selected.has(o.id));
@@ -264,12 +291,40 @@ function AdminPage() {
                         onChange={toggleAll}
                       />
                     </th>
-                    <th className="px-4 py-3 font-semibold">Datum</th>
+                    <th
+                      className="px-4 py-3 font-semibold cursor-pointer select-none group"
+                      onClick={() => handleSort("date")}
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        Datum
+                        {sort.column === "date" && (
+                          sort.dir === "asc" ? (
+                            <ArrowUp className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          ) : (
+                            <ArrowDown className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          )
+                        )}
+                      </span>
+                    </th>
                     <th className="px-4 py-3 font-semibold">Status</th>
                     <th className="px-4 py-3 font-semibold">Klant</th>
                     <th className="px-4 py-3 font-semibold hidden md:table-cell">Adres</th>
                     <th className="px-4 py-3 font-semibold hidden md:table-cell">Items</th>
-                    <th className="px-4 py-3 font-semibold text-right">€</th>
+                    <th
+                      className="px-4 py-3 font-semibold text-right cursor-pointer select-none group"
+                      onClick={() => handleSort("amount")}
+                    >
+                      <span className="inline-flex items-center gap-1 justify-end">
+                        €
+                        {sort.column === "amount" && (
+                          sort.dir === "asc" ? (
+                            <ArrowUp className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          ) : (
+                            <ArrowDown className="w-3.5 h-3.5 text-[#2ECC8A]" />
+                          )
+                        )}
+                      </span>
+                    </th>
                     <th className="px-4 py-3 font-semibold hidden md:table-cell">Order</th>
                   </tr>
                 </thead>
