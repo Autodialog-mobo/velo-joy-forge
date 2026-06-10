@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { AlertTriangle } from "lucide-react";
 import shopsData from "@/data/shops.json";
 
