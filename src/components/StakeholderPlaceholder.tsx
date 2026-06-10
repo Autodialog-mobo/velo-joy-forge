@@ -1,4 +1,4 @@
-import { Link, useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { VelopassMark } from "@/components/VelopassMark";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
@@ -14,8 +14,7 @@ export function StakeholderPlaceholder({
 }) {
   const lang = useCurrentLang();
   const { t } = useTranslation("common");
-  const router = useRouter();
-  void router;
+
   return (
     <main className="stk-placeholder">
       <Link to="/$lang" params={{ lang }} className="stk-logo" aria-label="Velopass">

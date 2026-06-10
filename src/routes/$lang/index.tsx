@@ -109,7 +109,7 @@ function VelopassHome() {
           <button
             type="button"
             className="nav-toggle"
-            aria-label="Menu"
+            aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
             onClick={() => setNavOpen((o) => !o)}
           >
