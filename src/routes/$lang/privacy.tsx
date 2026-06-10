@@ -1,21 +1,46 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { Footer } from "@/components/Footer";
 import { buildLocalizedHead } from "@/i18n/seo";
+import i18n from "@/i18n/config";
+
+type RichItem = { label: string; body: string };
+type Section = {
+  title: string;
+  body?: string;
+  intro?: string;
+  list?: string[];
+  list_rich?: RichItem[];
+  outro?: string;
+  outro_prefix?: string;
+  outro_email?: string;
+  outro_suffix?: string;
+  intro_prefix?: string;
+  intro_email?: string;
+  intro_mid?: string;
+  intro_link?: string;
+  intro_suffix?: string;
+};
 
 export const Route = createFileRoute("/$lang/privacy")({
-  component: PrivacyPage,
-  head: ({ params }) =>
-    buildLocalizedHead({
+  head: ({ params }) => {
+    const t = i18n.getFixedT(typeof params.lang === "string" ? params.lang : "en", "privacy");
+    return buildLocalizedHead({
       lang: params.lang,
       path: "privacy",
-      title: "Privacybeleid — Velopass",
-      description: "Lees hoe Velopass je persoonsgegevens verwerkt en beschermt.",
-    }),
+      title: t("meta.title"),
+      description: t("meta.description"),
+    });
+  },
+  component: PrivacyPage,
 });
 
 function PrivacyPage() {
   const lang = useCurrentLang();
+  const { t } = useTranslation("privacy");
+  const sections = t("sections", { returnObjects: true }) as Section[];
+
   return (
     <>
       <main
@@ -36,7 +61,7 @@ function PrivacyPage() {
             marginBottom: 14,
           }}
         >
-          Privacybeleid
+          {t("eyebrow")}
         </p>
         <h1
           style={{
@@ -49,7 +74,7 @@ function PrivacyPage() {
             marginBottom: 16,
           }}
         >
-          Hoe we je gegevens beschermen
+          {t("title")}
         </h1>
         <p
           style={{
@@ -59,114 +84,19 @@ function PrivacyPage() {
             marginBottom: 48,
           }}
         >
-          Laatst bijgewerkt: 17 mei 2026
+          {t("last_updated")}
         </p>
 
-        <Section title="1. Wie zijn we?">
-          Velopass BV, gevestigd aan Stokerijstraat 29/bus a1, 2110 Wijnegem,
-          BTW BE0777.359.681, is de verantwoordelijke voor de verwerking van
-          je persoonsgegevens via deze website en de Velopass-diensten.
-        </Section>
-
-        <Section title="2. Welke gegevens verzamelen we?">
-          We verzamelen enkel gegevens die noodzakelijk zijn voor onze dienst:
-          <ul style={ulStyle}>
-            <li>Naam en contactgegevens (e-mail, telefoon)</li>
-            <li>Fietsgegevens (frame-ID, merk, model, foto)</li>
-            <li>Accountinformatie en loginhistoriek</li>
-            <li>Gebruiksgegevens en interacties met onze dienst</li>
-          </ul>
-        </Section>
-
-        <Section title="3. Waarvoor gebruiken we je gegevens?">
-          Je gegevens worden gebruikt voor:
-          <ul style={ulStyle}>
-            <li>Het aanmaken en beheren van je Velopass-account</li>
-            <li>Fietsregistratie en eigendomsverificatie</li>
-            <li>Klantenservice en communicatie</li>
-            <li>Statistische analyses om onze dienst te verbeteren</li>
-          </ul>
-        </Section>
-
-        <Section title="4. Cookies">
-          Onze website maakt gebruik van cookies:
-          <ul style={ulStyle}>
-            <li>
-              <strong>Functionele cookies:</strong> noodzakelijk voor het
-              correct werken van de website (bijv. sessiebeheer).
-            </li>
-            <li>
-              <strong>Analytische cookies:</strong> helpen ons begrijpen hoe
-              bezoekers onze website gebruiken. Deze worden enkel geplaatst
-              nadat je toestemming hebt gegeven.
-            </li>
-          </ul>
-          Je kunt je cookievoorkeuren op elk moment aanpassen via de banner
-          onderaan de pagina.
-        </Section>
-
-        <Section title="5. Hoe lang bewaren we je gegevens?">
-          We bewaren je persoonsgegevens niet langer dan nodig is voor het
-          doel waarvoor ze zijn verzameld, tenzij een langere bewaartermijn
-          wettelijk verplicht is. Fietsregistratiegegevens worden bewaard
-          zolang je account actief is.
-        </Section>
-
-        <Section title="6. Je rechten">
-          Je hebt het recht om:
-          <ul style={ulStyle}>
-            <li>Je gegevens in te kijken</li>
-            <li>Je gegevens te laten corrigeren of verwijderen</li>
-            <li>De verwerking te laten beperken</li>
-            <li>Bezwaar te maken tegen verwerking</li>
-            <li>Je gegevens over te dragen</li>
-          </ul>
-          Contacteer ons via{" "}
-          <a
-            href="mailto:privacy@velopass.com"
-            style={{ color: "var(--green)", textDecoration: "underline" }}
-          >
-            privacy@velopass.com
-          </a>{" "}
-          om deze rechten uit te oefenen.
-        </Section>
-
-        <Section title="7. Beveiliging">
-          We nemen passende technische en organisatorische maatregelen om je
-          gegevens te beschermen tegen ongeoorloofde toegang, verlies of
-          diefstal, waaronder encryptie, toegangscontrole en regelmatige
-          beveiligingsaudits.
-        </Section>
-
-        <Section title="8. Contact">
-          Vragen over dit privacybeleid? Mail naar{" "}
-          <a
-            href="mailto:privacy@velopass.com"
-            style={{ color: "var(--green)", textDecoration: "underline" }}
-          >
-            privacy@velopass.com
-          </a>{" "}
-          of gebruik ons{" "}
-          <a
-            href={`/${lang}/contact`}
-            style={{ color: "var(--green)", textDecoration: "underline" }}
-          >
-            contactformulier
-          </a>.
-        </Section>
+        {sections.map((section, idx) => (
+          <SectionBlock key={idx} section={section} lang={lang} />
+        ))}
       </main>
       <Footer />
     </>
   );
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function SectionBlock({ section, lang }: { section: Section; lang: string }) {
   return (
     <section style={{ marginBottom: 40 }}>
       <h2
@@ -179,7 +109,7 @@ function Section({
           letterSpacing: "-0.2px",
         }}
       >
-        {title}
+        {section.title}
       </h2>
       <div
         style={{
@@ -188,7 +118,57 @@ function Section({
           lineHeight: 1.7,
         }}
       >
-        {children}
+        {section.body && <p style={{ margin: 0 }}>{section.body}</p>}
+        {section.intro && <p style={{ margin: 0 }}>{section.intro}</p>}
+        {section.list && (
+          <ul style={ulStyle}>
+            {section.list.map((item, i) => (
+              <li key={i}>{item}</li>
+            ))}
+          </ul>
+        )}
+        {section.list_rich && (
+          <ul style={ulStyle}>
+            {section.list_rich.map((item, i) => (
+              <li key={i}>
+                <strong>{item.label}</strong> {item.body}
+              </li>
+            ))}
+          </ul>
+        )}
+        {section.outro && <p style={{ margin: "10px 0 0" }}>{section.outro}</p>}
+        {section.outro_prefix && section.outro_email && (
+          <p style={{ margin: "10px 0 0" }}>
+            {section.outro_prefix}{" "}
+            <a
+              href={`mailto:${section.outro_email}`}
+              style={{ color: "var(--green)", textDecoration: "underline" }}
+            >
+              {section.outro_email}
+            </a>{" "}
+            {section.outro_suffix}
+          </p>
+        )}
+        {section.intro_prefix && section.intro_email && (
+          <p style={{ margin: 0 }}>
+            {section.intro_prefix}{" "}
+            <a
+              href={`mailto:${section.intro_email}`}
+              style={{ color: "var(--green)", textDecoration: "underline" }}
+            >
+              {section.intro_email}
+            </a>{" "}
+            {section.intro_mid}{" "}
+            <Link
+              to="/$lang/contact"
+              params={{ lang }}
+              style={{ color: "var(--green)", textDecoration: "underline" }}
+            >
+              {section.intro_link}
+            </Link>
+            {section.intro_suffix}
+          </p>
+        )}
       </div>
     </section>
   );

@@ -1,22 +1,30 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { StakeholderPlaceholder } from "@/components/StakeholderPlaceholder";
 import { buildLocalizedHead } from "@/i18n/seo";
+import i18n from "@/i18n/config";
 
 export const Route = createFileRoute("/$lang/manufacturer")({
-  head: ({ params }) =>
-    buildLocalizedHead({
+  head: ({ params }) => {
+    const t = i18n.getFixedT(typeof params.lang === "string" ? params.lang : "en", "stakeholders");
+    return buildLocalizedHead({
       lang: params.lang,
       path: "manufacturer",
-      title: "Velopass voor fabrikanten — Binnenkort",
-      description:
-        "Integreer Velopass al bij productie. Geef je dealers een vliegende start.",
+      title: t("manufacturer.meta_title"),
+      description: t("manufacturer.meta_description"),
       noindex: true,
-    }),
-  component: () => (
-    <StakeholderPlaceholder
-      eyebrow="Voor fabrikanten"
-      title="Velopass al bij productie geïntegreerd."
-      intro="Lever fietsen af met een ingebouwde Frame-ID en vooringevulde fietsdata. Maak het leven van je dealernetwerk eenvoudiger."
-    />
-  ),
+    });
+  },
+  component: ManufacturerPage,
 });
+
+function ManufacturerPage() {
+  const { t } = useTranslation("stakeholders");
+  return (
+    <StakeholderPlaceholder
+      eyebrow={t("manufacturer.eyebrow")}
+      title={t("manufacturer.title")}
+      intro={t("manufacturer.intro")}
+    />
+  );
+}

@@ -8,7 +8,8 @@
     "bike_check": "Bike check",
     "contact": "Contact",
     "for_professionals": "For professionals",
-    "login": "Log in"
+    "login": "Log in",
+    "menu": "Menu"
   },
   "lang_switcher": {
     "label": "Langue",
@@ -16,6 +17,7 @@
   },
   "footer": {
     "tagline": "Always on your bike. Everything sorted.",
+    "tagline_pro": "Every bike. A customer. For life.",
     "coverage": "Frame-IDs available across Europe · Shops active in BE, NL and FR",
     "privacy": "Privacy",
     "terms": "Terms",
@@ -23,7 +25,13 @@
     "bike_check": "Bike check",
     "stolen": "Bike stolen?",
     "faq": "Frequently asked questions",
+    "for_cyclists": "For cyclists",
     "copy": "© 2026 Velopass",
     "company_line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · VAT BE0777.359.681"
+  },
+  "placeholders": {
+    "soon": "Coming soon",
+    "back_to_stakeholders": "← All stakeholders",
+    "talk_to_us": "Talk to us →"
   }
 }

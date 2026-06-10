@@ -1,0 +1,24 @@
+{
+  "_translated": true,
+  "assistance": {
+    "meta_title": "Velopass for roadside assistance — Coming soon",
+    "meta_description": "One scan, full picture of the bike. Faster interventions for roadside assistance providers.",
+    "eyebrow": "For roadside assistance",
+    "title": "One scan. Full picture.",
+    "intro": "On intervention, instant access to the bike, owner and active services — anywhere in Europe."
+  },
+  "insurance": {
+    "meta_title": "Velopass for insurers — Coming soon",
+    "meta_description": "Verified bike data, automatic activation and lower fraud — for insurers.",
+    "eyebrow": "For insurers",
+    "title": "Verified bike data. Less fraud.",
+    "intro": "Activate policies automatically at the point of sale. Verify ownership through the international Velopass register."
+  },
+  "manufacturer": {
+    "meta_title": "Velopass for manufacturers — Coming soon",
+    "meta_description": "Integrate Velopass already at production. Give your dealers a flying start.",
+    "eyebrow": "For manufacturers",
+    "title": "Velopass integrated at production.",
+    "intro": "Deliver bikes with a built-in Frame-ID and pre-filled bike data. Make life simpler for your dealer network."
+  }
+}

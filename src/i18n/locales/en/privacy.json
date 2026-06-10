@@ -1,0 +1,75 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Privacy Policy — Velopass",
+    "description": "Read how Velopass processes and protects your personal data."
+  },
+  "eyebrow": "Privacy Policy",
+  "title": "How we protect your data",
+  "last_updated": "Last updated: 17 May 2026",
+  "sections": [
+    {
+      "title": "1. Who are we?",
+      "body": "Velopass BV, registered at Stokerijstraat 29/bus a1, 2110 Wijnegem, VAT BE0777.359.681, is the controller for the processing of your personal data through this website and the Velopass services."
+    },
+    {
+      "title": "2. What data do we collect?",
+      "intro": "We only collect data that is necessary for our service:",
+      "list": [
+        "Name and contact details (email, phone)",
+        "Bike data (frame-ID, brand, model, photo)",
+        "Account information and login history",
+        "Usage data and interactions with our service"
+      ]
+    },
+    {
+      "title": "3. What do we use your data for?",
+      "intro": "Your data is used for:",
+      "list": [
+        "Creating and managing your Velopass account",
+        "Bike registration and ownership verification",
+        "Customer service and communication",
+        "Statistical analysis to improve our service"
+      ]
+    },
+    {
+      "title": "4. Cookies",
+      "intro": "Our website uses cookies:",
+      "list_rich": [
+        { "label": "Functional cookies:", "body": "necessary for the website to work correctly (e.g. session management)." },
+        { "label": "Analytics cookies:", "body": "help us understand how visitors use our website. These are only set after you give consent." }
+      ],
+      "outro": "You can change your cookie preferences at any time via the banner at the bottom of the page."
+    },
+    {
+      "title": "5. How long do we keep your data?",
+      "body": "We keep your personal data no longer than necessary for the purpose for which it was collected, unless a longer retention period is required by law. Bike registration data is kept for as long as your account is active."
+    },
+    {
+      "title": "6. Your rights",
+      "intro": "You have the right to:",
+      "list": [
+        "Access your data",
+        "Have your data corrected or deleted",
+        "Have processing restricted",
+        "Object to processing",
+        "Have your data transferred"
+      ],
+      "outro_prefix": "Contact us at",
+      "outro_email": "privacy@velopass.com",
+      "outro_suffix": "to exercise these rights."
+    },
+    {
+      "title": "7. Security",
+      "body": "We take appropriate technical and organisational measures to protect your data against unauthorised access, loss or theft, including encryption, access control and regular security audits."
+    },
+    {
+      "title": "8. Contact",
+      "intro_prefix": "Questions about this privacy policy? Email",
+      "intro_email": "privacy@velopass.com",
+      "intro_mid": "or use our",
+      "intro_link": "contact form",
+      "intro_suffix": "."
+    }
+  ]
+}
