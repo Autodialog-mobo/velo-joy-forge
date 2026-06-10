@@ -45,9 +45,9 @@ function renderHref(target: string, label: string, key: number, lang: Lang): Rea
 }
 
 
-function renderToken(token: string, key: number): ReactNode {
+function renderToken(token: string, key: number, lang: Lang): ReactNode {
   const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
-  if (md) return renderHref(md[2], md[1], key);
+  if (md) return renderHref(md[2], md[1], key, lang);
   if (token.startsWith("mailto:")) {
     return <a key={key} href={token} style={linkStyle}>{token.slice(7)}</a>;
   }
@@ -58,7 +58,7 @@ function renderToken(token: string, key: number): ReactNode {
       </a>
     );
   }
-  if (token.startsWith("/")) return renderHref(token, token, key);
+  if (token.startsWith("/")) return renderHref(token, token, key, lang);
   return (
     <a key={key} href={`https://${token}`} target="_blank" rel="noopener noreferrer" style={linkStyle}>
       {token}
@@ -66,14 +66,14 @@ function renderToken(token: string, key: number): ReactNode {
   );
 }
 
-function renderLine(line: string): ReactNode[] {
+function renderLine(line: string, lang: Lang): ReactNode[] {
   const out: ReactNode[] = [];
   let last = 0;
   let i = 0;
   for (const m of line.matchAll(LINK_RE)) {
     const start = m.index ?? 0;
     if (start > last) out.push(<Fragment key={`t-${i++}`}>{line.slice(last, start)}</Fragment>);
-    out.push(renderToken(m[0], i++));
+    out.push(renderToken(m[0], i++, lang));
     last = start + m[0].length;
   }
   if (last < line.length) out.push(<Fragment key={`t-${i++}`}>{line.slice(last)}</Fragment>);
