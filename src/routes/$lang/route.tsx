@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import i18n, { isLang, SUPPORTED_LANGS, type Lang } from "@/i18n/config";
 
@@ -30,20 +30,22 @@ function LangLayout() {
   const safeLang = (isLang(lang) ? lang : "en") as Lang;
 
   // useState initializer runs once per mount (both SSR and client),
-  // giving us a stable per-request instance.
+  // giving us a stable per-request instance already set to the URL lang.
   const [scoped] = useState(() => createScopedI18n(safeLang));
 
-  // Keep the scoped instance in sync with the URL param on client-side
-  // soft navigations between /$lang variants. Without this, the cloned
-  // instance keeps its initial language and the React subtree never
-  // re-renders translated strings until a hard refresh.
-  if (scoped.language !== safeLang) {
-    void scoped.changeLanguage(safeLang);
-  }
-
-  if (typeof document !== "undefined") {
-    document.documentElement.lang = safeLang;
-  }
+  // Sync the scoped instance with the URL param on client-side soft
+  // navigations between /$lang variants. Must happen in an effect:
+  // calling changeLanguage() during render fires an i18next event that
+  // schedules setState in subscribed components (FaqSection etc.), which
+  // React flags as "setState during render of another component".
+  useEffect(() => {
+    if (scoped.language !== safeLang) {
+      void scoped.changeLanguage(safeLang);
+    }
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = safeLang;
+    }
+  }, [scoped, safeLang]);
 
   return (
     <I18nextProvider i18n={scoped}>
@@ -53,3 +55,4 @@ function LangLayout() {
 }
 
 export { SUPPORTED_LANGS };
+

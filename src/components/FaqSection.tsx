@@ -144,8 +144,11 @@ export function FaqSection() {
   const [openLeft, setOpenLeft] = useState<string[]>([]);
   const [openRight, setOpenRight] = useState<string[]>([]);
 
-  const leftFAQs = t("faq:left", { returnObjects: true }) as Faq[];
-  const rightFAQs = t("faq:right", { returnObjects: true }) as Faq[];
+  const leftRaw = t("faq:left", { returnObjects: true });
+  const rightRaw = t("faq:right", { returnObjects: true });
+  const leftFAQs: Faq[] = Array.isArray(leftRaw) ? (leftRaw as Faq[]) : [];
+  const rightFAQs: Faq[] = Array.isArray(rightRaw) ? (rightRaw as Faq[]) : [];
+
 
   useEffect(() => {
     const applyHash = () => {
