@@ -5,17 +5,20 @@ import { CheckCircle2, Truck, Mail, ArrowLeft } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { getOrderByMolliePayment } from "@/utils/mollie.functions";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 export const Route = createFileRoute("/$lang/order_/thanks")({
   validateSearch: (search: Record<string, unknown>): { payment_id?: string } => ({
     payment_id: typeof search.payment_id === "string" ? search.payment_id : undefined,
   }),
-  head: () => ({
-    meta: [
-      { title: "Bedankt voor je bestelling — Velopass" },
-      { name: "robots", content: "noindex" },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "order/thanks",
+      title: "Bedankt voor je bestelling — Velopass",
+      description: "Je Velopass-bestelling is bevestigd.",
+      noindex: true,
+    }),
   component: BedanktPage,
 });
 
