@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { VelopassMark } from "@/components/VelopassMark";
 
-export const Route = createFileRoute("/pro")({
+export const Route = createFileRoute("/$lang/pro")({
   head: () => ({
     meta: [
       { title: "Velopass Pro — Partnerportaal" },

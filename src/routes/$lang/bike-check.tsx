@@ -6,7 +6,7 @@ import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 
-export const Route = createFileRoute("/bike-check")({
+export const Route = createFileRoute("/$lang/bike-check")({
   head: () => ({
     meta: [
       { title: "Check de status van een fiets — Velopass" },

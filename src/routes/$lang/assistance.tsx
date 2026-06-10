@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { StakeholderPlaceholder } from "@/components/StakeholderPlaceholder";
 
-export const Route = createFileRoute("/assistance")({
+export const Route = createFileRoute("/$lang/assistance")({
   head: () => ({
     meta: [
       { title: "Velopass voor pechhulpverleners — Binnenkort" },

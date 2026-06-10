@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Footer } from "@/components/Footer";
 
-export const Route = createFileRoute("/privacy")({
+export const Route = createFileRoute("/$lang/privacy")({
   component: PrivacyPage,
   head: () => ({
     meta: [

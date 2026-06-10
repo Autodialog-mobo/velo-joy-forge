@@ -51,7 +51,7 @@ const BUNDLES: Bundle[] = [
 const eur = (cents: number) =>
   new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(cents / 100);
 
-export const Route = createFileRoute("/order")({
+export const Route = createFileRoute("/$lang/order")({
   head: () => ({
     meta: [
       { title: "Bestel een Velopass Frame-ID — vanaf €12,95" },

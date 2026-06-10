@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { StakeholderPlaceholder } from "@/components/StakeholderPlaceholder";
 
-export const Route = createFileRoute("/manufacturer")({
+export const Route = createFileRoute("/$lang/manufacturer")({
   head: () => ({
     meta: [
       { title: "Velopass voor fabrikanten — Binnenkort" },

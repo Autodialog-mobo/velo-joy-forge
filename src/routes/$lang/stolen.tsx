@@ -16,7 +16,7 @@ import {
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 
-export const Route = createFileRoute("/stolen")({
+export const Route = createFileRoute("/$lang/stolen")({
   head: () => ({
     meta: [
       { title: "Fiets gestolen? Doe snel aangifte — Velopass" },

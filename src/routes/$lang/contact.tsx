@@ -20,7 +20,7 @@ const searchSchema = z.object({
   type: fallback(z.enum(["rider", "shop"]), "rider").default("rider"),
 });
 
-export const Route = createFileRoute("/contact")({
+export const Route = createFileRoute("/$lang/contact")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
