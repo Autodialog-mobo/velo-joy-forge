@@ -53,6 +53,7 @@ const Check = () => (
 );
 
 function VelopassPro() {
+  const lang = useCurrentLang();
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   const [currentMonthYear, setCurrentMonthYear] = useState("");

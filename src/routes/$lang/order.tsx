@@ -72,6 +72,7 @@ export const Route = createFileRoute("/$lang/order")({
 });
 
 function BestellenPage() {
+  const lang = useCurrentLang();
   const [quantities, setQuantities] = useState<Record<BundleKey, number>>({
     frameid_solo_onetime: 0,
     frameid_duo_onetime: 0,

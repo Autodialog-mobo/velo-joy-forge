@@ -164,6 +164,7 @@ const SHOP_SUBJECTS = [
 ];
 
 function ContactPage() {
+  const lang = useCurrentLang();
   const { type } = useSearch({ from: "/contact" });
   const [activeTab, setActiveTab] = useState<"rider" | "shop">(type);
   const [navOpen, setNavOpen] = useState(false);

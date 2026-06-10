@@ -97,6 +97,7 @@ async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: 
 }
 
 function BikeSearchPage() {
+  const lang = useCurrentLang();
   const search = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const lang: Lang = search.get("lng") === "fr-fr" ? "fr-fr" : "nl-nl";
   const L = useMemo(() => t(lang), [lang]);

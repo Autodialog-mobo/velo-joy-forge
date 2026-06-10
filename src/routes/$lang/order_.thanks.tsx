@@ -26,6 +26,7 @@ const BUNDLE_NAMES: Record<string, string> = {
 };
 
 function BedanktPage() {
+  const lang = useCurrentLang();
   const { payment_id } = Route.useSearch();
   const [order, setOrder] = useState<{
     status: string | null;

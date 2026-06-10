@@ -17,6 +17,7 @@ export const Route = createFileRoute("/$lang/pro")({
 });
 
 function PartnerLogin() {
+  const lang = useCurrentLang();
   return (
     <main className="partner-login">
       <div className="pl-card">

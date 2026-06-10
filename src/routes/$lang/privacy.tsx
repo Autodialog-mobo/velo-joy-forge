@@ -19,6 +19,7 @@ export const Route = createFileRoute("/$lang/privacy")({
 });
 
 function PrivacyPage() {
+  const lang = useCurrentLang();
   return (
     <>
       <main

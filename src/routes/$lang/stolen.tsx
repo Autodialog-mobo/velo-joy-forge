@@ -122,6 +122,7 @@ function getBrowserCountry(): "BE" | "NL" | "FR" {
 }
 
 function GestolenPage() {
+  const lang = useCurrentLang();
   const [navOpen, setNavOpen] = useState(false);
   const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
 
