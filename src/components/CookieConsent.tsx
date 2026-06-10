@@ -64,7 +64,8 @@ export function CookieConsent() {
           Velopass gebruikt cookies om je surfervaring te verbeteren en
           anonieme statistieken bij te houden. Lees ons{" "}
           <Link
-            to="/privacy"
+            to="/$lang/privacy"
+            params={{ lang }}
             style={{
               color: "var(--green)",
               textDecoration: "underline",
