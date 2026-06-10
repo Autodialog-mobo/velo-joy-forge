@@ -18,11 +18,7 @@ export const Route = createFileRoute("/$lang")({
  * client hydration output.
  */
 function createScopedI18n(lang: Lang) {
-  const instance = i18n.cloneInstance({
-    lng: lang,
-    initImmediate: false,
-  });
-  // cloneInstance is sync because resources are already loaded.
+  const instance = i18n.cloneInstance({ lng: lang });
   if (instance.language !== lang) {
     void instance.changeLanguage(lang);
   }
