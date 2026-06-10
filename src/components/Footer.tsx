@@ -13,6 +13,14 @@ export function Footer({ variant = "default" }: FooterProps) {
   const lang = useCurrentLang();
   const { t } = useTranslation("common");
 
+  const scrollToFaq = () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById("faq")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  };
+
   if (variant === "pro") {
     return (
       <footer className="vp-footer darker">
