@@ -23,7 +23,8 @@ export function ShopFinder() {
         </div>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <Link
-            to="/stolen"
+            to="/$lang/stolen"
+            params={{ lang }}
             style={{
               display: "inline-flex",
               alignItems: "center",
