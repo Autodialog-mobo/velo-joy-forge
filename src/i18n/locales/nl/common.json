@@ -1,0 +1,29 @@
+{
+  "_translated": true,
+  "nav": {
+    "what_you_get": "Wat je krijgt",
+    "already_have_one": "Al een sticker?",
+    "order_sticker": "Sticker bestellen",
+    "community": "Community",
+    "bike_check": "Fiets controleren",
+    "contact": "Contact",
+    "for_professionals": "Voor professionals",
+    "login": "Inloggen"
+  },
+  "lang_switcher": {
+    "label": "Taal",
+    "current": "Huidige taal"
+  },
+  "footer": {
+    "tagline": "Altijd op de fiets. Alles geregeld.",
+    "coverage": "Frame-ID's beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR",
+    "privacy": "Privacy",
+    "terms": "Voorwaarden",
+    "contact": "Contact",
+    "bike_check": "Fiets controleren",
+    "stolen": "Fiets gestolen?",
+    "faq": "Veelgestelde vragen",
+    "copy": "© 2026 Velopass",
+    "company_line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · BTW BE0777.359.681"
+  }
+}

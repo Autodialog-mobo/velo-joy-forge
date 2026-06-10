@@ -1,0 +1,29 @@
+{
+  "_translated": false,
+  "nav": {
+    "what_you_get": "What you get",
+    "already_have_one": "Already have a sticker?",
+    "order_sticker": "Order a sticker",
+    "community": "Community",
+    "bike_check": "Bike check",
+    "contact": "Contact",
+    "for_professionals": "For professionals",
+    "login": "Log in"
+  },
+  "lang_switcher": {
+    "label": "Langue",
+    "current": "Langue actuelle"
+  },
+  "footer": {
+    "tagline": "Always on your bike. Everything sorted.",
+    "coverage": "Frame-IDs available across Europe · Shops active in BE, NL and FR",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "bike_check": "Bike check",
+    "stolen": "Bike stolen?",
+    "faq": "Frequently asked questions",
+    "copy": "© 2026 Velopass",
+    "company_line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · VAT BE0777.359.681"
+  }
+}
