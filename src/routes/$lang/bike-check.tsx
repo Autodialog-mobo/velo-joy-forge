@@ -878,6 +878,7 @@ function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
 }
 
 function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
+  const lang = useCurrentLang();
   return (
     <div style={resultCard("#CBD5E1")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
