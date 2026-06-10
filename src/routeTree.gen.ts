@@ -34,6 +34,7 @@ import { Route as LangInsuranceRouteImport } from './routes/$lang/insurance'
 import { Route as LangContactRouteImport } from './routes/$lang/contact'
 import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
 import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
+import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -162,6 +163,11 @@ const LangAssistanceRoute = LangAssistanceRouteImport.update({
   path: '/assistance',
   getParentRoute: () => LangRouteRoute,
 } as any)
+const LangAlreadyHaveOneRoute = LangAlreadyHaveOneRouteImport.update({
+  id: '/already-have-one',
+  path: '/already-have-one',
+  getParentRoute: () => LangRouteRoute,
+} as any)
 const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   id: '/api/public/vies-lookup',
   path: '/api/public/vies-lookup',
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
@@ -249,6 +257,7 @@ export interface FileRoutesById {
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/professionals'
     | '/sitemap.xml'
+    | '/$lang/already-have-one'
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/professionals'
     | '/sitemap.xml'
+    | '/$lang/already-have-one'
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
@@ -338,6 +349,7 @@ export interface FileRouteTypes {
     | '/gestolen'
     | '/professionals'
     | '/sitemap.xml'
+    | '/$lang/already-have-one'
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
@@ -550,6 +562,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAssistanceRouteImport
       parentRoute: typeof LangRouteRoute
     }
+    '/$lang/already-have-one': {
+      id: '/$lang/already-have-one'
+      path: '/already-have-one'
+      fullPath: '/$lang/already-have-one'
+      preLoaderRoute: typeof LangAlreadyHaveOneRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
     '/api/public/vies-lookup': {
       id: '/api/public/vies-lookup'
       path: '/api/public/vies-lookup'
@@ -575,6 +594,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LangRouteRouteChildren {
+  LangAlreadyHaveOneRoute: typeof LangAlreadyHaveOneRoute
   LangAssistanceRoute: typeof LangAssistanceRoute
   LangBikeCheckRoute: typeof LangBikeCheckRoute
   LangContactRoute: typeof LangContactRoute
@@ -591,6 +611,7 @@ interface LangRouteRouteChildren {
 }
 
 const LangRouteRouteChildren: LangRouteRouteChildren = {
+  LangAlreadyHaveOneRoute: LangAlreadyHaveOneRoute,
   LangAssistanceRoute: LangAssistanceRoute,
   LangBikeCheckRoute: LangBikeCheckRoute,
   LangContactRoute: LangContactRoute,
@@ -651,3 +672,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
