@@ -29,7 +29,9 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as OrderThanksRouteImport } from './routes/order_.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -135,10 +137,20 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangRouteRoute = LangRouteRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LangIndexRoute = LangIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LangRouteRoute,
 } as any)
 const OrderThanksRoute = OrderThanksRouteImport.update({
   id: '/order_/thanks',
@@ -169,6 +181,7 @@ const ApiPublicPaymentsMollieWebhookRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
   '/auth': typeof AuthRoute
@@ -191,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
+  '/$lang/': typeof LangIndexRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -218,12 +232,14 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order/thanks': typeof OrderThanksRoute
+  '/$lang': typeof LangIndexRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
@@ -247,6 +263,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/order_/thanks': typeof OrderThanksRoute
+  '/$lang/': typeof LangIndexRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -254,6 +271,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$lang'
     | '/al-een-sticker'
     | '/assistance'
     | '/auth'
@@ -276,6 +294,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bestellen/bedankt'
     | '/order/thanks'
+    | '/$lang/'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -303,11 +322,13 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bestellen/bedankt'
     | '/order/thanks'
+    | '/$lang'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   id:
     | '__root__'
     | '/'
+    | '/$lang'
     | '/_authenticated'
     | '/al-een-sticker'
     | '/assistance'
@@ -331,12 +352,14 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/bestellen/bedankt'
     | '/order_/thanks'
+    | '/$lang/'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LangRouteRoute: typeof LangRouteRouteWithChildren
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AlEenStickerRoute: typeof AlEenStickerRoute
   AssistanceRoute: typeof AssistanceRoute
@@ -504,12 +527,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$lang/': {
+      id: '/$lang/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangIndexRouteImport
+      parentRoute: typeof LangRouteRoute
     }
     '/order_/thanks': {
       id: '/order_/thanks'
@@ -549,6 +586,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LangRouteRouteChildren {
+  LangIndexRoute: typeof LangIndexRoute
+}
+
+const LangRouteRouteChildren: LangRouteRouteChildren = {
+  LangIndexRoute: LangIndexRoute,
+}
+
+const LangRouteRouteWithChildren = LangRouteRoute._addFileChildren(
+  LangRouteRouteChildren,
+)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
 }
@@ -574,6 +623,7 @@ const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LangRouteRoute: LangRouteRouteWithChildren,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AlEenStickerRoute: AlEenStickerRoute,
   AssistanceRoute: AssistanceRoute,
@@ -601,13 +651,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
