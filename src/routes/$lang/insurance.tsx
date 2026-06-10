@@ -1,14 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { StakeholderPlaceholder } from "@/components/StakeholderPlaceholder";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 export const Route = createFileRoute("/$lang/insurance")({
-  head: () => ({
-    meta: [
-      { title: "Velopass voor verzekeraars — Binnenkort" },
-      { name: "description", content: "Geverifieerde fietsdata, automatische activatie en lagere fraude — voor verzekeraars." },
-      { name: "robots", content: "noindex,nofollow" },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "insurance",
+      title: "Velopass voor verzekeraars — Binnenkort",
+      description:
+        "Geverifieerde fietsdata, automatische activatie en lagere fraude — voor verzekeraars.",
+      noindex: true,
+    }),
   component: () => (
     <StakeholderPlaceholder
       eyebrow="Voor verzekeraars"

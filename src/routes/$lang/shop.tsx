@@ -17,24 +17,19 @@ import kbcLogo from "@/assets/kbc-logo.png";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
+import { buildLocalizedHead } from "@/i18n/seo";
+
 export const Route = createFileRoute("/$lang/shop")({
-  head: () => ({
-    meta: [
-      { title: "Velopass Pro — Elke fiets. Een klant. Voor altijd." },
-      {
-        name: "description",
-        content:
-          "Met Velopass blijft elke klant die een fiets koopt automatisch verbonden met jouw winkel. POS-integratie of gratis Pro app voor fietswinkels in BE, NL en FR.",
-      },
-      { property: "og:title", content: "Velopass Pro — Elke fiets. Een klant. Voor altijd." },
-      {
-        property: "og:description",
-        content:
-          "Voor fietswinkels: behoud levenslang contact met je klanten via het internationale fietsregister.",
-      },
-      { property: "og:type", content: "website" },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "shop",
+      title: "Velopass Pro — Elke fiets. Een klant. Voor altijd.",
+      description:
+        "Met Velopass blijft elke klant die een fiets koopt automatisch verbonden met jouw winkel. POS-integratie of gratis Pro app voor fietswinkels in BE, NL en FR.",
+      ogDescription:
+        "Voor fietswinkels: behoud levenslang contact met je klanten via het internationale fietsregister.",
+    }),
   component: VelopassPro,
 });
 

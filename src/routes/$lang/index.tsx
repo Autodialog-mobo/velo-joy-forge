@@ -10,9 +10,8 @@ import { FaqSection } from "@/components/FaqSection";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import shopsData from "@/data/shops.json";
-import { SUPPORTED_LANGS, isLang, type Lang } from "@/i18n/config";
-
-const SITE_URL = "https://velopass.com";
+import { isLang, type Lang } from "@/i18n/config";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 const pathIconBox: React.CSSProperties = {
   width: 48,
@@ -27,36 +26,18 @@ const pathIconBox: React.CSSProperties = {
 export const Route = createFileRoute("/$lang/")({
   head: ({ params }) => {
     const lang = isLang(params.lang) ? params.lang : "en";
-    const canonical = `${SITE_URL}/${lang}`;
-    return {
-      meta: [
-        { title: `Velopass — ${lang === "nl" ? "Altijd op de fiets. Alles geregeld." : "Every bike. A customer for life."}` },
-        {
-          name: "description",
-          content:
-            lang === "nl"
-              ? "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort."
-              : "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop. The digital bike passport.",
-        },
-        { property: "og:title", content: "Velopass — Every bike. A customer for life." },
-        {
-          property: "og:description",
-          content:
-            "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop.",
-        },
-        { property: "og:url", content: canonical },
-        { property: "og:type", content: "website" },
-      ],
-      links: [
-        { rel: "canonical", href: canonical },
-        ...SUPPORTED_LANGS.map((l) => ({
-          rel: "alternate",
-          hrefLang: l,
-          href: `${SITE_URL}/${l}`,
-        })),
-        { rel: "alternate", hrefLang: "x-default", href: `${SITE_URL}/en` },
-      ],
-    };
+    return buildLocalizedHead({
+      lang,
+      path: "",
+      title: `Velopass — ${lang === "nl" ? "Altijd op de fiets. Alles geregeld." : "Every bike. A customer for life."}`,
+      description:
+        lang === "nl"
+          ? "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort."
+          : "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop. The digital bike passport.",
+      ogTitle: "Velopass — Every bike. A customer for life.",
+      ogDescription:
+        "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop.",
+    });
   },
   component: VelopassHome,
 });

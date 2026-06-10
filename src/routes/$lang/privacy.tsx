@@ -1,21 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { Footer } from "@/components/Footer";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 export const Route = createFileRoute("/$lang/privacy")({
   component: PrivacyPage,
-  head: () => ({
-    meta: [
-      { title: "Privacybeleid — Velopass" },
-      { name: "description", content: "Lees hoe Velopass je persoonsgegevens verwerkt en beschermt." },
-      { property: "og:title", content: "Privacybeleid — Velopass" },
-      { property: "og:description", content: "Lees hoe Velopass je persoonsgegevens verwerkt en beschermt." },
-      { property: "og:url", content: "/privacy" },
-    ],
-    links: [
-      { rel: "canonical", href: "/privacy" },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "privacy",
+      title: "Privacybeleid — Velopass",
+      description: "Lees hoe Velopass je persoonsgegevens verwerkt en beschermt.",
+    }),
 });
 
 function PrivacyPage() {

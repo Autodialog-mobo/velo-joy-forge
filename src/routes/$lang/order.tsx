@@ -52,22 +52,19 @@ const BUNDLES: Bundle[] = [
 const eur = (cents: number) =>
   new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(cents / 100);
 
+import { buildLocalizedHead } from "@/i18n/seo";
+
 export const Route = createFileRoute("/$lang/order")({
-  head: () => ({
-    meta: [
-      { title: "Bestel een Velopass Frame-ID — vanaf €12,95" },
-      {
-        name: "description",
-        content:
-          "Bestel je Velopass Frame-ID. Eén sticker, een leven lang digitaal serviceboekje voor je fiets. Gratis verzending in heel de EU.",
-      },
-      { property: "og:title", content: "Bestel een Velopass Frame-ID — vanaf €12,95" },
-      {
-        property: "og:description",
-        content: "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie.",
-      },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "order",
+      title: "Bestel een Velopass Frame-ID — vanaf €12,95",
+      description:
+        "Bestel je Velopass Frame-ID. Eén sticker, een leven lang digitaal serviceboekje voor je fiets. Gratis verzending in heel de EU.",
+      ogDescription: "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie.",
+      ogType: "product",
+    }),
   component: BestellenPage,
 });
 

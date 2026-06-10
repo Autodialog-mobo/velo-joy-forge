@@ -1,18 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { VelopassMark } from "@/components/VelopassMark";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 export const Route = createFileRoute("/$lang/pro")({
-  head: () => ({
-    meta: [
-      { title: "Velopass Pro — Partnerportaal" },
-      {
-        name: "description",
-        content: "Log in om toegang te krijgen tot jouw Velopass-werkomgeving.",
-      },
-      { name: "robots", content: "noindex,nofollow" },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "pro",
+      title: "Velopass Pro — Partnerportaal",
+      description: "Log in om toegang te krijgen tot jouw Velopass-werkomgeving.",
+      noindex: true,
+    }),
   component: PartnerLogin,
 });
 

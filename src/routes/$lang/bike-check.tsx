@@ -6,23 +6,18 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
 import { trackRegisterBikeClick } from "@/lib/analytics";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 export const Route = createFileRoute("/$lang/bike-check")({
-  head: () => ({
-    meta: [
-      { title: "Check de status van een fiets — Velopass" },
-      {
-        name: "description",
-        content:
-          "Controleer of een fiets geregistreerd is in de Velopass Community — zonder account, in enkele seconden.",
-      },
-      { property: "og:title", content: "Check de status van een fiets — Velopass" },
-      {
-        property: "og:description",
-        content: "Controleer een fiets via de Velopass-code of merk + framenummer.",
-      },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "bike-check",
+      title: "Check de status van een fiets — Velopass",
+      description:
+        "Controleer of een fiets geregistreerd is in de Velopass Community — zonder account, in enkele seconden.",
+      ogDescription: "Controleer een fiets via de Velopass-code of merk + framenummer.",
+    }),
   component: BikeSearchPage,
 });
 
