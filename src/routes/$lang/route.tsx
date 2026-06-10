@@ -33,6 +33,14 @@ function LangLayout() {
   // giving us a stable per-request instance.
   const [scoped] = useState(() => createScopedI18n(safeLang));
 
+  // Keep the scoped instance in sync with the URL param on client-side
+  // soft navigations between /$lang variants. Without this, the cloned
+  // instance keeps its initial language and the React subtree never
+  // re-renders translated strings until a hard refresh.
+  if (scoped.language !== safeLang) {
+    void scoped.changeLanguage(safeLang);
+  }
+
   if (typeof document !== "undefined") {
     document.documentElement.lang = safeLang;
   }
