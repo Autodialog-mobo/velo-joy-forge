@@ -8,7 +8,8 @@
     "bike_check": "Fiets controleren",
     "contact": "Contact",
     "for_professionals": "Voor professionals",
-    "login": "Inloggen"
+    "login": "Inloggen",
+    "menu": "Menu"
   },
   "lang_switcher": {
     "label": "Taal",
@@ -16,6 +17,7 @@
   },
   "footer": {
     "tagline": "Altijd op de fiets. Alles geregeld.",
+    "tagline_pro": "Every bike. A customer. For life.",
     "coverage": "Frame-ID's beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR",
     "privacy": "Privacy",
     "terms": "Voorwaarden",
@@ -23,7 +25,13 @@
     "bike_check": "Fiets controleren",
     "stolen": "Fiets gestolen?",
     "faq": "Veelgestelde vragen",
+    "for_cyclists": "Voor fietsers",
     "copy": "© 2026 Velopass",
     "company_line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · BTW BE0777.359.681"
+  },
+  "placeholders": {
+    "soon": "Binnenkort beschikbaar",
+    "back_to_stakeholders": "← Alle stakeholders",
+    "talk_to_us": "Praat met ons →"
   }
 }
