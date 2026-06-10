@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
+import { buildLocalizedHead } from "@/i18n/seo";
 
 const searchSchema = z.object({
   type: fallback(z.enum(["rider", "shop"]), "rider").default("rider"),
@@ -23,22 +24,15 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/$lang/contact")({
   validateSearch: zodValidator(searchSchema),
-  head: () => ({
-    meta: [
-      { title: "Contact — Velopass" },
-      {
-        name: "description",
-        content:
-          "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
-      },
-      { property: "og:title", content: "Contact — Velopass" },
-      {
-        property: "og:description",
-        content:
-          "Kies een onderwerp en chat met het Velopass-team via WhatsApp.",
-      },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "contact",
+      title: "Contact — Velopass",
+      description:
+        "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
+      ogDescription: "Kies een onderwerp en chat met het Velopass-team via WhatsApp.",
+    }),
   component: ContactPage,
 });
 
