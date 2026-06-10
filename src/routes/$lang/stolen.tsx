@@ -19,22 +19,14 @@ import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { buildLocalizedHead } from "@/i18n/seo";
 
 export const Route = createFileRoute("/$lang/stolen")({
-  head: () => ({
-    meta: [
-      { title: "Fiets gestolen? Doe snel aangifte — Velopass" },
-      {
-        name: "description",
-        content:
-          "Stappenplan na fietsdiefstal: meld je fiets in je Velopass, doe online aangifte via Police-on-web en activeer de Velopass Community.",
-      },
-      { property: "og:title", content: "Fiets gestolen? Doe snel aangifte — Velopass" },
-      {
-        property: "og:description",
-        content:
-          "Met Velopass heb je alle fietsgegevens bij de hand om snel online aangifte te doen via Police-on-web.",
-      },
-    ],
-  }),
+  head: ({ params }) =>
+    buildLocalizedHead({
+      lang: params.lang,
+      path: "stolen",
+      title: "Fiets gestolen? Doe snel aangifte — Velopass",
+      description:
+        "Stappenplan na fietsdiefstal: meld je fiets in je Velopass, doe online aangifte via Police-on-web en activeer de Velopass Community.",
+    }),
   component: GestolenPage,
 });
 
@@ -123,6 +115,7 @@ function getBrowserCountry(): "BE" | "NL" | "FR" {
 }
 
 function GestolenPage() {
+  const lang = useCurrentLang();
   const [navOpen, setNavOpen] = useState(false);
   const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
 
