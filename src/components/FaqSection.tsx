@@ -131,6 +131,7 @@ const rightFAQs = [
 ];
 
 export function FaqSection() {
+  const lang = useCurrentLang();
   const [openLeft, setOpenLeft] = useState<string[]>([]);
   const [openRight, setOpenRight] = useState<string[]>([]);
 
@@ -261,7 +262,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line, lang)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
@@ -311,7 +312,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line, lang)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
