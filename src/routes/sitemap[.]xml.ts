@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { SUPPORTED_LANGS } from "@/i18n/config";
 
 const BASE_URL = "https://velopass.com";
 
 interface SitemapEntry {
+  /** Path WITHOUT a language prefix (e.g. "/order", "/" for home). */
   path: string;
   changefreq?: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
   priority?: string;
@@ -24,15 +26,34 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/privacy", changefreq: "yearly", priority: "0.3" },
 ];
 
+function entryUrl(lang: string, path: string): string {
+  // Home "/" → /<lang>; other paths → /<lang>/<path>
+  return path === "/" ? `${BASE_URL}/${lang}` : `${BASE_URL}/${lang}${path}`;
+}
+
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
-        const urls = ENTRIES.map(
-          (e) =>
-            `  <url>\n    <loc>${BASE_URL}${e.path}</loc>${e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ""}${e.priority ? `\n    <priority>${e.priority}</priority>` : ""}\n  </url>`,
-        ).join("\n");
-        const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+        const urls: string[] = [];
+        for (const e of ENTRIES) {
+          for (const lang of SUPPORTED_LANGS) {
+            const loc = entryUrl(lang, e.path);
+            const alternates = SUPPORTED_LANGS
+              .map(
+                (l) =>
+                  `    <xhtml:link rel="alternate" hreflang="${l}" href="${entryUrl(l, e.path)}"/>`,
+              )
+              .join("\n");
+            const xDefault = `    <xhtml:link rel="alternate" hreflang="x-default" href="${entryUrl("en", e.path)}"/>`;
+            urls.push(
+              `  <url>\n    <loc>${loc}</loc>${
+                e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ""
+              }${e.priority ? `\n    <priority>${e.priority}</priority>` : ""}\n${alternates}\n${xDefault}\n  </url>`,
+            );
+          }
+        }
+        const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join("\n")}\n</urlset>\n`;
         return new Response(xml, {
           headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
         });
