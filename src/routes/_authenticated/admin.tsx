@@ -382,6 +382,7 @@ function AdminPage() {
                     return (
                       <tr
                         key={o.id}
+                        onClick={() => setDetailOrder(o)}
                         className={`${isLast ? "" : "border-b border-[rgba(13,31,60,0.05)]"} hover:bg-[rgba(46,204,138,0.04)] transition cursor-pointer`}
                       >
                         <td className="px-6 py-4 align-middle" onClick={(e) => e.stopPropagation()}>
