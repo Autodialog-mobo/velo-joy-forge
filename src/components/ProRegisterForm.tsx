@@ -203,7 +203,7 @@ export function RegisterForm() {
       <button type="submit" className="btn-submit">Registreer gratis →</button>
       <p style={{ textAlign: "center", marginTop: 14, marginBottom: 0 }}>
         <a
-          href="/contact"
+          href={`/${lang}/contact`}
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 13,
