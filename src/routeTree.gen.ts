@@ -29,6 +29,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrderThanksRouteImport } from './routes/order_.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
@@ -135,6 +136,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LangRouteRoute = LangRouteRouteImport.update({
+  id: '/$lang',
+  path: '/$lang',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -169,6 +175,7 @@ const ApiPublicPaymentsMollieWebhookRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
   '/auth': typeof AuthRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
   '/auth': typeof AuthRoute
@@ -224,6 +232,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$lang': typeof LangRouteRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
   '/assistance': typeof AssistanceRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$lang'
     | '/al-een-sticker'
     | '/assistance'
     | '/auth'
@@ -281,6 +291,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$lang'
     | '/al-een-sticker'
     | '/assistance'
     | '/auth'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/$lang'
     | '/_authenticated'
     | '/al-een-sticker'
     | '/assistance'
@@ -337,6 +349,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LangRouteRoute: typeof LangRouteRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AlEenStickerRoute: typeof AlEenStickerRoute
   AssistanceRoute: typeof AssistanceRoute
@@ -504,6 +517,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -574,6 +594,7 @@ const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LangRouteRoute: LangRouteRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AlEenStickerRoute: AlEenStickerRoute,
   AssistanceRoute: AssistanceRoute,
