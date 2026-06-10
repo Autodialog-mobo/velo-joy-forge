@@ -290,7 +290,8 @@ function VelopassPro() {
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>Ons team helpt je graag verder.</p>
           </div>
           <Link
-            to="/contact"
+            to="/$lang/contact"
+            params={{ lang }}
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,

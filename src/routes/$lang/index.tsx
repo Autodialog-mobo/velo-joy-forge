@@ -200,7 +200,8 @@ function VelopassHome() {
 
         <div style={{ textAlign: "center", marginTop: 20 }}>
           <Link
-            to="/stolen"
+            to="/$lang/stolen"
+            params={{ lang: currentLang }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,
@@ -301,7 +302,8 @@ function VelopassHome() {
                 Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
               </p>
               <Link
-                to="/stolen"
+                to="/$lang/stolen"
+                params={{ lang: currentLang }}
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontWeight: 500,
@@ -463,7 +465,8 @@ function VelopassHome() {
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>Ons team helpt je graag verder.</p>
           </div>
           <Link
-            to="/contact"
+            to="/$lang/contact"
+            params={{ lang: currentLang }}
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
