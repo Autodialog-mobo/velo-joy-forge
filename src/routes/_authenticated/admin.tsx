@@ -62,6 +62,7 @@ function AdminPage() {
     column: "date",
     dir: "desc",
   });
+  const [detailOrder, setDetailOrder] = useState<any>(null);
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
