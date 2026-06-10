@@ -203,7 +203,7 @@ export function FaqSection() {
             }}
           >
             Staat jouw vraag er niet bij? Contacteer ons via{" "}
-            <Link to="/contact" hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <Link to="/$lang/contact" params={{ lang }} hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
               WhatsApp
             </Link>{" "}
             of mail naar{" "}
