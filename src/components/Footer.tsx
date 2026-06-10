@@ -1,11 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 interface FooterProps {
   variant?: "default" | "pro";
 }
 
 export function Footer({ variant = "default" }: FooterProps) {
+  const lang = useCurrentLang();
+
   if (variant === "pro") {
     return (
       <footer className="vp-footer darker">
@@ -16,15 +19,16 @@ export function Footer({ variant = "default" }: FooterProps) {
           <div className="ftagline">Every bike. A customer. For life.</div>
         </div>
         <ul className="flinks">
-          <li><Link to="/privacy">Privacy</Link></li>
+          <li><Link to="/$lang/privacy" params={{ lang }}>Privacy</Link></li>
           <li><a href="#">Voorwaarden</a></li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/" hash="faq">Veelgestelde vragen</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang }}>Contact</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="faq">Veelgestelde vragen</Link></li>
           <li><a href="https://login.velopass.com/login?state=hKFo2SB5ODJtdjhZMGxXRGlPN1NVWFdQM3pqV3JUS1pFQTlkSaFupWxvZ2luo3RpZNkgM3R1ZXU4M2FxM3RqUk1FYVR3UUZCSTRhZV92dTlhRzmjY2lk2SBWak0xVFBUQUFFcG11aWhGNndYeEdGdVFybE5hVTY5MQ&client=VjM1TPTAAEpmuihF6wXxGFuQrlNaU691&protocol=oauth2&scope=openid%20profile%20email&audience=https%3A%2F%2Fcyclistapi.prod.velopass.com&redirect_uri=https%3A%2F%2Fapp.velopass.com%2Fdashboard&response_type=code&response_mode=query&nonce=a3hmZVl5aENNeU95d1U0SUlBaEM3NV9MbkZXNFdXRkg2c3RpOXJlMW5BUQ%3D%3D&code_challenge=5vSSWCjxdP-6B0z5HV38kaBGFWP4KSmv4gORKjvtzi0&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMi45LjAifQ%3D%3D#page=cyclist/login&method=standard&lng=nl-nl">Inloggen</a></li>
         </ul>
         <div className="fswitch">
           <Link
-            to="/"
+            to="/$lang"
+            params={{ lang }}
             style={{ color: "var(--green)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}
           >
             <ArrowUpRight size={15} strokeWidth={2.2} />
@@ -58,12 +62,12 @@ export function Footer({ variant = "default" }: FooterProps) {
         </div>
       </div>
       <ul className="flinks">
-        <li><Link to="/privacy">Privacy</Link></li>
+        <li><Link to="/$lang/privacy" params={{ lang }}>Privacy</Link></li>
         <li><a href="#">Voorwaarden</a></li>
-        <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/bike-check">Fiets controleren</Link></li>
-        <li><Link to="/stolen">Fiets gestolen?</Link></li>
-        <li><Link to="/" hash="faq">Veelgestelde vragen</Link></li>
+        <li><Link to="/$lang/contact" params={{ lang }}>Contact</Link></li>
+        <li><Link to="/$lang/bike-check" params={{ lang }}>Fiets controleren</Link></li>
+        <li><Link to="/$lang/stolen" params={{ lang }}>Fiets gestolen?</Link></li>
+        <li><Link to="/$lang" params={{ lang }} hash="faq">Veelgestelde vragen</Link></li>
       </ul>
       <div className="fcopy">© 2026 Velopass</div>
       <div
