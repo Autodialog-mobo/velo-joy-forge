@@ -151,20 +151,23 @@ export function FaqSection() {
 
 
   useEffect(() => {
+    if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
     const applyHash = () => {
       const h = window.location.hash.replace("#", "");
-      if (h.startsWith("faq-l-")) setOpenLeft([h]);
-      else if (h.startsWith("faq-r-")) setOpenRight([h]);
+      if (h.startsWith("faq-l-")) setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      else if (h.startsWith("faq-r-")) setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
       if (h.startsWith("faq-")) {
         requestAnimationFrame(() => {
-          document.getElementById(h)?.scrollIntoView({ block: "center" });
+          requestAnimationFrame(() => {
+            document.getElementById(h)?.scrollIntoView({ block: "center" });
+          });
         });
       }
     };
     applyHash();
     window.addEventListener("hashchange", applyHash);
     return () => window.removeEventListener("hashchange", applyHash);
-  }, []);
+  }, [leftFAQs.length, rightFAQs.length]);
 
   const syncHash = (val: string[]) => {
     const last = val[val.length - 1];
