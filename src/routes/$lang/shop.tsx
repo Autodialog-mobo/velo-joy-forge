@@ -16,7 +16,7 @@ import kbcLogo from "@/assets/kbc-logo.png";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
-export const Route = createFileRoute("/shop")({
+export const Route = createFileRoute("/$lang/shop")({
   head: () => ({
     meta: [
       { title: "Velopass Pro — Elke fiets. Een klant. Voor altijd." },
