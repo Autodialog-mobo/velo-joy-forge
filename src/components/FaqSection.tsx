@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState, type ReactNode } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
+import type { Lang } from "@/i18n/config";
 
 const linkStyle = {
   color: "#0D1F3C",
@@ -18,11 +20,15 @@ const linkStyle = {
 const LINK_RE =
   /(\[[^\]]+\]\([^)]+\))|(mailto:[^\s)]+)|(https?:\/\/[^\s)]+)|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)|(\/[a-zA-Z0-9/_#-]+)/g;
 
-function renderHref(target: string, label: string, key: number): ReactNode {
+function renderHref(target: string, label: string, key: number, lang: Lang): ReactNode {
   if (target.startsWith("/")) {
     const [path, hash] = target.split("#");
+    // Internal paths in FAQ copy are written as the canonical (English) slug
+    // without a /<lang> prefix. Prepend the active lang so links resolve
+    // inside the /$lang route tree.
+    const prefixed = `/${lang}${path}`;
     return (
-      <Link key={key} to={path} hash={hash} style={linkStyle}>
+      <Link key={key} to={prefixed as string} hash={hash} style={linkStyle}>
         {label}
       </Link>
     );
@@ -37,6 +43,7 @@ function renderHref(target: string, label: string, key: number): ReactNode {
     </a>
   );
 }
+
 
 function renderToken(token: string, key: number): ReactNode {
   const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
