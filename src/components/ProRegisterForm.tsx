@@ -19,6 +19,7 @@ function looksValid(v: string): boolean {
 }
 
 export function RegisterForm() {
+  const lang = useCurrentLang();
   const [vat, setVat] = useState("");
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
