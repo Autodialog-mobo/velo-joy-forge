@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import i18n, { isLang, SUPPORTED_LANGS, type Lang } from "@/i18n/config";
 
 export const Route = createFileRoute("/$lang")({
-  beforeLoad: ({ params }) => {
+  beforeLoad: async ({ params }) => {
     if (!isLang(params.lang)) throw notFound();
-    // Set i18n language synchronously on SSR and client.
+    // Await so SSR renders with the right language (prevents hydration mismatch).
     if (i18n.language !== params.lang) {
-      void i18n.changeLanguage(params.lang);
+      await i18n.changeLanguage(params.lang);
     }
     return { lang: params.lang as Lang };
   },
