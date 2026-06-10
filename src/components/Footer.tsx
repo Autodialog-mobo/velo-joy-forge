@@ -13,6 +13,14 @@ export function Footer({ variant = "default" }: FooterProps) {
   const lang = useCurrentLang();
   const { t } = useTranslation("common");
 
+  const scrollToFaq = () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.getElementById("faq")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  };
+
   if (variant === "pro") {
     return (
       <footer className="vp-footer darker">
@@ -26,7 +34,7 @@ export function Footer({ variant = "default" }: FooterProps) {
           <li><Link to="/$lang/privacy" params={{ lang }}>{t("footer.privacy")}</Link></li>
           <li><a href="#">{t("footer.terms")}</a></li>
           <li><Link to="/$lang/contact" params={{ lang }}>{t("footer.contact")}</Link></li>
-          <li><Link to="/$lang" params={{ lang }} hash="faq">{t("footer.faq")}</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="faq" onClick={scrollToFaq}>{t("footer.faq")}</Link></li>
           <li><a href={APP_LOGIN}>{t("nav.login")}</a></li>
         </ul>
         <div className="fswitch">
@@ -71,7 +79,7 @@ export function Footer({ variant = "default" }: FooterProps) {
         <li><Link to="/$lang/contact" params={{ lang }}>{t("footer.contact")}</Link></li>
         <li><Link to="/$lang/bike-check" params={{ lang }}>{t("footer.bike_check")}</Link></li>
         <li><Link to="/$lang/stolen" params={{ lang }}>{t("footer.stolen")}</Link></li>
-        <li><Link to="/$lang" params={{ lang }} hash="faq">{t("footer.faq")}</Link></li>
+        <li><Link to="/$lang" params={{ lang }} hash="faq" onClick={scrollToFaq}>{t("footer.faq")}</Link></li>
       </ul>
       <div className="fcopy">{t("footer.copy")}</div>
       <div
