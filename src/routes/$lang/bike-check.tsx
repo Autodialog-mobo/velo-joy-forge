@@ -159,10 +159,10 @@ function BikeSearchPage() {
           <span className="logo-text">velopass</span>
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href={`/${lang}#wat-je-krijgt">Wat je krijgt</a></li>
-          <li><a href={`/${lang}#already-have-one">Al een sticker?</a></li>
-          <li><a href={`/${lang}#order-sticker">Sticker bestellen</a></li>
-          <li><a href={`/${lang}#community">Community</a></li>
+          <li><a href={`/${lang}#wat-je-krijgt`}>Wat je krijgt</a></li>
+          <li><a href={`/${lang}#already-have-one`}>Al een sticker?</a></li>
+          <li><a href={`/${lang}#order-sticker`}>Sticker bestellen</a></li>
+          <li><a href={`/${lang}#community`}>Community</a></li>
           <li><Link to="/$lang/bike-check" params={{ lang }} search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
           <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
