@@ -9,6 +9,7 @@ const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 const totalActive = (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length;
 
 export function ShopFinder() {
+  const lang = useCurrentLang();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
