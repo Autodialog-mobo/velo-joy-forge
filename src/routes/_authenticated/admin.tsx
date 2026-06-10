@@ -459,6 +459,130 @@ function AdminPage() {
                 </tbody>
               </table>
             </div>
+
+            {/* Order Detail Modal */}
+            <Dialog open={!!detailOrder} onOpenChange={(open) => !open && setDetailOrder(null)}>
+              {detailOrder && (
+                <DialogContent className="max-w-lg p-0 overflow-hidden border-0 bg-white rounded-2xl">
+                  <div className="px-6 py-5 border-b border-[rgba(13,31,60,0.06)]" style={{ background: "rgba(245,243,238,0.5)" }}>
+                    <DialogHeader>
+                      <DialogTitle
+                        className="text-[18px] text-[#0D1F3C]"
+                        style={{ fontFamily: "Syne, sans-serif", fontWeight: 700 }}
+                      >
+                        <span className="flex items-center gap-2">
+                          <Hash className="w-4 h-4 text-[#2ECC8A]" />
+                          Order {detailOrder.id}
+                        </span>
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span
+                        className="inline-flex items-center h-[22px] px-2.5 rounded-full text-[11px] font-semibold lowercase"
+                        style={statusBadgeStyle(detailOrder.status)}
+                      >
+                        {detailOrder.status}
+                      </span>
+                      <span className="text-[11px] text-[rgba(13,31,60,0.45)]">
+                        {detailOrder.environment === "live" ? "Live" : "Sandbox"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="px-6 py-5 space-y-5">
+                    {/* Customer */}
+                    <div>
+                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5" /> Klant
+                      </h4>
+                      <p className="text-[14px] font-medium text-[#0D1F3C]">{detailOrder.shipping_name || "—"}</p>
+                      <p className="text-[13px] text-[rgba(13,31,60,0.6)]">{detailOrder.customer_email}</p>
+                    </div>
+
+                    {/* Address */}
+                    <div>
+                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5" /> Verzendadres
+                      </h4>
+                      <p className="text-[14px] text-[#0D1F3C]">{detailOrder.shipping_line1 || "—"}</p>
+                      {detailOrder.shipping_line2 && (
+                        <p className="text-[14px] text-[#0D1F3C]">{detailOrder.shipping_line2}</p>
+                      )}
+                      <p className="text-[13px] text-[rgba(13,31,60,0.6)]">
+                        {detailOrder.shipping_postal_code} {detailOrder.shipping_city}
+                        {detailOrder.shipping_state && `, ${detailOrder.shipping_state}`}
+                      </p>
+                      <p className="text-[13px] text-[rgba(13,31,60,0.6)]">{detailOrder.shipping_country}</p>
+                    </div>
+
+                    {/* Items */}
+                    <div>
+                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                        <Package className="w-3.5 h-3.5" /> Items
+                      </h4>
+                      {(linesByOrder.get(detailOrder.id) ?? []).length > 0 ? (
+                        <ul className="space-y-1">
+                          {(linesByOrder.get(detailOrder.id) ?? []).map((l: any) => (
+                            <li key={l.id} className="text-[14px] text-[#0D1F3C] flex justify-between">
+                              <span>{mapLegacyItem(l.bundle_sku)} × {l.quantity}</span>
+                              <span className="text-[rgba(13,31,60,0.5)] text-[13px]">{l.sticker_count} stickers</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-[14px] text-[#0D1F3C]">{mapLegacyItem(detailOrder.product_name || "—")}</p>
+                      )}
+                    </div>
+
+                    {/* Payment */}
+                    <div>
+                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                        <CreditCard className="w-3.5 h-3.5" /> Betaling
+                      </h4>
+                      <div className="flex justify-between text-[14px]">
+                        <span className="text-[rgba(13,31,60,0.6)]">Subtotaal</span>
+                        <span className="text-[#0D1F3C]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                          {formatEur(detailOrder.amount_subtotal)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-[14px]">
+                        <span className="text-[rgba(13,31,60,0.6)]">BTW</span>
+                        <span className="text-[#0D1F3C]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                          {formatEur(detailOrder.amount_tax)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-[15px] font-semibold mt-1 pt-1 border-t border-[rgba(13,31,60,0.06)]">
+                        <span className="text-[#0D1F3C]">Totaal</span>
+                        <span className="text-[#0D1F3C]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                          {formatEur(detailOrder.amount_total)}
+                        </span>
+                      </div>
+                      {detailOrder.mollie_payment_id && (
+                        <p className="text-[11px] text-[rgba(13,31,60,0.4)] mt-2 font-mono">
+                          Mollie: {detailOrder.mollie_payment_id}
+                        </p>
+                      )}
+                      {detailOrder.stripe_session_id && (
+                        <p className="text-[11px] text-[rgba(13,31,60,0.4)] mt-1 font-mono">
+                          Stripe: {detailOrder.stripe_session_id}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Date */}
+                    <div className="pt-2 border-t border-[rgba(13,31,60,0.06)]">
+                      <div className="flex items-center gap-1.5 text-[11px] text-[rgba(13,31,60,0.45)]">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(detailOrder.created_at).toLocaleString("nl-BE", {
+                          dateStyle: "full",
+                          timeStyle: "short",
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </DialogContent>
+              )}
+            </Dialog>
           </div>
         )}
       </div>
