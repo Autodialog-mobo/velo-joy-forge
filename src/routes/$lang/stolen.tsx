@@ -113,11 +113,11 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
 }
 
 function getBrowserCountry(): "BE" | "NL" | "FR" {
-  const lang = typeof navigator !== "undefined" ? navigator.language || "" : "";
-  const region = lang.split("-")[1]?.toUpperCase();
+  const navLang = typeof navigator !== "undefined" ? navigator.language || "" : "";
+  const region = navLang.split("-")[1]?.toUpperCase();
   if (region === "BE" || region === "NL" || region === "FR") return region;
-  if (lang.startsWith("nl")) return "NL";
-  if (lang.startsWith("fr")) return "FR";
+  if (navLang.startsWith("nl")) return "NL";
+  if (navLang.startsWith("fr")) return "FR";
   return "BE";
 }
 
