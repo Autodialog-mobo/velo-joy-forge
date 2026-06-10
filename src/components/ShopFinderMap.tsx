@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { AlertTriangle } from "lucide-react";
@@ -159,6 +160,7 @@ function distKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }
 }
 
 export default function ShopFinderMap() {
+  const lang = useCurrentLang();
   const [query, setQuery] = useState("");
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [flyTarget, setFlyTarget] = useState<{ lat: number; lng: number; zoom?: number; key: number } | null>(null);
@@ -253,7 +255,8 @@ export default function ShopFinderMap() {
 
       <div style={{ textAlign: "center", marginBottom: 24 }}>
         <Link
-          to="/stolen"
+          to="/$lang/stolen"
+          params={{ lang }}
           style={{
             display: "inline-flex",
             alignItems: "center",

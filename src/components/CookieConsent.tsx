@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 export function CookieConsent() {
+  const lang = useCurrentLang();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -62,7 +64,8 @@ export function CookieConsent() {
           Velopass gebruikt cookies om je surfervaring te verbeteren en
           anonieme statistieken bij te houden. Lees ons{" "}
           <Link
-            to="/privacy"
+            to="/$lang/privacy"
+            params={{ lang }}
             style={{
               color: "var(--green)",
               textDecoration: "underline",

@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { AlertTriangle } from "lucide-react";
 import shopsData from "@/data/shops.json";
 
@@ -8,6 +9,7 @@ const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 const totalActive = (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length;
 
 export function ShopFinder() {
+  const lang = useCurrentLang();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
@@ -21,7 +23,8 @@ export function ShopFinder() {
         </div>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <Link
-            to="/stolen"
+            to="/$lang/stolen"
+            params={{ lang }}
             style={{
               display: "inline-flex",
               alignItems: "center",
