@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 export function CookieConsent() {
+  const lang = useCurrentLang();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
