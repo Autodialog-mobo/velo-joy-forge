@@ -39,7 +39,9 @@ export const Route = createFileRoute("/$lang/privacy")({
 function PrivacyPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation("privacy");
-  const sections = t("sections", { returnObjects: true }) as Section[];
+  const rawSections = t("sections", { returnObjects: true });
+  const sections: Section[] = Array.isArray(rawSections) ? (rawSections as Section[]) : [];
+
 
   return (
     <>
