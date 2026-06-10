@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { Footer } from "@/components/Footer";
 
-export const Route = createFileRoute("/privacy")({
+export const Route = createFileRoute("/$lang/privacy")({
   component: PrivacyPage,
   head: () => ({
     meta: [
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/privacy")({
 });
 
 function PrivacyPage() {
+  const lang = useCurrentLang();
   return (
     <>
       <main
@@ -150,7 +152,7 @@ function PrivacyPage() {
           </a>{" "}
           of gebruik ons{" "}
           <a
-            href="/contact"
+            href={`/${lang}/contact`}
             style={{ color: "var(--green)", textDecoration: "underline" }}
           >
             contactformulier

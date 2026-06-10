@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
@@ -6,7 +7,7 @@ import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 
-export const Route = createFileRoute("/bike-check")({
+export const Route = createFileRoute("/$lang/bike-check")({
   head: () => ({
     meta: [
       { title: "Check de status van een fiets — Velopass" },
@@ -96,6 +97,7 @@ async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: 
 }
 
 function BikeSearchPage() {
+  const lang = useCurrentLang();
   const search = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const lang: Lang = search.get("lng") === "fr-fr" ? "fr-fr" : "nl-nl";
   const L = useMemo(() => t(lang), [lang]);
@@ -152,17 +154,17 @@ function BikeSearchPage() {
     <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
-        <a href="/" className="nav-logo">
+        <a href={`/${lang}`} className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href="/#wat-je-krijgt">Wat je krijgt</a></li>
-          <li><a href="/#already-have-one">Al een sticker?</a></li>
-          <li><a href="/#order-sticker">Sticker bestellen</a></li>
-          <li><a href="/#community">Community</a></li>
-          <li><Link to="/bike-check" search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
-          <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
+          <li><a href={`/${lang}#wat-je-krijgt`}>Wat je krijgt</a></li>
+          <li><a href={`/${lang}#already-have-one`}>Al een sticker?</a></li>
+          <li><a href={`/${lang}#order-sticker`}>Sticker bestellen</a></li>
+          <li><a href={`/${lang}#community`}>Community</a></li>
+          <li><Link to="/$lang/bike-check" params={{ lang }} search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="https://login.velopass.com/login?state=hKFo2SB5ODJtdjhZMGxXRGlPN1NVWFdQM3pqV3JUS1pFQTlkSaFupWxvZ2luo3RpZNkgM3R1ZXU4M2FxM3RqUk1FYVR3UUZCSTRhZV92dTlhRzmjY2lk2SBWak0xVFBUQUFFcG11aWhGNndYeEdGdVFybE5hVTY5MQ&client=VjM1TPTAAEpmuihF6wXxGFuQrlNaU691&protocol=oauth2&scope=openid%20profile%20email&audience=https%3A%2F%2Fcyclistapi.prod.velopass.com&redirect_uri=https%3A%2F%2Fapp.velopass.com%2Fdashboard&response_type=code&response_mode=query&nonce=a3hmZVl5aENNeU95d1U0SUlBaEM3NV9MbkZXNFdXRkg2c3RpOXJlMW5BUQ%3D%3D&code_challenge=5vSSWCjxdP-6B0z5HV38kaBGFWP4KSmv4gORKjvtzi0&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMi45LjAifQ%3D%3D#page=cyclist/login&method=standard&lng=nl-nl" className="btn-login">
@@ -619,7 +621,7 @@ function BikeSearchPage() {
             ) : (
               <>
                 <a
-                  href="/"
+                  href={`/${lang}`}
                   onClick={() => trackRegisterBikeClick("bikesearch", "status-info-register-frameid")}
                   style={{
                     background: "#0D1F3C",
@@ -884,7 +886,7 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
       <h3 style={resultTitle}>{L.notRegTitle}</h3>
       <p style={resultBody}>{L.notRegBody}</p>
       <a
-        href="/"
+        href={`/${lang}`}
         onClick={() => trackRegisterBikeClick("bikesearch", "search-result-not-registered")}
         style={{
           background: "#0D1F3C",

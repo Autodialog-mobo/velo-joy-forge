@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
@@ -51,7 +52,7 @@ const BUNDLES: Bundle[] = [
 const eur = (cents: number) =>
   new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(cents / 100);
 
-export const Route = createFileRoute("/order")({
+export const Route = createFileRoute("/$lang/order")({
   head: () => ({
     meta: [
       { title: "Bestel een Velopass Frame-ID — vanaf €12,95" },
@@ -71,6 +72,7 @@ export const Route = createFileRoute("/order")({
 });
 
 function BestellenPage() {
+  const lang = useCurrentLang();
   const [quantities, setQuantities] = useState<Record<BundleKey, number>>({
     frameid_solo_onetime: 0,
     frameid_duo_onetime: 0,
@@ -146,7 +148,7 @@ function BestellenPage() {
 
 
       <header style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1200, margin: "0 auto" }}>
-        <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
+        <Link to="/$lang" params={{ lang }} style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
           <VelopassMark size={28} />
           <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18 }}>Velopass</span>
         </Link>

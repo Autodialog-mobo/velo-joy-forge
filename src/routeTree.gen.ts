@@ -9,83 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as StolenRouteImport } from './routes/stolen'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ShopRouteImport } from './routes/shop'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
-import { Route as ProRouteImport } from './routes/pro'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as OrderRouteImport } from './routes/order'
-import { Route as ManufacturerRouteImport } from './routes/manufacturer'
-import { Route as LeasingRouteImport } from './routes/leasing'
-import { Route as InsuranceRouteImport } from './routes/insurance'
 import { Route as GestolenRouteImport } from './routes/gestolen'
 import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
-import { Route as BikeCheckRouteImport } from './routes/bike-check'
 import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AssistanceRouteImport } from './routes/assistance'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
-import { Route as OrderThanksRouteImport } from './routes/order_.thanks'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
+import { Route as LangShopRouteImport } from './routes/$lang/shop'
+import { Route as LangProRouteImport } from './routes/$lang/pro'
+import { Route as LangPrivacyRouteImport } from './routes/$lang/privacy'
+import { Route as LangOrderRouteImport } from './routes/$lang/order'
+import { Route as LangManufacturerRouteImport } from './routes/$lang/manufacturer'
+import { Route as LangLeasingRouteImport } from './routes/$lang/leasing'
+import { Route as LangInsuranceRouteImport } from './routes/$lang/insurance'
+import { Route as LangContactRouteImport } from './routes/$lang/contact'
+import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
+import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
+import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
+import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
 
-const StolenRoute = StolenRouteImport.update({
-  id: '/stolen',
-  path: '/stolen',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ShopRoute = ShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProfessionalsRoute = ProfessionalsRouteImport.update({
   id: '/professionals',
   path: '/professionals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProRoute = ProRouteImport.update({
-  id: '/pro',
-  path: '/pro',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrderRoute = OrderRouteImport.update({
-  id: '/order',
-  path: '/order',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ManufacturerRoute = ManufacturerRouteImport.update({
-  id: '/manufacturer',
-  path: '/manufacturer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeasingRoute = LeasingRouteImport.update({
-  id: '/leasing',
-  path: '/leasing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InsuranceRoute = InsuranceRouteImport.update({
-  id: '/insurance',
-  path: '/insurance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GestolenRoute = GestolenRouteImport.update({
@@ -98,19 +59,9 @@ const FietsControlerenRoute = FietsControlerenRouteImport.update({
   path: '/fiets-controleren',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BikesearchRoute = BikesearchRouteImport.update({
   id: '/bikesearch',
   path: '/bikesearch',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BikeCheckRoute = BikeCheckRouteImport.update({
-  id: '/bike-check',
-  path: '/bike-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BestellenRoute = BestellenRouteImport.update({
@@ -121,11 +72,6 @@ const BestellenRoute = BestellenRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AssistanceRoute = AssistanceRouteImport.update({
-  id: '/assistance',
-  path: '/assistance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AlEenStickerRoute = AlEenStickerRouteImport.update({
@@ -152,11 +98,6 @@ const LangIndexRoute = LangIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LangRouteRoute,
 } as any)
-const OrderThanksRoute = OrderThanksRouteImport.update({
-  id: '/order_/thanks',
-  path: '/order/thanks',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   id: '/bedankt',
   path: '/bedankt',
@@ -167,10 +108,75 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const LangStolenRoute = LangStolenRouteImport.update({
+  id: '/stolen',
+  path: '/stolen',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangShopRoute = LangShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangProRoute = LangProRouteImport.update({
+  id: '/pro',
+  path: '/pro',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangPrivacyRoute = LangPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangOrderRoute = LangOrderRouteImport.update({
+  id: '/order',
+  path: '/order',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangManufacturerRoute = LangManufacturerRouteImport.update({
+  id: '/manufacturer',
+  path: '/manufacturer',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangLeasingRoute = LangLeasingRouteImport.update({
+  id: '/leasing',
+  path: '/leasing',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangInsuranceRoute = LangInsuranceRouteImport.update({
+  id: '/insurance',
+  path: '/insurance',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangContactRoute = LangContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangBikeCheckRoute = LangBikeCheckRouteImport.update({
+  id: '/bike-check',
+  path: '/bike-check',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangAssistanceRoute = LangAssistanceRouteImport.update({
+  id: '/assistance',
+  path: '/assistance',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangAlreadyHaveOneRoute = LangAlreadyHaveOneRouteImport.update({
+  id: '/already-have-one',
+  path: '/already-have-one',
+  getParentRoute: () => LangRouteRoute,
+} as any)
 const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   id: '/api/public/vies-lookup',
   path: '/api/public/vies-lookup',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
+  id: '/order_/thanks',
+  path: '/order/thanks',
+  getParentRoute: () => LangRouteRoute,
 } as any)
 const ApiPublicPaymentsMollieWebhookRoute =
   ApiPublicPaymentsMollieWebhookRouteImport.update({
@@ -183,56 +189,58 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
-  '/assistance': typeof AssistanceRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
-  '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
-  '/contact': typeof ContactRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
-  '/insurance': typeof InsuranceRoute
-  '/leasing': typeof LeasingRoute
-  '/manufacturer': typeof ManufacturerRoute
-  '/order': typeof OrderRoute
-  '/privacy': typeof PrivacyRoute
-  '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
-  '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stolen': typeof StolenRoute
+  '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
+  '/$lang/assistance': typeof LangAssistanceRoute
+  '/$lang/bike-check': typeof LangBikeCheckRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/insurance': typeof LangInsuranceRoute
+  '/$lang/leasing': typeof LangLeasingRoute
+  '/$lang/manufacturer': typeof LangManufacturerRoute
+  '/$lang/order': typeof LangOrderRoute
+  '/$lang/privacy': typeof LangPrivacyRoute
+  '/$lang/pro': typeof LangProRoute
+  '/$lang/shop': typeof LangShopRoute
+  '/$lang/stolen': typeof LangStolenRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/order/thanks': typeof OrderThanksRoute
   '/$lang/': typeof LangIndexRoute
+  '/$lang/order/thanks': typeof LangOrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/al-een-sticker': typeof AlEenStickerRoute
-  '/assistance': typeof AssistanceRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
-  '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
-  '/contact': typeof ContactRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
-  '/insurance': typeof InsuranceRoute
-  '/leasing': typeof LeasingRoute
-  '/manufacturer': typeof ManufacturerRoute
-  '/order': typeof OrderRoute
-  '/privacy': typeof PrivacyRoute
-  '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
-  '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stolen': typeof StolenRoute
+  '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
+  '/$lang/assistance': typeof LangAssistanceRoute
+  '/$lang/bike-check': typeof LangBikeCheckRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/insurance': typeof LangInsuranceRoute
+  '/$lang/leasing': typeof LangLeasingRoute
+  '/$lang/manufacturer': typeof LangManufacturerRoute
+  '/$lang/order': typeof LangOrderRoute
+  '/$lang/privacy': typeof LangPrivacyRoute
+  '/$lang/pro': typeof LangProRoute
+  '/$lang/shop': typeof LangShopRoute
+  '/$lang/stolen': typeof LangStolenRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/order/thanks': typeof OrderThanksRoute
   '/$lang': typeof LangIndexRoute
+  '/$lang/order/thanks': typeof LangOrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -242,28 +250,29 @@ export interface FileRoutesById {
   '/$lang': typeof LangRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
-  '/assistance': typeof AssistanceRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
-  '/bike-check': typeof BikeCheckRoute
   '/bikesearch': typeof BikesearchRoute
-  '/contact': typeof ContactRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
-  '/insurance': typeof InsuranceRoute
-  '/leasing': typeof LeasingRoute
-  '/manufacturer': typeof ManufacturerRoute
-  '/order': typeof OrderRoute
-  '/privacy': typeof PrivacyRoute
-  '/pro': typeof ProRoute
   '/professionals': typeof ProfessionalsRoute
-  '/shop': typeof ShopRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stolen': typeof StolenRoute
+  '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
+  '/$lang/assistance': typeof LangAssistanceRoute
+  '/$lang/bike-check': typeof LangBikeCheckRoute
+  '/$lang/contact': typeof LangContactRoute
+  '/$lang/insurance': typeof LangInsuranceRoute
+  '/$lang/leasing': typeof LangLeasingRoute
+  '/$lang/manufacturer': typeof LangManufacturerRoute
+  '/$lang/order': typeof LangOrderRoute
+  '/$lang/privacy': typeof LangPrivacyRoute
+  '/$lang/pro': typeof LangProRoute
+  '/$lang/shop': typeof LangShopRoute
+  '/$lang/stolen': typeof LangStolenRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
-  '/order_/thanks': typeof OrderThanksRoute
   '/$lang/': typeof LangIndexRoute
+  '/$lang/order_/thanks': typeof LangOrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -273,56 +282,58 @@ export interface FileRouteTypes {
     | '/'
     | '/$lang'
     | '/al-een-sticker'
-    | '/assistance'
     | '/auth'
     | '/bestellen'
-    | '/bike-check'
     | '/bikesearch'
-    | '/contact'
     | '/fiets-controleren'
     | '/gestolen'
-    | '/insurance'
-    | '/leasing'
-    | '/manufacturer'
-    | '/order'
-    | '/privacy'
-    | '/pro'
     | '/professionals'
-    | '/shop'
     | '/sitemap.xml'
-    | '/stolen'
+    | '/$lang/already-have-one'
+    | '/$lang/assistance'
+    | '/$lang/bike-check'
+    | '/$lang/contact'
+    | '/$lang/insurance'
+    | '/$lang/leasing'
+    | '/$lang/manufacturer'
+    | '/$lang/order'
+    | '/$lang/privacy'
+    | '/$lang/pro'
+    | '/$lang/shop'
+    | '/$lang/stolen'
     | '/admin'
     | '/bestellen/bedankt'
-    | '/order/thanks'
     | '/$lang/'
+    | '/$lang/order/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/al-een-sticker'
-    | '/assistance'
     | '/auth'
     | '/bestellen'
-    | '/bike-check'
     | '/bikesearch'
-    | '/contact'
     | '/fiets-controleren'
     | '/gestolen'
-    | '/insurance'
-    | '/leasing'
-    | '/manufacturer'
-    | '/order'
-    | '/privacy'
-    | '/pro'
     | '/professionals'
-    | '/shop'
     | '/sitemap.xml'
-    | '/stolen'
+    | '/$lang/already-have-one'
+    | '/$lang/assistance'
+    | '/$lang/bike-check'
+    | '/$lang/contact'
+    | '/$lang/insurance'
+    | '/$lang/leasing'
+    | '/$lang/manufacturer'
+    | '/$lang/order'
+    | '/$lang/privacy'
+    | '/$lang/pro'
+    | '/$lang/shop'
+    | '/$lang/stolen'
     | '/admin'
     | '/bestellen/bedankt'
-    | '/order/thanks'
     | '/$lang'
+    | '/$lang/order/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   id:
@@ -331,28 +342,29 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/_authenticated'
     | '/al-een-sticker'
-    | '/assistance'
     | '/auth'
     | '/bestellen'
-    | '/bike-check'
     | '/bikesearch'
-    | '/contact'
     | '/fiets-controleren'
     | '/gestolen'
-    | '/insurance'
-    | '/leasing'
-    | '/manufacturer'
-    | '/order'
-    | '/privacy'
-    | '/pro'
     | '/professionals'
-    | '/shop'
     | '/sitemap.xml'
-    | '/stolen'
+    | '/$lang/already-have-one'
+    | '/$lang/assistance'
+    | '/$lang/bike-check'
+    | '/$lang/contact'
+    | '/$lang/insurance'
+    | '/$lang/leasing'
+    | '/$lang/manufacturer'
+    | '/$lang/order'
+    | '/$lang/privacy'
+    | '/$lang/pro'
+    | '/$lang/shop'
+    | '/$lang/stolen'
     | '/_authenticated/admin'
     | '/bestellen/bedankt'
-    | '/order_/thanks'
     | '/$lang/'
+    | '/$lang/order_/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
@@ -362,38 +374,19 @@ export interface RootRouteChildren {
   LangRouteRoute: typeof LangRouteRouteWithChildren
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AlEenStickerRoute: typeof AlEenStickerRoute
-  AssistanceRoute: typeof AssistanceRoute
   AuthRoute: typeof AuthRoute
   BestellenRoute: typeof BestellenRouteWithChildren
-  BikeCheckRoute: typeof BikeCheckRoute
   BikesearchRoute: typeof BikesearchRoute
-  ContactRoute: typeof ContactRoute
   FietsControlerenRoute: typeof FietsControlerenRoute
   GestolenRoute: typeof GestolenRoute
-  InsuranceRoute: typeof InsuranceRoute
-  LeasingRoute: typeof LeasingRoute
-  ManufacturerRoute: typeof ManufacturerRoute
-  OrderRoute: typeof OrderRoute
-  PrivacyRoute: typeof PrivacyRoute
-  ProRoute: typeof ProRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
-  ShopRoute: typeof ShopRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  StolenRoute: typeof StolenRoute
-  OrderThanksRoute: typeof OrderThanksRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/stolen': {
-      id: '/stolen'
-      path: '/stolen'
-      fullPath: '/stolen'
-      preLoaderRoute: typeof StolenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -401,60 +394,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/shop': {
-      id: '/shop'
-      path: '/shop'
-      fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/professionals': {
       id: '/professionals'
       path: '/professionals'
       fullPath: '/professionals'
       preLoaderRoute: typeof ProfessionalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pro': {
-      id: '/pro'
-      path: '/pro'
-      fullPath: '/pro'
-      preLoaderRoute: typeof ProRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/order': {
-      id: '/order'
-      path: '/order'
-      fullPath: '/order'
-      preLoaderRoute: typeof OrderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/manufacturer': {
-      id: '/manufacturer'
-      path: '/manufacturer'
-      fullPath: '/manufacturer'
-      preLoaderRoute: typeof ManufacturerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leasing': {
-      id: '/leasing'
-      path: '/leasing'
-      fullPath: '/leasing'
-      preLoaderRoute: typeof LeasingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/insurance': {
-      id: '/insurance'
-      path: '/insurance'
-      fullPath: '/insurance'
-      preLoaderRoute: typeof InsuranceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gestolen': {
@@ -471,25 +415,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FietsControlerenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/bikesearch': {
       id: '/bikesearch'
       path: '/bikesearch'
       fullPath: '/bikesearch'
       preLoaderRoute: typeof BikesearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bike-check': {
-      id: '/bike-check'
-      path: '/bike-check'
-      fullPath: '/bike-check'
-      preLoaderRoute: typeof BikeCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bestellen': {
@@ -504,13 +434,6 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/assistance': {
-      id: '/assistance'
-      path: '/assistance'
-      fullPath: '/assistance'
-      preLoaderRoute: typeof AssistanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/al-een-sticker': {
@@ -548,13 +471,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangIndexRouteImport
       parentRoute: typeof LangRouteRoute
     }
-    '/order_/thanks': {
-      id: '/order_/thanks'
-      path: '/order/thanks'
-      fullPath: '/order/thanks'
-      preLoaderRoute: typeof OrderThanksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/bestellen/bedankt': {
       id: '/bestellen/bedankt'
       path: '/bedankt'
@@ -569,12 +485,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/$lang/stolen': {
+      id: '/$lang/stolen'
+      path: '/stolen'
+      fullPath: '/$lang/stolen'
+      preLoaderRoute: typeof LangStolenRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/shop': {
+      id: '/$lang/shop'
+      path: '/shop'
+      fullPath: '/$lang/shop'
+      preLoaderRoute: typeof LangShopRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/pro': {
+      id: '/$lang/pro'
+      path: '/pro'
+      fullPath: '/$lang/pro'
+      preLoaderRoute: typeof LangProRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/privacy': {
+      id: '/$lang/privacy'
+      path: '/privacy'
+      fullPath: '/$lang/privacy'
+      preLoaderRoute: typeof LangPrivacyRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/order': {
+      id: '/$lang/order'
+      path: '/order'
+      fullPath: '/$lang/order'
+      preLoaderRoute: typeof LangOrderRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/manufacturer': {
+      id: '/$lang/manufacturer'
+      path: '/manufacturer'
+      fullPath: '/$lang/manufacturer'
+      preLoaderRoute: typeof LangManufacturerRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/leasing': {
+      id: '/$lang/leasing'
+      path: '/leasing'
+      fullPath: '/$lang/leasing'
+      preLoaderRoute: typeof LangLeasingRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/insurance': {
+      id: '/$lang/insurance'
+      path: '/insurance'
+      fullPath: '/$lang/insurance'
+      preLoaderRoute: typeof LangInsuranceRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/contact': {
+      id: '/$lang/contact'
+      path: '/contact'
+      fullPath: '/$lang/contact'
+      preLoaderRoute: typeof LangContactRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/bike-check': {
+      id: '/$lang/bike-check'
+      path: '/bike-check'
+      fullPath: '/$lang/bike-check'
+      preLoaderRoute: typeof LangBikeCheckRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/assistance': {
+      id: '/$lang/assistance'
+      path: '/assistance'
+      fullPath: '/$lang/assistance'
+      preLoaderRoute: typeof LangAssistanceRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/already-have-one': {
+      id: '/$lang/already-have-one'
+      path: '/already-have-one'
+      fullPath: '/$lang/already-have-one'
+      preLoaderRoute: typeof LangAlreadyHaveOneRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
     '/api/public/vies-lookup': {
       id: '/api/public/vies-lookup'
       path: '/api/public/vies-lookup'
       fullPath: '/api/public/vies-lookup'
       preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$lang/order_/thanks': {
+      id: '/$lang/order_/thanks'
+      path: '/order/thanks'
+      fullPath: '/$lang/order/thanks'
+      preLoaderRoute: typeof LangOrderThanksRouteImport
+      parentRoute: typeof LangRouteRoute
     }
     '/api/public/payments/mollie-webhook': {
       id: '/api/public/payments/mollie-webhook'
@@ -587,11 +594,37 @@ declare module '@tanstack/react-router' {
 }
 
 interface LangRouteRouteChildren {
+  LangAlreadyHaveOneRoute: typeof LangAlreadyHaveOneRoute
+  LangAssistanceRoute: typeof LangAssistanceRoute
+  LangBikeCheckRoute: typeof LangBikeCheckRoute
+  LangContactRoute: typeof LangContactRoute
+  LangInsuranceRoute: typeof LangInsuranceRoute
+  LangLeasingRoute: typeof LangLeasingRoute
+  LangManufacturerRoute: typeof LangManufacturerRoute
+  LangOrderRoute: typeof LangOrderRoute
+  LangPrivacyRoute: typeof LangPrivacyRoute
+  LangProRoute: typeof LangProRoute
+  LangShopRoute: typeof LangShopRoute
+  LangStolenRoute: typeof LangStolenRoute
   LangIndexRoute: typeof LangIndexRoute
+  LangOrderThanksRoute: typeof LangOrderThanksRoute
 }
 
 const LangRouteRouteChildren: LangRouteRouteChildren = {
+  LangAlreadyHaveOneRoute: LangAlreadyHaveOneRoute,
+  LangAssistanceRoute: LangAssistanceRoute,
+  LangBikeCheckRoute: LangBikeCheckRoute,
+  LangContactRoute: LangContactRoute,
+  LangInsuranceRoute: LangInsuranceRoute,
+  LangLeasingRoute: LangLeasingRoute,
+  LangManufacturerRoute: LangManufacturerRoute,
+  LangOrderRoute: LangOrderRoute,
+  LangPrivacyRoute: LangPrivacyRoute,
+  LangProRoute: LangProRoute,
+  LangShopRoute: LangShopRoute,
+  LangStolenRoute: LangStolenRoute,
   LangIndexRoute: LangIndexRoute,
+  LangOrderThanksRoute: LangOrderThanksRoute,
 }
 
 const LangRouteRouteWithChildren = LangRouteRoute._addFileChildren(
@@ -626,28 +659,26 @@ const rootRouteChildren: RootRouteChildren = {
   LangRouteRoute: LangRouteRouteWithChildren,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AlEenStickerRoute: AlEenStickerRoute,
-  AssistanceRoute: AssistanceRoute,
   AuthRoute: AuthRoute,
   BestellenRoute: BestellenRouteWithChildren,
-  BikeCheckRoute: BikeCheckRoute,
   BikesearchRoute: BikesearchRoute,
-  ContactRoute: ContactRoute,
   FietsControlerenRoute: FietsControlerenRoute,
   GestolenRoute: GestolenRoute,
-  InsuranceRoute: InsuranceRoute,
-  LeasingRoute: LeasingRoute,
-  ManufacturerRoute: ManufacturerRoute,
-  OrderRoute: OrderRoute,
-  PrivacyRoute: PrivacyRoute,
-  ProRoute: ProRoute,
   ProfessionalsRoute: ProfessionalsRoute,
-  ShopRoute: ShopRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  StolenRoute: StolenRoute,
-  OrderThanksRoute: OrderThanksRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

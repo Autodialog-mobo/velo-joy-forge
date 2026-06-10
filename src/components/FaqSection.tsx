@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useState, type ReactNode } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
+import type { Lang } from "@/i18n/config";
 
 const linkStyle = {
   color: "#0D1F3C",
@@ -18,11 +20,15 @@ const linkStyle = {
 const LINK_RE =
   /(\[[^\]]+\]\([^)]+\))|(mailto:[^\s)]+)|(https?:\/\/[^\s)]+)|((?:[a-z0-9-]+\.)+[a-z]{2,}(?:\/[^\s)]*)?)|(\/[a-zA-Z0-9/_#-]+)/g;
 
-function renderHref(target: string, label: string, key: number): ReactNode {
+function renderHref(target: string, label: string, key: number, lang: Lang): ReactNode {
   if (target.startsWith("/")) {
     const [path, hash] = target.split("#");
+    // Internal paths in FAQ copy are written as the canonical (English) slug
+    // without a /<lang> prefix. Prepend the active lang so links resolve
+    // inside the /$lang route tree.
+    const prefixed = `/${lang}${path}`;
     return (
-      <Link key={key} to={path} hash={hash} style={linkStyle}>
+      <Link key={key} to={prefixed as string} hash={hash} style={linkStyle}>
         {label}
       </Link>
     );
@@ -38,9 +44,10 @@ function renderHref(target: string, label: string, key: number): ReactNode {
   );
 }
 
-function renderToken(token: string, key: number): ReactNode {
+
+function renderToken(token: string, key: number, lang: Lang): ReactNode {
   const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
-  if (md) return renderHref(md[2], md[1], key);
+  if (md) return renderHref(md[2], md[1], key, lang);
   if (token.startsWith("mailto:")) {
     return <a key={key} href={token} style={linkStyle}>{token.slice(7)}</a>;
   }
@@ -51,7 +58,7 @@ function renderToken(token: string, key: number): ReactNode {
       </a>
     );
   }
-  if (token.startsWith("/")) return renderHref(token, token, key);
+  if (token.startsWith("/")) return renderHref(token, token, key, lang);
   return (
     <a key={key} href={`https://${token}`} target="_blank" rel="noopener noreferrer" style={linkStyle}>
       {token}
@@ -59,14 +66,14 @@ function renderToken(token: string, key: number): ReactNode {
   );
 }
 
-function renderLine(line: string): ReactNode[] {
+function renderLine(line: string, lang: Lang): ReactNode[] {
   const out: ReactNode[] = [];
   let last = 0;
   let i = 0;
   for (const m of line.matchAll(LINK_RE)) {
     const start = m.index ?? 0;
     if (start > last) out.push(<Fragment key={`t-${i++}`}>{line.slice(last, start)}</Fragment>);
-    out.push(renderToken(m[0], i++));
+    out.push(renderToken(m[0], i++, lang));
     last = start + m[0].length;
   }
   if (last < line.length) out.push(<Fragment key={`t-${i++}`}>{line.slice(last)}</Fragment>);
@@ -124,6 +131,7 @@ const rightFAQs = [
 ];
 
 export function FaqSection() {
+  const lang = useCurrentLang();
   const [openLeft, setOpenLeft] = useState<string[]>([]);
   const [openRight, setOpenRight] = useState<string[]>([]);
 
@@ -195,7 +203,7 @@ export function FaqSection() {
             }}
           >
             Staat jouw vraag er niet bij? Contacteer ons via{" "}
-            <Link to="/contact" hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <Link to="/$lang/contact" params={{ lang }} hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
               WhatsApp
             </Link>{" "}
             of mail naar{" "}
@@ -254,7 +262,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line, lang)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>
@@ -304,7 +312,7 @@ export function FaqSection() {
                           <span>{line.slice(1).trim()}</span>
                         </div>
                       ) : (
-                        <span key={idx}>{renderLine(line)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
+                        <span key={idx}>{renderLine(line, lang)}{idx < faq.a.split("\n").length - 1 ? <br /> : null}</span>
                       )
                     )}
                   </AccordionContent>

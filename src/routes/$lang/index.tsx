@@ -112,9 +112,9 @@ function VelopassHome() {
           <li><a href="#already-have-one">{t("common:nav.already_have_one")}</a></li>
           <li><a href="#order-sticker">{t("common:nav.order_sticker")}</a></li>
           <li><a href="#community">{t("common:nav.community")}</a></li>
-          <li><Link to="/bike-check" search={{ lng: "nl-nl" }}>{t("common:nav.bike_check")}</Link></li>
-          <li><Link to="/contact">{t("common:nav.contact")}</Link></li>
-          <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
+          <li><Link to="/$lang/bike-check" params={{ lang: currentLang }} search={{ lng: "nl-nl" }}>{t("common:nav.bike_check")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang: currentLang }}>{t("common:nav.contact")}</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang: currentLang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
           <LangSwitcher currentLang={currentLang} />
@@ -152,7 +152,7 @@ function VelopassHome() {
         <p className="hero-sub">{t("home:hero.sub")}</p>
 
         <div className="hero-cta-wrap">
-          <Link to="/order" className="hero-cta-primary">{t("home:hero.cta_primary")}</Link>
+          <Link to="/$lang/order" params={{ lang: currentLang }} className="hero-cta-primary">{t("home:hero.cta_primary")}</Link>
           <div className="hero-cta-sub">{t("home:hero.cta_sub")}</div>
         </div>
 
@@ -172,7 +172,7 @@ function VelopassHome() {
             <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in 1 minuut klaar.</p>
             <span className="path-cta">Open je Velopass →</span>
           </a>
-          <Link to="/order" className="path-card secondary">
+          <Link to="/$lang/order" params={{ lang: currentLang }} className="path-card secondary">
             <div className="path-tag">Nog geen Frame-ID?</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
@@ -200,7 +200,8 @@ function VelopassHome() {
 
         <div style={{ textAlign: "center", marginTop: 20 }}>
           <Link
-            to="/stolen"
+            to="/$lang/stolen"
+            params={{ lang: currentLang }}
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,
@@ -301,7 +302,8 @@ function VelopassHome() {
                 Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
               </p>
               <Link
-                to="/stolen"
+                to="/$lang/stolen"
+                params={{ lang: currentLang }}
                 style={{
                   fontFamily: "'DM Sans', sans-serif",
                   fontWeight: 500,
@@ -401,7 +403,7 @@ function VelopassHome() {
             <div style={pathIconBox}><Package size={24} color="#fff" strokeWidth={1.8} /></div>
             <h4>Via de Velopass webshop</h4>
             <p>Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
-            <Link to="/order" className="btn-g">Bestel via de Velopass webshop →</Link>
+            <Link to="/$lang/order" params={{ lang: currentLang }} className="btn-g">Bestel via de Velopass webshop →</Link>
           </div>
         </div>
         <div className="path-final">
@@ -463,7 +465,8 @@ function VelopassHome() {
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>Ons team helpt je graag verder.</p>
           </div>
           <Link
-            to="/contact"
+            to="/$lang/contact"
+            params={{ lang: currentLang }}
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,

@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 type ViesResult =
   | { state: "idle" }
@@ -18,6 +19,7 @@ function looksValid(v: string): boolean {
 }
 
 export function RegisterForm() {
+  const lang = useCurrentLang();
   const [vat, setVat] = useState("");
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
@@ -201,7 +203,7 @@ export function RegisterForm() {
       <button type="submit" className="btn-submit">Registreer gratis →</button>
       <p style={{ textAlign: "center", marginTop: 14, marginBottom: 0 }}>
         <a
-          href="/contact"
+          href={`/${lang}/contact`}
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 13,

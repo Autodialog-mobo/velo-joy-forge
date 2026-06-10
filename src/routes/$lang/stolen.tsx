@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
@@ -16,7 +17,7 @@ import {
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 
-export const Route = createFileRoute("/stolen")({
+export const Route = createFileRoute("/$lang/stolen")({
   head: () => ({
     meta: [
       { title: "Fiets gestolen? Doe snel aangifte — Velopass" },
@@ -121,6 +122,7 @@ function getBrowserCountry(): "BE" | "NL" | "FR" {
 }
 
 function GestolenPage() {
+  const lang = useCurrentLang();
   const [navOpen, setNavOpen] = useState(false);
   const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
 
@@ -282,16 +284,16 @@ function GestolenPage() {
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
-        <Link to="/" className="nav-logo">
+        <Link to="/$lang" params={{ lang }} className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><Link to="/" hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
-          <li><Link to="/" hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
-          <li><Link to="/" hash="order-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
-          <li><Link to="/" hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
-          <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="order-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
           <a href={APP_LOGIN} className="btn-login">

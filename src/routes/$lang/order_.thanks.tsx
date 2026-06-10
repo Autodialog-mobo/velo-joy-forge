@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { useEffect, useState } from "react";
 import { CheckCircle2, Truck, Mail, ArrowLeft } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { getOrderByMolliePayment } from "@/utils/mollie.functions";
 
-export const Route = createFileRoute("/order_/thanks")({
+export const Route = createFileRoute("/$lang/order_/thanks")({
   validateSearch: (search: Record<string, unknown>): { payment_id?: string } => ({
     payment_id: typeof search.payment_id === "string" ? search.payment_id : undefined,
   }),
@@ -25,6 +26,7 @@ const BUNDLE_NAMES: Record<string, string> = {
 };
 
 function BedanktPage() {
+  const lang = useCurrentLang();
   const { payment_id } = Route.useSearch();
   const [order, setOrder] = useState<{
     status: string | null;
@@ -66,11 +68,11 @@ function BedanktPage() {
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
       <header style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1200, margin: "0 auto" }}>
-        <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
+        <Link to="/$lang" params={{ lang }} style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
           <VelopassMark size={28} />
           <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18 }}>Velopass</span>
         </Link>
-        <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none" }}>
+        <Link to="/$lang" params={{ lang }} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none" }}>
           <ArrowLeft size={16} /> Terug naar home
         </Link>
       </header>

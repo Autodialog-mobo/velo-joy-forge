@@ -1,4 +1,5 @@
 import { useState, useMemo, lazy, Suspense, useEffect } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone, Link2, Sticker, QrCode, Send, RefreshCw, Monitor } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
@@ -16,7 +17,7 @@ import kbcLogo from "@/assets/kbc-logo.png";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
-export const Route = createFileRoute("/shop")({
+export const Route = createFileRoute("/$lang/shop")({
   head: () => ({
     meta: [
       { title: "Velopass Pro — Elke fiets. Een klant. Voor altijd." },
@@ -52,6 +53,7 @@ const Check = () => (
 );
 
 function VelopassPro() {
+  const lang = useCurrentLang();
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   const [currentMonthYear, setCurrentMonthYear] = useState("");
@@ -62,7 +64,7 @@ function VelopassPro() {
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav dark">
-        <Link to="/shop" className="nav-logo">
+        <Link to="/$lang/shop" params={{ lang }} className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass<span className="logo-pro">pro</span></span>
         </Link>
@@ -73,7 +75,7 @@ function VelopassPro() {
           <li><a href="#leasing">Leasing</a></li>
           <li><a href="#registreer">Registreer</a></li>
           <li><a href="#community">Community</a></li>
-          <li><Link to="/" style={{ color: "rgba(46,204,138,0.7)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></li>
+          <li><Link to="/$lang" params={{ lang }} style={{ color: "rgba(46,204,138,0.7)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor fietsers</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="#registreer" className="btn-nav-cta">Registreer je fietswinkel</a>
@@ -288,7 +290,8 @@ function VelopassPro() {
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>Ons team helpt je graag verder.</p>
           </div>
           <Link
-            to="/contact"
+            to="/$lang/contact"
+            params={{ lang }}
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,

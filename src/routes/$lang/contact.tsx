@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import {
   HelpCircle,
@@ -20,7 +21,7 @@ const searchSchema = z.object({
   type: fallback(z.enum(["rider", "shop"]), "rider").default("rider"),
 });
 
-export const Route = createFileRoute("/contact")({
+export const Route = createFileRoute("/$lang/contact")({
   validateSearch: zodValidator(searchSchema),
   head: () => ({
     meta: [
@@ -163,6 +164,7 @@ const SHOP_SUBJECTS = [
 ];
 
 function ContactPage() {
+  const lang = useCurrentLang();
   const { type } = useSearch({ from: "/contact" });
   const [activeTab, setActiveTab] = useState<"rider" | "shop">(type);
   const [navOpen, setNavOpen] = useState(false);
@@ -237,16 +239,16 @@ function ContactPage() {
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
-        <Link to="/" className="nav-logo">
+        <Link to="/$lang" params={{ lang }} className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><Link to="/" hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
-          <li><Link to="/" hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
-          <li><Link to="/" hash="order-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
-          <li><Link to="/" hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
-          <li><Link to="/professionals" style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="order-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="https://login.velopass.com/login?state=hKFo2SB5ODJtdjhZMGxXRGlPN1NVWFdQM3pqV3JUS1pFQTlkSaFupWxvZ2luo3RpZNkgM3R1ZXU4M2FxM3RqUk1FYVR3UUZCSTRhZV92dTlhRzmjY2lk2SBWak0xVFBUQUFFcG11aWhGNndYeEdGdVFybE5hVTY5MQ&client=VjM1TPTAAEpmuihF6wXxGFuQrlNaU691&protocol=oauth2&scope=openid%20profile%20email&audience=https%3A%2F%2Fcyclistapi.prod.velopass.com&redirect_uri=https%3A%2F%2Fapp.velopass.com%2Fdashboard&response_type=code&response_mode=query&nonce=a3hmZVl5aENNeU95d1U0SUlBaEM3NV9MbkZXNFdXRkg2c3RpOXJlMW5BUQ%3D%3D&code_challenge=5vSSWCjxdP-6B0z5HV38kaBGFWP4KSmv4gORKjvtzi0&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMi45LjAifQ%3D%3D#page=cyclist/login&method=standard&lng=nl-nl" className="btn-login">
