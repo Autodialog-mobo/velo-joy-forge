@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 type ViesResult =
   | { state: "idle" }
