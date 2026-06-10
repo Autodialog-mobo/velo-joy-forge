@@ -1,15 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
-import { SUPPORTED_LANGS, LANG_LABELS, isLang, type Lang } from "@/i18n/config";
-import { setLangCookie } from "@/lib/lang.functions";
+import { SUPPORTED_LANGS, LANG_LABELS, LANG_COOKIE, isLang, type Lang } from "@/i18n/config";
 
 export function LangSwitcher({ currentLang }: { currentLang: Lang }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
-  const persist = useServerFn(setLangCookie);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -24,7 +21,11 @@ export function LangSwitcher({ currentLang }: { currentLang: Lang }) {
 
   function swap(next: Lang) {
     setOpen(false);
-    void persist({ data: { lang: next } }).catch(() => {});
+    // Persist preference for 30 days (client-side cookie; SSR will read it on next visit).
+    try {
+      const maxAge = 60 * 60 * 24 * 30;
+      document.cookie = `${LANG_COOKIE}=${next}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
+    } catch {}
     // Replace the /<lang>/ prefix in the current pathname.
     const segs = pathname.split("/").filter(Boolean);
     if (segs.length > 0 && isLang(segs[0])) segs[0] = next;
