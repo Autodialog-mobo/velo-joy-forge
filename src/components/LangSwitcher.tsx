@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { SUPPORTED_LANGS, LANG_LABELS, LANG_COOKIE, isLang, type Lang } from "@/i18n/config";
 
-export function LangSwitcher({ currentLang }: { currentLang: Lang }) {
+export function LangSwitcher({ currentLang, tone = "dark" }: { currentLang: Lang; tone?: "light" | "dark" }) {
+  const isLight = tone === "light";
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
