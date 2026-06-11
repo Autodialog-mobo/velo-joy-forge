@@ -116,7 +116,12 @@ function FaqColumn({
     >
       <Accordion type="multiple" className="w-full" value={value} onValueChange={onChange}>
         {faqs.map((faq, i) => (
-          <AccordionItem key={`faq-${side}-${i}`} value={`faq-${side}-${i}`} id={`faq-${side}-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
+          <AccordionItem
+            key={`faq-${side}-${i}`}
+            value={`faq-${side}-${i}`}
+            id={`faq-${side}-${i}`}
+            className="border-b border-[rgba(13,31,60,0.1)]"
+          >
             <AccordionTrigger
               className="text-left"
               style={{
@@ -146,7 +151,10 @@ function FaqColumn({
                     <span>{line.slice(1).trim()}</span>
                   </div>
                 ) : (
-                  <span key={idx}>{renderLine(line, lang)}{idx < arr.length - 1 ? <br /> : null}</span>
+                  <span key={idx}>
+                    {renderLine(line, lang)}
+                    {idx < arr.length - 1 ? <br /> : null}
+                  </span>
                 ),
               )}
             </AccordionContent>
