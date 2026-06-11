@@ -1,5 +1,10 @@
 import { Fragment, useEffect, useState, type ReactNode } from "react";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
@@ -28,7 +33,11 @@ function renderHref(target: string, label: string, key: number, lang: Lang): Rea
     );
   }
   if (target.startsWith("mailto:") || target.startsWith("tel:")) {
-    return <a key={key} href={target} style={linkStyle}>{label}</a>;
+    return (
+      <a key={key} href={target} style={linkStyle}>
+        {label}
+      </a>
+    );
   }
   const href = /^https?:\/\//.test(target) ? target : `https://${target}`;
   return (
@@ -42,7 +51,11 @@ function renderToken(token: string, key: number, lang: Lang): ReactNode {
   const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
   if (md) return renderHref(md[2], md[1], key, lang);
   if (token.startsWith("mailto:")) {
-    return <a key={key} href={token} style={linkStyle}>{token.slice(7)}</a>;
+    return (
+      <a key={key} href={token} style={linkStyle}>
+        {token.slice(7)}
+      </a>
+    );
   }
   if (/^https?:\/\//.test(token)) {
     return (
@@ -53,7 +66,13 @@ function renderToken(token: string, key: number, lang: Lang): ReactNode {
   }
   if (token.startsWith("/")) return renderHref(token, token, key, lang);
   return (
-    <a key={key} href={`https://${token}`} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+    <a
+      key={key}
+      href={`https://${token}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={linkStyle}
+    >
       {token}
     </a>
   );
