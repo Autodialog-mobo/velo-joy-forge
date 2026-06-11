@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { buildLocalizedHead } from "@/i18n/seo";
 
