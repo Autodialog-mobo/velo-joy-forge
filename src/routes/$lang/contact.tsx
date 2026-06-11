@@ -164,9 +164,10 @@ function ContactPage() {
   const subjectsRaw = t("shop.subjects", { returnObjects: true });
   const subjects: string[] = Array.isArray(subjectsRaw) ? (subjectsRaw as string[]) : [];
 
-  const sendWa = () => {
+  const sendWa = (e?: React.MouseEvent<HTMLAnchorElement>) => {
     const result = waSchema.safeParse(wa);
     if (!result.success) {
+      e?.preventDefault();
       const fieldErrors: WaErrors = {};
       for (const issue of result.error.issues) {
         const key = issue.path[0] as keyof WaErrors;
@@ -181,16 +182,19 @@ function ContactPage() {
       return;
     }
     setErrors({});
-    const d = result.data;
+    // Anchor with target=_blank handles the navigation; nothing else to do.
+  };
+
+  const waHref = useMemo(() => {
     const text =
       `${t("rider.wa_message_intro")}\n\n` +
-      `${t("rider.wa_message_name")}: ${d.name}\n` +
-      `${t("rider.wa_message_email")}: ${d.email}\n` +
-      (d.phone ? `${t("rider.wa_message_phone")}: ${d.phone}\n` : "") +
-      (d.note ? `\n${d.note}\n` : "");
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+      `${t("rider.wa_message_name")}: ${wa.name}\n` +
+      `${t("rider.wa_message_email")}: ${wa.email}\n` +
+      (wa.phone ? `${t("rider.wa_message_phone")}: ${wa.phone}\n` : "") +
+      (wa.note ? `\n${wa.note}\n` : "");
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  }, [wa, t]);
+
 
   const pickSuggestion = (prefill: string) => {
     setWa((w) => ({ ...w, note: prefill }));
