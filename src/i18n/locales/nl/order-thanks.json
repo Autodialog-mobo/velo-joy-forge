@@ -1,0 +1,34 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Bedankt voor je bestelling — Velopass",
+    "description": "Je Velopass-bestelling is bevestigd."
+  },
+  "header": {
+    "back_home": "Terug naar home"
+  },
+  "states": {
+    "loading": "Bestelling laden…",
+    "error_title": "Hmm, er ging iets mis",
+    "error_unknown": "Onbekende fout",
+    "no_order": "Geen bestelinformatie gevonden."
+  },
+  "success": {
+    "eyebrow": "Bestelling ontvangen",
+    "title": "Bedankt voor je bestelling",
+    "intro": "We hebben je bestelling goed ontvangen:",
+    "shipping_note_one": "Je Frame-ID wordt verzonden binnen 2 werkdagen.",
+    "shipping_note_many": "Je Frame-ID's worden verzonden binnen 2 werkdagen.",
+    "card_confirmation": "Bevestiging",
+    "card_shipping": "Verzending",
+    "shipping_value": "Gratis · 2 werkdagen",
+    "amount_paid": "{{amount}} betaald",
+    "status_line": "Een betalingsbevestiging staat in je mailbox. Status: {{status}}.",
+    "back_button": "Terug naar Velopass"
+  },
+  "bundles": {
+    "frameid_solo_onetime": "Velopass Frame-ID Solo",
+    "frameid_duo_onetime": "Velopass Frame-ID Duo",
+    "frameid_family_onetime": "Velopass Frame-ID Familie"
+  }
+}

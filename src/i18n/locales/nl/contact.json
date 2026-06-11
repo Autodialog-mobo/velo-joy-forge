@@ -1,0 +1,102 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Contact — Velopass",
+    "description": "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
+    "og_description": "Kies een onderwerp en chat met het Velopass-team via WhatsApp."
+  },
+  "back": "Terug",
+  "header": {
+    "title": "Hoe kunnen we helpen?",
+    "subtitle": "Kies hieronder wie je bent — we sturen je vraag meteen naar de juiste persoon."
+  },
+  "tabs": {
+    "rider": "Ik ben een fietser",
+    "shop": "Ik ben een fietswinkel"
+  },
+  "cards_eyebrow": "Waarover gaat je vraag?",
+  "rider": {
+    "suggestions": [
+      {
+        "title": "Hulp bij activatie",
+        "desc": "Uitnodiging ontvangen maar lukt het niet om in te loggen?",
+        "prefill": "Hallo Velopass, ik heb hulp nodig bij de activatie van mijn account. "
+      },
+      {
+        "title": "Vraag over mijn Frame-ID",
+        "desc": "Frame-ID niet ontvangen, beschadigd of een andere vraag over je bestelling?",
+        "prefill": "Hallo Velopass, ik heb een vraag over mijn Frame-ID: "
+      },
+      {
+        "title": "Gevonden fiets melden",
+        "desc": "Heb je een fiets gevonden met een Velopass Frame-ID?",
+        "prefill": "Hallo Velopass, ik heb een fiets gevonden met een Velopass Frame-ID. "
+      }
+    ],
+    "pick_subject": "Kies dit onderwerp →",
+    "form_title": "Stuur ons een bericht",
+    "form_subtitle": "Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.",
+    "wa_message_intro": "Hallo Velopass,",
+    "wa_message_name": "Naam",
+    "wa_message_email": "E-mail",
+    "wa_message_phone": "Telefoon",
+    "email_alt_prefix": "Liever een e-mail sturen?"
+  },
+  "shop": {
+    "shortcuts": [
+      {
+        "title": "Demo aanvragen",
+        "desc": "Bekijk Velopass live en stel al je vragen aan ons team."
+      },
+      {
+        "title": "Kassasysteem of integratie",
+        "desc": "Vragen over koppeling met je kassasysteem of de Pro App?"
+      },
+      {
+        "title": "Al partner — technische vraag",
+        "desc": "Ben je al aangesloten en heb je een vraag over je account of portal?"
+      }
+    ],
+    "send_email": "Stuur een e-mail →",
+    "form_title": "Stuur ons een bericht",
+    "form_subtitle": "Vul het formulier in — we antwoorden binnen 1 werkdag.",
+    "success": "Je bericht is verstuurd. We antwoorden binnen 1 werkdag.",
+    "subjects": [
+      "Demo aanvragen",
+      "Kassasysteem of integratie",
+      "Pricing of kennismakingspakket",
+      "Al partner — technische vraag",
+      "Leasingmaatschappij of verzekeraar",
+      "Andere"
+    ],
+    "subject_placeholder": "Kies een onderwerp…"
+  },
+  "form": {
+    "name": "Naam",
+    "name_placeholder": "Jan Janssens",
+    "phone": "Telefoon",
+    "phone_placeholder": "+32 4...",
+    "email": "E-mail",
+    "email_placeholder_rider": "jan@voorbeeld.be",
+    "email_placeholder_shop": "jan@winkel.be",
+    "company": "Fietswinkel of bedrijfsnaam",
+    "company_placeholder": "Fietsen Janssens",
+    "note": "Opmerking",
+    "note_placeholder": "Vertel ons kort waar je vraag over gaat...",
+    "subject": "Onderwerp",
+    "message": "Bericht",
+    "send_whatsapp": "Verstuur via WhatsApp →"
+  },
+  "errors": {
+    "name_required": "Vul je naam in.",
+    "email_required": "Vul je e-mailadres in.",
+    "email_invalid": "Vul een geldig e-mailadres in.",
+    "company_required": "Vul je winkel- of bedrijfsnaam in.",
+    "subject_required": "Kies een onderwerp.",
+    "message_required": "Schrijf een bericht.",
+    "form_check": "Controleer het formulier."
+  },
+  "legal": {
+    "line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, België · BTW: BE0777.359.681 · {{email}}"
+  }
+}
