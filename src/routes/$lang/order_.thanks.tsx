@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { CheckCircle2, Truck, Mail, ArrowLeft } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { getOrderByMolliePayment } from "@/utils/mollie.functions";
 import { buildLocalizedHead } from "@/i18n/seo";
 
