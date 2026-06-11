@@ -48,7 +48,7 @@ const SHOP_HREFS = [
 ];
 
 type Suggestion = { title: string; desc: string; prefill: string };
-type Shortcut = { title: string; desc: string };
+type Shortcut = { title: string; desc: string; prefill: string };
 
 type WaErrors = Partial<Record<"name" | "email", string>>;
 type ShopErrors = Partial<Record<"name" | "company" | "email" | "subject" | "message", string>>;
