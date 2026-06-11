@@ -396,13 +396,14 @@ type TFn = ReturnType<typeof useTranslation>["t"];
 
 /* ============== RIDER TAB ============== */
 function RiderTab({
-  wa, setWa, errors, setErrors, sendWa, pickSuggestion, suggestions, t,
+  wa, setWa, errors, setErrors, sendWa, waHref, pickSuggestion, suggestions, t,
 }: {
   wa: { name: string; email: string; phone: string; note: string };
   setWa: React.Dispatch<React.SetStateAction<{ name: string; email: string; phone: string; note: string }>>;
   errors: WaErrors;
   setErrors: React.Dispatch<React.SetStateAction<WaErrors>>;
-  sendWa: () => void;
+  sendWa: (e?: React.MouseEvent<HTMLAnchorElement>) => void;
+  waHref: string;
   pickSuggestion: (prefill: string) => void;
   suggestions: Suggestion[];
   t: TFn;
