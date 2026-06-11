@@ -1,7 +1,196 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
-    "title": "Fiets gestolen? Volg ons stappenplan | Velopass",
-    "description": "Meld je fiets als vermist, doe aangifte bij de politie en verwittig je verzekeraar. Velopass begeleidt je stap voor stap."
+    "title": "Fiets gestolen? Doe snel aangifte — Velopass",
+    "description": "Stappenplan na fietsdiefstal: meld je fiets in je Velopass, doe online aangifte via Police-on-web en activeer de Velopass Community."
+  },
+  "back": "Terug",
+  "hero": {
+    "eyebrow": "Fiets gestolen of vermist?",
+    "title": "Doe snel aangifte. Velopass helpt je.",
+    "lead": "Voor een aangifte heb je exacte fietsgegevens nodig — gegevens die je niet meer bij de hand hebt als je fiets weg is. Tenzij je Velopass hebt."
+  },
+  "argument": {
+    "title": "Alles wat de politie nodig heeft, staat in jouw Velopass",
+    "rows": [
+      ["Merk, model en kleur", "In je Velopass-paspoort"],
+      ["Framenummer", "In je Velopass-paspoort"],
+      ["Foto's van de fiets", "Opgeslagen in je Velopass"],
+      ["Aankoopfactuur", "Gekoppeld aan je Velopass"],
+      ["Exacte locatie van de diefstal", "Al ingegeven bij je melding in Velopass"],
+      ["Bewijs van eigenaarschap", "Je Velopass IS het bewijs"]
+    ],
+    "cta": "Open mijn Velopass →"
+  },
+  "step1": {
+    "title": "Stap 1 — Meld je fiets als vermist",
+    "body": "Log in op je Velopass-account en ga naar **'Mijn fiets'**. Klik op **'Melden als vermist'**. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd.",
+    "badge_note": "Iedereen die jouw Frame-ID scant ziet dat jouw fiets gezocht wordt en kan je anoniem een seintje geven.",
+    "cta": "Meld mijn fiets →"
+  },
+  "step2": {
+    "title": "Stap 2 — Doe online aangifte bij de politie",
+    "lead": "Kies jouw land voor het stappenplan.",
+    "countries": {
+      "BE": "🇧🇪 België",
+      "NL": "🇳🇱 Nederland",
+      "FR": "🇫🇷 Frankrijk"
+    },
+    "coming_soon": "Binnenkort beschikbaar",
+    "checklist_title": "Wat heb je vooraf nodig?",
+    "after_title": "Wat gebeurt er na de aangifte?",
+    "BE": {
+      "intro": "In België doe je online aangifte via Police-on-web. Zo bespaar je een rit naar het commissariaat.",
+      "checklist": [
+        { "text": "Je identiteitskaart (eID) of de itsme-app" },
+        { "text": "Merk, model, kleur en type fiets", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Het framenummer", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Graveernummer of fietspas", "velopass": "Je Velopass-code volstaat" },
+        { "text": "Exacte locatie, datum en uur van de diefstal", "velopass": "Al ingegeven bij je melding in Velopass" },
+        { "text": "Foto's van de fiets", "velopass": "Al opgeslagen in je Velopass" },
+        { "text": "Aankoopfactuur (indien beschikbaar)", "velopass": "Gekoppeld aan je Velopass" }
+      ],
+      "steps": [
+        {
+          "title": "Surf naar police-on-web.be",
+          "body": "[www.police-on-web.be](https://www.police-on-web.be)"
+        },
+        {
+          "title": "Start een nieuwe aangifte",
+          "body": "Klik op **'Nieuwe aangifte starten'** en kies **'Fietsdiefstal'**."
+        },
+        {
+          "title": "Meld je aan via CSAM",
+          "body": "Identificeer je met je eID-kaartlezer of de itsme-app."
+        },
+        {
+          "title": "Vul het formulier in",
+          "body": "• Persoonsgegevens als eigenaar/aangever\n• Feiten: waar en wanneer gestolen?\n• Voorwerp: alle details van de fiets (hoe meer details, hoe groter de kans op terugvinden)",
+          "tip": "Open je Velopass om alle fietsgegevens in één oogopslag bij de hand te hebben."
+        },
+        {
+          "title": "Controleer en verzend",
+          "body": "Controleer de gegevens en klik op **Verzenden**."
+        }
+      ],
+      "after_body": "Je ontvangt een dossiernummer en een ontvangstbewijs. Het officieel proces-verbaal (PV) wordt opgesteld door de lokale politiezone. Heb je een fietsverzekering? Stuur het PV-nummer door naar je verzekeraar om je claim te starten.",
+      "found_title": "Check ook gevondenfietsen.be",
+      "found_body": "Gestolen fietsen worden vaak ergens achtergelaten. Kijk regelmatig op [www.gevondenfietsen.be](https://www.gevondenfietsen.be) — je fiets duikt er misschien op."
+    },
+    "NL": {
+      "intro": "In Nederland doe je online aangifte via politie.nl. Je hebt hiervoor een DigiD nodig.",
+      "check_first_title": "Controleer eerst dit",
+      "check_first_body": "Is je fiets misschien verplaatst door de gemeente? Fietsen die fout geparkeerd staan worden soms meegenomen naar een depot. Check dit eerst voordat je aangifte doet.",
+      "checklist": [
+        { "text": "Je DigiD (inloggen via digid.nl)" },
+        { "text": "Merk, model, kleur en type fiets", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Het framenummer (staat meestal onder het trapplateau of aan de voorkant van het frame)", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Exacte locatie, datum en tijdstip van de diefstal", "velopass": "Al ingegeven bij je melding in Velopass" },
+        { "text": "Foto's van de fiets", "velopass": "Al opgeslagen in je Velopass" },
+        { "text": "Aankoopfactuur (indien beschikbaar)", "velopass": "Gekoppeld aan je Velopass" }
+      ],
+      "conditions_title": "Voorwaarden online aangifte",
+      "conditions_intro": "Online aangifte via politie.nl is mogelijk als:",
+      "conditions": [
+        "De fiets niet gestolen is uit een woning, schuur of garage",
+        "De diefstal minder dan een jaar geleden is"
+      ],
+      "conditions_note": "Voldoe je niet? Bel dan 0900-8844 of doe persoonlijk aangifte op een politiebureau.",
+      "steps": [
+        {
+          "title": "Surf naar politie.nl",
+          "body": "[www.politie.nl/aangifte](https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html)"
+        },
+        {
+          "title": "Kies fietsdiefstal",
+          "body": "Kies **'Aangifte doen van fietsdiefstal'**."
+        },
+        {
+          "title": "Log in met DigiD",
+          "body": "Log in met je DigiD via het CSAM-portaal."
+        },
+        {
+          "title": "Vul het formulier in",
+          "body": "• Persoonsgegevens als eigenaar/aangever\n• Feiten: waar en wanneer gestolen? Stond de fiets op slot?\n• Voorwerp: alle details van de fiets — hoe meer details, hoe groter de kans op terugvinden",
+          "tip": "Open je Velopass om alle fietsgegevens in één oogopslag bij de hand te hebben — inclusief de locatie die je al ingaf bij het melden. Kopieer die direct naar het formulier."
+        },
+        {
+          "title": "Controleer en verstuur",
+          "body": "Controleer de gegevens en verstuur de aangifte."
+        }
+      ],
+      "after_body": "Je ontvangt een bevestiging met een zaaknummer. Bewaar dit goed — je hebt het nodig voor je verzekering. Je fiets wordt automatisch opgenomen in het fietsdiefstalregister van de RDW én in StopHeling, zodat handelaren kunnen controleren of een fiets gestolen is. Heb je een fietsverzekering? Meld de diefstal direct bij je verzekeraar en stuur het zaaknummer mee.",
+      "tip1_title": "Check gevondenfietsen.be",
+      "tip1_body": "Gestolen fietsen worden vaak ergens achtergelaten. Controleer regelmatig [www.gevondenfietsen.be](https://www.gevondenfietsen.be).",
+      "tip2_title": "Houd Marktplaats in de gaten",
+      "tip2_body": "Gestolen fietsen verschijnen soms binnen dagen op tweedehandsplatforms. Herken je jouw fiets? Ga nooit zelf de confrontatie aan — bel de politie via 0900-8844."
+    },
+    "FR": {
+      "fnuci_badge": "FNUCI · République Française",
+      "fnuci_title": "Velopass is een erkende operator van het Frans nationaal fietsregister",
+      "fnuci_body_1": "Als Fransman is jouw Velopass-registratie automatisch gekoppeld aan het **FNUCI** — het *Fichier National Unique des Cycles Identifiés*. Dit is het officiële staatsregister waarop de politie en gendarmerie zich baseren bij het opsporen van gestolen fietsen.",
+      "fnuci_body_2": "Concreet: zodra je jouw fiets als gestolen meldt in Velopass, wordt de status in het FNUCI automatisch bijgewerkt. De politie ziet dit onmiddellijk.",
+      "flow_step_label": "Stap {{n}}",
+      "flow_steps": [
+        { "title": "Jij meldt in Velopass", "body": "Je verandert de status van je fiets naar REPORTED in je Velopass-account." },
+        { "title": "FNUCI wordt bijgewerkt", "body": "Velopass stuurt de statuswijziging door naar het FNUCI. Politie en gendarmerie hebben toegang tot dit register." },
+        { "title": "Politie identificeert je fiets", "body": "Wordt jouw fiets aangetroffen? De agent scant de Velopass-code en ziet meteen dat hij gestolen is — en wie de eigenaar is." }
+      ],
+      "code_note": "**Je Velopass-code IS je FNUCI-identifiant.** Dit is het 10-cijferig nummer dat de politie nodig heeft voor de officiële *plainte*. Je vindt het in je Velopass-account.",
+      "ma_intro": "Doe je aangifte online via Ma Sécurité. Jouw Velopass-code is het *identifiant unique* dat het formulier vraagt — al beschikbaar in je Velopass.",
+      "home_already_title": "Al terug thuis?",
+      "home_already_body": "Belgische en Nederlandse verzekeraars eisen bijna altijd een Frans politierapport. Start de aangifte zo snel mogelijk via Ma Sécurité, ook als je al thuis bent.",
+      "checklist": [
+        { "text": "Je paspoort of identiteitskaart" },
+        { "text": "FranceConnect-account (optioneel maar aanbevolen)", "note": "Zonder FranceConnect: fysieke afspraak vereist bij een Frans politiebureau of gendarmerie" },
+        { "text": "Jouw Velopass-code (= FNUCI-identifiant)", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Merk, model, kleur en type fiets", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Het framenummer", "velopass": "Al beschikbaar in je Velopass" },
+        { "text": "Exacte Franse locatie, datum en tijdstip", "velopass": "Al ingegeven bij je melding in Velopass — als toerist herinner je het exacte adres later vaak niet meer" },
+        { "text": "Foto's van de fiets", "velopass": "Al opgeslagen in je Velopass" }
+      ],
+      "method1_badge": "Volledig digitaal",
+      "method1_title": "Met FranceConnect (aanbevolen)",
+      "method1_body": "Woon je in Frankrijk of heb je een Frans overheidsaccount? Dan doe je de volledige aangifte online en ontvang je het officieel *procès-verbal* digitaal per mail.",
+      "method2_badge": "Fysieke afspraak vereist",
+      "method2_title": "Zonder FranceConnect (toeristen)",
+      "method2_body": "Vul het formulier online in en plan daarna een afspraak bij een Frans politiebureau (*commissariat de police*) of de gendarmerie. Ben je al thuis? Vraag via de 24/7 chatfunctie op Ma Sécurité naar alternatieve opties.",
+      "steps": [
+        {
+          "title": "Surf naar Ma Sécurité",
+          "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nSelecteer de Engelse versie rechtsboven."
+        },
+        {
+          "title": "Kies 'Vol' (Diefstal)",
+          "body": "Selecteer **'Vol'** als type delict."
+        },
+        {
+          "title": "Log in via FranceConnect of als gast",
+          "body": "Met FranceConnect verloopt alles volledig digitaal. Zonder FranceConnect kan je verdergaan als gast."
+        },
+        {
+          "title": "Vul het formulier in",
+          "body": "• Identifiant unique: jouw Velopass-code\n• Exacte Franse locatie, datum en tijdstip\n• Alle kenmerken van de fiets",
+          "tip": "Open je Velopass — jouw Velopass-code is het identifiant unique dat het formulier vraagt. Alle andere fietsgegevens en de locatie staan er ook al in."
+        },
+        {
+          "title": "Ontvang je procès-verbal of plan een afspraak",
+          "body": "**Met FranceConnect:** je ontvangt het officiële procès-verbal digitaal per mail. Stuur dit door naar je verzekeraar.\n\n**Zonder FranceConnect:** kies een politiebureau of gendarmerie in de buurt van de diefstallocatie en plan een afspraak."
+        }
+      ],
+      "chat_title": "Ma Sécurité heeft een 24/7 chatfunctie",
+      "chat_body": "Ben je al thuis en lukt het niet om de aangifte volledig online af te ronden? Gebruik de chatfunctie op [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
+    }
+  },
+  "step3": {
+    "title": "Stap 3 — Fiets teruggevonden? Meld het!",
+    "badge_note": "status na terugvinden",
+    "body": "Gefeliciteerd! Log in op je Velopass en meld je fiets als **'Teruggevonden'**. De status verandert automatisch terug naar ALL CLEAR. Controleer daarna of je Frame-ID nog intact is — zo niet, bestel een nieuwe via onze webshop of bij een Velopass-fietswinkel.",
+    "cta": "Mijn fiets teruggevonden →"
+  },
+  "cta": {
+    "title": "Nog geen Velopass?",
+    "body": "Registreer je fiets nu en zorg dat alle gegevens altijd beschikbaar zijn — ook als je je fiets niet meer bij de hand hebt.",
+    "button": "Registreer je fiets →"
   }
 }
