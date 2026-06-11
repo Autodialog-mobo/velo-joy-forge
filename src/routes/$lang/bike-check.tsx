@@ -5,6 +5,7 @@ import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRigh
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 import { buildLocalizedHead } from "@/i18n/seo";
 
