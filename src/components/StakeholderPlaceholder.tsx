@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { VelopassMark } from "@/components/VelopassMark";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 export function StakeholderPlaceholder({
@@ -21,6 +22,9 @@ export function StakeholderPlaceholder({
         <div className="stk-logo-mark"><VelopassMark /></div>
         <span className="stk-logo-text">velopass</span>
       </Link>
+      <div style={{ position: "absolute", top: 20, right: 24, zIndex: 50 }}>
+        <LangSwitcher currentLang={lang} tone="light" />
+      </div>
       <div className="stk-card">
         <span className="stk-eyebrow">{eyebrow}</span>
         <h1 className="stk-title">{title}</h1>

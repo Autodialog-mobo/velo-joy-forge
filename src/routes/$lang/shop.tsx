@@ -5,6 +5,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, Mail, CheckCircle2, Sparkles, Building2, Wallet, CalendarDays, ExternalLink, ClipboardList, X, Check as CheckIcon, AlertCircle, Smartphone, Link2, Sticker, QrCode, Send, RefreshCw, Monitor } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import shopsData from "@/data/shops.json";
 import { RegisterForm } from "@/components/ProRegisterForm";
 import leasingAppMockup from "@/assets/leasing-app-mockup-v2.png";
@@ -93,7 +94,8 @@ function VelopassPro() {
             </Link>
           </li>
         </ul>
-        <div className="nav-actions">
+        <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <LangSwitcher currentLang={lang} />
           <a href="#registreer" className="btn-nav-cta">{t("nav.registerCta")}</a>
           <button
             type="button"

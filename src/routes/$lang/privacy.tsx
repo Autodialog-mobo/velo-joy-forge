@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { Footer } from "@/components/Footer";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { buildLocalizedHead } from "@/i18n/seo";
 import i18n from "@/i18n/config";
 
@@ -45,6 +46,9 @@ function PrivacyPage() {
 
   return (
     <>
+      <div style={{ position: "absolute", top: 20, right: 24, zIndex: 50 }}>
+        <LangSwitcher currentLang={lang} tone="light" />
+      </div>
       <main
         style={{
           maxWidth: 800,

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { CheckCircle2, Truck, Mail, ArrowLeft } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { getOrderByMolliePayment } from "@/utils/mollie.functions";
 import { buildLocalizedHead } from "@/i18n/seo";
 
@@ -71,9 +72,12 @@ function BedanktPage() {
           <VelopassMark size={28} />
           <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18 }}>Velopass</span>
         </Link>
-        <Link to="/$lang" params={{ lang }} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none" }}>
-          <ArrowLeft size={16} /> {t("header.back_home")}
-        </Link>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
+          <LangSwitcher currentLang={lang} tone="light" />
+          <Link to="/$lang" params={{ lang }} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none" }}>
+            <ArrowLeft size={16} /> {t("header.back_home")}
+          </Link>
+        </div>
       </header>
 
       <main style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px 72px" }}>

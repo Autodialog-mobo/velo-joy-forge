@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { SUPPORTED_LANGS, LANG_LABELS, LANG_COOKIE, isLang, type Lang } from "@/i18n/config";
 
-export function LangSwitcher({ currentLang }: { currentLang: Lang }) {
+export function LangSwitcher({ currentLang, tone = "dark" }: { currentLang: Lang; tone?: "light" | "dark" }) {
+  const isLight = tone === "light";
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -50,8 +51,8 @@ export function LangSwitcher({ currentLang }: { currentLang: Lang }) {
           padding: "6px 10px",
           borderRadius: 8,
           background: "transparent",
-          border: "1px solid rgba(255,255,255,0.18)",
-          color: "inherit",
+          border: `1px solid ${isLight ? "rgba(13,31,60,0.18)" : "rgba(255,255,255,0.18)"}`,
+          color: isLight ? "#0D1F3C" : "inherit",
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 13,
           fontWeight: 500,
