@@ -41,11 +41,6 @@ const WA_NUMBER = "32471601573";
 
 const RIDER_ICONS: LucideIcon[] = [HelpCircle, Package, ScanLine];
 const SHOP_ICONS: LucideIcon[] = [CalendarCheck, Monitor, HelpCircle];
-const SHOP_HREFS = [
-  "mailto:info@velopass.com?subject=Demo aanvragen",
-  "mailto:info@velopass.com?subject=Kassasysteem integratie",
-  "mailto:support@velopass.com?subject=Technische vraag partner",
-];
 
 type Suggestion = { title: string; desc: string; prefill: string };
 type Shortcut = { title: string; desc: string; prefill: string };
