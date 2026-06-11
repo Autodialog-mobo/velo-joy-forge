@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
+import { useTranslation } from "react-i18next";
 import { createFileRoute, Link, useSearch } from "@tanstack/react-router";
 import {
   HelpCircle,
@@ -10,12 +11,12 @@ import {
   ArrowLeft,
   CalendarCheck,
   Monitor,
+  type LucideIcon,
 } from "lucide-react";
 import { z } from "zod";
 import { toast } from "sonner";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { VelopassMark } from "@/components/VelopassMark";
-import { Footer } from "@/components/Footer";
 import { buildLocalizedHead } from "@/i18n/seo";
 
 const searchSchema = z.object({
@@ -38,22 +39,18 @@ export const Route = createFileRoute("/$lang/contact")({
 
 const WA_NUMBER = "32471601573";
 
-const waSchema = z.object({
-  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100),
-  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
-  phone: z.string().trim().max(30).optional(),
-  note: z.string().trim().max(2000).optional(),
-});
-type WaErrors = Partial<Record<"name" | "email", string>>;
+const RIDER_ICONS: LucideIcon[] = [HelpCircle, Package, ScanLine];
+const SHOP_ICONS: LucideIcon[] = [CalendarCheck, Monitor, HelpCircle];
+const SHOP_HREFS = [
+  "mailto:info@velopass.com?subject=Demo aanvragen",
+  "mailto:info@velopass.com?subject=Kassasysteem integratie",
+  "mailto:support@velopass.com?subject=Technische vraag partner",
+];
 
-const shopFormSchema = z.object({
-  name: z.string().trim().min(1, { message: "Vul je naam in." }).max(100),
-  company: z.string().trim().min(1, { message: "Vul je winkel- of bedrijfsnaam in." }).max(150),
-  email: z.string().trim().min(1, { message: "Vul je e-mailadres in." }).email({ message: "Vul een geldig e-mailadres in." }).max(255),
-  phone: z.string().trim().max(30).optional(),
-  subject: z.string().min(1, { message: "Kies een onderwerp." }).max(120),
-  message: z.string().trim().min(1, { message: "Schrijf een bericht." }).max(2000),
-});
+type Suggestion = { title: string; desc: string; prefill: string };
+type Shortcut = { title: string; desc: string };
+
+type WaErrors = Partial<Record<"name" | "email", string>>;
 type ShopErrors = Partial<Record<"name" | "company" | "email" | "subject" | "message", string>>;
 
 const cardStyle: React.CSSProperties = {
@@ -105,60 +102,9 @@ const waInputStyle: React.CSSProperties = {
   boxSizing: "border-box",
 };
 
-
-const SUGGESTIONS = [
-  {
-    icon: HelpCircle,
-    title: "Hulp bij activatie",
-    desc: "Uitnodiging ontvangen maar lukt het niet om in te loggen?",
-    prefill: "Hallo Velopass, ik heb hulp nodig bij de activatie van mijn account. ",
-  },
-  {
-    icon: Package,
-    title: "Vraag over mijn Frame-ID",
-    desc: "Frame-ID niet ontvangen, beschadigd of een andere vraag over je bestelling?",
-    prefill: "Hallo Velopass, ik heb een vraag over mijn Frame-ID: ",
-  },
-  {
-    icon: ScanLine,
-    title: "Gevonden fiets melden",
-    desc: "Heb je een fiets gevonden met een Velopass Frame-ID?",
-    prefill: "Hallo Velopass, ik heb een fiets gevonden met een Velopass Frame-ID. ",
-  },
-];
-
-const SHOP_SHORTCUTS = [
-  {
-    icon: CalendarCheck,
-    title: "Demo aanvragen",
-    desc: "Bekijk Velopass live en stel al je vragen aan ons team.",
-    href: "mailto:info@velopass.com?subject=Demo aanvragen",
-  },
-  {
-    icon: Monitor,
-    title: "Kassasysteem of integratie",
-    desc: "Vragen over koppeling met je kassasysteem of de Pro App?",
-    href: "mailto:info@velopass.com?subject=Kassasysteem integratie",
-  },
-  {
-    icon: HelpCircle,
-    title: "Al partner — technische vraag",
-    desc: "Ben je al aangesloten en heb je een vraag over je account of portal?",
-    href: "mailto:support@velopass.com?subject=Technische vraag partner",
-  },
-];
-
-const SHOP_SUBJECTS = [
-  "Demo aanvragen",
-  "Kassasysteem of integratie",
-  "Pricing of kennismakingspakket",
-  "Al partner — technische vraag",
-  "Leasingmaatschappij of verzekeraar",
-  "Andere",
-];
-
 function ContactPage() {
   const lang = useCurrentLang();
+  const { t } = useTranslation(["contact", "common"]);
   const { type } = useSearch({ from: "/$lang/contact" });
   const [activeTab, setActiveTab] = useState<"rider" | "shop">(type);
   const [navOpen, setNavOpen] = useState(false);
@@ -166,6 +112,44 @@ function ContactPage() {
   useEffect(() => {
     setActiveTab(type);
   }, [type]);
+
+  const waSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().trim().min(1, { message: t("errors.name_required") }).max(100),
+        email: z
+          .string()
+          .trim()
+          .min(1, { message: t("errors.email_required") })
+          .email({ message: t("errors.email_invalid") })
+          .max(255),
+        phone: z.string().trim().max(30).optional(),
+        note: z.string().trim().max(2000).optional(),
+      }),
+    [t],
+  );
+
+  const shopFormSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().trim().min(1, { message: t("errors.name_required") }).max(100),
+        company: z
+          .string()
+          .trim()
+          .min(1, { message: t("errors.company_required") })
+          .max(150),
+        email: z
+          .string()
+          .trim()
+          .min(1, { message: t("errors.email_required") })
+          .email({ message: t("errors.email_invalid") })
+          .max(255),
+        phone: z.string().trim().max(30).optional(),
+        subject: z.string().min(1, { message: t("errors.subject_required") }).max(120),
+        message: z.string().trim().min(1, { message: t("errors.message_required") }).max(2000),
+      }),
+    [t],
+  );
 
   // RIDER form state
   const [wa, setWa] = useState({ name: "", email: "", phone: "", note: "" });
@@ -175,6 +159,15 @@ function ContactPage() {
   const [shop, setShop] = useState({ name: "", company: "", email: "", phone: "", subject: "", message: "" });
   const [shopErrors, setShopErrors] = useState<ShopErrors>({});
   const [shopSent, setShopSent] = useState(false);
+
+  const suggestionsRaw = t("rider.suggestions", { returnObjects: true });
+  const suggestions: Suggestion[] = Array.isArray(suggestionsRaw) ? (suggestionsRaw as Suggestion[]) : [];
+
+  const shortcutsRaw = t("shop.shortcuts", { returnObjects: true });
+  const shortcuts: Shortcut[] = Array.isArray(shortcutsRaw) ? (shortcutsRaw as Shortcut[]) : [];
+
+  const subjectsRaw = t("shop.subjects", { returnObjects: true });
+  const subjects: string[] = Array.isArray(subjectsRaw) ? (subjectsRaw as string[]) : [];
 
   const sendWa = () => {
     const result = waSchema.safeParse(wa);
@@ -187,7 +180,7 @@ function ContactPage() {
         }
       }
       setErrors(fieldErrors);
-      toast.error(result.error.issues[0]?.message ?? "Controleer het formulier.");
+      toast.error(result.error.issues[0]?.message ?? t("errors.form_check"));
       const focusId = fieldErrors.name ? "wa-name" : fieldErrors.email ? "wa-email" : null;
       if (focusId) document.getElementById(focusId)?.focus();
       return;
@@ -195,10 +188,10 @@ function ContactPage() {
     setErrors({});
     const d = result.data;
     const text =
-      `Hallo Velopass,\n\n` +
-      `Naam: ${d.name}\n` +
-      `E-mail: ${d.email}\n` +
-      (d.phone ? `Telefoon: ${d.phone}\n` : "") +
+      `${t("rider.wa_message_intro")}\n\n` +
+      `${t("rider.wa_message_name")}: ${d.name}\n` +
+      `${t("rider.wa_message_email")}: ${d.email}\n` +
+      (d.phone ? `${t("rider.wa_message_phone")}: ${d.phone}\n` : "") +
       (d.note ? `\n${d.note}\n` : "");
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank", "noopener,noreferrer");
@@ -220,14 +213,13 @@ function ContactPage() {
         if (!fe[k]) fe[k] = issue.message;
       }
       setShopErrors(fe);
-      toast.error(result.error.issues[0]?.message ?? "Controleer het formulier.");
+      toast.error(result.error.issues[0]?.message ?? t("errors.form_check"));
       return;
     }
     setShopErrors({});
     setShopSent(true);
     setShop({ name: "", company: "", email: "", phone: "", subject: "", message: "" });
   };
-
 
   return (
     <>
@@ -238,11 +230,11 @@ function ContactPage() {
           <span className="logo-text">velopass</span>
         </Link>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><Link to="/$lang" params={{ lang }} hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Wat je krijgt</Link></li>
-          <li><Link to="/$lang" params={{ lang }} hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Al een sticker?</Link></li>
-          <li><Link to="/$lang" params={{ lang }} hash="order-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Sticker bestellen</Link></li>
-          <li><Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>Community</Link></li>
-          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.what_you_get")}</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.already_have_one")}</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="order-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.order_sticker")}</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.community")}</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions">
           <a href="https://login.velopass.com/login?state=hKFo2SB5ODJtdjhZMGxXRGlPN1NVWFdQM3pqV3JUS1pFQTlkSaFupWxvZ2luo3RpZNkgM3R1ZXU4M2FxM3RqUk1FYVR3UUZCSTRhZV92dTlhRzmjY2lk2SBWak0xVFBUQUFFcG11aWhGNndYeEdGdVFybE5hVTY5MQ&client=VjM1TPTAAEpmuihF6wXxGFuQrlNaU691&protocol=oauth2&scope=openid%20profile%20email&audience=https%3A%2F%2Fcyclistapi.prod.velopass.com&redirect_uri=https%3A%2F%2Fapp.velopass.com%2Fdashboard&response_type=code&response_mode=query&nonce=a3hmZVl5aENNeU95d1U0SUlBaEM3NV9MbkZXNFdXRkg2c3RpOXJlMW5BUQ%3D%3D&code_challenge=5vSSWCjxdP-6B0z5HV38kaBGFWP4KSmv4gORKjvtzi0&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMi45LjAifQ%3D%3D#page=cyclist/login&method=standard&lng=nl-nl" className="btn-login">
@@ -250,12 +242,12 @@ function ContactPage() {
               <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
               <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            Inloggen
+            {t("common:nav.login")}
           </a>
           <button
             type="button"
             className="nav-toggle"
-            aria-label="Menu"
+            aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
             onClick={() => setNavOpen((o) => !o)}
           >
@@ -278,7 +270,7 @@ function ContactPage() {
           className="back-btn"
         >
           <ArrowLeft size={14} strokeWidth={2} />
-          Terug
+          {t("back")}
         </button>
       </div>
       <main style={{ background: "var(--bg)", paddingTop: 8, minHeight: "100vh" }}>
@@ -295,10 +287,10 @@ function ContactPage() {
               marginBottom: 6,
             }}
           >
-            Hoe kunnen we helpen?
+            {t("header.title")}
           </h1>
           <p style={{ fontSize: 14, color: "var(--text-muted)", maxWidth: 560, margin: "0 auto", lineHeight: 1.5 }}>
-            Kies hieronder wie je bent — we sturen je vraag meteen naar de juiste persoon.
+            {t("header.subtitle")}
           </p>
         </section>
 
@@ -312,7 +304,7 @@ function ContactPage() {
               onClick={() => setActiveTab("rider")}
               className={`contact-tab${activeTab === "rider" ? " active" : ""}`}
             >
-              Ik ben een fietser
+              {t("tabs.rider")}
             </button>
             <button
               type="button"
@@ -321,13 +313,10 @@ function ContactPage() {
               onClick={() => setActiveTab("shop")}
               className={`contact-tab${activeTab === "shop" ? " active" : ""}`}
             >
-              Ik ben een fietswinkel
+              {t("tabs.shop")}
             </button>
           </div>
         </section>
-
-
-
 
         {activeTab === "rider" ? (
           <RiderTab
@@ -337,6 +326,8 @@ function ContactPage() {
             setErrors={setErrors}
             sendWa={sendWa}
             pickSuggestion={pickSuggestion}
+            suggestions={suggestions}
+            t={t}
           />
         ) : (
           <ShopTab
@@ -346,17 +337,17 @@ function ContactPage() {
             setShopErrors={setShopErrors}
             sendShop={sendShop}
             shopSent={shopSent}
+            shortcuts={shortcuts}
+            subjects={subjects}
+            t={t}
           />
         )}
         {/* WETTELIJKE GEGEVENS */}
         <section style={{ padding: "0 6vw 20px", maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "var(--text-muted)", lineHeight: 1.55, margin: 0 }}>
-            Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, België · BTW: BE0777.359.681 · {activeTab === "shop" ? "info@velopass.com" : "support@velopass.com"}
+            {t("legal.line", { email: activeTab === "shop" ? "info@velopass.com" : "support@velopass.com" })}
           </p>
         </section>
-
-
-
       </main>
 
       <style>{`
@@ -379,15 +370,15 @@ function ContactPage() {
           .contact-tabs { grid-template-columns: 1fr; }
         }
       `}</style>
-
-
     </>
   );
 }
 
+type TFn = ReturnType<typeof useTranslation>["t"];
+
 /* ============== RIDER TAB ============== */
 function RiderTab({
-  wa, setWa, errors, setErrors, sendWa, pickSuggestion,
+  wa, setWa, errors, setErrors, sendWa, pickSuggestion, suggestions, t,
 }: {
   wa: { name: string; email: string; phone: string; note: string };
   setWa: React.Dispatch<React.SetStateAction<{ name: string; email: string; phone: string; note: string }>>;
@@ -395,17 +386,19 @@ function RiderTab({
   setErrors: React.Dispatch<React.SetStateAction<WaErrors>>;
   sendWa: () => void;
   pickSuggestion: (prefill: string) => void;
+  suggestions: Suggestion[];
+  t: TFn;
 }) {
   return (
     <>
       {/* SUGGESTIES */}
       <section style={{ padding: "4px 6vw 12px", maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ textAlign: "center", fontSize: 11, letterSpacing: 1.3, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 8 }}>
-          Waarover gaat je vraag?
+          {t("cards_eyebrow")}
         </p>
         <div className="contact-cards">
-          {SUGGESTIONS.map((s) => {
-            const Icon = s.icon;
+          {suggestions.map((s, idx) => {
+            const Icon = RIDER_ICONS[idx] ?? HelpCircle;
             return (
               <button
                 key={s.title}
@@ -421,7 +414,7 @@ function RiderTab({
                 <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>Kies dit onderwerp →</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>{t("rider.pick_subject")}</span>
               </button>
             );
           })}
@@ -440,17 +433,15 @@ function RiderTab({
           }}
         >
           <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: "-0.5px", marginBottom: 4, marginTop: 0 }}>
-            Stuur ons een bericht
+            {t("rider.form_title")}
           </h2>
           <p style={{ fontSize: 13, color: "rgba(245,243,238,0.7)", lineHeight: 1.45, marginBottom: 14, marginTop: 0 }}>
-            Vul je gegevens in en open WhatsApp — we antwoorden meestal binnen 2 uur tijdens kantooruren.
+            {t("rider.form_subtitle")}
           </p>
-
-
 
           <div className="wa-grid">
             <div>
-              <label htmlFor="wa-name" style={waLabelStyle}>Naam <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="wa-name" style={waLabelStyle}>{t("form.name")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <input
                 id="wa-name"
                 type="text"
@@ -461,26 +452,26 @@ function RiderTab({
                   setWa({ ...wa, name: e.target.value });
                   if (errors.name) setErrors((p) => ({ ...p, name: undefined }));
                 }}
-                placeholder="Jan Janssens"
+                placeholder={t("form.name_placeholder")}
                 aria-invalid={!!errors.name}
                 style={waInputStyle}
               />
               {errors.name && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.name}</p>}
             </div>
             <div>
-              <label htmlFor="wa-phone" style={waLabelStyle}>Telefoon</label>
+              <label htmlFor="wa-phone" style={waLabelStyle}>{t("form.phone")}</label>
               <input
                 id="wa-phone"
                 type="tel"
                 maxLength={30}
                 value={wa.phone}
                 onChange={(e) => setWa({ ...wa, phone: e.target.value })}
-                placeholder="+32 4..."
+                placeholder={t("form.phone_placeholder")}
                 style={waInputStyle}
               />
             </div>
             <div style={{ gridColumn: "1 / -1" }}>
-              <label htmlFor="wa-email" style={waLabelStyle}>E-mail <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="wa-email" style={waLabelStyle}>{t("form.email")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <input
                 id="wa-email"
                 type="email"
@@ -491,22 +482,21 @@ function RiderTab({
                   setWa({ ...wa, email: e.target.value });
                   if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
                 }}
-                placeholder="jan@voorbeeld.be"
+                placeholder={t("form.email_placeholder_rider")}
                 aria-invalid={!!errors.email}
                 style={waInputStyle}
               />
               {errors.email && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{errors.email}</p>}
             </div>
             <div style={{ gridColumn: "1 / -1" }}>
-              <label htmlFor="wa-note" style={waLabelStyle}>Opmerking</label>
+              <label htmlFor="wa-note" style={waLabelStyle}>{t("form.note")}</label>
               <textarea
                 id="wa-note"
                 rows={3}
-
                 maxLength={2000}
                 value={wa.note}
                 onChange={(e) => setWa({ ...wa, note: e.target.value })}
-                placeholder="Vertel ons kort waar je vraag over gaat..."
+                placeholder={t("form.note_placeholder")}
                 style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
               />
             </div>
@@ -535,17 +525,15 @@ function RiderTab({
             }}
           >
             <MessageCircle size={16} strokeWidth={2.2} />
-            Verstuur via WhatsApp →
+            {t("form.send_whatsapp")}
           </button>
 
           <p style={{ marginTop: 10, textAlign: "center", fontSize: 12, color: "rgba(245,243,238,0.6)" }}>
-            Liever een e-mail sturen?{" "}
+            {t("rider.email_alt_prefix")}{" "}
             <a href="mailto:support@velopass.com" style={{ color: "#2ECC8A", textDecoration: "none", fontWeight: 500 }}>
               support@velopass.com
             </a>
           </p>
-
-
         </div>
       </section>
     </>
@@ -554,7 +542,7 @@ function RiderTab({
 
 /* ============== SHOP TAB ============== */
 function ShopTab({
-  shop, setShop, shopErrors, setShopErrors, sendShop, shopSent,
+  shop, setShop, shopErrors, setShopErrors, sendShop, shopSent, shortcuts, subjects, t,
 }: {
   shop: { name: string; company: string; email: string; phone: string; subject: string; message: string };
   setShop: React.Dispatch<React.SetStateAction<{ name: string; company: string; email: string; phone: string; subject: string; message: string }>>;
@@ -562,20 +550,22 @@ function ShopTab({
   setShopErrors: React.Dispatch<React.SetStateAction<ShopErrors>>;
   sendShop: () => void;
   shopSent: boolean;
+  shortcuts: Shortcut[];
+  subjects: string[];
+  t: TFn;
 }) {
   return (
     <>
-
-      {/* SHORTCUTS — identieke card-stijl als Tab 1 */}
       <section style={{ padding: "4px 6vw 12px", maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ textAlign: "center", fontSize: 11, letterSpacing: 1.3, textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 8 }}>
-          Waarover gaat je vraag?
+          {t("cards_eyebrow")}
         </p>
         <div className="contact-cards">
-          {SHOP_SHORTCUTS.map((s) => {
-            const Icon = s.icon;
+          {shortcuts.map((s, idx) => {
+            const Icon = SHOP_ICONS[idx] ?? HelpCircle;
+            const href = SHOP_HREFS[idx] ?? "mailto:info@velopass.com";
             return (
-              <a key={s.title} href={s.href} style={cardStyle} className="contact-card">
+              <a key={s.title} href={href} style={cardStyle} className="contact-card">
                 <div style={iconBox}><Icon size={18} strokeWidth={1.8} /></div>
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--navy)", letterSpacing: "-0.2px", margin: 0 }}>
                   {s.title}
@@ -583,14 +573,13 @@ function ShopTab({
                 <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>Stuur een e-mail →</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>{t("shop.send_email")}</span>
               </a>
             );
           })}
         </div>
       </section>
 
-      {/* FORM — identieke dark navy card als Tab 1 */}
       <section style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
@@ -603,13 +592,11 @@ function ShopTab({
           }}
         >
           <h2 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 20, letterSpacing: "-0.5px", marginBottom: 4, marginTop: 0 }}>
-            Stuur ons een bericht
+            {t("shop.form_title")}
           </h2>
           <p style={{ fontSize: 13, color: "rgba(245,243,238,0.7)", lineHeight: 1.45, marginBottom: 14, marginTop: 0 }}>
-            Vul het formulier in — we antwoorden binnen 1 werkdag.
+            {t("shop.form_subtitle")}
           </p>
-
-
 
           {shopSent && (
             <div
@@ -624,67 +611,66 @@ function ShopTab({
                 fontSize: 14,
               }}
             >
-              Je bericht is verstuurd. We antwoorden binnen 1 werkdag.
+              {t("shop.success")}
             </div>
           )}
 
           <div className="wa-grid">
             <div>
-              <label htmlFor="s-name" style={waLabelStyle}>Naam <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="s-name" style={waLabelStyle}>{t("form.name")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <input
                 id="s-name" type="text" required maxLength={100} value={shop.name}
                 onChange={(e) => { setShop({ ...shop, name: e.target.value }); if (shopErrors.name) setShopErrors((p) => ({ ...p, name: undefined })); }}
-                placeholder="Jan Janssens" style={waInputStyle}
+                placeholder={t("form.name_placeholder")} style={waInputStyle}
               />
               {shopErrors.name && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.name}</p>}
             </div>
             <div>
-              <label htmlFor="s-company" style={{ ...waLabelStyle, whiteSpace: "nowrap", letterSpacing: 0.8 }}>Fietswinkel of bedrijfsnaam <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="s-company" style={{ ...waLabelStyle, whiteSpace: "nowrap", letterSpacing: 0.8 }}>{t("form.company")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <input
                 id="s-company" type="text" required maxLength={150} value={shop.company}
                 onChange={(e) => { setShop({ ...shop, company: e.target.value }); if (shopErrors.company) setShopErrors((p) => ({ ...p, company: undefined })); }}
-                placeholder="Fietsen Janssens" style={waInputStyle}
+                placeholder={t("form.company_placeholder")} style={waInputStyle}
               />
               {shopErrors.company && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.company}</p>}
             </div>
             <div>
-              <label htmlFor="s-email" style={waLabelStyle}>E-mail <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="s-email" style={waLabelStyle}>{t("form.email")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <input
                 id="s-email" type="email" required maxLength={255} value={shop.email}
                 onChange={(e) => { setShop({ ...shop, email: e.target.value }); if (shopErrors.email) setShopErrors((p) => ({ ...p, email: undefined })); }}
-                placeholder="jan@winkel.be" style={waInputStyle}
+                placeholder={t("form.email_placeholder_shop")} style={waInputStyle}
               />
               {shopErrors.email && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.email}</p>}
             </div>
             <div>
-              <label htmlFor="s-phone" style={waLabelStyle}>Telefoon</label>
+              <label htmlFor="s-phone" style={waLabelStyle}>{t("form.phone")}</label>
               <input
                 id="s-phone" type="tel" maxLength={30} value={shop.phone}
                 onChange={(e) => setShop({ ...shop, phone: e.target.value })}
-                placeholder="+32 4..." style={waInputStyle}
+                placeholder={t("form.phone_placeholder")} style={waInputStyle}
               />
             </div>
             <div style={{ gridColumn: "1 / -1" }}>
-              <label htmlFor="s-subject" style={waLabelStyle}>Onderwerp <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="s-subject" style={waLabelStyle}>{t("form.subject")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <select
                 id="s-subject" value={shop.subject}
                 onChange={(e) => { setShop({ ...shop, subject: e.target.value }); if (shopErrors.subject) setShopErrors((p) => ({ ...p, subject: undefined })); }}
                 style={waInputStyle}
               >
-                <option value="" style={{ background: "#0D1F3C" }}>Kies een onderwerp…</option>
-                {SHOP_SUBJECTS.map((s) => (
+                <option value="" style={{ background: "#0D1F3C" }}>{t("shop.subject_placeholder")}</option>
+                {subjects.map((s) => (
                   <option key={s} value={s} style={{ background: "#0D1F3C" }}>{s}</option>
                 ))}
               </select>
               {shopErrors.subject && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.subject}</p>}
             </div>
             <div style={{ gridColumn: "1 / -1" }}>
-              <label htmlFor="s-message" style={waLabelStyle}>Bericht <span style={{ color: "#2ECC8A" }}>*</span></label>
+              <label htmlFor="s-message" style={waLabelStyle}>{t("form.message")} <span style={{ color: "#2ECC8A" }}>*</span></label>
               <textarea
                 id="s-message" rows={3} maxLength={2000} required value={shop.message}
-
                 onChange={(e) => { setShop({ ...shop, message: e.target.value }); if (shopErrors.message) setShopErrors((p) => ({ ...p, message: undefined })); }}
-                placeholder="Vertel ons kort waar je vraag over gaat..."
+                placeholder={t("form.note_placeholder")}
                 style={{ ...waInputStyle, resize: "vertical", lineHeight: 1.5 }}
               />
               {shopErrors.message && <p style={{ marginTop: 6, fontSize: 13, color: "#ff8a8a" }}>{shopErrors.message}</p>}
@@ -714,11 +700,8 @@ function ShopTab({
             }}
           >
             <MessageCircle size={16} strokeWidth={2.2} />
-            Verstuur via WhatsApp →
+            {t("form.send_whatsapp")}
           </button>
-
-
-
         </div>
       </section>
     </>
