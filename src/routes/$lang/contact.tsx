@@ -560,7 +560,7 @@ function RiderTab({
 
 /* ============== SHOP TAB ============== */
 function ShopTab({
-  shop, setShop, shopErrors, setShopErrors, sendShop, shopSent, shortcuts, subjects, t,
+  shop, setShop, shopErrors, setShopErrors, sendShop, shopSent, shortcuts, subjects, pickShopShortcut, t,
 }: {
   shop: { name: string; company: string; email: string; phone: string; subject: string; message: string };
   setShop: React.Dispatch<React.SetStateAction<{ name: string; company: string; email: string; phone: string; subject: string; message: string }>>;
@@ -570,6 +570,7 @@ function ShopTab({
   shopSent: boolean;
   shortcuts: Shortcut[];
   subjects: string[];
+  pickShopShortcut: (idx: number) => void;
   t: TFn;
 }) {
   return (
@@ -581,9 +582,14 @@ function ShopTab({
         <div className="contact-cards">
           {shortcuts.map((s, idx) => {
             const Icon = SHOP_ICONS[idx] ?? HelpCircle;
-            const href = SHOP_HREFS[idx] ?? "mailto:info@velopass.com";
             return (
-              <a key={s.title} href={href} style={cardStyle} className="contact-card">
+              <button
+                key={s.title}
+                type="button"
+                onClick={() => pickShopShortcut(idx)}
+                style={cardStyle}
+                className="contact-card"
+              >
                 <div style={iconBox}><Icon size={18} strokeWidth={1.8} /></div>
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--navy)", letterSpacing: "-0.2px", margin: 0 }}>
                   {s.title}
@@ -591,14 +597,15 @@ function ShopTab({
                 <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>{t("shop.send_email")}</span>
-              </a>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>{t("shop.pick_subject")}</span>
+              </button>
             );
           })}
         </div>
       </section>
 
-      <section style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
+      <section id="shop-form" style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
+
         <div
           style={{
             background: "#0D1F3C",
