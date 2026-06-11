@@ -164,9 +164,10 @@ function ContactPage() {
   const subjectsRaw = t("shop.subjects", { returnObjects: true });
   const subjects: string[] = Array.isArray(subjectsRaw) ? (subjectsRaw as string[]) : [];
 
-  const sendWa = () => {
+  const sendWa = (e?: React.MouseEvent<HTMLAnchorElement>) => {
     const result = waSchema.safeParse(wa);
     if (!result.success) {
+      e?.preventDefault();
       const fieldErrors: WaErrors = {};
       for (const issue of result.error.issues) {
         const key = issue.path[0] as keyof WaErrors;
@@ -181,16 +182,19 @@ function ContactPage() {
       return;
     }
     setErrors({});
-    const d = result.data;
+    // Anchor with target=_blank handles the navigation; nothing else to do.
+  };
+
+  const waHref = useMemo(() => {
     const text =
       `${t("rider.wa_message_intro")}\n\n` +
-      `${t("rider.wa_message_name")}: ${d.name}\n` +
-      `${t("rider.wa_message_email")}: ${d.email}\n` +
-      (d.phone ? `${t("rider.wa_message_phone")}: ${d.phone}\n` : "") +
-      (d.note ? `\n${d.note}\n` : "");
-    const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+      `${t("rider.wa_message_name")}: ${wa.name}\n` +
+      `${t("rider.wa_message_email")}: ${wa.email}\n` +
+      (wa.phone ? `${t("rider.wa_message_phone")}: ${wa.phone}\n` : "") +
+      (wa.note ? `\n${wa.note}\n` : "");
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  }, [wa, t]);
+
 
   const pickSuggestion = (prefill: string) => {
     setWa((w) => ({ ...w, note: prefill }));
@@ -337,6 +341,7 @@ function ContactPage() {
             errors={errors}
             setErrors={setErrors}
             sendWa={sendWa}
+            waHref={waHref}
             pickSuggestion={pickSuggestion}
             suggestions={suggestions}
             t={t}
@@ -391,13 +396,14 @@ type TFn = ReturnType<typeof useTranslation>["t"];
 
 /* ============== RIDER TAB ============== */
 function RiderTab({
-  wa, setWa, errors, setErrors, sendWa, pickSuggestion, suggestions, t,
+  wa, setWa, errors, setErrors, sendWa, waHref, pickSuggestion, suggestions, t,
 }: {
   wa: { name: string; email: string; phone: string; note: string };
   setWa: React.Dispatch<React.SetStateAction<{ name: string; email: string; phone: string; note: string }>>;
   errors: WaErrors;
   setErrors: React.Dispatch<React.SetStateAction<WaErrors>>;
-  sendWa: () => void;
+  sendWa: (e?: React.MouseEvent<HTMLAnchorElement>) => void;
+  waHref: string;
   pickSuggestion: (prefill: string) => void;
   suggestions: Suggestion[];
   t: TFn;
@@ -514,12 +520,15 @@ function RiderTab({
               />
             </div>
           </div>
-          <button
-            type="button"
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={sendWa}
             style={{
               marginTop: 14,
               width: "100%",
+              boxSizing: "border-box",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
@@ -535,11 +544,12 @@ function RiderTab({
               letterSpacing: "1.4px",
               textTransform: "uppercase",
               cursor: "pointer",
+              textDecoration: "none",
             }}
           >
             <MessageCircle size={16} strokeWidth={2.2} />
             {t("form.send_whatsapp")}
-          </button>
+          </a>
 
           <p style={{ marginTop: 10, textAlign: "center", fontSize: 12, color: "rgba(245,243,238,0.6)" }}>
             {t("rider.email_alt_prefix")}{" "}
