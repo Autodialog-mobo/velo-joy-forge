@@ -199,23 +199,27 @@ function MarkdownBlock({ text, keyPrefix }: { text: string; keyPrefix: string })
     else paragraphs[paragraphs.length - 1].push(l);
   }
 
+  // Use <span style={{display:"block"}}> wrappers so the output stays valid
+  // phrasing content inside parent <p> elements.
   return (
     <>
       {paragraphs.map((para, pi) => {
         if (para.length === 0) return null;
-        // Within a paragraph, do bullets if mixed
         return (
-          <div key={`${keyPrefix}-p-${pi}`} style={{ marginTop: pi === 0 ? 0 : 8 }}>
+          <span
+            key={`${keyPrefix}-p-${pi}`}
+            style={{ display: "block", marginTop: pi === 0 ? 0 : 8 }}
+          >
             {para.map((line, li) => {
               if (line.startsWith("• ")) {
                 return (
-                  <div
+                  <span
                     key={`${keyPrefix}-bl-${pi}-${li}`}
                     style={{ display: "flex", gap: 6, marginTop: li === 0 ? 0 : 2 }}
                   >
                     <span>•</span>
                     <span>{renderInline(line.slice(2), `${keyPrefix}-bl-${pi}-${li}`)}</span>
-                  </div>
+                  </span>
                 );
               }
               return (
@@ -225,7 +229,7 @@ function MarkdownBlock({ text, keyPrefix }: { text: string; keyPrefix: string })
                 </Fragment>
               );
             })}
-          </div>
+          </span>
         );
       })}
     </>
