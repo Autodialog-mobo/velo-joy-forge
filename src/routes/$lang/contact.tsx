@@ -356,6 +356,7 @@ function ContactPage() {
             shopSent={shopSent}
             shortcuts={shortcuts}
             subjects={subjects}
+            pickShopShortcut={pickShopShortcut}
             t={t}
           />
         )}
