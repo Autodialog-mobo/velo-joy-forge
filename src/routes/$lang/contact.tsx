@@ -341,6 +341,7 @@ function ContactPage() {
             errors={errors}
             setErrors={setErrors}
             sendWa={sendWa}
+            waHref={waHref}
             pickSuggestion={pickSuggestion}
             suggestions={suggestions}
             t={t}
