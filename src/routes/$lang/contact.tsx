@@ -520,12 +520,15 @@ function RiderTab({
               />
             </div>
           </div>
-          <button
-            type="button"
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={sendWa}
             style={{
               marginTop: 14,
               width: "100%",
+              boxSizing: "border-box",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
@@ -541,11 +544,12 @@ function RiderTab({
               letterSpacing: "1.4px",
               textTransform: "uppercase",
               cursor: "pointer",
+              textDecoration: "none",
             }}
           >
             <MessageCircle size={16} strokeWidth={2.2} />
             {t("form.send_whatsapp")}
-          </button>
+          </a>
 
           <p style={{ marginTop: 10, textAlign: "center", fontSize: 12, color: "rgba(245,243,238,0.6)" }}>
             {t("rider.email_alt_prefix")}{" "}
