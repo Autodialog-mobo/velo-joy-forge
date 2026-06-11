@@ -46,18 +46,22 @@
     "shortcuts": [
       {
         "title": "Demo aanvragen",
-        "desc": "Bekijk Velopass live en stel al je vragen aan ons team."
+        "desc": "Bekijk Velopass live en stel al je vragen aan ons team.",
+        "prefill": "Hallo Velopass, ik wil graag een demo van Velopass voor mijn winkel."
       },
       {
         "title": "Kassasysteem of integratie",
-        "desc": "Vragen over koppeling met je kassasysteem of de Pro App?"
+        "desc": "Vragen over koppeling met je kassasysteem of de Pro App?",
+        "prefill": "Hallo Velopass, ik heb een vraag over kassasysteem-integratie of de Pro App: "
       },
       {
         "title": "Al partner — technische vraag",
-        "desc": "Ben je al aangesloten en heb je een vraag over je account of portal?"
+        "desc": "Ben je al aangesloten en heb je een vraag over je account of portal?",
+        "prefill": "Hallo Velopass, ik ben al partner en heb een technische vraag: "
       }
     ],
     "send_email": "Stuur een e-mail →",
+    "pick_subject": "Kies dit onderwerp →",
     "form_title": "Stuur ons een bericht",
     "form_subtitle": "Vul het formulier in — we antwoorden binnen 1 werkdag.",
     "success": "Je bericht is verstuurd. We antwoorden binnen 1 werkdag.",

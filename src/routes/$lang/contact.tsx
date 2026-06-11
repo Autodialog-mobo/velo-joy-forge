@@ -41,14 +41,9 @@ const WA_NUMBER = "32471601573";
 
 const RIDER_ICONS: LucideIcon[] = [HelpCircle, Package, ScanLine];
 const SHOP_ICONS: LucideIcon[] = [CalendarCheck, Monitor, HelpCircle];
-const SHOP_HREFS = [
-  "mailto:info@velopass.com?subject=Demo aanvragen",
-  "mailto:info@velopass.com?subject=Kassasysteem integratie",
-  "mailto:support@velopass.com?subject=Technische vraag partner",
-];
 
 type Suggestion = { title: string; desc: string; prefill: string };
-type Shortcut = { title: string; desc: string };
+type Shortcut = { title: string; desc: string; prefill: string };
 
 type WaErrors = Partial<Record<"name" | "email", string>>;
 type ShopErrors = Partial<Record<"name" | "company" | "email" | "subject" | "message", string>>;
@@ -221,6 +216,23 @@ function ContactPage() {
     setShop({ name: "", company: "", email: "", phone: "", subject: "", message: "" });
   };
 
+  // Map shop shortcut index -> subject index in the shop.subjects list.
+  // 0 = Request a demo (subjects[0]), 1 = POS/integration (subjects[1]),
+  // 2 = Already a partner — tech question (subjects[3]).
+  const SHOP_SUBJECT_INDEX = [0, 1, 3];
+  const pickShopShortcut = (idx: number) => {
+    const subjectIdx = SHOP_SUBJECT_INDEX[idx] ?? 0;
+    setShop((s) => ({
+      ...s,
+      subject: subjects[subjectIdx] ?? s.subject,
+      message: shortcuts[idx]?.prefill ?? s.message,
+    }));
+    setShopErrors({});
+    const el = document.getElementById("shop-form");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => document.getElementById("s-name")?.focus(), 400);
+  };
+
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
@@ -339,6 +351,7 @@ function ContactPage() {
             shopSent={shopSent}
             shortcuts={shortcuts}
             subjects={subjects}
+            pickShopShortcut={pickShopShortcut}
             t={t}
           />
         )}
@@ -542,7 +555,7 @@ function RiderTab({
 
 /* ============== SHOP TAB ============== */
 function ShopTab({
-  shop, setShop, shopErrors, setShopErrors, sendShop, shopSent, shortcuts, subjects, t,
+  shop, setShop, shopErrors, setShopErrors, sendShop, shopSent, shortcuts, subjects, pickShopShortcut, t,
 }: {
   shop: { name: string; company: string; email: string; phone: string; subject: string; message: string };
   setShop: React.Dispatch<React.SetStateAction<{ name: string; company: string; email: string; phone: string; subject: string; message: string }>>;
@@ -552,6 +565,7 @@ function ShopTab({
   shopSent: boolean;
   shortcuts: Shortcut[];
   subjects: string[];
+  pickShopShortcut: (idx: number) => void;
   t: TFn;
 }) {
   return (
@@ -563,9 +577,14 @@ function ShopTab({
         <div className="contact-cards">
           {shortcuts.map((s, idx) => {
             const Icon = SHOP_ICONS[idx] ?? HelpCircle;
-            const href = SHOP_HREFS[idx] ?? "mailto:info@velopass.com";
             return (
-              <a key={s.title} href={href} style={cardStyle} className="contact-card">
+              <button
+                key={s.title}
+                type="button"
+                onClick={() => pickShopShortcut(idx)}
+                style={cardStyle}
+                className="contact-card"
+              >
                 <div style={iconBox}><Icon size={18} strokeWidth={1.8} /></div>
                 <h3 style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 15, color: "var(--navy)", letterSpacing: "-0.2px", margin: 0 }}>
                   {s.title}
@@ -573,14 +592,15 @@ function ShopTab({
                 <p style={{ fontSize: 12.5, color: "var(--text-muted)", lineHeight: 1.45, flex: 1, margin: 0 }}>
                   {s.desc}
                 </p>
-                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>{t("shop.send_email")}</span>
-              </a>
+                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)" }}>{t("shop.pick_subject")}</span>
+              </button>
             );
           })}
         </div>
       </section>
 
-      <section style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
+      <section id="shop-form" style={{ padding: "8px 6vw 16px", maxWidth: 720, margin: "0 auto" }}>
+
         <div
           style={{
             background: "#0D1F3C",
