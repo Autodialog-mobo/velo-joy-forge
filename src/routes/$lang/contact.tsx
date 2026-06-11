@@ -17,6 +17,7 @@ import { z } from "zod";
 import { toast } from "sonner";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { VelopassMark } from "@/components/VelopassMark";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { buildLocalizedHead } from "@/i18n/seo";
 
 const searchSchema = z.object({
