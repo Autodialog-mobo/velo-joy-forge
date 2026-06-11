@@ -363,7 +363,7 @@ function ContactPage() {
         .wa-grid input::placeholder, .wa-grid textarea::placeholder, .wa-grid select { color: rgba(245,243,238,0.55); }
         .wa-grid input:focus, .wa-grid textarea:focus, .wa-grid select:focus { border-color: #2ECC8A; }
         @media (max-width: 768px) {
-          .back-btn-wrap { padding-top: 56px; }
+          .back-btn-wrap { padding-top: 72px; }
           .back-btn { font-size: 12px; }
           .contact-cards { grid-template-columns: 1fr; }
           .wa-grid { grid-template-columns: 1fr; }
