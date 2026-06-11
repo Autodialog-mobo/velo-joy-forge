@@ -1,5 +1,5 @@
 {
-  "_translated": true,
+  "_translated": false,
   "meta": {
     "title": "Bike stolen? File a quick report — Velopass",
     "description": "Step-by-step after a bike theft: report your bike in your Velopass, file online with the police, and activate the Velopass Community."
@@ -13,12 +13,30 @@
   "argument": {
     "title": "Everything the police needs is in your Velopass",
     "rows": [
-      ["Brand, model and colour", "In your Velopass passport"],
-      ["Frame number", "In your Velopass passport"],
-      ["Photos of the bike", "Saved in your Velopass"],
-      ["Purchase invoice", "Linked to your Velopass"],
-      ["Exact theft location", "Already entered when you reported it in Velopass"],
-      ["Proof of ownership", "Your Velopass IS the proof"]
+      [
+        "Brand, model and colour",
+        "In your Velopass passport"
+      ],
+      [
+        "Frame number",
+        "In your Velopass passport"
+      ],
+      [
+        "Photos of the bike",
+        "Saved in your Velopass"
+      ],
+      [
+        "Purchase invoice",
+        "Linked to your Velopass"
+      ],
+      [
+        "Exact theft location",
+        "Already entered when you reported it in Velopass"
+      ],
+      [
+        "Proof of ownership",
+        "Your Velopass IS the proof"
+      ]
     ],
     "cta": "Open my Velopass →"
   },
@@ -42,13 +60,33 @@
     "BE": {
       "intro": "In Belgium you file an online report via Police-on-web. That saves you a trip to the police station.",
       "checklist": [
-        { "text": "Your ID card (eID) or the itsme app" },
-        { "text": "Brand, model, colour and type of bike", "velopass": "Already in your Velopass" },
-        { "text": "The frame number", "velopass": "Already in your Velopass" },
-        { "text": "Engraving number or bike pass", "velopass": "Your Velopass code is enough" },
-        { "text": "Exact location, date and time of the theft", "velopass": "Already entered when you reported it in Velopass" },
-        { "text": "Photos of the bike", "velopass": "Already saved in your Velopass" },
-        { "text": "Purchase invoice (if available)", "velopass": "Linked to your Velopass" }
+        {
+          "text": "Your ID card (eID) or the itsme app"
+        },
+        {
+          "text": "Brand, model, colour and type of bike",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "The frame number",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "Engraving number or bike pass",
+          "velopass": "Your Velopass code is enough"
+        },
+        {
+          "text": "Exact location, date and time of the theft",
+          "velopass": "Already entered when you reported it in Velopass"
+        },
+        {
+          "text": "Photos of the bike",
+          "velopass": "Already saved in your Velopass"
+        },
+        {
+          "text": "Purchase invoice (if available)",
+          "velopass": "Linked to your Velopass"
+        }
       ],
       "steps": [
         {
@@ -82,12 +120,29 @@
       "check_first_title": "Check this first",
       "check_first_body": "Has your bike maybe been moved by the city? Bikes parked illegally are sometimes taken to a depot. Check this before filing a report.",
       "checklist": [
-        { "text": "Your DigiD (log in via digid.nl)" },
-        { "text": "Brand, model, colour and type of bike", "velopass": "Already in your Velopass" },
-        { "text": "The frame number (usually under the bottom bracket or on the front of the frame)", "velopass": "Already in your Velopass" },
-        { "text": "Exact location, date and time of the theft", "velopass": "Already entered when you reported it in Velopass" },
-        { "text": "Photos of the bike", "velopass": "Already saved in your Velopass" },
-        { "text": "Purchase invoice (if available)", "velopass": "Linked to your Velopass" }
+        {
+          "text": "Your DigiD (log in via digid.nl)"
+        },
+        {
+          "text": "Brand, model, colour and type of bike",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "The frame number (usually under the bottom bracket or on the front of the frame)",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "Exact location, date and time of the theft",
+          "velopass": "Already entered when you reported it in Velopass"
+        },
+        {
+          "text": "Photos of the bike",
+          "velopass": "Already saved in your Velopass"
+        },
+        {
+          "text": "Purchase invoice (if available)",
+          "velopass": "Linked to your Velopass"
+        }
       ],
       "conditions_title": "Conditions for online filing",
       "conditions_intro": "Online filing via politie.nl is possible if:",
@@ -132,22 +187,51 @@
       "fnuci_body_2": "Concretely: as soon as you report your bike as stolen in Velopass, the status in the FNUCI is updated automatically. The police see it instantly.",
       "flow_step_label": "Step {{n}}",
       "flow_steps": [
-        { "title": "You report in Velopass", "body": "You change your bike's status to REPORTED in your Velopass account." },
-        { "title": "FNUCI is updated", "body": "Velopass forwards the status change to the FNUCI. Police and gendarmerie have access to this register." },
-        { "title": "Police identify your bike", "body": "Is your bike found? The officer scans the Velopass code and immediately sees that it's stolen — and who the owner is." }
+        {
+          "title": "You report in Velopass",
+          "body": "You change your bike's status to REPORTED in your Velopass account."
+        },
+        {
+          "title": "FNUCI is updated",
+          "body": "Velopass forwards the status change to the FNUCI. Police and gendarmerie have access to this register."
+        },
+        {
+          "title": "Police identify your bike",
+          "body": "Is your bike found? The officer scans the Velopass code and immediately sees that it's stolen — and who the owner is."
+        }
       ],
       "code_note": "**Your Velopass code IS your FNUCI identifier.** This is the 10-digit number the police need for the official *plainte*. You'll find it in your Velopass account.",
       "ma_intro": "File your report online via Ma Sécurité. Your Velopass code is the *identifiant unique* the form asks for — already in your Velopass.",
       "home_already_title": "Already back home?",
       "home_already_body": "Belgian and Dutch insurers almost always require a French police report. Start the report as quickly as possible via Ma Sécurité, even if you're already home.",
       "checklist": [
-        { "text": "Your passport or ID card" },
-        { "text": "FranceConnect account (optional but recommended)", "note": "Without FranceConnect: in-person appointment required at a French police station or gendarmerie" },
-        { "text": "Your Velopass code (= FNUCI identifier)", "velopass": "Already in your Velopass" },
-        { "text": "Brand, model, colour and type of bike", "velopass": "Already in your Velopass" },
-        { "text": "The frame number", "velopass": "Already in your Velopass" },
-        { "text": "Exact French location, date and time", "velopass": "Already entered when you reported it in Velopass — as a tourist you often can't recall the exact address later" },
-        { "text": "Photos of the bike", "velopass": "Already saved in your Velopass" }
+        {
+          "text": "Your passport or ID card"
+        },
+        {
+          "text": "FranceConnect account (optional but recommended)",
+          "note": "Without FranceConnect: in-person appointment required at a French police station or gendarmerie"
+        },
+        {
+          "text": "Your Velopass code (= FNUCI identifier)",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "Brand, model, colour and type of bike",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "The frame number",
+          "velopass": "Already in your Velopass"
+        },
+        {
+          "text": "Exact French location, date and time",
+          "velopass": "Already entered when you reported it in Velopass — as a tourist you often can't recall the exact address later"
+        },
+        {
+          "text": "Photos of the bike",
+          "velopass": "Already saved in your Velopass"
+        }
       ],
       "method1_badge": "Fully digital",
       "method1_title": "With FranceConnect (recommended)",
