@@ -177,14 +177,17 @@ export function FaqSection() {
   const leftFAQs: Faq[] = Array.isArray(leftRaw) ? (leftRaw as Faq[]) : [];
   const rightFAQs: Faq[] = Array.isArray(rightRaw) ? (rightRaw as Faq[]) : [];
 
-
   useEffect(() => {
     const timers: number[] = [];
     const scrollToId = (id: string, block: ScrollLogicalPosition) => {
       [0, 100, 350, 700].forEach((delay) => {
-        timers.push(window.setTimeout(() => {
-          document.getElementById(id)?.scrollIntoView({ behavior: delay === 0 ? "auto" : "smooth", block });
-        }, delay));
+        timers.push(
+          window.setTimeout(() => {
+            document
+              .getElementById(id)
+              ?.scrollIntoView({ behavior: delay === 0 ? "auto" : "smooth", block });
+          }, delay),
+        );
       });
     };
     const applyHash = () => {
@@ -194,7 +197,9 @@ export function FaqSection() {
         return;
       }
       if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
-      if (h.startsWith("faq-l-")) setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      if (h.startsWith("faq-l-")) {
+        setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      }
       else if (h.startsWith("faq-r-")) setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
       if (h.startsWith("faq-")) {
         scrollToId(h, "center");
