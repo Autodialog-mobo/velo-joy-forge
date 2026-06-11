@@ -151,15 +151,23 @@ export function FaqSection() {
 
 
   useEffect(() => {
-    if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
     const applyHash = () => {
       const h = window.location.hash.replace("#", "");
+      if (h === "faq") {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.getElementById("faq")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+        return;
+      }
+      if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
       if (h.startsWith("faq-l-")) setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
       else if (h.startsWith("faq-r-")) setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
       if (h.startsWith("faq-")) {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            document.getElementById(h)?.scrollIntoView({ block: "center" });
+            document.getElementById(h)?.scrollIntoView({ behavior: "smooth", block: "center" });
           });
         });
       }
