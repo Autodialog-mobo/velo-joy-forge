@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState, type ReactNode } from "react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import type { Lang } from "@/i18n/config";
@@ -141,6 +141,7 @@ function FaqColumn({
 export function FaqSection() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["faq", "common"]);
+  const routeHash = useRouterState({ select: (s) => s.location.hash });
   const [openLeft, setOpenLeft] = useState<string[]>([]);
   const [openRight, setOpenRight] = useState<string[]>([]);
 
@@ -151,31 +152,34 @@ export function FaqSection() {
 
 
   useEffect(() => {
+    const timers: number[] = [];
+    const scrollToId = (id: string, block: ScrollLogicalPosition) => {
+      [0, 100, 350, 700].forEach((delay) => {
+        timers.push(window.setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: delay === 0 ? "auto" : "smooth", block });
+        }, delay));
+      });
+    };
     const applyHash = () => {
-      const h = window.location.hash.replace("#", "");
+      const h = (routeHash || window.location.hash).replace("#", "");
       if (h === "faq") {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            document.getElementById("faq")?.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
-        });
+        scrollToId("faq", "start");
         return;
       }
       if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
       if (h.startsWith("faq-l-")) setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
       else if (h.startsWith("faq-r-")) setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
       if (h.startsWith("faq-")) {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            document.getElementById(h)?.scrollIntoView({ behavior: "smooth", block: "center" });
-          });
-        });
+        scrollToId(h, "center");
       }
     };
     applyHash();
     window.addEventListener("hashchange", applyHash);
-    return () => window.removeEventListener("hashchange", applyHash);
-  }, [leftFAQs.length, rightFAQs.length]);
+    return () => {
+      window.removeEventListener("hashchange", applyHash);
+      timers.forEach(window.clearTimeout);
+    };
+  }, [routeHash, leftFAQs.length, rightFAQs.length]);
 
   const syncHash = (val: string[]) => {
     const last = val[val.length - 1];
