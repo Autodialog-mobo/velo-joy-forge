@@ -264,11 +264,19 @@ export function FaqSection() {
             }}
           >
             {t("faq:section.support_prefix")}{" "}
-            <Link to="/$lang/contact" params={{ lang }} hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <Link
+              to="/$lang/contact"
+              params={{ lang }}
+              hash="wa-form"
+              style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
               {t("faq:section.support_whatsapp")}
             </Link>{" "}
             {t("faq:section.support_or_mail")}{" "}
-            <a href="mailto:support@velopass.com" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <a
+              href="mailto:support@velopass.com"
+              style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
               support@velopass.com
             </a>
           </p>
@@ -281,8 +289,26 @@ export function FaqSection() {
             gap: 24,
           }}
         >
-          <FaqColumn faqs={leftFAQs} value={openLeft} onChange={(v) => { setOpenLeft(v); syncHash(v); }} side="l" lang={lang} />
-          <FaqColumn faqs={rightFAQs} value={openRight} onChange={(v) => { setOpenRight(v); syncHash(v); }} side="r" lang={lang} />
+          <FaqColumn
+            faqs={leftFAQs}
+            value={openLeft}
+            onChange={(v) => {
+              setOpenLeft(v);
+              syncHash(v);
+            }}
+            side="l"
+            lang={lang}
+          />
+          <FaqColumn
+            faqs={rightFAQs}
+            value={openRight}
+            onChange={(v) => {
+              setOpenRight(v);
+              syncHash(v);
+            }}
+            side="r"
+            lang={lang}
+          />
         </div>
       </div>
     </section>
