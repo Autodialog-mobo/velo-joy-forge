@@ -46,18 +46,22 @@
     "shortcuts": [
       {
         "title": "Request a demo",
-        "desc": "See Velopass live and ask our team anything."
+        "desc": "See Velopass live and ask our team anything.",
+        "prefill": "Hi Velopass, I'd like to request a demo of Velopass for my shop."
       },
       {
         "title": "POS or integration",
-        "desc": "Questions about linking your POS or the Pro App?"
+        "desc": "Questions about linking your POS or the Pro App?",
+        "prefill": "Hi Velopass, I have a question about POS integration or the Pro App: "
       },
       {
         "title": "Already a partner — tech question",
-        "desc": "Already onboard and have a question about your account or portal?"
+        "desc": "Already onboard and have a question about your account or portal?",
+        "prefill": "Hi Velopass, I'm already a partner and I have a technical question: "
       }
     ],
     "send_email": "Send an email →",
+    "pick_subject": "Pick this topic →",
     "form_title": "Send us a message",
     "form_subtitle": "Fill in the form — we'll reply within 1 business day.",
     "success": "Your message has been sent. We'll reply within 1 business day.",
