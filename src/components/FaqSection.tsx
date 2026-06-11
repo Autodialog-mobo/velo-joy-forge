@@ -1,6 +1,11 @@
 import { Fragment, useEffect, useState, type ReactNode } from "react";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { Link } from "@tanstack/react-router";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import type { Lang } from "@/i18n/config";
@@ -28,7 +33,11 @@ function renderHref(target: string, label: string, key: number, lang: Lang): Rea
     );
   }
   if (target.startsWith("mailto:") || target.startsWith("tel:")) {
-    return <a key={key} href={target} style={linkStyle}>{label}</a>;
+    return (
+      <a key={key} href={target} style={linkStyle}>
+        {label}
+      </a>
+    );
   }
   const href = /^https?:\/\//.test(target) ? target : `https://${target}`;
   return (
@@ -42,7 +51,11 @@ function renderToken(token: string, key: number, lang: Lang): ReactNode {
   const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
   if (md) return renderHref(md[2], md[1], key, lang);
   if (token.startsWith("mailto:")) {
-    return <a key={key} href={token} style={linkStyle}>{token.slice(7)}</a>;
+    return (
+      <a key={key} href={token} style={linkStyle}>
+        {token.slice(7)}
+      </a>
+    );
   }
   if (/^https?:\/\//.test(token)) {
     return (
@@ -53,7 +66,13 @@ function renderToken(token: string, key: number, lang: Lang): ReactNode {
   }
   if (token.startsWith("/")) return renderHref(token, token, key, lang);
   return (
-    <a key={key} href={`https://${token}`} target="_blank" rel="noopener noreferrer" style={linkStyle}>
+    <a
+      key={key}
+      href={`https://${token}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={linkStyle}
+    >
       {token}
     </a>
   );
@@ -97,7 +116,12 @@ function FaqColumn({
     >
       <Accordion type="multiple" className="w-full" value={value} onValueChange={onChange}>
         {faqs.map((faq, i) => (
-          <AccordionItem key={`faq-${side}-${i}`} value={`faq-${side}-${i}`} id={`faq-${side}-${i}`} className="border-b border-[rgba(13,31,60,0.1)]">
+          <AccordionItem
+            key={`faq-${side}-${i}`}
+            value={`faq-${side}-${i}`}
+            id={`faq-${side}-${i}`}
+            className="border-b border-[rgba(13,31,60,0.1)]"
+          >
             <AccordionTrigger
               className="text-left"
               style={{
@@ -127,7 +151,10 @@ function FaqColumn({
                     <span>{line.slice(1).trim()}</span>
                   </div>
                 ) : (
-                  <span key={idx}>{renderLine(line, lang)}{idx < arr.length - 1 ? <br /> : null}</span>
+                  <span key={idx}>
+                    {renderLine(line, lang)}
+                    {idx < arr.length - 1 ? <br /> : null}
+                  </span>
                 ),
               )}
             </AccordionContent>
@@ -141,6 +168,7 @@ function FaqColumn({
 export function FaqSection() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["faq", "common"]);
+  const routeHash = useRouterState({ select: (s) => s.location.hash });
   const [openLeft, setOpenLeft] = useState<string[]>([]);
   const [openRight, setOpenRight] = useState<string[]>([]);
 
@@ -149,25 +177,42 @@ export function FaqSection() {
   const leftFAQs: Faq[] = Array.isArray(leftRaw) ? (leftRaw as Faq[]) : [];
   const rightFAQs: Faq[] = Array.isArray(rightRaw) ? (rightRaw as Faq[]) : [];
 
-
   useEffect(() => {
-    if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
+    const timers: number[] = [];
+    const scrollToId = (id: string, block: ScrollLogicalPosition) => {
+      [0, 100, 350, 700].forEach((delay) => {
+        timers.push(
+          window.setTimeout(() => {
+            document
+              .getElementById(id)
+              ?.scrollIntoView({ behavior: delay === 0 ? "auto" : "smooth", block });
+          }, delay),
+        );
+      });
+    };
     const applyHash = () => {
-      const h = window.location.hash.replace("#", "");
-      if (h.startsWith("faq-l-")) setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
-      else if (h.startsWith("faq-r-")) setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      const h = (routeHash || window.location.hash).replace("#", "");
+      if (h === "faq") {
+        scrollToId("faq", "start");
+        return;
+      }
+      if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
+      if (h.startsWith("faq-l-")) {
+        setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      } else if (h.startsWith("faq-r-")) {
+        setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      }
       if (h.startsWith("faq-")) {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            document.getElementById(h)?.scrollIntoView({ block: "center" });
-          });
-        });
+        scrollToId(h, "center");
       }
     };
     applyHash();
     window.addEventListener("hashchange", applyHash);
-    return () => window.removeEventListener("hashchange", applyHash);
-  }, [leftFAQs.length, rightFAQs.length]);
+    return () => {
+      window.removeEventListener("hashchange", applyHash);
+      timers.forEach(window.clearTimeout);
+    };
+  }, [routeHash, leftFAQs.length, rightFAQs.length]);
 
   const syncHash = (val: string[]) => {
     const last = val[val.length - 1];
@@ -219,11 +264,19 @@ export function FaqSection() {
             }}
           >
             {t("faq:section.support_prefix")}{" "}
-            <Link to="/$lang/contact" params={{ lang }} hash="wa-form" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <Link
+              to="/$lang/contact"
+              params={{ lang }}
+              hash="wa-form"
+              style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
               {t("faq:section.support_whatsapp")}
             </Link>{" "}
             {t("faq:section.support_or_mail")}{" "}
-            <a href="mailto:support@velopass.com" style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}>
+            <a
+              href="mailto:support@velopass.com"
+              style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
               support@velopass.com
             </a>
           </p>
@@ -236,8 +289,26 @@ export function FaqSection() {
             gap: 24,
           }}
         >
-          <FaqColumn faqs={leftFAQs} value={openLeft} onChange={(v) => { setOpenLeft(v); syncHash(v); }} side="l" lang={lang} />
-          <FaqColumn faqs={rightFAQs} value={openRight} onChange={(v) => { setOpenRight(v); syncHash(v); }} side="r" lang={lang} />
+          <FaqColumn
+            faqs={leftFAQs}
+            value={openLeft}
+            onChange={(v) => {
+              setOpenLeft(v);
+              syncHash(v);
+            }}
+            side="l"
+            lang={lang}
+          />
+          <FaqColumn
+            faqs={rightFAQs}
+            value={openRight}
+            onChange={(v) => {
+              setOpenRight(v);
+              syncHash(v);
+            }}
+            side="r"
+            lang={lang}
+          />
         </div>
       </div>
     </section>
