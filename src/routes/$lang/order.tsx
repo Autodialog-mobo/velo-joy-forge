@@ -150,19 +150,22 @@ function BestellenPage() {
           <VelopassMark size={28} />
           <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18 }}>Velopass</span>
         </Link>
-        <button
-          type="button"
-          onClick={() => {
-            if (typeof window !== "undefined" && window.history.length > 1) {
-              window.history.back();
-            } else {
-              window.location.href = "/";
-            }
-          }}
-          style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
-        >
-          <ArrowLeft size={16} /> Terug
-        </button>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
+          <LangSwitcher currentLang={lang} tone="light" />
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined" && window.history.length > 1) {
+                window.history.back();
+              } else {
+                window.location.href = "/";
+              }
+            }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
+          >
+            <ArrowLeft size={16} /> Terug
+          </button>
+        </div>
       </header>
 
       {/* Hero */}
