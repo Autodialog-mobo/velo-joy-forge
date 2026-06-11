@@ -199,8 +199,9 @@ export function FaqSection() {
       if (leftFAQs.length === 0 && rightFAQs.length === 0) return;
       if (h.startsWith("faq-l-")) {
         setOpenLeft((prev) => (prev.includes(h) ? prev : [...prev, h]));
+      } else if (h.startsWith("faq-r-")) {
+        setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
       }
-      else if (h.startsWith("faq-r-")) setOpenRight((prev) => (prev.includes(h) ? prev : [...prev, h]));
       if (h.startsWith("faq-")) {
         scrollToId(h, "center");
       }
