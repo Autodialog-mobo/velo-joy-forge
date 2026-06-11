@@ -93,7 +93,8 @@ function VelopassPro() {
             </Link>
           </li>
         </ul>
-        <div className="nav-actions">
+        <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <LangSwitcher currentLang={lang} />
           <a href="#registreer" className="btn-nav-cta">{t("nav.registerCta")}</a>
           <button
             type="button"
