@@ -270,7 +270,8 @@ function GestolenPage() {
           <li><Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.community")}</Link></li>
           <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
-        <div className="nav-actions">
+        <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <LangSwitcher currentLang={lang} />
           <a href={APP_LOGIN} className="btn-login">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
