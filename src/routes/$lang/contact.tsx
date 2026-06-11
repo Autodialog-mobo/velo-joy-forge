@@ -221,6 +221,23 @@ function ContactPage() {
     setShop({ name: "", company: "", email: "", phone: "", subject: "", message: "" });
   };
 
+  // Map shop shortcut index -> subject index in the shop.subjects list.
+  // 0 = Request a demo (subjects[0]), 1 = POS/integration (subjects[1]),
+  // 2 = Already a partner — tech question (subjects[3]).
+  const SHOP_SUBJECT_INDEX = [0, 1, 3];
+  const pickShopShortcut = (idx: number) => {
+    const subjectIdx = SHOP_SUBJECT_INDEX[idx] ?? 0;
+    setShop((s) => ({
+      ...s,
+      subject: subjects[subjectIdx] ?? s.subject,
+      message: shortcuts[idx]?.prefill ?? s.message,
+    }));
+    setShopErrors({});
+    const el = document.getElementById("shop-form");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => document.getElementById("s-name")?.focus(), 400);
+  };
+
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
