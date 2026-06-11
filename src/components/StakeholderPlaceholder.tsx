@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { VelopassMark } from "@/components/VelopassMark";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 export function StakeholderPlaceholder({
