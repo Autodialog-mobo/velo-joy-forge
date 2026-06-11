@@ -351,7 +351,7 @@ function ContactPage() {
       </main>
 
       <style>{`
-        .back-btn-wrap { padding: 56px 6vw 0; max-width: 1100px; margin: 0 auto; }
+        .back-btn-wrap { padding: 88px 6vw 0; max-width: 1100px; margin: 0 auto; }
         .back-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
         .contact-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: rgba(13,31,60,0.05); padding: 4px; border-radius: 10px; margin-bottom: 8px; }
         .contact-tab { padding: 8px 14px; border: none; background: transparent; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 13px; color: rgba(13,31,60,0.55); border-radius: 8px; cursor: pointer; transition: all 0.18s ease; }
@@ -363,7 +363,7 @@ function ContactPage() {
         .wa-grid input::placeholder, .wa-grid textarea::placeholder, .wa-grid select { color: rgba(245,243,238,0.55); }
         .wa-grid input:focus, .wa-grid textarea:focus, .wa-grid select:focus { border-color: #2ECC8A; }
         @media (max-width: 768px) {
-          .back-btn-wrap { padding-top: 56px; }
+          .back-btn-wrap { padding-top: 72px; }
           .back-btn { font-size: 12px; }
           .contact-cards { grid-template-columns: 1fr; }
           .wa-grid { grid-template-columns: 1fr; }
