@@ -139,9 +139,10 @@ function BestellenPage() {
       }
       window.location.href = result.checkoutUrl;
     } catch (e) {
-      setCheckoutError(e instanceof Error ? e.message : "Onbekende fout");
+      setCheckoutError(e instanceof Error ? e.message : t("checkout_stage.unknown_error"));
     }
   };
+
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C" }}>
