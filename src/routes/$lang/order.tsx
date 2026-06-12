@@ -120,6 +120,7 @@ function BestellenPage() {
           items: items.map((i) => ({ priceId: i.priceId, quantity: i.quantity })),
           customerEmail: email,
           origin: window.location.origin,
+          lang: lang as "nl" | "en" | "fr" | "de",
           shipping: {
             firstName: firstName.trim(),
             lastName: lastName.trim(),
