@@ -16,8 +16,7 @@ type Bundle = {
   stickers: number;
   price: number; // cents
   pricePerUnit: number;
-  tagline: string;
-  discountLabel?: string;
+  discountKey?: "discount_15" | "discount_23";
   featured?: boolean;
 };
 
@@ -28,7 +27,6 @@ const BUNDLES: Bundle[] = [
     stickers: 1,
     price: 1295,
     pricePerUnit: 1295,
-    tagline: "€12,95 per stuk",
   },
   {
     key: "frameid_duo_onetime",
@@ -36,8 +34,7 @@ const BUNDLES: Bundle[] = [
     stickers: 2,
     price: 2195,
     pricePerUnit: 1098,
-    tagline: "€10,98 per stuk",
-    discountLabel: "15% korting",
+    discountKey: "discount_15",
     featured: true,
   },
   {
@@ -46,10 +43,10 @@ const BUNDLES: Bundle[] = [
     stickers: 5,
     price: 4995,
     pricePerUnit: 999,
-    tagline: "€9,99 per stuk",
-    discountLabel: "23% korting",
+    discountKey: "discount_23",
   },
 ];
+
 
 const eur = (cents: number) =>
   new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(cents / 100);
