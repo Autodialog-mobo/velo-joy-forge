@@ -221,32 +221,34 @@ function BestellenPage() {
                     >
                       {isFeatured && (
                         <span style={{ position: "absolute", top: -14, right: 12, zIndex: 2, background: "#2ECC8A", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", padding: "4px 12px", borderRadius: 999, boxShadow: "0 2px 8px rgba(46,204,138,0.4)" }}>
-                          POPULAIRSTE
+                          {t("bundles.popular_badge")}
                         </span>
                       )}
                       <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#2ECC8A" }}>
                         {b.stickers}
                       </div>
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 16, color: "#0D1F3C", marginTop: 2 }}>
-                        {b.stickers === 1 ? "Frame-ID" : "Frame-ID's"}
+                        {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
                       <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
-                      <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>{b.tagline}</p>
-                      {b.discountLabel && (
+                      <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
+                        {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
+                      </p>
+                      {b.discountKey && (
                         <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.18)", color: "#0F8A5C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
-                          {b.discountLabel}
+                          {t(`bundles.${b.discountKey}` as const)}
                         </span>
                       )}
 
                       <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                         <div style={{ display: "inline-flex", alignItems: "center", border: "1px solid rgba(13,31,60,0.15)", borderRadius: 10, overflow: "hidden", background: "#fff" }}>
-                          <button type="button" aria-label="Minder" onClick={() => updateQty(b.key, -1)} style={qtyBtn} disabled={qty === 0}>
+                          <button type="button" aria-label={t("bundles.qty_decrease_aria")} onClick={() => updateQty(b.key, -1)} style={qtyBtn} disabled={qty === 0}>
                             <Minus size={14} />
                           </button>
                           <span style={{ minWidth: 32, textAlign: "center", fontWeight: 600, color: "#0D1F3C" }}>{qty}</span>
-                          <button type="button" aria-label="Meer" onClick={() => updateQty(b.key, 1)} style={qtyBtn}>
+                          <button type="button" aria-label={t("bundles.qty_increase_aria")} onClick={() => updateQty(b.key, 1)} style={qtyBtn}>
                             <Plus size={14} />
                           </button>
                         </div>
@@ -265,9 +267,10 @@ function BestellenPage() {
                             cursor: "pointer",
                           }}
                         >
-                          {qty > 0 ? "Nog één" : "Toevoegen"}
+                          {qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
                         </button>
                       </div>
+
                     </div>
                   );
                 })}
