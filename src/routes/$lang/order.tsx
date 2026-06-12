@@ -274,33 +274,34 @@ function BestellenPage() {
               </div>
 
               <p style={{ fontSize: 12, color: "rgba(13,31,60,0.55)", margin: 0, fontFamily: "DM Sans, sans-serif" }}>
-                Combineer gerust meerdere bundels in één bestelling. BTW en eventuele lokale belastingen worden automatisch berekend bij de checkout.
+                {t("info.combine_note")}
               </p>
 
               {/* PRO TIP — klevinstructies */}
               <div style={{ background: "rgba(46,204,138,0.06)", border: "1px solid rgba(46,204,138,0.2)", borderRadius: 12, padding: "20px 24px", fontFamily: "DM Sans, sans-serif" }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <Lightbulb size={16} color="#2ECC8A" />
-                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>Pro tip</span>
+                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>{t("pro_tip.label")}</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
                   <div>
                     <Droplets size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Ontvetten eerst</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Reinig het frameoppervlak eerst met een ontvettingsmiddel voor een optimale hechting.</p>
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.degrease_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.degrease_body")}</p>
                   </div>
                   <div>
                     <Eye size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Zichtbaar plaatsen</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Plaats de Frame-ID in het zicht — bij voorkeur net onder de zadelpen. Zo is de QR makkelijk scanbaar.</p>
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.visible_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.visible_body")}</p>
                   </div>
                   <div>
                     <ShieldCheck size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Afschrikking voor dieven</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Een zichtbare Frame-ID laat dieven meteen weten dat jouw fiets beschermd en geregistreerd is.</p>
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.deterrent_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.deterrent_body")}</p>
                   </div>
                 </div>
               </div>
+
             </div>
 
             {/* Cart sidebar */}
