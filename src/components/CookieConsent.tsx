@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 export function CookieConsent() {
   const lang = useCurrentLang();
+  const { t } = useTranslation("common");
   const [visible, setVisible] = useState(false);
+
 
   useEffect(() => {
     const consent = localStorage.getItem("vp_cookie_consent");
