@@ -13,7 +13,8 @@
     "cta_primary": "Commandez votre Frame-ID →",
     "cta_sub": "À partir de 12,95 € — livraison gratuite dans toute l'UE",
     "stolen_link": "Vélo volé ou disparu ? → Lisez ce qu'il faut faire",
-    "trust_text_suffix": "vélocistes"
+    "trust_text_suffix": "vélocistes",
+    "trust_text_cyclists": "+180 000 cyclistes"
   },
   "paths": {
     "shop": {
