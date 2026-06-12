@@ -407,7 +407,7 @@ function BestellenPage() {
                     opacity: !canCheckout ? 0.7 : 1,
                   }}
                 >
-                  {hasItems ? `Betalen — ${eur(total)} →` : "Betalen →"}
+                  {hasItems ? t("cart.pay_with_total_template", { total: eur(total) }) : t("cart.pay_arrow")}
                 </button>
                 {!canCheckout && (
                   <span
