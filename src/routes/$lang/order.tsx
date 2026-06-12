@@ -72,6 +72,7 @@ export const Route = createFileRoute("/$lang/order")({
 
 function BestellenPage() {
   const lang = useCurrentLang();
+  const { t } = useTranslation("order");
   const [quantities, setQuantities] = useState<Record<BundleKey, number>>({
     frameid_solo_onetime: 0,
     frameid_duo_onetime: 0,
@@ -87,6 +88,7 @@ function BestellenPage() {
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
 
   const items = useMemo(
     () =>
