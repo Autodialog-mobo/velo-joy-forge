@@ -13,7 +13,8 @@
     "cta_primary": "Frame-ID bestellen →",
     "cta_sub": "Ab 12,95 € — kostenloser Versand in der gesamten EU",
     "stolen_link": "Fahrrad gestohlen oder verschwunden? → Lies, was jetzt zu tun ist",
-    "trust_text_suffix": "Fahrradhändlern"
+    "trust_text_suffix": "Fahrradhändlern",
+    "trust_text_cyclists": "+180.000 Radfahrer"
   },
   "paths": {
     "shop": {

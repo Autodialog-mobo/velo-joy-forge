@@ -73,7 +73,9 @@ type LangConfig = {
 };
 
 const LANG_CONFIG: Record<string, LangConfig> = {
-  fr: { target: "FR", formality: "less" },
+  // FR: vous-form is the correct register for the French market — keep formality at default
+  // so re-runs don't drift to tutoiement.
+  fr: { target: "FR", formality: "default" },
   de: { target: "DE", formality: "default" },
 };
 
