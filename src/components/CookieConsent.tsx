@@ -64,8 +64,7 @@ export function CookieConsent() {
             margin: 0,
           }}
         >
-          Velopass gebruikt cookies om je surfervaring te verbeteren en
-          anonieme statistieken bij te houden. Lees ons{" "}
+          {t("cookie_consent.message")}{" "}
           <Link
             to="/$lang/privacy"
             params={{ lang }}
@@ -75,10 +74,11 @@ export function CookieConsent() {
               textUnderlineOffset: 3,
             }}
           >
-            privacybeleid
+            {t("cookie_consent.privacy_link")}
           </Link>{" "}
-          voor meer info.
+          {t("cookie_consent.message_suffix")}
         </p>
+
       </div>
       <div style={{ display: "flex", gap: 12, flexShrink: 0 }}>
         <button
