@@ -40,12 +40,22 @@ async function mollieFetch(path: string, init: RequestInit = {}) {
 
 export type MollieCheckoutResult = { checkoutUrl: string; paymentId: string } | { error: string };
 
+type SupportedLang = "nl" | "en" | "fr" | "de";
+
+const LANG_TO_MOLLIE_LOCALE: Record<SupportedLang, string> = {
+  nl: "nl_BE", // BE is our largest market — Bancontact defaults
+  en: "en_US", // Mollie's standard English locale (en_GB not in supported list)
+  fr: "fr_BE", // Wallonia is bigger for us than FR-FR
+  de: "de_DE",
+};
+
 export const createMolliePayment = createServerFn({ method: "POST" })
   .inputValidator(
     (data: {
       items: Array<{ priceId: string; quantity: number }>;
       customerEmail: string;
       origin: string;
+      lang: SupportedLang;
       shipping: {
         firstName: string;
         lastName: string;
@@ -68,6 +78,8 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         throw new Error("Ongeldig e-mailadres");
       }
       if (!/^https?:\/\//.test(data.origin)) throw new Error("Ongeldige origin");
+      if (!/^(nl|en|fr|de)$/.test(data.lang)) throw new Error("Ongeldige taal");
+
       const s = data.shipping;
       if (!s || !s.firstName?.trim() || !s.lastName?.trim() || !s.address?.trim()
           || !s.postalCode?.trim() || !s.city?.trim()) {
