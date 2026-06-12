@@ -33,5 +33,19 @@
     "soon": "Binnenkort beschikbaar",
     "back_to_stakeholders": "← Alle stakeholders",
     "talk_to_us": "Praat met ons →"
+  },
+  "cookie_consent": {
+    "message": "Velopass gebruikt cookies om je surfervaring te verbeteren en anonieme statistieken bij te houden. Lees ons",
+    "privacy_link": "privacybeleid",
+    "message_suffix": "voor meer info.",
+    "decline": "Alleen essentieel",
+    "accept": "Alle cookies toestaan"
+  },
+  "buttons": {
+    "loading": "Laden...",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "close": "Sluiten",
+    "retry": "Probeer opnieuw"
   }
 }
