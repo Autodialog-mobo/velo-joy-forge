@@ -40,12 +40,22 @@ async function mollieFetch(path: string, init: RequestInit = {}) {
 
 export type MollieCheckoutResult = { checkoutUrl: string; paymentId: string } | { error: string };
 
+type SupportedLang = "nl" | "en" | "fr" | "de";
+
+const LANG_TO_MOLLIE_LOCALE: Record<SupportedLang, string> = {
+  nl: "nl_BE", // BE is our largest market — Bancontact defaults
+  en: "en_US", // Mollie's standard English locale (en_GB not in supported list)
+  fr: "fr_BE", // Wallonia is bigger for us than FR-FR
+  de: "de_DE",
+};
+
 export const createMolliePayment = createServerFn({ method: "POST" })
   .inputValidator(
     (data: {
       items: Array<{ priceId: string; quantity: number }>;
       customerEmail: string;
       origin: string;
+      lang: SupportedLang;
       shipping: {
         firstName: string;
         lastName: string;
@@ -68,6 +78,8 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         throw new Error("Ongeldig e-mailadres");
       }
       if (!/^https?:\/\//.test(data.origin)) throw new Error("Ongeldige origin");
+      if (!/^(nl|en|fr|de)$/.test(data.lang)) throw new Error("Ongeldige taal");
+
       const s = data.shipping;
       if (!s || !s.firstName?.trim() || !s.lastName?.trim() || !s.address?.trim()
           || !s.postalCode?.trim() || !s.city?.trim()) {
@@ -100,22 +112,31 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         email: data.customerEmail,
       };
 
+      const mollieLocale = LANG_TO_MOLLIE_LOCALE[data.lang];
+      const redirectBase = `${data.origin}/${data.lang}/order/thanks`;
+
       // Create payment with placeholder redirect; we'll patch with real ID after.
       const payment = await mollieFetch("/payments", {
         method: "POST",
         body: JSON.stringify({
           amount: { currency: "EUR", value: formatAmount(totalCents) },
           description: `Velopass — ${description}`,
-          redirectUrl: `${data.origin}/order/thanks?payment_id=pending`,
+          redirectUrl: `${redirectBase}?payment_id=pending`,
           webhookUrl: `${data.origin}/api/public/payments/mollie-webhook`,
           billingEmail: data.customerEmail,
           shippingAddress,
-          locale: "nl_NL",
-          metadata: { items: data.items, email: data.customerEmail, shipping: shippingAddress },
+          locale: mollieLocale,
+          metadata: {
+            items: data.items,
+            email: data.customerEmail,
+            shipping: shippingAddress,
+            lang: data.lang,
+          },
         }),
       });
 
-      const realRedirect = `${data.origin}/order/thanks?payment_id=${payment.id}`;
+      const realRedirect = `${redirectBase}?payment_id=${payment.id}`;
+
       await mollieFetch(`/payments/${payment.id}`, {
         method: "PATCH",
         body: JSON.stringify({ redirectUrl: realRedirect }),
@@ -143,7 +164,9 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           shipping_postal_code: shippingAddress.postalCode,
           shipping_city: shippingAddress.city,
           shipping_country: shippingAddress.country,
+          lang: data.lang,
           updated_at: new Date().toISOString(),
+
         },
         { onConflict: "mollie_payment_id" },
       );
