@@ -164,7 +164,9 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           shipping_postal_code: shippingAddress.postalCode,
           shipping_city: shippingAddress.city,
           shipping_country: shippingAddress.country,
+          lang: data.lang,
           updated_at: new Date().toISOString(),
+
         },
         { onConflict: "mollie_payment_id" },
       );
