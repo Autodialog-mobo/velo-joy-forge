@@ -1,51 +1,51 @@
 {
   "_translated": false,
   "nav": {
-    "what_you_get": "What you get",
-    "already_have_one": "Already have a sticker?",
-    "order_sticker": "Order a sticker",
-    "community": "Community",
-    "bike_check": "Bike check",
-    "contact": "Contact",
-    "for_professionals": "For professionals",
-    "login": "Log in",
-    "menu": "Menu"
+    "what_you_get": "Was Sie erhalten",
+    "already_have_one": "Hast du schon einen Aufkleber?",
+    "order_sticker": "Bestelle einen Aufkleber",
+    "community": "Gemeinschaft",
+    "bike_check": "Fahrradcheck",
+    "contact": "Kontakt",
+    "for_professionals": "Für Fachleute",
+    "login": "Anmelden",
+    "menu": "Menü"
   },
   "lang_switcher": {
     "label": "Sprache",
     "current": "Aktuelle Sprache"
   },
   "footer": {
-    "tagline": "Always on your bike. Everything sorted.",
-    "tagline_pro": "Every bike. A customer. For life.",
-    "coverage": "Frame-IDs available across Europe · Shops active in BE, NL and FR",
-    "privacy": "Privacy",
-    "terms": "Terms",
-    "contact": "Contact",
-    "bike_check": "Bike check",
-    "stolen": "Bike stolen?",
-    "faq": "Frequently asked questions",
-    "for_cyclists": "For cyclists",
+    "tagline": "Immer auf dem Rad. Alles geregelt.",
+    "tagline_pro": "Jedes Fahrrad. Ein Kunde. Ein Leben lang.",
+    "coverage": "Frame-ID in ganz Europa erhältlich · Filialen in BE, NL und FR",
+    "privacy": "Datenschutz",
+    "terms": "Begriffe",
+    "contact": "Kontakt",
+    "bike_check": "Fahrradcheck",
+    "stolen": "Fahrrad gestohlen?",
+    "faq": "Häufig gestellte Fragen",
+    "for_cyclists": "Für Radfahrer",
     "copy": "© 2026 Velopass",
-    "company_line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · VAT BE0777.359.681"
+    "company_line": "Velopass BV · Stokerijstraat 29/Bus a1, 2110 Wijnegem · USt-IdNr. BE0777.359.681"
   },
   "placeholders": {
-    "soon": "Coming soon",
-    "back_to_stakeholders": "← All stakeholders",
-    "talk_to_us": "Talk to us →"
+    "soon": "In Kürze",
+    "back_to_stakeholders": "← Alle Beteiligten",
+    "talk_to_us": "Sprechen Sie uns an →"
   },
   "cookie_consent": {
-    "message": "Velopass uses cookies to improve your browsing experience and keep anonymous statistics. Read our",
-    "privacy_link": "privacy policy",
-    "message_suffix": "for more info.",
-    "decline": "Essential only",
-    "accept": "Allow all cookies"
+    "message": "Velopass verwendet Cookies, um Ihr Surferlebnis zu verbessern und anonyme Statistiken zu erstellen. Lesen Sie unsere",
+    "privacy_link": "Datenschutzerklärung",
+    "message_suffix": "Weitere Informationen finden Sie hier.",
+    "decline": "Nur das Nötigste",
+    "accept": "Alle Cookies zulassen"
   },
   "buttons": {
-    "loading": "Loading...",
-    "save": "Save",
-    "cancel": "Cancel",
-    "close": "Close",
-    "retry": "Try again"
+    "loading": "Wird geladen...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "close": "Schließen",
+    "retry": "Versuche es noch einmal"
   }
 }

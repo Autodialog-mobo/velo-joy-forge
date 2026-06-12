@@ -1,106 +1,106 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Contact — Velopass",
-    "description": "Need help with activation, your Frame-ID or a found bike? Send the Velopass team a message via WhatsApp.",
-    "og_description": "Pick a topic and chat with the Velopass team on WhatsApp."
+    "title": "Kontakt — Velopass",
+    "description": "Benötigst du Hilfe bei der Aktivierung, bei „Frame-ID“ oder bei einem gefundenen Fahrrad? Dann sende dem „Velopass“-Team eine Nachricht über WhatsApp.",
+    "og_description": "Such dir ein Thema aus und chatte mit dem Team von „Velopass“ auf WhatsApp."
   },
-  "back": "Back",
+  "back": "Zurück",
   "header": {
-    "title": "How can we help?",
-    "subtitle": "Pick below who you are — we'll send your question straight to the right person."
+    "title": "Wie können wir Ihnen helfen?",
+    "subtitle": "Wähle unten aus, wer du bist – wir leiten deine Frage direkt an die richtige Person weiter."
   },
   "tabs": {
-    "rider": "I'm a cyclist",
-    "shop": "I'm a bike shop"
+    "rider": "Ich bin Radfahrer",
+    "shop": "Ich bin ein Fahrradgeschäft"
   },
-  "cards_eyebrow": "What's your question about?",
+  "cards_eyebrow": "Worum geht es bei deiner Frage?",
   "rider": {
     "suggestions": [
       {
-        "title": "Activation help",
-        "desc": "Received an invite but can't log in?",
-        "prefill": "Hi Velopass, I need help activating my account. "
+        "title": "Hilfe zur Aktivierung",
+        "desc": "Du hast eine Einladung erhalten, kannst dich aber nicht anmelden?",
+        "prefill": "Hallo Velopass, ich brauche Hilfe bei der Aktivierung meines Kontos. "
       },
       {
-        "title": "Question about my Frame-ID",
-        "desc": "Frame-ID not received, damaged or another question about your order?",
-        "prefill": "Hi Velopass, I have a question about my Frame-ID: "
+        "title": "Frage zu meinem „Frame-ID“",
+        "desc": "Frame-ID Nicht erhalten, beschädigt oder eine andere Frage zu Ihrer Bestellung?",
+        "prefill": "Hallo Velopass, ich habe eine Frage zu meinem „Frame-ID“: "
       },
       {
-        "title": "Report a found bike",
-        "desc": "Found a bike with a Velopass Frame-ID?",
-        "prefill": "Hi Velopass, I found a bike with a Velopass Frame-ID. "
+        "title": "Fundfahrrad melden",
+        "desc": "Hast du ein Fahrrad mit einem „Velopass“ gefunden? Frame-ID?",
+        "prefill": "Hallo Velopass, ich habe ein Fahrrad mit einem Velopass Frame-ID gefunden. "
       }
     ],
-    "pick_subject": "Pick this topic →",
-    "form_title": "Send us a message",
-    "form_subtitle": "Fill in your details and open WhatsApp — we usually reply within 2 hours during office hours.",
-    "wa_message_intro": "Hi Velopass,",
+    "pick_subject": "Wähle dieses Thema aus →",
+    "form_title": "Schreiben Sie uns eine Nachricht",
+    "form_subtitle": "Geben Sie Ihre Daten ein und öffnen Sie WhatsApp – wir antworten in der Regel innerhalb von 2 Stunden während der Bürozeiten.",
+    "wa_message_intro": "Hallo Velopass,",
     "wa_message_name": "Name",
-    "wa_message_email": "Email",
-    "wa_message_phone": "Phone",
-    "email_alt_prefix": "Prefer to send an email?"
+    "wa_message_email": "E-Mail",
+    "wa_message_phone": "Telefon",
+    "email_alt_prefix": "Möchten Sie lieber eine E-Mail senden?"
   },
   "shop": {
     "shortcuts": [
       {
-        "title": "Request a demo",
-        "desc": "See Velopass live and ask our team anything.",
-        "prefill": "Hi Velopass, I'd like to request a demo of Velopass for my shop."
+        "title": "Demo anfordern",
+        "desc": "Sehen Sie sich „Velopass“ live an und stellen Sie unserem Team alle Fragen, die Sie haben.",
+        "prefill": "Hallo Velopass, ich möchte eine Demo von „Velopass“ für meinen Shop anfordern."
       },
       {
-        "title": "POS or integration",
-        "desc": "Questions about linking your POS or the Pro App?",
-        "prefill": "Hi Velopass, I have a question about POS integration or the Pro App: "
+        "title": "Kassensystem oder Integration",
+        "desc": "Haben Sie Fragen zur Verknüpfung Ihres Kassensystems oder der Pro-App?",
+        "prefill": "Hallo Velopass, ich habe eine Frage zur POS-Integration oder zur Pro-App: "
       },
       {
-        "title": "Already a partner — tech question",
-        "desc": "Already onboard and have a question about your account or portal?",
-        "prefill": "Hi Velopass, I'm already a partner and I have a technical question: "
+        "title": "Ich bin bereits Partner – technische Frage",
+        "desc": "Sind Sie bereits registriert und haben eine Frage zu Ihrem Konto oder zum Portal?",
+        "prefill": "Hallo „Velopass“, ich bin bereits Partner und habe eine technische Frage: "
       }
     ],
-    "send_email": "Send an email →",
-    "pick_subject": "Pick this topic →",
-    "form_title": "Send us a message",
-    "form_subtitle": "Fill in the form — we'll reply within 1 business day.",
-    "success": "Your message has been sent. We'll reply within 1 business day.",
+    "send_email": "E-Mail senden →",
+    "pick_subject": "Wähle dieses Thema aus →",
+    "form_title": "Schreiben Sie uns eine Nachricht",
+    "form_subtitle": "Füllen Sie das Formular aus – wir melden uns innerhalb eines Werktags bei Ihnen.",
+    "success": "Ihre Nachricht wurde gesendet. Wir antworten Ihnen innerhalb eines Werktags.",
     "subjects": [
-      "Request a demo",
-      "POS or integration",
-      "Pricing or starter pack",
-      "Already a partner — tech question",
-      "Leasing company or insurer",
-      "Other"
+      "Demo anfordern",
+      "Kassensystem oder Integration",
+      "Preise oder Starterpaket",
+      "Ich bin bereits Partner – technische Frage",
+      "Leasinggesellschaft oder Versicherer",
+      "Sonstiges"
     ],
-    "subject_placeholder": "Pick a topic…"
+    "subject_placeholder": "Wähle ein Thema aus…"
   },
   "form": {
     "name": "Name",
     "name_placeholder": "John Smith",
-    "phone": "Phone",
+    "phone": "Telefon",
     "phone_placeholder": "+32 4...",
-    "email": "Email",
+    "email": "E-Mail",
     "email_placeholder_rider": "john@example.com",
     "email_placeholder_shop": "john@shop.com",
-    "company": "Bike shop or company name",
+    "company": "Name des Fahrradgeschäfts oder der Firma",
     "company_placeholder": "Smith Bikes",
-    "note": "Note",
-    "note_placeholder": "Tell us briefly what your question is about...",
-    "subject": "Subject",
-    "message": "Message",
-    "send_whatsapp": "Send via WhatsApp →"
+    "note": "Hinweis",
+    "note_placeholder": "Schreiben Sie uns kurz, worum es bei Ihrer Frage geht...",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "send_whatsapp": "Über WhatsApp senden →"
   },
   "errors": {
-    "name_required": "Please enter your name.",
-    "email_required": "Please enter your email address.",
-    "email_invalid": "Please enter a valid email address.",
-    "company_required": "Please enter your shop or company name.",
-    "subject_required": "Please pick a topic.",
-    "message_required": "Please write a message.",
-    "form_check": "Please check the form."
+    "name_required": "Bitte geben Sie Ihren Namen ein.",
+    "email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+    "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "company_required": "Bitte geben Sie den Namen Ihres Geschäfts oder Unternehmens ein.",
+    "subject_required": "Bitte wählen Sie ein Thema aus.",
+    "message_required": "Bitte schreiben Sie eine Nachricht.",
+    "form_check": "Bitte überprüfen Sie das Formular."
   },
   "legal": {
-    "line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, Belgium · VAT: BE0777.359.681 · {{email}}"
+    "line": "Velopass BV · Stokerijstraat 29/Bus a1, 2110 Wijnegem, Belgien · USt-IdNr.: BE0777.359.681 · {{email}}"
   }
 }
