@@ -1,24 +1,24 @@
 {
   "_translated": false,
   "assistance": {
-    "meta_title": "Velopass for roadside assistance — Coming soon",
-    "meta_description": "One scan, full picture of the bike. Faster interventions for roadside assistance providers.",
-    "eyebrow": "For roadside assistance",
-    "title": "One scan. Full picture.",
-    "intro": "On intervention, instant access to the bike, owner and active services — anywhere in Europe."
+    "meta_title": "Velopass pour l'assistance routière — Bientôt disponible",
+    "meta_description": "Un seul scan, un aperçu complet du vélo. Des interventions plus rapides pour les prestataires d'assistance routière.",
+    "eyebrow": "Pour l'assistance routière",
+    "title": "Un seul scan. Une vue d'ensemble.",
+    "intro": "En cas d'intervention, tu as un accès immédiat au vélo, au propriétaire et aux services actifs — partout en Europe."
   },
   "insurance": {
-    "meta_title": "Velopass for insurers — Coming soon",
-    "meta_description": "Verified bike data, automatic activation and lower fraud — for insurers.",
-    "eyebrow": "For insurers",
-    "title": "Verified bike data. Less fraud.",
-    "intro": "Activate policies automatically at the point of sale. Verify ownership through the international Velopass register."
+    "meta_title": "Velopass pour les assureurs — À venir",
+    "meta_description": "Des données vérifiées sur les motos, une activation automatique et moins de fraudes — pour les assureurs.",
+    "eyebrow": "Pour les assureurs",
+    "title": "Des données vérifiées sur les vélos. Moins de fraudes.",
+    "intro": "Active automatiquement les polices d'assurance au point de vente. Vérifie la propriété via le registre international de l'Velopass."
   },
   "manufacturer": {
-    "meta_title": "Velopass for manufacturers — Coming soon",
-    "meta_description": "Integrate Velopass already at production. Give your dealers a flying start.",
-    "eyebrow": "For manufacturers",
-    "title": "Velopass integrated at production.",
-    "intro": "Deliver bikes with a built-in Frame-ID and pre-filled bike data. Make life simpler for your dealer network."
+    "meta_title": "Velopass pour les fabricants — À venir",
+    "meta_description": "Intègre dès maintenant l'Velopass. Donne à tes concessionnaires un bon départ.",
+    "eyebrow": "Pour les fabricants",
+    "title": "Velopass intégré dès la phase de production.",
+    "intro": "Livrez des vélos équipés d'un système «Frame-ID» intégré et dont les données sont déjà enregistrées. Facilitez la vie à votre réseau de revendeurs."
   }
 }

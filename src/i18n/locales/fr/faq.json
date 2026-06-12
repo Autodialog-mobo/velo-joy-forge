@@ -1,58 +1,58 @@
 {
   "_translated": false,
   "section": {
-    "eyebrow": "FREQUENTLY ASKED QUESTIONS",
-    "title": "Everything you want to know",
-    "support_prefix": "Don't see your question? Reach out via",
+    "eyebrow": "FOIRE AUX QUESTIONS",
+    "title": "Tout ce que tu veux savoir",
+    "support_prefix": "Tu ne trouves pas ta question ? Contacte-nous via",
     "support_whatsapp": "WhatsApp",
-    "support_or_mail": "or email"
+    "support_or_mail": "ou par e-mail"
   },
   "left": [
     {
-      "q": "What if someone removes the Frame-ID from my bike?",
-      "a": "First of all, that's not easy: the Frame-ID is designed to break apart on removal attempts — the material crumbles into pieces and also damages the frame's paint. Every attempt leaves clear traces.\n\nBut even if someone succeeds: at registration we also store the brand and frame number of your bike. Your bike stays traceable through that combination — just like a car without a licence plate can still be found via its chassis number. The Frame-ID just makes it faster and easier.\n\nOn top of that, Velopass blocks any attempt to re-register a bike that's already known, based on the brand + frame number combination. A thief therefore cannot re-register your bike under their name.\n\nWant to check if your bike is registered? Search by brand + frame number on [Bike check →](/bike-check)"
+      "q": "Et si quelqu'un volait l'Frame-IDe de mon vélo ?",
+      "a": "Tout d'abord, ce n'est pas facile : l'étiquette de sécurité (Frame-ID) est conçue pour se déchirer en cas de tentative de retrait — le matériau se désagrège en morceaux et endommage également la peinture du cadre. Chaque tentative laisse des traces évidentes.\n\nMais même si quelqu'un y parvient : lors de l'enregistrement, on enregistre aussi la marque et le numéro de cadre de ton vélo. Ton vélo reste traçable grâce à cette combinaison — tout comme une voiture sans plaque d'immatriculation peut toujours être retrouvée grâce à son numéro de châssis. L'Frame-ID, ça rend juste le processus plus rapide et plus facile.\n\nDe plus, Velopass bloque toute tentative de réenregistrement d’un vélo déjà connu, sur la base de la combinaison marque + numéro de cadre. Un voleur ne peut donc pas réenregistrer ton vélo à son nom.\n\nTu veux vérifier si ton vélo est enregistré ? Effectue une recherche par marque + numéro de cadre sur [Vérification du vélo →](/bike-check)"
     },
     {
-      "q": "Can I order a new Frame-ID if mine was removed or damaged?",
-      "a": "Yes. Order a new Frame-ID through our webshop or at a Velopass bike shop near you. Once it arrives, log in to your Velopass, select the bike and click 'Replace Frame-ID'. Your bike history and all active services stay intact."
+      "q": "Puis-je commander un nouveau «Frame-ID» si le mien a été retiré ou endommagé ?",
+      "a": "Oui. Commande un nouveau vélo «Frame-ID» via notre boutique en ligne ou dans un magasin Velopass près de chez toi. Une fois le vélo reçu, connecte-toi à ton compte Velopass, sélectionne le vélo et clique sur «Remplacer le vélo Frame-ID». L'historique de ton vélo et tous les services actifs sont conservés."
     },
     {
-      "q": "How do I transfer my bike to a new owner?",
-      "a": "Log in to your Velopass, select the bike and click 'Transfer ownership'. You'll receive a PIN by email. Share that PIN with the new owner — they enter it and the bike is registered in their name. The full bike history transfers with it — only your personal details and private photos stay private."
+      "q": "Comment faire pour céder mon vélo à un nouveau propriétaire ?",
+      "a": "Connecte-toi à ton compte Velopass, sélectionne le vélo et clique sur « Transférer la propriété ». Tu recevras un code PIN par e-mail. Transmets ce code au nouveau propriétaire : il n'aura qu'à le saisir pour que le vélo soit enregistré à son nom. Tout l'historique du vélo sera transféré ; seules tes données personnelles et tes photos privées resteront confidentielles."
     },
     {
-      "q": "How does Velopass work with the Belgian National Bike Register (MyBike)?",
-      "a": "You can use your Velopass code to also register your bike in MyBike, the Belgian national bike register. That way you're doubly protected — both in the Velopass Community and in the official register."
+      "q": "Comment fonctionne Velopass avec le Registre national belge des vélos (MyBike) ?",
+      "a": "Tu peux utiliser ton code Velopass pour enregistrer ton vélo sur MyBike, le registre national belge des vélos. Tu bénéficies ainsi d'une double protection : à la fois au sein de la communauté Velopass et dans le registre officiel."
     },
     {
-      "q": "What's the difference between the Velopass code and the frame number?",
-      "a": "They are two different numbers. The frame number is the serial number the manufacturer has engraved on your bike's frame. The Velopass code is on the Frame-ID stuck to your bike and gives access to your digital passport. On bikesearch.velopass.com you can search using either."
+      "q": "Quelle est la différence entre le code d'Velopassation et le numéro de châssis ?",
+      "a": "Ce sont deux numéros différents. Le numéro de cadre est le numéro de série que le fabricant a gravé sur le cadre de ton vélo. Le code Velopass figure sur l'étiquette Frame-ID collée sur ton vélo et te permet d'accéder à ton passeport numérique. Sur bikesearch.velopass.com, tu peux effectuer une recherche en utilisant l'un ou l'autre."
     }
   ],
   "right": [
     {
-      "q": "What do ALL CLEAR, REPORTED and NOT REGISTERED mean?",
-      "a": "These are the three statuses in the Velopass Community:\n• ALL CLEAR: the bike is registered and not reported missing. All good.\n• REPORTED: the owner has actively reported the bike. The community is helping look.\n• NOT REGISTERED: the bike is not in the Velopass database and is not yet protected."
+      "q": "Qu'est-ce que ça veut dire « ALL CLEAR », « REPORTED » et « NOT REGISTERED » ?",
+      "a": "Voici les trois statuts de la communauté Velopass :\n• TOUT VA BIEN : le vélo est enregistré et n'a pas été signalé comme volé. Tout va bien.\n• SIGNALÉ : le propriétaire a officiellement signalé la disparition du vélo. La communauté participe aux recherches.\n• NON ENREGISTRÉ : le vélo ne figure pas dans la base de données Velopass et n'est pas encore protégé."
     },
     {
-      "q": "Why is engraving no longer used and what's the difference with Velopass?",
-      "a": "Engraving has nearly disappeared — and rightly so. Modern carbon or aluminium bikes get damaged by an engraving machine. On carbon, engraving is even fatal to the frame structure. E-bikes also have internal cables running through the tubes.\n\nIn the past, your national ID number was engraved — that's a privacy risk. Your personal ID was literally visible on your bike.\n\nThe Velopass Frame-ID replaces this entirely:\n• No damage to the frame — the sticker adheres, it doesn't scratch\n• No personal data on the sticker — anyone scanning sees only the status (free or reported), never your data\n• Tamper-resistant — the material crumbles to pieces if someone tries to remove it\n• Transferable — at resale you hand over the digital passport to the new owner, without re-registering\n• Digital passport — proof of purchase, serial number and maintenance history all in one place"
+      "q": "Pourquoi on n'utilise plus la gravure et quelle est la différence avec l'Velopass ?",
+      "a": "La gravure a presque disparu — et à juste titre. Les vélos modernes en carbone ou en aluminium s’abîment au contact d’une machine à graver. Sur le carbone, la gravure peut même endommager irrémédiablement la structure du cadre. Les vélos électriques ont également des câbles internes qui passent à l’intérieur des tubes.\n\nAvant, ton numéro d’identité national était gravé — ce qui représentait un risque pour la confidentialité. Ton identité était littéralement visible sur ton vélo.\n\nL'autocollant Velopass remplace complètement cette pratique :\n• Aucun dommage au cadre — l'autocollant adhère, il ne raye pas\n• Aucune donnée personnelle sur l'autocollant — toute personne qui le scanne ne voit que le statut (libre ou signalé), jamais tes données\n• Inviolable — le matériau se désagrège en morceaux si quelqu’un tente de l’enlever\n• Transférable — lors de la revente, tu remets le passeport numérique au nouveau propriétaire, sans avoir à le réenregistrer\n• Passeport numérique — preuve d’achat, numéro de série et historique d’entretien, le tout au même endroit"
     },
     {
-      "q": "I'm trying to log in but it doesn't work.",
-      "a": "The app in the App Store and Google Play is the Velopass Pro app — exclusively for bike shops. As a cyclist you log in via velopass.com. Click 'Log in' top right or go to app.velopass.com/login."
+      "q": "J'essaie de me connecter, mais ça ne marche pas.",
+      "a": "L'application disponible sur l'App Store et Google Play est l'application «Velopass Pro », réservée exclusivement aux magasins de vélo. En tant que cycliste, tu te connectes via velopass.com. Clique sur « Se connecter » en haut à droite ou rends-toi sur app.velopass.com/login."
     },
     {
-      "q": "I'm buying a second-hand bike with a Velopass Frame-ID. What should I do?",
-      "a": "Two steps. Before the purchase: check the bike's status on bikesearch.velopass.com — that way you're sure the bike isn't reported stolen or missing. After the purchase: ask the previous owner to transfer ownership to you via their Velopass account. Then the bike is officially in your name."
+      "q": "Je vais acheter un vélo d'occasion équipé d'un système «Velopass» Frame-ID. Que dois-je faire ?",
+      "a": "Deux étapes. Avant l'achat : vérifie l'état du vélo sur bikesearch.velopass.com — tu seras ainsi certain que le vélo n'a pas été signalé comme volé ou perdu. Après l'achat : demande à l'ancien propriétaire de te céder la propriété via son compte Velopass. Le vélo sera alors officiellement à ton nom."
     },
     {
-      "q": "How do I link a bike shop to my Velopass?",
-      "a": "If your bike was registered through a Velopass bike shop, that shop is already linked automatically. Want to pick another shop or add a shop? Do it in your Velopass account under 'My bike shop'. You can change this at any time."
+      "q": "Comment associer un magasin de vélos à mon compte Velopass ?",
+      "a": "Si ton vélo a été enregistré via un magasin de vélos Velopass, ce magasin est déjà associé automatiquement. Tu veux choisir un autre magasin ou en ajouter un ? Rends-toi dans ton compte Velopass, dans la rubrique « Mon magasin de vélos ». Tu peux modifier cette information à tout moment."
     },
     {
-      "q": "I can't register my bike.",
-      "a": "There are two situations where registration works differently:\n\nDoes your Velopass code start with VP? Then you most likely bought it in France. In France, bike registration is required by law and must be done by the seller — the bike shop. The shop registers the bike at sale; you can't do this yourself online. Contact your bike shop if registration hasn't happened yet.\n\nIs it a lease bike? Lease bikes are registered in the leasing company's name (Joule is an exception — there you do have your own account). In that case you don't have your own Velopass account, but the bike shop can read your bike and add maintenance. Is your bike lost or stolen? Report it to the leasing company — they can mark the bike as missing."
+      "q": "Je n'arrive pas à immatriculer mon vélo.",
+      "a": "Il existe deux cas où l'immatriculation fonctionne différemment :\n\nTon numéro d'Velopasse commence-t-il par VP ? Dans ce cas, tu l'as très probablement acheté en France. En France, l'immatriculation des vélos est obligatoire et doit être effectuée par le vendeur, c'est-à-dire le magasin de vélos. Le magasin immatricule le vélo au moment de la vente ; tu ne peux pas le faire toi-même en ligne. Contacte ton magasin de vélo si l'enregistrement n'a pas encore été effectué.\n\nS'agit-il d'un vélo en leasing ? Les vélos en leasing sont enregistrés au nom de la société de leasing (Joule fait exception — dans ce cas, tu disposes de ton propre compte). Dans ce cas, tu n’as pas de compte Velopass personnel, mais le magasin de vélos peut lire les données de ton vélo et ajouter des opérations d’entretien. Ton vélo a-t-il été perdu ou volé ? Signale-le à la société de leasing — elle pourra marquer le vélo comme manquant."
     }
   ]
 }

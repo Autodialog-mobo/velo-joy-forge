@@ -1,74 +1,80 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Privacy Policy — Velopass",
-    "description": "Read how Velopass processes and protects your personal data."
+    "title": "Politique de confidentialité — Velopass",
+    "description": "Découvre comment Velopass traite et protège tes données personnelles."
   },
-  "eyebrow": "Privacy Policy",
-  "title": "How we protect your data",
-  "last_updated": "Last updated: 17 May 2026",
+  "eyebrow": "Politique de confidentialité",
+  "title": "Comment nous protégeons tes données",
+  "last_updated": "Dernière mise à jour : 17 mai 2026",
   "sections": [
     {
-      "title": "1. Who are we?",
-      "body": "Velopass BV, registered at Stokerijstraat 29/bus a1, 2110 Wijnegem, VAT BE0777.359.681, is the controller for the processing of your personal data through this website and the Velopass services."
+      "title": "1. Qui sommes-nous ?",
+      "body": "Velopass BV, dont le siège social est situé à Stokerijstraat 29/bus a1, 2110 Wijnegem, numéro de TVA BE0777.359.681, est le responsable du traitement de tes données à caractère personnel via ce site web et les services Velopass."
     },
     {
-      "title": "2. What data do we collect?",
-      "intro": "We only collect data that is necessary for our service:",
+      "title": "2. Quelles données collectons-nous ?",
+      "intro": "On ne collecte que les données nécessaires au bon fonctionnement de notre service :",
       "list": [
-        "Name and contact details (email, phone)",
-        "Bike data (frame-ID, brand, model, photo)",
-        "Account information and login history",
-        "Usage data and interactions with our service"
+        "Nom et coordonnées (e-mail, téléphone)",
+        "Informations sur le vélo (numéro de cadre, marque, modèle, photo)",
+        "Informations sur le compte et historique des connexions",
+        "Données d'utilisation et interactions avec notre service"
       ]
     },
     {
-      "title": "3. What do we use your data for?",
-      "intro": "Your data is used for:",
+      "title": "3. À quoi servent tes données ?",
+      "intro": "Tes données sont utilisées pour :",
       "list": [
-        "Creating and managing your Velopass account",
-        "Bike registration and ownership verification",
-        "Customer service and communication",
-        "Statistical analysis to improve our service"
+        "Créer et gérer ton compte Velopass",
+        "Enregistrement des vélos et vérification de la propriété",
+        "Service client et communication",
+        "Analyse statistique pour améliorer notre service"
       ]
     },
     {
       "title": "4. Cookies",
-      "intro": "Our website uses cookies:",
+      "intro": "Notre site web utilise des cookies :",
       "list_rich": [
-        { "label": "Functional cookies:", "body": "necessary for the website to work correctly (e.g. session management)." },
-        { "label": "Analytics cookies:", "body": "help us understand how visitors use our website. These are only set after you give consent." }
+        {
+          "label": "Cookies fonctionnels :",
+          "body": "indispensables au bon fonctionnement du site web (par exemple, la gestion des sessions)."
+        },
+        {
+          "label": "Cookies d'analyse :",
+          "body": "nous aident à comprendre comment les visiteurs utilisent notre site web. Ces cookies ne sont installés qu'après que tu aies donné ton consentement."
+        }
       ],
-      "outro": "You can change your cookie preferences at any time via the banner at the bottom of the page."
+      "outro": "Tu peux modifier tes préférences en matière de cookies à tout moment via la bannière située en bas de la page."
     },
     {
-      "title": "5. How long do we keep your data?",
-      "body": "We keep your personal data no longer than necessary for the purpose for which it was collected, unless a longer retention period is required by law. Bike registration data is kept for as long as your account is active."
+      "title": "5. Combien de temps conservons-nous tes données ?",
+      "body": "Nous ne conservons pas tes données personnelles plus longtemps que nécessaire au regard de la finalité pour laquelle elles ont été collectées, sauf si la loi impose une durée de conservation plus longue. Les données d'enregistrement de ton vélo sont conservées tant que ton compte est actif."
     },
     {
-      "title": "6. Your rights",
-      "intro": "You have the right to:",
+      "title": "6. Tes droits",
+      "intro": "Tu as le droit de :",
       "list": [
-        "Access your data",
-        "Have your data corrected or deleted",
-        "Have processing restricted",
-        "Object to processing",
-        "Have your data transferred"
+        "Accède à tes données",
+        "Fais corriger ou supprimer tes données",
+        "Limiter le traitement",
+        "S'opposer au traitement",
+        "Fais transférer tes données"
       ],
-      "outro_prefix": "Contact us at",
+      "outro_prefix": "Contacte-nous à l'adresse",
       "outro_email": "privacy@velopass.com",
-      "outro_suffix": "to exercise these rights."
+      "outro_suffix": "pour exercer ces droits."
     },
     {
-      "title": "7. Security",
-      "body": "We take appropriate technical and organisational measures to protect your data against unauthorised access, loss or theft, including encryption, access control and regular security audits."
+      "title": "7. Sécurité",
+      "body": "Nous prenons les mesures techniques et organisationnelles appropriées pour protéger tes données contre tout accès non autorisé, toute perte ou tout vol, notamment par le biais du chiffrement, du contrôle d'accès et d'audits de sécurité réguliers."
     },
     {
       "title": "8. Contact",
-      "intro_prefix": "Questions about this privacy policy? Email",
+      "intro_prefix": "Tu as des questions sur cette politique de confidentialité ? Envoie-nous un e-mail",
       "intro_email": "privacy@velopass.com",
-      "intro_mid": "or use our",
-      "intro_link": "contact form",
+      "intro_mid": "ou utilise notre",
+      "intro_link": "formulaire de contact",
       "intro_suffix": "."
     }
   ]

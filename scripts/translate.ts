@@ -28,8 +28,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const LOCALES_DIR = resolve(__dirname, "../src/i18n/locales");
 const SOURCE = "en";
 
-const DEEPL_ENDPOINT = "https://api.deepl.com/v2/translate";
 const DEEPL_API_KEY = process.env.DEEPL_API_KEY;
+// Free-tier keys end with ":fx" and must hit api-free.deepl.com.
+const DEEPL_ENDPOINT =
+  DEEPL_API_KEY && DEEPL_API_KEY.endsWith(":fx")
+    ? "https://api-free.deepl.com/v2/translate"
+    : "https://api.deepl.com/v2/translate";
 
 // Terms that must never be translated.
 const PRESERVE_TERMS = [

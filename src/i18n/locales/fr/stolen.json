@@ -1,280 +1,280 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Bike stolen? File a quick report — Velopass",
-    "description": "Step-by-step after a bike theft: report your bike in your Velopass, file online with the police, and activate the Velopass Community."
+    "title": "On t'a volé ton vélo ? Dépose rapidement une plainte — Velopass",
+    "description": "Que faire étape par étape après le vol de ton vélo : signale-le sur ton compte Velopass, dépose plainte en ligne auprès de la police et active la communauté Velopass."
   },
-  "back": "Back",
+  "back": "Retour",
   "hero": {
-    "eyebrow": "Bike stolen or missing?",
-    "title": "File a quick report. Velopass helps you.",
-    "lead": "A police report needs exact bike details — details you no longer have at hand when your bike is gone. Unless you have Velopass."
+    "eyebrow": "Ton vélo a été volé ou tu ne le trouves plus ?",
+    "title": "Fais un rapport rapide. Velopass est là pour t'aider.",
+    "lead": "Un rapport de police nécessite des informations précises sur ton vélo — des informations que tu n'as plus sous la main une fois que ton vélo a disparu. À moins que tu n'aies Velopass."
   },
   "argument": {
-    "title": "Everything the police needs is in your Velopass",
+    "title": "Tout ce dont la police a besoin se trouve sur ton site Velopass",
     "rows": [
       [
-        "Brand, model and colour",
-        "In your Velopass passport"
+        "Marque, modèle et couleur",
+        "Dans ton passeport «Velopass»"
       ],
       [
-        "Frame number",
-        "In your Velopass passport"
+        "Numéro de châssis",
+        "Dans ton passeport «Velopass»"
       ],
       [
-        "Photos of the bike",
-        "Saved in your Velopass"
+        "Photos du vélo",
+        "Enregistré dans ton Velopass"
       ],
       [
-        "Purchase invoice",
-        "Linked to your Velopass"
+        "Facture d'achat",
+        "Lien vers ton site Velopass"
       ],
       [
-        "Exact theft location",
-        "Already entered when you reported it in Velopass"
+        "Lieu exact du vol",
+        "C'était déjà enregistré quand tu l'as signalé sur Velopass"
       ],
       [
-        "Proof of ownership",
-        "Your Velopass IS the proof"
+        "Justificatif de propriété",
+        "Ton Velopass, c'est la preuve"
       ]
     ],
-    "cta": "Open my Velopass →"
+    "cta": "Ouvre mon site Velopass →"
   },
   "step1": {
-    "title": "Step 1 — Report your bike as missing",
-    "body": "Log in to your Velopass account and go to **'My bike'**. Click **'Report as missing'**. Your bike's status changes to REPORTED — the Velopass Community is activated immediately.",
-    "badge_note": "Anyone scanning your Frame-ID sees that your bike is being looked for and can give you an anonymous heads-up.",
-    "cta": "Report my bike →"
+    "title": "Étape 1 — Signale la disparition de ton vélo",
+    "body": "Connecte-toi à ton compte Velopass et rends-toi dans **« Mon vélo »**. Clique sur **« Signaler comme perdu »**. Le statut de ton vélo passe à « SIGNALÉ » — la communauté Velopass est immédiatement alertée.",
+    "badge_note": "Quiconque scanne ton code-barres Frame-ID verra que ton vélo est recherché et pourra te prévenir en toute anonymité.",
+    "cta": "Signaler mon vélo →"
   },
   "step2": {
-    "title": "Step 2 — File an online report with the police",
-    "lead": "Pick your country for the step-by-step.",
+    "title": "Étape 2 — Dépose une plainte en ligne auprès de la police",
+    "lead": "Choisis ton pays pour accéder au guide étape par étape.",
     "countries": {
-      "BE": "🇧🇪 Belgium",
-      "NL": "🇳🇱 Netherlands",
+      "BE": "🇧🇪 Belgique",
+      "NL": "🇳🇱 Pays-Bas",
       "FR": "🇫🇷 France"
     },
-    "coming_soon": "Coming soon",
-    "checklist_title": "What do you need beforehand?",
-    "after_title": "What happens after the report?",
+    "coming_soon": "À venir",
+    "checklist_title": "De quoi as-tu besoin avant de commencer ?",
+    "after_title": "Et après le rapport ?",
     "BE": {
-      "intro": "In Belgium you file an online report via Police-on-web. That saves you a trip to the police station.",
+      "intro": "En Belgique, tu peux faire une déclaration en ligne sur Police-on-web. Ça t'évite de te rendre au commissariat.",
       "checklist": [
         {
-          "text": "Your ID card (eID) or the itsme app"
+          "text": "Ta carte d'identité (eID) ou l'application «itsme »"
         },
         {
-          "text": "Brand, model, colour and type of bike",
-          "velopass": "Already in your Velopass"
+          "text": "Marque, modèle, couleur et type de vélo",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "The frame number",
-          "velopass": "Already in your Velopass"
+          "text": "Le numéro de châssis",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "Engraving number or bike pass",
-          "velopass": "Your Velopass code is enough"
+          "text": "Numéro de gravure ou carte de vélo",
+          "velopass": "Ton code d'Velopass, ça suffit"
         },
         {
-          "text": "Exact location, date and time of the theft",
-          "velopass": "Already entered when you reported it in Velopass"
+          "text": "Lieu, date et heure exacts du vol",
+          "velopass": "C'était déjà enregistré quand tu l'as signalé sur Velopass"
         },
         {
-          "text": "Photos of the bike",
-          "velopass": "Already saved in your Velopass"
+          "text": "Photos du vélo",
+          "velopass": "Déjà enregistré dans ton Velopass"
         },
         {
-          "text": "Purchase invoice (if available)",
-          "velopass": "Linked to your Velopass"
+          "text": "Facture d'achat (si tu en as une)",
+          "velopass": "Lien vers ton site Velopass"
         }
       ],
       "steps": [
         {
-          "title": "Go to police-on-web.be",
+          "title": "Rends-toi sur police-on-web.be",
           "body": "[www.police-on-web.be](https://www.police-on-web.be)"
         },
         {
-          "title": "Start a new report",
-          "body": "Click **'Start a new report'** and pick **'Bike theft'**."
+          "title": "Créer un nouveau rapport",
+          "body": "Clique sur **« Créer un nouveau signalement »** et sélectionne **« Vol de vélo »**."
         },
         {
-          "title": "Sign in via CSAM",
-          "body": "Identify yourself with your eID card reader or the itsme app."
+          "title": "Connecte-toi via CSAM",
+          "body": "Identifie-toi à l'aide de ton lecteur de carte d'identité électronique ou de l'application « itsme »."
         },
         {
-          "title": "Fill in the form",
-          "body": "• Personal details as owner/reporter\n• Facts: where and when was it stolen?\n• Object: every detail of the bike (the more detail, the higher the chance of recovery)",
-          "tip": "Open your Velopass to have every bike detail at hand in one glance."
+          "title": "Remplis le formulaire",
+          "body": "• Tes coordonnées en tant que propriétaire/personne signalant le vol\n• Les faits : où et quand le vol a-t-il eu lieu ?\n• L'objet : toutes les caractéristiques du vélo (plus tu donnes de détails, plus il y a de chances de le retrouver)",
+          "tip": "Ouvre ton « Velopass » pour avoir toutes les infos sur ton vélo à portée de main en un seul coup d'œil."
         },
         {
-          "title": "Review and submit",
-          "body": "Check the details and click **Submit**."
+          "title": "Vérifier et envoyer",
+          "body": "Vérifie les informations et clique sur **Envoyer**."
         }
       ],
-      "after_body": "You receive a case number and a confirmation. The official record (PV) is drawn up by the local police zone. Got bike insurance? Forward the PV number to your insurer to start your claim.",
-      "found_title": "Also check gevondenfietsen.be",
-      "found_body": "Stolen bikes are often abandoned somewhere. Check [www.gevondenfietsen.be](https://www.gevondenfietsen.be) regularly — your bike may turn up there."
+      "after_body": "Tu reçois un numéro de dossier et une confirmation. Le procès-verbal (PV) est établi par la zone de police locale. Tu as une assurance vélo ? Transmets le numéro du PV à ton assureur pour entamer ta déclaration de sinistre.",
+      "found_title": "Consulte aussi gevondenfietsen.be",
+      "found_body": "Les vélos volés sont souvent abandonnés quelque part. Consulte régulièrement [www.gevondenfietsen.be](https://www.gevondenfietsen.be) : ton vélo s'y trouve peut-être."
     },
     "NL": {
-      "intro": "In the Netherlands you file an online report via politie.nl. You need a DigiD for this.",
-      "check_first_title": "Check this first",
-      "check_first_body": "Has your bike maybe been moved by the city? Bikes parked illegally are sometimes taken to a depot. Check this before filing a report.",
+      "intro": "Aux Pays-Bas, tu peux déposer une plainte en ligne sur le site politie.nl. Pour cela, tu as besoin d'un identifiant « DigiD ».",
+      "check_first_title": "Regarde ça d'abord",
+      "check_first_body": "Est-ce que ta moto a peut-être été déplacée par la mairie ? Les motos garées illégalement sont parfois emmenées à la fourrière. Vérifie ça avant de faire une déclaration.",
       "checklist": [
         {
-          "text": "Your DigiD (log in via digid.nl)"
+          "text": "Ton identifiant « DigiD » (connecte-toi via digid.nl)"
         },
         {
-          "text": "Brand, model, colour and type of bike",
-          "velopass": "Already in your Velopass"
+          "text": "Marque, modèle, couleur et type de vélo",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "The frame number (usually under the bottom bracket or on the front of the frame)",
-          "velopass": "Already in your Velopass"
+          "text": "Le numéro de cadre (généralement situé sous le boîtier de pédalier ou à l'avant du cadre)",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "Exact location, date and time of the theft",
-          "velopass": "Already entered when you reported it in Velopass"
+          "text": "Lieu, date et heure exacts du vol",
+          "velopass": "C'était déjà enregistré quand tu l'as signalé sur Velopass"
         },
         {
-          "text": "Photos of the bike",
-          "velopass": "Already saved in your Velopass"
+          "text": "Photos du vélo",
+          "velopass": "Déjà enregistré dans ton Velopass"
         },
         {
-          "text": "Purchase invoice (if available)",
-          "velopass": "Linked to your Velopass"
+          "text": "Facture d'achat (si tu en as une)",
+          "velopass": "Lien vers ton site Velopass"
         }
       ],
-      "conditions_title": "Conditions for online filing",
-      "conditions_intro": "Online filing via politie.nl is possible if:",
+      "conditions_title": "Conditions pour le dépôt en ligne",
+      "conditions_intro": "Il est possible de déposer une plainte en ligne via politie.nl si :",
       "conditions": [
-        "The bike was not stolen from a home, shed or garage",
-        "The theft was less than one year ago"
+        "Le vélo n'a pas été volé dans une maison, une remise ou un garage",
+        "Le vol a eu lieu il y a moins d'un an"
       ],
-      "conditions_note": "Doesn't apply? Call 0900-8844 or file in person at a police station.",
+      "conditions_note": "Ça ne s'applique pas à toi ? Appelle le 0900-8844 ou dépose ta plainte en personne au commissariat.",
       "steps": [
         {
-          "title": "Go to politie.nl",
+          "title": "Rends-toi sur politie.nl",
           "body": "[www.politie.nl/aangifte](https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html)"
         },
         {
-          "title": "Pick bike theft",
-          "body": "Choose **'Aangifte doen van fietsdiefstal'**."
+          "title": "Vol de vélo",
+          "body": "Sélectionne **« Déposer une plainte pour vol de vélo »**."
         },
         {
-          "title": "Sign in with DigiD",
-          "body": "Sign in with your DigiD via the CSAM portal."
+          "title": "Connecte-toi avec DigiD",
+          "body": "Connecte-toi avec ton identifiant « DigiD » via le portail CSAM."
         },
         {
-          "title": "Fill in the form",
-          "body": "• Personal details as owner/reporter\n• Facts: where and when was it stolen? Was the bike locked?\n• Object: every detail of the bike — the more detail, the higher the chance of recovery",
-          "tip": "Open your Velopass to have every bike detail at hand — including the location you entered when reporting it. Copy that straight into the form."
+          "title": "Remplis le formulaire",
+          "body": "• Coordonnées du propriétaire/de la personne qui signale le vol\n• Faits : où et quand le vol a-t-il eu lieu ? Le vélo était-il attaché ?\n• Objet : tous les détails concernant le vélo — plus tu en donnes, plus il y a de chances de le retrouver",
+          "tip": "Ouvre ton compte Velopass pour avoir toutes les informations sur le vélo à portée de main, y compris le lieu que tu as indiqué lors de la déclaration. Copie ces informations directement dans le formulaire."
         },
         {
-          "title": "Review and submit",
-          "body": "Check the details and submit the report."
+          "title": "Vérifier et envoyer",
+          "body": "Vérifie les détails et envoie le rapport."
         }
       ],
-      "after_body": "You receive a confirmation with a case number. Keep it safe — you'll need it for your insurance. Your bike is automatically added to the RDW bike theft register and to StopHeling, so traders can check whether a bike is stolen. Got bike insurance? Report the theft directly to your insurer and include the case number.",
-      "tip1_title": "Check gevondenfietsen.be",
-      "tip1_body": "Stolen bikes are often abandoned somewhere. Check [www.gevondenfietsen.be](https://www.gevondenfietsen.be) regularly.",
-      "tip2_title": "Keep an eye on Marktplaats",
-      "tip2_body": "Stolen bikes sometimes appear on second-hand platforms within days. Recognise your bike? Never confront the seller yourself — call the police on 0900-8844."
+      "after_body": "Tu recevras une confirmation avec un numéro de dossier. Conserve-le précieusement : tu en auras besoin pour ton assurance. Ton vélo est automatiquement enregistré dans le registre des vols de vélos du RDW et sur StopHeling, ce qui permet aux commerçants de vérifier si un vélo a été volé. Tu as une assurance vélo ? Signale le vol directement à ton assureur en indiquant le numéro de dossier.",
+      "tip1_title": "Consulte le site gevondenfietsen.be",
+      "tip1_body": "Les vélos volés sont souvent abandonnés quelque part. Consulte régulièrement [www.gevondenfietsen.be](https://www.gevondenfietsen.be).",
+      "tip2_title": "Garde un œil sur Marktplaats",
+      "tip2_body": "Il arrive que des vélos volés réapparaissent sur des sites de vente d'occasion en l'espace de quelques jours. Tu reconnais ton vélo ? Ne t'adresse jamais directement au vendeur : appelle la police au 0900-8844."
     },
     "FR": {
-      "fnuci_badge": "FNUCI · République Française",
-      "fnuci_title": "Velopass is a recognised operator of the French national bike register",
-      "fnuci_body_1": "As a French resident, your Velopass registration is automatically linked to the **FNUCI** — the *Fichier National Unique des Cycles Identifiés*. This is the official state register that police and gendarmerie use when tracking stolen bikes.",
-      "fnuci_body_2": "Concretely: as soon as you report your bike as stolen in Velopass, the status in the FNUCI is updated automatically. The police see it instantly.",
-      "flow_step_label": "Step {{n}}",
+      "fnuci_badge": "FNUCI · République française",
+      "fnuci_title": "Velopass est un opérateur agréé du registre national français des vélos",
+      "fnuci_body_1": "En tant que résident français, ton inscription sur Velopass est automatiquement reliée au **FNUCI** — le *Fichier National Unique des Cycles Identifiés*. Il s'agit du registre officiel de l'État auquel la police et la gendarmerie ont recours pour retrouver les vélos volés.",
+      "fnuci_body_2": "Concrètement : dès que tu signales le vol de ton vélo sur Velopass, le statut est automatiquement mis à jour sur FNUCI. La police en est immédiatement informée.",
+      "flow_step_label": "Étape {{n}}",
       "flow_steps": [
         {
-          "title": "You report in Velopass",
-          "body": "You change your bike's status to REPORTED in your Velopass account."
+          "title": "Tu peux nous faire part de tes commentaires sur Velopass",
+          "body": "Tu modifies le statut de ton vélo en « SIGNALÉ » dans ton compte Velopass."
         },
         {
-          "title": "FNUCI is updated",
-          "body": "Velopass forwards the status change to the FNUCI. Police and gendarmerie have access to this register."
+          "title": "FNUCI est mis à jour",
+          "body": "Velopass transmet le changement de statut au registre national des personnes (FNUCI). La police et la gendarmerie ont accès à ce registre."
         },
         {
-          "title": "Police identify your bike",
-          "body": "Is your bike found? The officer scans the Velopass code and immediately sees that it's stolen — and who the owner is."
+          "title": "La police identifie ton vélo",
+          "body": "Ton vélo a-t-il été retrouvé ? L'agent scanne le code d'Velopass, et voit tout de suite qu'il a été volé — et qui en est le propriétaire."
         }
       ],
-      "code_note": "**Your Velopass code IS your FNUCI identifier.** This is the 10-digit number the police need for the official *plainte*. You'll find it in your Velopass account.",
-      "ma_intro": "File your report online via Ma Sécurité. Your Velopass code is the *identifiant unique* the form asks for — already in your Velopass.",
-      "home_already_title": "Already back home?",
-      "home_already_body": "Belgian and Dutch insurers almost always require a French police report. Start the report as quickly as possible via Ma Sécurité, even if you're already home.",
+      "code_note": "**Ton code Velopass correspond à ton identifiant FNUCI.** Il s'agit du numéro à 10 chiffres dont la police a besoin pour enregistrer officiellement la *plainte*. Tu le trouveras dans ton compte Velopass.",
+      "ma_intro": "Déclare ton sinistre en ligne via Ma Sécurité. Ton code d'Velopass, c'est l'« identifiant unique » demandé dans le formulaire — il figure déjà sur ton Velopass.",
+      "home_already_title": "Tu es déjà rentré ?",
+      "home_already_body": "Les assureurs belges et néerlandais exigent presque toujours un procès-verbal de police français. Fais ta déclaration dès que possible via Ma Sécurité, même si tu es déjà rentré chez toi.",
       "checklist": [
         {
-          "text": "Your passport or ID card"
+          "text": "Ton passeport ou ta carte d'identité"
         },
         {
-          "text": "FranceConnect account (optional but recommended)",
-          "note": "Without FranceConnect: in-person appointment required at a French police station or gendarmerie"
+          "text": "Compte FranceConnect (facultatif mais recommandé)",
+          "note": "Sans FranceConnect : rendez-vous en personne obligatoire dans un commissariat de police ou une gendarmerie"
         },
         {
-          "text": "Your Velopass code (= FNUCI identifier)",
-          "velopass": "Already in your Velopass"
+          "text": "Ton code d'Velopass (= identifiant FNUCI)",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "Brand, model, colour and type of bike",
-          "velopass": "Already in your Velopass"
+          "text": "Marque, modèle, couleur et type de vélo",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "The frame number",
-          "velopass": "Already in your Velopass"
+          "text": "Le numéro de châssis",
+          "velopass": "Déjà dans ton Velopass"
         },
         {
-          "text": "Exact French location, date and time",
-          "velopass": "Already entered when you reported it in Velopass — as a tourist you often can't recall the exact address later"
+          "text": "Lieu, date et heure exacts en France",
+          "velopass": "Tu l'avais déjà indiquée quand tu l'as signalé sur Velopass — en tant que touriste, on a souvent du mal à se souvenir de l'adresse exacte par la suite"
         },
         {
-          "text": "Photos of the bike",
-          "velopass": "Already saved in your Velopass"
+          "text": "Photos du vélo",
+          "velopass": "Déjà enregistré dans ton Velopass"
         }
       ],
-      "method1_badge": "Fully digital",
-      "method1_title": "With FranceConnect (recommended)",
-      "method1_body": "Do you live in France or have a French government account? Then you file the full report online and receive the official *procès-verbal* by email.",
-      "method2_badge": "In-person appointment required",
-      "method2_title": "Without FranceConnect (tourists)",
-      "method2_body": "Fill in the form online and then book an appointment at a French police station (*commissariat de police*) or gendarmerie. Already back home? Use the 24/7 chat on Ma Sécurité to ask about alternatives.",
+      "method1_badge": "Entièrement numérique",
+      "method1_title": "Avec FranceConnect (recommandé)",
+      "method1_body": "Tu résides en France ou tu as un compte auprès de l'administration française ? Dans ce cas, tu remplis la déclaration complète en ligne et tu reçois le *procès-verbal* officiel par e-mail.",
+      "method2_badge": "Rendez-vous en personne obligatoire",
+      "method2_title": "Sans FranceConnect (touristes)",
+      "method2_body": "Remplis le formulaire en ligne, puis prends rendez-vous dans un commissariat de police ou une gendarmerie. Tu es déjà rentré chez toi ? Utilise le chat disponible 24 h/24 et 7 j/7 sur Ma Sécurité pour te renseigner sur les autres possibilités.",
       "steps": [
         {
-          "title": "Go to Ma Sécurité",
-          "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nSwitch to the English version in the top right."
+          "title": "Rends-toi sur Ma Sécurité",
+          "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nPasse à la version anglaise en haut à droite."
         },
         {
-          "title": "Pick 'Vol' (Theft)",
-          "body": "Select **'Vol'** as the type of offence."
+          "title": "Vols (vol avec effraction)",
+          "body": "Sélectionne **« Vol »** comme type d'infraction."
         },
         {
-          "title": "Sign in via FranceConnect or as a guest",
-          "body": "With FranceConnect everything runs fully online. Without FranceConnect you can continue as a guest."
+          "title": "Connecte-toi via FranceConnect ou en tant qu'invité",
+          "body": "Avec FranceConnect, tout se fait entièrement en ligne. Sans FranceConnect, tu peux continuer en tant qu'invité."
         },
         {
-          "title": "Fill in the form",
-          "body": "• Identifiant unique: your Velopass code\n• Exact French location, date and time\n• Every characteristic of the bike",
-          "tip": "Open your Velopass — your Velopass code is the identifiant unique the form asks for. All other bike details and the location are already in there."
+          "title": "Remplis le formulaire",
+          "body": "• Identifiant unique : ton code d'Velopass\n• Lieu, date et heure exacts en France\n• Toutes les caractéristiques du vélo",
+          "tip": "Ouvre ton Velopass — ton code Velopass correspond à l'identifiant unique demandé dans le formulaire. Toutes les autres informations concernant le vélo ainsi que le lieu y figurent déjà."
         },
         {
-          "title": "Receive your procès-verbal or book an appointment",
-          "body": "**With FranceConnect:** you receive the official procès-verbal by email. Forward it to your insurer.\n\n**Without FranceConnect:** pick a police station or gendarmerie near the theft location and book an appointment."
+          "title": "Reçois ton procès-verbal ou prends rendez-vous",
+          "body": "**Avec FranceConnect :** tu reçois le procès-verbal officiel par e-mail. Transmets-le à ton assureur.\n\n**Sans FranceConnect :** choisis un commissariat ou une gendarmerie près du lieu du vol et prends rendez-vous."
         }
       ],
-      "chat_title": "Ma Sécurité has a 24/7 chat",
-      "chat_body": "Already home and unable to finish the report fully online? Use the chat on [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
+      "chat_title": "Ma Sécurité propose un service de chat disponible 24 h/24, 7 j/7",
+      "chat_body": "Tu es déjà rentré chez toi et tu n'arrives pas à remplir le rapport en ligne ? Utilise le chat sur [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
     }
   },
   "step3": {
-    "title": "Step 3 — Bike recovered? Report it!",
-    "badge_note": "status after recovery",
-    "body": "Congrats! Log in to your Velopass and mark your bike as **'Recovered'**. The status automatically changes back to ALL CLEAR. Then check that your Frame-ID is still intact — if not, order a new one via our webshop or at a Velopass bike shop.",
-    "cta": "My bike is recovered →"
+    "title": "Étape 3 — Tu as retrouvé ton vélo ? Signale-le !",
+    "badge_note": "état après la récupération",
+    "body": "Félicitations ! Connecte-toi à ton compte Velopass et marque ton vélo comme **« Récupéré »**. Le statut repassera automatiquement à « TOUT EST RÉGLÉ ». Vérifie ensuite que ton Frame-ID est toujours intact — si ce n'est pas le cas, commande-en un nouveau via notre boutique en ligne ou dans un magasin de vélos Velopass.",
+    "cta": "On a retrouvé mon vélo →"
   },
   "cta": {
-    "title": "No Velopass yet?",
-    "body": "Register your bike now so every detail is always available — even when you no longer have your bike at hand.",
-    "button": "Register your bike →"
+    "title": "Tu n'as pas encore d'Velopass ?",
+    "body": "Enregistre ton vélo dès maintenant pour que toutes les informations soient toujours à ta disposition, même quand tu n'as plus ton vélo sous la main.",
+    "button": "Enregistre ton vélo →"
   }
 }
