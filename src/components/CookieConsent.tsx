@@ -104,7 +104,7 @@ export function CookieConsent() {
             (e.target as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)";
           }}
         >
-          Alleen essentieel
+          {t("cookie_consent.decline")}
         </button>
         <button
           onClick={handleAccept}
