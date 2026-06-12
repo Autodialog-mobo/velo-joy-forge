@@ -12,7 +12,10 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "translate:fr": "bun scripts/translate.ts fr",
+    "translate:de": "bun scripts/translate.ts de",
+    "translate:all": "bun scripts/translate.ts all"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",
