@@ -127,7 +127,7 @@ export function CookieConsent() {
             (e.target as HTMLButtonElement).style.background = "var(--green)";
           }}
         >
-          Alle cookies toestaan
+          {t("cookie_consent.accept")}
         </button>
       </div>
     </div>
