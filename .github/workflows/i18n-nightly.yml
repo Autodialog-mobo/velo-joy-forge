@@ -24,4 +24,46 @@ jobs:
         run: npm install
 
       - name: Run i18n validation
-        run: npm run validate:i18n
+        id: validate
+        run: npm run validate:i18n 2>&1 | tee validate-output.log
+
+      - name: Run build
+        id: build
+        if: success()
+        run: npm run build 2>&1 | tee build-output.log
+
+      - name: Notify Slack on failure
+        if: failure() && env.SLACK_WEBHOOK_URL != ''
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPO: ${{ github.repository }}
+          FAILED_STEP: ${{ steps.validate.outcome != 'success' && 'i18n validation' || 'build' }}
+        run: |
+          LOG_TAIL=""
+          if [ -f validate-output.log ]; then
+            LOG_TAIL=$(tail -n 40 validate-output.log)
+          fi
+          if [ -f build-output.log ] && [ "${{ steps.validate.outcome }}" = "success" ]; then
+            LOG_TAIL=$(tail -n 40 build-output.log)
+          fi
+          PAYLOAD=$(jq -n \
+            --arg repo "$REPO" \
+            --arg url "$RUN_URL" \
+            --arg step "$FAILED_STEP" \
+            --arg log "$LOG_TAIL" \
+            '{
+              text: ("🚨 *i18n Nightly failed* in `" + $repo + "`\n*Failed step:* " + $step + "\n*Run:* " + $url + "\n```" + $log + "```")
+            }')
+          curl -sS -X POST -H 'Content-Type: application/json' \
+            --data "$PAYLOAD" "$SLACK_WEBHOOK_URL"
+
+      - name: Notify Slack on success
+        if: success() && env.SLACK_WEBHOOK_URL != '' && github.event_name == 'workflow_dispatch'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          curl -sS -X POST -H 'Content-Type: application/json' \
+            --data "{\"text\":\"✅ i18n Nightly OK — ${RUN_URL}\"}" \
+            "$SLACK_WEBHOOK_URL"
