@@ -48,6 +48,10 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? p.metadata.items
             : [];
 
+          const metaLang = typeof p.metadata?.lang === "string" && /^(nl|en|fr|de)$/.test(p.metadata.lang)
+            ? p.metadata.lang
+            : null;
+
           const { data: upserted } = await (supabaseAdmin.from("orders") as any).upsert(
             {
               mollie_payment_id: p.id,
@@ -71,6 +75,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               shipping_postal_code: shipping?.postalCode ?? "",
               shipping_city: shipping?.city ?? "",
               shipping_country: shipping?.country ?? "",
+              lang: metaLang,
               updated_at: new Date().toISOString(),
             },
             { onConflict: "mollie_payment_id" },
