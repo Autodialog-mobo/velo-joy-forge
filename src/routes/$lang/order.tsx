@@ -331,54 +331,55 @@ function BestellenPage() {
               )}
 
               <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", fontSize: 13, color: "rgba(13,31,60,0.7)", borderTop: "1px solid rgba(13,31,60,0.08)" }}>
-                <span>Verzending</span>
-                <span style={{ color: "#2ECC8A", fontWeight: 600 }}>Gratis in heel de EU</span>
+                <span>{t("cart.shipping")}</span>
+                <span style={{ color: "#2ECC8A", fontWeight: 600 }}>{t("cart.shipping_free")}</span>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: "1px solid rgba(13,31,60,0.08)" }}>
-                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 16, color: "#0D1F3C" }}>Totaal</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 16, color: "#0D1F3C" }}>{t("cart.total")}</span>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 20, color: "#0D1F3C" }}>{eur(total)}</span>
               </div>
 
               <div style={{ display: "grid", gap: 6, margin: "16px 0 12px" }}>
                 <label htmlFor="email" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
-                  E-mailadres
+                  {t("cart.email_label")}
                 </label>
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="jij@voorbeeld.be"
+                  placeholder={t("cart.email_placeholder")}
                   style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
                 />
               </div>
 
               <div style={{ display: "grid", gap: 10, margin: "0 0 12px" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                  <LabeledInput label="Voornaam" value={firstName} onChange={setFirstName} placeholder="Jan" />
-                  <LabeledInput label="Achternaam" value={lastName} onChange={setLastName} placeholder="Janssens" />
+                  <LabeledInput label={t("cart.first_name")} value={firstName} onChange={setFirstName} placeholder={t("cart.first_name_placeholder")} />
+                  <LabeledInput label={t("cart.last_name")} value={lastName} onChange={setLastName} placeholder={t("cart.last_name_placeholder")} />
                 </div>
-                <LabeledInput label="Straat + huisnummer" value={address} onChange={setAddress} placeholder="Kerkstraat 12" />
+                <LabeledInput label={t("cart.address")} value={address} onChange={setAddress} placeholder={t("cart.address_placeholder")} />
                 <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 8 }}>
-                  <LabeledInput label="Postcode" value={postalCode} onChange={setPostalCode} placeholder="9000" />
-                  <LabeledInput label="Stad" value={city} onChange={setCity} placeholder="Gent" />
+                  <LabeledInput label={t("cart.postal_code")} value={postalCode} onChange={setPostalCode} placeholder={t("cart.postal_code_placeholder")} />
+                  <LabeledInput label={t("cart.city")} value={city} onChange={setCity} placeholder={t("cart.city_placeholder")} />
                 </div>
                 <div style={{ display: "grid", gap: 6 }}>
-                  <label htmlFor="country" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>Land</label>
+                  <label htmlFor="country" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{t("cart.country")}</label>
                   <select
                     id="country"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
                   >
-                    <option value="BE">België</option>
-                    <option value="NL">Nederland</option>
-                    <option value="FR">Frankrijk</option>
-                    <option value="LU">Luxemburg</option>
-                    <option value="DE">Duitsland</option>
+                    <option value="BE">{t("cart.country_be")}</option>
+                    <option value="NL">{t("cart.country_nl")}</option>
+                    <option value="FR">{t("cart.country_fr")}</option>
+                    <option value="LU">{t("cart.country_lu")}</option>
+                    <option value="DE">{t("cart.country_de")}</option>
                   </select>
                 </div>
               </div>
+
 
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
                 <button
