@@ -1,0 +1,87 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Check the status of a bike — Velopass",
+    "description": "Check whether a bike is registered in the Velopass Community — no account needed, in seconds.",
+    "ogDescription": "Check a bike via its Velopass code or brand + frame number."
+  },
+  "nav": {
+    "what_you_get": "What you get",
+    "already_have_one": "Already have a sticker?",
+    "order_sticker": "Order a sticker",
+    "community": "Community",
+    "bike_check": "Bike check",
+    "for_professionals": "For professionals",
+    "login": "Log in",
+    "menu_label": "Menu"
+  },
+  "page": {
+    "back": "← Back",
+    "eyebrow": "BIKE CHECK",
+    "title": "Check the status of a bike",
+    "subtitle": "Check whether a bike is registered in the Velopass Community — no account needed, in seconds."
+  },
+  "method_a": {
+    "title": "Via the Velopass code",
+    "desc": "Scan the QR-code on the Frame-ID or enter the Velopass code manually.",
+    "code_label": "Velopass code",
+    "scan_cta": "Scan the QR-code",
+    "manual_cta": "Enter the code manually"
+  },
+  "method_b": {
+    "title": "Via brand and frame number",
+    "desc": "Search using the brand and frame number of the bike.",
+    "brand": "Brand",
+    "brand_placeholder": "Choose a brand",
+    "frame_number": "Frame number",
+    "check": "Check",
+    "loading": "Checking...",
+    "captcha": "I am not a robot",
+    "captcha_meta_privacy": "Privacy · Terms"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again."
+  },
+  "status_overview": {
+    "eyebrow": "WHAT DOES THE STATUS MEAN?",
+    "title": "Three possible outcomes",
+    "subtitle": "After searching you will always see one of these three statuses.",
+    "secured_group_label": "SECURED — Registered in the Velopass Community",
+    "not_secured_group_label": "NOT SECURED — Not registered in Velopass",
+    "divider_or": "or",
+    "is_this_your_bike": "Is this your bike?",
+    "order_frameid_cta": "Order a Frame-ID →",
+    "order_frameid_hint": "Protect your bike with a Velopass Frame-ID — available via a bike shop or our webshop.",
+    "register_bike_cta": "Register your bike →",
+    "register_bike_hint": "You already have a Frame-ID on your bike. Register it in a few steps."
+  },
+  "status_cards": {
+    "all_clear": {
+      "badge": "ALL CLEAR",
+      "title": "Free and safe",
+      "body": "Registered in the Velopass Community and not reported as missing."
+    },
+    "reported": {
+      "badge": "REPORTED",
+      "title": "Reported as missing",
+      "body": "Registered and actively reported by the owner. The Velopass Community is helping search."
+    },
+    "not_registered": {
+      "badge": "NOT REGISTERED",
+      "title": "Not registered",
+      "body": "This bike is not in the Velopass database. It is not protected yet."
+    }
+  },
+  "result": {
+    "secured_title": "This bike is secured",
+    "secured_body": "This bike is registered in the Velopass Community and has not been reported as missing.",
+    "secured_cta": "Is this your bike? Open your Velopass →",
+    "reported_title": "This bike has been reported",
+    "reported_body": "This bike is registered and actively reported by its owner. The Velopass Community is searching actively.",
+    "reported_cta_primary": "Report a found bike →",
+    "reported_cta_secondary": "Call the police: 101",
+    "not_registered_title": "Not registered",
+    "not_registered_body": "This bike is not in the Velopass database. Register it to protect it.",
+    "not_registered_cta": "Register your bike →"
+  }
+}
