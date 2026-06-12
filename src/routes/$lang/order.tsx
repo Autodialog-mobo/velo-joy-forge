@@ -463,10 +463,10 @@ function BestellenPage() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
               <div>
                 <p style={{ margin: 0, fontSize: 12, color: "rgba(13,31,60,0.6)", fontFamily: "DM Sans, sans-serif", textTransform: "uppercase", letterSpacing: 1.5 }}>
-                  Betaling
+                  {t("checkout_stage.label")}
                 </p>
                 <h2 style={{ margin: "4px 0 0", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0D1F3C" }}>
-                  Totaal {eur(total)}
+                  {t("checkout_stage.total_template", { total: eur(total) })}
                 </h2>
               </div>
               <button
@@ -474,18 +474,19 @@ function BestellenPage() {
                 onClick={() => setStage("select")}
                 style={{ background: "transparent", border: "none", color: "rgba(13,31,60,0.65)", cursor: "pointer", fontSize: 13, fontFamily: "DM Sans, sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
               >
-                <ArrowLeft size={14} /> Wijzig bestelling
+                <ArrowLeft size={14} /> {t("checkout_stage.edit_order")}
               </button>
             </div>
             {checkoutError ? (
               <div style={{ color: "#b00020", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
-                Er ging iets mis bij het starten van de betaling: {checkoutError}
+                {t("checkout_stage.error_prefix")} {checkoutError}
               </div>
             ) : (
               <p style={{ margin: 0, color: "rgba(13,31,60,0.7)", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
-                Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…
+                {t("checkout_stage.redirecting")}
               </p>
             )}
+
           </div>
         )}
       </main>
