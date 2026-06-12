@@ -177,18 +177,19 @@ function BestellenPage() {
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "56px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ color: "#2ECC8A", fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>
-            Bestel een Frame-ID
+            {t("hero.eyebrow")}
           </p>
           <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 36, lineHeight: 1.15, margin: "12px 0 14px", maxWidth: 720 }}>
-            Bescherm je fiets. Vanaf €12,95.
+            {t("hero.title")}
           </h1>
           <p style={{ fontFamily: "DM Sans, sans-serif", color: "rgba(255,255,255,0.72)", fontSize: 14, lineHeight: 1.6, margin: 0, maxWidth: 620 }}>
-            Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje. Gratis verzending in heel de EU.
+            {t("hero.subtitle")}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 24, fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> Gratis verzending in heel de EU</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> Veilig betalen via Mollie</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> {t("hero.feature_shipping")}</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> {t("hero.feature_secure")}</span>
           </div>
+
         </div>
       </section>
 
