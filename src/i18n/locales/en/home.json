@@ -14,5 +14,25 @@
     "cta_sub": "From €12.95 — free shipping across the EU",
     "stolen_link": "Bike stolen or missing? → Read what to do next",
     "trust_text_suffix": "shops"
+  },
+  "paths": {
+    "shop": {
+      "tag": "JUST BOUGHT A BIKE?",
+      "title": "Your Velopass is ready",
+      "desc": "Chances are your Velopass is already waiting for you via your bike shop. Your bike is registered — just pick a password and everything is ready.",
+      "cta": "Open your Velopass →"
+    },
+    "order": {
+      "tag": "No Frame-ID yet?",
+      "title": "Order a Velopass Frame-ID",
+      "desc": "From €12.95. Free shipping. Instantly protected via your digital bike passport.",
+      "cta": "View the bundles →"
+    },
+    "second_hand": {
+      "tag": "Second-hand bike with Frame-ID?",
+      "title": "The passport moves with you. In your name.",
+      "desc": "Bought a second-hand bike with an existing Velopass Frame-ID? Register it in your name — the passport simply transfers.",
+      "cta": "Start transfer →"
+    }
   }
 }

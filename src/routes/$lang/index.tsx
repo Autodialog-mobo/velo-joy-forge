@@ -140,7 +140,7 @@ function VelopassHome() {
 
         <div className="path-split">
           <a href="#already-have-one" className="path-card primary">
-            <div className="path-tag">Uitnodiging ontvangen van je fietswinkel?</div>
+            <div className="path-tag">{t("home:paths.shop.tag")}</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round">
                 <rect x="2" y="2" width="8" height="8" rx="1" />
@@ -149,12 +149,12 @@ function VelopassHome() {
                 <rect x="14" y="14" width="4" height="4" rx="0.5" fill="#0D1F3C" />
               </svg>
             </div>
-            <div className="path-title">Jouw Velopass staat klaar</div>
-            <p className="path-desc">Je fietswinkel heeft je fiets al geregistreerd en je een uitnodiging gestuurd. Kies enkel nog een wachtwoord — in 1 minuut klaar.</p>
-            <span className="path-cta">Open je Velopass →</span>
+            <div className="path-title">{t("home:paths.shop.title")}</div>
+            <p className="path-desc">{t("home:paths.shop.desc")}</p>
+            <span className="path-cta">{t("home:paths.shop.cta")}</span>
           </a>
           <Link to="/$lang/order" params={{ lang: currentLang }} className="path-card secondary">
-            <div className="path-tag">Nog geen Frame-ID?</div>
+            <div className="path-tag">{t("home:paths.order.tag")}</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
                 <circle cx="12" cy="12" r="10" />
@@ -162,20 +162,20 @@ function VelopassHome() {
                 <line x1="8" y1="12" x2="16" y2="12" />
               </svg>
             </div>
-            <div className="path-title">Bestel een Velopass Frame-ID</div>
-            <p className="path-desc">Vanaf €12,95. Gratis verzending. Direct beschermd via je digitaal fietspaspoort.</p>
-            <span className="path-cta">Sticker bestellen →</span>
+            <div className="path-title">{t("home:paths.order.title")}</div>
+            <p className="path-desc">{t("home:paths.order.desc")}</p>
+            <span className="path-cta">{t("home:paths.order.cta")}</span>
           </Link>
           <a href="#tweedehands" className="path-card tertiary">
-            <div className="path-tag">Tweedehands fiets met Frame-ID?</div>
+            <div className="path-tag">{t("home:paths.second_hand.tag")}</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
                 <path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
             </div>
-            <div className="path-title">Het paspoort gaat mee. Op jouw naam.</div>
-            <p className="path-desc">Tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Registreer hem op jouw naam — het paspoort gaat gewoon mee.</p>
-            <span className="path-cta">Overdracht starten →</span>
+            <div className="path-title">{t("home:paths.second_hand.title")}</div>
+            <p className="path-desc">{t("home:paths.second_hand.desc")}</p>
+            <span className="path-cta">{t("home:paths.second_hand.cta")}</span>
           </a>
         </div>
 
