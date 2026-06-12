@@ -1,38 +1,38 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
-    "title": "Velopass — Every bike. A customer for life.",
-    "description": "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop."
+    "title": "Velopass — Toujours à vélo. Tout est réglé.",
+    "description": "Un Frame-ID sur votre vélo et vous avez toujours accès à la protection antivol, l'assistance, l'assurance et votre vélociste. Le passeport vélo numérique."
   },
   "hero": {
-    "eyebrow": "Theft protection + digital bike passport",
-    "title_line_1": "Always on your bike.",
-    "title_line_2_em": "Everything",
-    "title_line_3_em": "sorted.",
-    "sub": "One Frame-ID on your bike — and you always have access to theft protection, roadside assistance, insurance and your digital service book.",
-    "cta_primary": "Order your Frame-ID →",
-    "cta_sub": "From €12.95 — free shipping across the EU",
-    "stolen_link": "Bike stolen or missing? → Read what to do next",
-    "trust_text_suffix": "shops"
+    "eyebrow": "Protection antivol + passeport vélo numérique",
+    "title_line_1": "Toujours à vélo.",
+    "title_line_2_em": "Tout",
+    "title_line_3_em": "est réglé.",
+    "sub": "Un Frame-ID sur votre vélo — et vous avez toujours accès à la protection antivol, l'assistance, l'assurance et votre carnet d'entretien numérique. Quoi qu'il arrive.",
+    "cta_primary": "Commandez votre Frame-ID →",
+    "cta_sub": "À partir de 12,95 € — livraison gratuite dans toute l'UE",
+    "stolen_link": "Vélo volé ou disparu ? → Lisez ce qu'il faut faire",
+    "trust_text_suffix": "vélocistes"
   },
   "paths": {
     "shop": {
-      "tag": "JUST BOUGHT A BIKE?",
-      "title": "Your Velopass is ready",
-      "desc": "Chances are your Velopass is already waiting for you via your bike shop. Your bike is registered — just pick a password and everything is ready.",
-      "cta": "Open your Velopass →"
+      "tag": "VÉLO FRAÎCHEMENT ACHETÉ ?",
+      "title": "Votre Velopass est prêt",
+      "desc": "Il y a de fortes chances que votre Velopass soit déjà prêt via votre vélociste. Votre vélo est enregistré — choisissez simplement un mot de passe et tout est prêt.",
+      "cta": "Ouvrez votre Velopass →"
     },
     "order": {
-      "tag": "No Frame-ID yet?",
-      "title": "Order a Velopass Frame-ID",
-      "desc": "From €12.95. Free shipping. Instantly protected via your digital bike passport.",
-      "cta": "View the bundles →"
+      "tag": "Pas encore de Frame-ID ?",
+      "title": "Commandez un Velopass Frame-ID",
+      "desc": "À partir de 12,95 €. Livraison gratuite. Protection immédiate via votre passeport vélo numérique.",
+      "cta": "Voir les formules →"
     },
     "second_hand": {
-      "tag": "Second-hand bike with Frame-ID?",
-      "title": "The passport moves with you. In your name.",
-      "desc": "Bought a second-hand bike with an existing Velopass Frame-ID? Register it in your name — the passport simply transfers.",
-      "cta": "Start transfer →"
+      "tag": "Vélo d'occasion avec Frame-ID ?",
+      "title": "Le passeport vous suit. À votre nom.",
+      "desc": "Acheté un vélo d'occasion avec un Velopass Frame-ID existant ? Enregistrez-le à votre nom — le passeport est tout simplement transféré.",
+      "cta": "Démarrer le transfert →"
     }
   }
 }
