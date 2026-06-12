@@ -199,7 +199,7 @@ function VelopassHome() {
           <div className="avatars">
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
           </div>
-          <div className="trust-text">+180.000 fietsers&nbsp; ·&nbsp; <strong>{activeShopsCount.toLocaleString("nl-BE")}+ {t("home:hero.trust_text_suffix")}</strong></div>
+          <div className="trust-text">{t("home:hero.trust_text_cyclists")}&nbsp; ·&nbsp; <strong>{activeShopsCount.toLocaleString("nl-BE")}+ {t("home:hero.trust_text_suffix")}</strong></div>
         </div>
       </section>
 
