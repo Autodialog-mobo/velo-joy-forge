@@ -361,7 +361,7 @@ function BestellenPage() {
                     id="country"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff" }}
+                    style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
                   >
                     <option value="BE">België</option>
                     <option value="NL">Nederland</option>
