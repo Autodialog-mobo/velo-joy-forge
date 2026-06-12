@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle } from "lucide-react";
@@ -23,7 +24,6 @@ export const Route = createFileRoute("/$lang/bike-check")({
 });
 
 type Status = "secured" | "secured_reported" | "not_registered";
-type Lang = "nl-nl" | "fr-fr";
 
 const BRANDS = [
   "Trek", "Specialized", "Cube", "Giant", "Cannondale", "Scott", "Bianchi",
@@ -31,61 +31,13 @@ const BRANDS = [
   "Batavus", "Cortina", "Cowboy", "VanMoof", "Riese & Müller", "Andere",
 ];
 
-const t = (lang: Lang) => ({
-  back: lang === "fr-fr" ? "← Retour" : "← Terug",
-  eyebrow: lang === "fr-fr" ? "VÉRIFIER UN VÉLO" : "FIETS CONTROLEREN",
-  title: lang === "fr-fr" ? "Vérifiez le statut d'un vélo" : "Check de status van een fiets",
-  subtitle:
-    lang === "fr-fr"
-      ? "Vérifiez si un vélo est enregistré dans la Communauté Velopass — sans compte, en quelques secondes."
-      : "Controleer of een fiets geregistreerd is in de Velopass Community — zonder account, in enkele seconden.",
-  methodA: lang === "fr-fr" ? "Via le code Velopass" : "Via de Velopass-code",
-  methodAdesc:
-    lang === "fr-fr"
-      ? "Scannez le QR-code sur le Frame-ID ou entrez le code Velopass manuellement."
-      : "Scan de QR-code op de Frame-ID of voer de Velopass-code handmatig in.",
-  codeLabel: lang === "fr-fr" ? "Code Velopass" : "Velopass-code",
-  methodB: lang === "fr-fr" ? "Via la marque et le numéro de cadre" : "Via merk en framenummer",
-  methodBdesc:
-    lang === "fr-fr"
-      ? "Recherchez sur base de la marque et du numéro de cadre du vélo."
-      : "Zoek op basis van het merk en het framenummer van de fiets.",
-  brand: lang === "fr-fr" ? "Marque" : "Merk",
-  brandPlaceholder: lang === "fr-fr" ? "Choisir une marque" : "Kies een merk",
-  frameNumber: lang === "fr-fr" ? "Numéro de cadre" : "Framenummer",
-  check: lang === "fr-fr" ? "Vérifier" : "Controleer",
-  loading: lang === "fr-fr" ? "Vérification..." : "Controleren...",
-  error: lang === "fr-fr" ? "Une erreur s'est produite. Réessayez." : "Er ging iets mis. Probeer het opnieuw.",
-  securedTitle: lang === "fr-fr" ? "Ce vélo est sécurisé" : "Deze fiets is beveiligd",
-  securedBody:
-    lang === "fr-fr"
-      ? "Ce vélo est enregistré dans la Communauté Velopass et n'a pas été signalé comme disparu."
-      : "Deze fiets is geregistreerd in de Velopass Community en niet gemeld als vermist.",
-  securedCta: lang === "fr-fr" ? "C'est votre vélo ? Ouvrez votre Velopass →" : "Is dit jouw fiets? Open je Velopass →",
-  reportedTitle: lang === "fr-fr" ? "Ce vélo a été signalé" : "Deze fiets is gemeld",
-  reportedBody:
-    lang === "fr-fr"
-      ? "Ce vélo est enregistré et activement signalé par son propriétaire. La Communauté Velopass cherche activement."
-      : "Deze fiets is geregistreerd én actief gemeld door de eigenaar. De Velopass Community zoekt actief mee.",
-  reportedCtaPrimary: lang === "fr-fr" ? "Signaler un vélo trouvé →" : "Meld een gevonden fiets →",
-  reportedCtaSecondary: lang === "fr-fr" ? "Appeler la police : 101" : "Bel politie: 101",
-  notRegTitle: lang === "fr-fr" ? "Non enregistré" : "Niet geregistreerd",
-  notRegBody:
-    lang === "fr-fr"
-      ? "Ce vélo ne figure pas dans la base de données Velopass. Enregistrez-le pour le sécuriser."
-      : "Deze fiets staat niet in de Velopass-database. Registreer hem om hem te beveiligen.",
-  notRegCta: lang === "fr-fr" ? "Enregistrez votre vélo →" : "Registreer je fiets →",
-  captcha: lang === "fr-fr" ? "Je ne suis pas un robot" : "Ik ben geen robot",
-  scanCta: lang === "fr-fr" ? "Scanner le QR-code" : "Scan de QR-code",
-  manualCta: lang === "fr-fr" ? "Entrer le code manuellement" : "Code handmatig invoeren",
-});
+type TFn = ReturnType<typeof useTranslation>["t"];
 
 // Mock backend — deterministic based on input
 async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: string }): Promise<{ status: Status }> {
   await new Promise((r) => setTimeout(r, 700));
   const key = (payload.velopass_code || payload.frame_number || "").toUpperCase().replace(/\s/g, "");
   if (!key) throw new Error("empty");
-  // Demo rule: digit sum determines status
   const sum = key.split("").reduce((a, c) => a + (c.charCodeAt(0) % 7), 0);
   const mod = sum % 3;
   const status: Status = mod === 0 ? "secured" : mod === 1 ? "secured_reported" : "not_registered";
@@ -94,10 +46,7 @@ async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: 
 
 function BikeSearchPage() {
   const lang = useCurrentLang();
-  const search = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : new URLSearchParams();
-  const apiLang: "nl-nl" | "fr-fr" = search.get("lng") === "fr-fr" ? "fr-fr" : "nl-nl";
-  const L = useMemo(() => t(apiLang), [apiLang]);
-
+  const { t } = useTranslation(["bike-check", "common"]);
 
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
@@ -124,7 +73,7 @@ function BikeSearchPage() {
       const res = await mockBikeStatus({ velopass_code: codeA.trim() });
       setResult(res.status);
     } catch {
-      setError(L.error);
+      setError(t("errors.generic"));
     } finally {
       setLoadingA(false);
     }
@@ -141,7 +90,7 @@ function BikeSearchPage() {
       const res = await mockBikeStatus({ frame_number: `${brand}-${frame.trim()}` });
       setResult(res.status);
     } catch {
-      setError(L.error);
+      setError(t("errors.generic"));
     } finally {
       setLoadingB(false);
     }
@@ -156,12 +105,12 @@ function BikeSearchPage() {
           <span className="logo-text">velopass</span>
         </a>
         <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
-          <li><a href={`/${lang}#wat-je-krijgt`}>Wat je krijgt</a></li>
-          <li><a href={`/${lang}#already-have-one`}>Al een sticker?</a></li>
-          <li><a href={`/${lang}#order-sticker`}>Sticker bestellen</a></li>
-          <li><a href={`/${lang}#community`}>Community</a></li>
-          <li><Link to="/$lang/bike-check" params={{ lang }} search={{ lng: "nl-nl" }}>Fiets controleren</Link></li>
-          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />Voor professionals</Link></li>
+          <li><a href={`/${lang}#wat-je-krijgt`}>{t("nav.what_you_get")}</a></li>
+          <li><a href={`/${lang}#already-have-one`}>{t("nav.already_have_one")}</a></li>
+          <li><a href={`/${lang}#order-sticker`}>{t("nav.order_sticker")}</a></li>
+          <li><a href={`/${lang}#community`}>{t("nav.community")}</a></li>
+          <li><Link to="/$lang/bike-check" params={{ lang }} search={{ lng: "nl-nl" }}>{t("nav.bike_check")}</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
           <LangSwitcher currentLang={lang} />
@@ -170,12 +119,12 @@ function BikeSearchPage() {
               <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
               <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            Inloggen
+            {t("nav.login")}
           </a>
           <button
             type="button"
             className="nav-toggle"
-            aria-label="Menu"
+            aria-label={t("nav.menu_label")}
             aria-expanded={navOpen}
             onClick={() => setNavOpen((o) => !o)}
           >
@@ -214,11 +163,10 @@ function BikeSearchPage() {
             gap: 4,
           }}
         >
-          {L.back}
+          {t("page.back")}
         </button>
       </section>
       <section style={{ padding: "16px 6vw 16px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
-
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
@@ -230,7 +178,7 @@ function BikeSearchPage() {
             marginBottom: 10,
           }}
         >
-          {L.eyebrow}
+          {t("page.eyebrow")}
         </div>
         <h1
           style={{
@@ -243,7 +191,7 @@ function BikeSearchPage() {
             marginBottom: 12,
           }}
         >
-          {L.title}
+          {t("page.title")}
         </h1>
         <p
           style={{
@@ -256,7 +204,7 @@ function BikeSearchPage() {
             lineHeight: 1.6,
           }}
         >
-          {L.subtitle}
+          {t("page.subtitle")}
         </p>
       </section>
 
@@ -268,8 +216,8 @@ function BikeSearchPage() {
             <div style={{ marginBottom: 14 }}>
               <QrCode size={28} color="#2ECC8A" strokeWidth={1.8} />
             </div>
-            <h2 style={cardTitle}>{L.methodA}</h2>
-            <p style={cardDesc}>{L.methodAdesc}</p>
+            <h2 style={cardTitle}>{t("method_a.title")}</h2>
+            <p style={cardDesc}>{t("method_a.desc")}</p>
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
               <button
@@ -283,7 +231,7 @@ function BikeSearchPage() {
                   background: "#0D1F3C",
                 }}
               >
-                <QrCode size={16} strokeWidth={2} /> {L.scanCta}
+                <QrCode size={16} strokeWidth={2} /> {t("method_a.scan_cta")}
               </button>
               <button
                 type="button"
@@ -302,7 +250,7 @@ function BikeSearchPage() {
                   flex: "1 1 200px",
                 }}
               >
-                {L.manualCta} →
+                {t("method_a.manual_cta")} →
               </button>
             </div>
           </form>
@@ -312,23 +260,23 @@ function BikeSearchPage() {
             <div style={{ marginBottom: 14 }}>
               <Hash size={28} color="#5A7090" strokeWidth={1.8} />
             </div>
-            <h2 style={cardTitle}>{L.methodB}</h2>
-            <p style={cardDesc}>{L.methodBdesc}</p>
+            <h2 style={cardTitle}>{t("method_b.title")}</h2>
+            <p style={cardDesc}>{t("method_b.desc")}</p>
 
-            <label style={labelStyle} htmlFor="bs-brand">{L.brand}</label>
+            <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
             <select
               id="bs-brand"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               style={{ ...inputStyle, appearance: "none", background: "#fff" }}
             >
-              <option value="">{L.brandPlaceholder}</option>
+              <option value="">{t("method_b.brand_placeholder")}</option>
               {BRANDS.map((b) => (
                 <option key={b} value={b}>{b}</option>
               ))}
             </select>
 
-            <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{L.frameNumber}</label>
+            <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
               id="bs-frame"
               type="text"
@@ -361,11 +309,11 @@ function BikeSearchPage() {
                 onChange={(e) => setCaptcha(e.target.checked)}
                 style={{ width: 22, height: 22, cursor: "pointer" }}
               />
-              <span style={{ flex: 1 }}>{L.captcha}</span>
+              <span style={{ flex: 1 }}>{t("method_b.captcha")}</span>
               <span style={{ fontSize: 10, color: "#5A7090", textAlign: "right", lineHeight: 1.2 }}>
                 reCAPTCHA
                 <br />
-                <span style={{ fontSize: 9 }}>Privacy · Terms</span>
+                <span style={{ fontSize: 9 }}>{t("method_b.captcha_meta_privacy")}</span>
               </span>
             </label>
 
@@ -376,10 +324,10 @@ function BikeSearchPage() {
             >
               {loadingB ? (
                 <>
-                  <Loader2 size={16} className="bs-spin" /> {L.loading}
+                  <Loader2 size={16} className="bs-spin" /> {t("method_b.loading")}
                 </>
               ) : (
-                L.check
+                t("method_b.check")
               )}
             </button>
           </form>
@@ -407,9 +355,9 @@ function BikeSearchPage() {
         {/* RESULT */}
         {result && (
           <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
-            {result === "secured" && <SecuredCard L={L} />}
-            {result === "secured_reported" && <ReportedCard L={L} />}
-            {result === "not_registered" && <NotRegCard L={L} />}
+            {result === "secured" && <SecuredCard t={t} />}
+            {result === "secured_reported" && <ReportedCard t={t} />}
+            {result === "not_registered" && <NotRegCard t={t} />}
           </div>
         )}
       </section>
@@ -428,7 +376,7 @@ function BikeSearchPage() {
               marginBottom: 10,
             }}
           >
-            WAT BETEKENT DE STATUS?
+            {t("status_overview.eyebrow")}
           </div>
           <h2
             style={{
@@ -440,7 +388,7 @@ function BikeSearchPage() {
               marginBottom: 8,
             }}
           >
-            Drie mogelijke uitkomsten
+            {t("status_overview.title")}
           </h2>
           <p
             style={{
@@ -452,7 +400,7 @@ function BikeSearchPage() {
               margin: "0 auto",
             }}
           >
-            Na het zoeken zie je altijd één van deze drie statussen.
+            {t("status_overview.subtitle")}
           </p>
         </div>
 
@@ -480,7 +428,7 @@ function BikeSearchPage() {
             }}
           >
             <VelopassMark size={12} />
-            <span>SECURED — Geregistreerd in de Velopass Community</span>
+            <span>{t("status_overview.secured_group_label")}</span>
           </div>
 
           <div className="bs-secured-grid">
@@ -488,11 +436,11 @@ function BikeSearchPage() {
             <div style={statusCardStyle}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <CheckCircle2 size={20} color="#2ECC8A" />
-                <span style={statusBadgeStyle("#2ECC8A")}>ALL CLEAR</span>
+                <span style={statusBadgeStyle("#2ECC8A")}>{t("status_cards.all_clear.badge")}</span>
               </div>
-              <h3 style={statusTitleStyle}>Vrij en veilig</h3>
+              <h3 style={statusTitleStyle}>{t("status_cards.all_clear.title")}</h3>
               <p style={statusBodyStyle}>
-                Geregistreerd in de Velopass Community en niet gemeld als vermist.
+                {t("status_cards.all_clear.body")}
               </p>
             </div>
 
@@ -500,11 +448,11 @@ function BikeSearchPage() {
             <div style={statusCardStyle}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <AlertTriangle size={20} color="#F59E0B" />
-                <span style={statusBadgeStyle("#F59E0B")}>REPORTED</span>
+                <span style={statusBadgeStyle("#F59E0B")}>{t("status_cards.reported.badge")}</span>
               </div>
-              <h3 style={statusTitleStyle}>Gemeld als vermist</h3>
+              <h3 style={statusTitleStyle}>{t("status_cards.reported.title")}</h3>
               <p style={statusBodyStyle}>
-                Geregistreerd én actief gemeld door de eigenaar. De Velopass Community zoekt mee.
+                {t("status_cards.reported.body")}
               </p>
             </div>
           </div>
@@ -529,7 +477,7 @@ function BikeSearchPage() {
               fontStyle: "italic",
             }}
           >
-            of
+            {t("status_overview.divider_or")}
           </span>
           <div style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
         </div>
@@ -558,18 +506,18 @@ function BikeSearchPage() {
             }}
           >
             <XCircle size={12} color="#5A7090" strokeWidth={1.8} />
-            <span>NOT SECURED — Niet geregistreerd in Velopass</span>
+            <span>{t("status_overview.not_secured_group_label")}</span>
           </div>
 
           {/* CARD 3: NOT REGISTERED */}
           <div style={{ ...statusCardStyle, borderLeft: "4px solid #CBD5E1" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <Search size={20} color="#5A7090" />
-              <span style={statusBadgeStyle("#F1F5F9")}>NOT REGISTERED</span>
+              <span style={statusBadgeStyle("#F1F5F9")}>{t("status_cards.not_registered.badge")}</span>
             </div>
-            <h3 style={statusTitleStyle}>Niet geregistreerd</h3>
+            <h3 style={statusTitleStyle}>{t("status_cards.not_registered.title")}</h3>
             <p style={statusBodyStyle}>
-              Deze fiets staat niet in de Velopass-database. Hij is nog niet beveiligd.
+              {t("status_cards.not_registered.body")}
             </p>
             <p
               style={{
@@ -580,7 +528,7 @@ function BikeSearchPage() {
                 margin: "16px 0 12px",
               }}
             >
-              Is dit jouw fiets?
+              {t("status_overview.is_this_your_bike")}
             </p>
 
             {lastMethod === "b" ? (
@@ -602,7 +550,7 @@ function BikeSearchPage() {
                     marginTop: 4,
                   }}
                 >
-                  Bestel een Frame-ID →
+                  {t("status_overview.order_frameid_cta")}
                 </a>
                 <p
                   style={{
@@ -613,7 +561,7 @@ function BikeSearchPage() {
                     margin: "8px 0 0",
                   }}
                 >
-                  Bescherm je fiets met een Velopass Frame-ID — verkrijgbaar via een fietswinkel of onze webshop.
+                  {t("status_overview.order_frameid_hint")}
                 </p>
               </>
             ) : (
@@ -635,7 +583,7 @@ function BikeSearchPage() {
                     marginTop: 4,
                   }}
                 >
-                  Registreer je fiets →
+                  {t("status_overview.register_bike_cta")}
                 </a>
                 <p
                   style={{
@@ -646,7 +594,7 @@ function BikeSearchPage() {
                     margin: "8px 0 0",
                   }}
                 >
-                  Je hebt al een Frame-ID op je fiets. Registreer hem in enkele stappen.
+                  {t("status_overview.register_bike_hint")}
                 </p>
               </>
             )}
@@ -810,35 +758,35 @@ const resultBody: React.CSSProperties = {
   marginBottom: 20,
 };
 
-function SecuredCard({ L }: { L: ReturnType<typeof t> }) {
+function SecuredCard({ t }: { t: TFn }) {
   return (
     <div style={resultCard("#2ECC8A")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>SECURED</span>
+        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>{t("status_cards.all_clear.badge")}</span>
         <CheckCircle2 color="#2ECC8A" size={24} />
       </div>
-      <h3 style={resultTitle}>{L.securedTitle}</h3>
-      <p style={resultBody}>{L.securedBody}</p>
+      <h3 style={resultTitle}>{t("result.secured_title")}</h3>
+      <p style={resultBody}>{t("result.secured_body")}</p>
       <a
         href="https://velopass.com"
         style={{ color: "#2ECC8A", fontWeight: 500, textDecoration: "none", fontSize: 14 }}
       >
-        {L.securedCta}
+        {t("result.secured_cta")}
       </a>
     </div>
   );
 }
 
-function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
+function ReportedCard({ t }: { t: TFn }) {
   return (
     <div style={resultCard("#F59E0B")}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>SECURED</span>
-        <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>REPORTED</span>
+        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>{t("status_cards.all_clear.badge")}</span>
+        <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>{t("status_cards.reported.badge")}</span>
         <AlertTriangle color="#F59E0B" size={24} style={{ marginLeft: 4 }} />
       </div>
-      <h3 style={resultTitle}>{L.reportedTitle}</h3>
-      <p style={resultBody}>{L.reportedBody}</p>
+      <h3 style={resultTitle}>{t("result.reported_title")}</h3>
+      <p style={resultBody}>{t("result.reported_body")}</p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <a
           href="mailto:found@velopass.com"
@@ -852,7 +800,7 @@ function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
             fontWeight: 500,
           }}
         >
-          {L.reportedCtaPrimary}
+          {t("result.reported_cta_primary")}
         </a>
         <a
           href="tel:101"
@@ -867,23 +815,23 @@ function ReportedCard({ L }: { L: ReturnType<typeof t> }) {
             fontWeight: 500,
           }}
         >
-          {L.reportedCtaSecondary}
+          {t("result.reported_cta_secondary")}
         </a>
       </div>
     </div>
   );
 }
 
-function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
+function NotRegCard({ t }: { t: TFn }) {
   const lang = useCurrentLang();
   return (
     <div style={resultCard("#CBD5E1")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#F1F5F9", color: "#0D1F3C" }}>NOT REGISTERED</span>
+        <span style={{ ...badgeBase, background: "#F1F5F9", color: "#0D1F3C" }}>{t("status_cards.not_registered.badge")}</span>
         <Search color="#5A7090" size={24} />
       </div>
-      <h3 style={resultTitle}>{L.notRegTitle}</h3>
-      <p style={resultBody}>{L.notRegBody}</p>
+      <h3 style={resultTitle}>{t("result.not_registered_title")}</h3>
+      <p style={resultBody}>{t("result.not_registered_body")}</p>
       <a
         href={`/${lang}`}
         onClick={() => trackRegisterBikeClick("bikesearch", "search-result-not-registered")}
@@ -898,7 +846,7 @@ function NotRegCard({ L }: { L: ReturnType<typeof t> }) {
           display: "inline-block",
         }}
       >
-        {L.notRegCta}
+        {t("result.not_registered_cta")}
       </a>
     </div>
   );

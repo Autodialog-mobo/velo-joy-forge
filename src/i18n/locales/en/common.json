@@ -33,5 +33,19 @@
     "soon": "Coming soon",
     "back_to_stakeholders": "← All stakeholders",
     "talk_to_us": "Talk to us →"
+  },
+  "cookie_consent": {
+    "message": "Velopass uses cookies to improve your browsing experience and keep anonymous statistics. Read our",
+    "privacy_link": "privacy policy",
+    "message_suffix": "for more info.",
+    "decline": "Essential only",
+    "accept": "Allow all cookies"
+  },
+  "buttons": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "retry": "Try again"
   }
 }

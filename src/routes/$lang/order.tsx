@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
@@ -15,8 +16,7 @@ type Bundle = {
   stickers: number;
   price: number; // cents
   pricePerUnit: number;
-  tagline: string;
-  discountLabel?: string;
+  discountKey?: "discount_15" | "discount_23";
   featured?: boolean;
 };
 
@@ -27,7 +27,6 @@ const BUNDLES: Bundle[] = [
     stickers: 1,
     price: 1295,
     pricePerUnit: 1295,
-    tagline: "€12,95 per stuk",
   },
   {
     key: "frameid_duo_onetime",
@@ -35,8 +34,7 @@ const BUNDLES: Bundle[] = [
     stickers: 2,
     price: 2195,
     pricePerUnit: 1098,
-    tagline: "€10,98 per stuk",
-    discountLabel: "15% korting",
+    discountKey: "discount_15",
     featured: true,
   },
   {
@@ -45,10 +43,10 @@ const BUNDLES: Bundle[] = [
     stickers: 5,
     price: 4995,
     pricePerUnit: 999,
-    tagline: "€9,99 per stuk",
-    discountLabel: "23% korting",
+    discountKey: "discount_23",
   },
 ];
+
 
 const eur = (cents: number) =>
   new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(cents / 100);
@@ -71,6 +69,7 @@ export const Route = createFileRoute("/$lang/order")({
 
 function BestellenPage() {
   const lang = useCurrentLang();
+  const { t } = useTranslation("order");
   const [quantities, setQuantities] = useState<Record<BundleKey, number>>({
     frameid_solo_onetime: 0,
     frameid_duo_onetime: 0,
@@ -86,6 +85,7 @@ function BestellenPage() {
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
 
   const items = useMemo(
     () =>
@@ -136,9 +136,10 @@ function BestellenPage() {
       }
       window.location.href = result.checkoutUrl;
     } catch (e) {
-      setCheckoutError(e instanceof Error ? e.message : "Onbekende fout");
+      setCheckoutError(e instanceof Error ? e.message : t("checkout_stage.unknown_error"));
     }
   };
+
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C" }}>
@@ -163,8 +164,9 @@ function BestellenPage() {
             }}
             style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
           >
-            <ArrowLeft size={16} /> Terug
+            <ArrowLeft size={16} /> {t("header.back")}
           </button>
+
         </div>
       </header>
 
@@ -172,18 +174,19 @@ function BestellenPage() {
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "56px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ color: "#2ECC8A", fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>
-            Bestel een Frame-ID
+            {t("hero.eyebrow")}
           </p>
           <h1 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 36, lineHeight: 1.15, margin: "12px 0 14px", maxWidth: 720 }}>
-            Bescherm je fiets. Vanaf €12,95.
+            {t("hero.title")}
           </h1>
           <p style={{ fontFamily: "DM Sans, sans-serif", color: "rgba(255,255,255,0.72)", fontSize: 14, lineHeight: 1.6, margin: 0, maxWidth: 620 }}>
-            Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje. Gratis verzending in heel de EU.
+            {t("hero.subtitle")}
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 18, marginTop: 24, fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> Gratis verzending in heel de EU</span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> Veilig betalen via Mollie</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><Truck size={16} color="#2ECC8A" /> {t("hero.feature_shipping")}</span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}><ShieldCheck size={16} color="#2ECC8A" /> {t("hero.feature_secure")}</span>
           </div>
+
         </div>
       </section>
 
@@ -215,32 +218,34 @@ function BestellenPage() {
                     >
                       {isFeatured && (
                         <span style={{ position: "absolute", top: -14, right: 12, zIndex: 2, background: "#2ECC8A", color: "#0D1F3C", fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase", padding: "4px 12px", borderRadius: 999, boxShadow: "0 2px 8px rgba(46,204,138,0.4)" }}>
-                          POPULAIRSTE
+                          {t("bundles.popular_badge")}
                         </span>
                       )}
                       <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#2ECC8A" }}>
                         {b.stickers}
                       </div>
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 16, color: "#0D1F3C", marginTop: 2 }}>
-                        {b.stickers === 1 ? "Frame-ID" : "Frame-ID's"}
+                        {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
                       <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
-                      <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>{b.tagline}</p>
-                      {b.discountLabel && (
+                      <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
+                        {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
+                      </p>
+                      {b.discountKey && (
                         <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.18)", color: "#0F8A5C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
-                          {b.discountLabel}
+                          {t(`bundles.${b.discountKey}` as const)}
                         </span>
                       )}
 
                       <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                         <div style={{ display: "inline-flex", alignItems: "center", border: "1px solid rgba(13,31,60,0.15)", borderRadius: 10, overflow: "hidden", background: "#fff" }}>
-                          <button type="button" aria-label="Minder" onClick={() => updateQty(b.key, -1)} style={qtyBtn} disabled={qty === 0}>
+                          <button type="button" aria-label={t("bundles.qty_decrease_aria")} onClick={() => updateQty(b.key, -1)} style={qtyBtn} disabled={qty === 0}>
                             <Minus size={14} />
                           </button>
                           <span style={{ minWidth: 32, textAlign: "center", fontWeight: 600, color: "#0D1F3C" }}>{qty}</span>
-                          <button type="button" aria-label="Meer" onClick={() => updateQty(b.key, 1)} style={qtyBtn}>
+                          <button type="button" aria-label={t("bundles.qty_increase_aria")} onClick={() => updateQty(b.key, 1)} style={qtyBtn}>
                             <Plus size={14} />
                           </button>
                         </div>
@@ -259,63 +264,67 @@ function BestellenPage() {
                             cursor: "pointer",
                           }}
                         >
-                          {qty > 0 ? "Nog één" : "Toevoegen"}
+                          {qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
                         </button>
                       </div>
+
                     </div>
                   );
                 })}
               </div>
 
               <p style={{ fontSize: 12, color: "rgba(13,31,60,0.55)", margin: 0, fontFamily: "DM Sans, sans-serif" }}>
-                Combineer gerust meerdere bundels in één bestelling. BTW en eventuele lokale belastingen worden automatisch berekend bij de checkout.
+                {t("info.combine_note")}
               </p>
 
               {/* PRO TIP — klevinstructies */}
               <div style={{ background: "rgba(46,204,138,0.06)", border: "1px solid rgba(46,204,138,0.2)", borderRadius: 12, padding: "20px 24px", fontFamily: "DM Sans, sans-serif" }}>
                 <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <Lightbulb size={16} color="#2ECC8A" />
-                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>Pro tip</span>
+                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>{t("pro_tip.label")}</span>
                 </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
                   <div>
                     <Droplets size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Ontvetten eerst</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Reinig het frameoppervlak eerst met een ontvettingsmiddel voor een optimale hechting.</p>
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.degrease_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.degrease_body")}</p>
                   </div>
                   <div>
                     <Eye size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Zichtbaar plaatsen</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Plaats de Frame-ID in het zicht — bij voorkeur net onder de zadelpen. Zo is de QR makkelijk scanbaar.</p>
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.visible_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.visible_body")}</p>
                   </div>
                   <div>
                     <ShieldCheck size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>Afschrikking voor dieven</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>Een zichtbare Frame-ID laat dieven meteen weten dat jouw fiets beschermd en geregistreerd is.</p>
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.deterrent_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.deterrent_body")}</p>
                   </div>
                 </div>
               </div>
+
             </div>
 
             {/* Cart sidebar */}
             <aside style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", position: "sticky", top: 20 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <ShoppingBag size={18} color="#0D1F3C" />
-                <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: 0, color: "#0D1F3C" }}>Winkelmandje</h2>
+                <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: 0, color: "#0D1F3C" }}>{t("cart.title")}</h2>
               </div>
 
               {!hasItems ? (
                 <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: "0 0 16px" }}>
-                  Voeg minstens één bundel toe om verder te gaan.
+                  {t("cart.empty")}
                 </p>
+
               ) : (
                 <div style={{ display: "grid", gap: 10, marginBottom: 14 }}>
                   {items.map((i) => (
                     <div key={i.priceId} style={{ display: "flex", justifyContent: "space-between", gap: 12, fontSize: 14, color: "#0D1F3C" }}>
                       <span>
-                        <span style={{ fontWeight: 600 }}>{i.bundle.name}</span>
+                        <span style={{ fontWeight: 600 }}>{i.bundle.stickers} {i.bundle.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}</span>
                         <span style={{ color: "rgba(13,31,60,0.6)" }}> × {i.quantity}</span>
                       </span>
+
                       <span style={{ fontWeight: 600 }}>{eur(i.bundle.price * i.quantity)}</span>
                     </div>
                   ))}
@@ -323,54 +332,55 @@ function BestellenPage() {
               )}
 
               <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", fontSize: 13, color: "rgba(13,31,60,0.7)", borderTop: "1px solid rgba(13,31,60,0.08)" }}>
-                <span>Verzending</span>
-                <span style={{ color: "#2ECC8A", fontWeight: 600 }}>Gratis in heel de EU</span>
+                <span>{t("cart.shipping")}</span>
+                <span style={{ color: "#2ECC8A", fontWeight: 600 }}>{t("cart.shipping_free")}</span>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: "1px solid rgba(13,31,60,0.08)" }}>
-                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 16, color: "#0D1F3C" }}>Totaal</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 16, color: "#0D1F3C" }}>{t("cart.total")}</span>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 20, color: "#0D1F3C" }}>{eur(total)}</span>
               </div>
 
               <div style={{ display: "grid", gap: 6, margin: "16px 0 12px" }}>
                 <label htmlFor="email" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
-                  E-mailadres
+                  {t("cart.email_label")}
                 </label>
                 <input
                   id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="jij@voorbeeld.be"
+                  placeholder={t("cart.email_placeholder")}
                   style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
                 />
               </div>
 
               <div style={{ display: "grid", gap: 10, margin: "0 0 12px" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                  <LabeledInput label="Voornaam" value={firstName} onChange={setFirstName} placeholder="Jan" />
-                  <LabeledInput label="Achternaam" value={lastName} onChange={setLastName} placeholder="Janssens" />
+                  <LabeledInput label={t("cart.first_name")} value={firstName} onChange={setFirstName} placeholder={t("cart.first_name_placeholder")} />
+                  <LabeledInput label={t("cart.last_name")} value={lastName} onChange={setLastName} placeholder={t("cart.last_name_placeholder")} />
                 </div>
-                <LabeledInput label="Straat + huisnummer" value={address} onChange={setAddress} placeholder="Kerkstraat 12" />
+                <LabeledInput label={t("cart.address")} value={address} onChange={setAddress} placeholder={t("cart.address_placeholder")} />
                 <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 8 }}>
-                  <LabeledInput label="Postcode" value={postalCode} onChange={setPostalCode} placeholder="9000" />
-                  <LabeledInput label="Stad" value={city} onChange={setCity} placeholder="Gent" />
+                  <LabeledInput label={t("cart.postal_code")} value={postalCode} onChange={setPostalCode} placeholder={t("cart.postal_code_placeholder")} />
+                  <LabeledInput label={t("cart.city")} value={city} onChange={setCity} placeholder={t("cart.city_placeholder")} />
                 </div>
                 <div style={{ display: "grid", gap: 6 }}>
-                  <label htmlFor="country" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>Land</label>
+                  <label htmlFor="country" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{t("cart.country")}</label>
                   <select
                     id="country"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
                   >
-                    <option value="BE">België</option>
-                    <option value="NL">Nederland</option>
-                    <option value="FR">Frankrijk</option>
-                    <option value="LU">Luxemburg</option>
-                    <option value="DE">Duitsland</option>
+                    <option value="BE">{t("cart.country_be")}</option>
+                    <option value="NL">{t("cart.country_nl")}</option>
+                    <option value="FR">{t("cart.country_fr")}</option>
+                    <option value="LU">{t("cart.country_lu")}</option>
+                    <option value="DE">{t("cart.country_de")}</option>
                   </select>
                 </div>
               </div>
+
 
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
                 <button
@@ -398,7 +408,7 @@ function BestellenPage() {
                     opacity: !canCheckout ? 0.7 : 1,
                   }}
                 >
-                  {hasItems ? `Betalen — ${eur(total)} →` : "Betalen →"}
+                  {hasItems ? t("cart.pay_with_total_template", { total: eur(total) }) : t("cart.pay_arrow")}
                 </button>
                 {!canCheckout && (
                   <span
@@ -423,10 +433,10 @@ function BestellenPage() {
                     className="pay-tooltip"
                   >
                     {!hasItems
-                      ? "Kies minstens één bundel om te kunnen betalen."
+                      ? t("tooltips.need_bundle")
                       : !emailValid
-                      ? "Vul een geldig e-mailadres in om verder te gaan."
-                      : "Vul je verzendadres in om verder te gaan."}
+                      ? t("tooltips.need_email")
+                      : t("tooltips.need_shipping")}
                     <span
                       style={{
                         position: "absolute",
@@ -442,8 +452,9 @@ function BestellenPage() {
                 )}
               </div>
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
-                Veilig betalen via Mollie · Bancontact · iDEAL · Kaart
+                {t("cart.secure_note")}
               </p>
+
             </aside>
           </div>
         )}
@@ -453,10 +464,10 @@ function BestellenPage() {
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16, flexWrap: "wrap", gap: 12 }}>
               <div>
                 <p style={{ margin: 0, fontSize: 12, color: "rgba(13,31,60,0.6)", fontFamily: "DM Sans, sans-serif", textTransform: "uppercase", letterSpacing: 1.5 }}>
-                  Betaling
+                  {t("checkout_stage.label")}
                 </p>
                 <h2 style={{ margin: "4px 0 0", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 22, color: "#0D1F3C" }}>
-                  Totaal {eur(total)}
+                  {t("checkout_stage.total_template", { total: eur(total) })}
                 </h2>
               </div>
               <button
@@ -464,18 +475,19 @@ function BestellenPage() {
                 onClick={() => setStage("select")}
                 style={{ background: "transparent", border: "none", color: "rgba(13,31,60,0.65)", cursor: "pointer", fontSize: 13, fontFamily: "DM Sans, sans-serif", display: "inline-flex", alignItems: "center", gap: 6 }}
               >
-                <ArrowLeft size={14} /> Wijzig bestelling
+                <ArrowLeft size={14} /> {t("checkout_stage.edit_order")}
               </button>
             </div>
             {checkoutError ? (
               <div style={{ color: "#b00020", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
-                Er ging iets mis bij het starten van de betaling: {checkoutError}
+                {t("checkout_stage.error_prefix")} {checkoutError}
               </div>
             ) : (
               <p style={{ margin: 0, color: "rgba(13,31,60,0.7)", fontFamily: "DM Sans, sans-serif", fontSize: 14 }}>
-                Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…
+                {t("checkout_stage.redirecting")}
               </p>
             )}
+
           </div>
         )}
       </main>
