@@ -321,9 +321,10 @@ function BestellenPage() {
                   {items.map((i) => (
                     <div key={i.priceId} style={{ display: "flex", justifyContent: "space-between", gap: 12, fontSize: 14, color: "#0D1F3C" }}>
                       <span>
-                        <span style={{ fontWeight: 600 }}>{i.bundle.name}</span>
+                        <span style={{ fontWeight: 600 }}>{i.bundle.stickers} {i.bundle.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}</span>
                         <span style={{ color: "rgba(13,31,60,0.6)" }}> × {i.quantity}</span>
                       </span>
+
                       <span style={{ fontWeight: 600 }}>{eur(i.bundle.price * i.quantity)}</span>
                     </div>
                   ))}
