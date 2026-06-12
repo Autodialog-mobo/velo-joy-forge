@@ -432,10 +432,10 @@ function BestellenPage() {
                     className="pay-tooltip"
                   >
                     {!hasItems
-                      ? "Kies minstens één bundel om te kunnen betalen."
+                      ? t("tooltips.need_bundle")
                       : !emailValid
-                      ? "Vul een geldig e-mailadres in om verder te gaan."
-                      : "Vul je verzendadres in om verder te gaan."}
+                      ? t("tooltips.need_email")
+                      : t("tooltips.need_shipping")}
                     <span
                       style={{
                         position: "absolute",
@@ -451,8 +451,9 @@ function BestellenPage() {
                 )}
               </div>
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
-                Veilig betalen via Mollie · Bancontact · iDEAL · Kaart
+                {t("cart.secure_note")}
               </p>
+
             </aside>
           </div>
         )}
