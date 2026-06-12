@@ -87,6 +87,7 @@ export type Database = {
           customer_email: string
           environment: string
           id: string
+          lang: string | null
           mollie_payment_id: string | null
           price_id: string
           product_name: string
@@ -112,6 +113,7 @@ export type Database = {
           customer_email: string
           environment?: string
           id?: string
+          lang?: string | null
           mollie_payment_id?: string | null
           price_id: string
           product_name: string
@@ -137,6 +139,7 @@ export type Database = {
           customer_email?: string
           environment?: string
           id?: string
+          lang?: string | null
           mollie_payment_id?: string | null
           price_id?: string
           product_name?: string
