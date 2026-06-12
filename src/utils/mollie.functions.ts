@@ -112,22 +112,31 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         email: data.customerEmail,
       };
 
+      const mollieLocale = LANG_TO_MOLLIE_LOCALE[data.lang];
+      const redirectBase = `${data.origin}/${data.lang}/order/thanks`;
+
       // Create payment with placeholder redirect; we'll patch with real ID after.
       const payment = await mollieFetch("/payments", {
         method: "POST",
         body: JSON.stringify({
           amount: { currency: "EUR", value: formatAmount(totalCents) },
           description: `Velopass — ${description}`,
-          redirectUrl: `${data.origin}/order/thanks?payment_id=pending`,
+          redirectUrl: `${redirectBase}?payment_id=pending`,
           webhookUrl: `${data.origin}/api/public/payments/mollie-webhook`,
           billingEmail: data.customerEmail,
           shippingAddress,
-          locale: "nl_NL",
-          metadata: { items: data.items, email: data.customerEmail, shipping: shippingAddress },
+          locale: mollieLocale,
+          metadata: {
+            items: data.items,
+            email: data.customerEmail,
+            shipping: shippingAddress,
+            lang: data.lang,
+          },
         }),
       });
 
-      const realRedirect = `${data.origin}/order/thanks?payment_id=${payment.id}`;
+      const realRedirect = `${redirectBase}?payment_id=${payment.id}`;
+
       await mollieFetch(`/payments/${payment.id}`, {
         method: "PATCH",
         body: JSON.stringify({ redirectUrl: realRedirect }),
