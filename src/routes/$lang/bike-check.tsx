@@ -9,17 +9,31 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang } from "@/i18n/config";
+import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
+import enBikeCheck from "@/i18n/locales/en/bike-check.json";
+import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
+import deBikeCheck from "@/i18n/locales/de/bike-check.json";
+
+const BIKE_CHECK_META = {
+  nl: nlBikeCheck.meta,
+  en: enBikeCheck.meta,
+  fr: frBikeCheck.meta,
+  de: deBikeCheck.meta,
+} as const;
 
 export const Route = createFileRoute("/$lang/bike-check")({
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang = isLang(params.lang) ? params.lang : "en";
+    const m = BIKE_CHECK_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "bike-check",
-      title: "Check de status van een fiets — Velopass",
-      description:
-        "Controleer of een fiets geregistreerd is in de Velopass Community — zonder account, in enkele seconden.",
-      ogDescription: "Controleer een fiets via de Velopass-code of merk + framenummer.",
-    }),
+      title: m.title,
+      description: m.description,
+      ogDescription: m.ogDescription,
+    });
+  },
   component: BikeSearchPage,
 });
 
