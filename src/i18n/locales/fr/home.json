@@ -57,7 +57,6 @@
   },
   "community": {
     "headline": "Votre vélo n'est jamais seul.",
-    "unit": "vélocistes",
-    "subhead_rest": ", cyclistes et policiers font partie de la Communauté Velopass. Si quelqu'un scanne votre Frame-ID, vous recevez immédiatement une notification."
+    "subhead": "<b>{{count}}+ vélocistes</b>, cyclistes et policiers font partie de la Communauté Velopass. Si quelqu'un scanne votre Frame-ID, vous recevez immédiatement une notification."
   }
 }

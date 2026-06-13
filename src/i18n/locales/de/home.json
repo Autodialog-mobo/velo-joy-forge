@@ -57,7 +57,6 @@
   },
   "community": {
     "headline": "Dein Fahrrad ist nie allein.",
-    "unit": "Fahrradhändler",
-    "subhead_rest": ", Radfahrer und Polizei sind Teil der Velopass-Community. Scannt jemand deine Frame-ID, bekommst du sofort eine Benachrichtigung."
+    "subhead": "<b>{{count}}+ Fahrradhändler</b>, Radfahrer und Polizei sind Teil der Velopass-Community. Scannt jemand deine Frame-ID, bekommst du sofort eine Benachrichtigung."
   }
 }
