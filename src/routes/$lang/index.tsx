@@ -215,7 +215,7 @@ function VelopassHome() {
                 ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
-              <img src={stickerImg} alt="Velopass Frame-ID op een fietsframe" width={1024} height={1024} />
+              <img src={stickerImg} alt={t("home:sticker.img_alt")} width={1024} height={1024} />
               <div className="scan-overlay" aria-hidden="true">
                 <span className="scan-corner tl" />
                 <span className="scan-corner tr" />
@@ -223,7 +223,7 @@ function VelopassHome() {
                 <span className="scan-corner br" />
                 <span className="scan-line" />
               </div>
-              <div className="scan-badge">Scan → toegang tot alles</div>
+              <div className="scan-badge">{t("home:sticker.scan_badge")}</div>
               <div className="secured-tag" aria-label="Secured"><span className="secured-tag-dot" />SECURED</div>
             </div>
             {import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune") && (
@@ -244,24 +244,24 @@ function VelopassHome() {
             )}
           </div>
           <div className="sticker-content">
-            <p className="eyebrow">De Velopass Frame-ID</p>
+            <p className="eyebrow">{t("home:sticker.eyebrow")}</p>
             <h2 className="sticker-title">
               <span className="st-line-1">{t("home:sticker.title_line_1")}</span>
               <span className="st-line-2">{t("home:sticker.title_line_2")}</span>
             </h2>
-            <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
+            <p className="sec-sub">{t("home:sticker.intro")}</p>
             <div className="sticker-feats">
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de Frame-ID nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
+                <div><strong>{t("home:sticker.feats.location.title")}</strong><span>{t("home:sticker.feats.location.body")}</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Directe toegang tot alles.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering en pechhulp heb je altijd bij de hand, en een onderhoudsbeurt bij je fietswinkel plan je voortaan in een paar klikken.</span></div>
+                <div><strong>{t("home:sticker.feats.access.title")}</strong><span>{t("home:sticker.feats.access.body")}</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Verbonden met het frame.</strong><span>De Frame-ID hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De Frame-ID blijft op het frame, de data verhuist mee.</span></div>
+                <div><strong>{t("home:sticker.feats.frame.title")}</strong><span>{t("home:sticker.feats.frame.body")}</span></div>
               </div>
             </div>
           </div>
@@ -277,10 +277,10 @@ function VelopassHome() {
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
             <div>
               <div className="vc-head"><h3>{t("home:benefits.cards.theft")}</h3></div>
-              <p>{activeShopsCount.toLocaleString("nl-BE")}+ fietswinkels scannen automatisch via hun kassasysteem. Ook fietsers en politie die de QR scannen zien meteen dat jouw fiets gezocht wordt.</p>
-              <div className="secured-pill"><span className="sdot" />Jouw fiets. SECURED.</div>
+              <p>{t("home:benefits.cards.theft_body", { shopCount: activeShopsCount.toLocaleString(currentLang) })}</p>
+              <div className="secured-pill"><span className="sdot" />{t("home:benefits.secured_pill")}</div>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "var(--text-muted)", marginTop: 10, lineHeight: 1.5 }}>
-                Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
+                {t("home:benefits.cards.theft_mybike")}
               </p>
               <Link
                 to="/$lang/stolen"
@@ -295,7 +295,7 @@ function VelopassHome() {
                   marginTop: 10,
                 }}
               >
-                Fiets gestolen of vermist? Lees wat je moet doen →
+                {t("home:benefits.cards.theft_stolen_link")}
               </Link>
             </div>
           </div>
@@ -304,32 +304,32 @@ function VelopassHome() {
             <div>
               <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
               <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
-                Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.
+                {t("home:benefits.cards.service_book_body")}
               </p>
               <p style={{ fontSize: 13, color: "var(--text-muted)", fontStyle: "italic", marginTop: 10, lineHeight: 1.6 }}>
-                Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.
+                {t("home:benefits.cards.service_book_note")}
               </p>
             </div>
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg></div>
             <div>
-              <div className="vc-head"><h3>{t("home:benefits.cards.roadside")}</h3><span className="optional-badge">Optioneel</span></div>
-              <p>Panne onderweg? Hulp is één scan ver. Directe toegang tot pechhulp — zonder zoeken, zonder wachten. Heb je al een pechhulpabonnement? Voeg dat toe aan je Velopass zodat alles op één plek staat.</p>
+              <div className="vc-head"><h3>{t("home:benefits.cards.roadside")}</h3><span className="optional-badge">{t("home:benefits.optional_badge")}</span></div>
+              <p>{t("home:benefits.cards.roadside_body")}</p>
             </div>
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg></div>
             <div>
-            <div className="vc-head"><h3>{t("home:benefits.cards.insurance")}</h3><span className="optional-badge">Optioneel</span></div>
-              <p>Sluit een fietsverzekering af rechtstreeks vanuit je Velopass — in enkele klikken. Heb je al een verzekering? Voeg die toe aan je Velopass zodat alles op één plek staat.</p>
+            <div className="vc-head"><h3>{t("home:benefits.cards.insurance")}</h3><span className="optional-badge">{t("home:benefits.optional_badge")}</span></div>
+              <p>{t("home:benefits.cards.insurance_body")}</p>
             </div>
           </div>
           <div className="vc" style={{ gridColumn: "1/-1" }}>
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
             <div style={{ flex: 1 }}>
               <div className="vc-head"><h3>{t("home:benefits.cards.ownership")}</h3></div>
-              <p>Alles over je fiets op één plek — specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang.</p>
+              <p>{t("home:benefits.cards.ownership_body")}</p>
             </div>
           </div>
         </div>

@@ -74,16 +74,44 @@
   },
   "sticker": {
     "title_line_1": "Your bike's digital key.",
-    "title_line_2": "One scan. Everything sorted."
+    "title_line_2": "One scan. Everything sorted.",
+    "eyebrow": "The Velopass Frame-ID",
+    "intro": "One Frame-ID on your frame, a world of possibilities in your pocket.",
+    "scan_badge": "Scan → access to everything",
+    "img_alt": "Velopass Frame-ID on a bike frame",
+    "feats": {
+      "location": {
+        "title": "Always in the right place.",
+        "body": "Whether your dealer fits the Frame-ID at purchase or you stick it on yourself after an online order: it's designed to stay indestructibly on your frame for a bike's entire life."
+      },
+      "access": {
+        "title": "Instant access to everything.",
+        "body": "Scan the QR code for instant access to your digital passport. Your insurance and roadside assistance are always at hand, and you book a service at your bike shop in just a few clicks."
+      },
+      "frame": {
+        "title": "Tied to the frame.",
+        "body": "The Frame-ID belongs to the bike, not the person. When you sell, you transfer the history and protection with ease. The Frame-ID stays on the frame, the data moves with it."
+      }
+    }
   },
   "benefits": {
     "title": "One Frame-ID. A whole bike life sorted.",
+    "optional_badge": "Optional",
+    "secured_pill": "Your bike. SECURED.",
     "cards": {
       "theft": "Theft protection",
       "service_book": "Your digital service book",
       "roadside": "Roadside assistance",
       "insurance": "Insurance",
-      "ownership": "Worry-free ownership"
+      "ownership": "Worry-free ownership",
+      "theft_body": "{{shopCount}}+ bike shops scan automatically through their point-of-sale system. Cyclists and police who scan the QR also see right away that your bike is being looked for.",
+      "theft_mybike": "Also linked to MyBike, the Belgian national bike register.",
+      "theft_stolen_link": "Bike stolen or missing? Read what to do →",
+      "service_book_body": "Every service, every repair — documented and always at hand. Selling your bike? A complete service history raises its resale value.",
+      "service_book_note": "Managed by your Velopass bike shop — the expert who knows your bike. Show your Wallet at every visit, even at another shop when you're travelling.",
+      "roadside_body": "Breakdown on the road? Help is one scan away. Instant access to roadside assistance — no searching, no waiting. Already have a roadside assistance subscription? Add it to your Velopass so everything is in one place.",
+      "insurance_body": "Take out bike insurance straight from your Velopass — in just a few clicks. Already insured? Add it to your Velopass so everything is in one place.",
+      "ownership_body": "Everything about your bike in one place — specs, warranty, full service history and active services. Selling your bike? Transfer the passport to the new owner in one click. Your investment keeps its value, for life."
     }
   },
   "community": {
