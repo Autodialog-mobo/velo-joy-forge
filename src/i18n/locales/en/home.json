@@ -21,18 +21,23 @@
       "tag": "JUST BOUGHT A BIKE?",
       "title": "Your Velopass is ready",
       "desc": "Chances are your Velopass is already waiting for you via your bike shop. Your bike is registered — just pick a password and everything is ready.",
+      "body": "Your bike shop has applied the Frame-ID and registered your bike in your name. All you need to do is choose a password.",
       "cta": "Open your Velopass →"
     },
     "order": {
       "tag": "No Frame-ID yet?",
       "title": "Order a Velopass Frame-ID",
       "desc": "From €12.95. Free shipping. Instantly protected via your digital bike passport.",
+      "body": "One Frame-ID activates your digital passport for the entire lifetime of your bike. One-time purchase — no subscription, no hidden costs.",
       "cta": "View the bundles →"
     },
     "second_hand": {
       "tag": "Second-hand bike with Frame-ID?",
       "title": "The passport moves with you. In your name.",
+      "title_lead": "The passport comes with it.",
+      "title_em": "In your name.",
       "desc": "Bought a second-hand bike with an existing Velopass Frame-ID? Register it in your name — the passport simply transfers.",
+      "body": "Bought a second-hand bike with an existing Velopass Frame-ID? You can easily transfer the digital passport to your name. The neutral bike history (service visits, repairs and warranty data) comes with it. Personal services such as roadside assistance and insurance you activate yourself. Invoices, prices and personal photos stay private with the previous owner.",
       "cta": "Start transfer →"
     }
   },
@@ -51,6 +56,8 @@
     }
   },
   "community": {
-    "headline": "Your bike is never alone."
+    "headline": "Your bike is never alone.",
+    "unit": "shops",
+    "subhead_rest": ", cyclists and police are part of the Velopass Community. If someone scans your Frame-ID, you get an instant notification."
   }
 }
