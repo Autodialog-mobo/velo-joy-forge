@@ -35,5 +35,22 @@
       "desc": "Hast du ein gebrauchtes Fahrrad mit einem bestehenden „Velopass“ (Frame-ID) gekauft? Lass es auf deinen Namen umschreiben – der Pass wird einfach übertragen.",
       "cta": "Übertragung starten →"
     }
+  },
+  "sticker": {
+    "title_line_1": "Der digitale Schlüssel deines Fahrrads.",
+    "title_line_2": "Ein Scan. Alles erledigt."
+  },
+  "benefits": {
+    "title": "Eine Frame-ID. Ein ganzes Fahrradleben geregelt.",
+    "cards": {
+      "theft": "Diebstahlschutz",
+      "service_book": "Dein digitales Serviceheft",
+      "roadside": "Pannenhilfe",
+      "insurance": "Versicherung",
+      "ownership": "Sorgloser Besitz"
+    }
+  },
+  "community": {
+    "headline": "Dein Fahrrad ist nie allein."
   }
 }
