@@ -76,7 +76,9 @@ const LANG_CONFIG: Record<string, LangConfig> = {
   // FR: vous-form is the correct register for the French market — keep formality at default
   // so re-runs don't drift to tutoiement.
   fr: { target: "FR", formality: "default" },
-  de: { target: "DE", formality: "default" },
+  // DE: du-form is the market standard in the German cycling domain — use formality=less
+  // so re-runs stay consistent and don't drift to Sie.
+  de: { target: "DE", formality: "less" },
 };
 
 type Stats = { translated: number; skipped: number; preserved: number };
@@ -154,6 +156,7 @@ function collectJobs(
   enNode: unknown,
   targetNode: unknown,
   needsRetranslate: boolean,
+  force: boolean,
   trail: (string | number)[],
   jobs: Job[],
   stats: Stats,
@@ -163,7 +166,7 @@ function collectJobs(
   if (Array.isArray(enNode)) {
     const tArr = Array.isArray(targetNode) ? targetNode : [];
     for (let i = 0; i < enNode.length; i++) {
-      collectJobs(enNode[i], tArr[i], needsRetranslate, [...trail, i], jobs, stats);
+      collectJobs(enNode[i], tArr[i], needsRetranslate, force, [...trail, i], jobs, stats);
     }
     return;
   }
@@ -174,7 +177,7 @@ function collectJobs(
         : {};
     for (const [k, v] of Object.entries(enNode)) {
       if (k.startsWith("_")) continue; // skip meta like _translated
-      collectJobs(v, tObj[k], needsRetranslate, [...trail, k], jobs, stats);
+      collectJobs(v, tObj[k], needsRetranslate, force, [...trail, k], jobs, stats);
     }
     return;
   }
@@ -183,7 +186,7 @@ function collectJobs(
   // Decide if this leaf needs translation.
   const missing = targetNode === undefined;
   const equalsEn = typeof targetNode === "string" && targetNode === enNode;
-  if (missing || (equalsEn && needsRetranslate)) {
+  if (force || missing || (equalsEn && needsRetranslate)) {
     jobs.push({ path: trail, text: enNode });
   } else {
     stats.skipped++;
@@ -250,6 +253,7 @@ async function translateFile(
   filename: string,
   lang: string,
   cfg: LangConfig,
+  force: boolean,
 ): Promise<Stats> {
   const enPath = join(LOCALES_DIR, SOURCE, filename);
   const targetDir = join(LOCALES_DIR, lang);
@@ -266,7 +270,7 @@ async function translateFile(
 
   const stats: Stats = { translated: 0, skipped: 0, preserved: 0 };
   const jobs: Job[] = [];
-  collectJobs(en, target, needsRetranslate, [], jobs, stats);
+  collectJobs(en, target, needsRetranslate, force, [], jobs, stats);
 
   if (jobs.length === 0) {
     console.log(
@@ -291,7 +295,9 @@ async function translateFile(
   });
   stats.translated = jobs.length;
 
-  const rebuilt = rebuildWithEnOrder(en, target, translations, []);
+  const rebuilt = rebuildWithEnOrder(en, target, translations, []) as Record<string, unknown>;
+  // After a forced re-run, reset _translated to false so native reviewer re-validates.
+  if (force) rebuilt._translated = false;
   writeFileSync(targetPath, JSON.stringify(rebuilt, null, 2) + "\n", "utf8");
 
   console.log(
@@ -300,17 +306,17 @@ async function translateFile(
   return stats;
 }
 
-async function translateLang(lang: string): Promise<void> {
+async function translateLang(lang: string, force: boolean): Promise<void> {
   const cfg = LANG_CONFIG[lang];
   if (!cfg) throw new Error(`Unsupported target language: ${lang}`);
-  console.log(`\n→ Translating to ${lang.toUpperCase()} (DeepL ${cfg.target}, formality=${cfg.formality ?? "default"})`);
+  console.log(`\n→ Translating to ${lang.toUpperCase()} (DeepL ${cfg.target}, formality=${cfg.formality ?? "default"}${force ? ", FORCE" : ""})`);
 
   const files = readdirSync(join(LOCALES_DIR, SOURCE)).filter((f) =>
     f.endsWith(".json"),
   );
   const totals: Stats = { translated: 0, skipped: 0, preserved: 0 };
   for (const f of files) {
-    const s = await translateFile(f, lang, cfg);
+    const s = await translateFile(f, lang, cfg, force);
     totals.translated += s.translated;
     totals.skipped += s.skipped;
     totals.preserved += s.preserved;
@@ -321,13 +327,16 @@ async function translateLang(lang: string): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const arg = process.argv[2];
+  const args = process.argv.slice(2);
+  const force = args.includes("--force") || process.env.FORCE === "1";
+  const positional = args.filter((a) => !a.startsWith("--"));
+  const arg = positional[0];
   if (!arg) {
-    console.error("Usage: bun run translate:<fr|de|all>");
+    console.error("Usage: bun run translate:<fr|de|all> [-- --force]");
     process.exit(1);
   }
   const langs = arg === "all" ? Object.keys(LANG_CONFIG) : [arg];
-  for (const l of langs) await translateLang(l);
+  for (const l of langs) await translateLang(l, force);
   console.log("\nDone. _translated flags left at false — flip manually after native review.");
 }
 
