@@ -57,6 +57,7 @@
   },
   "community": {
     "headline": "Jouw fiets is nooit alleen.",
-    "subhead": "<b>{{count}}+ winkels</b>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje."
+    "subhead": "<0>{{count}}+ {{unit}}</0>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.",
+    "unit": "winkels"
   }
 }

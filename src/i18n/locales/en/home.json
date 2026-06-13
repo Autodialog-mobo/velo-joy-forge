@@ -57,6 +57,7 @@
   },
   "community": {
     "headline": "Your bike is never alone.",
-    "subhead": "<b>{{count}}+ shops</b>, cyclists and police are part of the Velopass Community. If someone scans your Frame-ID, you get an instant notification."
+    "subhead": "<0>{{count}}+ {{unit}}</0>, cyclists and police are part of the Velopass Community. Someone scans your Frame-ID? You get notified right away.",
+    "unit": "shops"
   }
 }

@@ -25,8 +25,11 @@ export function ShopFinder() {
             <Trans
               i18nKey="community.subhead"
               ns="home"
-              values={{ count: totalActive.toLocaleString("nl-BE") }}
-              components={{ b: <strong style={{ color: "#0D1F3C", fontWeight: 600 }} /> }}
+              values={{
+                count: totalActive.toLocaleString(lang === "en" ? "en-GB" : lang === "fr" ? "fr-BE" : lang === "de" ? "de-DE" : "nl-BE"),
+                unit: t("community.unit"),
+              }}
+              components={[<strong style={{ color: "#0D1F3C", fontWeight: 600 }} />]}
             />
           </p>
         </div>

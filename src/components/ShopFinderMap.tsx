@@ -254,8 +254,11 @@ export default function ShopFinderMap() {
           <Trans
             i18nKey="community.subhead"
             ns="home"
-            values={{ count: animatedCount }}
-            components={{ b: <strong style={{ color: "#0D1F3C", fontWeight: 600 }} /> }}
+            values={{
+              count: animatedCount.toLocaleString(lang === "en" ? "en-GB" : lang === "fr" ? "fr-BE" : lang === "de" ? "de-DE" : "nl-BE"),
+              unit: t("community.unit"),
+            }}
+            components={[<strong style={{ color: "#0D1F3C", fontWeight: 600 }} />]}
           />
         </p>
       </div>
