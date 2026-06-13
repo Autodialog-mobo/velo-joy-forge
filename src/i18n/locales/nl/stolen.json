@@ -24,7 +24,7 @@
   },
   "step1": {
     "title": "Stap 1 — Meld je fiets als vermist",
-    "body": "Log in op je Velopass-account en ga naar **'Mijn fiets'**. Klik op **'Melden als vermist'**. De status van je fiets verandert naar REPORTED — de Velopass Community wordt meteen geactiveerd.",
+    "body": "Log in op je Velopass-account en ga naar **'Mijn fiets'**. Klik op **'Melden als vermist'**. De status van je fiets verandert naar **Gemeld** — de Velopass Community wordt meteen geactiveerd.",
     "badge_note": "Iedereen die jouw Frame-ID scant ziet dat jouw fiets gezocht wordt en kan je anoniem een seintje geven.",
     "cta": "Meld mijn fiets →"
   },
@@ -132,7 +132,7 @@
       "fnuci_body_2": "Concreet: zodra je jouw fiets als gestolen meldt in Velopass, wordt de status in het FNUCI automatisch bijgewerkt. De politie ziet dit onmiddellijk.",
       "flow_step_label": "Stap {{n}}",
       "flow_steps": [
-        { "title": "Jij meldt in Velopass", "body": "Je verandert de status van je fiets naar REPORTED in je Velopass-account." },
+        { "title": "Jij meldt in Velopass", "body": "Je verandert de status van je fiets naar **Gemeld** in je Velopass-account." },
         { "title": "FNUCI wordt bijgewerkt", "body": "Velopass stuurt de statuswijziging door naar het FNUCI. Politie en gendarmerie hebben toegang tot dit register." },
         { "title": "Politie identificeert je fiets", "body": "Wordt jouw fiets aangetroffen? De agent scant de Velopass-code en ziet meteen dat hij gestolen is — en wie de eigenaar is." }
       ],
@@ -185,7 +185,7 @@
   "step3": {
     "title": "Stap 3 — Fiets teruggevonden? Meld het!",
     "badge_note": "status na terugvinden",
-    "body": "Gefeliciteerd! Log in op je Velopass en meld je fiets als **'Teruggevonden'**. De status verandert automatisch terug naar ALL CLEAR. Controleer daarna of je Frame-ID nog intact is — zo niet, bestel een nieuwe via onze webshop of bij een Velopass-fietswinkel.",
+    "body": "Gefeliciteerd! Log in op je Velopass en meld je fiets als **'Teruggevonden'**. De status verandert automatisch terug naar **Veilig**. Controleer daarna of je Frame-ID nog intact is — zo niet, bestel een nieuwe via onze webshop of bij een Velopass-fietswinkel.",
     "cta": "Mijn fiets teruggevonden →"
   },
   "cta": {
