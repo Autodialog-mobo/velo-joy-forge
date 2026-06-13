@@ -324,7 +324,7 @@ export default function ShopFinderMap() {
             <span className="sf-foot-mark">
               <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#2ECC8A" /><path d="M24 54 L42 72 L76 30" fill="none" stroke="#0D1F3C" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </span>
-            <span><strong>{filtered.length}</strong> {t("community.list_unit")}</span>
+            <span><strong>{filtered.length}</strong> {t("community.unit")}</span>
           </div>
         </aside>
 
