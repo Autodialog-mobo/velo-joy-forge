@@ -76,7 +76,9 @@ const LANG_CONFIG: Record<string, LangConfig> = {
   // FR: vous-form is the correct register for the French market — keep formality at default
   // so re-runs don't drift to tutoiement.
   fr: { target: "FR", formality: "default" },
-  de: { target: "DE", formality: "default" },
+  // DE: du-form is the market standard in the German cycling domain — use formality=less
+  // so re-runs stay consistent and don't drift to Sie.
+  de: { target: "DE", formality: "less" },
 };
 
 type Stats = { translated: number; skipped: number; preserved: number };
