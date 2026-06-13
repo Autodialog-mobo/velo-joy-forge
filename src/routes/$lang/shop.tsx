@@ -64,8 +64,9 @@ function VelopassPro() {
   );
   const [currentMonthYear, setCurrentMonthYear] = useState("");
   useEffect(() => {
-    setCurrentMonthYear(new Date().toLocaleDateString("nl-BE", { month: "long", year: "numeric" }));
-  }, []);
+    const locale = lang === "fr" ? "fr-BE" : lang === "de" ? "de-DE" : lang === "en" ? "en-GB" : "nl-BE";
+    setCurrentMonthYear(new Date().toLocaleDateString(locale, { month: "long", year: "numeric" }));
+  }, [lang]);
 
   const bikes = [
     { name: "Trek Domane AL 4", sub: t("hero.dash.bike1Sub"), a: true },
