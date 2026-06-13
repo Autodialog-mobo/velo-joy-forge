@@ -19,16 +19,30 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang } from "@/i18n/config";
+import nlStolen from "@/i18n/locales/nl/stolen.json";
+import enStolen from "@/i18n/locales/en/stolen.json";
+import frStolen from "@/i18n/locales/fr/stolen.json";
+import deStolen from "@/i18n/locales/de/stolen.json";
+
+const STOLEN_META = {
+  nl: nlStolen.meta,
+  en: enStolen.meta,
+  fr: frStolen.meta,
+  de: deStolen.meta,
+} as const;
 
 export const Route = createFileRoute("/$lang/stolen")({
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang = isLang(params.lang) ? params.lang : "en";
+    const m = STOLEN_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "stolen",
-      title: "Fiets gestolen? Doe snel aangifte — Velopass",
-      description:
-        "Stappenplan na fietsdiefstal: meld je fiets in je Velopass, doe online aangifte via Police-on-web en activeer de Velopass Community.",
-    }),
+      title: m.title,
+      description: m.description,
+    });
+  },
   component: GestolenPage,
 });
 
