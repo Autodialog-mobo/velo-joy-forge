@@ -1,34 +1,34 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
-    "title": "Vielen Dank für deine Bestellung – Velopass",
-    "description": "Deine Bestellung bei „Velopass“ ist bestätigt."
+    "title": "Danke für deine Bestellung — Velopass",
+    "description": "Deine Velopass-Bestellung ist bestätigt."
   },
   "header": {
     "back_home": "Zurück zur Startseite"
   },
   "states": {
-    "loading": "Ladefolge…",
-    "error_title": "Hmm, da ist wohl was schiefgelaufen",
+    "loading": "Bestellung wird geladen…",
+    "error_title": "Hmm, etwas ist schiefgelaufen",
     "error_unknown": "Unbekannter Fehler",
-    "no_order": "Es wurden keine Bestelldaten gefunden."
+    "no_order": "Keine Bestellinformationen gefunden."
   },
   "success": {
-    "eyebrow": "Bestellung eingegangen",
-    "title": "Vielen Dank für deine Bestellung",
+    "eyebrow": "Bestellung erhalten",
+    "title": "Danke für deine Bestellung",
     "intro": "Wir haben deine Bestellung erhalten:",
-    "shipping_note_one": "Dein „Frame-ID“ wird innerhalb von 2 Werktagen versandt.",
-    "shipping_note_many": "Deine „Frame-ID“ werden innerhalb von 2 Werktagen versandt.",
+    "shipping_note_one": "Deine Frame-ID wird innerhalb von 2 Werktagen versandt.",
+    "shipping_note_many": "Deine Frame-IDs werden innerhalb von 2 Werktagen versandt.",
     "card_confirmation": "Bestätigung",
     "card_shipping": "Versand",
     "shipping_value": "Kostenlos · 2 Werktage",
     "amount_paid": "{{amount}} bezahlt",
     "status_line": "Eine Zahlungsbestätigung liegt in deinem Postfach. Status: {{status}}.",
-    "back_button": "Zurück zu „Velopass“"
+    "back_button": "Zurück zu Velopass"
   },
   "bundles": {
     "frameid_solo_onetime": "Velopass Frame-ID Solo",
     "frameid_duo_onetime": "Velopass Frame-ID Duo",
-    "frameid_family_onetime": "Velopass Frame-ID Familie"
+    "frameid_family_onetime": "Velopass Frame-ID Family"
   }
 }
