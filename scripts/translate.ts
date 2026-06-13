@@ -295,7 +295,9 @@ async function translateFile(
   });
   stats.translated = jobs.length;
 
-  const rebuilt = rebuildWithEnOrder(en, target, translations, []);
+  const rebuilt = rebuildWithEnOrder(en, target, translations, []) as Record<string, unknown>;
+  // After a forced re-run, reset _translated to false so native reviewer re-validates.
+  if (force) rebuilt._translated = false;
   writeFileSync(targetPath, JSON.stringify(rebuilt, null, 2) + "\n", "utf8");
 
   console.log(
