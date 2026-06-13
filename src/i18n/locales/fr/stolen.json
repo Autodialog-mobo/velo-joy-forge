@@ -1,251 +1,167 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
-    "title": "On t'a volé ton vélo ? Dépose rapidement une plainte — Velopass",
-    "description": "Que faire étape par étape après le vol de ton vélo : signale-le sur ton compte Velopass, dépose plainte en ligne auprès de la police et active la communauté Velopass."
+    "title": "Vélo volé ? Fais une déclaration rapide — Velopass",
+    "description": "Étape par étape après un vol de vélo : signale ton vélo dans ton Velopass, fais une déclaration en ligne à la police et active la communauté Velopass."
   },
   "back": "Retour",
   "hero": {
-    "eyebrow": "Ton vélo a été volé ou tu ne le trouves plus ?",
-    "title": "Fais un rapport rapide. Velopass est là pour t'aider.",
-    "lead": "Un rapport de police nécessite des informations précises sur ton vélo — des informations que tu n'as plus sous la main une fois que ton vélo a disparu. À moins que tu n'aies Velopass."
+    "eyebrow": "Vélo volé ou disparu ?",
+    "title": "Fais une déclaration rapide. Velopass t'aide.",
+    "lead": "Une déclaration à la police exige les détails exacts du vélo — des détails que tu n'as plus sous la main quand ton vélo a disparu. Sauf si tu as Velopass."
   },
   "argument": {
-    "title": "Tout ce dont la police a besoin se trouve sur ton site Velopass",
+    "title": "Tout ce dont la police a besoin se trouve dans ton Velopass",
     "rows": [
-      [
-        "Marque, modèle et couleur",
-        "Dans ton passeport «Velopass»"
-      ],
-      [
-        "Numéro de châssis",
-        "Dans ton passeport «Velopass»"
-      ],
-      [
-        "Photos du vélo",
-        "Enregistré dans ton Velopass"
-      ],
-      [
-        "Facture d'achat",
-        "Lien vers ton site Velopass"
-      ],
-      [
-        "Lieu exact du vol",
-        "C'était déjà enregistré quand tu l'as signalé sur Velopass"
-      ],
-      [
-        "Justificatif de propriété",
-        "Ton Velopass, c'est la preuve"
-      ]
+      ["Marque, modèle et couleur", "Dans ton passeport Velopass"],
+      ["Numéro de cadre", "Dans ton passeport Velopass"],
+      ["Photos du vélo", "Enregistrées dans ton Velopass"],
+      ["Facture d'achat", "Liée à ton Velopass"],
+      ["Lieu exact du vol", "Déjà saisi lors de ta déclaration dans Velopass"],
+      ["Preuve de propriété", "Ton Velopass EST la preuve"]
     ],
-    "cta": "Ouvre mon site Velopass →"
+    "cta": "Ouvrir mon Velopass →"
   },
   "step1": {
-    "title": "Étape 1 — Signale la disparition de ton vélo",
-    "body": "Connecte-toi à ton compte Velopass et rends-toi dans **« Mon vélo »**. Clique sur **« Signaler comme perdu »**. Le statut de ton vélo passe à « SIGNALÉ » — la communauté Velopass est immédiatement alertée.",
-    "badge_note": "Quiconque scanne ton code-barres Frame-ID verra que ton vélo est recherché et pourra te prévenir en toute anonymité.",
+    "title": "Étape 1 — Signale ton vélo comme disparu",
+    "body": "Connecte-toi à ton compte Velopass et va dans **« Mon vélo »**. Clique sur **« Signaler comme disparu »**. Le statut de ton vélo passe à REPORTED — la communauté Velopass est activée immédiatement.",
+    "badge_note": "Toute personne qui scanne ton Frame-ID voit que ton vélo est recherché et peut te prévenir de façon anonyme.",
     "cta": "Signaler mon vélo →"
   },
   "step2": {
-    "title": "Étape 2 — Dépose une plainte en ligne auprès de la police",
-    "lead": "Choisis ton pays pour accéder au guide étape par étape.",
+    "title": "Étape 2 — Fais une déclaration en ligne à la police",
+    "lead": "Choisis ton pays pour le pas à pas.",
     "countries": {
       "BE": "🇧🇪 Belgique",
       "NL": "🇳🇱 Pays-Bas",
       "FR": "🇫🇷 France"
     },
-    "coming_soon": "À venir",
-    "checklist_title": "De quoi as-tu besoin avant de commencer ?",
-    "after_title": "Et après le rapport ?",
+    "coming_soon": "Bientôt disponible",
+    "checklist_title": "De quoi as-tu besoin au préalable ?",
+    "after_title": "Que se passe-t-il après la déclaration ?",
     "BE": {
-      "intro": "En Belgique, tu peux faire une déclaration en ligne sur Police-on-web. Ça t'évite de te rendre au commissariat.",
+      "intro": "En Belgique, tu fais une déclaration en ligne via Police-on-web. Cela t'évite un déplacement au commissariat.",
       "checklist": [
-        {
-          "text": "Ta carte d'identité (eID) ou l'application «itsme »"
-        },
-        {
-          "text": "Marque, modèle, couleur et type de vélo",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Le numéro de châssis",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Numéro de gravure ou carte de vélo",
-          "velopass": "Ton code d'Velopass, ça suffit"
-        },
-        {
-          "text": "Lieu, date et heure exacts du vol",
-          "velopass": "C'était déjà enregistré quand tu l'as signalé sur Velopass"
-        },
-        {
-          "text": "Photos du vélo",
-          "velopass": "Déjà enregistré dans ton Velopass"
-        },
-        {
-          "text": "Facture d'achat (si tu en as une)",
-          "velopass": "Lien vers ton site Velopass"
-        }
+        { "text": "Ta carte d'identité (eID) ou l'app itsme" },
+        { "text": "Marque, modèle, couleur et type de vélo", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Le numéro de cadre", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Numéro de gravure ou passeport vélo", "velopass": "Ton code Velopass suffit" },
+        { "text": "Lieu, date et heure exacts du vol", "velopass": "Déjà saisis lors de ta déclaration dans Velopass" },
+        { "text": "Photos du vélo", "velopass": "Déjà enregistrées dans ton Velopass" },
+        { "text": "Facture d'achat (si disponible)", "velopass": "Liée à ton Velopass" }
       ],
       "steps": [
         {
-          "title": "Rends-toi sur police-on-web.be",
+          "title": "Va sur police-on-web.be",
           "body": "[www.police-on-web.be](https://www.police-on-web.be)"
         },
         {
-          "title": "Créer un nouveau rapport",
-          "body": "Clique sur **« Créer un nouveau signalement »** et sélectionne **« Vol de vélo »**."
+          "title": "Démarre une nouvelle déclaration",
+          "body": "Clique sur **« Démarrer une nouvelle déclaration »** et choisis **« Vol de vélo »**."
         },
         {
           "title": "Connecte-toi via CSAM",
-          "body": "Identifie-toi à l'aide de ton lecteur de carte d'identité électronique ou de l'application « itsme »."
+          "body": "Identifie-toi avec ton lecteur de carte eID ou l'app itsme."
         },
         {
           "title": "Remplis le formulaire",
-          "body": "• Tes coordonnées en tant que propriétaire/personne signalant le vol\n• Les faits : où et quand le vol a-t-il eu lieu ?\n• L'objet : toutes les caractéristiques du vélo (plus tu donnes de détails, plus il y a de chances de le retrouver)",
-          "tip": "Ouvre ton « Velopass » pour avoir toutes les infos sur ton vélo à portée de main en un seul coup d'œil."
+          "body": "• Données personnelles en tant que propriétaire/déclarant\n• Faits : où et quand le vol a-t-il eu lieu ?\n• Objet : chaque détail du vélo (plus il y a de détails, plus les chances de récupération sont élevées)",
+          "tip": "Ouvre ton Velopass pour avoir chaque détail du vélo sous les yeux d'un seul coup d'œil."
         },
         {
-          "title": "Vérifier et envoyer",
-          "body": "Vérifie les informations et clique sur **Envoyer**."
+          "title": "Vérifie et envoie",
+          "body": "Vérifie les données et clique sur **Envoyer**."
         }
       ],
-      "after_body": "Tu reçois un numéro de dossier et une confirmation. Le procès-verbal (PV) est établi par la zone de police locale. Tu as une assurance vélo ? Transmets le numéro du PV à ton assureur pour entamer ta déclaration de sinistre.",
+      "after_body": "Tu reçois un numéro de dossier et une confirmation. Le procès-verbal (PV) est rédigé par la zone de police locale. Tu as une assurance vélo ? Transmets le numéro de PV à ton assureur pour lancer ta demande d'indemnisation.",
       "found_title": "Consulte aussi gevondenfietsen.be",
-      "found_body": "Les vélos volés sont souvent abandonnés quelque part. Consulte régulièrement [www.gevondenfietsen.be](https://www.gevondenfietsen.be) : ton vélo s'y trouve peut-être."
+      "found_body": "Les vélos volés sont souvent abandonnés quelque part. Consulte régulièrement [www.gevondenfietsen.be](https://www.gevondenfietsen.be) — ton vélo pourrait y réapparaître."
     },
     "NL": {
-      "intro": "Aux Pays-Bas, tu peux déposer une plainte en ligne sur le site politie.nl. Pour cela, tu as besoin d'un identifiant « DigiD ».",
-      "check_first_title": "Regarde ça d'abord",
-      "check_first_body": "Est-ce que ta moto a peut-être été déplacée par la mairie ? Les motos garées illégalement sont parfois emmenées à la fourrière. Vérifie ça avant de faire une déclaration.",
+      "intro": "Aux Pays-Bas, tu fais une déclaration en ligne via politie.nl. Tu as besoin d'un DigiD pour cela.",
+      "check_first_title": "Vérifie d'abord ceci",
+      "check_first_body": "Ton vélo a-t-il peut-être été déplacé par la ville ? Les vélos stationnés illégalement sont parfois emmenés dans un dépôt. Vérifie cela avant de faire une déclaration.",
       "checklist": [
-        {
-          "text": "Ton identifiant « DigiD » (connecte-toi via digid.nl)"
-        },
-        {
-          "text": "Marque, modèle, couleur et type de vélo",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Le numéro de cadre (généralement situé sous le boîtier de pédalier ou à l'avant du cadre)",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Lieu, date et heure exacts du vol",
-          "velopass": "C'était déjà enregistré quand tu l'as signalé sur Velopass"
-        },
-        {
-          "text": "Photos du vélo",
-          "velopass": "Déjà enregistré dans ton Velopass"
-        },
-        {
-          "text": "Facture d'achat (si tu en as une)",
-          "velopass": "Lien vers ton site Velopass"
-        }
+        { "text": "Ton DigiD (connexion via digid.nl)" },
+        { "text": "Marque, modèle, couleur et type de vélo", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Le numéro de cadre (généralement sous le boîtier de pédalier ou à l'avant du cadre)", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Lieu, date et heure exacts du vol", "velopass": "Déjà saisis lors de ta déclaration dans Velopass" },
+        { "text": "Photos du vélo", "velopass": "Déjà enregistrées dans ton Velopass" },
+        { "text": "Facture d'achat (si disponible)", "velopass": "Liée à ton Velopass" }
       ],
-      "conditions_title": "Conditions pour le dépôt en ligne",
-      "conditions_intro": "Il est possible de déposer une plainte en ligne via politie.nl si :",
+      "conditions_title": "Conditions pour une déclaration en ligne",
+      "conditions_intro": "La déclaration en ligne via politie.nl est possible si :",
       "conditions": [
-        "Le vélo n'a pas été volé dans une maison, une remise ou un garage",
-        "Le vol a eu lieu il y a moins d'un an"
+        "Le vélo n'a pas été volé dans une habitation, une remise ou un garage",
+        "Le vol date de moins d'un an"
       ],
-      "conditions_note": "Ça ne s'applique pas à toi ? Appelle le 0900-8844 ou dépose ta plainte en personne au commissariat.",
+      "conditions_note": "Ce n'est pas le cas ? Appelle le 0900-8844 ou fais ta déclaration en personne dans un commissariat.",
       "steps": [
         {
-          "title": "Rends-toi sur politie.nl",
+          "title": "Va sur politie.nl",
           "body": "[www.politie.nl/aangifte](https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html)"
         },
         {
-          "title": "Vol de vélo",
-          "body": "Sélectionne **« Déposer une plainte pour vol de vélo »**."
+          "title": "Choisis le vol de vélo",
+          "body": "Choisis **« Aangifte doen van fietsdiefstal »**."
         },
         {
           "title": "Connecte-toi avec DigiD",
-          "body": "Connecte-toi avec ton identifiant « DigiD » via le portail CSAM."
+          "body": "Connecte-toi avec ton DigiD via le portail CSAM."
         },
         {
           "title": "Remplis le formulaire",
-          "body": "• Coordonnées du propriétaire/de la personne qui signale le vol\n• Faits : où et quand le vol a-t-il eu lieu ? Le vélo était-il attaché ?\n• Objet : tous les détails concernant le vélo — plus tu en donnes, plus il y a de chances de le retrouver",
-          "tip": "Ouvre ton compte Velopass pour avoir toutes les informations sur le vélo à portée de main, y compris le lieu que tu as indiqué lors de la déclaration. Copie ces informations directement dans le formulaire."
+          "body": "• Données personnelles en tant que propriétaire/déclarant\n• Faits : où et quand le vol a-t-il eu lieu ? Le vélo était-il verrouillé ?\n• Objet : chaque détail du vélo — plus il y a de détails, plus les chances de récupération sont élevées",
+          "tip": "Ouvre ton Velopass pour avoir chaque détail du vélo sous la main — y compris le lieu que tu as saisi lors de ta déclaration. Copie-le directement dans le formulaire."
         },
         {
-          "title": "Vérifier et envoyer",
-          "body": "Vérifie les détails et envoie le rapport."
+          "title": "Vérifie et envoie",
+          "body": "Vérifie les données et envoie la déclaration."
         }
       ],
-      "after_body": "Tu recevras une confirmation avec un numéro de dossier. Conserve-le précieusement : tu en auras besoin pour ton assurance. Ton vélo est automatiquement enregistré dans le registre des vols de vélos du RDW et sur StopHeling, ce qui permet aux commerçants de vérifier si un vélo a été volé. Tu as une assurance vélo ? Signale le vol directement à ton assureur en indiquant le numéro de dossier.",
-      "tip1_title": "Consulte le site gevondenfietsen.be",
+      "after_body": "Tu reçois une confirmation avec un numéro de dossier. Conserve-le précieusement — tu en auras besoin pour ton assurance. Ton vélo est automatiquement ajouté au registre des vols de vélos du RDW et à StopHeling, afin que les commerçants puissent vérifier si un vélo est volé. Tu as une assurance vélo ? Signale le vol directement à ton assureur et joins le numéro de dossier.",
+      "tip1_title": "Consulte gevondenfietsen.be",
       "tip1_body": "Les vélos volés sont souvent abandonnés quelque part. Consulte régulièrement [www.gevondenfietsen.be](https://www.gevondenfietsen.be).",
       "tip2_title": "Garde un œil sur Marktplaats",
-      "tip2_body": "Il arrive que des vélos volés réapparaissent sur des sites de vente d'occasion en l'espace de quelques jours. Tu reconnais ton vélo ? Ne t'adresse jamais directement au vendeur : appelle la police au 0900-8844."
+      "tip2_body": "Les vélos volés réapparaissent parfois sur les plateformes de seconde main en quelques jours. Tu reconnais ton vélo ? Ne confronte jamais le vendeur toi-même — appelle la police au 0900-8844."
     },
     "FR": {
-      "fnuci_badge": "FNUCI · République française",
-      "fnuci_title": "Velopass est un opérateur agréé du registre national français des vélos",
-      "fnuci_body_1": "En tant que résident français, ton inscription sur Velopass est automatiquement reliée au **FNUCI** — le *Fichier National Unique des Cycles Identifiés*. Il s'agit du registre officiel de l'État auquel la police et la gendarmerie ont recours pour retrouver les vélos volés.",
-      "fnuci_body_2": "Concrètement : dès que tu signales le vol de ton vélo sur Velopass, le statut est automatiquement mis à jour sur FNUCI. La police en est immédiatement informée.",
+      "fnuci_badge": "FNUCI · République Française",
+      "fnuci_title": "Velopass est un opérateur agréé du fichier national des cycles français",
+      "fnuci_body_1": "En tant que résident français, ton enregistrement Velopass est automatiquement lié au **FNUCI** — le *Fichier National Unique des Cycles Identifiés*. C'est le registre officiel de l'État que la police et la gendarmerie utilisent pour suivre les vélos volés.",
+      "fnuci_body_2": "Concrètement : dès que tu signales ton vélo comme volé dans Velopass, le statut dans le FNUCI est mis à jour automatiquement. La police le voit instantanément.",
       "flow_step_label": "Étape {{n}}",
       "flow_steps": [
-        {
-          "title": "Tu peux nous faire part de tes commentaires sur Velopass",
-          "body": "Tu modifies le statut de ton vélo en « SIGNALÉ » dans ton compte Velopass."
-        },
-        {
-          "title": "FNUCI est mis à jour",
-          "body": "Velopass transmet le changement de statut au registre national des personnes (FNUCI). La police et la gendarmerie ont accès à ce registre."
-        },
-        {
-          "title": "La police identifie ton vélo",
-          "body": "Ton vélo a-t-il été retrouvé ? L'agent scanne le code d'Velopass, et voit tout de suite qu'il a été volé — et qui en est le propriétaire."
-        }
+        { "title": "Tu signales dans Velopass", "body": "Tu changes le statut de ton vélo en REPORTED dans ton compte Velopass." },
+        { "title": "Le FNUCI est mis à jour", "body": "Velopass transmet le changement de statut au FNUCI. La police et la gendarmerie ont accès à ce registre." },
+        { "title": "La police identifie ton vélo", "body": "Ton vélo est retrouvé ? L'agent scanne le code Velopass et voit immédiatement qu'il est volé — et qui en est le propriétaire." }
       ],
-      "code_note": "**Ton code Velopass correspond à ton identifiant FNUCI.** Il s'agit du numéro à 10 chiffres dont la police a besoin pour enregistrer officiellement la *plainte*. Tu le trouveras dans ton compte Velopass.",
-      "ma_intro": "Déclare ton sinistre en ligne via Ma Sécurité. Ton code d'Velopass, c'est l'« identifiant unique » demandé dans le formulaire — il figure déjà sur ton Velopass.",
-      "home_already_title": "Tu es déjà rentré ?",
-      "home_already_body": "Les assureurs belges et néerlandais exigent presque toujours un procès-verbal de police français. Fais ta déclaration dès que possible via Ma Sécurité, même si tu es déjà rentré chez toi.",
+      "code_note": "**Ton code Velopass EST ton identifiant FNUCI.** C'est le numéro à 10 chiffres dont la police a besoin pour la plainte officielle. Tu le trouves dans ton compte Velopass.",
+      "ma_intro": "Fais ta déclaration en ligne via Ma Sécurité. Ton code Velopass est l'*identifiant unique* que le formulaire demande — déjà dans ton Velopass.",
+      "home_already_title": "Déjà rentré chez toi ?",
+      "home_already_body": "Les assureurs belges et néerlandais exigent presque toujours une déclaration de police française. Lance la déclaration le plus vite possible via Ma Sécurité, même si tu es déjà rentré.",
       "checklist": [
-        {
-          "text": "Ton passeport ou ta carte d'identité"
-        },
-        {
-          "text": "Compte FranceConnect (facultatif mais recommandé)",
-          "note": "Sans FranceConnect : rendez-vous en personne obligatoire dans un commissariat de police ou une gendarmerie"
-        },
-        {
-          "text": "Ton code d'Velopass (= identifiant FNUCI)",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Marque, modèle, couleur et type de vélo",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Le numéro de châssis",
-          "velopass": "Déjà dans ton Velopass"
-        },
-        {
-          "text": "Lieu, date et heure exacts en France",
-          "velopass": "Tu l'avais déjà indiquée quand tu l'as signalé sur Velopass — en tant que touriste, on a souvent du mal à se souvenir de l'adresse exacte par la suite"
-        },
-        {
-          "text": "Photos du vélo",
-          "velopass": "Déjà enregistré dans ton Velopass"
-        }
+        { "text": "Ton passeport ou ta carte d'identité" },
+        { "text": "Compte FranceConnect (facultatif mais recommandé)", "note": "Sans FranceConnect : rendez-vous en personne obligatoire dans un commissariat ou une gendarmerie en France" },
+        { "text": "Ton code Velopass (= identifiant FNUCI)", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Marque, modèle, couleur et type de vélo", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Le numéro de cadre", "velopass": "Déjà dans ton Velopass" },
+        { "text": "Lieu exact en France, date et heure", "velopass": "Déjà saisis lors de ta déclaration dans Velopass — en tant que touriste, tu ne peux souvent plus te rappeler l'adresse exacte plus tard" },
+        { "text": "Photos du vélo", "velopass": "Déjà enregistrées dans ton Velopass" }
       ],
       "method1_badge": "Entièrement numérique",
       "method1_title": "Avec FranceConnect (recommandé)",
-      "method1_body": "Tu résides en France ou tu as un compte auprès de l'administration française ? Dans ce cas, tu remplis la déclaration complète en ligne et tu reçois le *procès-verbal* officiel par e-mail.",
+      "method1_body": "Tu habites en France ou tu as un compte administratif français ? Alors tu fais la déclaration complète en ligne et tu reçois le *procès-verbal* officiel par e-mail.",
       "method2_badge": "Rendez-vous en personne obligatoire",
       "method2_title": "Sans FranceConnect (touristes)",
-      "method2_body": "Remplis le formulaire en ligne, puis prends rendez-vous dans un commissariat de police ou une gendarmerie. Tu es déjà rentré chez toi ? Utilise le chat disponible 24 h/24 et 7 j/7 sur Ma Sécurité pour te renseigner sur les autres possibilités.",
+      "method2_body": "Remplis le formulaire en ligne, puis prends rendez-vous dans un commissariat de police ou une gendarmerie en France. Déjà rentré chez toi ? Utilise le chat 24/7 sur Ma Sécurité pour te renseigner sur les alternatives.",
       "steps": [
         {
-          "title": "Rends-toi sur Ma Sécurité",
+          "title": "Va sur Ma Sécurité",
           "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nPasse à la version anglaise en haut à droite."
         },
         {
-          "title": "Vols (vol avec effraction)",
+          "title": "Choisis « Vol »",
           "body": "Sélectionne **« Vol »** comme type d'infraction."
         },
         {
@@ -254,27 +170,27 @@
         },
         {
           "title": "Remplis le formulaire",
-          "body": "• Identifiant unique : ton code d'Velopass\n• Lieu, date et heure exacts en France\n• Toutes les caractéristiques du vélo",
-          "tip": "Ouvre ton Velopass — ton code Velopass correspond à l'identifiant unique demandé dans le formulaire. Toutes les autres informations concernant le vélo ainsi que le lieu y figurent déjà."
+          "body": "• Identifiant unique : ton code Velopass\n• Lieu exact en France, date et heure\n• Chaque caractéristique du vélo",
+          "tip": "Ouvre ton Velopass — ton code Velopass est l'identifiant unique que le formulaire demande. Tous les autres détails du vélo et le lieu y sont déjà."
         },
         {
           "title": "Reçois ton procès-verbal ou prends rendez-vous",
           "body": "**Avec FranceConnect :** tu reçois le procès-verbal officiel par e-mail. Transmets-le à ton assureur.\n\n**Sans FranceConnect :** choisis un commissariat ou une gendarmerie près du lieu du vol et prends rendez-vous."
         }
       ],
-      "chat_title": "Ma Sécurité propose un service de chat disponible 24 h/24, 7 j/7",
-      "chat_body": "Tu es déjà rentré chez toi et tu n'arrives pas à remplir le rapport en ligne ? Utilise le chat sur [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
+      "chat_title": "Ma Sécurité dispose d'un chat 24/7",
+      "chat_body": "Déjà rentré chez toi et incapable de finaliser la déclaration entièrement en ligne ? Utilise le chat sur [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
     }
   },
   "step3": {
-    "title": "Étape 3 — Tu as retrouvé ton vélo ? Signale-le !",
-    "badge_note": "état après la récupération",
-    "body": "Félicitations ! Connecte-toi à ton compte Velopass et marque ton vélo comme **« Récupéré »**. Le statut repassera automatiquement à « TOUT EST RÉGLÉ ». Vérifie ensuite que ton Frame-ID est toujours intact — si ce n'est pas le cas, commande-en un nouveau via notre boutique en ligne ou dans un magasin de vélos Velopass.",
-    "cta": "On a retrouvé mon vélo →"
+    "title": "Étape 3 — Vélo retrouvé ? Signale-le !",
+    "badge_note": "statut après récupération",
+    "body": "Félicitations ! Connecte-toi à ton Velopass et marque ton vélo comme **« Retrouvé »**. Le statut repasse automatiquement à ALL CLEAR. Vérifie ensuite que ton Frame-ID est toujours intact — si ce n'est pas le cas, commandes-en un nouveau via notre webshop ou chez un vélociste Velopass.",
+    "cta": "Mon vélo est retrouvé →"
   },
   "cta": {
-    "title": "Tu n'as pas encore d'Velopass ?",
-    "body": "Enregistre ton vélo dès maintenant pour que toutes les informations soient toujours à ta disposition, même quand tu n'as plus ton vélo sous la main.",
-    "button": "Enregistre ton vélo →"
+    "title": "Pas encore de Velopass ?",
+    "body": "Enregistre ton vélo maintenant pour que chaque détail soit toujours disponible — même quand tu n'as plus ton vélo sous la main.",
+    "button": "Enregistrer mon vélo →"
   }
 }
