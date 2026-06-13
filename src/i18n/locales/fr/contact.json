@@ -1,42 +1,42 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
     "title": "Contact — Velopass",
-    "description": "Tu as besoin d'aide pour l'activation, ton Frame-ID ou un vélo retrouvé ? Envoie un message à l'équipe d'Velopass via WhatsApp.",
-    "og_description": "Choisis un sujet et discute avec l'équipe d'Velopass. sur WhatsApp."
+    "description": "Besoin d'aide pour l'activation, ton Frame-ID ou un vélo retrouvé ? Envoie un message à l'équipe Velopass via WhatsApp.",
+    "og_description": "Choisis un sujet et discute avec l'équipe Velopass sur WhatsApp."
   },
   "back": "Retour",
   "header": {
     "title": "Comment pouvons-nous t'aider ?",
-    "subtitle": "Choisis ci-dessous qui tu es — on transmettra ta question directement à la bonne personne."
+    "subtitle": "Indique ci-dessous qui tu es — nous transmettons ta question directement à la bonne personne."
   },
   "tabs": {
     "rider": "Je suis cycliste",
-    "shop": "Je suis un magasin de vélos"
+    "shop": "Je suis vélociste"
   },
-  "cards_eyebrow": "De quoi porte ta question ?",
+  "cards_eyebrow": "Quel est le sujet de ta question ?",
   "rider": {
     "suggestions": [
       {
         "title": "Aide à l'activation",
         "desc": "Tu as reçu une invitation mais tu n'arrives pas à te connecter ?",
-        "prefill": "Salut Velopass, j'ai besoin d'aide pour activer mon compte. "
+        "prefill": "Bonjour Velopass, j'ai besoin d'aide pour activer mon compte. "
       },
       {
-        "title": "Une question sur mon Frame-ID",
-        "desc": "Frame-ID Tu n'as pas reçu ta commande, elle est endommagée ou tu as une autre question à propos de ta commande ?",
-        "prefill": "Salut Velopass, j'ai une question à propos de mon Frame-ID : "
+        "title": "Question sur mon Frame-ID",
+        "desc": "Frame-ID non reçu, endommagé ou une autre question sur ta commande ?",
+        "prefill": "Bonjour Velopass, j'ai une question sur mon Frame-ID : "
       },
       {
-        "title": "Signaler un vélo trouvé",
-        "desc": "Tu as trouvé un vélo équipé d'un Velopass Frame-ID ?",
-        "prefill": "Salut Velopass, j'ai trouvé un vélo équipé d'un Velopass Frame-ID. "
+        "title": "Signaler un vélo retrouvé",
+        "desc": "Tu as trouvé un vélo avec un Frame-ID Velopass ?",
+        "prefill": "Bonjour Velopass, j'ai trouvé un vélo avec un Frame-ID Velopass. "
       }
     ],
-    "pick_subject": "Choisis ce sujet →",
+    "pick_subject": "Choisir ce sujet →",
     "form_title": "Envoie-nous un message",
-    "form_subtitle": "Indique tes coordonnées et ouvre WhatsApp — on te répond généralement dans les 2 heures pendant les heures de bureau.",
-    "wa_message_intro": "Salut Velopass,",
+    "form_subtitle": "Remplis tes coordonnées et ouvre WhatsApp — nous répondons généralement dans les 2 heures pendant les heures de bureau.",
+    "wa_message_intro": "Bonjour Velopass,",
     "wa_message_name": "Nom",
     "wa_message_email": "E-mail",
     "wa_message_phone": "Téléphone",
@@ -45,33 +45,33 @@
   "shop": {
     "shortcuts": [
       {
-        "title": "Demande une démo",
-        "desc": "Viens voir «Velopass» en direct et pose toutes tes questions à notre équipe.",
-        "prefill": "Salut Velopass, j'aimerais demander une démo d'Velopass pour ma boutique."
+        "title": "Demander une démo",
+        "desc": "Découvre Velopass en direct et pose toutes tes questions à notre équipe.",
+        "prefill": "Bonjour Velopass, je souhaite demander une démo de Velopass pour mon magasin."
       },
       {
-        "title": "TPV ou intégration",
-        "desc": "Tu as des questions sur la connexion de ton terminal de paiement ou de l'application Pro ?",
-        "prefill": "Salut Velopass, j'ai une question concernant l'intégration au système de caisse ou l'application Pro : "
+        "title": "Caisse (POS) ou intégration",
+        "desc": "Des questions sur la connexion de ta caisse ou l'app Pro ?",
+        "prefill": "Bonjour Velopass, j'ai une question sur l'intégration de la caisse ou l'app Pro : "
       },
       {
-        "title": "Tu es déjà partenaire — question technique",
-        "desc": "Tu es déjà inscrit et tu as une question concernant ton compte ou le portail ?",
-        "prefill": "Salut Velopass, je suis déjà partenaire et j'ai une question technique : "
+        "title": "Déjà partenaire — question technique",
+        "desc": "Déjà à bord et une question sur ton compte ou ton portail ?",
+        "prefill": "Bonjour Velopass, je suis déjà partenaire et j'ai une question technique : "
       }
     ],
     "send_email": "Envoyer un e-mail →",
-    "pick_subject": "Choisis ce sujet →",
+    "pick_subject": "Choisir ce sujet →",
     "form_title": "Envoie-nous un message",
-    "form_subtitle": "Remplis le formulaire — on te répondra dans un délai d'un jour ouvré.",
-    "success": "Ton message a bien été envoyé. On te répondra dans un délai d'un jour ouvré.",
+    "form_subtitle": "Remplis le formulaire — nous répondons dans un délai d'un jour ouvrable.",
+    "success": "Ton message a été envoyé. Nous répondons dans un délai d'un jour ouvrable.",
     "subjects": [
-      "Demande une démo",
-      "TPV ou intégration",
+      "Demander une démo",
+      "Caisse (POS) ou intégration",
       "Tarifs ou pack de démarrage",
-      "Tu es déjà partenaire — question technique",
-      "Société de crédit-bail ou assureur",
-      "Autres"
+      "Déjà partenaire — question technique",
+      "Société de leasing ou assureur",
+      "Autre"
     ],
     "subject_placeholder": "Choisis un sujet…"
   },
@@ -79,28 +79,28 @@
     "name": "Nom",
     "name_placeholder": "Julien Dubois",
     "phone": "Téléphone",
-    "phone_placeholder": "+33 6 12 34 56 78",
+    "phone_placeholder": "+32 470 12 34 56",
     "email": "E-mail",
-    "email_placeholder_rider": "julien@exemple.fr",
-    "email_placeholder_shop": "julien@cyclesdubois.fr",
-    "company": "Nom du magasin de vélos ou de l'entreprise",
+    "email_placeholder_rider": "julien@example.be",
+    "email_placeholder_shop": "julien@cyclesdubois.be",
+    "company": "Nom du magasin ou de l'entreprise",
     "company_placeholder": "Cycles Dubois",
     "note": "Remarque",
-    "note_placeholder": "Explique-nous brièvement de quoi il s'agit...",
-    "subject": "Objet",
+    "note_placeholder": "Explique-nous brièvement le sujet de ta question...",
+    "subject": "Sujet",
     "message": "Message",
     "send_whatsapp": "Envoyer via WhatsApp →"
   },
   "errors": {
-    "name_required": "Veuillez entrer ton nom.",
-    "email_required": "Veuillez saisir ton adresse e-mail.",
-    "email_invalid": "Veuillez saisir une adresse e-mail valide.",
-    "company_required": "Veuillez saisir le nom de ta boutique ou de ton entreprise.",
-    "subject_required": "Choisis un sujet, s'il te plaît.",
+    "name_required": "Indique ton nom.",
+    "email_required": "Indique ton adresse e-mail.",
+    "email_invalid": "Indique une adresse e-mail valide.",
+    "company_required": "Indique le nom de ton magasin ou de ton entreprise.",
+    "subject_required": "Choisis un sujet.",
     "message_required": "Écris un message.",
-    "form_check": "Vérifie le formulaire, s'il te plaît."
+    "form_check": "Vérifie le formulaire."
   },
   "legal": {
-    "line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, Belgique · N° de TVA : BE0777.359.681 · {{email}}"
+    "line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, Belgique · TVA : BE0777.359.681 · {{email}}"
   }
 }
