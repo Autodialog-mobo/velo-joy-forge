@@ -74,16 +74,44 @@
   },
   "sticker": {
     "title_line_1": "De digitale sleutel van je fiets.",
-    "title_line_2": "Eén scan. Alles geregeld."
+    "title_line_2": "Eén scan. Alles geregeld.",
+    "eyebrow": "De Velopass Frame-ID",
+    "intro": "Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.",
+    "scan_badge": "Scan → toegang tot alles",
+    "img_alt": "Velopass Frame-ID op een fietsframe",
+    "feats": {
+      "location": {
+        "title": "Altijd op de juiste plek.",
+        "body": "Of je dealer de Frame-ID nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten."
+      },
+      "access": {
+        "title": "Directe toegang tot alles.",
+        "body": "Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering en pechhulp heb je altijd bij de hand, en een onderhoudsbeurt bij je fietswinkel plan je voortaan in een paar klikken."
+      },
+      "frame": {
+        "title": "Verbonden met het frame.",
+        "body": "De Frame-ID hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De Frame-ID blijft op het frame, de data verhuist mee."
+      }
+    }
   },
   "benefits": {
     "title": "Eén Frame-ID. Een heel fietsleven geregeld.",
+    "optional_badge": "Optioneel",
+    "secured_pill": "Jouw fiets. SECURED.",
     "cards": {
       "theft": "Diefstalprotectie",
       "service_book": "Jouw digitale serviceboekje",
       "roadside": "Pechhulp",
       "insurance": "Verzekering",
-      "ownership": "Zorgeloos eigenaarschap"
+      "ownership": "Zorgeloos eigenaarschap",
+      "theft_body": "{{shopCount}}+ fietswinkels scannen automatisch via hun kassasysteem. Ook fietsers en politie die de QR scannen zien meteen dat jouw fiets gezocht wordt.",
+      "theft_mybike": "Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.",
+      "theft_stolen_link": "Fiets gestolen of vermist? Lees wat je moet doen →",
+      "service_book_body": "Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.",
+      "service_book_note": "Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.",
+      "roadside_body": "Panne onderweg? Hulp is één scan ver. Directe toegang tot pechhulp — zonder zoeken, zonder wachten. Heb je al een pechhulpabonnement? Voeg dat toe aan je Velopass zodat alles op één plek staat.",
+      "insurance_body": "Sluit een fietsverzekering af rechtstreeks vanuit je Velopass — in enkele klikken. Heb je al een verzekering? Voeg die toe aan je Velopass zodat alles op één plek staat.",
+      "ownership_body": "Alles over je fiets op één plek — specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang."
     }
   },
 
