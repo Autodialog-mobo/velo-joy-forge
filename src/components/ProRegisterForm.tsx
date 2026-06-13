@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 
 type ViesResult =
@@ -20,6 +21,8 @@ function looksValid(v: string): boolean {
 
 export function RegisterForm() {
   const lang = useCurrentLang();
+  const { t } = useTranslation("shop");
+  const tf = (k: string) => t(`registerForm.${k}`);
   const [vat, setVat] = useState("");
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
@@ -63,13 +66,13 @@ export function RegisterForm() {
   return (
     <form onSubmit={(e) => e.preventDefault()}>
       <div className="form-row">
-        <label className="flabel" htmlFor="pvat">BTW-nummer of ondernemingsnummer</label>
+        <label className="flabel" htmlFor="pvat">{tf("vat_label")}</label>
         <div className="vat-row">
           <input
             id="pvat"
             className="finput"
             type="text"
-            placeholder="BE0777359681 / NL123456789B01 / FR12345678901"
+            placeholder={tf("vat_placeholder")}
             value={vat}
             onChange={(e) => {
               setVat(e.target.value);
@@ -92,49 +95,49 @@ export function RegisterForm() {
             {vies.state === "loading" ? (
               <>
                 <span className="vat-spinner" aria-hidden="true" />
-                Gegevens ophalen...
+                {tf("looking_up")}
               </>
             ) : (
-              <>Opzoeken →</>
+              <>{tf("lookup")}</>
             )}
           </button>
         </div>
         {vies.state === "ok" && (
           <div className="vat-success">
-            <div className="vat-badge">✓ Gevonden</div>
+            <div className="vat-badge">{tf("found")}</div>
             <div className="vat-name">{vies.name}</div>
             {vies.address && <div className="vat-addr">{vies.address}</div>}
-            <div className="vat-hint">Klopt dit? Pas aan indien nodig.</div>
+            <div className="vat-hint">{tf("hint_correct")}</div>
           </div>
         )}
         {vies.state === "notfound" && (
-          <p className="vat-note err">Niet gevonden. Vul de gegevens handmatig in.</p>
+          <p className="vat-note err">{tf("notfound")}</p>
         )}
         {vies.state === "invalid" && (
-          <p className="vat-note err">Voer een geldig EU BTW-nummer in (bv. BE0777359681).</p>
+          <p className="vat-note err">{tf("invalid")}</p>
         )}
         {vies.state === "error" && (
-          <p className="vat-note err">De VIES-dienst is momenteel niet beschikbaar. Vul de gegevens handmatig in.</p>
+          <p className="vat-note err">{tf("vies_unavailable")}</p>
         )}
       </div>
 
       <div className="fgrid">
         <div className="form-row">
-          <label className="flabel" htmlFor="pf">Voornaam</label>
-          <input id="pf" className="finput" type="text" placeholder="Jan" />
+          <label className="flabel" htmlFor="pf">{tf("first_name")}</label>
+          <input id="pf" className="finput" type="text" placeholder={tf("first_name_placeholder")} />
         </div>
         <div className="form-row">
-          <label className="flabel" htmlFor="pl">Naam</label>
-          <input id="pl" className="finput" type="text" placeholder="De Smedt" />
+          <label className="flabel" htmlFor="pl">{tf("last_name")}</label>
+          <input id="pl" className="finput" type="text" placeholder={tf("last_name_placeholder")} />
         </div>
       </div>
       <div className="form-row">
-        <label className="flabel" htmlFor="ps">Naam fietswinkel</label>
+        <label className="flabel" htmlFor="ps">{tf("shop_name")}</label>
         <input
           id="ps"
           className={`finput${autofilled.shop ? " from-vies" : ""}`}
           type="text"
-          placeholder="Van Dyck Fietsen"
+          placeholder={tf("shop_name_placeholder")}
           value={shop}
           onChange={(e) => {
             setShop(e.target.value);
@@ -143,12 +146,12 @@ export function RegisterForm() {
         />
       </div>
       <div className="form-row">
-        <label className="flabel" htmlFor="paddr">Adres</label>
+        <label className="flabel" htmlFor="paddr">{tf("address")}</label>
         <input
           id="paddr"
           className={`finput${autofilled.address ? " from-vies" : ""}`}
           type="text"
-          placeholder="Stokerijstraat 29, 2110 Wijnegem"
+          placeholder={tf("address_placeholder")}
           value={address}
           onChange={(e) => {
             setAddress(e.target.value);
@@ -158,23 +161,23 @@ export function RegisterForm() {
       </div>
       <div className="fgrid">
         <div className="form-row">
-          <label className="flabel" htmlFor="pe">E-mailadres</label>
-          <input id="pe" className="finput" type="email" placeholder="jan@fietswinkel.be" />
+          <label className="flabel" htmlFor="pe">{tf("email")}</label>
+          <input id="pe" className="finput" type="email" placeholder={tf("email_placeholder")} />
         </div>
         <div className="form-row">
-          <label className="flabel" htmlFor="pt">Telefoonnummer</label>
-          <input id="pt" className="finput" type="tel" placeholder="+32 471 60 15 73" />
+          <label className="flabel" htmlFor="pt">{tf("phone")}</label>
+          <input id="pt" className="finput" type="tel" placeholder={tf("phone_placeholder")} />
         </div>
       </div>
       <div className="form-row">
-        <label className="flabel" htmlFor="pk">Kassasysteem</label>
+        <label className="flabel" htmlFor="pk">{tf("pos")}</label>
         <select
           id="pk"
           className="finput"
           value={pos}
           onChange={(e) => setPos(e.target.value)}
         >
-          <option value="" disabled>Selecteer je kassasysteem</option>
+          <option value="" disabled>{tf("pos_select")}</option>
           <option value="cyclesoftware">CycleSoftware</option>
           <option value="vendit">Vendit</option>
           <option value="wilmar">Wilmar</option>
@@ -182,28 +185,28 @@ export function RegisterForm() {
           <option value="adcount">Adcount</option>
           <option value="g8">G8</option>
           <option value="shifter">Shifter</option>
-          <option value="none">Geen kassasysteem</option>
-          <option value="other">Ander</option>
+          <option value="none">{tf("pos_none")}</option>
+          <option value="other">{tf("pos_other")}</option>
         </select>
       </div>
       {pos === "other" && (
         <div className="form-row">
-          <label className="flabel" htmlFor="pko">Welk kassasysteem?</label>
+          <label className="flabel" htmlFor="pko">{tf("pos_other_label")}</label>
           <input
             id="pko"
             className="finput"
             type="text"
-            placeholder="Typ het merk of type..."
+            placeholder={tf("pos_other_placeholder")}
             value={posOther}
             onChange={(e) => setPosOther(e.target.value)}
             required
           />
         </div>
       )}
-      <button type="submit" className="btn-submit">Registreer gratis →</button>
+      <button type="submit" className="btn-submit">{tf("submit")}</button>
       <p style={{ textAlign: "center", marginTop: 14, marginBottom: 0 }}>
         <a
-          href={`/${lang}/contact`}
+          href={`/${lang}/contact?type=shop`}
           style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: 13,
@@ -211,10 +214,10 @@ export function RegisterForm() {
             textDecoration: "none",
           }}
         >
-          Liever eerst een demo? →
+          {tf("demo_link")}
         </a>
       </p>
-      <p className="fnote">Gratis te starten. Geen creditcard vereist.</p>
+      <p className="fnote">{tf("free_note")}</p>
     </form>
   );
 }
