@@ -1,106 +1,106 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
     "title": "Kontakt — Velopass",
-    "description": "Brauchst du Hilfe bei der Aktivierung, bei „Frame-ID“ oder bei einem gefundenen Fahrrad? Schick dem „Velopass“-Team eine Nachricht über WhatsApp.",
-    "og_description": "Such dir ein Thema aus und chatte mit dem Team von „Velopass“ auf WhatsApp."
+    "description": "Brauchst du Hilfe bei der Aktivierung, deiner Frame-ID oder einem gefundenen Fahrrad? Schick dem Velopass-Team eine Nachricht über WhatsApp.",
+    "og_description": "Wähle ein Thema und chatte mit dem Velopass-Team auf WhatsApp."
   },
   "back": "Zurück",
   "header": {
     "title": "Wie können wir dir helfen?",
-    "subtitle": "Wähle unten aus, wer du bist – wir leiten deine Frage direkt an die richtige Person weiter."
+    "subtitle": "Gib unten an, wer du bist — wir leiten deine Frage direkt an die richtige Person weiter."
   },
   "tabs": {
     "rider": "Ich bin Radfahrer",
-    "shop": "Ich bin ein Fahrradgeschäft"
+    "shop": "Ich bin Fahrradhändler"
   },
   "cards_eyebrow": "Worum geht es bei deiner Frage?",
   "rider": {
     "suggestions": [
       {
-        "title": "Hilfe zur Aktivierung",
-        "desc": "Du hast eine Einladung erhalten, kannst dich aber nicht anmelden?",
+        "title": "Hilfe bei der Aktivierung",
+        "desc": "Eine Einladung erhalten, aber du kannst dich nicht anmelden?",
         "prefill": "Hallo Velopass, ich brauche Hilfe bei der Aktivierung meines Kontos. "
       },
       {
-        "title": "Frage zu meinem „Frame-ID“",
-        "desc": "Frame-ID Nicht erhalten, beschädigt oder hast du eine andere Frage zu deiner Bestellung?",
-        "prefill": "Hallo Velopass, ich habe eine Frage zu meinem „Frame-ID“: "
+        "title": "Frage zu meiner Frame-ID",
+        "desc": "Frame-ID nicht erhalten, beschädigt oder eine andere Frage zu deiner Bestellung?",
+        "prefill": "Hallo Velopass, ich habe eine Frage zu meiner Frame-ID: "
       },
       {
         "title": "Ein gefundenes Fahrrad melden",
-        "desc": "Hast du ein Fahrrad mit einem Velopass Frame-ID gefunden?",
-        "prefill": "Hallo Velopass, ich habe ein Fahrrad mit einem Velopass Frame-ID gefunden. "
+        "desc": "Ein Fahrrad mit einer Velopass Frame-ID gefunden?",
+        "prefill": "Hallo Velopass, ich habe ein Fahrrad mit einer Velopass Frame-ID gefunden. "
       }
     ],
-    "pick_subject": "Wähle dieses Thema aus →",
+    "pick_subject": "Dieses Thema wählen →",
     "form_title": "Schick uns eine Nachricht",
-    "form_subtitle": "Gib deine Daten ein und öffne WhatsApp – wir antworten in der Regel innerhalb von 2 Stunden während der Bürozeiten.",
+    "form_subtitle": "Trag deine Daten ein und öffne WhatsApp — wir antworten während der Bürozeiten meist innerhalb von 2 Stunden.",
     "wa_message_intro": "Hallo Velopass,",
     "wa_message_name": "Name",
     "wa_message_email": "E-Mail",
     "wa_message_phone": "Telefon",
-    "email_alt_prefix": "Möchtest du lieber eine E-Mail schicken?"
+    "email_alt_prefix": "Lieber eine E-Mail senden?"
   },
   "shop": {
     "shortcuts": [
       {
-        "title": "Fordere eine Demo an",
-        "desc": "Schau dir „Velopass“ live an und stell unserem Team alle möglichen Fragen.",
-        "prefill": "Hallo Velopass, ich möchte eine Demo von „Velopass“ für meinen Shop anfordern."
+        "title": "Demo anfragen",
+        "desc": "Sieh Velopass live und stell unserem Team alle deine Fragen.",
+        "prefill": "Hallo Velopass, ich möchte eine Demo von Velopass für mein Geschäft anfragen."
       },
       {
-        "title": "Kassensystem oder Integration",
-        "desc": "Hast du Fragen zur Verknüpfung mit deinem Kassensystem oder der Pro-App?",
+        "title": "Kasse (POS) oder Integration",
+        "desc": "Fragen zur Anbindung deiner Kasse oder der Pro-App?",
         "prefill": "Hallo Velopass, ich habe eine Frage zur POS-Integration oder zur Pro-App: "
       },
       {
-        "title": "Du bist bereits Partner – technische Frage",
-        "desc": "Bist du bereits angemeldet und hast eine Frage zu deinem Konto oder zum Portal?",
+        "title": "Bereits Partner — technische Frage",
+        "desc": "Schon an Bord und eine Frage zu deinem Konto oder Portal?",
         "prefill": "Hallo Velopass, ich bin bereits Partner und habe eine technische Frage: "
       }
     ],
     "send_email": "E-Mail senden →",
-    "pick_subject": "Wähle dieses Thema aus →",
+    "pick_subject": "Dieses Thema wählen →",
     "form_title": "Schick uns eine Nachricht",
-    "form_subtitle": "Füll das Formular aus – wir melden uns innerhalb eines Werktags bei dir.",
-    "success": "Deine Nachricht wurde gesendet. Wir melden uns innerhalb eines Werktags bei dir.",
+    "form_subtitle": "Füll das Formular aus — wir antworten innerhalb eines Werktags.",
+    "success": "Deine Nachricht wurde gesendet. Wir antworten innerhalb eines Werktags.",
     "subjects": [
-      "Fordere eine Demo an",
-      "Kassensystem oder Integration",
+      "Demo anfragen",
+      "Kasse (POS) oder Integration",
       "Preise oder Starterpaket",
-      "Du bist bereits Partner – technische Frage",
+      "Bereits Partner — technische Frage",
       "Leasinggesellschaft oder Versicherer",
       "Sonstiges"
     ],
-    "subject_placeholder": "Such dir ein Thema aus…"
+    "subject_placeholder": "Wähle ein Thema…"
   },
   "form": {
     "name": "Name",
-    "name_placeholder": "Lukas Müller",
+    "name_placeholder": "Max Müller",
     "phone": "Telefon",
     "phone_placeholder": "+49 151 23456789",
     "email": "E-Mail",
-    "email_placeholder_rider": "lukas@beispiel.de",
-    "email_placeholder_shop": "lukas@muellerfahrrad.de",
-    "company": "Name des Fahrradgeschäfts oder der Firma",
-    "company_placeholder": "Müller Fahrrad",
-    "note": "Hinweis",
-    "note_placeholder": "Schreib uns kurz, worum es bei deiner Frage geht...",
+    "email_placeholder_rider": "max@example.de",
+    "email_placeholder_shop": "max@muellerbikes.de",
+    "company": "Name des Fahrradgeschäfts oder Unternehmens",
+    "company_placeholder": "Müller Bikes",
+    "note": "Anmerkung",
+    "note_placeholder": "Sag uns kurz, worum es bei deiner Frage geht...",
     "subject": "Betreff",
     "message": "Nachricht",
-    "send_whatsapp": "Per WhatsApp senden →"
+    "send_whatsapp": "Über WhatsApp senden →"
   },
   "errors": {
     "name_required": "Bitte gib deinen Namen ein.",
     "email_required": "Bitte gib deine E-Mail-Adresse ein.",
     "email_invalid": "Bitte gib eine gültige E-Mail-Adresse ein.",
     "company_required": "Bitte gib den Namen deines Geschäfts oder Unternehmens ein.",
-    "subject_required": "Bitte wähle ein Thema aus.",
+    "subject_required": "Bitte wähle ein Thema.",
     "message_required": "Bitte schreib eine Nachricht.",
-    "form_check": "Bitte überprüfe das Formular."
+    "form_check": "Bitte überprüf das Formular."
   },
   "legal": {
-    "line": "Velopass BV · Stokerijstraat 29/Bus a1, 2110 Wijnegem, Belgien · USt-IdNr.: BE0777.359.681 · {{email}}"
+    "line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, Belgien · USt-IdNr.: BE0777.359.681 · {{email}}"
   }
 }
