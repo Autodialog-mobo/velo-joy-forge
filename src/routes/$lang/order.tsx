@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye } from "lucide-react";
+import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
@@ -85,6 +85,7 @@ function BestellenPage() {
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [navOpen, setNavOpen] = useState(false);
 
 
   const items = useMemo(
@@ -144,32 +145,39 @@ function BestellenPage() {
 
   return (
     <div style={{ background: "#F5F3EE", minHeight: "100vh", color: "#0D1F3C" }}>
-
-
-
-      <header style={{ padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1200, margin: "0 auto" }}>
-        <Link to="/$lang" params={{ lang }} style={{ display: "inline-flex", alignItems: "center", gap: 10, textDecoration: "none", color: "#0D1F3C" }}>
-          <VelopassMark size={28} />
-          <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18 }}>Velopass</span>
+      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
+      <nav className="vp-nav">
+        <Link to="/$lang" params={{ lang }} className="nav-logo">
+          <div className="logo-mark"><VelopassMark /></div>
+          <span className="logo-text">velopass</span>
         </Link>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
-          <LangSwitcher currentLang={lang} tone="light" />
+        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+          <li><Link to="/$lang" params={{ lang }} hash="wat-je-krijgt">{t("common:nav.what_you_get")}</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="already-have-one">{t("common:nav.already_have_one")}</Link></li>
+          <li><Link to="/$lang" params={{ lang }} hash="community">{t("common:nav.community")}</Link></li>
+          <li><Link to="/$lang/bike-check" params={{ lang }}>{t("common:nav.bike_check")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang }}>{t("common:nav.contact")}</Link></li>
+          <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
+        </ul>
+        <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <LangSwitcher currentLang={lang} />
           <button
             type="button"
-            onClick={() => {
-              if (typeof window !== "undefined" && window.history.length > 1) {
-                window.history.back();
-              } else {
-                window.location.href = "/";
-              }
-            }}
-            style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14, color: "rgba(13,31,60,0.7)", textDecoration: "none", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
+            className="nav-toggle"
+            aria-label={t("common:nav.menu")}
+            aria-expanded={navOpen}
+            onClick={() => setNavOpen((o) => !o)}
           >
-            <ArrowLeft size={16} /> {t("header.back")}
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              {navOpen ? (
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              )}
+            </svg>
           </button>
-
         </div>
-      </header>
+      </nav>
 
       {/* Hero */}
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "56px 24px 72px" }}>
