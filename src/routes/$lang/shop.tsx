@@ -151,7 +151,7 @@ function VelopassPro() {
         <div className="pro-hero-right">
           <div className="dash">
             <div className="dash-hdr">
-              <span className="dash-title">Van Dyck Fietsen — {currentMonthYear}</span>
+              <span className="dash-title">{t("hero.dash.shopName")} — {currentMonthYear}</span>
               <span className="dash-date">{t("hero.dash.subtitle")}</span>
             </div>
             <div className="dash-stats">
