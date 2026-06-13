@@ -227,7 +227,7 @@
   },
   "registerForm": {
     "vat_label": "BTW-nummer of ondernemingsnummer",
-    "vat_placeholder": "BE0777359681 / NL123456789B01 / FR12345678901",
+    "vat_placeholder": "BE0777359681",
     "lookup": "Opzoeken →",
     "looking_up": "Gegevens ophalen...",
     "found": "✓ Gevonden",

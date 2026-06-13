@@ -227,7 +227,7 @@
   },
   "registerForm": {
     "vat_label": "USt-IdNr. oder Unternehmensnummer",
-    "vat_placeholder": "BE0777359681 / NL123456789B01 / FR12345678901",
+    "vat_placeholder": "DE123456789",
     "lookup": "Suchen →",
     "looking_up": "Daten werden geladen...",
     "found": "✓ Gefunden",

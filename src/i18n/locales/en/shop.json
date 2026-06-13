@@ -227,7 +227,7 @@
   },
   "registerForm": {
     "vat_label": "VAT or company number",
-    "vat_placeholder": "BE0777359681 / NL123456789B01 / FR12345678901",
+    "vat_placeholder": "GB123456789",
     "lookup": "Look up →",
     "looking_up": "Fetching details...",
     "found": "✓ Found",

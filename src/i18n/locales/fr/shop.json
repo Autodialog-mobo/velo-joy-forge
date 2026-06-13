@@ -227,7 +227,7 @@
   },
   "registerForm": {
     "vat_label": "Numéro de TVA ou d'entreprise",
-    "vat_placeholder": "BE0777359681 / NL123456789B01 / FR12345678901",
+    "vat_placeholder": "FR12345678901",
     "lookup": "Rechercher →",
     "looking_up": "Récupération des données...",
     "found": "✓ Trouvé",
