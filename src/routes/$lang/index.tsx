@@ -94,7 +94,7 @@ function VelopassHome() {
           <li><a href="#order-sticker">{t("common:nav.order_sticker")}</a></li>
           <li><a href="#community">{t("common:nav.community")}</a></li>
           <li><Link to="/$lang/bike-check" params={{ lang: currentLang }} search={{ lng: "nl-nl" }}>{t("common:nav.bike_check")}</Link></li>
-          <li><Link to="/$lang/contact" params={{ lang: currentLang }}>{t("common:nav.contact")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang: currentLang }} search={{ type: "rider" }}>{t("common:nav.contact")}</Link></li>
           <li><Link to="/$lang/shop" params={{ lang: currentLang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
