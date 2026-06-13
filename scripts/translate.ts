@@ -253,6 +253,7 @@ async function translateFile(
   filename: string,
   lang: string,
   cfg: LangConfig,
+  force: boolean,
 ): Promise<Stats> {
   const enPath = join(LOCALES_DIR, SOURCE, filename);
   const targetDir = join(LOCALES_DIR, lang);
@@ -269,7 +270,7 @@ async function translateFile(
 
   const stats: Stats = { translated: 0, skipped: 0, preserved: 0 };
   const jobs: Job[] = [];
-  collectJobs(en, target, needsRetranslate, [], jobs, stats);
+  collectJobs(en, target, needsRetranslate, force, [], jobs, stats);
 
   if (jobs.length === 0) {
     console.log(
