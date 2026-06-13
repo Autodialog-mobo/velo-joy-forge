@@ -35,5 +35,22 @@
       "desc": "Acheté un vélo d'occasion avec un Velopass Frame-ID existant ? Enregistrez-le à votre nom — le passeport est tout simplement transféré.",
       "cta": "Démarrer le transfert →"
     }
+  },
+  "sticker": {
+    "title_line_1": "La clé numérique de votre vélo.",
+    "title_line_2": "Un scan. Tout est réglé."
+  },
+  "benefits": {
+    "title": "Un Frame-ID. Toute une vie de vélo réglée.",
+    "cards": {
+      "theft": "Protection antivol",
+      "service_book": "Votre carnet d'entretien numérique",
+      "roadside": "Assistance dépannage",
+      "insurance": "Assurance",
+      "ownership": "Une propriété sans souci"
+    }
+  },
+  "community": {
+    "headline": "Votre vélo n'est jamais seul."
   }
 }

@@ -246,8 +246,8 @@ function VelopassHome() {
           <div className="sticker-content">
             <p className="eyebrow">De Velopass Frame-ID</p>
             <h2 className="sticker-title">
-              <span className="st-line-1">De digitale sleutel van je fiets.</span>
-              <span className="st-line-2">Eén scan. Alles geregeld.</span>
+              <span className="st-line-1">{t("home:sticker.title_line_1")}</span>
+              <span className="st-line-2">{t("home:sticker.title_line_2")}</span>
             </h2>
             <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
             <div className="sticker-feats">
@@ -271,12 +271,12 @@ function VelopassHome() {
       {/* VOORDELEN */}
       <section className="voordelen" id="wat-je-krijgt">
         <p className="eyebrow">Alles op één plek</p>
-        <h2 className="sec-title">Eén Frame-ID. Een heel fietsleven geregeld.</h2>
+        <h2 className="sec-title">{t("home:benefits.title")}</h2>
         <div className="vgrid">
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
             <div>
-              <div className="vc-head"><h3>Diefstalprotectie</h3></div>
+              <div className="vc-head"><h3>{t("home:benefits.cards.theft")}</h3></div>
               <p>{activeShopsCount.toLocaleString("nl-BE")}+ fietswinkels scannen automatisch via hun kassasysteem. Ook fietsers en politie die de QR scannen zien meteen dat jouw fiets gezocht wordt.</p>
               <div className="secured-pill"><span className="sdot" />Jouw fiets. SECURED.</div>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "var(--text-muted)", marginTop: 10, lineHeight: 1.5 }}>
@@ -302,7 +302,7 @@ function VelopassHome() {
           <div className="vc">
             <div className="vc-icon"><Store size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
             <div>
-              <div className="vc-head"><h3>Jouw digitale serviceboekje</h3></div>
+              <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
               <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
                 Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.
               </p>
@@ -314,21 +314,21 @@ function VelopassHome() {
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg></div>
             <div>
-              <div className="vc-head"><h3>Pechhulp</h3><span className="optional-badge">Optioneel</span></div>
+              <div className="vc-head"><h3>{t("home:benefits.cards.roadside")}</h3><span className="optional-badge">Optioneel</span></div>
               <p>Panne onderweg? Hulp is één scan ver. Directe toegang tot pechhulp — zonder zoeken, zonder wachten. Heb je al een pechhulpabonnement? Voeg dat toe aan je Velopass zodat alles op één plek staat.</p>
             </div>
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg></div>
             <div>
-            <div className="vc-head"><h3>Verzekering</h3><span className="optional-badge">Optioneel</span></div>
+            <div className="vc-head"><h3>{t("home:benefits.cards.insurance")}</h3><span className="optional-badge">Optioneel</span></div>
               <p>Sluit een fietsverzekering af rechtstreeks vanuit je Velopass — in enkele klikken. Heb je al een verzekering? Voeg die toe aan je Velopass zodat alles op één plek staat.</p>
             </div>
           </div>
           <div className="vc" style={{ gridColumn: "1/-1" }}>
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
             <div style={{ flex: 1 }}>
-              <div className="vc-head"><h3>Zorgeloos eigenaarschap</h3></div>
+              <div className="vc-head"><h3>{t("home:benefits.cards.ownership")}</h3></div>
               <p>Alles over je fiets op één plek — specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang.</p>
             </div>
           </div>
