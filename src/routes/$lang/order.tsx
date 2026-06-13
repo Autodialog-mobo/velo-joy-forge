@@ -52,18 +52,32 @@ const eur = (cents: number) =>
   new Intl.NumberFormat("nl-BE", { style: "currency", currency: "EUR" }).format(cents / 100);
 
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang } from "@/i18n/config";
+import nlOrder from "@/i18n/locales/nl/order.json";
+import enOrder from "@/i18n/locales/en/order.json";
+import frOrder from "@/i18n/locales/fr/order.json";
+import deOrder from "@/i18n/locales/de/order.json";
+
+const ORDER_META = {
+  nl: nlOrder.meta,
+  en: enOrder.meta,
+  fr: frOrder.meta,
+  de: deOrder.meta,
+} as const;
 
 export const Route = createFileRoute("/$lang/order")({
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang = isLang(params.lang) ? params.lang : "en";
+    const m = ORDER_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "order",
-      title: "Bestel een Velopass Frame-ID — vanaf €12,95",
-      description:
-        "Bestel je Velopass Frame-ID. Eén sticker, een leven lang digitaal serviceboekje voor je fiets. Gratis verzending in heel de EU.",
-      ogDescription: "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie.",
+      title: m.title,
+      description: m.description,
+      ogDescription: m.ogDescription,
       ogType: "product",
-    }),
+    });
+  },
   component: BestellenPage,
 });
 
