@@ -63,8 +63,13 @@ img { max-width: 100%; display: block; }
 button { font-family: inherit; }
 
 /* Deep-link scroll offset — fixed nav is 64px + breathing room */
-#hero, #frame-id, #wat-je-krijgt, #already-have-one, #order-sticker, #community, #tweedehands, #faq {
-  scroll-margin-top: 80px;
+.scroll-target {
+  scroll-margin-top: 88px;
+}
+@media (max-width: 768px) {
+  .scroll-target {
+    scroll-margin-top: 72px;
+  }
 }
 
 

@@ -17,7 +17,7 @@ export function ShopFinder() {
 
   if (!mounted) {
     return (
-      <section className="shop-finder" id="community">
+      <section className="shop-finder scroll-target" id="community">
         <div className="sf-hero">
           <p className="eyebrow" style={{ color: "#2ECC8A" }}>{t("community.eyebrow")}</p>
           <h2 className="sf-headline">{t("community.headline")}</h2>
@@ -64,7 +64,7 @@ export function ShopFinder() {
   return (
     <Suspense
       fallback={
-        <section className="shop-finder" id="community">
+        <section className="shop-finder scroll-target" id="community">
           <p className="eyebrow">De Velopass Community</p>
           <p className="sec-sub">Kaart laden...</p>
         </section>
