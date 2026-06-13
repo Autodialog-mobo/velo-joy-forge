@@ -35,5 +35,22 @@
       "desc": "Bought a second-hand bike with an existing Velopass Frame-ID? Register it in your name — the passport simply transfers.",
       "cta": "Start transfer →"
     }
+  },
+  "sticker": {
+    "title_line_1": "Your bike's digital key.",
+    "title_line_2": "One scan. Everything sorted."
+  },
+  "benefits": {
+    "title": "One Frame-ID. A whole bike life sorted.",
+    "cards": {
+      "theft": "Theft protection",
+      "service_book": "Your digital service book",
+      "roadside": "Roadside assistance",
+      "insurance": "Insurance",
+      "ownership": "Worry-free ownership"
+    }
+  },
+  "community": {
+    "headline": "Your bike is never alone."
   }
 }
