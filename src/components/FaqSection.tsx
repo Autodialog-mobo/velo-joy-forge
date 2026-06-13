@@ -267,6 +267,7 @@ export function FaqSection() {
             <Link
               to="/$lang/contact"
               params={{ lang }}
+              search={{ type: "rider" }}
               hash="wa-form"
               style={{ color: "#0D1F3C", textDecoration: "underline", textUnderlineOffset: 3 }}
             >
