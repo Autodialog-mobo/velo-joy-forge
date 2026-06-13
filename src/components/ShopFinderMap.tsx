@@ -248,7 +248,7 @@ export default function ShopFinderMap() {
   return (
     <section className="shop-finder" id="community" ref={sectionRef}>
       <div className="sf-hero">
-        <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
+        <p className="eyebrow" style={{ color: "#2ECC8A" }}>{t("community.eyebrow")}</p>
         <h2 className="sf-headline">{t("community.headline")}</h2>
         <p className="sf-subhead">
           <Trans
@@ -283,7 +283,7 @@ export default function ShopFinderMap() {
           }}
         >
           <AlertTriangle size={16} />
-          Fiets gestolen of vermist? Volg ons stappenplan →
+          {t("community.stolen_link")}
         </Link>
       </div>
 
@@ -293,14 +293,14 @@ export default function ShopFinderMap() {
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5A7090" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
             <input
               type="text"
-              placeholder="Zoek op stad, winkel of fietsmerk..."
+              placeholder={t("community.search_placeholder")}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
           </div>
           <button type="button" className="sf-geo" onClick={handleGeolocate} disabled={geoStatus === "loading"}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
-            {geoStatus === "loading" ? "Locatie zoeken..." : geoStatus === "denied" ? "Locatie geweigerd" : "Vind een winkel bij jou in de buurt"}
+            {geoStatus === "loading" ? t("community.geo_loading") : geoStatus === "denied" ? t("community.geo_denied") : t("community.geo_idle")}
           </button>
           <div className="sf-list">
             {filtered.map(({ s, i }) => (
@@ -317,13 +317,13 @@ export default function ShopFinderMap() {
                 </div>
               </button>
             ))}
-            {filtered.length === 0 && <div className="sf-empty">Geen winkels gevonden.</div>}
+            {filtered.length === 0 && <div className="sf-empty">{t("community.empty")}</div>}
           </div>
           <div className="sf-foot">
             <span className="sf-foot-mark">
               <svg width="16" height="16" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="#2ECC8A" /><path d="M24 54 L42 72 L76 30" fill="none" stroke="#0D1F3C" strokeWidth="11" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </span>
-            <span><strong>{filtered.length}</strong> winkels</span>
+            <span><strong>{filtered.length}</strong> {t("community.list_unit")}</span>
           </div>
         </aside>
 
