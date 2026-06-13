@@ -306,17 +306,17 @@ async function translateFile(
   return stats;
 }
 
-async function translateLang(lang: string): Promise<void> {
+async function translateLang(lang: string, force: boolean): Promise<void> {
   const cfg = LANG_CONFIG[lang];
   if (!cfg) throw new Error(`Unsupported target language: ${lang}`);
-  console.log(`\n→ Translating to ${lang.toUpperCase()} (DeepL ${cfg.target}, formality=${cfg.formality ?? "default"})`);
+  console.log(`\n→ Translating to ${lang.toUpperCase()} (DeepL ${cfg.target}, formality=${cfg.formality ?? "default"}${force ? ", FORCE" : ""})`);
 
   const files = readdirSync(join(LOCALES_DIR, SOURCE)).filter((f) =>
     f.endsWith(".json"),
   );
   const totals: Stats = { translated: 0, skipped: 0, preserved: 0 };
   for (const f of files) {
-    const s = await translateFile(f, lang, cfg);
+    const s = await translateFile(f, lang, cfg, force);
     totals.translated += s.translated;
     totals.skipped += s.skipped;
     totals.preserved += s.preserved;
@@ -327,13 +327,16 @@ async function translateLang(lang: string): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  const arg = process.argv[2];
+  const args = process.argv.slice(2);
+  const force = args.includes("--force") || process.env.FORCE === "1";
+  const positional = args.filter((a) => !a.startsWith("--"));
+  const arg = positional[0];
   if (!arg) {
-    console.error("Usage: bun run translate:<fr|de|all>");
+    console.error("Usage: bun run translate:<fr|de|all> [-- --force]");
     process.exit(1);
   }
   const langs = arg === "all" ? Object.keys(LANG_CONFIG) : [arg];
-  for (const l of langs) await translateLang(l);
+  for (const l of langs) await translateLang(l, force);
   console.log("\nDone. _translated flags left at false — flip manually after native review.");
 }
 
