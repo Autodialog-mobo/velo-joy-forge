@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, notFound } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import i18n, { isLang, SUPPORTED_LANGS, type Lang } from "@/i18n/config";
+import { useScrollToHash } from "@/hooks/useScrollToHash";
 
 export const Route = createFileRoute("/$lang")({
   beforeLoad: ({ params }) => {
@@ -46,6 +47,8 @@ function LangLayout() {
       document.documentElement.lang = safeLang;
     }
   }, [scoped, safeLang]);
+
+  useScrollToHash();
 
   return (
     <I18nextProvider i18n={scoped}>
