@@ -304,10 +304,10 @@ function VelopassHome() {
             <div>
               <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
               <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
-                Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.
+                {t("home:benefits.cards.service_book_body")}
               </p>
               <p style={{ fontSize: 13, color: "var(--text-muted)", fontStyle: "italic", marginTop: 10, lineHeight: 1.6 }}>
-                Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.
+                {t("home:benefits.cards.service_book_note")}
               </p>
             </div>
           </div>
