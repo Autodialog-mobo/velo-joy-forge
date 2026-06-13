@@ -9,11 +9,11 @@
     "title_line_1": "Immer auf dem Rad.",
     "title_line_2_em": "Alles",
     "title_line_3_em": "Erledigt.",
-    "sub": "Einmal „Frame-ID“ auf deinem Motorrad – und du hast immer Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft. Was auch immer passiert.",
+    "sub": "Einmal „Frame-ID“ auf deinem Fahrrad – und du hast immer Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft. Was auch immer passiert.",
     "cta_primary": "Bestelle dein „Frame-ID“ →",
     "cta_sub": "Ab 12,95 € – versandkostenfrei in die ganze EU",
     "stolen_link": "Fahrrad gestohlen oder verlegt? → Hier erfährst du, was du als Nächstes tun solltest",
-    "trust_text_suffix": "Geschäfte",
+    "trust_text_suffix": "Fahrradhändler",
     "trust_text_cyclists": "+180.000 Radfahrer"
   },
   "paths": {
@@ -25,7 +25,7 @@
     },
     "order": {
       "tag": "Noch kein „Frame-ID“?",
-      "title": "Bestelle einen „Velopass“ unter Frame-ID",
+      "title": "Velopass Frame-ID bestellen",
       "desc": "Ab 12,95 €. Kostenloser Versand. Sofortiger Schutz über deinen digitalen Fahrradpass.",
       "cta": "Bundles ansehen →"
     },
