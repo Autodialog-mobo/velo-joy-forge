@@ -246,8 +246,8 @@ function VelopassHome() {
           <div className="sticker-content">
             <p className="eyebrow">De Velopass Frame-ID</p>
             <h2 className="sticker-title">
-              <span className="st-line-1">De digitale sleutel van je fiets.</span>
-              <span className="st-line-2">Eén scan. Alles geregeld.</span>
+              <span className="st-line-1">{t("home:sticker.title_line_1")}</span>
+              <span className="st-line-2">{t("home:sticker.title_line_2")}</span>
             </h2>
             <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
             <div className="sticker-feats">
