@@ -156,6 +156,7 @@ function collectJobs(
   enNode: unknown,
   targetNode: unknown,
   needsRetranslate: boolean,
+  force: boolean,
   trail: (string | number)[],
   jobs: Job[],
   stats: Stats,
@@ -165,7 +166,7 @@ function collectJobs(
   if (Array.isArray(enNode)) {
     const tArr = Array.isArray(targetNode) ? targetNode : [];
     for (let i = 0; i < enNode.length; i++) {
-      collectJobs(enNode[i], tArr[i], needsRetranslate, [...trail, i], jobs, stats);
+      collectJobs(enNode[i], tArr[i], needsRetranslate, force, [...trail, i], jobs, stats);
     }
     return;
   }
@@ -176,7 +177,7 @@ function collectJobs(
         : {};
     for (const [k, v] of Object.entries(enNode)) {
       if (k.startsWith("_")) continue; // skip meta like _translated
-      collectJobs(v, tObj[k], needsRetranslate, [...trail, k], jobs, stats);
+      collectJobs(v, tObj[k], needsRetranslate, force, [...trail, k], jobs, stats);
     }
     return;
   }
@@ -185,7 +186,7 @@ function collectJobs(
   // Decide if this leaf needs translation.
   const missing = targetNode === undefined;
   const equalsEn = typeof targetNode === "string" && targetNode === enNode;
-  if (missing || (equalsEn && needsRetranslate)) {
+  if (force || missing || (equalsEn && needsRetranslate)) {
     jobs.push({ path: trail, text: enNode });
   } else {
     stats.skipped++;
