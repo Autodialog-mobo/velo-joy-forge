@@ -1,34 +1,34 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
     "title": "Merci pour ta commande — Velopass",
-    "description": "Ta commande sur Velopass est confirmée."
+    "description": "Ta commande Velopass est confirmée."
   },
   "header": {
-    "back_home": "Retour à la page d'accueil"
+    "back_home": "Retour à l'accueil"
   },
   "states": {
-    "loading": "Chargement en cours…",
-    "error_title": "Hmm, il y a eu un problème",
+    "loading": "Chargement de la commande…",
+    "error_title": "Hmm, un problème est survenu",
     "error_unknown": "Erreur inconnue",
-    "no_order": "Aucune information sur la commande n'a été trouvée."
+    "no_order": "Aucune information de commande trouvée."
   },
   "success": {
     "eyebrow": "Commande reçue",
     "title": "Merci pour ta commande",
     "intro": "Nous avons bien reçu ta commande :",
-    "shipping_note_one": "Ta commande Frame-ID sera expédiée sous 2 jours ouvrés.",
-    "shipping_note_many": "Tes Frame-IDs seront expédiées sous 2 jours ouvrés.",
+    "shipping_note_one": "Ton Frame-ID sera expédié sous 2 jours ouvrables.",
+    "shipping_note_many": "Tes Frame-ID seront expédiés sous 2 jours ouvrables.",
     "card_confirmation": "Confirmation",
-    "card_shipping": "Livraison",
-    "shipping_value": "Gratuit · 2 jours ouvrés",
-    "amount_paid": "{{amount}} payé",
-    "status_line": "Tu trouveras une confirmation de paiement dans ta boîte mail. Statut : {{status}}.",
+    "card_shipping": "Expédition",
+    "shipping_value": "Gratuit · 2 jours ouvrables",
+    "amount_paid": "{{amount}} payés",
+    "status_line": "Une confirmation de paiement est dans ta boîte mail. Statut : {{status}}.",
     "back_button": "Retour à Velopass"
   },
   "bundles": {
-    "frameid_solo_onetime": "Velopass Frame-ID En solo",
+    "frameid_solo_onetime": "Velopass Frame-ID Solo",
     "frameid_duo_onetime": "Velopass Frame-ID Duo",
-    "frameid_family_onetime": "Velopass Frame-ID Famille"
+    "frameid_family_onetime": "Velopass Frame-ID Family"
   }
 }
