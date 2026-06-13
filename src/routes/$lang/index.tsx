@@ -215,7 +215,7 @@ function VelopassHome() {
                 ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
-              <img src={stickerImg} alt="Velopass Frame-ID op een fietsframe" width={1024} height={1024} />
+              <img src={stickerImg} alt={t("home:sticker.img_alt")} width={1024} height={1024} />
               <div className="scan-overlay" aria-hidden="true">
                 <span className="scan-corner tl" />
                 <span className="scan-corner tr" />
