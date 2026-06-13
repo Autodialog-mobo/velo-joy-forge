@@ -70,15 +70,6 @@ function VelopassHome() {
       localStorage.setItem(QR_STORAGE_KEY, JSON.stringify({ x: qrX, y: qrY, size: qrSize }));
     } catch {}
   }, [qrX, qrY, qrSize]);
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
-      }
-    }
-  }, []);
 
   return (
     <>
@@ -199,7 +190,7 @@ function VelopassHome() {
           <div className="avatars">
             <div className="av">LV</div><div className="av">MP</div><div className="av">KD</div><div className="av">+</div>
           </div>
-          <div className="trust-text">{t("home:hero.trust_text_cyclists")}&nbsp; ·&nbsp; <strong>{activeShopsCount.toLocaleString("nl-BE")}+ {t("home:hero.trust_text_suffix")}</strong></div>
+          <div className="trust-text">{t("home:hero.trust_text_cyclists")}&nbsp; ·&nbsp; <strong>{activeShopsCount.toLocaleString(currentLang)}+ {t("home:hero.trust_text_suffix")}</strong></div>
         </div>
       </section>
 
