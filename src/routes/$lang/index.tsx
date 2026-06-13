@@ -329,7 +329,7 @@ function VelopassHome() {
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg></div>
             <div style={{ flex: 1 }}>
               <div className="vc-head"><h3>{t("home:benefits.cards.ownership")}</h3></div>
-              <p>Alles over je fiets op één plek — specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang.</p>
+              <p>{t("home:benefits.cards.ownership_body")}</p>
             </div>
           </div>
         </div>
