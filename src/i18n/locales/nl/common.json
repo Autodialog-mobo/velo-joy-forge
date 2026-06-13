@@ -2,8 +2,8 @@
   "_translated": true,
   "nav": {
     "what_you_get": "Wat je krijgt",
-    "already_have_one": "Al een sticker?",
-    "order_sticker": "Sticker bestellen",
+    "already_have_one": "Al een Frame-ID?",
+    "order_sticker": "Frame-ID bestellen",
     "community": "Community",
     "bike_check": "Fiets controleren",
     "contact": "Contact",
@@ -17,8 +17,8 @@
   },
   "footer": {
     "tagline": "Altijd op de fiets. Alles geregeld.",
-    "tagline_pro": "Every bike. A customer. For life.",
-    "coverage": "Frame-ID's beschikbaar in heel Europa · Fietswinkels actief in BE, NL en FR",
+    "tagline_pro": "Every bike. A customer for life.",
+    "coverage": "Frame-ID beschikbaar in heel Europa · Fietswinkels in BE, NL en FR",
     "privacy": "Privacy",
     "terms": "Voorwaarden",
     "contact": "Contact",
@@ -37,12 +37,12 @@
   "cookie_consent": {
     "message": "Velopass gebruikt cookies om je surfervaring te verbeteren en anonieme statistieken bij te houden. Lees ons",
     "privacy_link": "privacybeleid",
-    "message_suffix": "voor meer info.",
+    "message_suffix": "voor meer informatie.",
     "decline": "Alleen essentieel",
     "accept": "Alle cookies toestaan"
   },
   "buttons": {
-    "loading": "Laden...",
+    "loading": "Laden…",
     "save": "Opslaan",
     "cancel": "Annuleren",
     "close": "Sluiten",

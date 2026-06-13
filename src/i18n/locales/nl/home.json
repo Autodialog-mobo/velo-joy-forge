@@ -2,38 +2,38 @@
   "_translated": true,
   "meta": {
     "title": "Velopass — Altijd op de fiets. Alles geregeld.",
-    "description": "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort."
+    "description": "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalbescherming, pechhulp, verzekering en je vaste fietswinkel. Het digitale fietspaspoort."
   },
   "hero": {
     "eyebrow": "Diefstalbescherming + digitaal fietspaspoort",
     "title_line_1": "Altijd op de fiets.",
     "title_line_2_em": "Alles",
     "title_line_3_em": "geregeld.",
-    "sub": "Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en jouw digitaal serviceboekje. Wat er ook gebeurt.",
+    "sub": "Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalbescherming, pechhulp, verzekering en je digitaal serviceboekje. Altijd binnen handbereik.",
     "cta_primary": "Bestel je Frame-ID →",
-    "cta_sub": "Vanaf €12,95 — gratis verzending in heel de EU",
+    "cta_sub": "Vanaf €12,95 — gratis verzending in de hele EU",
     "stolen_link": "Fiets gestolen of vermist? → Lees wat je nu moet doen",
     "trust_text_suffix": "fietswinkels",
     "trust_text_cyclists": "+180.000 fietsers"
   },
   "paths": {
     "shop": {
-      "tag": "NIEUWE FIETS GEKOCHT?",
+      "tag": "NET EEN FIETS GEKOCHT",
       "title": "Jouw Velopass staat klaar",
-      "desc": "Grote kans dat je Velopass al klaarstaat via je fietsenwinkel. Je fiets is geregistreerd — kies enkel nog een wachtwoord en alles staat voor je klaar.",
+      "desc": "Grote kans dat je Velopass al klaarstaat via je fietswinkel. Je fiets is geregistreerd — kies een wachtwoord en je bent vertrokken.",
       "cta": "Open je Velopass →"
     },
     "order": {
       "tag": "Nog geen Frame-ID?",
       "title": "Bestel een Velopass Frame-ID",
       "desc": "Vanaf €12,95. Gratis verzending. Direct beschermd via je digitaal fietspaspoort.",
-      "cta": "Bekijk de bundels →"
+      "cta": "Kies je bundel →"
     },
     "second_hand": {
       "tag": "Tweedehands fiets met Frame-ID?",
       "title": "Het paspoort gaat mee. Op jouw naam.",
       "desc": "Tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Registreer hem op jouw naam — het paspoort gaat gewoon mee.",
-      "cta": "Overdracht starten →"
+      "cta": "Zet 'm op jouw naam →"
     }
   }
 }
