@@ -170,7 +170,7 @@ function BestellenPage() {
           <li><Link to="/$lang" params={{ lang }} hash="already-have-one">{t("common:nav.already_have_one")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="community">{t("common:nav.community")}</Link></li>
           <li><Link to="/$lang/bike-check" params={{ lang }}>{t("common:nav.bike_check")}</Link></li>
-          <li><Link to="/$lang/contact" params={{ lang }}>{t("common:nav.contact")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "rider" }}>{t("common:nav.contact")}</Link></li>
           <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
