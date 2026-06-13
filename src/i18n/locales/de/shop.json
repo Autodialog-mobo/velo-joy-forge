@@ -37,9 +37,10 @@
       "stat4Label": "Anmeldequote",
       "stat4Delta": "↑ +3 % gegenüber dem Vormonat",
       "recentScans": "Aktuelle Scans",
-      "bike1Sub": "L. Vermeersch · gerade eingescannt",
-      "bike2Sub": "M. Peeters · wartet auf die Registrierung",
-      "bike3Sub": "K. De Smedt · Wartungsarbeiten geplant",
+      "shopName": "Fahrradhaus Müller",
+      "bike1Sub": "L. Müller · gerade eingescannt",
+      "bike2Sub": "M. Schneider · wartet auf die Registrierung",
+      "bike3Sub": "K. Fischer · Wartungsarbeiten geplant",
       "badgeActive": "Aktiv",
       "badgePending": "In Bearbeitung",
       "scanBtn": "Neues Fahrrad scannen"
