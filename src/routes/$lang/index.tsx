@@ -337,14 +337,14 @@ function VelopassHome() {
 
       {/* PAD 1 */}
       <section className="flow-sticker" id="already-have-one">
-        <p className="eyebrow">Uitnodiging ontvangen?</p>
+        <p className="eyebrow">{t("home:paths.shop.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.shop.title")}</h2>
         <p className="sec-sub">{t("home:paths.shop.body")}</p>
         <div className="steps-flow">
           {[
-            { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 2, t: "Kies een wachtwoord", d: "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass gaat open.", icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Je Velopass is klaar", d: "Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 1, t: t("home:paths.shop.steps.s1.title"), d: t("home:paths.shop.steps.s1.body"), icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 2, t: t("home:paths.shop.steps.s2.title"), d: t("home:paths.shop.steps.s2.body"), icon: <KeyRound size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 3, t: t("home:paths.shop.steps.s3.title"), d: t("home:paths.shop.steps.s3.body"), icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -362,28 +362,28 @@ function VelopassHome() {
           ))}
         </div>
         <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-p">Open je Velopass</a>
-          <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-s">Geen mail ontvangen? →</a>
+          <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-p">{t("home:paths.shop.cta_primary")}</a>
+          <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-s">{t("home:paths.shop.cta_secondary")}</a>
         </div>
       </section>
 
       {/* PAD 2 */}
       <section className="flow-new" id="order-sticker">
-        <p className="eyebrow">Nog geen Frame-ID</p>
+        <p className="eyebrow">{t("home:paths.order.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.order.title")}</h2>
         <p className="sec-sub">{t("home:paths.order.body")}</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#fff" strokeWidth={1.8} /></div>
-            <h4>Via een fietswinkel</h4>
-            <p>Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft Frame-ID's in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.</p>
-            <a href="#community" className="btn-p">Vind een fietswinkel bij jou in de buurt</a>
+            <h4>{t("home:paths.order.shop_path.title")}</h4>
+            <p>{t("home:paths.order.shop_path.body")}</p>
+            <a href="#community" className="btn-p">{t("home:paths.order.shop_path.cta")}</a>
           </div>
           <div className="sn path-shop">
             <div style={pathIconBox}><Package size={24} color="#fff" strokeWidth={1.8} /></div>
-            <h4>Via de Velopass webshop</h4>
-            <p>Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.</p>
-            <Link to="/$lang/order" params={{ lang: currentLang }} className="btn-g">Bestel via de Velopass webshop →</Link>
+            <h4>{t("home:paths.order.web_path.title")}</h4>
+            <p>{t("home:paths.order.web_path.body")}</p>
+            <Link to="/$lang/order" params={{ lang: currentLang }} className="btn-g">{t("home:paths.order.web_path.cta")}</Link>
           </div>
         </div>
         <div className="path-final">
@@ -391,8 +391,8 @@ function VelopassHome() {
             <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} />
           </div>
           <div>
-            <h4>Altijd op de fiets. Alles geregeld.</h4>
-            <p>Jouw Velopass is actief. Diefstalprotectie, pechhulp en verzekering — één scan van je Frame-ID ver.</p>
+            <h4>{t("home:paths.order.final.title")}</h4>
+            <p>{t("home:paths.order.final.body")}</p>
           </div>
         </div>
       </section>
@@ -401,14 +401,14 @@ function VelopassHome() {
 
       {/* PAD 3 */}
       <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
-        <p className="eyebrow">Tweedehands fiets met Frame-ID</p>
+        <p className="eyebrow">{t("home:paths.second_hand.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.second_hand.title_lead")} <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>{t("home:paths.second_hand.title_em")}</em></h2>
         <p className="sec-sub">{t("home:paths.second_hand.body")}</p>
         <div className="steps-flow">
           {[
-            { n: 1, t: "Scan de QR-code op de Frame-ID", d: "Scan de QR-code op de Frame-ID van je tweedehands fiets.", icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 2, t: "Vraag de overdracht aan", d: "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam.", icon: <ArrowRightLeft size={22} color="#2ECC8A" strokeWidth={1.8} /> },
-            { n: 3, t: "Jouw Velopass. Jouw fiets.", d: "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken.", icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 1, t: t("home:paths.second_hand.steps.s1.title"), d: t("home:paths.second_hand.steps.s1.body"), icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 2, t: t("home:paths.second_hand.steps.s2.title"), d: t("home:paths.second_hand.steps.s2.body"), icon: <ArrowRightLeft size={22} color="#2ECC8A" strokeWidth={1.8} /> },
+            { n: 3, t: t("home:paths.second_hand.steps.s3.title"), d: t("home:paths.second_hand.steps.s3.body"), icon: <CheckCircle2 size={22} color="#2ECC8A" strokeWidth={1.8} /> },
           ].map((s, i, arr) => (
             <div className="sf" key={s.n}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -427,10 +427,10 @@ function VelopassHome() {
         </div>
         <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
           <button type="button" onClick={() => { setScanManual(false); setScanOpen(true); }} className="btn-p" style={{ border: "none", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 8 }}>
-            <QrCode size={16} strokeWidth={2} /> Scan de QR-code
+            <QrCode size={16} strokeWidth={2} /> {t("home:paths.second_hand.cta_scan")}
           </button>
           <button type="button" onClick={() => { setScanManual(true); setScanOpen(true); }} className="btn-s" style={{ border: "none", background: "transparent", cursor: "pointer", font: "inherit" }}>
-            Code handmatig invoeren →
+            {t("home:paths.second_hand.cta_manual")}
           </button>
         </div>
       </section>
