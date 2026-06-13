@@ -74,16 +74,44 @@
   },
   "sticker": {
     "title_line_1": "Der digitale Schlüssel deines Fahrrads.",
-    "title_line_2": "Ein Scan. Alles erledigt."
+    "title_line_2": "Ein Scan. Alles erledigt.",
+    "eyebrow": "Die Velopass Frame-ID",
+    "intro": "Eine Frame-ID an deinem Rahmen, eine Welt voller Möglichkeiten in deiner Tasche.",
+    "scan_badge": "Scannen → Zugang zu allem",
+    "img_alt": "Velopass Frame-ID an einem Fahrradrahmen",
+    "feats": {
+      "location": {
+        "title": "Immer am richtigen Ort.",
+        "body": "Ob dein Händler die Frame-ID beim Kauf anbringt oder du sie nach einer Onlinebestellung selbst aufklebst: Sie ist so gemacht, dass sie ein Fahrradleben lang unverwüstlich an deinem Rahmen bleibt."
+      },
+      "access": {
+        "title": "Direkter Zugang zu allem.",
+        "body": "Scanne den QR-Code für direkten Zugang zu deinem digitalen Pass. Deine Versicherung und Pannenhilfe hast du immer zur Hand, und einen Servicetermin bei deinem Fahrradhändler buchst du mit wenigen Klicks."
+      },
+      "frame": {
+        "title": "Mit dem Rahmen verbunden.",
+        "body": "Die Frame-ID gehört zum Fahrrad, nicht zur Person. Beim Verkauf überträgst du Historie und Schutz ganz einfach. Die Frame-ID bleibt am Rahmen, die Daten ziehen mit um."
+      }
+    }
   },
   "benefits": {
     "title": "Eine Frame-ID. Ein ganzes Fahrradleben geregelt.",
+    "optional_badge": "Optional",
+    "secured_pill": "Dein Fahrrad. SECURED.",
     "cards": {
       "theft": "Diebstahlschutz",
       "service_book": "Dein digitales Serviceheft",
       "roadside": "Pannenhilfe",
       "insurance": "Versicherung",
-      "ownership": "Sorgloser Besitz"
+      "ownership": "Sorgloser Besitz",
+      "theft_body": "{{shopCount}}+ Fahrradhändler scannen automatisch über ihr Kassensystem. Auch Radfahrer und Polizei, die den QR scannen, sehen sofort, dass dein Fahrrad gesucht wird.",
+      "theft_mybike": "Ebenfalls mit MyBike verknüpft, dem belgischen nationalen Fahrradregister.",
+      "theft_stolen_link": "Fahrrad gestohlen oder verschwunden? Lies, was zu tun ist →",
+      "service_book_body": "Jeder Service, jede Reparatur — dokumentiert und immer zur Hand. Verkaufst du dein Fahrrad? Eine vollständige Servicehistorie erhöht den Wiederverkaufswert.",
+      "service_book_note": "Verwaltet von deinem Velopass-Fahrradhändler — dem Experten, der dein Fahrrad kennt. Zeig deine Wallet bei jedem Besuch, auch bei einem anderen Händler, wenn du unterwegs bist.",
+      "roadside_body": "Panne unterwegs? Hilfe ist nur einen Scan entfernt. Direkter Zugang zur Pannenhilfe — ohne Suchen, ohne Warten. Hast du schon ein Pannenhilfe-Abo? Füg es zu deinem Velopass hinzu, damit alles an einem Ort ist.",
+      "insurance_body": "Schließ eine Fahrradversicherung direkt über deinen Velopass ab — mit wenigen Klicks. Schon versichert? Füg deine Versicherung zu deinem Velopass hinzu, damit alles an einem Ort ist.",
+      "ownership_body": "Alles über dein Fahrrad an einem Ort — Spezifikationen, Garantie, vollständige Servicehistorie und aktive Services. Verkaufst du dein Fahrrad? Übertrag den Pass mit einem Klick an den neuen Eigentümer. Deine Investition behält ihren Wert, ein Leben lang."
     }
   },
   "community": {
