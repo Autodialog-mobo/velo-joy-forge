@@ -37,9 +37,10 @@
       "stat4Label": "Registration rate",
       "stat4Delta": "↑ +3% vs last month",
       "recentScans": "Recent scans",
-      "bike1Sub": "L. Vermeersch · just scanned",
-      "bike2Sub": "M. Peeters · awaiting registration",
-      "bike3Sub": "K. De Smedt · maintenance planned",
+      "shopName": "Walker Cycles",
+      "bike1Sub": "L. Walker · just scanned",
+      "bike2Sub": "M. Thompson · awaiting registration",
+      "bike3Sub": "K. Hughes · maintenance planned",
       "badgeActive": "Active",
       "badgePending": "Pending",
       "scanBtn": "Scan new bike"
