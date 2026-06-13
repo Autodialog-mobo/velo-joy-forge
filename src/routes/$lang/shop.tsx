@@ -332,6 +332,7 @@ function VelopassPro() {
           <Link
             to="/$lang/contact"
             params={{ lang }}
+            search={{ type: "shop" }}
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
