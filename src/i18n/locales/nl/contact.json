@@ -68,10 +68,10 @@
     "subjects": [
       "Demo aanvragen",
       "Kassasysteem of integratie",
-      "Pricing of kennismakingspakket",
+      "Prijzen of kennismakingspakket",
       "Al partner — technische vraag",
       "Leasingmaatschappij of verzekeraar",
-      "Andere"
+      "Iets anders"
     ],
     "subject_placeholder": "Kies een onderwerp…"
   },
@@ -79,14 +79,14 @@
     "name": "Naam",
     "name_placeholder": "Jan Janssens",
     "phone": "Telefoon",
-    "phone_placeholder": "+32 4...",
+    "phone_placeholder": "+32 4…",
     "email": "E-mail",
     "email_placeholder_rider": "jan@voorbeeld.be",
     "email_placeholder_shop": "jan@winkel.be",
     "company": "Fietswinkel of bedrijfsnaam",
     "company_placeholder": "Fietsen Janssens",
     "note": "Opmerking",
-    "note_placeholder": "Vertel ons kort waar je vraag over gaat...",
+    "note_placeholder": "Vertel ons kort waar je vraag over gaat…",
     "subject": "Onderwerp",
     "message": "Bericht",
     "send_whatsapp": "Verstuur via WhatsApp →"
