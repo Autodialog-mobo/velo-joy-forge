@@ -247,7 +247,7 @@ export default function ShopFinderMap() {
   const selectedShop = activeIdx != null ? shops[activeIdx] : null;
 
   return (
-    <section className="shop-finder" id="community" ref={sectionRef}>
+    <section className="shop-finder scroll-target" id="community" ref={sectionRef}>
       <div className="sf-hero">
         <p className="eyebrow" style={{ color: "#2ECC8A" }}>{t("community.eyebrow")}</p>
         <h2 className="sf-headline">{t("community.headline")}</h2>

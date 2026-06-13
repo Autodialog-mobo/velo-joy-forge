@@ -118,7 +118,7 @@ function VelopassHome() {
       </nav>
 
       {/* HERO */}
-      <section className="hero" id="hero">
+      <section className="hero scroll-target" id="hero">
         <span className="hero-eyebrow"><span className="eyebrow-dot" />{t("home:hero.eyebrow")}</span>
         <h1 className="hero-title">{t("home:hero.title_line_1")}<br /><em>{t("home:hero.title_line_2_em")}<br />{t("home:hero.title_line_3_em")}</em></h1>
         <p className="hero-sub">{t("home:hero.sub")}</p>
@@ -195,7 +195,7 @@ function VelopassHome() {
       </section>
 
       {/* FRAME-ID UITLEG */}
-      <section className="sticker-section" id="frame-id">
+      <section className="sticker-section scroll-target" id="frame-id">
         <div className="sticker-grid">
           <div className="sticker-visual">
             <div
@@ -260,7 +260,7 @@ function VelopassHome() {
       </section>
 
       {/* VOORDELEN */}
-      <section className="voordelen" id="wat-je-krijgt">
+      <section className="voordelen scroll-target" id="wat-je-krijgt">
         <p className="eyebrow">{t("home:benefits.section_label")}</p>
         <h2 className="sec-title">{t("home:benefits.title")}</h2>
         <div className="vgrid">
@@ -327,7 +327,7 @@ function VelopassHome() {
       </section>
 
       {/* PAD 1 */}
-      <section className="flow-sticker" id="already-have-one">
+      <section className="flow-sticker scroll-target" id="already-have-one">
         <p className="eyebrow">{t("home:paths.shop.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.shop.title")}</h2>
         <p className="sec-sub">{t("home:paths.shop.body")}</p>
@@ -359,7 +359,7 @@ function VelopassHome() {
       </section>
 
       {/* PAD 2 */}
-      <section className="flow-new" id="order-sticker">
+      <section className="flow-new scroll-target" id="order-sticker">
         <p className="eyebrow">{t("home:paths.order.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.order.title")}</h2>
         <p className="sec-sub">{t("home:paths.order.body")}</p>
@@ -391,7 +391,7 @@ function VelopassHome() {
       <ShopFinder />
 
       {/* PAD 3 */}
-      <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
+      <section className="flow-sticker scroll-target" id="tweedehands" style={{ background: "var(--bg)" }}>
         <p className="eyebrow">{t("home:paths.second_hand.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.second_hand.title_lead")} <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>{t("home:paths.second_hand.title_em")}</em></h2>
         <p className="sec-sub">{t("home:paths.second_hand.body")}</p>
