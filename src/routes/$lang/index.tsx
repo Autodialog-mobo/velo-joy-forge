@@ -271,7 +271,7 @@ function VelopassHome() {
       {/* VOORDELEN */}
       <section className="voordelen" id="wat-je-krijgt">
         <p className="eyebrow">Alles op één plek</p>
-        <h2 className="sec-title">Eén Frame-ID. Een heel fietsleven geregeld.</h2>
+        <h2 className="sec-title">{t("home:benefits.title")}</h2>
         <div className="vgrid">
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
