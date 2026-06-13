@@ -302,7 +302,7 @@ function VelopassHome() {
           <div className="vc">
             <div className="vc-icon"><Store size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
             <div>
-              <div className="vc-head"><h3>Jouw digitale serviceboekje</h3></div>
+              <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
               <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
                 Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.
               </p>
