@@ -6,6 +6,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
+import { LeafletGestureSupport } from "./LeafletGestureSupport";
 
 type Shop = {
   name: string;
@@ -74,6 +75,7 @@ export default function ProCommunityMap() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
       />
+      <LeafletGestureSupport />
       <Clusters shops={shops} />
     </MapContainer>
   );
