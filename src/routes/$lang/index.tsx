@@ -441,8 +441,9 @@ function VelopassHome() {
       <section style={{ background: "#183A6E", padding: "32px 40px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 20, flexWrap: "wrap" }}>
           <div>
-            <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: 20, color: "#fff", margin: 0 }}>Nog vragen?</p>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>Ons team helpt je graag verder.</p>
+            <p style={{ fontFamily: "'Syne', sans-serif", fontWeight: 600, fontSize: 20, color: "#fff", margin: 0 }}>{t("home:contact_band.title")}</p>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14, color: "rgba(255,255,255,0.7)", margin: "4px 0 0" }}>{t("home:contact_band.subtitle")}</p>
+
           </div>
           <Link
             to="/$lang/contact"
@@ -464,7 +465,7 @@ function VelopassHome() {
               whiteSpace: "nowrap",
             }}
           >
-            Neem contact op →
+            {t("home:contact_band.cta")}
           </Link>
         </div>
       </section>

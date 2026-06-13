@@ -19,26 +19,57 @@
   "paths": {
     "shop": {
       "tag": "HAST DU DIR GERADE EIN FAHRRAD GEKAUFT?",
+      "eyebrow": "Einladung erhalten?",
       "title": "Dein Velopass ist fertig",
       "desc": "Wahrscheinlich wartet dein Velopass schon in deinem Fahrradhändler auf dich. Dein Fahrrad ist bereits registriert – du musst nur noch ein Passwort wählen, und schon ist alles bereit.",
       "body": "Dein Fahrradhändler hat die Frame-ID angebracht und dein Fahrrad bereits auf deinen Namen registriert. Du musst nur noch ein Passwort wählen.",
-      "cta": "Öffne deinen Velopass →"
+      "cta": "Öffne deinen Velopass →",
+      "steps": {
+        "s1": { "title": "Prüfe deine E-Mail", "body": "Du hast einen Einladungslink von deinem Fahrradhändler erhalten. Öffne ihn, um zu starten." },
+        "s2": { "title": "Wähle ein Passwort", "body": "Erstelle dein Velopass-Konto in wenigen Sekunden." },
+        "s3": { "title": "Dein Velopass ist bereit", "body": "Dein Fahrrad und dein digitaler Pass sind mit deinem Namen verknüpft." }
+      },
+      "cta_primary": "Öffne deinen Velopass",
+      "cta_secondary": "Keine E-Mail erhalten? →"
     },
     "order": {
       "tag": "Noch kein Frame-ID?",
+      "eyebrow": "Frame-ID bestellen",
       "title": "Velopass Frame-ID bestellen",
       "desc": "Ab 12,95 €. Kostenloser Versand. Sofortiger Schutz über deinen digitalen Fahrradpass.",
       "body": "Eine Frame-ID aktiviert deinen digitalen Pass für die gesamte Lebensdauer deines Fahrrads. Einmaliger Kauf — kein Abo, keine versteckten Kosten.",
-      "cta": "Bundles ansehen →"
+      "cta": "Bundles ansehen →",
+      "shop_path": {
+        "title": "Über einen Fahrradhändler",
+        "body": "Hol dir eine Frame-ID bei einem Partner-Fahrradhändler und aktiviere deinen Pass vor Ort.",
+        "cta": "Finde einen Händler in deiner Nähe →"
+      },
+      "web_path": {
+        "title": "Über den Velopass-Onlineshop",
+        "body": "Bestelle deine Frame-ID online und erhalte sie bequem nach Hause.",
+        "cta": "Pakete ansehen →"
+      },
+      "final": {
+        "title": "Immer im Sattel. Alles geregelt.",
+        "body": "Sobald deine Frame-ID aktiviert ist, leben dein Fahrrad, deine Services und deine Historie an einem Ort."
+      }
     },
     "second_hand": {
       "tag": "Ein gebrauchtes Fahrrad mit Frame-ID?",
+      "eyebrow": "Gebrauchtes Fahrrad mit Frame-ID",
       "title": "Der Pass wandert mit. Auf deinen Namen.",
       "title_lead": "Der Pass wandert mit.",
       "title_em": "Auf deinen Namen.",
       "desc": "Hast du ein gebrauchtes Fahrrad mit einem bestehenden Velopass (Frame-ID) gekauft? Lass es auf deinen Namen umschreiben – der Pass wird einfach übertragen.",
       "body": "Du hast ein gebrauchtes Fahrrad mit einer bestehenden Velopass Frame-ID gekauft? Du kannst den digitalen Pass ganz einfach auf deinen Namen übertragen. Die neutrale Fahrradhistorie (Wartungen, Reparaturen und Garantiedaten) wandert mit. Persönliche Services wie Pannenhilfe und Versicherung aktivierst du selbst. Rechnungen, Preise und persönliche Fotos bleiben beim Vorbesitzer privat.",
-      "cta": "Übertragung starten →"
+      "cta": "Übertragung starten →",
+      "steps": {
+        "s1": { "title": "Scanne den QR-Code auf der Frame-ID", "body": "Scanne den QR-Code auf der Frame-ID deines gebrauchten Fahrrads." },
+        "s2": { "title": "Beantrage die Übertragung", "body": "Der Vorbesitzer erhält automatisch eine Anfrage. Nach seiner Bestätigung läuft das Fahrrad offiziell auf deinen Namen." },
+        "s3": { "title": "Dein Velopass. Dein Fahrrad.", "body": "Der digitale Pass gehört jetzt dir. Du erhältst eine neutrale Zeitleiste der Ereignisse des Fahrrads. Pannenhilfe, Versicherung und aktive Services aktivierst du selbst mit wenigen Klicks." }
+      },
+      "cta_scan": "QR-Code scannen",
+      "cta_manual": "Code manuell eingeben →"
     }
   },
   "sticker": {
@@ -56,8 +87,24 @@
     }
   },
   "community": {
+    "eyebrow": "Die Velopass-Community",
     "headline": "Dein Fahrrad ist nie allein.",
     "subhead": "<0>{{count}}+ {{unit}}</0>, Radfahrer und Polizei sind Teil der Velopass Community. Jemand scannt deine Frame-ID? Du wirst sofort benachrichtigt.",
-    "unit": "Fahrradhändler"
+    "unit": "Fahrradhändler",
+    "stolen_link": "Fahrrad gestohlen oder verschwunden? Folge unserem Ablaufplan →",
+    "search_placeholder": "Suche nach Stadt…",
+    "geo_idle": "Meinen Standort verwenden",
+    "geo_loading": "Standort wird ermittelt…",
+    "geo_denied": "Standort nicht verfügbar",
+    "empty": "Keine Händler gefunden.",
+    "list_unit": "Fahrradhändler",
+    "outro_line": "Je größer die Community, desto sicherer dein Fahrrad.",
+    "outro_em": "Und sie wächst jeden Tag.",
+    "outro_cta": "Noch kein Velopass? Registriere dein Fahrrad →"
+  },
+  "contact_band": {
+    "title": "Noch Fragen?",
+    "subtitle": "Unser Team hilft dir gerne weiter.",
+    "cta": "Kontakt aufnehmen →"
   }
 }

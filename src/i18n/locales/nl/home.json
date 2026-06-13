@@ -86,6 +86,7 @@
       "ownership": "Zorgeloos eigenaarschap"
     }
   },
+
   "community": {
     "eyebrow": "De Velopass Community",
     "headline": "Jouw fiets is nooit alleen.",
@@ -101,5 +102,11 @@
     "outro_line": "Hoe groter de community, hoe veiliger jouw fiets.",
     "outro_em": "En hij groeit elke dag.",
     "outro_cta": "Nog geen Velopass? Registreer je fiets →"
+  },
+  "contact_band": {
+    "title": "Nog vragen?",
+    "subtitle": "Ons team helpt je graag verder.",
+    "cta": "Neem contact op →"
   }
 }
+
