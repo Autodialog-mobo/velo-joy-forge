@@ -13,7 +13,7 @@
     "register": "S'inscrire",
     "community": "Communauté",
     "forCyclists": "Pour les cyclistes",
-    "registerCta": "Inscris ton magasin de vélo",
+    "registerCta": "Inscris-toi comme vélociste",
     "menuLabel": "Menu"
   },
   "hero": {
@@ -21,9 +21,9 @@
     "title1": "Tes clients restent",
     "titleEm": "ce sont toujours tes clients.",
     "sub": "Tant que le vélo roule, ton magasin reste leur premier point de contact.",
-    "ctaPrimary": "Inscris ton magasin de vélo",
+    "ctaPrimary": "Inscris-toi comme vélociste",
     "ctaSecondary": "Comment ça marche ? →",
-    "statShopsLabel": "magasins de vélo en activité",
+    "statShopsLabel": "vélocistes en activité",
     "statBikesLabel": "vélos immatriculés",
     "statRetentionLabel": "un taux de fidélisation plus élevé",
     "dash": {
@@ -92,7 +92,7 @@
   },
   "register": {
     "eyebrow": "Commence gratuitement",
-    "title": "Inscris ton magasin de vélo",
+    "title": "Inscris-toi comme vélociste",
     "sub": "Inscris-toi gratuitement et reçois 5 autocollants de bienvenue. Pas de contrat, pas d'engagement. C'est toi qui décides du rythme.",
     "packageTitle": "Ton pack de bienvenue",
     "packageItem1": "5 Velopass Frame-ID — gratuit",
@@ -223,6 +223,6 @@
     "resultBannerPre": "Tu scannes ensuite le vélo avec l'appli Pro ou le système de caisse ? Tu vois alors tout d'un coup :",
     "resultBannerHighlight": "société, budget, numéro de contrat, date de fin, et bien plus encore...",
     "ctaNote": "Tu n'es pas encore partenaire ? Inscris-toi gratuitement et reçois 5 autocollants «Frame-ID» pour les essayer.",
-    "ctaBtn": "Inscris ton magasin de vélos →"
+    "ctaBtn": "Inscris-toi comme vélociste →"
   }
 }
