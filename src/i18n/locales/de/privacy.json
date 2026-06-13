@@ -1,20 +1,20 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Datenschutzerklärung – Velopass",
-    "description": "Lesen Sie, wie Velopass Ihre personenbezogenen Daten verarbeitet und schützt."
+    "title": "Datenschutzerklärung — Velopass",
+    "description": "Lies nach, wie Velopass deine personenbezogenen Daten verarbeitet und schützt."
   },
   "eyebrow": "Datenschutzerklärung",
-  "title": "Wie wir Ihre Daten schützen",
+  "title": "Wie wir deine Daten schützen",
   "last_updated": "Zuletzt aktualisiert: 17. Mai 2026",
   "sections": [
     {
       "title": "1. Wer sind wir?",
-      "body": "Velopass BV, mit Sitz in der Stokerijstraat 29/Bus a1, 2110 Wijnegem, Umsatzsteuer-Identifikationsnummer BE0777.359.681, ist der Verantwortliche für die Verarbeitung Ihrer personenbezogenen Daten über diese Website und die Dienste von Velopass."
+      "body": "Velopass BV, mit Sitz in der Stokerijstraat 29/Bus a1, 2110 Wijnegem, Umsatzsteuer-Identifikationsnummer BE0777.359.681, ist der Verantwortliche für die Verarbeitung deiner personenbezogenen Daten über diese Website und die Dienste von Velopass."
     },
     {
       "title": "2. Welche Daten erheben wir?",
-      "intro": "Wir erheben nur Daten, die für unseren Service erforderlich sind:",
+      "intro": "Wir erheben nur Daten, die für unseren Service notwendig sind:",
       "list": [
         "Name und Kontaktdaten (E-Mail, Telefon)",
         "Fahrraddaten (Rahmen-ID, Marke, Modell, Foto)",
@@ -23,10 +23,10 @@
       ]
     },
     {
-      "title": "3. Wofür verwenden wir Ihre Daten?",
-      "intro": "Ihre Daten werden verwendet für:",
+      "title": "3. Wofür verwenden wir deine Daten?",
+      "intro": "Deine Daten werden verwendet für:",
       "list": [
-        "Einrichten und Verwalten Ihres „Velopass“-Kontos",
+        "Einrichten und Verwalten deines „Velopass“-Kontos",
         "Fahrradregistrierung und Eigentumsnachweis",
         "Kundenservice und Kommunikation",
         "Statistische Analysen zur Verbesserung unseres Service"
@@ -41,39 +41,39 @@
           "body": "die für das ordnungsgemäße Funktionieren der Website erforderlich sind (z. B. Sitzungsverwaltung)."
         },
         {
-          "label": "Analytik-Cookies:",
-          "body": "helfen uns zu verstehen, wie Besucher unsere Website nutzen. Diese werden erst gesetzt, nachdem Sie Ihre Einwilligung erteilt haben."
+          "label": "Analytics-Cookies:",
+          "body": "helfen uns zu verstehen, wie Besucher unsere Website nutzen. Diese werden erst gesetzt, nachdem du deine Einwilligung gegeben hast."
         }
       ],
-      "outro": "Sie können Ihre Cookie-Einstellungen jederzeit über das Banner am unteren Rand der Seite ändern."
+      "outro": "Du kannst deine Cookie-Einstellungen jederzeit über das Banner am unteren Seitenrand ändern."
     },
     {
-      "title": "5. Wie lange speichern wir Ihre Daten?",
-      "body": "Wir speichern Ihre personenbezogenen Daten nicht länger, als es für den Zweck, für den sie erhoben wurden, erforderlich ist, es sei denn, eine längere Aufbewahrungsfrist ist gesetzlich vorgeschrieben. Die Daten zur Fahrradregistrierung werden so lange gespeichert, wie Ihr Konto aktiv ist."
+      "title": "5. Wie lange speichern wir deine Daten?",
+      "body": "Wir speichern deine personenbezogenen Daten nicht länger, als es für den Zweck, für den sie erhoben wurden, erforderlich ist, es sei denn, eine längere Aufbewahrungsfrist ist gesetzlich vorgeschrieben. Die Daten zur Fahrradregistrierung werden so lange gespeichert, wie dein Konto aktiv ist."
     },
     {
-      "title": "6. Ihre Rechte",
-      "intro": "Sie haben das Recht:",
+      "title": "6. Deine Rechte",
+      "intro": "Du hast das Recht:",
       "list": [
-        "Auf Ihre Daten zugreifen",
-        "Lassen Sie Ihre Daten berichtigen oder löschen",
+        "Auf deine Daten zugreifen",
+        "Lass deine Daten berichtigen oder löschen",
         "Verarbeitung einschränken",
         "Widerspruch gegen die Verarbeitung",
-        "Lassen Sie Ihre Daten übertragen"
+        "Lass deine Daten übertragen"
       ],
-      "outro_prefix": "Kontaktieren Sie uns unter",
+      "outro_prefix": "Schreib uns unter",
       "outro_email": "privacy@velopass.com",
       "outro_suffix": "um diese Rechte auszuüben."
     },
     {
       "title": "7. Sicherheit",
-      "body": "Wir ergreifen geeignete technische und organisatorische Maßnahmen, um Ihre Daten vor unbefugtem Zugriff, Verlust oder Diebstahl zu schützen, darunter Verschlüsselung, Zugriffskontrolle und regelmäßige Sicherheitsüberprüfungen."
+      "body": "Wir ergreifen geeignete technische und organisatorische Maßnahmen, um deine Daten vor unbefugtem Zugriff, Verlust oder Diebstahl zu schützen, darunter Verschlüsselung, Zugriffskontrolle und regelmäßige Sicherheitsüberprüfungen."
     },
     {
       "title": "8. Kontakt",
-      "intro_prefix": "Haben Sie Fragen zu dieser Datenschutzerklärung? E-Mail",
+      "intro_prefix": "Hast du Fragen zu dieser Datenschutzerklärung? Schick uns eine E-Mail",
       "intro_email": "privacy@velopass.com",
-      "intro_mid": "oder nutzen Sie unseren",
+      "intro_mid": "oder nutze unser",
       "intro_link": "Kontaktformular",
       "intro_suffix": "."
     }

@@ -2,12 +2,12 @@
   "_translated": false,
   "meta": {
     "title": "Kontakt — Velopass",
-    "description": "Benötigst du Hilfe bei der Aktivierung, bei „Frame-ID“ oder bei einem gefundenen Fahrrad? Dann sende dem „Velopass“-Team eine Nachricht über WhatsApp.",
+    "description": "Brauchst du Hilfe bei der Aktivierung, bei „Frame-ID“ oder bei einem gefundenen Fahrrad? Schick dem „Velopass“-Team eine Nachricht über WhatsApp.",
     "og_description": "Such dir ein Thema aus und chatte mit dem Team von „Velopass“ auf WhatsApp."
   },
   "back": "Zurück",
   "header": {
-    "title": "Wie können wir Ihnen helfen?",
+    "title": "Wie können wir dir helfen?",
     "subtitle": "Wähle unten aus, wer du bist – wir leiten deine Frage direkt an die richtige Person weiter."
   },
   "tabs": {
@@ -24,56 +24,56 @@
       },
       {
         "title": "Frage zu meinem „Frame-ID“",
-        "desc": "Frame-ID Nicht erhalten, beschädigt oder eine andere Frage zu Ihrer Bestellung?",
+        "desc": "Frame-ID Nicht erhalten, beschädigt oder hast du eine andere Frage zu deiner Bestellung?",
         "prefill": "Hallo Velopass, ich habe eine Frage zu meinem „Frame-ID“: "
       },
       {
-        "title": "Fundfahrrad melden",
-        "desc": "Hast du ein Fahrrad mit einem „Velopass“ gefunden? Frame-ID?",
+        "title": "Ein gefundenes Fahrrad melden",
+        "desc": "Hast du ein Fahrrad mit einem Velopass Frame-ID gefunden?",
         "prefill": "Hallo Velopass, ich habe ein Fahrrad mit einem Velopass Frame-ID gefunden. "
       }
     ],
     "pick_subject": "Wähle dieses Thema aus →",
-    "form_title": "Schreiben Sie uns eine Nachricht",
-    "form_subtitle": "Geben Sie Ihre Daten ein und öffnen Sie WhatsApp – wir antworten in der Regel innerhalb von 2 Stunden während der Bürozeiten.",
+    "form_title": "Schick uns eine Nachricht",
+    "form_subtitle": "Gib deine Daten ein und öffne WhatsApp – wir antworten in der Regel innerhalb von 2 Stunden während der Bürozeiten.",
     "wa_message_intro": "Hallo Velopass,",
     "wa_message_name": "Name",
     "wa_message_email": "E-Mail",
     "wa_message_phone": "Telefon",
-    "email_alt_prefix": "Möchten Sie lieber eine E-Mail senden?"
+    "email_alt_prefix": "Möchtest du lieber eine E-Mail schicken?"
   },
   "shop": {
     "shortcuts": [
       {
-        "title": "Demo anfordern",
-        "desc": "Sehen Sie sich „Velopass“ live an und stellen Sie unserem Team alle Fragen, die Sie haben.",
+        "title": "Fordere eine Demo an",
+        "desc": "Schau dir „Velopass“ live an und stell unserem Team alle möglichen Fragen.",
         "prefill": "Hallo Velopass, ich möchte eine Demo von „Velopass“ für meinen Shop anfordern."
       },
       {
         "title": "Kassensystem oder Integration",
-        "desc": "Haben Sie Fragen zur Verknüpfung Ihres Kassensystems oder der Pro-App?",
+        "desc": "Hast du Fragen zur Verknüpfung mit deinem Kassensystem oder der Pro-App?",
         "prefill": "Hallo Velopass, ich habe eine Frage zur POS-Integration oder zur Pro-App: "
       },
       {
-        "title": "Ich bin bereits Partner – technische Frage",
-        "desc": "Sind Sie bereits registriert und haben eine Frage zu Ihrem Konto oder zum Portal?",
-        "prefill": "Hallo „Velopass“, ich bin bereits Partner und habe eine technische Frage: "
+        "title": "Du bist bereits Partner – technische Frage",
+        "desc": "Bist du bereits angemeldet und hast eine Frage zu deinem Konto oder zum Portal?",
+        "prefill": "Hallo Velopass, ich bin bereits Partner und habe eine technische Frage: "
       }
     ],
     "send_email": "E-Mail senden →",
     "pick_subject": "Wähle dieses Thema aus →",
-    "form_title": "Schreiben Sie uns eine Nachricht",
-    "form_subtitle": "Füllen Sie das Formular aus – wir melden uns innerhalb eines Werktags bei Ihnen.",
-    "success": "Ihre Nachricht wurde gesendet. Wir antworten Ihnen innerhalb eines Werktags.",
+    "form_title": "Schick uns eine Nachricht",
+    "form_subtitle": "Füll das Formular aus – wir melden uns innerhalb eines Werktags bei dir.",
+    "success": "Deine Nachricht wurde gesendet. Wir melden uns innerhalb eines Werktags bei dir.",
     "subjects": [
-      "Demo anfordern",
+      "Fordere eine Demo an",
       "Kassensystem oder Integration",
       "Preise oder Starterpaket",
-      "Ich bin bereits Partner – technische Frage",
+      "Du bist bereits Partner – technische Frage",
       "Leasinggesellschaft oder Versicherer",
       "Sonstiges"
     ],
-    "subject_placeholder": "Wähle ein Thema aus…"
+    "subject_placeholder": "Such dir ein Thema aus…"
   },
   "form": {
     "name": "Name",
@@ -86,19 +86,19 @@
     "company": "Name des Fahrradgeschäfts oder der Firma",
     "company_placeholder": "Smith Bikes",
     "note": "Hinweis",
-    "note_placeholder": "Schreiben Sie uns kurz, worum es bei Ihrer Frage geht...",
+    "note_placeholder": "Schreib uns kurz, worum es bei deiner Frage geht...",
     "subject": "Betreff",
     "message": "Nachricht",
-    "send_whatsapp": "Über WhatsApp senden →"
+    "send_whatsapp": "Per WhatsApp senden →"
   },
   "errors": {
-    "name_required": "Bitte geben Sie Ihren Namen ein.",
-    "email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
-    "email_invalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-    "company_required": "Bitte geben Sie den Namen Ihres Geschäfts oder Unternehmens ein.",
-    "subject_required": "Bitte wählen Sie ein Thema aus.",
-    "message_required": "Bitte schreiben Sie eine Nachricht.",
-    "form_check": "Bitte überprüfen Sie das Formular."
+    "name_required": "Bitte gib deinen Namen ein.",
+    "email_required": "Bitte gib deine E-Mail-Adresse ein.",
+    "email_invalid": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "company_required": "Bitte gib den Namen deines Geschäfts oder Unternehmens ein.",
+    "subject_required": "Bitte wähle ein Thema aus.",
+    "message_required": "Bitte schreib eine Nachricht.",
+    "form_check": "Bitte überprüfe das Formular."
   },
   "legal": {
     "line": "Velopass BV · Stokerijstraat 29/Bus a1, 2110 Wijnegem, Belgien · USt-IdNr.: BE0777.359.681 · {{email}}"

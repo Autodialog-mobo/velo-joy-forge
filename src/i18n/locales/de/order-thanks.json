@@ -1,29 +1,29 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Vielen Dank für Ihre Bestellung – Velopass",
-    "description": "Ihre Bestellung bei „Velopass“ wurde bestätigt."
+    "title": "Vielen Dank für deine Bestellung – Velopass",
+    "description": "Deine Bestellung bei „Velopass“ ist bestätigt."
   },
   "header": {
     "back_home": "Zurück zur Startseite"
   },
   "states": {
-    "loading": "Wird geladen…",
-    "error_title": "Hmm, da ist wohl etwas schiefgelaufen",
+    "loading": "Ladefolge…",
+    "error_title": "Hmm, da ist wohl was schiefgelaufen",
     "error_unknown": "Unbekannter Fehler",
     "no_order": "Es wurden keine Bestelldaten gefunden."
   },
   "success": {
     "eyebrow": "Bestellung eingegangen",
-    "title": "Vielen Dank für Ihre Bestellung",
-    "intro": "Wir haben Ihre Bestellung erhalten:",
-    "shipping_note_one": "Ihr „Frame-ID“ wird innerhalb von 2 Werktagen versandt.",
-    "shipping_note_many": "Ihre „Frame-ID“ werden innerhalb von 2 Werktagen versandt.",
+    "title": "Vielen Dank für deine Bestellung",
+    "intro": "Wir haben deine Bestellung erhalten:",
+    "shipping_note_one": "Dein „Frame-ID“ wird innerhalb von 2 Werktagen versandt.",
+    "shipping_note_many": "Deine „Frame-ID“ werden innerhalb von 2 Werktagen versandt.",
     "card_confirmation": "Bestätigung",
     "card_shipping": "Versand",
     "shipping_value": "Kostenlos · 2 Werktage",
     "amount_paid": "{{amount}} bezahlt",
-    "status_line": "Eine Zahlungsbestätigung befindet sich in Ihrem Postfach. Status: {{status}}.",
+    "status_line": "Eine Zahlungsbestätigung liegt in deinem Postfach. Status: {{status}}.",
     "back_button": "Zurück zu „Velopass“"
   },
   "bundles": {

@@ -1,10 +1,10 @@
 {
   "_translated": false,
   "nav": {
-    "what_you_get": "Was Sie erhalten",
+    "what_you_get": "Was du bekommst",
     "already_have_one": "Hast du schon einen Aufkleber?",
     "order_sticker": "Bestelle einen Aufkleber",
-    "community": "Gemeinschaft",
+    "community": "Community",
     "bike_check": "Fahrradcheck",
     "contact": "Kontakt",
     "for_professionals": "Für Fachleute",
@@ -18,9 +18,9 @@
   "footer": {
     "tagline": "Immer auf dem Rad. Alles geregelt.",
     "tagline_pro": "Jedes Fahrrad. Ein Kunde. Ein Leben lang.",
-    "coverage": "Frame-ID in ganz Europa erhältlich · Filialen in BE, NL und FR",
+    "coverage": "Frame-ID ist in ganz Europa erhältlich · Filialen in BE, NL und FR",
     "privacy": "Datenschutz",
-    "terms": "Begriffe",
+    "terms": "Bedingungen",
     "contact": "Kontakt",
     "bike_check": "Fahrradcheck",
     "stolen": "Fahrrad gestohlen?",
@@ -30,14 +30,14 @@
     "company_line": "Velopass BV · Stokerijstraat 29/Bus a1, 2110 Wijnegem · USt-IdNr. BE0777.359.681"
   },
   "placeholders": {
-    "soon": "In Kürze",
+    "soon": "Demnächst",
     "back_to_stakeholders": "← Alle Beteiligten",
-    "talk_to_us": "Sprechen Sie uns an →"
+    "talk_to_us": "Sprich uns an →"
   },
   "cookie_consent": {
-    "message": "Velopass verwendet Cookies, um Ihr Surferlebnis zu verbessern und anonyme Statistiken zu erstellen. Lesen Sie unsere",
+    "message": "Velopass verwendet Cookies, um dein Surferlebnis zu verbessern und anonyme Statistiken zu erstellen. Lies unsere",
     "privacy_link": "Datenschutzerklärung",
-    "message_suffix": "Weitere Informationen finden Sie hier.",
+    "message_suffix": "Weitere Informationen findest du hier.",
     "decline": "Nur das Nötigste",
     "accept": "Alle Cookies zulassen"
   },
@@ -46,6 +46,6 @@
     "save": "Speichern",
     "cancel": "Abbrechen",
     "close": "Schließen",
-    "retry": "Versuche es noch einmal"
+    "retry": "Versuch es noch einmal"
   }
 }

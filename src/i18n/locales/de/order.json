@@ -1,17 +1,17 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Bestellen Sie „Velopass“ unter Frame-ID – ab 12,95 €",
-    "description": "Bestellen Sie Ihr „Velopass“ unter Frame-ID. Ein Aufkleber, ein digitales Serviceheft für Ihr Fahrrad, das ein Leben lang gültig ist. Kostenloser Versand innerhalb der EU.",
-    "ogDescription": "Schützen Sie Ihr Fahrrad. Kostenloser Versand. Sichere Zahlungen über Mollie."
+    "title": "Bestelle „Velopass“ unter Frame-ID – ab 12,95 €",
+    "description": "Bestelle dein „Velopass“ unter Frame-ID. Ein Aufkleber, ein digitales Serviceheft für dein Fahrrad, das ein Leben lang gilt. Kostenloser Versand innerhalb der EU.",
+    "ogDescription": "Schütze dein Fahrrad. Kostenloser Versand. Sichere Zahlungen über Mollie."
   },
   "header": {
     "back": "Zurück"
   },
   "hero": {
-    "eyebrow": "Bestellen Sie einen „Frame-ID“",
-    "title": "Schützen Sie Ihr Fahrrad. Ab 12,95 €.",
-    "subtitle": "Einmal „Frame-ID“ auf dein Fahrrad – und schon hast du jederzeit Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft. Kostenloser Versand innerhalb der EU.",
+    "eyebrow": "Bestelle einen „Frame-ID“",
+    "title": "Schütze dein Fahrrad. Ab 12,95 €.",
+    "subtitle": "Einmal „Frame-ID“ auf dein Fahrrad – und schon hast du jederzeit Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft. Kostenloser Versand in die gesamte EU.",
     "feature_shipping": "Kostenloser Versand innerhalb der EU",
     "feature_secure": "Sichere Zahlungen über Mollie"
   },
@@ -19,25 +19,25 @@
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID",
     "popular_badge": "AM BELIEBTESTEN",
-    "per_unit_template": "{{price}} jeweils",
+    "per_unit_template": "{{price}} jeder",
     "discount_15": "15 % Rabatt",
     "discount_23": "23 % Rabatt",
     "qty_decrease_aria": "Weniger",
     "qty_increase_aria": "Mehr",
-    "add_one_more": "Noch einen hinzufügen",
+    "add_one_more": "Noch eins dazu",
     "add": "Hinzufügen"
   },
   "info": {
-    "combine_note": "Sie können gerne mehrere Pakete in einer Bestellung kombinieren. Die Mehrwertsteuer und etwaige lokale Steuern werden an der Kasse automatisch berechnet."
+    "combine_note": "Du kannst gerne mehrere Pakete in einer Bestellung kombinieren. Die Mehrwertsteuer und etwaige lokale Steuern werden an der Kasse automatisch berechnet."
   },
   "pro_tip": {
     "label": "Profi-Tipp",
     "degrease_title": "Zuerst entfetten",
-    "degrease_body": "Reinigen Sie die Rahmenoberfläche zunächst mit einem Entfetter, um eine optimale Haftung zu gewährleisten.",
-    "visible_title": "Stellen Sie es gut sichtbar auf",
-    "visible_body": "Bringen Sie den QR-Code „Frame-ID“ gut sichtbar an – am besten direkt unterhalb der Sattelstütze. So lässt sich der QR-Code leicht scannen.",
+    "degrease_body": "Reinige die Rahmenoberfläche zunächst mit einem Entfetter, um eine optimale Haftung zu gewährleisten.",
+    "visible_title": "Stell es gut sichtbar hin",
+    "visible_body": "Bring den „Frame-ID“ gut sichtbar an – am besten direkt unterhalb der Sattelstütze. So lässt sich der QR-Code leicht scannen.",
     "deterrent_title": "Abschreckung für Diebe",
-    "deterrent_body": "Ein gut sichtbares „Frame-ID“-Etikett zeigt Dieben sofort, dass Ihr Fahrrad geschützt und registriert ist."
+    "deterrent_body": "Ein gut sichtbares „Frame-ID“-Etikett zeigt Dieben sofort, dass dein Fahrrad geschützt und registriert ist."
   },
   "cart": {
     "title": "Warenkorb",
@@ -69,16 +69,16 @@
     "secure_note": "Sichere Zahlungen über Mollie · Bancontact · iDEAL · Kreditkarte"
   },
   "tooltips": {
-    "need_bundle": "Wählen Sie mindestens ein Paket zur Bezahlung aus.",
-    "need_email": "Geben Sie eine gültige E-Mail-Adresse ein, um fortzufahren.",
-    "need_shipping": "Geben Sie Ihre Lieferadresse ein, um fortzufahren."
+    "need_bundle": "Wähle mindestens ein Paket aus, das du bezahlen möchtest.",
+    "need_email": "Gib eine gültige E-Mail-Adresse ein, um fortzufahren.",
+    "need_shipping": "Gib deine Lieferadresse ein, um fortzufahren."
   },
   "checkout_stage": {
-    "label": "Zahlung",
+    "label": "Bezahlung",
     "total_template": "Gesamt{{total}}",
     "edit_order": "Reihenfolge bearbeiten",
     "error_prefix": "Beim Starten der Zahlung ist ein Fehler aufgetreten:",
-    "redirecting": "Sie werden zur sicheren Zahlungsseite von Mollie weitergeleitet…",
+    "redirecting": "Du wirst zur sicheren Zahlungsseite von Mollie weitergeleitet…",
     "unknown_error": "Unbekannter Fehler"
   }
 }

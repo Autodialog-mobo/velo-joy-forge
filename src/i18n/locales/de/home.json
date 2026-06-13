@@ -1,38 +1,38 @@
 {
-  "_translated": true,
+  "_translated": false,
   "meta": {
-    "title": "Velopass — Immer auf dem Rad. Alles geregelt.",
-    "description": "Eine Frame-ID an deinem Rad und du hast jederzeit Zugang zu Diebstahlschutz, Pannenhilfe, Versicherung und deinem Fahrradhändler. Der digitale Fahrradpass."
+    "title": "Velopass — Every bike. A customer for life.",
+    "description": "Mit einem „Frame-ID“ an deinem Fahrrad hast du immer Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und deinen Fahrradhändler. Der digitale Fahrradpass."
   },
   "hero": {
     "eyebrow": "Diebstahlschutz + digitaler Fahrradpass",
     "title_line_1": "Immer auf dem Rad.",
     "title_line_2_em": "Alles",
-    "title_line_3_em": "geregelt.",
-    "sub": "Eine Frame-ID an deinem Rad — und du hast jederzeit Zugang zu Diebstahlschutz, Pannenhilfe, Versicherung und deinem digitalen Serviceheft. Was auch passiert.",
-    "cta_primary": "Frame-ID bestellen →",
-    "cta_sub": "Ab 12,95 € — kostenloser Versand in der gesamten EU",
-    "stolen_link": "Fahrrad gestohlen oder verschwunden? → Lies, was jetzt zu tun ist",
-    "trust_text_suffix": "Fahrradhändlern",
+    "title_line_3_em": "Erledigt.",
+    "sub": "Einmal „Frame-ID“ auf deinem Motorrad – und du hast immer Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft. Was auch immer passiert.",
+    "cta_primary": "Bestelle dein „Frame-ID“ →",
+    "cta_sub": "Ab 12,95 € – versandkostenfrei in die ganze EU",
+    "stolen_link": "Fahrrad gestohlen oder verlegt? → Hier erfährst du, was du als Nächstes tun solltest",
+    "trust_text_suffix": "Geschäfte",
     "trust_text_cyclists": "+180.000 Radfahrer"
   },
   "paths": {
     "shop": {
-      "tag": "NEUES FAHRRAD GEKAUFT?",
-      "title": "Dein Velopass steht bereit",
-      "desc": "Wahrscheinlich steht dein Velopass schon über deinen Fahrradhändler bereit. Dein Rad ist registriert — wähle nur noch ein Passwort und alles ist startklar.",
-      "cta": "Velopass öffnen →"
+      "tag": "HAST DU DIR GERADE EIN FAHRRAD GEKAUFT?",
+      "title": "Dein „Velopass“ ist fertig",
+      "desc": "Wahrscheinlich wartet dein „Velopass“ schon in deinem Fahrradgeschäft auf dich. Dein Fahrrad ist bereits registriert – du musst nur noch ein Passwort wählen, und schon ist alles bereit.",
+      "cta": "Öffne deinen „Velopass“ →"
     },
     "order": {
-      "tag": "Noch keine Frame-ID?",
-      "title": "Velopass Frame-ID bestellen",
-      "desc": "Ab 12,95 €. Kostenloser Versand. Sofort geschützt über deinen digitalen Fahrradpass.",
+      "tag": "Noch kein „Frame-ID“?",
+      "title": "Bestelle einen „Velopass“ unter Frame-ID",
+      "desc": "Ab 12,95 €. Kostenloser Versand. Sofortiger Schutz über deinen digitalen Fahrradpass.",
       "cta": "Bundles ansehen →"
     },
     "second_hand": {
-      "tag": "Gebrauchtes Rad mit Frame-ID?",
-      "title": "Der Pass kommt mit. Auf deinen Namen.",
-      "desc": "Ein gebrauchtes Rad mit bestehender Velopass Frame-ID gekauft? Registriere es auf deinen Namen — der Pass wird einfach übertragen.",
+      "tag": "Ein gebrauchtes Fahrrad bei „Frame-ID“?",
+      "title": "Der Reisepass begleitet dich überallhin. Auf deinen Namen ausgestellt.",
+      "desc": "Hast du ein gebrauchtes Fahrrad mit einem bestehenden „Velopass“ (Frame-ID) gekauft? Lass es auf deinen Namen umschreiben – der Pass wird einfach übertragen.",
       "cta": "Übertragung starten →"
     }
   }

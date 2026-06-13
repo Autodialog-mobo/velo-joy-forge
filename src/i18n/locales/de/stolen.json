@@ -1,25 +1,25 @@
 {
   "_translated": false,
   "meta": {
-    "title": "Fahrrad gestohlen? Melden Sie den Diebstahl schnell – Velopass",
-    "description": "Schritt für Schritt nach einem Fahrraddiebstahl: Melden Sie Ihr Fahrrad in Ihrem „Velopass“, erstatten Sie online Anzeige bei der Polizei und aktivieren Sie die „Velopass“-Community."
+    "title": "Fahrrad gestohlen? Melde es schnell – Velopass",
+    "description": "Schritt für Schritt nach einem Fahrraddiebstahl: Melde dein Fahrrad in deinem „Velopass“, erstatte online Anzeige bei der Polizei und aktiviere die „Velopass“-Community."
   },
   "back": "Zurück",
   "hero": {
     "eyebrow": "Fahrrad gestohlen oder verlegt?",
-    "title": "Erstellen Sie einen kurzen Bericht. Velopass hilft Ihnen dabei.",
-    "lead": "Ein Polizeibericht erfordert genaue Angaben zum Fahrrad – Angaben, die Sie nicht mehr zur Hand haben, wenn Ihr Fahrrad verschwunden ist. Es sei denn, Sie nutzen „Velopass“."
+    "title": "Erstelle schnell einen Bericht. Velopass hilft dir dabei.",
+    "lead": "Ein Polizeibericht benötigt genaue Angaben zum Fahrrad – Angaben, die du nicht mehr zur Hand hast, wenn dein Fahrrad weg ist. Es sei denn, du hast „Velopass“."
   },
   "argument": {
-    "title": "Alles, was die Polizei braucht, finden Sie unter Velopass",
+    "title": "Alles, was die Polizei braucht, findest du unter Velopass",
     "rows": [
       [
         "Marke, Modell und Farbe",
-        "In Ihrem „Velopass“-Pass"
+        "In deinem „Velopass“-Pass"
       ],
       [
-        "Rahmennummer",
-        "In Ihrem „Velopass“-Pass"
+        "Bildnummer",
+        "In deinem „Velopass“-Pass"
       ],
       [
         "Fotos vom Fahrrad",
@@ -27,57 +27,57 @@
       ],
       [
         "Einkaufsrechnung",
-        "Verlinkt zu Ihrer Website Velopass"
+        "Verlinkt zu deiner Website Velopass"
       ],
       [
         "Genauer Ort des Diebstahls",
-        "Das wurde bereits erfasst, als Sie es unter Velopass gemeldet haben"
+        "Das war bereits eingetragen, als du es unter Velopass gemeldet hast"
       ],
       [
         "Eigentumsnachweis",
         "Dein „Velopass“ IST der Beweis"
       ]
     ],
-    "cta": "Meine „Velopass“ öffnen →"
+    "cta": "Öffne meine „Velopass“ →"
   },
   "step1": {
-    "title": "Schritt 1 – Melden Sie Ihr Fahrrad als vermisst",
-    "body": "Melden Sie sich bei Ihrem „Velopass“-Konto an und gehen Sie zu **„Mein Fahrrad“**. Klicken Sie auf **„Als vermisst melden“**. Der Status Ihres Fahrrads ändert sich in „GEMELDET“ – die „Velopass“-Community wird sofort alarmiert.",
+    "title": "Schritt 1 – Melde dein Fahrrad als vermisst",
+    "body": "Melde dich bei deinem Velopass-Konto an und gehe zu **„Mein Fahrrad“**. Klicke auf **„Als vermisst melden“**. Der Status deines Fahrrads ändert sich zu „GEMELDET“ – die Velopass-Community wird sofort alarmiert.",
     "badge_note": "Jeder, der deinen QR-Code unter Frame-ID scannt, sieht, dass dein Fahrrad gesucht wird, und kann dich anonym darauf hinweisen.",
     "cta": "Mein Fahrrad melden →"
   },
   "step2": {
-    "title": "Schritt 2 – Erstatten Sie online Anzeige bei der Polizei",
-    "lead": "Wählen Sie Ihr Land für die Schritt-für-Schritt-Anleitung aus.",
+    "title": "Schritt 2 – Erstelle online eine Anzeige bei der Polizei",
+    "lead": "Wähle dein Land für die Schritt-für-Schritt-Anleitung aus.",
     "countries": {
       "BE": "🇧🇪 Belgien",
       "NL": "🇳🇱 Niederlande",
       "FR": "🇫🇷 Frankreich"
     },
-    "coming_soon": "In Kürze",
+    "coming_soon": "Demnächst",
     "checklist_title": "Was brauchst du vorher?",
-    "after_title": "Was geschieht nach dem Bericht?",
+    "after_title": "Was passiert nach dem Bericht?",
     "BE": {
-      "intro": "In Belgien erstatten Sie online Anzeige über Police-on-web. So sparen Sie sich den Weg zur Polizeiwache.",
+      "intro": "In Belgien erstattest du Anzeige online über Police-on-web. So sparst du dir den Weg zur Polizeiwache.",
       "checklist": [
         {
-          "text": "Ihr Personalausweis (eID) oder die App „itsme“"
+          "text": "Dein Personalausweis (eID) oder die App „itsme“"
         },
         {
           "text": "Marke, Modell, Farbe und Typ des Fahrrads",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
           "text": "Die Rahmennummer",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
           "text": "Gravurnummer oder Fahrradpass",
-          "velopass": "Dein Code „Velopass“ reicht aus"
+          "velopass": "Dein „Velopass“-Code reicht aus"
         },
         {
           "text": "Genaue Ort, Datum und Uhrzeit des Diebstahls",
-          "velopass": "Das wurde bereits erfasst, als Sie es unter Velopass gemeldet haben"
+          "velopass": "Das war bereits eingetragen, als du es unter Velopass gemeldet hast"
         },
         {
           "text": "Fotos vom Fahrrad",
@@ -85,55 +85,55 @@
         },
         {
           "text": "Kaufrechnung (falls vorhanden)",
-          "velopass": "Verlinkt zu Ihrer Website Velopass"
+          "velopass": "Verlinkt zu deinem Velopass"
         }
       ],
       "steps": [
         {
-          "title": "Zur Website police-on-web.be",
+          "title": "Geh auf police-on-web.be",
           "body": "[www.police-on-web.be](https://www.police-on-web.be)"
         },
         {
           "title": "Neuen Bericht erstellen",
-          "body": "Klicken Sie auf **„Neuen Bericht erstellen“** und wählen Sie **„Fahrraddiebstahl“** aus."
+          "body": "Klicke auf **„Neuen Bericht erstellen“** und wähle **„Fahrraddiebstahl“** aus."
         },
         {
           "title": "Über CSAM anmelden",
-          "body": "Identifizieren Sie sich mit Ihrem eID-Kartenlesegerät oder der App „itsme“."
+          "body": "Identifiziere dich mit deinem eID-Kartenlesegerät oder der „itsme“-App."
         },
         {
-          "title": "Füllen Sie das Formular aus",
-          "body": "• Persönliche Angaben als Eigentümer/Anzeigender\n• Sachverhalt: Wo und wann wurde das Fahrrad gestohlen?\n• Gegenstand: Alle Einzelheiten zum Fahrrad (je detaillierter, desto größer die Chance auf Wiederauffindung)",
-          "tip": "Öffnen Sie Ihr „Velopass“, um alle Details zu Ihrem Fahrrad auf einen Blick zur Hand zu haben."
+          "title": "Fülle das Formular aus",
+          "body": "• Persönliche Angaben als Besitzer/Anzeigender\n• Sachverhalt: Wo und wann wurde es gestohlen?\n• Gegenstand: Alle Details zum Fahrrad (je detaillierter, desto größer die Chance auf Wiederauffindung)",
+          "tip": "Öffne dein „Velopass“, um alle Details zu deinem Fahrrad auf einen Blick zur Hand zu haben."
         },
         {
-          "title": "Überprüfen und absenden",
-          "body": "Überprüfen Sie die Angaben und klicken Sie auf **Absenden**."
+          "title": "Überprüfen und abschicken",
+          "body": "Überprüfe die Angaben und klicke auf **Absenden**."
         }
       ],
-      "after_body": "Sie erhalten eine Fallnummer und eine Bestätigung. Das amtliche Protokoll (PV) wird von der örtlichen Polizeidienststelle erstellt. Haben Sie eine Fahrradversicherung? Leiten Sie die PV-Nummer an Ihren Versicherer weiter, um Ihren Schadenfall zu melden.",
-      "found_title": "Schau auch mal auf gevondenfietsen.be vorbei",
-      "found_body": "Gestohlene Fahrräder werden oft irgendwo zurückgelassen. Schau regelmäßig auf [www.gevondenfietsen.be](https://www.gevondenfietsen.be) vorbei – vielleicht taucht dein Fahrrad dort auf."
+      "after_body": "Du erhältst eine Fallnummer und eine Bestätigung. Das amtliche Protokoll (PV) wird von der örtlichen Polizeidienststelle erstellt. Hast du eine Fahrradversicherung? Leite die PV-Nummer an deinen Versicherer weiter, um deinen Schadenfall zu melden.",
+      "found_title": "Schau auch mal bei gevondenfietsen.be vorbei",
+      "found_body": "Gestohlene Fahrräder werden oft irgendwo zurückgelassen. Schau regelmäßig bei [www.gevondenfietsen.be](https://www.gevondenfietsen.be) vorbei – vielleicht taucht dein Fahrrad dort auf."
     },
     "NL": {
-      "intro": "In den Niederlanden erstatten Sie online über politie.nl Anzeige. Dazu benötigen Sie ein „DigiD“.",
+      "intro": "In den Niederlanden erstattest du online Anzeige über politie.nl. Dazu benötigst du eine „DigiD“.",
       "check_first_title": "Schau dir das zuerst an",
-      "check_first_body": "Wurde Ihr Fahrrad vielleicht von der Stadt abgeschleppt? Falsch geparkte Fahrräder werden manchmal in ein Depot gebracht. Überprüfen Sie dies, bevor Sie eine Anzeige erstatten.",
+      "check_first_body": "Wurde dein Fahrrad vielleicht von der Stadt abgeschleppt? Falsch geparkte Fahrräder werden manchmal in ein Depot gebracht. Überprüfe das, bevor du eine Anzeige erstattest.",
       "checklist": [
         {
-          "text": "Ihr „DigiD“ (Anmeldung über digid.nl)"
+          "text": "Dein „DigiD“ (Anmeldung über digid.nl)"
         },
         {
           "text": "Marke, Modell, Farbe und Typ des Fahrrads",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
-          "text": "Die Rahmennummer (in der Regel unter dem Tretlager oder an der Vorderseite des Rahmens)",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "text": "Die Rahmennummer (normalerweise unter dem Tretlager oder an der Vorderseite des Rahmens)",
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
           "text": "Genaue Ort, Datum und Uhrzeit des Diebstahls",
-          "velopass": "Das wurde bereits erfasst, als Sie es unter Velopass gemeldet haben"
+          "velopass": "Das war bereits eingetragen, als du es unter Velopass gemeldet hast"
         },
         {
           "text": "Fotos vom Fahrrad",
@@ -141,92 +141,92 @@
         },
         {
           "text": "Kaufrechnung (falls vorhanden)",
-          "velopass": "Verlinkt zu Ihrer Website Velopass"
+          "velopass": "Verlinkt zu deiner Seite „Velopass“"
         }
       ],
       "conditions_title": "Voraussetzungen für die Online-Einreichung",
       "conditions_intro": "Eine Online-Anzeige über politie.nl ist möglich, wenn:",
       "conditions": [
         "Das Fahrrad wurde nicht aus einem Haus, einem Schuppen oder einer Garage gestohlen",
-        "Der Diebstahl liegt weniger als ein Jahr zurück"
+        "Der Diebstahl liegt noch nicht einmal ein Jahr zurück"
       ],
-      "conditions_note": "Trifft das nicht zu? Rufen Sie die Nummer 0900-8844 an oder reichen Sie den Antrag persönlich bei einer Polizeidienststelle ein.",
+      "conditions_note": "Trifft das nicht zu? Ruf unter 0900-8844 an oder reiche die Anzeige persönlich bei einer Polizeidienststelle ein.",
       "steps": [
         {
-          "title": "Zur Website politie.nl",
+          "title": "Geh auf politie.nl",
           "body": "[www.politie.nl/aangifte](https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html)"
         },
         {
           "title": "Fahrraddiebstahl",
-          "body": "Wählen Sie **„Fahrraddiebstahl melden“**."
+          "body": "Wähle **„Fahrraddiebstahl melden“**."
         },
         {
           "title": "Mit DigiD anmelden",
-          "body": "Melden Sie sich über das CSAM-Portal mit Ihrem „DigiD“ an."
+          "body": "Melde dich über das CSAM-Portal mit deinem DigiD an."
         },
         {
-          "title": "Füllen Sie das Formular aus",
-          "body": "• Persönliche Angaben als Eigentümer/Anzeigender\n• Sachverhalt: Wo und wann wurde das Fahrrad gestohlen? War das Fahrrad angeschlossen?\n• Gegenstand: Alle Details zum Fahrrad – je detaillierter die Angaben, desto größer die Chance auf Wiederauffindung",
-          "tip": "Öffnen Sie Ihre „Velopass“, um alle Details zum Fahrrad griffbereit zu haben – einschließlich des Standorts, den Sie bei der Meldung angegeben haben. Übertragen Sie diese Angaben direkt in das Formular."
+          "title": "Fülle das Formular aus",
+          "body": "• Persönliche Angaben als Besitzer/Anzeigender\n• Sachverhalt: Wo und wann wurde es gestohlen? War das Fahrrad angeschlossen?\n• Gegenstand: Alle Details zum Fahrrad – je mehr Details, desto größer die Chance auf Wiederauffindung",
+          "tip": "Öffne deine „Velopass“, um alle Details zum Fahrrad griffbereit zu haben – einschließlich des Standorts, den du bei der Meldung angegeben hast. Kopiere diese Angaben direkt in das Formular."
         },
         {
-          "title": "Überprüfen und absenden",
-          "body": "Überprüfen Sie die Angaben und senden Sie den Bericht ab."
+          "title": "Überprüfen und abschicken",
+          "body": "Überprüfe die Angaben und sende den Bericht ab."
         }
       ],
-      "after_body": "Sie erhalten eine Bestätigung mit einer Fallnummer. Bewahren Sie diese gut auf – Sie benötigen sie für Ihre Versicherung. Ihr Fahrrad wird automatisch in das RDW-Diebstahlregister und bei StopHeling erfasst, damit Händler überprüfen können, ob ein Fahrrad gestohlen wurde. Haben Sie eine Fahrradversicherung? Melden Sie den Diebstahl direkt bei Ihrem Versicherer und geben Sie dabei die Fallnummer an.",
-      "tip1_title": "Schau mal auf gevondenfietsen.be nach",
+      "after_body": "Du erhältst eine Bestätigung mit einer Fallnummer. Bewahre sie gut auf – du brauchst sie für deine Versicherung. Dein Fahrrad wird automatisch in das RDW-Diebstahlregister und bei StopHeling erfasst, damit Händler überprüfen können, ob ein Fahrrad gestohlen ist. Hast du eine Fahrradversicherung? Melde den Diebstahl direkt bei deinem Versicherer und gib die Fallnummer an.",
+      "tip1_title": "Schau mal auf gevondenfietsen.be",
       "tip1_body": "Gestohlene Fahrräder werden oft irgendwo zurückgelassen. Schau regelmäßig unter [www.gevondenfietsen.be](https://www.gevondenfietsen.be) nach.",
       "tip2_title": "Behalte Marktplaats im Auge",
-      "tip2_body": "Gestohlene Fahrräder tauchen manchmal schon innerhalb weniger Tage auf Second-Hand-Plattformen auf. Erkennen Sie Ihr Fahrrad wieder? Sprechen Sie den Verkäufer niemals selbst an – rufen Sie die Polizei unter 0900-8844 an."
+      "tip2_body": "Gestohlene Fahrräder tauchen manchmal schon innerhalb weniger Tage auf Second-Hand-Plattformen auf. Erkennst du dein Fahrrad wieder? Sprich den Verkäufer niemals selbst darauf an – ruf die Polizei unter 0900-8844 an."
     },
     "FR": {
       "fnuci_badge": "FNUCI · Französische Republik",
       "fnuci_title": "Velopass ist ein anerkannter Betreiber des französischen nationalen Fahrradregisters",
-      "fnuci_body_1": "Als Einwohner Frankreichs wird Ihre Registrierung bei „Velopass“ automatisch mit dem **FNUCI** – dem *Fichier National Unique des Cycles Identifiés* – verknüpft. Dabei handelt es sich um das offizielle staatliche Register, auf das Polizei und Gendarmerie bei der Suche nach gestohlenen Fahrrädern zurückgreifen.",
-      "fnuci_body_2": "Konkret bedeutet das: Sobald Sie Ihr Fahrrad unter Velopass als gestohlen melden, wird der Status im „FNUCI“ automatisch aktualisiert. Die Polizei sieht dies sofort.",
+      "fnuci_body_1": "Als Einwohner Frankreichs wird deine Registrierung bei „Velopass“ automatisch mit dem **FNUCI** – dem *Fichier National Unique des Cycles Identifiés* – verknüpft. Dabei handelt es sich um das offizielle staatliche Register, auf das Polizei und Gendarmerie bei der Suche nach gestohlenen Fahrrädern zurückgreifen.",
+      "fnuci_body_2": "Konkret: Sobald du dein Fahrrad unter Velopass als gestohlen meldest, wird der Status im „FNUCI“ automatisch aktualisiert. Die Polizei sieht das sofort.",
       "flow_step_label": "Schritt {{n}}",
       "flow_steps": [
         {
-          "title": "Sie melden sich unter Velopass an",
+          "title": "Du meldest dich unter Velopass",
           "body": "Du änderst den Status deines Fahrrads in deinem „Velopass“-Konto auf „MELDET“."
         },
         {
           "title": "FNUCI wird aktualisiert",
-          "body": "Velopass leitet die Statusänderung an das Register für Personen mit Aufenthaltsgenehmigung (FNUCI) weiter. Polizei und Gendarmerie haben Zugriff auf dieses Register."
+          "body": "Velopass leitet die Statusänderung an das Register für Personen mit Sicherheitsüberprüfung (FNUCI) weiter. Polizei und Gendarmerie haben Zugriff auf dieses Register."
         },
         {
           "title": "Die Polizei identifiziert dein Fahrrad",
-          "body": "Wurde Ihr Fahrrad gefunden? Der Beamte scannt den „Velopass“-Code und sieht sofort, dass es gestohlen ist – und wer der Besitzer ist."
+          "body": "Wurde dein Fahrrad gefunden? Der Beamte scannt den „Velopass“-Code und sieht sofort, dass es gestohlen ist – und wer der Besitzer ist."
         }
       ],
-      "code_note": "**Dein „Velopass“-Code IST deine „FNUCI“-Identifikationsnummer.** Dies ist die 10-stellige Nummer, die die Polizei für die offizielle *Anzeige* benötigt. Du findest sie in deinem „Velopass“-Konto.",
-      "ma_intro": "Reichen Sie Ihren Bericht online über „Ma Sécurité“ ein. Ihr „Velopass“-Code ist die „*identifiant unique*“, nach der im Formular gefragt wird – diese finden Sie bereits in Ihrem „Velopass“.",
+      "code_note": "**Dein „Velopass“-Code IST deine „FNUCI“-Identifikationsnummer.** Das ist die 10-stellige Nummer, die die Polizei für die offizielle *Anzeige* benötigt. Du findest sie in deinem „Velopass“-Konto.",
+      "ma_intro": "Reiche deinen Bericht online über „Ma Sécurité“ ein. Dein „Velopass“-Code ist die „*identifiant unique*“, nach der im Formular gefragt wird – du findest ihn bereits in deinem „Velopass“.",
       "home_already_title": "Schon wieder zu Hause?",
-      "home_already_body": "Belgische und niederländische Versicherer verlangen fast immer einen französischen Polizeibericht. Erstellen Sie den Bericht so schnell wie möglich über „Ma Sécurité“, auch wenn Sie bereits wieder zu Hause sind.",
+      "home_already_body": "Belgische und niederländische Versicherer verlangen fast immer einen französischen Polizeibericht. Erstelle den Bericht so schnell wie möglich über Ma Sécurité, auch wenn du bereits wieder zu Hause bist.",
       "checklist": [
         {
-          "text": "Ihr Reisepass oder Personalausweis"
+          "text": "Dein Reisepass oder Personalausweis"
         },
         {
-          "text": "FranceConnect-Konto (optional, wird jedoch empfohlen)",
+          "text": "FranceConnect-Konto (optional, wird aber empfohlen)",
           "note": "Ohne FranceConnect: Persönlicher Termin bei einer französischen Polizeidienststelle oder Gendarmerie erforderlich"
         },
         {
           "text": "Deine „Velopass“-Nummer (= FNUCI-Kennung)",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
           "text": "Marke, Modell, Farbe und Typ des Fahrrads",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
           "text": "Die Rahmennummer",
-          "velopass": "Bereits in Ihrem „Velopass“"
+          "velopass": "Schon in deinem „Velopass“"
         },
         {
-          "text": "Genaue Angabe von Ort, Datum und Uhrzeit in Frankreich",
-          "velopass": "Das war bereits eingetragen, als Sie es unter Velopass gemeldet haben – als Tourist kann man sich später oft nicht mehr an die genaue Adresse erinnern"
+          "text": "Genaue Angaben zu Ort, Datum und Uhrzeit in Frankreich",
+          "velopass": "Das hast du bereits bei deiner Meldung auf Velopass angegeben – als Tourist fällt einem die genaue Adresse später oft nicht mehr ein"
         },
         {
           "text": "Fotos vom Fahrrad",
@@ -235,46 +235,46 @@
       ],
       "method1_badge": "Vollständig digital",
       "method1_title": "Mit FranceConnect (empfohlen)",
-      "method1_body": "Wohnen Sie in Frankreich oder verfügen Sie über ein Konto bei einer französischen Behörde? Dann reichen Sie den vollständigen Bericht online ein und erhalten das offizielle *Protokoll* per E-Mail.",
+      "method1_body": "Wohnst du in Frankreich oder hast du ein Konto bei einer französischen Behörde? Dann reichst du den vollständigen Bericht online ein und erhältst das offizielle *Protokoll* per E-Mail.",
       "method2_badge": "Persönlicher Termin erforderlich",
       "method2_title": "Ohne FranceConnect (Touristen)",
-      "method2_body": "Füllen Sie das Formular online aus und vereinbaren Sie anschließend einen Termin bei einer französischen Polizeidienststelle (*commissariat de police*) oder Gendarmerie. Sind Sie bereits wieder zu Hause? Nutzen Sie den rund um die Uhr verfügbaren Chat auf Ma Sécurité, um sich nach Alternativen zu erkundigen.",
+      "method2_body": "Füll das Formular online aus und vereinbare dann einen Termin bei einer französischen Polizeiwache (*commissariat de police*) oder Gendarmerie. Bist du schon wieder zu Hause? Nutze den rund um die Uhr verfügbaren Chat auf Ma Sécurité, um dich nach Alternativen zu erkundigen.",
       "steps": [
         {
-          "title": "Zu „Ma Sécurité“",
-          "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nWechseln Sie oben rechts zur englischen Version."
+          "title": "Zu „Ma Sécurité“ gehen",
+          "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nWechsle oben rechts zur englischen Version."
         },
         {
           "title": "Wähle „Vol“ (Diebstahl)",
-          "body": "Wählen Sie **„Vol“** als Art des Vergehens aus."
+          "body": "Wähle **„Vol“** als Art des Verstoßes aus."
         },
         {
-          "title": "Melden Sie sich über FranceConnect oder als Gast an",
-          "body": "Mit FranceConnect läuft alles komplett online. Ohne FranceConnect können Sie als Gast fortfahren."
+          "title": "Melde dich über FranceConnect oder als Gast an",
+          "body": "Mit FranceConnect läuft alles komplett online. Ohne FranceConnect kannst du als Gast weitermachen."
         },
         {
-          "title": "Füllen Sie das Formular aus",
-          "body": "• Eindeutige Kennung: Ihr „Velopass“-Code\n• Genaue Angaben zu Ort, Datum und Uhrzeit in Frankreich\n• Alle Merkmale des Fahrrads",
-          "tip": "Öffne deine „Velopass“ – deine „Velopass“-Nummer ist die eindeutige Kennung, nach der im Formular gefragt wird. Alle weiteren Angaben zum Fahrrad sowie der Standort sind dort bereits eingetragen."
+          "title": "Fülle das Formular aus",
+          "body": "• Eindeutige Kennung: dein „Velopass“-Code\n• Genaue Angaben zu Ort, Datum und Uhrzeit in Frankreich\n• Alle Merkmale des Fahrrads",
+          "tip": "Öffne deine „Velopass“ – dein „Velopass“-Code ist die eindeutige Kennung, nach der im Formular gefragt wird. Alle anderen Angaben zum Fahrrad und der Standort sind bereits darin enthalten."
         },
         {
-          "title": "Holen Sie Ihren Strafbescheid ab oder vereinbaren Sie einen Termin",
-          "body": "**Mit FranceConnect:** Sie erhalten das offizielle Protokoll per E-Mail. Leiten Sie es an Ihren Versicherer weiter.\n\n**Ohne FranceConnect:** Suchen Sie sich eine Polizeidienststelle oder Gendarmerie in der Nähe des Diebstahlortes aus und vereinbaren Sie einen Termin."
+          "title": "Hol dir dein Protokoll ab oder vereinbare einen Termin",
+          "body": "**Mit FranceConnect:** Du erhältst das offizielle Protokoll per E-Mail. Leite es an deinen Versicherer weiter.\n\n**Ohne FranceConnect:** Such dir eine Polizeidienststelle oder Gendarmerie in der Nähe des Diebstahlortes aus und vereinbare einen Termin."
         }
       ],
-      "chat_title": "Ma Sécurité bietet einen rund um die Uhr verfügbaren Chat",
-      "chat_body": "Sie sind bereits zu Hause und können den Bericht nicht vollständig online fertigstellen? Nutzen Sie den Chat auf [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
+      "chat_title": "Ma Sécurité bietet einen 24/7-Chat",
+      "chat_body": "Du bist schon zu Hause und kannst den Bericht nicht vollständig online fertigstellen? Nutze den Chat auf [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
     }
   },
   "step3": {
-    "title": "Schritt 3 – Fahrrad wiedergefunden? Melde es!",
-    "badge_note": "Status nach der Wiederherstellung",
+    "title": "Schritt 3 – Hast du dein Fahrrad wiedergefunden? Melde es!",
+    "badge_note": "Zustand nach der Genesung",
     "body": "Herzlichen Glückwunsch! Melde dich bei deinem Velopass an und markiere dein Fahrrad als **„Wiedergefunden“**. Der Status ändert sich automatisch wieder auf „ALL CLEAR“. Überprüfe anschließend, ob dein Frame-ID noch intakt ist – falls nicht, bestelle ein neues über unseren Webshop oder in einem Velopass-Fahrradgeschäft.",
     "cta": "Mein Fahrrad ist wieder da →"
   },
   "cta": {
     "title": "Noch kein „Velopass“?",
-    "body": "Registrieren Sie Ihr Fahrrad jetzt, damit Ihnen alle Details jederzeit zur Verfügung stehen – auch wenn Sie Ihr Fahrrad gerade nicht zur Hand haben.",
-    "button": "Registrieren Sie Ihr Fahrrad →"
+    "body": "Registriere dein Fahrrad jetzt, damit dir alle Details jederzeit zur Verfügung stehen – auch wenn du dein Fahrrad gerade nicht zur Hand hast.",
+    "button": "Registriere dein Fahrrad →"
   }
 }

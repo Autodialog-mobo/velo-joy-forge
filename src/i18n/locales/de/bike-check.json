@@ -2,14 +2,14 @@
   "_translated": false,
   "meta": {
     "title": "Den Status eines Fahrrads prüfen — Velopass",
-    "description": "Prüfen Sie, ob ein Fahrrad in der „Velopass“-Community registriert ist – ganz ohne Konto und in wenigen Sekunden.",
-    "ogDescription": "Ein Fahrrad anhand seiner „Velopass“-Nummer oder der Marke und der Rahmennummer überprüfen."
+    "description": "Prüfe, ob ein Fahrrad in der „Velopass“-Community registriert ist – ganz ohne Konto und in wenigen Sekunden.",
+    "ogDescription": "Überprüfe ein Fahrrad anhand seiner VIN-Nummer (Velopass) oder anhand der Marke und der Rahmennummer."
   },
   "nav": {
-    "what_you_get": "Was Sie erhalten",
+    "what_you_get": "Was du bekommst",
     "already_have_one": "Hast du schon einen Aufkleber?",
     "order_sticker": "Bestelle einen Aufkleber",
-    "community": "Gemeinschaft",
+    "community": "Community",
     "bike_check": "Fahrradcheck",
     "for_professionals": "Für Fachleute",
     "login": "Anmelden",
@@ -19,21 +19,21 @@
     "back": "← Zurück",
     "eyebrow": "FAHRRADCHECK",
     "title": "Den Status eines Fahrrads prüfen",
-    "subtitle": "Prüfen Sie, ob ein Fahrrad in der „Velopass“-Community registriert ist – ganz ohne Konto und in wenigen Sekunden."
+    "subtitle": "Prüfe, ob ein Fahrrad in der „Velopass“-Community registriert ist – ganz ohne Konto und in wenigen Sekunden."
   },
   "method_a": {
     "title": "Über den Code „Velopass“",
-    "desc": "Scannen Sie den QR-Code auf der Seite Frame-ID oder geben Sie den Code Velopass manuell ein.",
+    "desc": "Scanne den QR-Code auf der Seite Frame-ID oder gib die Adresse Velopass manuell ein.",
     "code_label": "Velopass Code",
-    "scan_cta": "Scannen Sie den QR-Code",
-    "manual_cta": "Geben Sie den Code manuell ein"
+    "scan_cta": "Scanne den QR-Code",
+    "manual_cta": "Gib den Code manuell ein"
   },
   "method_b": {
     "title": "Über Marke und Rahmennummer",
     "desc": "Suche anhand der Marke und der Rahmennummer des Fahrrads.",
     "brand": "Marke",
-    "brand_placeholder": "Wählen Sie eine Marke",
-    "frame_number": "Rahmennummer",
+    "brand_placeholder": "Wähle eine Marke",
+    "frame_number": "Bildnummer",
     "check": "Überprüfen",
     "loading": "Wird geprüft...",
     "captcha": "Ich bin kein Roboter",
@@ -43,21 +43,21 @@
     "generic": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut."
   },
   "status_overview": {
-    "eyebrow": "WAS BEDEUTET DIESER STATUS?",
+    "eyebrow": "WAS BEDEUTET DER STATUS?",
     "title": "Drei mögliche Ergebnisse",
-    "subtitle": "Nach der Suche wird immer einer dieser drei Status angezeigt.",
+    "subtitle": "Nach der Suche wird dir immer einer dieser drei Status angezeigt.",
     "secured_group_label": "SICHER — Registriert in der „Velopass“-Community",
     "not_secured_group_label": "NICHT GESICHERT — Nicht unter Velopass registriert",
     "divider_or": "oder",
     "is_this_your_bike": "Ist das dein Fahrrad?",
-    "order_frameid_cta": "Bestellen Sie einen „Frame-ID“ →",
-    "order_frameid_hint": "Schützen Sie Ihr Fahrrad mit einem „Velopass“ Frame-ID – erhältlich im Fahrradfachgeschäft oder in unserem Webshop.",
-    "register_bike_cta": "Registrieren Sie Ihr Fahrrad →",
-    "register_bike_hint": "Sie haben bereits ein „Frame-ID“ an Ihrem Fahrrad. Registrieren Sie es in wenigen Schritten."
+    "order_frameid_cta": "Bestelle einen „Frame-ID“ →",
+    "order_frameid_hint": "Schütze dein Fahrrad mit einem „Velopass“ Frame-ID – erhältlich im Fahrradfachgeschäft oder in unserem Webshop.",
+    "register_bike_cta": "Registriere dein Fahrrad →",
+    "register_bike_hint": "Du hast bereits ein „Frame-ID“ an deinem Fahrrad. Registriere es in wenigen Schritten."
   },
   "status_cards": {
     "all_clear": {
-      "badge": "ENTWARNUNG",
+      "badge": "ALLES IN ORDNUNG",
       "title": "Kostenlos und sicher",
       "body": "In der „Velopass“-Community registriert und nicht als vermisst gemeldet."
     },
@@ -69,19 +69,19 @@
     "not_registered": {
       "badge": "NICHT REGISTRIERT",
       "title": "Nicht registriert",
-      "body": "Dieses Fahrrad ist nicht in der Datenbank „Velopass“ verzeichnet. Es ist noch nicht geschützt."
+      "body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Es ist noch nicht geschützt."
     }
   },
   "result": {
     "secured_title": "Dieses Fahrrad ist angeschlossen",
     "secured_body": "Dieses Fahrrad ist in der „Velopass“-Community registriert und wurde nicht als vermisst gemeldet.",
-    "secured_cta": "Gehört dieses Fahrrad dir? Öffne deinen Velopass →",
-    "reported_title": "Dieses Fahrrad wurde als gestohlen gemeldet",
+    "secured_cta": "Gehört das Fahrrad dir? Öffne deinen Velopass →",
+    "reported_title": "Dieses Fahrrad wurde gemeldet",
     "reported_body": "Dieses Fahrrad ist registriert und wird von seinem Besitzer aktiv gemeldet. Die „Velopass“-Community sucht aktiv danach.",
-    "reported_cta_primary": "Fundfahrrad melden →",
-    "reported_cta_secondary": "Rufen Sie die Polizei an: 101",
+    "reported_cta_primary": "Ein gefundenes Fahrrad melden →",
+    "reported_cta_secondary": "Ruf die Polizei an: 101",
     "not_registered_title": "Nicht registriert",
-    "not_registered_body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Registrieren Sie es, um es zu schützen.",
-    "not_registered_cta": "Registrieren Sie Ihr Fahrrad →"
+    "not_registered_body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Registriere es, um es zu schützen.",
+    "not_registered_cta": "Registriere dein Fahrrad →"
   }
 }
