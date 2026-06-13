@@ -37,9 +37,10 @@
       "stat4Label": "Taux d'inscription",
       "stat4Delta": "↑ +3 % par rapport au mois dernier",
       "recentScans": "Scans récents",
-      "bike1Sub": "L. Vermeersch · vient d'être numérisé",
-      "bike2Sub": "M. Peeters · en attente d'inscription",
-      "bike3Sub": "K. De Smedt · maintenance programmée",
+      "shopName": "Cycles Dubois",
+      "bike1Sub": "L. Lefèvre · vient d'être scanné",
+      "bike2Sub": "M. Martin · en attente d'inscription",
+      "bike3Sub": "K. Bernard · entretien programmé",
       "badgeActive": "Actif",
       "badgePending": "En attente",
       "scanBtn": "Scanner un nouveau vélo"
