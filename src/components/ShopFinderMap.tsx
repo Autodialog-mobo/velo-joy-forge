@@ -249,7 +249,7 @@ export default function ShopFinderMap() {
     <section className="shop-finder" id="community" ref={sectionRef}>
       <div className="sf-hero">
         <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
-        <h2 className="sf-headline">Jouw fiets is nooit alleen.</h2>
+        <h2 className="sf-headline">{t("community.headline")}</h2>
         <p className="sf-subhead">
           <strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{animatedCount}+ winkels</strong>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.
         </p>
