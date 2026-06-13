@@ -174,7 +174,7 @@ function BestellenPage() {
           <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-          <LangSwitcher currentLang={lang} />
+          <LangSwitcher currentLang={lang} tone="light" />
           <button
             type="button"
             className="nav-toggle"
