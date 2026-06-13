@@ -244,24 +244,24 @@ function VelopassHome() {
             )}
           </div>
           <div className="sticker-content">
-            <p className="eyebrow">De Velopass Frame-ID</p>
+            <p className="eyebrow">{t("home:sticker.eyebrow")}</p>
             <h2 className="sticker-title">
               <span className="st-line-1">{t("home:sticker.title_line_1")}</span>
               <span className="st-line-2">{t("home:sticker.title_line_2")}</span>
             </h2>
-            <p className="sec-sub">Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.</p>
+            <p className="sec-sub">{t("home:sticker.intro")}</p>
             <div className="sticker-feats">
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Altijd op de juiste plek.</strong><span>Of je dealer de Frame-ID nu plaatst bij aankoop, of je plakt hem zelf na een online bestelling: hij is ontworpen om een fietsleven lang onverwoestbaar op je frame te blijven zitten.</span></div>
+                <div><strong>{t("home:sticker.feats.location.title")}</strong><span>{t("home:sticker.feats.location.body")}</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Directe toegang tot alles.</strong><span>Scan de QR-code voor directe toegang tot je digitale paspoort. Je verzekering en pechhulp heb je altijd bij de hand, en een onderhoudsbeurt bij je fietswinkel plan je voortaan in een paar klikken.</span></div>
+                <div><strong>{t("home:sticker.feats.access.title")}</strong><span>{t("home:sticker.feats.access.body")}</span></div>
               </div>
               <div className="sticker-feat">
                 <div className="sfeat-bar" />
-                <div><strong>Verbonden met het frame.</strong><span>De Frame-ID hoort bij de fiets, niet bij de persoon. Bij verkoop draag je de historie en beveiliging eenvoudig over. De Frame-ID blijft op het frame, de data verhuist mee.</span></div>
+                <div><strong>{t("home:sticker.feats.frame.title")}</strong><span>{t("home:sticker.feats.frame.body")}</span></div>
               </div>
             </div>
           </div>
