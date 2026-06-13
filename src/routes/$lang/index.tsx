@@ -448,6 +448,7 @@ function VelopassHome() {
           <Link
             to="/$lang/contact"
             params={{ lang: currentLang }}
+            search={{ type: "rider" }}
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
