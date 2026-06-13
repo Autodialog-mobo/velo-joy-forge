@@ -162,6 +162,7 @@ function distKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }
 
 export default function ShopFinderMap() {
   const lang = useCurrentLang();
+  const { t } = useTranslation("home");
   const [query, setQuery] = useState("");
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [flyTarget, setFlyTarget] = useState<{ lat: number; lng: number; zoom?: number; key: number } | null>(null);
