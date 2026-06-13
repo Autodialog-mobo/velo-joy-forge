@@ -35,5 +35,22 @@
       "desc": "Tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Registreer hem op jouw naam — het paspoort gaat gewoon mee.",
       "cta": "Zet 'm op jouw naam →"
     }
+  },
+  "sticker": {
+    "title_line_1": "De digitale sleutel van je fiets.",
+    "title_line_2": "Eén scan. Alles geregeld."
+  },
+  "benefits": {
+    "title": "Eén Frame-ID. Een heel fietsleven geregeld.",
+    "cards": {
+      "theft": "Diefstalprotectie",
+      "service_book": "Jouw digitale serviceboekje",
+      "roadside": "Pechhulp",
+      "insurance": "Verzekering",
+      "ownership": "Zorgeloos eigenaarschap"
+    }
+  },
+  "community": {
+    "headline": "Jouw fiets is nooit alleen."
   }
 }
