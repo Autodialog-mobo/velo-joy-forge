@@ -19,26 +19,57 @@
   "paths": {
     "shop": {
       "tag": "NET EEN FIETS GEKOCHT",
+      "eyebrow": "Uitnodiging ontvangen?",
       "title": "Jouw Velopass staat klaar",
       "desc": "Grote kans dat je Velopass al klaarstaat via je fietswinkel. Je fiets is geregistreerd — kies een wachtwoord en je bent vertrokken.",
       "body": "Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.",
-      "cta": "Open je Velopass →"
+      "cta": "Open je Velopass →",
+      "steps": {
+        "s1": { "title": "Controleer je e-mail", "body": "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen." },
+        "s2": { "title": "Kies een wachtwoord", "body": "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass gaat open." },
+        "s3": { "title": "Je Velopass is klaar", "body": "Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID." }
+      },
+      "cta_primary": "Open je Velopass",
+      "cta_secondary": "Geen mail ontvangen? →"
     },
     "order": {
       "tag": "Nog geen Frame-ID?",
+      "eyebrow": "Nog geen Frame-ID",
       "title": "Bestel een Velopass Frame-ID",
       "desc": "Vanaf €12,95. Gratis verzending. Direct beschermd via je digitaal fietspaspoort.",
       "body": "Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.",
-      "cta": "Kies je bundel →"
+      "cta": "Kies je bundel →",
+      "shop_path": {
+        "title": "Via een fietswinkel",
+        "body": "Ga langs bij een Velopass-fietswinkel bij jou in de buurt. De winkel heeft Frame-ID's in voorraad, plakt hem ter plekke op je fiets én registreert hem meteen op jouw naam. Jij rijdt buiten.",
+        "cta": "Vind een fietswinkel bij jou in de buurt"
+      },
+      "web_path": {
+        "title": "Via de Velopass webshop",
+        "body": "Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.",
+        "cta": "Bestel via de Velopass webshop →"
+      },
+      "final": {
+        "title": "Altijd op de fiets. Alles geregeld.",
+        "body": "Jouw Velopass is actief. Diefstalprotectie, pechhulp en verzekering — één scan van je Frame-ID ver."
+      }
     },
     "second_hand": {
       "tag": "Tweedehands fiets met Frame-ID?",
+      "eyebrow": "Tweedehands fiets met Frame-ID",
       "title": "Het paspoort gaat mee. Op jouw naam.",
       "title_lead": "Het paspoort gaat mee.",
       "title_em": "Op jouw naam.",
       "desc": "Tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Registreer hem op jouw naam — het paspoort gaat gewoon mee.",
       "body": "Heb je een tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.",
-      "cta": "Zet 'm op jouw naam →"
+      "cta": "Zet 'm op jouw naam →",
+      "steps": {
+        "s1": { "title": "Scan de QR-code op de Frame-ID", "body": "Scan de QR-code op de Frame-ID van je tweedehands fiets." },
+        "s2": { "title": "Vraag de overdracht aan", "body": "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam." },
+        "s3": { "title": "Jouw Velopass. Jouw fiets.", "body": "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken." }
+      },
+      "cta_scan": "Scan de QR-code",
+      "cta_manual": "Code handmatig invoeren →"
     }
   },
   "sticker": {
@@ -56,8 +87,19 @@
     }
   },
   "community": {
+    "eyebrow": "De Velopass Community",
     "headline": "Jouw fiets is nooit alleen.",
     "subhead": "<0>{{count}}+ {{unit}}</0>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.",
-    "unit": "winkels"
+    "unit": "winkels",
+    "stolen_link": "Fiets gestolen of vermist? Volg ons stappenplan →",
+    "search_placeholder": "Zoek op stad, winkel of fietsmerk...",
+    "geo_idle": "Vind een winkel bij jou in de buurt",
+    "geo_loading": "Locatie zoeken...",
+    "geo_denied": "Locatie geweigerd",
+    "empty": "Geen winkels gevonden.",
+    "list_unit": "winkels",
+    "outro_line": "Hoe groter de community, hoe veiliger jouw fiets.",
+    "outro_em": "En hij groeit elke dag.",
+    "outro_cta": "Nog geen Velopass? Registreer je fiets →"
   }
 }

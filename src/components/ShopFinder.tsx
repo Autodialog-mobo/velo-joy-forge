@@ -19,7 +19,7 @@ export function ShopFinder() {
     return (
       <section className="shop-finder" id="community">
         <div className="sf-hero">
-          <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
+          <p className="eyebrow" style={{ color: "#2ECC8A" }}>{t("community.eyebrow")}</p>
           <h2 className="sf-headline">{t("community.headline")}</h2>
           <p className="sf-subhead">
             <Trans
@@ -53,7 +53,7 @@ export function ShopFinder() {
             }}
           >
             <AlertTriangle size={16} />
-            Fiets gestolen of vermist? Volg ons stappenplan →
+            {t("community.stolen_link")}
           </Link>
         </div>
         <p className="sec-sub" style={{ marginTop: 32 }}>Kaart laden...</p>

@@ -19,26 +19,57 @@
   "paths": {
     "shop": {
       "tag": "JUST BOUGHT A BIKE?",
+      "eyebrow": "Got an invitation?",
       "title": "Your Velopass is ready",
       "desc": "Chances are your Velopass is already waiting for you via your bike shop. Your bike is registered — just pick a password and everything is ready.",
       "body": "Your bike shop has applied the Frame-ID and registered your bike in your name. All you need to do is choose a password.",
-      "cta": "Open your Velopass →"
+      "cta": "Open your Velopass →",
+      "steps": {
+        "s1": { "title": "Check your email", "body": "You've received an invitation from your bike shop via Velopass. Click the link in that email to open your Velopass." },
+        "s2": { "title": "Choose a password", "body": "Your details are already filled in. Just pick a password — and your Velopass opens." },
+        "s3": { "title": "Your Velopass is ready", "body": "Theft protection, roadside assistance, insurance and your digital service book — all accessible via one scan of the QR code on your Frame-ID." }
+      },
+      "cta_primary": "Open your Velopass",
+      "cta_secondary": "Didn't get the email? →"
     },
     "order": {
       "tag": "No Frame-ID yet?",
+      "eyebrow": "No Frame-ID yet",
       "title": "Order a Velopass Frame-ID",
       "desc": "From €12.95. Free shipping. Instantly protected via your digital bike passport.",
       "body": "One Frame-ID activates your digital passport for the entire lifetime of your bike. One-time purchase — no subscription, no hidden costs.",
-      "cta": "View the bundles →"
+      "cta": "View the bundles →",
+      "shop_path": {
+        "title": "Via a bike shop",
+        "body": "Drop by a Velopass bike shop near you. The shop keeps Frame-IDs in stock, applies one to your bike on the spot and registers it straight away in your name. You ride out, sorted.",
+        "cta": "Find a bike shop near you"
+      },
+      "web_path": {
+        "title": "Via the Velopass webshop",
+        "body": "Order a Frame-ID directly from Velopass — delivered to your door. Apply it yourself and register via velopass.com. Ideal if there's no Velopass shop nearby, or for international orders.",
+        "cta": "Order via the Velopass webshop →"
+      },
+      "final": {
+        "title": "Always on your bike. Everything sorted.",
+        "body": "Your Velopass is active. Theft protection, roadside assistance and insurance — one scan of your Frame-ID away."
+      }
     },
     "second_hand": {
       "tag": "Second-hand bike with Frame-ID?",
+      "eyebrow": "Second-hand bike with Frame-ID",
       "title": "The passport moves with you. In your name.",
       "title_lead": "The passport comes with it.",
       "title_em": "In your name.",
       "desc": "Bought a second-hand bike with an existing Velopass Frame-ID? Register it in your name — the passport simply transfers.",
       "body": "Bought a second-hand bike with an existing Velopass Frame-ID? You can easily transfer the digital passport to your name. The neutral bike history (service visits, repairs and warranty data) comes with it. Personal services such as roadside assistance and insurance you activate yourself. Invoices, prices and personal photos stay private with the previous owner.",
-      "cta": "Start transfer →"
+      "cta": "Start transfer →",
+      "steps": {
+        "s1": { "title": "Scan the QR code on the Frame-ID", "body": "Scan the QR code on the Frame-ID of your second-hand bike." },
+        "s2": { "title": "Request the transfer", "body": "The previous owner automatically receives a request. After their confirmation, the bike is officially in your name." },
+        "s3": { "title": "Your Velopass. Your bike.", "body": "The digital passport is now yours. You get a neutral timeline of the bike's events. Roadside assistance, insurance and active services you activate yourself in a few clicks." }
+      },
+      "cta_scan": "Scan the QR code",
+      "cta_manual": "Enter the code manually →"
     }
   },
   "sticker": {
@@ -56,8 +87,19 @@
     }
   },
   "community": {
+    "eyebrow": "The Velopass Community",
     "headline": "Your bike is never alone.",
     "subhead": "<0>{{count}}+ {{unit}}</0>, cyclists and police are part of the Velopass Community. Someone scans your Frame-ID? You get notified right away.",
-    "unit": "shops"
+    "unit": "shops",
+    "stolen_link": "Bike stolen or missing? Follow our step-by-step guide →",
+    "search_placeholder": "Search by city, shop or bike brand...",
+    "geo_idle": "Find a shop near you",
+    "geo_loading": "Locating...",
+    "geo_denied": "Location denied",
+    "empty": "No shops found.",
+    "list_unit": "shops",
+    "outro_line": "The bigger the community, the safer your bike.",
+    "outro_em": "And it grows every day.",
+    "outro_cta": "No Velopass yet? Register your bike →"
   }
 }
