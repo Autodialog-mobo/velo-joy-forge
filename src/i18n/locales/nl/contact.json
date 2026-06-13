@@ -24,7 +24,7 @@
       },
       {
         "title": "Vraag over mijn Frame-ID",
-        "desc": "Frame-ID niet ontvangen, beschadigd of een andere vraag over je bestelling?",
+        "desc": "Niet ontvangen, beschadigd of andere vraag over je bestelling?",
         "prefill": "Hallo Velopass, ik heb een vraag over mijn Frame-ID: "
       },
       {
@@ -55,7 +55,7 @@
         "prefill": "Hallo Velopass, ik heb een vraag over kassasysteem-integratie of de Pro App: "
       },
       {
-        "title": "Al partner — technische vraag",
+        "title": "Technische vraag (al partner)",
         "desc": "Ben je al aangesloten en heb je een vraag over je account of portal?",
         "prefill": "Hallo Velopass, ik ben al partner en heb een technische vraag: "
       }
