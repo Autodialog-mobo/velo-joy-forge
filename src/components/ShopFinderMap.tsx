@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -251,7 +251,12 @@ export default function ShopFinderMap() {
         <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
         <h2 className="sf-headline">{t("community.headline")}</h2>
         <p className="sf-subhead">
-          <strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{animatedCount}+ {t("community.unit")}</strong>{t("community.subhead_rest")}
+          <Trans
+            i18nKey="community.subhead"
+            ns="home"
+            values={{ count: animatedCount }}
+            components={{ b: <strong style={{ color: "#0D1F3C", fontWeight: 600 }} /> }}
+          />
         </p>
       </div>
 

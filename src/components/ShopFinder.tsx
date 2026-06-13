@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { AlertTriangle } from "lucide-react";
 import shopsData from "@/data/shops.json";
@@ -21,7 +21,14 @@ export function ShopFinder() {
         <div className="sf-hero">
           <p className="eyebrow" style={{ color: "#2ECC8A" }}>De Velopass Community</p>
           <h2 className="sf-headline">{t("community.headline")}</h2>
-          <p className="sf-subhead"><strong style={{ color: "#0D1F3C", fontWeight: 600 }}>{totalActive.toLocaleString("nl-BE")}+ {t("community.unit")}</strong>{t("community.subhead_rest")}</p>
+          <p className="sf-subhead">
+            <Trans
+              i18nKey="community.subhead"
+              ns="home"
+              values={{ count: totalActive.toLocaleString("nl-BE") }}
+              components={{ b: <strong style={{ color: "#0D1F3C", fontWeight: 600 }} /> }}
+            />
+          </p>
         </div>
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <Link
