@@ -338,7 +338,7 @@ function VelopassHome() {
       {/* PAD 1 */}
       <section className="flow-sticker" id="already-have-one">
         <p className="eyebrow">Uitnodiging ontvangen?</p>
-        <h2 className="sec-title">Jouw Velopass staat klaar</h2>
+        <h2 className="sec-title">{t("home:paths.shop.title")}</h2>
         <p className="sec-sub">Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
         <div className="steps-flow">
           {[
@@ -370,7 +370,7 @@ function VelopassHome() {
       {/* PAD 2 */}
       <section className="flow-new" id="order-sticker">
         <p className="eyebrow">Nog geen Frame-ID</p>
-        <h2 className="sec-title">Bestel een Velopass Frame-ID</h2>
+        <h2 className="sec-title">{t("home:paths.order.title")}</h2>
         <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
