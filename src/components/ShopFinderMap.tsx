@@ -10,6 +10,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
+import { LeafletGestureSupport } from "./LeafletGestureSupport";
 import { ShopPanel } from "./ShopPanel";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 
@@ -328,11 +329,12 @@ export default function ShopFinderMap() {
         </aside>
 
         <div className="sf-map">
-          <MapContainer center={[50.85, 4.35]} zoom={6} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false} touchZoom={true}>
+          <MapContainer center={[50.85, 4.35]} zoom={6} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false} touchZoom={true} tap={false}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             />
+            <LeafletGestureSupport />
             <FlyTo target={flyTarget} />
             <ClusterLayer
               shops={shops}
