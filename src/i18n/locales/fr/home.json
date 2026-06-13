@@ -21,18 +21,23 @@
       "tag": "VÉLO FRAÎCHEMENT ACHETÉ ?",
       "title": "Votre Velopass est prêt",
       "desc": "Il y a de fortes chances que votre Velopass soit déjà prêt via votre vélociste. Votre vélo est enregistré — choisissez simplement un mot de passe et tout est prêt.",
+      "body": "Votre vélociste a posé le Frame-ID et enregistré votre vélo à votre nom. Il ne vous reste qu'à choisir un mot de passe.",
       "cta": "Ouvrez votre Velopass →"
     },
     "order": {
       "tag": "Pas encore de Frame-ID ?",
       "title": "Commandez un Velopass Frame-ID",
       "desc": "À partir de 12,95 €. Livraison gratuite. Protection immédiate via votre passeport vélo numérique.",
+      "body": "Un Frame-ID active votre passeport numérique pour toute la durée de vie de votre vélo. Achat unique — pas d'abonnement, pas de frais cachés.",
       "cta": "Voir les formules →"
     },
     "second_hand": {
       "tag": "Vélo d'occasion avec Frame-ID ?",
       "title": "Le passeport vous suit. À votre nom.",
+      "title_lead": "Le passeport vous suit.",
+      "title_em": "À votre nom.",
       "desc": "Acheté un vélo d'occasion avec un Velopass Frame-ID existant ? Enregistrez-le à votre nom — le passeport est tout simplement transféré.",
+      "body": "Vous avez acheté un vélo d'occasion avec un Velopass Frame-ID existant ? Vous pouvez facilement transférer le passeport numérique à votre nom. L'historique neutre du vélo (entretiens, réparations et données de garantie) vous suit. Les services personnels comme l'assistance dépannage et l'assurance, vous les activez vous-même. Factures, prix et photos personnelles restent privés chez l'ancien propriétaire.",
       "cta": "Démarrer le transfert →"
     }
   },
@@ -51,6 +56,8 @@
     }
   },
   "community": {
-    "headline": "Votre vélo n'est jamais seul."
+    "headline": "Votre vélo n'est jamais seul.",
+    "unit": "vélocistes",
+    "subhead_rest": ", cyclistes et policiers font partie de la Communauté Velopass. Si quelqu'un scanne votre Frame-ID, vous recevez immédiatement une notification."
   }
 }

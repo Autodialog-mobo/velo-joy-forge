@@ -339,7 +339,7 @@ function VelopassHome() {
       <section className="flow-sticker" id="already-have-one">
         <p className="eyebrow">Uitnodiging ontvangen?</p>
         <h2 className="sec-title">{t("home:paths.shop.title")}</h2>
-        <p className="sec-sub">Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.</p>
+        <p className="sec-sub">{t("home:paths.shop.body")}</p>
         <div className="steps-flow">
           {[
             { n: 1, t: "Controleer je e-mail", d: "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen.", icon: <Mail size={22} color="#2ECC8A" strokeWidth={1.8} /> },
@@ -371,7 +371,7 @@ function VelopassHome() {
       <section className="flow-new" id="order-sticker">
         <p className="eyebrow">Nog geen Frame-ID</p>
         <h2 className="sec-title">{t("home:paths.order.title")}</h2>
-        <p className="sec-sub">Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.</p>
+        <p className="sec-sub">{t("home:paths.order.body")}</p>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#fff" strokeWidth={1.8} /></div>
@@ -402,8 +402,8 @@ function VelopassHome() {
       {/* PAD 3 */}
       <section className="flow-sticker" id="tweedehands" style={{ background: "var(--bg)" }}>
         <p className="eyebrow">Tweedehands fiets met Frame-ID</p>
-        <h2 className="sec-title">Het paspoort gaat mee. <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>Op jouw naam.</em></h2>
-        <p className="sec-sub">Heb je een tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.</p>
+        <h2 className="sec-title">{t("home:paths.second_hand.title_lead")} <em style={{ fontStyle: "normal", color: "#2ECC8A" }}>{t("home:paths.second_hand.title_em")}</em></h2>
+        <p className="sec-sub">{t("home:paths.second_hand.body")}</p>
         <div className="steps-flow">
           {[
             { n: 1, t: "Scan de QR-code op de Frame-ID", d: "Scan de QR-code op de Frame-ID van je tweedehands fiets.", icon: <QrCode size={22} color="#2ECC8A" strokeWidth={1.8} /> },
