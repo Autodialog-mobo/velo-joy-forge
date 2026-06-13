@@ -277,10 +277,10 @@ function VelopassHome() {
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><rect x="2" y="2" width="8" height="8" rx="1" /><rect x="14" y="2" width="8" height="8" rx="1" /><rect x="2" y="14" width="8" height="8" rx="1" /><rect x="14" y="14" width="4" height="4" rx="0.5" fill="#2ECC8A" /></svg></div>
             <div>
               <div className="vc-head"><h3>{t("home:benefits.cards.theft")}</h3></div>
-              <p>{activeShopsCount.toLocaleString("nl-BE")}+ fietswinkels scannen automatisch via hun kassasysteem. Ook fietsers en politie die de QR scannen zien meteen dat jouw fiets gezocht wordt.</p>
-              <div className="secured-pill"><span className="sdot" />Jouw fiets. SECURED.</div>
+              <p>{t("home:benefits.cards.theft_body", { shopCount: activeShopsCount.toLocaleString(currentLang) })}</p>
+              <div className="secured-pill"><span className="sdot" />{t("home:benefits.secured_pill")}</div>
               <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: 12, color: "var(--text-muted)", marginTop: 10, lineHeight: 1.5 }}>
-                Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.
+                {t("home:benefits.cards.theft_mybike")}
               </p>
               <Link
                 to="/$lang/stolen"
@@ -295,7 +295,7 @@ function VelopassHome() {
                   marginTop: 10,
                 }}
               >
-                Fiets gestolen of vermist? Lees wat je moet doen →
+                {t("home:benefits.cards.theft_stolen_link")}
               </Link>
             </div>
           </div>
