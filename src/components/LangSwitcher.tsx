@@ -52,7 +52,7 @@ export function LangSwitcher({ currentLang, tone = "dark" }: { currentLang: Lang
           borderRadius: 8,
           background: "transparent",
           border: `1px solid ${isLight ? "rgba(13,31,60,0.18)" : "rgba(255,255,255,0.18)"}`,
-          color: isLight ? "#0D1F3C" : "inherit",
+          color: isLight ? "#0D1F3C" : "#fff",
           fontFamily: "'DM Sans', sans-serif",
           fontSize: 13,
           fontWeight: 500,
