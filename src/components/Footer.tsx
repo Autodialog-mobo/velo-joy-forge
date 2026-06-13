@@ -33,7 +33,7 @@ export function Footer({ variant = "default" }: FooterProps) {
         <ul className="flinks">
           <li><Link to="/$lang/privacy" params={{ lang }}>{t("footer.privacy")}</Link></li>
           <li><a href="#">{t("footer.terms")}</a></li>
-          <li><Link to="/$lang/contact" params={{ lang }}>{t("footer.contact")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "shop" }}>{t("footer.contact")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="faq" onClick={scrollToFaq}>{t("footer.faq")}</Link></li>
           <li><a href={APP_LOGIN}>{t("nav.login")}</a></li>
         </ul>
