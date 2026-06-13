@@ -1,84 +1,84 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
-    "title": "Order a Velopass Frame-ID — from €12.95",
-    "description": "Order your Velopass Frame-ID. One sticker, a lifetime digital service book for your bike. Free shipping across the EU.",
-    "ogDescription": "Protect your bike. Free shipping. Secure payments via Mollie."
+    "title": "Bestel een Velopass Frame-ID — vanaf €12,95",
+    "description": "Bestel je Velopass Frame-ID. Eén Frame-ID, een leven lang een digitaal serviceboekje voor je fiets. Gratis verzending in de hele EU.",
+    "ogDescription": "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie."
   },
   "header": {
-    "back": "Back"
+    "back": "Terug"
   },
   "hero": {
-    "eyebrow": "Order a Frame-ID",
-    "title": "Protect your bike. From €12.95.",
-    "subtitle": "One Frame-ID on your bike — and you always have access to theft protection, roadside assistance, insurance and your digital service book. Free shipping across the EU.",
-    "feature_shipping": "Free shipping across the EU",
-    "feature_secure": "Secure payments via Mollie"
+    "eyebrow": "Bestel een Frame-ID",
+    "title": "Bescherm je fiets. Vanaf €12,95.",
+    "subtitle": "Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalbescherming, pechhulp, verzekering en je digitaal serviceboekje. Gratis verzending in de hele EU.",
+    "feature_shipping": "Gratis verzending in de hele EU",
+    "feature_secure": "Veilig betalen via Mollie"
   },
   "bundles": {
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID's",
-    "popular_badge": "MOST POPULAR",
-    "per_unit_template": "{{price}} each",
-    "discount_15": "15% off",
-    "discount_23": "23% off",
-    "qty_decrease_aria": "Less",
-    "qty_increase_aria": "More",
-    "add_one_more": "Add one more",
-    "add": "Add"
+    "popular_badge": "POPULAIRST",
+    "per_unit_template": "{{price}} per stuk",
+    "discount_15": "15% korting",
+    "discount_23": "23% korting",
+    "qty_decrease_aria": "Minder",
+    "qty_increase_aria": "Meer",
+    "add_one_more": "Voeg er nog één toe",
+    "add": "Toevoegen"
   },
   "info": {
-    "combine_note": "Feel free to combine multiple bundles in one order. VAT and any local taxes are calculated automatically at checkout."
+    "combine_note": "Combineer gerust meerdere bundels in één bestelling. Btw en eventuele lokale taksen worden automatisch berekend bij het afrekenen."
   },
   "pro_tip": {
     "label": "Pro tip",
-    "degrease_title": "Degrease first",
-    "degrease_body": "Clean the frame surface first with a degreaser for optimal adhesion.",
-    "visible_title": "Place it visibly",
-    "visible_body": "Place the Frame-ID in plain sight — preferably just below the seat post. That makes the QR easy to scan.",
-    "deterrent_title": "Deterrent for thieves",
-    "deterrent_body": "A visible Frame-ID immediately tells thieves your bike is protected and registered."
+    "degrease_title": "Eerst ontvetten",
+    "degrease_body": "Maak het frame eerst schoon met een ontvetter voor een perfecte hechting.",
+    "visible_title": "Zet 'm goed zichtbaar",
+    "visible_body": "Plak je Frame-ID in het zicht — het mooist net onder de zadelpen. Zo is de QR makkelijk te scannen.",
+    "deterrent_title": "Schrikt dieven af",
+    "deterrent_body": "Een zichtbare Frame-ID maakt meteen duidelijk dat je fiets geregistreerd en beschermd is."
   },
   "cart": {
-    "title": "Cart",
-    "empty": "Add at least one bundle to continue.",
-    "shipping": "Shipping",
-    "shipping_free": "Free across the EU",
-    "total": "Total",
-    "email_label": "Email address",
-    "email_placeholder": "you@example.com",
-    "first_name": "First name",
-    "first_name_placeholder": "John",
-    "last_name": "Last name",
-    "last_name_placeholder": "Doe",
-    "address": "Street + house number",
-    "address_placeholder": "Main Street 12",
-    "postal_code": "Postal code",
+    "title": "Winkelmandje",
+    "empty": "Voeg minstens één bundel toe om verder te gaan.",
+    "shipping": "Verzending",
+    "shipping_free": "Gratis in de hele EU",
+    "total": "Totaal",
+    "email_label": "E-mailadres",
+    "email_placeholder": "jij@voorbeeld.com",
+    "first_name": "Voornaam",
+    "first_name_placeholder": "Jan",
+    "last_name": "Achternaam",
+    "last_name_placeholder": "Janssens",
+    "address": "Straat + huisnummer",
+    "address_placeholder": "Hoofdstraat 12",
+    "postal_code": "Postcode",
     "postal_code_placeholder": "9000",
-    "city": "City",
-    "city_placeholder": "Ghent",
-    "country": "Country",
-    "country_be": "Belgium",
-    "country_nl": "Netherlands",
-    "country_fr": "France",
-    "country_lu": "Luxembourg",
-    "country_de": "Germany",
-    "pay": "Pay",
-    "pay_with_total_template": "Pay — {{total}} →",
-    "pay_arrow": "Pay →",
-    "secure_note": "Secure payments via Mollie · Bancontact · iDEAL · Card"
+    "city": "Gemeente",
+    "city_placeholder": "Gent",
+    "country": "Land",
+    "country_be": "België",
+    "country_nl": "Nederland",
+    "country_fr": "Frankrijk",
+    "country_lu": "Luxemburg",
+    "country_de": "Duitsland",
+    "pay": "Betalen",
+    "pay_with_total_template": "Betaal {{total}} →",
+    "pay_arrow": "Betalen →",
+    "secure_note": "Veilig betalen via Mollie · Bancontact · iDEAL · Kaart"
   },
   "tooltips": {
-    "need_bundle": "Choose at least one bundle to pay.",
-    "need_email": "Enter a valid email address to continue.",
-    "need_shipping": "Fill in your shipping address to continue."
+    "need_bundle": "Kies eerst een bundel om te betalen.",
+    "need_email": "Vul een geldig e-mailadres in om verder te gaan.",
+    "need_shipping": "Vul je verzendadres in om verder te gaan."
   },
   "checkout_stage": {
-    "label": "Payment",
-    "total_template": "Total {{total}}",
-    "edit_order": "Edit order",
-    "error_prefix": "Something went wrong starting the payment:",
-    "redirecting": "You are being redirected to the secure Mollie payment page…",
-    "unknown_error": "Unknown error"
+    "label": "Betaling",
+    "total_template": "Totaal {{total}}",
+    "edit_order": "Bestelling aanpassen",
+    "error_prefix": "Er ging iets mis bij het starten van de betaling:",
+    "redirecting": "Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…",
+    "unknown_error": "Onbekende fout"
   }
 }
