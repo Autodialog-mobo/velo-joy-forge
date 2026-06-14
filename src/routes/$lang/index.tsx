@@ -11,7 +11,72 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import shopsData from "@/data/shops.json";
 import { isLang, type Lang } from "@/i18n/config";
-import { buildLocalizedHead } from "@/i18n/seo";
+import { buildLocalizedHead, SITE_URL } from "@/i18n/seo";
+import faqEn from "@/i18n/locales/en/faq.json";
+import faqNl from "@/i18n/locales/nl/faq.json";
+import faqFr from "@/i18n/locales/fr/faq.json";
+import faqDe from "@/i18n/locales/de/faq.json";
+
+const FAQ_BY_LANG: Record<Lang, { left: Array<{ q: string; a: string }>; right: Array<{ q: string; a: string }> }> = {
+  en: faqEn as never,
+  nl: faqNl as never,
+  fr: faqFr as never,
+  de: faqDe as never,
+};
+
+function stripFaqMarkdown(s: string): string {
+  return s
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildHomeJsonLd(lang: Lang) {
+  const faq = FAQ_BY_LANG[lang] ?? FAQ_BY_LANG.en;
+  const allFaqs = [...faq.left, ...faq.right];
+  const website = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Velopass",
+    url: SITE_URL,
+    inLanguage: lang,
+  };
+  const organization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Velopass",
+    url: SITE_URL,
+    logo: `${SITE_URL}/favicon.svg`,
+    sameAs: ["https://app.velopass.com"],
+  };
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: allFaqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: stripFaqMarkdown(f.a) },
+    })),
+  };
+  const product = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Velopass Frame-ID",
+    description:
+      "Digital bike passport sticker. One Frame-ID on your bike for theft protection, roadside assistance, insurance and your digital service book.",
+    brand: { "@type": "Brand", name: "Velopass" },
+    url: `${SITE_URL}/${lang}/order`,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "EUR",
+      price: "12.95",
+      availability: "https://schema.org/InStock",
+      url: `${SITE_URL}/${lang}/order`,
+    },
+  };
+  return [website, organization, faqPage, product];
+}
 
 const pathIconBox: React.CSSProperties = {
   width: 48,
