@@ -249,7 +249,7 @@ function BikeSearchPage() {
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanFrame = sanitizeAlnum(frame);
-    if (!brand || !cleanFrame || !turnstileToken) return;
+    if (!brand || !cleanFrame) return;
     setError(null);
     setResult(null);
     setLoadingB(true);
