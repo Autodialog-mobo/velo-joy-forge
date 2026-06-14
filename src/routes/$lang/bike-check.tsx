@@ -1051,18 +1051,52 @@ function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   );
 }
 
-function detectCountry(): "BE" | "NL" | "FR" {
-  if (typeof navigator === "undefined") return "BE";
-  const lang = navigator.language || "";
-  const region = lang.split("-")[1]?.toUpperCase();
-  if (region === "BE" || region === "NL" || region === "FR") return region;
-  if (lang.startsWith("nl")) return "NL";
-  if (lang.startsWith("fr")) return "FR";
-  return "BE";
-}
+type Country = "BE" | "NL" | "FR" | "DE";
+
+const COUNTRY_CONFIGS: Record<Country, {
+  primaryHref: string;
+  primaryKey: string;
+  secondary?: { kind: "link" | "text"; href?: string; key: string };
+  noteKey: string;
+}> = {
+  BE: {
+    primaryHref: "https://www.police-on-web.be",
+    primaryKey: "result.reported_be_primary",
+    secondary: { kind: "link", href: "https://www.politie.be/nl", key: "result.reported_be_secondary" },
+    noteKey: "police_note_be",
+  },
+  NL: {
+    primaryHref: "https://www.politie.nl/aangifte-of-melding-doen",
+    primaryKey: "result.reported_nl_primary",
+    secondary: { kind: "text", key: "result.reported_nl_note" },
+    noteKey: "police_note_nl",
+  },
+  FR: {
+    primaryHref: "https://www.pre-plainte-en-ligne.gouv.fr",
+    primaryKey: "result.reported_fr_primary",
+    noteKey: "police_note_fr",
+  },
+  DE: {
+    primaryHref: "https://www.polizei.de/Polizei/DE/Einrichtungen/Onlinewache/onlinewache_node.html",
+    primaryKey: "result.reported_de_primary",
+    noteKey: "police_note_de",
+  },
+};
+
+const COUNTRY_LABELS: Record<Country, string> = {
+  BE: "België",
+  NL: "Nederland",
+  FR: "France",
+  DE: "Deutschland",
+};
 
 function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
-  const country = detectCountry();
+  const serverCountry = (bike.country ?? "BE") as Country;
+  const [country, setCountry] = useState<Country>(serverCountry);
+  const [showPicker, setShowPicker] = useState(false);
+
+  const cfg = COUNTRY_CONFIGS[country];
+
   const outlinedBtn = {
     background: "transparent",
     color: "#0D1F3C",
@@ -1072,48 +1106,9 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
     textDecoration: "none",
     fontSize: 14,
     fontWeight: 500,
+    fontFamily: "'DM Sans', sans-serif",
+    display: "inline-block",
   } as const;
-
-  let policyButtons: ReactNode = null;
-  let secondary: ReactNode = null;
-  let noteKey: "police_note_be" | "police_note_nl" | "police_note_fr" = "police_note_be";
-
-  if (country === "NL") {
-    noteKey = "police_note_nl";
-    policyButtons = (
-      <a href="https://www.politie.nl/aangifte-of-melding-doen" target="_blank" rel="noopener noreferrer" style={outlinedBtn}>
-        {t("result.reported_nl_primary")}
-      </a>
-    );
-    secondary = (
-      <span style={{ color: "#5A7090", fontWeight: 500, fontSize: 14, marginTop: 10, display: "inline-block" }}>
-        {t("result.reported_nl_note")}
-      </span>
-    );
-  } else if (country === "FR") {
-    noteKey = "police_note_fr";
-    policyButtons = (
-      <a href="https://www.pre-plainte-en-ligne.gouv.fr" target="_blank" rel="noopener noreferrer" style={outlinedBtn}>
-        {t("result.reported_fr_primary")}
-      </a>
-    );
-  } else {
-    policyButtons = (
-      <a href="https://www.police-on-web.be" target="_blank" rel="noopener noreferrer" style={outlinedBtn}>
-        {t("result.reported_be_primary")}
-      </a>
-    );
-    secondary = (
-      <a
-        href="https://www.politie.be/nl"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: "#5A7090", fontWeight: 500, textDecoration: "underline", fontSize: 14, marginTop: 10, display: "inline-block" }}
-      >
-        {t("result.reported_be_secondary")}
-      </a>
-    );
-  }
 
   return (
     <div style={resultCard("#F59E0B")}>
@@ -1137,7 +1132,7 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
           lineHeight: 1.5,
         }}
       >
-        {t(noteKey)}
+        {t(cfg.noteKey)}
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         {bike.lostReportUrl && (
@@ -1153,14 +1148,75 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
               textDecoration: "none",
               fontSize: 14,
               fontWeight: 500,
+              fontFamily: "'DM Sans', sans-serif",
+              display: "inline-block",
             }}
           >
             {t("result.reported_cta_primary")}
           </a>
         )}
-        {policyButtons}
+        <a href={cfg.primaryHref} target="_blank" rel="noopener" style={outlinedBtn}>
+          {t(cfg.primaryKey)}
+        </a>
       </div>
-      {secondary}
+      {cfg.secondary && (
+        cfg.secondary.kind === "link" ? (
+          <a
+            href={cfg.secondary.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#5A7090", fontWeight: 500, textDecoration: "underline", fontSize: 14, marginTop: 10, display: "inline-block", fontFamily: "'DM Sans', sans-serif" }}
+          >
+            {t(cfg.secondary.key)}
+          </a>
+        ) : (
+          <span style={{ color: "#5A7090", fontWeight: 500, fontSize: 14, marginTop: 10, display: "inline-block", fontFamily: "'DM Sans', sans-serif" }}>
+            {t(cfg.secondary.key)}
+          </span>
+        )
+      )}
+      <div style={{ marginTop: 16, fontFamily: "'DM Sans', sans-serif", fontSize: 13 }}>
+        {!showPicker ? (
+          <button
+            type="button"
+            onClick={() => setShowPicker(true)}
+            style={{
+              background: "transparent",
+              border: "none",
+              padding: 0,
+              color: "#5A7090",
+              textDecoration: "underline",
+              cursor: "pointer",
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: 13,
+            }}
+          >
+            {t("result.switch_country")}
+          </button>
+        ) : (
+          <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+            <label htmlFor="bs-country" style={{ color: "#5A7090" }}>{t("result.country_label")}</label>
+            <select
+              id="bs-country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value as Country)}
+              style={{
+                background: "#fff",
+                border: "1px solid rgba(13,31,60,0.2)",
+                borderRadius: 8,
+                padding: "6px 10px",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "#0D1F3C",
+              }}
+            >
+              {(Object.keys(COUNTRY_CONFIGS) as Country[]).map((c) => (
+                <option key={c} value={c}>{COUNTRY_LABELS[c]}</option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
