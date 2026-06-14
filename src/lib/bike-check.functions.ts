@@ -103,9 +103,10 @@ function mapBikePayload(raw: unknown): BikeCheckResult {
     };
   }
   const reported = Boolean(
-    pick(bike, ["isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
+    pick(bike, ["isLost", "isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
       String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("REPORT") ||
-      String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("STOLEN"),
+      String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("STOLEN") ||
+      String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("LOST"),
   );
   const year = pick<number | string>(bike, ["yearOfCreation", "year", "buildYear"]);
   const yearNum = year === null ? null : Number(year);
