@@ -12,6 +12,7 @@ import { trackRegisterBikeClick } from "@/lib/analytics";
 import { buildLocalizedHead } from "@/i18n/seo";
 import { isLang } from "@/i18n/config";
 import { checkBike, checkBikeByFrame, type BikeCheckResult } from "@/lib/bike-check.functions";
+import BIKE_BRANDS from "@/data/bike-brands.json";
 import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
@@ -202,6 +203,14 @@ function BikeSearchPage() {
   const [turnstileToken, setTurnstileToken] = useState("");
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [brandFocused, setBrandFocused] = useState(false);
+  const brandSuggestions = (() => {
+    const q = brand.trim().toLowerCase();
+    if (!q) return [] as string[];
+    return (BIKE_BRANDS as string[])
+      .filter((b) => b.toLowerCase().includes(q) && b.toLowerCase() !== q)
+      .slice(0, 8);
+  })();
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
   const sanitizeAlnum = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -450,16 +459,71 @@ function BikeSearchPage() {
             <p style={cardDesc}>{t("method_b.desc")}</p>
 
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
-            <input
-              id="bs-brand"
-              type="text"
-              autoCorrect="off"
-              spellCheck={false}
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              placeholder={t("method_b.brand_placeholder")}
-              style={inputStyle}
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                id="bs-brand"
+                type="text"
+                autoCorrect="off"
+                spellCheck={false}
+                autoComplete="off"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                onFocus={() => setBrandFocused(true)}
+                onBlur={() => setTimeout(() => setBrandFocused(false), 120)}
+                placeholder={t("method_b.brand_placeholder")}
+                style={inputStyle}
+              />
+              {brandFocused && brandSuggestions.length > 0 && (
+                <ul
+                  role="listbox"
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    right: 0,
+                    margin: "4px 0 0",
+                    padding: 4,
+                    listStyle: "none",
+                    background: "#fff",
+                    border: "1px solid #d6dde6",
+                    borderRadius: 8,
+                    boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
+                    zIndex: 20,
+                    maxHeight: 280,
+                    overflowY: "auto",
+                  }}
+                >
+                  {brandSuggestions.map((b) => (
+                    <li key={b}>
+                      <button
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setBrand(b);
+                          setBrandFocused(false);
+                        }}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          textAlign: "left",
+                          padding: "8px 10px",
+                          border: "none",
+                          background: "transparent",
+                          borderRadius: 6,
+                          cursor: "pointer",
+                          fontSize: 15,
+                          color: "#0F172A",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        {b}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
