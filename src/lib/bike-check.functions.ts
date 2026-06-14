@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
+import BIKE_BRANDS from "@/data/bike-brands.json";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
 
