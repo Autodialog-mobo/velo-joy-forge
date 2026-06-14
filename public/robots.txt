@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://velopass.com/sitemap.xml
