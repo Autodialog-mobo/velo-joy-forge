@@ -871,6 +871,61 @@ function AdminPage() {
                           </div>
                         );
                       })()}
+
+                      {/* Contextual status transition */}
+                      {(() => {
+                        if (detailOrder.status === "paid") {
+                          return (
+                            <button
+                              type="button"
+                              disabled={detailBusy}
+                              onClick={async () => {
+                                setDetailBusy(true);
+                                try {
+                                  await doPrint({ data: { orderIds: [detailOrder.id] } });
+                                  setDetailOrder((prev: any) => (prev ? { ...prev, status: "printed" } : prev));
+                                  await refetch();
+                                } finally {
+                                  setDetailBusy(false);
+                                }
+                              }}
+                              className="btn-primary h-10 px-4 rounded-[12px] text-[13px] font-semibold w-full mt-3"
+                            >
+                              Markeer als geprint
+                            </button>
+                          );
+                        }
+                        if (detailOrder.status === "printed") {
+                          return (
+                            <button
+                              type="button"
+                              disabled={detailBusy}
+                              onClick={async () => {
+                                setDetailBusy(true);
+                                try {
+                                  await doShip({ data: { orderIds: [detailOrder.id] } });
+                                  setDetailOrder((prev: any) => (prev ? { ...prev, status: "shipped" } : prev));
+                                  await refetch();
+                                } finally {
+                                  setDetailBusy(false);
+                                }
+                              }}
+                              className="btn-primary h-10 px-4 rounded-[12px] text-[13px] font-semibold w-full mt-3"
+                            >
+                              Markeer als verzonden
+                            </button>
+                          );
+                        }
+                        if (detailOrder.status === "shipped") {
+                          return (
+                            <div className="flex items-center gap-2 mt-3 text-[12px]" style={{ color: TEXT_MUTED }}>
+                              <Check className="w-3.5 h-3.5" style={{ color: GREEN }} />
+                              Afgerond — verzonden
+                            </div>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
 
                     <div>
