@@ -251,11 +251,12 @@ function AdminPage() {
 
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen vp-pro-page"
       style={{
-        background: NAVY,
+        backgroundColor: NAVY,
         color: TEXT_PRI,
         fontFamily: "'DM Sans', sans-serif",
+        minHeight: "100dvh",
       }}
     >
       <style>{`
