@@ -1110,7 +1110,7 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
         </a>
       </div>
       <a
-        href="https://www.police.be/nl/zonefinder"
+        href="https://www.politie.be/nl"
         target="_blank"
         rel="noopener noreferrer"
         style={{
