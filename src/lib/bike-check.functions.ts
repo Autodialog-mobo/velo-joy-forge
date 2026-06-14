@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequestIP } from "@tanstack/react-start/server";
+import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
 
