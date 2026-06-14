@@ -529,13 +529,40 @@ function AdminPage() {
               className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-4"
               style={{ borderBottom: `1px solid ${SURFACE_BORDER}` }}
             >
-              <div className="flex items-baseline gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <span style={EYEBROW}>Bestellingen</span>
                 <span className="text-[12px]" style={{ color: TEXT_MUTED }}>
                   {selectedOrders.length > 0
                     ? `${selectedOrders.length} geselecteerd`
                     : `${filtered.length} weergegeven`}
                 </span>
+                <label className="inline-flex items-center gap-2 ml-1">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Status:
+                  </span>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => {
+                      setStatusFilter(e.target.value);
+                      setSelected(new Set());
+                    }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op status"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle statussen</option>
+                    {availableStatuses.map((s) => (
+                      <option key={s} value={s} style={{ background: NAVY }}>
+                        {statusLabelNl(s)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
