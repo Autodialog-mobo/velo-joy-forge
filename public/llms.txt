@@ -1,0 +1,29 @@
+# Velopass
+
+> Velopass is a bike registration and anti-theft service that helps cyclists protect their bikes, verify second-hand purchases, and recover stolen bicycles.
+
+Velopass provides Frame-ID stickers and an online registry so owners can prove ownership and report theft. Buyers can check any bike's status before purchase. The service works across the Netherlands, Belgium, and beyond, supporting Dutch, English, French, and German.
+
+## Pages
+
+- [Home](/en): Register your bike, get a Frame-ID sticker, and protect against theft.
+- [Shop](/en/shop): Order Velopass Frame-ID stickers and registration kits.
+- [Bike Check](/en/bike-check): Verify if a bike is stolen or registered before buying second-hand.
+- [Report Stolen](/en/stolen): Report a stolen bike and alert the Velopass network.
+- [Already have a sticker?](/en/already-have-one): Activate or manage an existing Frame-ID sticker.
+- [Professionals](/en/pro): B2B solutions for bike shops, manufacturers, insurers, and leasing companies.
+- [Manufacturers](/en/manufacturer): Partnerships for OEM frame-number registration and theft prevention.
+- [Insurance](/en/insurance): How insurers use Velopass to reduce bike theft claims.
+- [Leasing](/en/leasing): Fleet registration and recovery services for bike leasing companies.
+- [Assistance](/en/assistance): Roadside assistance integration with bike registration.
+- [Contact](/en/contact): Get in touch with the Velopass team.
+- [Buying Second-Hand Guide](/en/guides/buying-second-hand): Checklist to safely buy a used bike and avoid stolen goods.
+
+## Standalone tools
+
+- [Bike Search](/bikesearch): Quick lookup tool to check a bike's registration or theft status by frame number.
+- [Fiets Controleren](/fiets-controleren): Dutch-language bike check for the Belgian and Dutch markets.
+- [Gestolen Melden](/gestolen): Dutch-language page to report a stolen bike.
+- [Al Een Sticker](/al-een-sticker): Dutch-language page for users who already own a Velopass sticker.
+- [Bestellen](/bestellen): Dutch-language direct order page.
+- [Professionals NL](/professionals): Dutch-language B2B overview for bike shops and fleet managers.
