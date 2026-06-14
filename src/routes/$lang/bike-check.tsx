@@ -231,7 +231,7 @@ function BikeSearchPage() {
     setLoadingA(true);
     setLastMethod("a");
     try {
-      const res = await runCheckBike({ data: { code: clean, turnstileToken } });
+      const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
@@ -262,7 +262,7 @@ function BikeSearchPage() {
     setLastMethod("b");
     try {
       const res = await runCheckByFrame({
-        data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken },
+        data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken, lang },
       });
       setResult(res);
     } catch {
