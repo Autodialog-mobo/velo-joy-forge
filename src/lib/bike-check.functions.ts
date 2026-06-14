@@ -111,7 +111,9 @@ async function normalizeBrand(raw: string): Promise<string> {
   }
 }
 
-function mapBikePayload(raw: unknown): BikeCheckResult {
+type BikeCheckCore = Omit<BikeCheckResult, "country">;
+
+function mapBikePayload(raw: unknown): BikeCheckCore {
   const bike = (Array.isArray(raw) ? raw[0] : raw) as Record<string, unknown> | null;
   if (!bike || typeof bike !== "object") {
     return {
@@ -149,7 +151,7 @@ async function fetchByBrandFrame(
   apiKey: string,
   brand: string,
   frameNumber: string,
-): Promise<BikeCheckResult | null> {
+): Promise<BikeCheckCore | null> {
   const url = `https://thirdpartyapi.prod.velopass.com/api/Bicycles?Brand=${encodeURIComponent(brand)}&FrameNumber=${encodeURIComponent(frameNumber)}`;
   const res = await fetch(url, {
     method: "GET",
@@ -166,7 +168,7 @@ async function fetchByBrandFrame(
   return mapped.found ? mapped : null;
 }
 
-const NOT_FOUND: BikeCheckResult = {
+const NOT_FOUND_CORE: BikeCheckCore = {
   found: false,
   status: null,
   brand: null,
