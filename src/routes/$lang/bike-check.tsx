@@ -456,11 +456,18 @@ function BikeSearchPage() {
               type="text"
               autoCorrect="off"
               spellCheck={false}
+              autoComplete="off"
+              list="bs-brand-list"
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
               placeholder={t("method_b.brand_placeholder")}
               style={inputStyle}
             />
+            <datalist id="bs-brand-list">
+              {(BIKE_BRANDS as string[]).map((b) => (
+                <option key={b} value={b} />
+              ))}
+            </datalist>
 
             <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
