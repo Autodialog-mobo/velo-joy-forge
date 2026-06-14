@@ -3,6 +3,7 @@ import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
 import BIKE_BRANDS from "@/data/bike-brands.json";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
+export type BikeCheckCountry = "BE" | "NL" | "FR" | "DE";
 
 export interface BikeCheckResult {
   found: boolean;
@@ -13,6 +14,17 @@ export interface BikeCheckResult {
   bikeType: string | null;
   yearOfCreation: number | null;
   lostReportUrl: string | null;
+  country: BikeCheckCountry;
+}
+
+function resolveCountry(lang: string | undefined): BikeCheckCountry {
+  const cf = (getRequestHeader("cf-ipcountry") ?? "").toUpperCase();
+  if (cf === "BE" || cf === "NL" || cf === "FR" || cf === "DE") return cf;
+  const l = (lang ?? "").toLowerCase();
+  if (l.startsWith("de")) return "DE";
+  if (l.startsWith("fr")) return "BE";
+  if (l.startsWith("nl")) return "BE";
+  return "BE";
 }
 
 const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
@@ -99,7 +111,9 @@ async function normalizeBrand(raw: string): Promise<string> {
   }
 }
 
-function mapBikePayload(raw: unknown): BikeCheckResult {
+type BikeCheckCore = Omit<BikeCheckResult, "country">;
+
+function mapBikePayload(raw: unknown): BikeCheckCore {
   const bike = (Array.isArray(raw) ? raw[0] : raw) as Record<string, unknown> | null;
   if (!bike || typeof bike !== "object") {
     return {
@@ -137,7 +151,7 @@ async function fetchByBrandFrame(
   apiKey: string,
   brand: string,
   frameNumber: string,
-): Promise<BikeCheckResult | null> {
+): Promise<BikeCheckCore | null> {
   const url = `https://thirdpartyapi.prod.velopass.com/api/Bicycles?Brand=${encodeURIComponent(brand)}&FrameNumber=${encodeURIComponent(frameNumber)}`;
   const res = await fetch(url, {
     method: "GET",
@@ -154,7 +168,7 @@ async function fetchByBrandFrame(
   return mapped.found ? mapped : null;
 }
 
-const NOT_FOUND: BikeCheckResult = {
+const NOT_FOUND_CORE: BikeCheckCore = {
   found: false,
   status: null,
   brand: null,
@@ -166,7 +180,7 @@ const NOT_FOUND: BikeCheckResult = {
 };
 
 export const checkBikeByFrame = createServerFn({ method: "POST" })
-  .inputValidator((input: { brand: string; frameNumber: string; turnstileToken?: string }) => {
+  .inputValidator((input: { brand: string; frameNumber: string; turnstileToken?: string; lang?: string }) => {
     if (!input || typeof input.brand !== "string" || !input.brand.trim()) {
       throw new Error("brand_required");
     }
@@ -177,6 +191,7 @@ export const checkBikeByFrame = createServerFn({ method: "POST" })
       brand: input.brand.trim(),
       frameNumber: input.frameNumber.trim(),
       turnstileToken: typeof input.turnstileToken === "string" ? input.turnstileToken : "",
+      lang: typeof input.lang === "string" ? input.lang : "",
     };
   })
   .handler(async ({ data }): Promise<BikeCheckResult> => {
@@ -198,27 +213,30 @@ export const checkBikeByFrame = createServerFn({ method: "POST" })
     const apiKey = process.env.VELOPASS_API_KEY;
     if (!apiKey) throw new Error("server_misconfigured");
 
+    const country = resolveCountry(data.lang);
+
     // First attempt: raw brand.
     const first = await fetchByBrandFrame(apiKey, data.brand, data.frameNumber);
-    if (first) return first;
+    if (first) return { ...first, country };
 
     // Fallback: normalize brand via Claude, retry once if it changed.
     const normalized = await normalizeBrand(data.brand);
     if (normalized && normalized.toLowerCase() !== data.brand.toLowerCase()) {
       const second = await fetchByBrandFrame(apiKey, normalized, data.frameNumber);
-      if (second) return second;
+      if (second) return { ...second, country };
     }
-    return NOT_FOUND;
+    return { ...NOT_FOUND_CORE, country };
   });
 
 export const checkBike = createServerFn({ method: "POST" })
-  .inputValidator((input: { code: string; turnstileToken?: string }) => {
+  .inputValidator((input: { code: string; turnstileToken?: string; lang?: string }) => {
     if (!input || typeof input.code !== "string" || !input.code.trim()) {
       throw new Error("code_required");
     }
     return {
       code: input.code.trim(),
       turnstileToken: typeof input.turnstileToken === "string" ? input.turnstileToken : "",
+      lang: typeof input.lang === "string" ? input.lang : "",
     };
   })
   .handler(async ({ data }): Promise<BikeCheckResult> => {
@@ -230,8 +248,6 @@ export const checkBike = createServerFn({ method: "POST" })
       throw err;
     }
 
-    // Skip captcha enforcement on localhost / Lovable preview domains where the
-    // Turnstile site key is not whitelisted (widget returns no token).
     const host = (getRequestHeader("host") ?? "").toLowerCase();
     const isPreviewHost =
       host.startsWith("localhost") ||
@@ -244,6 +260,9 @@ export const checkBike = createServerFn({ method: "POST" })
 
     const apiKey = process.env.VELOPASS_API_KEY;
     if (!apiKey) throw new Error("server_misconfigured");
+
+    const country = resolveCountry(data.lang);
+    const notFound: BikeCheckResult = { ...NOT_FOUND_CORE, country };
 
     const url = `https://thirdpartyapi.prod.velopass.com/api/Bicycles?StickerCode=${encodeURIComponent(data.code)}`;
     const res = await fetch(url, {
@@ -254,11 +273,11 @@ export const checkBike = createServerFn({ method: "POST" })
       cf: { cacheTtl: 0, cacheEverything: false },
     });
 
-    if (res.status === 404) return NOT_FOUND;
+    if (res.status === 404) return notFound;
     if (!res.ok) throw new Error(`upstream_error_${res.status}`);
 
     const raw = (await res.json()) as unknown;
-    if (Array.isArray(raw) && raw.length === 0) return NOT_FOUND;
+    if (Array.isArray(raw) && raw.length === 0) return notFound;
     const mapped = mapBikePayload(raw);
-    return mapped.found ? mapped : NOT_FOUND;
+    return mapped.found ? { ...mapped, country } : notFound;
   });
