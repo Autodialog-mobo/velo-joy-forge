@@ -77,6 +77,52 @@ const PERMANENT_REDIRECTS: Record<string, string> = {
   "/al-een-sticker": "/#already-have-one",
 };
 
+const SUPPORTED_DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
+const ROBOTS_TXT = "User-agent: *\nAllow: /\nSitemap: https://velopass.com/sitemap.xml\n";
+
+function langFromRequest(request: Request): string {
+  const pathname = new URL(request.url).pathname;
+  const segment = pathname.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];
+  return segment && SUPPORTED_DOCUMENT_LANGS.has(segment) ? segment : "nl";
+}
+
+function maybeRobotsTxt(request: Request): Response | null {
+  const url = new URL(request.url);
+  if (url.pathname !== "/robots.txt") return null;
+
+  return new Response(ROBOTS_TXT, {
+    headers: {
+      "content-type": "text/plain; charset=utf-8",
+      "cache-control": "public, max-age=3600",
+    },
+  });
+}
+
+function withDocumentLang(html: string, lang: string): string {
+  return html.replace(/<html\b([^>]*)>/i, (_match, attrs: string) => {
+    if (/\slang=(['"]).*?\1/i.test(attrs)) {
+      return `<html${attrs.replace(/\slang=(['"]).*?\1/i, ` lang="${lang}"`)}>`;
+    }
+
+    return `<html lang="${lang}"${attrs}>`;
+  });
+}
+
+async function ensureDocumentLang(request: Request, response: Response): Promise<Response> {
+  const contentType = response.headers.get("content-type") ?? "";
+  if (!contentType.includes("text/html")) return response;
+
+  const html = await response.text();
+  const headers = new Headers(response.headers);
+  headers.delete("content-length");
+
+  return new Response(withDocumentLang(html, langFromRequest(request)), {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 function maybeRedirect(request: Request): Response | null {
   const url = new URL(request.url);
   const target = PERMANENT_REDIRECTS[url.pathname];
@@ -89,11 +135,14 @@ function maybeRedirect(request: Request): Response | null {
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const robotsResponse = maybeRobotsTxt(request);
+      if (robotsResponse) return robotsResponse;
       const redirectResponse = maybeRedirect(request);
       if (redirectResponse) return redirectResponse;
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalizedResponse = await normalizeCatastrophicSsrResponse(response);
+      return await ensureDocumentLang(request, normalizedResponse);
     } catch (error) {
       console.error(error);
       return brandedErrorResponse();

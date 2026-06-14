@@ -4,15 +4,27 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
-  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getRequestUrl } from "@tanstack/react-start/server";
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { initAnalytics } from "../lib/analytics";
 import { CookieConsent } from "@/components/CookieConsent";
+
+const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
+
+function langFromPathname(pathname: string): string {
+  const segment = pathname.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];
+  return segment && DOCUMENT_LANGS.has(segment) ? segment : "nl";
+}
+
+const getDocumentLang = createIsomorphicFn()
+  .server(() => langFromPathname(getRequestUrl().pathname))
+  .client(() => langFromPathname(window.location.pathname));
 
 function NotFoundComponent() {
   return (
@@ -103,9 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const langMatch = pathname?.match(/^\/([a-z]{2})(?:\/|$)/);
-  const lang = langMatch ? langMatch[1] : "nl";
+  const lang = getDocumentLang();
 
   return (
     <html lang={lang}>
