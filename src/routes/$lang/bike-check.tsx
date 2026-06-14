@@ -374,47 +374,24 @@ function BikeSearchPage() {
             <input
               id="bs-frame"
               type="text"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              spellCheck={false}
               value={frame}
-              onChange={(e) => setFrame(e.target.value)}
+              onChange={(e) => setFrame(sanitizeAlnum(e.target.value))}
               placeholder="WTU212C0774E"
-              maxLength={32}
               style={inputStyle}
             />
 
-            {/* Mock reCAPTCHA */}
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "12px 14px",
-                border: "1px solid rgba(13,31,60,0.12)",
-                borderRadius: 6,
-                background: "#F9FAFB",
-                marginTop: 14,
-                cursor: "pointer",
-                fontSize: 14,
-                color: "#0D1F3C",
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={captcha}
-                onChange={(e) => setCaptcha(e.target.checked)}
-                style={{ width: 22, height: 22, cursor: "pointer" }}
-              />
-              <span style={{ flex: 1 }}>{t("method_b.captcha")}</span>
-              <span style={{ fontSize: 10, color: "#5A7090", textAlign: "right", lineHeight: 1.2 }}>
-                reCAPTCHA
-                <br />
-                <span style={{ fontSize: 9 }}>{t("method_b.captcha_meta_privacy")}</span>
-              </span>
-            </label>
+            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
+            <div style={{ marginTop: 14 }}>
+              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
+            </div>
 
             <button
               type="submit"
-              disabled={loadingB || !brand || !frame.trim() || !captcha}
-              style={navyBtn(loadingB || !brand || !frame.trim() || !captcha)}
+              disabled={loadingB || !brand || !frame.trim() || !turnstileToken}
+              style={navyBtn(loadingB || !brand || !frame.trim() || !turnstileToken)}
             >
               {loadingB ? (
                 <>
