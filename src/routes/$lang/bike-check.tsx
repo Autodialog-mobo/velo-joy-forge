@@ -199,6 +199,7 @@ function BikeSearchPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["bike-check", "common"]);
   const runCheckBike = useServerFn(checkBike);
+  const runCheckByFrame = useServerFn(checkBikeByFrame);
 
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
