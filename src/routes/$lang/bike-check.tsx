@@ -235,25 +235,26 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{t("method_a.title")}</h2>
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
+            <input
+              id="bs-code"
+              type="text"
+              inputMode="text"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              spellCheck={false}
+              value={codeA}
+              onChange={(e) => setCodeA(sanitizeCode(e.target.value))}
+              placeholder="87CH9810171"
+              maxLength={32}
+              style={{ ...inputStyle, letterSpacing: 2, fontVariantNumeric: "tabular-nums" }}
+            />
+
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
               <button
                 type="button"
-                onClick={() => { setScanManual(false); setScanOpen(true); }}
+                onClick={() => setScanOpen(true)}
                 style={{
-                  ...navyBtn(false),
-                  marginTop: 0,
-                  width: "auto",
-                  flex: "1 1 200px",
-                  background: "#0D1F3C",
-                }}
-              >
-                <QrCode size={16} strokeWidth={2} /> {t("method_a.scan_cta")}
-              </button>
-              <button
-                type="button"
-                onClick={() => { setScanManual(true); setScanOpen(true); }}
-                style={{
-                  marginTop: 0,
                   background: "transparent",
                   color: "#0D1F3C",
                   border: "1.5px solid rgba(13,31,60,0.2)",
@@ -263,10 +264,27 @@ function BikeSearchPage() {
                   fontWeight: 500,
                   fontSize: 14,
                   cursor: "pointer",
-                  flex: "1 1 200px",
+                  flex: "1 1 180px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
                 }}
               >
-                {t("method_a.manual_cta")} →
+                <QrCode size={16} strokeWidth={2} /> {t("method_a.scan_cta")}
+              </button>
+              <button
+                type="submit"
+                disabled={loadingA || !codeA}
+                style={{ ...navyBtn(loadingA || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
+              >
+                {loadingA ? (
+                  <>
+                    <Loader2 size={16} className="bs-spin" /> {t("method_b.loading")}
+                  </>
+                ) : (
+                  t("method_b.check")
+                )}
               </button>
             </div>
           </form>
