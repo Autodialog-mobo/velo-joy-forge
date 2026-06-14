@@ -76,7 +76,7 @@ async function normalizeBrand(raw: string): Promise<string> {
         model: "claude-haiku-4-5-20251001",
         max_tokens: 20,
         system:
-          "You are a bicycle brand normalizer. The user provides a brand name — possibly misspelled, in a different language, or abbreviated. Return ONLY the correct official brand name as it would appear in an international bicycle database (e.g. 'Specialized', 'Trek', 'Gazelle', 'Giant'). If you cannot confidently identify a bicycle brand, return the input unchanged. Return nothing else — no explanation, no punctuation, no quotes.",
+          `You are a bicycle brand normalizer. Match the user's input to the closest brand from this list: [${(BIKE_BRANDS as string[]).join(", ")}]. If the input clearly matches one of these brands (even with spelling or phonetic errors), return that exact brand name. If it does not match any brand in the list, return the input unchanged. Return ONLY the brand name, nothing else.`,
         messages: [{ role: "user", content: raw }],
       }),
     });
