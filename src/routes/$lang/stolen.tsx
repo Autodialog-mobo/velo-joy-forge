@@ -124,11 +124,8 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
 }
 
 function getBrowserCountry(): "BE" | "NL" | "FR" {
-  const lang = typeof navigator !== "undefined" ? navigator.language || "" : "";
-  const region = lang.split("-")[1]?.toUpperCase();
-  if (region === "BE" || region === "NL" || region === "FR") return region;
-  if (lang.startsWith("nl")) return "NL";
-  if (lang.startsWith("fr")) return "FR";
+  // Default to BE on both server and client to avoid SSR hydration mismatch.
+  // The real visitor country is detected via cf-ipcountry in a useEffect.
   return "BE";
 }
 
