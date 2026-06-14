@@ -37,6 +37,7 @@ import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
 import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
+import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -178,6 +179,12 @@ const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
   path: '/order/thanks',
   getParentRoute: () => LangRouteRoute,
 } as any)
+const LangGuidesBuyingSecondHandRoute =
+  LangGuidesBuyingSecondHandRouteImport.update({
+    id: '/guides/buying-second-hand',
+    path: '/guides/buying-second-hand',
+    getParentRoute: () => LangRouteRoute,
+  } as any)
 const ApiPublicPaymentsMollieWebhookRoute =
   ApiPublicPaymentsMollieWebhookRouteImport.update({
     id: '/api/public/payments/mollie-webhook',
@@ -211,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang/': typeof LangIndexRoute
+  '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -240,6 +248,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang': typeof LangIndexRoute
+  '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -272,6 +281,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang/': typeof LangIndexRoute
+  '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -304,6 +314,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bestellen/bedankt'
     | '/$lang/'
+    | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -333,6 +344,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/bestellen/bedankt'
     | '/$lang'
+    | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -364,6 +376,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/bestellen/bedankt'
     | '/$lang/'
+    | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -583,6 +596,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangOrderThanksRouteImport
       parentRoute: typeof LangRouteRoute
     }
+    '/$lang/guides/buying-second-hand': {
+      id: '/$lang/guides/buying-second-hand'
+      path: '/guides/buying-second-hand'
+      fullPath: '/$lang/guides/buying-second-hand'
+      preLoaderRoute: typeof LangGuidesBuyingSecondHandRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
     '/api/public/payments/mollie-webhook': {
       id: '/api/public/payments/mollie-webhook'
       path: '/api/public/payments/mollie-webhook'
@@ -607,6 +627,7 @@ interface LangRouteRouteChildren {
   LangShopRoute: typeof LangShopRoute
   LangStolenRoute: typeof LangStolenRoute
   LangIndexRoute: typeof LangIndexRoute
+  LangGuidesBuyingSecondHandRoute: typeof LangGuidesBuyingSecondHandRoute
   LangOrderThanksRoute: typeof LangOrderThanksRoute
 }
 
@@ -624,6 +645,7 @@ const LangRouteRouteChildren: LangRouteRouteChildren = {
   LangShopRoute: LangShopRoute,
   LangStolenRoute: LangStolenRoute,
   LangIndexRoute: LangIndexRoute,
+  LangGuidesBuyingSecondHandRoute: LangGuidesBuyingSecondHandRoute,
   LangOrderThanksRoute: LangOrderThanksRoute,
 }
 
