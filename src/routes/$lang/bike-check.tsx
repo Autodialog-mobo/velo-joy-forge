@@ -245,7 +245,7 @@ function BikeSearchPage() {
               spellCheck={false}
               value={codeA}
               onChange={(e) => setCodeA(sanitizeCode(e.target.value))}
-              placeholder="87CH9810171"
+              placeholder="87CH981017"
               maxLength={32}
               style={{ ...inputStyle, letterSpacing: 2, fontVariantNumeric: "tabular-nums" }}
             />
