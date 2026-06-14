@@ -83,5 +83,15 @@
     "not_registered_title": "Nog niet geregistreerd",
     "not_registered_body": "Deze fiets staat nog niet in Velopass. Registreer 'm om hem te beschermen.",
     "not_registered_cta": "Registreer je fiets →"
-  }
+  },
+  "bike_details": {
+    "heading": "Details van de fiets",
+    "brand": "Merk",
+    "model": "Model",
+    "color": "Kleur",
+    "type": "Type",
+    "year": "Bouwjaar",
+    "unknown": "Onbekend"
+  },
+  "police_note": "Heb je deze fiets gevonden? Neem contact op met de politie of meld het bij Velopass."
 }
