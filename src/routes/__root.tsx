@@ -13,6 +13,14 @@ import appCss from "../styles.css?url";
 import { initAnalytics } from "../lib/analytics";
 import { CookieConsent } from "@/components/CookieConsent";
 
+const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
+
+function getClientDocumentLang(): string {
+  if (typeof window === "undefined") return "nl";
+  const segment = window.location.pathname.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];
+  return segment && DOCUMENT_LANGS.has(segment) ? segment : "nl";
+}
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -102,8 +110,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
+  const lang = getClientDocumentLang();
+
   return (
-    <html lang="nl">
+    <html lang={lang}>
       <head>
         <HeadContent />
       </head>
