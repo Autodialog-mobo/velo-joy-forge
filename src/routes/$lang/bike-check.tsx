@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
@@ -10,6 +11,7 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 import { buildLocalizedHead } from "@/i18n/seo";
 import { isLang } from "@/i18n/config";
+import { checkBike, type BikeCheckResult } from "@/lib/bike-check.functions";
 import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
@@ -37,8 +39,6 @@ export const Route = createFileRoute("/$lang/bike-check")({
   component: BikeSearchPage,
 });
 
-type Status = "secured" | "secured_reported" | "not_registered";
-
 const BRANDS = [
   "Trek", "Specialized", "Cube", "Giant", "Cannondale", "Scott", "Bianchi",
   "BMC", "Canyon", "Merida", "Ridley", "KTM", "Stevens", "Koga", "Gazelle",
@@ -47,20 +47,10 @@ const BRANDS = [
 
 type TFn = ReturnType<typeof useTranslation>["t"];
 
-// Mock backend — deterministic based on input
-async function mockBikeStatus(payload: { velopass_code?: string; frame_number?: string }): Promise<{ status: Status }> {
-  await new Promise((r) => setTimeout(r, 700));
-  const key = (payload.velopass_code || payload.frame_number || "").toUpperCase().replace(/\s/g, "");
-  if (!key) throw new Error("empty");
-  const sum = key.split("").reduce((a, c) => a + (c.charCodeAt(0) % 7), 0);
-  const mod = sum % 3;
-  const status: Status = mod === 0 ? "secured" : mod === 1 ? "secured_reported" : "not_registered";
-  return { status };
-}
-
 function BikeSearchPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["bike-check", "common"]);
+  const runCheckBike = useServerFn(checkBike);
 
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
@@ -72,7 +62,7 @@ function BikeSearchPage() {
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
-  const [result, setResult] = useState<Status | null>(null);
+  const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
 
@@ -84,8 +74,8 @@ function BikeSearchPage() {
     setLoadingA(true);
     setLastMethod("a");
     try {
-      const res = await mockBikeStatus({ velopass_code: codeA.trim() });
-      setResult(res.status);
+      const res = await runCheckBike({ data: { code: codeA.trim() } });
+      setResult(res);
     } catch {
       setError(t("errors.generic"));
     } finally {
@@ -101,8 +91,8 @@ function BikeSearchPage() {
     setLoadingB(true);
     setLastMethod("b");
     try {
-      const res = await mockBikeStatus({ frame_number: `${brand}-${frame.trim()}` });
-      setResult(res.status);
+      const res = await runCheckBike({ data: { code: frame.trim() } });
+      setResult(res);
     } catch {
       setError(t("errors.generic"));
     } finally {
@@ -369,9 +359,9 @@ function BikeSearchPage() {
         {/* RESULT */}
         {result && (
           <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
-            {result === "secured" && <SecuredCard t={t} />}
-            {result === "secured_reported" && <ReportedCard t={t} />}
-            {result === "not_registered" && <NotRegCard t={t} />}
+            {!result.found && <NotRegCard t={t} />}
+            {result.found && result.status === "ALL_CLEAR" && <SecuredCard t={t} bike={result} />}
+            {result.found && result.status === "REPORTED" && <ReportedCard t={t} bike={result} />}
           </div>
         )}
       </section>
@@ -772,7 +762,52 @@ const resultBody: React.CSSProperties = {
   marginBottom: 20,
 };
 
-function SecuredCard({ t }: { t: TFn }) {
+function BikeDetails({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
+  const unknown = t("bike_details.unknown");
+  const rows: Array<[string, string]> = [
+    [t("bike_details.brand"), bike.brand ?? unknown],
+    [t("bike_details.model"), bike.model ?? unknown],
+    [t("bike_details.color"), bike.primaryColor ?? unknown],
+    [t("bike_details.type"), bike.bikeType ?? unknown],
+    [t("bike_details.year"), bike.yearOfCreation ? String(bike.yearOfCreation) : unknown],
+  ];
+  return (
+    <div
+      style={{
+        marginTop: 4,
+        marginBottom: 20,
+        background: "rgba(13,31,60,0.03)",
+        border: "1px solid rgba(13,31,60,0.08)",
+        borderRadius: 10,
+        padding: "14px 16px",
+      }}
+    >
+      <div
+        style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 500,
+          fontSize: 11,
+          textTransform: "uppercase",
+          letterSpacing: 1,
+          color: "#5A7090",
+          marginBottom: 10,
+        }}
+      >
+        {t("bike_details.heading")}
+      </div>
+      <dl style={{ display: "grid", gridTemplateColumns: "auto 1fr", columnGap: 16, rowGap: 6, margin: 0, fontFamily: "'DM Sans', sans-serif", fontSize: 14 }}>
+        {rows.map(([k, v]) => (
+          <div key={k} style={{ display: "contents" }}>
+            <dt style={{ color: "#5A7090" }}>{k}</dt>
+            <dd style={{ margin: 0, color: "#0D1F3C", fontWeight: 500 }}>{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
+function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
     <div style={resultCard("#2ECC8A")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -781,6 +816,7 @@ function SecuredCard({ t }: { t: TFn }) {
       </div>
       <h3 style={resultTitle}>{t("result.secured_title")}</h3>
       <p style={resultBody}>{t("result.secured_body")}</p>
+      <BikeDetails t={t} bike={bike} />
       <a
         href="https://velopass.com"
         style={{ color: "#2ECC8A", fontWeight: 500, textDecoration: "none", fontSize: 14 }}
@@ -791,7 +827,7 @@ function SecuredCard({ t }: { t: TFn }) {
   );
 }
 
-function ReportedCard({ t }: { t: TFn }) {
+function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
     <div style={resultCard("#F59E0B")}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
@@ -801,6 +837,22 @@ function ReportedCard({ t }: { t: TFn }) {
       </div>
       <h3 style={resultTitle}>{t("result.reported_title")}</h3>
       <p style={resultBody}>{t("result.reported_body")}</p>
+      <BikeDetails t={t} bike={bike} />
+      <p
+        style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: 14,
+          color: "#9A3412",
+          background: "#FEF3C7",
+          border: "1px solid #FDE68A",
+          padding: "10px 14px",
+          borderRadius: 8,
+          margin: "0 0 16px",
+          lineHeight: 1.5,
+        }}
+      >
+        {t("police_note")}
+      </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <a
           href="mailto:found@velopass.com"

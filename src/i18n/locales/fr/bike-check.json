@@ -83,5 +83,15 @@
     "not_registered_title": "Tu n'es pas inscrit",
     "not_registered_body": "Ce vélo ne figure pas dans la base de données d'Velopass. Enregistre-le pour le protéger.",
     "not_registered_cta": "Enregistre ton vélo →"
-  }
+  },
+  "bike_details": {
+    "heading": "Details van de fiets",
+    "brand": "Merk",
+    "model": "Model",
+    "color": "Kleur",
+    "type": "Type",
+    "year": "Bouwjaar",
+    "unknown": "Onbekend"
+  },
+  "police_note": "Heb je deze fiets gevonden? Neem contact op met de politie of meld het bij Velopass."
 }
