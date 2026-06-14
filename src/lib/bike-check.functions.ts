@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequestIP } from "@tanstack/react-start/server";
+import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
 
@@ -79,8 +79,17 @@ export const checkBike = createServerFn({ method: "POST" })
       throw err;
     }
 
-    const captchaOk = await verifyTurnstile(data.turnstileToken, ip);
-    if (!captchaOk) throw new Error("captcha_failed");
+    // Skip captcha enforcement on localhost / Lovable preview domains where the
+    // Turnstile site key is not whitelisted (widget returns no token).
+    const host = (getRequestHeader("host") ?? "").toLowerCase();
+    const isPreviewHost =
+      host.startsWith("localhost") ||
+      host.includes("id-preview--") ||
+      host.includes("-dev.lovable.app");
+    if (!isPreviewHost) {
+      const captchaOk = await verifyTurnstile(data.turnstileToken, ip);
+      if (!captchaOk) throw new Error("captcha_failed");
+    }
 
     const apiKey = process.env.VELOPASS_API_KEY;
     if (!apiKey) throw new Error("server_misconfigured");
