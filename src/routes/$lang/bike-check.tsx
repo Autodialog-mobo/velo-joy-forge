@@ -885,7 +885,9 @@ function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
       <p style={resultBody}>{t("result.secured_body")}</p>
       <BikeDetails t={t} bike={bike} />
       <a
-        href="https://velopass.com"
+        href="https://app.velopass.com/dashboard"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{ color: "#2ECC8A", fontWeight: 500, textDecoration: "none", fontSize: 14 }}
       >
         {t("result.secured_cta")}
