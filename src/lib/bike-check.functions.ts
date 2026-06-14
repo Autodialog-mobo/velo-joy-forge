@@ -236,6 +236,9 @@ export const checkBike = createServerFn({ method: "POST" })
     const res = await fetch(url, {
       method: "GET",
       headers: { "X-Api-Key": apiKey, Accept: "application/json" },
+      cache: "no-store",
+      // @ts-expect-error Cloudflare Workers-specific fetch option
+      cf: { cacheTtl: 0, cacheEverything: false },
     });
 
     if (res.status === 404) {
