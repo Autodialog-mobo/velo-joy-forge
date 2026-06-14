@@ -286,6 +286,7 @@ function BikeSearchPage() {
           <li><a href={`/${lang}#order-sticker`}>{t("nav.order_sticker")}</a></li>
           <li><a href={`/${lang}#community`}>{t("nav.community")}</a></li>
           <li><Link to="/$lang/bike-check" params={{ lang }} search={{ lng: "nl-nl" }}>{t("nav.bike_check")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "rider" }}>{t("common:nav.contact")}</Link></li>
           <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
