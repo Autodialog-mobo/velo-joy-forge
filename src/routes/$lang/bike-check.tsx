@@ -59,7 +59,7 @@ function BikeSearchPage() {
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
 
-  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
@@ -245,8 +245,8 @@ function BikeSearchPage() {
               spellCheck={false}
               value={codeA}
               onChange={(e) => setCodeA(sanitizeCode(e.target.value))}
-              placeholder="87CH981017"
-              maxLength={32}
+              placeholder="UC9K4D3NCJ"
+              maxLength={10}
               style={{ ...inputStyle, letterSpacing: 2, fontVariantNumeric: "tabular-nums" }}
             />
 
