@@ -17,6 +17,7 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/shop", changefreq: "weekly", priority: "0.8" },
   { path: "/bike-check", changefreq: "weekly", priority: "0.8" },
   { path: "/stolen", changefreq: "monthly", priority: "0.7" },
+  { path: "/guides/buying-second-hand", changefreq: "monthly", priority: "0.7" },
   { path: "/already-have-one", changefreq: "monthly", priority: "0.6" },
   { path: "/manufacturer", changefreq: "monthly", priority: "0.6" },
   { path: "/insurance", changefreq: "monthly", priority: "0.6" },

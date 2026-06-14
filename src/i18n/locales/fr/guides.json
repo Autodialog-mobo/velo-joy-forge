@@ -1,0 +1,66 @@
+{
+  "buying_second_hand": {
+    "meta": {
+      "title": "Ce vélo est-il volé ? Acheter un vélo d'occasion en toute sécurité — Velopass",
+      "description": "Vérifiez si un vélo d'occasion est volé. Checklist : numéro de cadre, facture d'origine et contrôle d'enregistrement via Velopass Bike Check."
+    },
+    "eyebrow": "Guide",
+    "title": "Comment savoir si un vélo est volé ?",
+    "intro": "Acheter un vélo d'occasion, c'est malin — à condition d'être sûr qu'il n'est pas volé. Cette checklist t'aide à vérifier en cinq minutes que le vélo est clean, et à organiser un transfert de propriété en toute sécurité.",
+    "tldr_title": "En bref",
+    "tldr": "Demande le numéro de cadre et la facture d'origine, vérifie le vélo sur bikesearch.velopass.com, et fais transférer la propriété par le vendeur via son compte Velopass. Pas d'enregistrement ou pas de facture ? Passe ton chemin.",
+    "cta_primary": "Vérifier un vélo maintenant",
+    "cta_secondary": "Signaler un vélo volé",
+    "sections": [
+      {
+        "title": "1. Demande toujours le numéro de cadre",
+        "body": "Le numéro de cadre est le code unique gravé par le fabricant sur le cadre — généralement sous le boîtier de pédalier, sur le tube de direction ou près de la roue arrière. Demande au vendeur une photo nette avant de te déplacer. Pas de numéro de cadre = pas de transaction."
+      },
+      {
+        "title": "2. Vérifie le vélo avec Velopass Bike Check",
+        "body": "Saisis le numéro de cadre ou le code Velopass (sur l'étiquette Frame-ID) dans notre Bike Check. Tu verras immédiatement si le vélo est signalé comme volé ou perdu, et s'il a un propriétaire actif associé. Gratuit, anonyme, environ 10 secondes."
+      },
+      {
+        "title": "3. Demande la facture d'achat d'origine",
+        "body": "Un vendeur honnête possède la facture d'origine (ou un précédent bon de transfert). Vérifie le nom, la date et le numéro de cadre sur la facture — ils doivent correspondre au vélo et au vendeur. Un doute ? Demande une copie de sa pièce d'identité et compare."
+      },
+      {
+        "title": "4. Repère les signaux suspects",
+        "list": [
+          "Prix bien en dessous de la valeur du modèle sur le marché",
+          "Vendeur pressé, pas de lieu de rendez-vous fixe, espèces uniquement",
+          "Rayures ou dégâts autour du numéro de cadre (potentiellement limé)",
+          "Pas de clé pour l'antivol, pas de manuel, pas d'historique",
+          "Histoire qui ne tient pas : « c'est à un ami », « héritage », « pas le temps d'expliquer »"
+        ]
+      },
+      {
+        "title": "5. Organise le transfert de propriété sur place",
+        "body": "Le vélo a un enregistrement Velopass ? Demande au vendeur de lancer le transfert sur place depuis son compte Velopass. Le vélo est alors officiellement à ton nom — et tu peux le récupérer s'il est volé plus tard. Pas encore de Velopass ? Enregistre-le toi-même dès que tu l'achètes."
+      },
+      {
+        "title": "6. Et si le vélo s'avère être volé ?",
+        "body": "Ne l'achète pas. Un vélo volé reste la propriété du propriétaire d'origine — tu perds donc ton argent et le vélo. Signale l'annonce à la plateforme (Leboncoin, Facebook, 2ememain) et, si tu peux identifier le vendeur, à la police."
+      }
+    ],
+    "faq_title": "Questions fréquentes",
+    "faq": [
+      {
+        "q": "Peut-on voir à l'aspect d'un vélo s'il est volé ?",
+        "a": "Pas de façon fiable. Un vélo soigné peut être volé ; un vélo abîmé peut être vendu honnêtement. Seuls le numéro de cadre + un contrôle d'enregistrement donnent une certitude."
+      },
+      {
+        "q": "Et si le vendeur refuse de partager le numéro de cadre ?",
+        "a": "C'est un signal d'alarme. Un vendeur honnête n'a rien à cacher. Passe ton chemin."
+      },
+      {
+        "q": "Velopass Bike Check est-il gratuit ?",
+        "a": "Oui. La vérification est gratuite, anonyme, et fonctionne pour n'importe quel vélo — même les vélos non enregistrés chez Velopass sont contrôlés via notre base de données des vols."
+      },
+      {
+        "q": "Que faire si j'ai acheté par erreur un vélo volé ?",
+        "a": "Signale-le à la police et rends le vélo à son propriétaire légitime. Tu peux essayer de te faire rembourser par le vendeur, mais juridiquement tu n'es pas protégé."
+      }
+    ]
+  }
+}

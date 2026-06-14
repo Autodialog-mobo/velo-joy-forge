@@ -194,6 +194,7 @@ type TFn = ReturnType<typeof useTranslation>["t"];
 function BikeSearchPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["bike-check", "common"]);
+  const { t: tGuides } = useTranslation("guides");
   const runCheckBike = useServerFn(checkBike);
   const runCheckByFrame = useServerFn(checkBikeByFrame);
 
@@ -840,7 +841,70 @@ function BikeSearchPage() {
         </div>
       </section>
 
+      <section
+        style={{
+          maxWidth: 900,
+          margin: "40px auto 0",
+          padding: "0 6vw",
+        }}
+      >
+        <Link
+          to="/$lang/guides/buying-second-hand"
+          params={{ lang }}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 16,
+            padding: "18px 22px",
+            borderRadius: 14,
+            background: "color-mix(in srgb, var(--green) 8%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--green) 25%, transparent)",
+            textDecoration: "none",
+            color: "var(--navy)",
+          }}
+        >
+          <div style={{ flex: "1 1 280px" }}>
+            <p
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: "1.2px",
+                textTransform: "uppercase",
+                color: "var(--green)",
+                margin: "0 0 4px",
+              }}
+            >
+              {tGuides("buying_second_hand.eyebrow")}
+            </p>
+            <p
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: 18,
+                fontWeight: 700,
+                margin: 0,
+                letterSpacing: "-0.3px",
+              }}
+            >
+              {tGuides("buying_second_hand.title")}
+            </p>
+          </div>
+          <span
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: "var(--green)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {tGuides("buying_second_hand.cta_primary")} →
+          </span>
+        </Link>
+      </section>
+
       <Footer />
+
 
       <style>{`
         .bs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }

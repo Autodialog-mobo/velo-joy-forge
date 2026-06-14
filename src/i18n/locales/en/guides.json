@@ -1,0 +1,66 @@
+{
+  "buying_second_hand": {
+    "meta": {
+      "title": "Is this bike stolen? How to safely buy a second-hand bike — Velopass",
+      "description": "Check if a second-hand bike is stolen. Checklist for frame number, original invoice, and registration check via Velopass Bike Check."
+    },
+    "eyebrow": "Guide",
+    "title": "How do you know if a bike is stolen?",
+    "intro": "Buying a second-hand bike is smart — but only if you can be sure it isn't stolen. This checklist helps you verify in five minutes whether the bike is clean, and how to safely transfer ownership.",
+    "tldr_title": "Quick summary",
+    "tldr": "Ask for the frame number and the original invoice, check the bike on bikesearch.velopass.com, and have the seller transfer ownership via their Velopass account. No registration or no invoice? Walk away.",
+    "cta_primary": "Check a bike now",
+    "cta_secondary": "Report a stolen bike",
+    "sections": [
+      {
+        "title": "1. Always ask for the frame number",
+        "body": "The frame number is the unique serial code the manufacturer has engraved on the frame — usually under the bottom bracket, on the head tube, or near the rear wheel. Ask the seller for a clear photo before you visit. No frame number = no deal."
+      },
+      {
+        "title": "2. Check the bike with Velopass Bike Check",
+        "body": "Enter the frame number or the Velopass code (on the Frame-ID sticker) into our Bike Check. You'll see straight away whether the bike is registered as stolen or missing, and whether it has an active owner attached. Free, anonymous, about 10 seconds."
+      },
+      {
+        "title": "3. Ask for the original purchase invoice",
+        "body": "An honest seller has the original invoice (or a previous transfer receipt). Check the name, date and frame number on the invoice — they must match the bike and the seller. Doubts? Ask for a copy of their ID and compare."
+      },
+      {
+        "title": "4. Watch for red flags",
+        "list": [
+          "Price far below the model's market value",
+          "Seller in a rush, no fixed meeting spot, cash only",
+          "Scratches or damage around the frame number (possibly filed off)",
+          "No key for the lock, no manual, no history",
+          "Story doesn't add up: \"from a friend\", \"inheritance\", \"no time to explain\""
+        ]
+      },
+      {
+        "title": "5. Handle the ownership transfer on the spot",
+        "body": "Does the bike have a Velopass registration? Ask the seller to start the transfer right there via their Velopass account. The bike is then officially in your name — and you can get it back if it's stolen later. No Velopass yet? Register it yourself as soon as you buy it."
+      },
+      {
+        "title": "6. What if the bike turns out to be stolen?",
+        "body": "Don't buy it. A stolen bike remains the property of the original owner, so you lose both your money and the bike. Report the listing to the platform (eBay, Facebook, Gumtree) and, if you can identify the seller, to the police."
+      }
+    ],
+    "faq_title": "Frequently asked questions",
+    "faq": [
+      {
+        "q": "Can I tell from how a bike looks whether it's stolen?",
+        "a": "Not reliably. A clean, well-kept bike can be stolen; a worn-down one can be sold honestly. Only the frame number + a registration check give certainty."
+      },
+      {
+        "q": "What if the seller refuses to share the frame number?",
+        "a": "That's a red flag. An honest seller has nothing to hide. Walk away."
+      },
+      {
+        "q": "Is Velopass Bike Check free?",
+        "a": "Yes. The check is free, anonymous, and works for any bike — even bikes that aren't registered with Velopass are checked against our theft database."
+      },
+      {
+        "q": "What do I do if I've accidentally bought a stolen bike?",
+        "a": "Report it to the police and return the bike to its rightful owner. You can try to get your money back from the seller, but legally you're not protected."
+      }
+    ]
+  }
+}
