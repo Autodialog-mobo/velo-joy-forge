@@ -1119,6 +1119,46 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
       <h3 style={resultTitle}>{t("result.reported_title")}</h3>
       <p style={resultBody}>{t("result.reported_body")}</p>
       <BikeDetails t={t} bike={bike} />
+
+      {/* Owner contact — primary, warm */}
+      {bike.lostReportUrl && (
+        <>
+          <div style={{ marginBottom: 20 }}>
+            <p
+              style={{
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 14,
+                color: "#5A7090",
+                lineHeight: 1.6,
+                margin: "0 0 10px",
+              }}
+            >
+              {t("result.contact_owner_note")}
+            </p>
+            <a
+              href={bike.lostReportUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: "#0D1F3C",
+                color: "#fff",
+                padding: "12px 20px",
+                borderRadius: 10,
+                textDecoration: "none",
+                fontSize: 14,
+                fontWeight: 500,
+                fontFamily: "'DM Sans', sans-serif",
+                display: "inline-block",
+              }}
+            >
+              {t("result.contact_owner")}
+            </a>
+          </div>
+          <div style={{ height: 1, background: "rgba(13,31,60,0.1)", margin: "0 0 20px" }} />
+        </>
+      )}
+
+      {/* Police referral — secondary, formal */}
       <p
         style={{
           fontFamily: "'DM Sans', sans-serif",
@@ -1135,26 +1175,6 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
         {t(cfg.noteKey)}
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        {bike.lostReportUrl && (
-          <a
-            href={bike.lostReportUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              background: "#0D1F3C",
-              color: "#fff",
-              padding: "12px 20px",
-              borderRadius: 10,
-              textDecoration: "none",
-              fontSize: 14,
-              fontWeight: 500,
-              fontFamily: "'DM Sans', sans-serif",
-              display: "inline-block",
-            }}
-          >
-            {t("result.reported_cta_primary")}
-          </a>
-        )}
         <a href={cfg.primaryHref} target="_blank" rel="noopener" style={outlinedBtn}>
           {t(cfg.primaryKey)}
         </a>

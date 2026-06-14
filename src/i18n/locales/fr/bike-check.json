@@ -79,6 +79,8 @@
     "reported_title": "Ce vélo a été signalé",
     "reported_body": "Ce vélo est enregistré et son propriétaire en donne régulièrement des nouvelles. La communauté Velopass mène des recherches actives.",
     "reported_cta_primary": "Signaler un vélo trouvé →",
+    "contact_owner": "Let the owner know you found it →",
+    "contact_owner_note": "You send a message directly to the owner. You can do this anonymously too.",
     "not_registered_title": "Tu n'es pas inscrit",
     "not_registered_body": "Ce vélo ne figure pas dans la base de données d'Velopass. Enregistre-le pour le protéger.",
     "not_registered_cta": "Enregistre ton vélo →",

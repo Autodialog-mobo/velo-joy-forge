@@ -79,6 +79,8 @@
     "reported_title": "This bike has been reported",
     "reported_body": "This bike is registered and actively reported by its owner. The Velopass Community is searching actively.",
     "reported_cta_primary": "Report a found bike →",
+    "contact_owner": "Let the owner know you found it →",
+    "contact_owner_note": "You send a message directly to the owner. You can do this anonymously too.",
     "not_registered_title": "Not registered",
     "not_registered_body": "This bike is not in the Velopass database. Register it to protect it.",
     "not_registered_cta": "Register your bike →",
