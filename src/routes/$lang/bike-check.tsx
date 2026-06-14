@@ -12,6 +12,7 @@ import { trackRegisterBikeClick } from "@/lib/analytics";
 import { buildLocalizedHead } from "@/i18n/seo";
 import { isLang } from "@/i18n/config";
 import { checkBike, checkBikeByFrame, type BikeCheckResult } from "@/lib/bike-check.functions";
+import BIKE_BRANDS from "@/data/bike-brands.json";
 import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
