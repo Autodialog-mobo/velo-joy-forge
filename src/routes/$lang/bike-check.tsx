@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -16,6 +16,64 @@ import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
 import deBikeCheck from "@/i18n/locales/de/bike-check.json";
+
+// Cloudflare Turnstile site key — placeholder; replace with the real key from the Cloudflare dashboard.
+const TURNSTILE_SITE_KEY = "0x4AAAAAAA_PLACEHOLDER_REPLACE_ME";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+      remove: (id: string) => void;
+      reset: (id?: string) => void;
+    };
+  }
+}
+
+function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: string) => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+  const onTokenRef = useRef(onToken);
+  onTokenRef.current = onToken;
+
+  useEffect(() => {
+    let cancelled = false;
+    const render = () => {
+      if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) return;
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        size: "invisible",
+        callback: (token: string) => onTokenRef.current(token),
+        "refresh-expired": "auto",
+        "error-callback": () => onTokenRef.current(""),
+        "expired-callback": () => onTokenRef.current(""),
+      });
+    };
+    if (window.turnstile) {
+      render();
+    } else {
+      const SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      let script = document.querySelector<HTMLScriptElement>(`script[src^="${SRC}"]`);
+      if (!script) {
+        script = document.createElement("script");
+        script.src = SRC;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+      script.addEventListener("load", render);
+    }
+    return () => {
+      cancelled = true;
+      if (widgetIdRef.current && window.turnstile) {
+        try { window.turnstile.remove(widgetIdRef.current); } catch { /* ignore */ }
+        widgetIdRef.current = null;
+      }
+    };
+  }, [siteKey]);
+
+  return <div ref={containerRef} />;
+}
 
 const BIKE_CHECK_META = {
   nl: nlBikeCheck.meta,
@@ -55,11 +113,12 @@ function BikeSearchPage() {
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
   const [frame, setFrame] = useState("");
-  const [captcha, setCaptcha] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+  const sanitizeAlnum = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
@@ -75,7 +134,7 @@ function BikeSearchPage() {
     setLoadingA(true);
     setLastMethod("a");
     try {
-      const res = await runCheckBike({ data: { code: clean } });
+      const res = await runCheckBike({ data: { code: clean, turnstileToken } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
@@ -97,13 +156,14 @@ function BikeSearchPage() {
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!brand || !frame.trim() || !captcha) return;
+    const cleanFrame = sanitizeAlnum(frame);
+    if (!brand || !cleanFrame || !turnstileToken) return;
     setError(null);
     setResult(null);
     setLoadingB(true);
     setLastMethod("b");
     try {
-      const res = await runCheckBike({ data: { code: frame.trim() } });
+      const res = await runCheckBike({ data: { code: cleanFrame, turnstileToken } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
@@ -314,47 +374,24 @@ function BikeSearchPage() {
             <input
               id="bs-frame"
               type="text"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              spellCheck={false}
               value={frame}
-              onChange={(e) => setFrame(e.target.value)}
+              onChange={(e) => setFrame(sanitizeAlnum(e.target.value))}
               placeholder="WTU212C0774E"
-              maxLength={32}
               style={inputStyle}
             />
 
-            {/* Mock reCAPTCHA */}
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "12px 14px",
-                border: "1px solid rgba(13,31,60,0.12)",
-                borderRadius: 6,
-                background: "#F9FAFB",
-                marginTop: 14,
-                cursor: "pointer",
-                fontSize: 14,
-                color: "#0D1F3C",
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={captcha}
-                onChange={(e) => setCaptcha(e.target.checked)}
-                style={{ width: 22, height: 22, cursor: "pointer" }}
-              />
-              <span style={{ flex: 1 }}>{t("method_b.captcha")}</span>
-              <span style={{ fontSize: 10, color: "#5A7090", textAlign: "right", lineHeight: 1.2 }}>
-                reCAPTCHA
-                <br />
-                <span style={{ fontSize: 9 }}>{t("method_b.captcha_meta_privacy")}</span>
-              </span>
-            </label>
+            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
+            <div style={{ marginTop: 14 }}>
+              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
+            </div>
 
             <button
               type="submit"
-              disabled={loadingB || !brand || !frame.trim() || !captcha}
-              style={navyBtn(loadingB || !brand || !frame.trim() || !captcha)}
+              disabled={loadingB || !brand || !frame.trim() || !turnstileToken}
+              style={navyBtn(loadingB || !brand || !frame.trim() || !turnstileToken)}
             >
               {loadingB ? (
                 <>
@@ -848,7 +885,9 @@ function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
       <p style={resultBody}>{t("result.secured_body")}</p>
       <BikeDetails t={t} bike={bike} />
       <a
-        href="https://velopass.com"
+        href="https://app.velopass.com/dashboard"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{ color: "#2ECC8A", fontWeight: 500, textDecoration: "none", fontSize: 14 }}
       >
         {t("result.secured_cta")}
