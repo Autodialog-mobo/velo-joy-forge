@@ -468,7 +468,7 @@ function GestolenPage() {
               flexWrap: "wrap",
             }}
           >
-            {(["BE", "NL", "FR"] as const).map((code) => {
+            {(["BE", "NL", "FR", "DE"] as const).map((code) => {
               const active = country === code;
               return (
                 <button
