@@ -1,5 +1,7 @@
-import { Fragment, useState, type ReactNode } from "react";
+import { Fragment, useState, useEffect, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { getVisitorCountry } from "@/lib/visitor-country.functions";
 import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
@@ -260,6 +262,21 @@ function GestolenPage() {
   const { t } = useTranslation(["stolen", "common"]);
   const [navOpen, setNavOpen] = useState(false);
   const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
+  const fetchVisitorCountry = useServerFn(getVisitorCountry);
+  useEffect(() => {
+    let cancelled = false;
+    fetchVisitorCountry()
+      .then((res) => {
+        if (cancelled) return;
+        if (res.country === "BE" || res.country === "NL" || res.country === "FR") {
+          setCountry(res.country);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [fetchVisitorCountry]);
 
   const argRowsRaw = t("argument.rows", { returnObjects: true });
   const argRows: [string, string][] = Array.isArray(argRowsRaw) ? (argRowsRaw as [string, string][]) : [];
