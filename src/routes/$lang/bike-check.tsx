@@ -11,7 +11,7 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import { trackRegisterBikeClick } from "@/lib/analytics";
 import { buildLocalizedHead } from "@/i18n/seo";
 import { isLang } from "@/i18n/config";
-import { checkBike, type BikeCheckResult } from "@/lib/bike-check.functions";
+import { checkBike, checkBikeByFrame, type BikeCheckResult } from "@/lib/bike-check.functions";
 import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
@@ -199,6 +199,7 @@ function BikeSearchPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["bike-check", "common"]);
   const runCheckBike = useServerFn(checkBike);
+  const runCheckByFrame = useServerFn(checkBikeByFrame);
 
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
@@ -255,7 +256,9 @@ function BikeSearchPage() {
     setLoadingB(true);
     setLastMethod("b");
     try {
-      const res = await runCheckBike({ data: { code: cleanFrame, turnstileToken } });
+      const res = await runCheckByFrame({
+        data: { brand, frameNumber: cleanFrame, turnstileToken },
+      });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
