@@ -121,6 +121,44 @@ function AdminPage() {
   const [detailOrder, setDetailOrder] = useState<any>(null);
   const [labelCopied, setLabelCopied] = useState(false);
   const [detailBusy, setDetailBusy] = useState(false);
+  const [batchStatus, setBatchStatus] = useState<string | null>(null);
+  const [batchQueue, setBatchQueue] = useState<string[]>([]);
+  const [batchIndex, setBatchIndex] = useState(0);
+  const [batchDone, setBatchDone] = useState(false);
+
+  const openDetail = (o: any, queueSource?: any[]) => {
+    setDetailOrder(o);
+    setBatchStatus(o.status);
+    const source = queueSource ?? [];
+    const queue = source.filter((x: any) => x.status === o.status).map((x: any) => x.id);
+    setBatchQueue(queue);
+    setBatchIndex(Math.max(0, queue.indexOf(o.id)));
+    setBatchDone(false);
+  };
+
+  const closeDetail = () => {
+    setDetailOrder(null);
+    setBatchStatus(null);
+    setBatchQueue([]);
+    setBatchIndex(0);
+    setBatchDone(false);
+  };
+
+  const advanceBatch = async () => {
+    const res = await refetch();
+    if (!batchStatus) return;
+    const latest = res.data?.orders ?? [];
+    const byId = new Map<string, any>(latest.map((o: any) => [o.id, o]));
+    for (let i = batchIndex + 1; i < batchQueue.length; i++) {
+      const candidate = byId.get(batchQueue[i]);
+      if (candidate && candidate.status === batchStatus) {
+        setDetailOrder(candidate);
+        setBatchIndex(i);
+        return;
+      }
+    }
+    setBatchDone(true);
+  };
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
@@ -645,7 +683,7 @@ function AdminPage() {
                     return (
                       <tr
                         key={o.id}
-                        onClick={() => setDetailOrder(o)}
+                        onClick={() => openDetail(o, filtered)}
                         className="row-link cursor-pointer"
                         style={{
                           borderBottom: isLast ? "none" : `1px solid ${SURFACE_BORDER}`,
@@ -743,7 +781,7 @@ function AdminPage() {
             </div>
 
             {/* Order Detail Modal */}
-            <Dialog open={!!detailOrder} onOpenChange={(open) => !open && setDetailOrder(null)}>
+            <Dialog open={!!detailOrder} onOpenChange={(open) => !open && closeDetail()}>
               {detailOrder && (
                 <DialogContent
                   className="max-w-lg p-0 overflow-hidden rounded-[18px]"
@@ -788,6 +826,11 @@ function AdminPage() {
                       <span className="text-[11px]" style={{ color: TEXT_MUTED }}>
                         {detailOrder.environment === "live" ? "Live" : "Sandbox"}
                       </span>
+                      {batchStatus && batchQueue.length > 1 && (
+                        <span className="ml-auto text-[11px]" style={{ color: TEXT_MUTED }}>
+                          Order {Math.min(batchIndex + 1, batchQueue.length)} van {batchQueue.length} {statusLabelNl(batchStatus).toLowerCase()}
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -874,6 +917,14 @@ function AdminPage() {
 
                       {/* Contextual status transition */}
                       {(() => {
+                        if (batchDone && batchStatus) {
+                          return (
+                            <div className="flex items-center gap-2 mt-3 text-[12px]" style={{ color: TEXT_MUTED }}>
+                              <Check className="w-3.5 h-3.5" style={{ color: GREEN }} />
+                              Alle {statusLabelNl(batchStatus).toLowerCase()} orders verwerkt
+                            </div>
+                          );
+                        }
                         if (detailOrder.status === "paid") {
                           return (
                             <button
@@ -883,8 +934,7 @@ function AdminPage() {
                                 setDetailBusy(true);
                                 try {
                                   await doPrint({ data: { orderIds: [detailOrder.id] } });
-                                  setDetailOrder((prev: any) => (prev ? { ...prev, status: "printed" } : prev));
-                                  await refetch();
+                                  await advanceBatch();
                                 } finally {
                                   setDetailBusy(false);
                                 }
@@ -904,8 +954,7 @@ function AdminPage() {
                                 setDetailBusy(true);
                                 try {
                                   await doShip({ data: { orderIds: [detailOrder.id] } });
-                                  setDetailOrder((prev: any) => (prev ? { ...prev, status: "shipped" } : prev));
-                                  await refetch();
+                                  await advanceBatch();
                                 } finally {
                                   setDetailBusy(false);
                                 }
