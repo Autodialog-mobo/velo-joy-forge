@@ -838,8 +838,46 @@ function AdminPage() {
                         style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, color: TEXT_PRI }}
                       >
                         <span className="flex items-center gap-2">
-                          <Hash className="w-4 h-4" style={{ color: GREEN }} />
-                          Order {detailOrder.id.slice(0, 8)}
+                          {(() => {
+                            const atFirst = navIndex <= 0;
+                            const atLast = navIndex >= navIds.length - 1;
+                            const arrowBase: React.CSSProperties = {
+                              width: 28, height: 28, borderRadius: 8,
+                              display: "inline-flex", alignItems: "center", justifyContent: "center",
+                              border: `1px solid ${SURFACE_BORDER}`,
+                              background: "rgba(255,255,255,0.04)",
+                              color: TEXT_PRI,
+                            };
+                            return (
+                              <>
+                                <button
+                                  type="button"
+                                  aria-label="Vorige order"
+                                  onClick={() => gotoNav(-1)}
+                                  disabled={atFirst}
+                                  style={{ ...arrowBase, opacity: atFirst ? 0.35 : 1, cursor: atFirst ? "not-allowed" : "pointer" }}
+                                >
+                                  <ChevronLeft className="w-4 h-4" />
+                                </button>
+                                <Hash className="w-4 h-4" style={{ color: GREEN }} />
+                                <span>Order {detailOrder.id.slice(0, 8)}</span>
+                                <button
+                                  type="button"
+                                  aria-label="Volgende order"
+                                  onClick={() => gotoNav(1)}
+                                  disabled={atLast}
+                                  style={{ ...arrowBase, opacity: atLast ? 0.35 : 1, cursor: atLast ? "not-allowed" : "pointer" }}
+                                >
+                                  <ChevronRight className="w-4 h-4" />
+                                </button>
+                                {navIds.length > 0 && (
+                                  <span className="ml-2 text-[11px] font-normal" style={{ color: TEXT_MUTED, fontFamily: "Inter, sans-serif" }}>
+                                    {navIndex + 1} / {navIds.length}
+                                  </span>
+                                )}
+                              </>
+                            );
+                          })()}
                         </span>
                       </DialogTitle>
                     </DialogHeader>
