@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -16,6 +16,64 @@ import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
 import deBikeCheck from "@/i18n/locales/de/bike-check.json";
+
+// Cloudflare Turnstile site key — placeholder; replace with the real key from the Cloudflare dashboard.
+const TURNSTILE_SITE_KEY = "0x4AAAAAAA_PLACEHOLDER_REPLACE_ME";
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (el: HTMLElement, opts: Record<string, unknown>) => string;
+      remove: (id: string) => void;
+      reset: (id?: string) => void;
+    };
+  }
+}
+
+function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: string) => void }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+  const onTokenRef = useRef(onToken);
+  onTokenRef.current = onToken;
+
+  useEffect(() => {
+    let cancelled = false;
+    const render = () => {
+      if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) return;
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        size: "invisible",
+        callback: (token: string) => onTokenRef.current(token),
+        "refresh-expired": "auto",
+        "error-callback": () => onTokenRef.current(""),
+        "expired-callback": () => onTokenRef.current(""),
+      });
+    };
+    if (window.turnstile) {
+      render();
+    } else {
+      const SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+      let script = document.querySelector<HTMLScriptElement>(`script[src^="${SRC}"]`);
+      if (!script) {
+        script = document.createElement("script");
+        script.src = SRC;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+      script.addEventListener("load", render);
+    }
+    return () => {
+      cancelled = true;
+      if (widgetIdRef.current && window.turnstile) {
+        try { window.turnstile.remove(widgetIdRef.current); } catch { /* ignore */ }
+        widgetIdRef.current = null;
+      }
+    };
+  }, [siteKey]);
+
+  return <div ref={containerRef} />;
+}
 
 const BIKE_CHECK_META = {
   nl: nlBikeCheck.meta,
