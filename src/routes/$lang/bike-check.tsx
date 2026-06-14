@@ -219,10 +219,8 @@ function BikeSearchPage() {
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
     if (!clean) return;
-    if (!turnstileToken) {
-      setError(t("errors.generic"));
-      return;
-    }
+
+
     setError(null);
     setResult(null);
     setLoadingA(true);
