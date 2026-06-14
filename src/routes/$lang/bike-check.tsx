@@ -428,8 +428,8 @@ function BikeSearchPage() {
               </button>
               <button
                 type="submit"
-                disabled={loadingA || !codeA || !turnstileToken}
-                style={{ ...navyBtn(loadingA || !codeA || !turnstileToken), marginTop: 0, width: "auto", flex: "1 1 180px" }}
+                disabled={loadingA || !codeA}
+                style={{ ...navyBtn(loadingA || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
               >
                 {loadingA ? (
                   <>
