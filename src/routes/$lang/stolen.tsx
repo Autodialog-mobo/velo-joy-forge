@@ -123,11 +123,12 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
   );
 }
 
-function getBrowserCountry(): "BE" | "NL" | "FR" {
+function getBrowserCountry(): "BE" | "NL" | "FR" | "DE" {
   // Default to BE on both server and client to avoid SSR hydration mismatch.
   // The real visitor country is detected via cf-ipcountry in a useEffect.
   return "BE";
 }
+
 
 /* ---------------- Inline markdown renderer ----------------
    Supports inside a line:
