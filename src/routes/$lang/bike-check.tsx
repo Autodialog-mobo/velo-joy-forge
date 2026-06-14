@@ -134,7 +134,7 @@ function BikeSearchPage() {
     setLoadingA(true);
     setLastMethod("a");
     try {
-      const res = await runCheckBike({ data: { code: clean } });
+      const res = await runCheckBike({ data: { code: clean, turnstileToken } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
@@ -156,13 +156,14 @@ function BikeSearchPage() {
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!brand || !frame.trim() || !captcha) return;
+    const cleanFrame = sanitizeAlnum(frame);
+    if (!brand || !cleanFrame || !turnstileToken) return;
     setError(null);
     setResult(null);
     setLoadingB(true);
     setLastMethod("b");
     try {
-      const res = await runCheckBike({ data: { code: frame.trim() } });
+      const res = await runCheckBike({ data: { code: cleanFrame, turnstileToken } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
