@@ -38,9 +38,16 @@ function formatEur(cents: number) {
 function statusDotColor(status: string) {
   switch (status) {
     case "paid": return "#2ECC8A";
-    case "printed": return "#F5B547";
-    case "shipped": return "rgba(255,255,255,0.40)";
-    default: return "rgba(255,255,255,0.30)";
+    case "printed": return "#E0A33E";
+    case "shipped": return "rgba(255,255,255,0.60)";
+    case "pending": return "rgba(255,255,255,0.50)";
+    case "expired":
+    case "failed":
+    case "cancelled":
+    case "canceled":
+      return "#E05252";
+    case "refunded": return "rgba(255,255,255,0.50)";
+    default: return "rgba(255,255,255,0.40)";
   }
 }
 function statusLabelNl(status: string) {
@@ -48,6 +55,13 @@ function statusLabelNl(status: string) {
     case "paid": return "Betaald";
     case "printed": return "Geprint";
     case "shipped": return "Verzonden";
+    case "pending": return "Wachtend";
+    case "expired": return "Verlopen";
+    case "cancelled":
+    case "canceled":
+      return "Geannuleerd";
+    case "failed": return "Mislukt";
+    case "refunded": return "Terugbetaald";
     default: return status;
   }
 }
@@ -56,11 +70,20 @@ function statusPillStyle(status: string): React.CSSProperties {
     case "paid":
       return { background: "rgba(46,204,138,0.12)", color: "#2ECC8A", border: "1px solid rgba(46,204,138,0.30)" };
     case "printed":
-      return { background: "rgba(245,181,71,0.10)", color: "#F5B547", border: "1px solid rgba(245,181,71,0.28)" };
+      return { background: "rgba(224,163,62,0.12)", color: "#E0A33E", border: "1px solid rgba(224,163,62,0.30)" };
     case "shipped":
-      return { background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.10)" };
+      return { background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.12)" };
+    case "pending":
+      return { background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.10)" };
+    case "expired":
+    case "failed":
+    case "cancelled":
+    case "canceled":
+      return { background: "rgba(224,82,82,0.12)", color: "#E05252", border: "1px solid rgba(224,82,82,0.30)" };
+    case "refunded":
+      return { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.10)" };
     default:
-      return { background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.50)", border: "1px solid rgba(255,255,255,0.08)" };
+      return { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.10)" };
   }
 }
 
