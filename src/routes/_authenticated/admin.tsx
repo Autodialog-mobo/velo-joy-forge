@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
@@ -34,19 +34,51 @@ function formatEur(cents: number) {
   return `€${(cents / 100).toFixed(2).replace(".", ",")}`;
 }
 
-function statusBadgeStyle(status: string): React.CSSProperties {
+// Dark-theme pill badges with leading status dot
+function statusDotColor(status: string) {
   switch (status) {
-    case "paid":
-      return { background: "rgba(46,204,138,0.15)", color: "#1A8A5C" };
-    case "printed":
-      return { background: "rgba(59,130,246,0.12)", color: "#1E40AF" };
-    case "shipped":
-      return { background: "rgba(13,31,60,0.7)", color: "#FFFFFF" };
-    case "pending":
-    default:
-      return { background: "rgba(13,31,60,0.08)", color: "rgba(13,31,60,0.7)" };
+    case "paid": return "#2ECC8A";
+    case "printed": return "#F5B547";
+    case "shipped": return "rgba(255,255,255,0.40)";
+    default: return "rgba(255,255,255,0.30)";
   }
 }
+function statusLabelNl(status: string) {
+  switch (status) {
+    case "paid": return "Betaald";
+    case "printed": return "Geprint";
+    case "shipped": return "Verzonden";
+    default: return status;
+  }
+}
+function statusPillStyle(status: string): React.CSSProperties {
+  switch (status) {
+    case "paid":
+      return { background: "rgba(46,204,138,0.12)", color: "#2ECC8A", border: "1px solid rgba(46,204,138,0.30)" };
+    case "printed":
+      return { background: "rgba(245,181,71,0.10)", color: "#F5B547", border: "1px solid rgba(245,181,71,0.28)" };
+    case "shipped":
+      return { background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.10)" };
+    default:
+      return { background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.50)", border: "1px solid rgba(255,255,255,0.08)" };
+  }
+}
+
+const NAVY = "#0D1F3C";
+const GREEN = "#2ECC8A";
+const SURFACE = "rgba(255,255,255,0.04)";
+const SURFACE_BORDER = "rgba(255,255,255,0.08)";
+const TEXT_PRI = "rgba(255,255,255,0.92)";
+const TEXT_SEC = "rgba(255,255,255,0.60)";
+const TEXT_MUTED = "rgba(255,255,255,0.40)";
+
+const EYEBROW: React.CSSProperties = {
+  fontSize: 10,
+  fontWeight: 600,
+  letterSpacing: "0.2em",
+  textTransform: "uppercase",
+  color: TEXT_MUTED,
+};
 
 function AdminPage() {
   const navigate = useNavigate();
@@ -203,127 +235,298 @@ function AdminPage() {
   const SortIcon = ({ column }: { column: "date" | "amount" }) => {
     if (sort.column !== column) return null;
     return sort.dir === "asc" ? (
-      <ArrowUp className="w-3 h-3 text-[#2ECC8A]" />
+      <ArrowUp className="w-3 h-3" style={{ color: GREEN }} />
     ) : (
-      <ArrowDown className="w-3 h-3 text-[#2ECC8A]" />
+      <ArrowDown className="w-3 h-3" style={{ color: GREEN }} />
     );
   };
 
+  // Pipeline stage definition
+  const PIPELINE: { key: StatusFilter; label: string; caption: string; dot: string }[] = [
+    { key: "all", label: "Alle", caption: "totaal in pipeline", dot: "rgba(255,255,255,0.35)" },
+    { key: "paid", label: "Betaald", caption: "klaar om te printen", dot: "#2ECC8A" },
+    { key: "printed", label: "Geprint", caption: "klaar om te verzenden", dot: "#F5B547" },
+    { key: "shipped", label: "Verzonden", caption: "afgerond", dot: "rgba(255,255,255,0.40)" },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#F5F3EE] text-[#0D1F3C]" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      <div className="max-w-[1280px] mx-auto px-5 py-5 md:px-10 md:py-10">
+    <div
+      className="min-h-screen"
+      style={{
+        background: NAVY,
+        color: TEXT_PRI,
+        fontFamily: "'DM Sans', sans-serif",
+      }}
+    >
+      <style>{`
+        .vp-pro-admin input[type="checkbox"] {
+          appearance: none;
+          -webkit-appearance: none;
+          width: 16px; height: 16px;
+          border: 1.5px solid rgba(255,255,255,0.30);
+          border-radius: 4px;
+          background: rgba(255,255,255,0.04);
+          cursor: pointer;
+          position: relative;
+          transition: all 0.15s;
+        }
+        .vp-pro-admin input[type="checkbox"]:hover { border-color: ${GREEN}; }
+        .vp-pro-admin input[type="checkbox"]:checked {
+          background: ${GREEN};
+          border-color: ${GREEN};
+        }
+        .vp-pro-admin input[type="checkbox"]:checked::after {
+          content: '';
+          position: absolute;
+          left: 4px; top: 1px;
+          width: 4px; height: 8px;
+          border: solid ${NAVY};
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+        .vp-pro-admin input[type="checkbox"]:focus-visible {
+          outline: 2px solid ${GREEN};
+          outline-offset: 2px;
+        }
+        .vp-pro-admin button:focus-visible,
+        .vp-pro-admin .stage-card:focus-visible {
+          outline: 2px solid ${GREEN};
+          outline-offset: 2px;
+        }
+        .vp-pro-admin .stage-card { transition: all 0.18s ease; }
+        .vp-pro-admin .stage-card:hover { background: rgba(255,255,255,0.06); }
+        .vp-pro-admin .stage-card.active {
+          background: rgba(46,204,138,0.08);
+          border-color: rgba(46,204,138,0.45);
+        }
+        .vp-pro-admin .row-link:hover { background: rgba(255,255,255,0.03); }
+        .vp-pro-admin .btn-ghost {
+          background: transparent;
+          color: ${TEXT_PRI};
+          border: 1px solid ${SURFACE_BORDER};
+          transition: all 0.15s;
+        }
+        .vp-pro-admin .btn-ghost:hover:not(:disabled) {
+          background: rgba(255,255,255,0.06);
+          border-color: rgba(255,255,255,0.18);
+        }
+        .vp-pro-admin .btn-primary {
+          background: ${GREEN};
+          color: ${NAVY};
+          border: 1px solid ${GREEN};
+          transition: all 0.15s;
+          font-weight: 600;
+        }
+        .vp-pro-admin .btn-primary:hover:not(:disabled) {
+          background: #25b277;
+          border-color: #25b277;
+        }
+        .vp-pro-admin .btn-primary:disabled,
+        .vp-pro-admin .btn-ghost:disabled { opacity: 0.35; cursor: not-allowed; }
+      `}</style>
+
+      <div className="vp-pro-admin max-w-[1280px] mx-auto px-5 py-6 md:px-10 md:py-10">
         {/* Header */}
         <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
           <div>
+            <div style={EYEBROW}>Velopass · Back-office</div>
             <h1
-              className="text-[24px] md:text-[28px] font-bold leading-tight text-[#0D1F3C]"
-              style={{ fontFamily: "Syne, sans-serif", fontWeight: 700 }}
+              className="mt-2"
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(28px, 3.2vw, 36px)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.6px",
+                color: TEXT_PRI,
+              }}
             >
-              Velopass · Fulfillment
+              Fulfillment
             </h1>
-            <p className="text-[14px] text-[rgba(13,31,60,0.6)] mt-1">
+            <p className="mt-1.5 text-[13px]" style={{ color: TEXT_SEC }}>
               Beheer betaalde bestellingen en print verzendlabels
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="inline-flex rounded-lg border border-[rgba(13,31,60,0.12)] overflow-hidden text-[13px]">
-              {(["live", "sandbox"] as const).map((env) => (
-                <button
-                  key={env}
-                  onClick={() => {
-                    setEnvironment(env);
-                    setSelected(new Set());
-                  }}
-                  className={`px-3 py-1.5 transition ${
-                    environment === env
-                      ? env === "live"
-                        ? "bg-[#2ECC8A] text-[#0D1F3C] font-semibold"
-                        : "bg-yellow-400 text-yellow-950 font-semibold"
-                      : "bg-white hover:bg-[rgba(13,31,60,0.04)]"
-                  }`}
-                >
-                  {env === "live" ? "Live" : "Sandbox"}
-                </button>
-              ))}
+            {/* Live/Sandbox segmented pill */}
+            <div
+              className="inline-flex p-1 rounded-full"
+              style={{
+                background: SURFACE,
+                border: `1px solid ${SURFACE_BORDER}`,
+              }}
+              role="tablist"
+              aria-label="Environment"
+            >
+              {(["live", "sandbox"] as const).map((env) => {
+                const active = environment === env;
+                return (
+                  <button
+                    key={env}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => {
+                      setEnvironment(env);
+                      setSelected(new Set());
+                    }}
+                    className="px-4 py-1.5 rounded-full text-[12px] font-semibold transition"
+                    style={{
+                      background: active ? GREEN : "transparent",
+                      color: active ? NAVY : TEXT_SEC,
+                      letterSpacing: "0.02em",
+                    }}
+                  >
+                    {env === "live" ? "Live" : "Sandbox"}
+                  </button>
+                );
+              })}
             </div>
             <button
               onClick={signOut}
-              className="text-[13px] text-[rgba(13,31,60,0.6)] hover:text-[#0D1F3C] transition"
+              className="text-[12px] transition"
+              style={{ color: TEXT_SEC, letterSpacing: "0.02em" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = TEXT_PRI)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = TEXT_SEC)}
             >
               Uitloggen
             </button>
           </div>
         </header>
 
-        {isLoading && <p className="text-sm text-[rgba(13,31,60,0.6)]">Laden...</p>}
+        {/* Pipeline */}
+        <section className="mb-6" aria-label="Fulfillment pipeline">
+          <div style={{ ...EYEBROW, marginBottom: 12 }}>Pipeline</div>
+          <div className="flex flex-wrap items-stretch gap-3 md:gap-2">
+            {PIPELINE.map((stage, idx) => {
+              const active = filter === stage.key;
+              const count = counts[stage.key] ?? 0;
+              return (
+                <div key={stage.key} className="flex items-center gap-2 md:gap-3 flex-1 min-w-[220px]">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFilter(stage.key);
+                      setSelected(new Set());
+                    }}
+                    aria-pressed={active}
+                    className={`stage-card text-left w-full p-5 rounded-[18px] ${active ? "active" : ""}`}
+                    style={{
+                      background: active ? "rgba(46,204,138,0.08)" : SURFACE,
+                      border: `1px solid ${active ? "rgba(46,204,138,0.45)" : SURFACE_BORDER}`,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <span style={{ ...EYEBROW, color: active ? GREEN : TEXT_MUTED }}>
+                        {stage.label}
+                      </span>
+                      <span
+                        aria-hidden
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: "50%",
+                          background: stage.dot,
+                          boxShadow: stage.key === "paid" ? "0 0 0 4px rgba(46,204,138,0.12)" : undefined,
+                        }}
+                      />
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "'Syne', sans-serif",
+                        fontWeight: 700,
+                        fontSize: 44,
+                        lineHeight: 1,
+                        letterSpacing: "-1.5px",
+                        color: active ? GREEN : TEXT_PRI,
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      {count}
+                    </div>
+                    <div
+                      className="mt-2 text-[12px]"
+                      style={{ color: TEXT_SEC, lineHeight: 1.4 }}
+                    >
+                      {stage.caption}
+                    </div>
+                  </button>
+                  {idx < PIPELINE.length - 1 && (
+                    <ArrowRight
+                      className="shrink-0 hidden md:block"
+                      style={{ color: "rgba(255,255,255,0.20)" }}
+                      strokeWidth={1.5}
+                    />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {isLoading && (
+          <p className="text-sm" style={{ color: TEXT_SEC }}>Laden…</p>
+        )}
         {error && (
-          <p className="text-sm text-red-600">{(error as Error).message || "Fout bij laden"}</p>
+          <div
+            className="rounded-[18px] p-4 text-sm"
+            style={{
+              background: "rgba(244,82,82,0.08)",
+              border: "1px solid rgba(244,82,82,0.30)",
+              color: "#FF8A8A",
+            }}
+          >
+            {(error as Error).message || "Fout bij laden"}
+          </div>
         )}
 
         {!isLoading && !error && (
           <div
-            className="bg-white rounded-2xl border border-[rgba(13,31,60,0.04)] overflow-hidden"
+            className="rounded-[18px] overflow-hidden"
             style={{
-              boxShadow:
-                "0 1px 3px rgba(13,31,60,0.04), 0 4px 16px rgba(13,31,60,0.06)",
+              background: SURFACE,
+              border: `1px solid ${SURFACE_BORDER}`,
             }}
           >
-            {/* Toolbar as card header */}
+            {/* Toolbar */}
             <div
-              className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-5 border-b border-[rgba(13,31,60,0.06)]"
-              style={{ background: "rgba(245,243,238,0.5)" }}
+              className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-4"
+              style={{ borderBottom: `1px solid ${SURFACE_BORDER}` }}
             >
-              {/* Filters */}
-              <div className="flex gap-1.5 overflow-x-auto -mx-1 px-1">
-                {STATUS_FILTERS.map((f) => {
-                  const active = filter === f;
-                  const label = f === "all" ? "Alle" : f;
-                  return (
-                    <button
-                      key={f}
-                      onClick={() => {
-                        setFilter(f);
-                        setSelected(new Set());
-                      }}
-                      className={`shrink-0 px-3.5 py-1.5 rounded-full text-[13px] transition ${
-                        active
-                          ? "bg-[#0D1F3C] text-white font-semibold"
-                          : "bg-transparent text-[rgba(13,31,60,0.6)] hover:bg-[rgba(13,31,60,0.05)]"
-                      }`}
-                    >
-                      {label} ({counts[f] ?? 0})
-                    </button>
-                  );
-                })}
+              <div className="flex items-baseline gap-3">
+                <span style={EYEBROW}>Bestellingen</span>
+                <span className="text-[12px]" style={{ color: TEXT_MUTED }}>
+                  {selectedOrders.length > 0
+                    ? `${selectedOrders.length} geselecteerd`
+                    : `${filtered.length} weergegeven`}
+                </span>
               </div>
-
-              {/* Bulk actions */}
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={generateLabels}
                   disabled={!hasSelection}
-                  className="h-9 px-3.5 rounded-lg text-[13px] font-medium bg-[#0D1F3C] text-white disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#183A6E] transition"
+                  className="btn-primary h-9 px-4 rounded-[12px] text-[13px]"
                 >
                   Labels PDF ({selectedOrders.length})
                 </button>
                 <button
                   onClick={exportCsv}
                   disabled={!hasSelection}
-                  className="h-9 px-3.5 rounded-lg text-[13px] font-medium border border-[rgba(13,31,60,0.15)] bg-white text-[#0D1F3C] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[rgba(13,31,60,0.03)] transition"
+                  className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   CSV export
                 </button>
                 <button
                   onClick={handleMarkPrinted}
                   disabled={busy || !hasSelection}
-                  className="h-9 px-3.5 rounded-lg text-[13px] font-medium border border-[rgba(13,31,60,0.15)] bg-white text-[#0D1F3C] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[rgba(13,31,60,0.03)] transition"
+                  className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer geprint
                 </button>
                 <button
                   onClick={handleMarkShipped}
                   disabled={busy || !hasSelection}
-                  className="h-9 px-3.5 rounded-lg text-[13px] font-medium bg-[#2ECC8A] text-[#0D1F3C] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#1AAD70] transition"
+                  className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer verzonden
                 </button>
@@ -333,37 +536,32 @@ function AdminPage() {
             {/* Table */}
             <div className="overflow-x-auto">
               <table className="w-full text-[14px]">
-                <thead style={{ background: "rgba(13,31,60,0.02)" }}>
-                  <tr className="border-b border-[rgba(13,31,60,0.08)]">
+                <thead style={{ background: "rgba(255,255,255,0.02)" }}>
+                  <tr style={{ borderBottom: `1px solid ${SURFACE_BORDER}` }}>
                     <th className="px-6 py-3 w-8">
                       <input
                         type="checkbox"
                         checked={filtered.length > 0 && selected.size === filtered.length}
                         onChange={toggleAll}
+                        aria-label="Selecteer alle bestellingen"
                       />
                     </th>
                     <th
-                      className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] cursor-pointer select-none"
+                      className="px-6 py-3 text-left cursor-pointer select-none"
+                      style={EYEBROW}
                       onClick={() => handleSort("date")}
                     >
                       <span className="inline-flex items-center gap-1">
                         Datum <SortIcon column="date" />
                       </span>
                     </th>
-                    <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)]">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)]">
-                      Klant
-                    </th>
-                    <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] hidden md:table-cell">
-                      Adres
-                    </th>
-                    <th className="px-6 py-3 text-left text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] hidden md:table-cell">
-                      Items
-                    </th>
+                    <th className="px-6 py-3 text-left" style={EYEBROW}>Status</th>
+                    <th className="px-6 py-3 text-left" style={EYEBROW}>Klant</th>
+                    <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Adres</th>
+                    <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Items</th>
                     <th
-                      className="px-6 py-3 text-right text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] cursor-pointer select-none"
+                      className="px-6 py-3 text-right cursor-pointer select-none"
+                      style={EYEBROW}
                       onClick={() => handleSort("amount")}
                     >
                       <span className="inline-flex items-center gap-1 justify-end">
@@ -383,16 +581,23 @@ function AdminPage() {
                       <tr
                         key={o.id}
                         onClick={() => setDetailOrder(o)}
-                        className={`${isLast ? "" : "border-b border-[rgba(13,31,60,0.05)]"} hover:bg-[rgba(46,204,138,0.04)] transition cursor-pointer`}
+                        className="row-link cursor-pointer"
+                        style={{
+                          borderBottom: isLast ? "none" : `1px solid ${SURFACE_BORDER}`,
+                        }}
                       >
                         <td className="px-6 py-4 align-middle" onClick={(e) => e.stopPropagation()}>
                           <input
                             type="checkbox"
                             checked={selected.has(o.id)}
                             onChange={() => toggle(o.id)}
+                            aria-label={`Selecteer order ${o.id.slice(0, 8)}`}
                           />
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-[13px] text-[rgba(13,31,60,0.75)] align-middle">
+                        <td
+                          className="px-6 py-4 whitespace-nowrap text-[13px] align-middle"
+                          style={{ color: TEXT_SEC, fontVariantNumeric: "tabular-nums" }}
+                        >
                           {new Date(o.created_at).toLocaleString("nl-BE", {
                             dateStyle: "short",
                             timeStyle: "short",
@@ -400,40 +605,52 @@ function AdminPage() {
                         </td>
                         <td className="px-6 py-4 align-middle">
                           <span
-                            className="inline-flex items-center h-[22px] px-2.5 rounded-full text-[11px] font-semibold lowercase"
-                            style={statusBadgeStyle(o.status)}
+                            className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-full text-[11px] font-semibold"
+                            style={statusPillStyle(o.status)}
                           >
-                            {o.status}
+                            <span
+                              aria-hidden
+                              style={{
+                                width: 6,
+                                height: 6,
+                                borderRadius: "50%",
+                                background: statusDotColor(o.status),
+                              }}
+                            />
+                            {statusLabelNl(o.status)}
                           </span>
                         </td>
                         <td className="px-6 py-4 align-middle">
-                          <div className="text-[14px] font-medium text-[#0D1F3C] leading-[1.4]">
-                            {o.shipping_name || <span className="text-[rgba(13,31,60,0.4)]">—</span>}
+                          <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
+                            {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
                           </div>
-                          <div className="text-[12px] text-[rgba(13,31,60,0.55)] leading-[1.4]">
+                          <div className="text-[12px] leading-[1.4]" style={{ color: TEXT_SEC }}>
                             {o.customer_email}
                           </div>
                         </td>
                         <td className="px-6 py-4 text-[13px] hidden md:table-cell align-middle">
-                          <div className="text-[#0D1F3C]">{o.shipping_line1 || "—"}</div>
-                          <div className="text-[rgba(13,31,60,0.55)]">
+                          <div style={{ color: TEXT_PRI }}>{o.shipping_line1 || "—"}</div>
+                          <div style={{ color: TEXT_SEC }}>
                             {o.shipping_postal_code} {o.shipping_city}{" "}
-                            <span className="text-[rgba(13,31,60,0.4)]">{o.shipping_country}</span>
+                            <span style={{ color: TEXT_MUTED }}>{o.shipping_country}</span>
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-[13px] text-[rgba(13,31,60,0.75)] hidden md:table-cell align-middle">
+                        <td
+                          className="px-6 py-4 text-[13px] hidden md:table-cell align-middle"
+                          style={{ color: TEXT_SEC }}
+                        >
                           {items}
                         </td>
                         <td className="px-6 py-4 text-right align-middle">
                           <div
-                            className="text-[15px] font-semibold text-[#0D1F3C]"
-                            style={{ fontVariantNumeric: "tabular-nums" }}
+                            className="text-[15px] font-semibold"
+                            style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}
                           >
                             {formatEur(o.amount_total)}
                           </div>
                           <div
-                            className="text-[11px] text-[rgba(13,31,60,0.5)] font-mono mt-0.5"
-                            style={{ fontVariantNumeric: "tabular-nums" }}
+                            className="text-[11px] font-mono mt-0.5"
+                            style={{ color: TEXT_MUTED, fontVariantNumeric: "tabular-nums" }}
                           >
                             #{o.id.slice(0, 8)}
                           </div>
@@ -445,11 +662,11 @@ function AdminPage() {
                     <tr>
                       <td colSpan={7}>
                         <div className="flex flex-col items-center justify-center text-center" style={{ padding: "80px 24px" }}>
-                          <Inbox className="w-10 h-10 text-[rgba(13,31,60,0.35)] mb-4" strokeWidth={1.5} />
-                          <p className="text-[15px] font-semibold text-[#0D1F3C]">
+                          <Inbox className="w-10 h-10 mb-4" strokeWidth={1.5} style={{ color: TEXT_MUTED }} />
+                          <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
                             Geen bestellingen in deze status
                           </p>
-                          <p className="text-[13px] text-[rgba(13,31,60,0.55)] mt-1 max-w-sm">
+                          <p className="text-[13px] mt-1 max-w-sm" style={{ color: TEXT_SEC }}>
                             Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden.
                           </p>
                         </div>
@@ -463,115 +680,137 @@ function AdminPage() {
             {/* Order Detail Modal */}
             <Dialog open={!!detailOrder} onOpenChange={(open) => !open && setDetailOrder(null)}>
               {detailOrder && (
-                <DialogContent className="max-w-lg p-0 overflow-hidden border-0 bg-white rounded-2xl">
-                  <div className="px-6 py-5 border-b border-[rgba(13,31,60,0.06)]" style={{ background: "rgba(245,243,238,0.5)" }}>
+                <DialogContent
+                  className="max-w-lg p-0 overflow-hidden rounded-[18px]"
+                  style={{
+                    background: "#13294D",
+                    border: `1px solid ${SURFACE_BORDER}`,
+                    color: TEXT_PRI,
+                  }}
+                >
+                  <div
+                    className="px-6 py-5"
+                    style={{
+                      borderBottom: `1px solid ${SURFACE_BORDER}`,
+                      background: "rgba(255,255,255,0.02)",
+                    }}
+                  >
                     <DialogHeader>
                       <DialogTitle
-                        className="text-[18px] text-[#0D1F3C]"
-                        style={{ fontFamily: "Syne, sans-serif", fontWeight: 700 }}
+                        className="text-[18px]"
+                        style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, color: TEXT_PRI }}
                       >
                         <span className="flex items-center gap-2">
-                          <Hash className="w-4 h-4 text-[#2ECC8A]" />
-                          Order {detailOrder.id}
+                          <Hash className="w-4 h-4" style={{ color: GREEN }} />
+                          Order {detailOrder.id.slice(0, 8)}
                         </span>
                       </DialogTitle>
                     </DialogHeader>
                     <div className="flex items-center gap-2 mt-2">
                       <span
-                        className="inline-flex items-center h-[22px] px-2.5 rounded-full text-[11px] font-semibold lowercase"
-                        style={statusBadgeStyle(detailOrder.status)}
+                        className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-full text-[11px] font-semibold"
+                        style={statusPillStyle(detailOrder.status)}
                       >
-                        {detailOrder.status}
+                        <span
+                          aria-hidden
+                          style={{
+                            width: 6, height: 6, borderRadius: "50%",
+                            background: statusDotColor(detailOrder.status),
+                          }}
+                        />
+                        {statusLabelNl(detailOrder.status)}
                       </span>
-                      <span className="text-[11px] text-[rgba(13,31,60,0.45)]">
+                      <span className="text-[11px]" style={{ color: TEXT_MUTED }}>
                         {detailOrder.environment === "live" ? "Live" : "Sandbox"}
                       </span>
                     </div>
                   </div>
 
                   <div className="px-6 py-5 space-y-5">
-                    {/* Customer */}
                     <div>
-                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                      <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
                         <User className="w-3.5 h-3.5" /> Klant
                       </h4>
-                      <p className="text-[14px] font-medium text-[#0D1F3C]">{detailOrder.shipping_name || "—"}</p>
-                      <p className="text-[13px] text-[rgba(13,31,60,0.6)]">{detailOrder.customer_email}</p>
+                      <p className="text-[14px] font-medium" style={{ color: TEXT_PRI }}>
+                        {detailOrder.shipping_name || "—"}
+                      </p>
+                      <p className="text-[13px]" style={{ color: TEXT_SEC }}>{detailOrder.customer_email}</p>
                     </div>
 
-                    {/* Address */}
                     <div>
-                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                      <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
                         <MapPin className="w-3.5 h-3.5" /> Verzendadres
                       </h4>
-                      <p className="text-[14px] text-[#0D1F3C]">{detailOrder.shipping_line1 || "—"}</p>
+                      <p className="text-[14px]" style={{ color: TEXT_PRI }}>{detailOrder.shipping_line1 || "—"}</p>
                       {detailOrder.shipping_line2 && (
-                        <p className="text-[14px] text-[#0D1F3C]">{detailOrder.shipping_line2}</p>
+                        <p className="text-[14px]" style={{ color: TEXT_PRI }}>{detailOrder.shipping_line2}</p>
                       )}
-                      <p className="text-[13px] text-[rgba(13,31,60,0.6)]">
+                      <p className="text-[13px]" style={{ color: TEXT_SEC }}>
                         {detailOrder.shipping_postal_code} {detailOrder.shipping_city}
                         {detailOrder.shipping_state && `, ${detailOrder.shipping_state}`}
                       </p>
-                      <p className="text-[13px] text-[rgba(13,31,60,0.6)]">{detailOrder.shipping_country}</p>
+                      <p className="text-[13px]" style={{ color: TEXT_SEC }}>{detailOrder.shipping_country}</p>
                     </div>
 
-                    {/* Items */}
                     <div>
-                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                      <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
                         <Package className="w-3.5 h-3.5" /> Items
                       </h4>
                       {(linesByOrder.get(detailOrder.id) ?? []).length > 0 ? (
                         <ul className="space-y-1">
                           {(linesByOrder.get(detailOrder.id) ?? []).map((l: any) => (
-                            <li key={l.id} className="text-[14px] text-[#0D1F3C] flex justify-between">
+                            <li key={l.id} className="text-[14px] flex justify-between" style={{ color: TEXT_PRI }}>
                               <span>{mapLegacyItem(l.bundle_sku)} × {l.quantity}</span>
-                              <span className="text-[rgba(13,31,60,0.5)] text-[13px]">{l.sticker_count} stickers</span>
+                              <span className="text-[13px]" style={{ color: TEXT_SEC }}>{l.sticker_count} stickers</span>
                             </li>
                           ))}
                         </ul>
                       ) : (
-                        <p className="text-[14px] text-[#0D1F3C]">{mapLegacyItem(detailOrder.product_name || "—")}</p>
+                        <p className="text-[14px]" style={{ color: TEXT_PRI }}>
+                          {mapLegacyItem(detailOrder.product_name || "—")}
+                        </p>
                       )}
                     </div>
 
-                    {/* Payment */}
                     <div>
-                      <h4 className="text-[11px] font-semibold uppercase tracking-[0.06em] text-[rgba(13,31,60,0.5)] mb-2 flex items-center gap-1.5">
+                      <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
                         <CreditCard className="w-3.5 h-3.5" /> Betaling
                       </h4>
                       <div className="flex justify-between text-[14px]">
-                        <span className="text-[rgba(13,31,60,0.6)]">Subtotaal</span>
-                        <span className="text-[#0D1F3C]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ color: TEXT_SEC }}>Subtotaal</span>
+                        <span style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}>
                           {formatEur(detailOrder.amount_subtotal)}
                         </span>
                       </div>
                       <div className="flex justify-between text-[14px]">
-                        <span className="text-[rgba(13,31,60,0.6)]">BTW</span>
-                        <span className="text-[#0D1F3C]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                        <span style={{ color: TEXT_SEC }}>BTW</span>
+                        <span style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}>
                           {formatEur(detailOrder.amount_tax)}
                         </span>
                       </div>
-                      <div className="flex justify-between text-[15px] font-semibold mt-1 pt-1 border-t border-[rgba(13,31,60,0.06)]">
-                        <span className="text-[#0D1F3C]">Totaal</span>
-                        <span className="text-[#0D1F3C]" style={{ fontVariantNumeric: "tabular-nums" }}>
+                      <div
+                        className="flex justify-between text-[15px] font-semibold mt-1 pt-2"
+                        style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}
+                      >
+                        <span style={{ color: TEXT_PRI }}>Totaal</span>
+                        <span style={{ color: GREEN, fontVariantNumeric: "tabular-nums" }}>
                           {formatEur(detailOrder.amount_total)}
                         </span>
                       </div>
                       {detailOrder.mollie_payment_id && (
-                        <p className="text-[11px] text-[rgba(13,31,60,0.4)] mt-2 font-mono">
+                        <p className="text-[11px] mt-2 font-mono" style={{ color: TEXT_MUTED }}>
                           Mollie: {detailOrder.mollie_payment_id}
                         </p>
                       )}
                       {detailOrder.stripe_session_id && (
-                        <p className="text-[11px] text-[rgba(13,31,60,0.4)] mt-1 font-mono">
+                        <p className="text-[11px] mt-1 font-mono" style={{ color: TEXT_MUTED }}>
                           Stripe: {detailOrder.stripe_session_id}
                         </p>
                       )}
                     </div>
 
-                    {/* Date */}
-                    <div className="pt-2 border-t border-[rgba(13,31,60,0.06)]">
-                      <div className="flex items-center gap-1.5 text-[11px] text-[rgba(13,31,60,0.45)]">
+                    <div className="pt-2" style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
+                      <div className="flex items-center gap-1.5 text-[11px]" style={{ color: TEXT_MUTED }}>
                         <Calendar className="w-3 h-3" />
                         {new Date(detailOrder.created_at).toLocaleString("nl-BE", {
                           dateStyle: "full",
