@@ -32,7 +32,7 @@
     "title": "Via brand and frame number",
     "desc": "Search using the brand and frame number of the bike.",
     "brand": "Brand",
-    "brand_placeholder": "Choose a brand",
+    "brand_placeholder": "Trek, Specialized, Gazelle…",
     "frame_number": "Frame number",
     "check": "Check",
     "loading": "Checking...",
