@@ -270,13 +270,16 @@ export const checkBike = createServerFn({ method: "POST" })
     }
 
     const reported = Boolean(
-      pick(bike, ["isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
+      pick(bike, ["isLost", "isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
         String(pick(bike, ["status", "state"]) ?? "")
           .toUpperCase()
           .includes("REPORT") ||
         String(pick(bike, ["status", "state"]) ?? "")
           .toUpperCase()
-          .includes("STOLEN"),
+          .includes("STOLEN") ||
+        String(pick(bike, ["status", "state"]) ?? "")
+          .toUpperCase()
+          .includes("LOST"),
     );
 
     const year = pick<number | string>(bike, ["yearOfCreation", "year", "buildYear"]);
