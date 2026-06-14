@@ -94,13 +94,13 @@
     "country_label": "Country"
   },
   "bike_details": {
-    "heading": "Details van de fiets",
-    "brand": "Merk",
+    "heading": "Bike details",
+    "brand": "Brand",
     "model": "Model",
-    "color": "Kleur",
+    "color": "Color",
     "type": "Type",
-    "year": "Bouwjaar",
-    "unknown": "Onbekend"
+    "year": "Year",
+    "unknown": "Unknown"
   },
   "police_note_be": "Found this bike? File a report via Police-on-web or find your local police zone.",
   "police_note_nl": "Found this bike? File a police report or notice in the Netherlands.",

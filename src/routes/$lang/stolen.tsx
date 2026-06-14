@@ -123,11 +123,12 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
   );
 }
 
-function getBrowserCountry(): "BE" | "NL" | "FR" {
+function getBrowserCountry(): "BE" | "NL" | "FR" | "DE" {
   // Default to BE on both server and client to avoid SSR hydration mismatch.
   // The real visitor country is detected via cf-ipcountry in a useEffect.
   return "BE";
 }
+
 
 /* ---------------- Inline markdown renderer ----------------
    Supports inside a line:
@@ -258,14 +259,14 @@ function GestolenPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["stolen", "common"]);
   const [navOpen, setNavOpen] = useState(false);
-  const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
+  const [country, setCountry] = useState<"BE" | "NL" | "FR" | "DE">(getBrowserCountry);
   const fetchVisitorCountry = useServerFn(getVisitorCountry);
   useEffect(() => {
     let cancelled = false;
     fetchVisitorCountry()
       .then((res) => {
         if (cancelled) return;
-        if (res.country === "BE" || res.country === "NL" || res.country === "FR") {
+        if (res.country === "BE" || res.country === "NL" || res.country === "FR" || res.country === "DE") {
           setCountry(res.country);
         }
       })
@@ -467,7 +468,7 @@ function GestolenPage() {
               flexWrap: "wrap",
             }}
           >
-            {(["BE", "NL", "FR"] as const).map((code) => {
+            {(["BE", "NL", "FR", "DE"] as const).map((code) => {
               const active = country === code;
               return (
                 <button
@@ -498,6 +499,7 @@ function GestolenPage() {
           {country === "BE" && <CountryBE getList={getList} t={t} />}
           {country === "NL" && <CountryNL getList={getList} t={t} />}
           {country === "FR" && <CountryFR getList={getList} t={t} />}
+          {country === "DE" && <CountryDE getList={getList} t={t} />}
         </section>
 
         {/* STAP 3 */}
@@ -991,6 +993,25 @@ function CountryFR({ getList, t }: { getList: GetList; t: TFn }) {
         body={t("step2.FR.chat_body")}
         keyPrefix="fr-chat"
       />
+    </div>
+  );
+}
+
+/* ============== DE ============== */
+function CountryDE({ getList, t }: { getList: GetList; t: TFn }) {
+  const checklist = getList<ChecklistItem>("step2.DE.checklist");
+  const steps = getList<StepItem>("step2.DE.steps");
+  return (
+    <div style={{ display: "grid", gap: 24 }}>
+      <GreenIntroCard text={t("step2.DE.intro")} />
+      <AmberTipCard
+        icon={<Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />}
+        title={t("step2.DE.important_title")}
+        body={t("step2.DE.important_body")}
+        keyPrefix="de-important"
+      />
+      <ChecklistCard title={t("step2.checklist_title")} items={checklist} keyPrefix="de-cl" />
+      <StepsList steps={steps} keyPrefix="de-st" />
     </div>
   );
 }
