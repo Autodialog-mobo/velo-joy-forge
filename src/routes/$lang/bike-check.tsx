@@ -1140,20 +1140,24 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
         {t(noteKey)}
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <a
-          href="mailto:found@velopass.com"
-          style={{
-            background: "#0D1F3C",
-            color: "#fff",
-            padding: "12px 20px",
-            borderRadius: 10,
-            textDecoration: "none",
-            fontSize: 14,
-            fontWeight: 500,
-          }}
-        >
-          {t("result.reported_cta_primary")}
-        </a>
+        {bike.lostReportUrl && (
+          <a
+            href={bike.lostReportUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: "#0D1F3C",
+              color: "#fff",
+              padding: "12px 20px",
+              borderRadius: 10,
+              textDecoration: "none",
+              fontSize: 14,
+              fontWeight: 500,
+            }}
+          >
+            {t("result.reported_cta_primary")}
+          </a>
+        )}
         {policyButtons}
       </div>
       {secondary}

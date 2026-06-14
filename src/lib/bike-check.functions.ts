@@ -12,6 +12,16 @@ export interface BikeCheckResult {
   primaryColor: string | null;
   bikeType: string | null;
   yearOfCreation: number | null;
+  lostReportUrl: string | null;
+}
+
+const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+
+function extractLostReportUrl(bike: Record<string, unknown>): string | null {
+  const url = pick<string>(bike, ["url", "bicycleUrl", "link"]);
+  const direct = typeof url === "string" ? url.match(UUID_RE)?.[0] : null;
+  const id = direct ?? (pick<string>(bike, ["id", "uuid", "bicycleId"]) ?? "").match(UUID_RE)?.[0];
+  return id ? `https://app.velopass.com/lost/${id}` : null;
 }
 
 function pick<T = unknown>(obj: Record<string, unknown>, keys: string[]): T | null {
@@ -100,6 +110,7 @@ function mapBikePayload(raw: unknown): BikeCheckResult {
       primaryColor: null,
       bikeType: null,
       yearOfCreation: null,
+      lostReportUrl: null,
     };
   }
   const reported = Boolean(
@@ -118,6 +129,7 @@ function mapBikePayload(raw: unknown): BikeCheckResult {
     primaryColor: pick<string>(bike, ["primaryColor", "color", "mainColor"]),
     bikeType: pick<string>(bike, ["bikeType", "category", "frameType"]),
     yearOfCreation: yearNum !== null && !Number.isNaN(yearNum) ? yearNum : null,
+    lostReportUrl: reported ? extractLostReportUrl(bike) : null,
   };
 }
 
@@ -150,6 +162,7 @@ const NOT_FOUND: BikeCheckResult = {
   primaryColor: null,
   bikeType: null,
   yearOfCreation: null,
+  lostReportUrl: null,
 };
 
 export const checkBikeByFrame = createServerFn({ method: "POST" })
@@ -241,57 +254,11 @@ export const checkBike = createServerFn({ method: "POST" })
       cf: { cacheTtl: 0, cacheEverything: false },
     });
 
-    if (res.status === 404) {
-      return {
-        found: false,
-        status: null,
-        brand: null,
-        model: null,
-        primaryColor: null,
-        bikeType: null,
-        yearOfCreation: null,
-      };
-    }
+    if (res.status === 404) return NOT_FOUND;
     if (!res.ok) throw new Error(`upstream_error_${res.status}`);
 
     const raw = (await res.json()) as unknown;
-    const bike = (Array.isArray(raw) ? raw[0] : raw) as Record<string, unknown> | null;
-
-    if (!bike || typeof bike !== "object") {
-      return {
-        found: false,
-        status: null,
-        brand: null,
-        model: null,
-        primaryColor: null,
-        bikeType: null,
-        yearOfCreation: null,
-      };
-    }
-
-    const reported = Boolean(
-      pick(bike, ["isLost", "isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
-        String(pick(bike, ["status", "state"]) ?? "")
-          .toUpperCase()
-          .includes("REPORT") ||
-        String(pick(bike, ["status", "state"]) ?? "")
-          .toUpperCase()
-          .includes("STOLEN") ||
-        String(pick(bike, ["status", "state"]) ?? "")
-          .toUpperCase()
-          .includes("LOST"),
-    );
-
-    const year = pick<number | string>(bike, ["yearOfCreation", "year", "buildYear"]);
-    const yearNum = year === null ? null : Number(year);
-
-    return {
-      found: true,
-      status: reported ? "REPORTED" : "ALL_CLEAR",
-      brand: pick<string>(bike, ["brand", "brandName", "make"]),
-      model: pick<string>(bike, ["model", "modelName", "type"]),
-      primaryColor: pick<string>(bike, ["primaryColor", "color", "mainColor"]),
-      bikeType: pick<string>(bike, ["bikeType", "category", "frameType"]),
-      yearOfCreation: yearNum !== null && !Number.isNaN(yearNum) ? yearNum : null,
-    };
+    if (Array.isArray(raw) && raw.length === 0) return NOT_FOUND;
+    const mapped = mapBikePayload(raw);
+    return mapped.found ? mapped : NOT_FOUND;
   });
