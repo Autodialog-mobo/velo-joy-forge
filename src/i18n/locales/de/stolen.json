@@ -13,12 +13,30 @@
   "argument": {
     "title": "Alles, was die Polizei braucht, steht in deinem Velopass",
     "rows": [
-      ["Marke, Modell und Farbe", "In deinem Velopass-Pass"],
-      ["Rahmennummer", "In deinem Velopass-Pass"],
-      ["Fotos des Fahrrads", "In deinem Velopass gespeichert"],
-      ["Kaufrechnung", "Mit deinem Velopass verknüpft"],
-      ["Genauer Tatort", "Bereits eingegeben, als du es in Velopass gemeldet hast"],
-      ["Eigentumsnachweis", "Dein Velopass IST der Nachweis"]
+      [
+        "Marke, Modell und Farbe",
+        "In deinem Velopass-Pass"
+      ],
+      [
+        "Rahmennummer",
+        "In deinem Velopass-Pass"
+      ],
+      [
+        "Fotos des Fahrrads",
+        "In deinem Velopass gespeichert"
+      ],
+      [
+        "Kaufrechnung",
+        "Mit deinem Velopass verknüpft"
+      ],
+      [
+        "Genauer Tatort",
+        "Bereits eingegeben, als du es in Velopass gemeldet hast"
+      ],
+      [
+        "Eigentumsnachweis",
+        "Dein Velopass IST der Nachweis"
+      ]
     ],
     "cta": "Meinen Velopass öffnen →"
   },
@@ -34,7 +52,8 @@
     "countries": {
       "BE": "🇧🇪 Belgien",
       "NL": "🇳🇱 Niederlande",
-      "FR": "🇫🇷 Frankreich"
+      "FR": "🇫🇷 Frankreich",
+      "DE": "🇩🇪 Deutschland"
     },
     "coming_soon": "Demnächst verfügbar",
     "checklist_title": "Was brauchst du vorab?",
@@ -42,13 +61,33 @@
     "BE": {
       "intro": "In Belgien erstattest du online Anzeige über Police-on-web. Das erspart dir den Weg zur Polizeiwache.",
       "checklist": [
-        { "text": "Deinen Personalausweis (eID) oder die itsme-App" },
-        { "text": "Marke, Modell, Farbe und Typ des Fahrrads", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Die Rahmennummer", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Gravurnummer oder Fahrradpass", "velopass": "Dein Velopass-Code genügt" },
-        { "text": "Genauer Ort, Datum und Uhrzeit des Diebstahls", "velopass": "Bereits eingegeben, als du es in Velopass gemeldet hast" },
-        { "text": "Fotos des Fahrrads", "velopass": "Bereits in deinem Velopass gespeichert" },
-        { "text": "Kaufrechnung (falls vorhanden)", "velopass": "Mit deinem Velopass verknüpft" }
+        {
+          "text": "Deinen Personalausweis (eID) oder die itsme-App"
+        },
+        {
+          "text": "Marke, Modell, Farbe und Typ des Fahrrads",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Die Rahmennummer",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Gravurnummer oder Fahrradpass",
+          "velopass": "Dein Velopass-Code genügt"
+        },
+        {
+          "text": "Genauer Ort, Datum und Uhrzeit des Diebstahls",
+          "velopass": "Bereits eingegeben, als du es in Velopass gemeldet hast"
+        },
+        {
+          "text": "Fotos des Fahrrads",
+          "velopass": "Bereits in deinem Velopass gespeichert"
+        },
+        {
+          "text": "Kaufrechnung (falls vorhanden)",
+          "velopass": "Mit deinem Velopass verknüpft"
+        }
       ],
       "steps": [
         {
@@ -82,12 +121,29 @@
       "check_first_title": "Prüf zuerst dies",
       "check_first_body": "Wurde dein Fahrrad vielleicht von der Stadt entfernt? Verkehrswidrig abgestellte Fahrräder werden manchmal zu einem Depot gebracht. Prüf das, bevor du Anzeige erstattest.",
       "checklist": [
-        { "text": "Deine DigiD (Anmeldung über digid.nl)" },
-        { "text": "Marke, Modell, Farbe und Typ des Fahrrads", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Die Rahmennummer (meist unter dem Tretlager oder vorne am Rahmen)", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Genauer Ort, Datum und Uhrzeit des Diebstahls", "velopass": "Bereits eingegeben, als du es in Velopass gemeldet hast" },
-        { "text": "Fotos des Fahrrads", "velopass": "Bereits in deinem Velopass gespeichert" },
-        { "text": "Kaufrechnung (falls vorhanden)", "velopass": "Mit deinem Velopass verknüpft" }
+        {
+          "text": "Deine DigiD (Anmeldung über digid.nl)"
+        },
+        {
+          "text": "Marke, Modell, Farbe und Typ des Fahrrads",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Die Rahmennummer (meist unter dem Tretlager oder vorne am Rahmen)",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Genauer Ort, Datum und Uhrzeit des Diebstahls",
+          "velopass": "Bereits eingegeben, als du es in Velopass gemeldet hast"
+        },
+        {
+          "text": "Fotos des Fahrrads",
+          "velopass": "Bereits in deinem Velopass gespeichert"
+        },
+        {
+          "text": "Kaufrechnung (falls vorhanden)",
+          "velopass": "Mit deinem Velopass verknüpft"
+        }
       ],
       "conditions_title": "Bedingungen für die Online-Anzeige",
       "conditions_intro": "Die Online-Anzeige über politie.nl ist möglich, wenn:",
@@ -132,22 +188,51 @@
       "fnuci_body_2": "Konkret: Sobald du dein Fahrrad in Velopass als gestohlen meldest, wird der Status im FNUCI automatisch aktualisiert. Die Polizei sieht es sofort.",
       "flow_step_label": "Schritt {{n}}",
       "flow_steps": [
-        { "title": "Du meldest in Velopass", "body": "Du änderst den Status deines Fahrrads in deinem Velopass-Konto auf REPORTED." },
-        { "title": "Das FNUCI wird aktualisiert", "body": "Velopass leitet die Statusänderung an das FNUCI weiter. Polizei und Gendarmerie haben Zugriff auf dieses Register." },
-        { "title": "Die Polizei identifiziert dein Fahrrad", "body": "Wird dein Fahrrad gefunden? Der Beamte scannt den Velopass-Code und sieht sofort, dass es gestohlen ist — und wer der Eigentümer ist." }
+        {
+          "title": "Du meldest in Velopass",
+          "body": "Du änderst den Status deines Fahrrads in deinem Velopass-Konto auf REPORTED."
+        },
+        {
+          "title": "Das FNUCI wird aktualisiert",
+          "body": "Velopass leitet die Statusänderung an das FNUCI weiter. Polizei und Gendarmerie haben Zugriff auf dieses Register."
+        },
+        {
+          "title": "Die Polizei identifiziert dein Fahrrad",
+          "body": "Wird dein Fahrrad gefunden? Der Beamte scannt den Velopass-Code und sieht sofort, dass es gestohlen ist — und wer der Eigentümer ist."
+        }
       ],
       "code_note": "**Dein Velopass-Code IST dein FNUCI-Identifikator.** Das ist die 10-stellige Nummer, die die Polizei für die offizielle *plainte* braucht. Du findest sie in deinem Velopass-Konto.",
       "ma_intro": "Erstatte deine Anzeige online über Ma Sécurité. Dein Velopass-Code ist der *identifiant unique*, nach dem das Formular fragt — bereits in deinem Velopass.",
       "home_already_title": "Schon wieder zu Hause?",
       "home_already_body": "Belgische und niederländische Versicherer verlangen fast immer eine französische Polizeianzeige. Starte die Anzeige so schnell wie möglich über Ma Sécurité, auch wenn du bereits zu Hause bist.",
       "checklist": [
-        { "text": "Deinen Reisepass oder Personalausweis" },
-        { "text": "FranceConnect-Konto (optional, aber empfohlen)", "note": "Ohne FranceConnect: persönlicher Termin in einem französischen Kommissariat oder einer Gendarmerie erforderlich" },
-        { "text": "Deinen Velopass-Code (= FNUCI-Identifikator)", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Marke, Modell, Farbe und Typ des Fahrrads", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Die Rahmennummer", "velopass": "Bereits in deinem Velopass" },
-        { "text": "Genauer Ort in Frankreich, Datum und Uhrzeit", "velopass": "Bereits eingegeben, als du es in Velopass gemeldet hast — als Tourist kannst du dich später oft nicht mehr an die genaue Adresse erinnern" },
-        { "text": "Fotos des Fahrrads", "velopass": "Bereits in deinem Velopass gespeichert" }
+        {
+          "text": "Deinen Reisepass oder Personalausweis"
+        },
+        {
+          "text": "FranceConnect-Konto (optional, aber empfohlen)",
+          "note": "Ohne FranceConnect: persönlicher Termin in einem französischen Kommissariat oder einer Gendarmerie erforderlich"
+        },
+        {
+          "text": "Deinen Velopass-Code (= FNUCI-Identifikator)",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Marke, Modell, Farbe und Typ des Fahrrads",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Die Rahmennummer",
+          "velopass": "Bereits in deinem Velopass"
+        },
+        {
+          "text": "Genauer Ort in Frankreich, Datum und Uhrzeit",
+          "velopass": "Bereits eingegeben, als du es in Velopass gemeldet hast — als Tourist kannst du dich später oft nicht mehr an die genaue Adresse erinnern"
+        },
+        {
+          "text": "Fotos des Fahrrads",
+          "velopass": "Bereits in deinem Velopass gespeichert"
+        }
       ],
       "method1_badge": "Vollständig digital",
       "method1_title": "Mit FranceConnect (empfohlen)",
@@ -180,6 +265,56 @@
       ],
       "chat_title": "Ma Sécurité hat einen 24/7-Chat",
       "chat_body": "Schon zu Hause und kannst die Anzeige nicht vollständig online abschließen? Nutz den Chat auf [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
+    },
+    "DE": {
+      "intro": "In Deutschland erstattest du die Anzeige online über die Onlinewache der Polizei. Anders als in Belgien oder den Niederlanden hat jedes Bundesland eine eigene Onlinewache — du wählst zuerst dein Bundesland.",
+      "important_title": "Wichtig vorab",
+      "important_body": "Nicht jedes Bundesland bietet die Online-Anzeige für jede Deliktart an, aber ein Fahrraddiebstahl lässt sich praktisch überall online melden. Ein Login ist meist nicht nötig — du gibst deine Daten direkt ein.",
+      "checklist": [
+        {
+          "text": "Marke, Modell, Farbe und Fahrradtyp",
+          "velopass": "Bereits in deinem Velopass verfügbar"
+        },
+        {
+          "text": "Die Rahmennummer",
+          "velopass": "Bereits in deinem Velopass verfügbar"
+        },
+        {
+          "text": "Genauer Ort, Datum und Uhrzeit des Diebstahls",
+          "velopass": "Bereits bei deiner Meldung in Velopass eingegeben"
+        },
+        {
+          "text": "Fotos des Fahrrads",
+          "velopass": "Bereits in deinem Velopass gespeichert"
+        },
+        {
+          "text": "Kaufrechnung (falls vorhanden)",
+          "velopass": "Mit deinem Velopass verknüpft"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Geh zur zentralen Onlinewache",
+          "body": "[www.polizei.de](https://www.polizei.de/Polizei/DE/Einrichtungen/Onlinewache/onlinewache_node.html) → wähle **'Onlinewache'**."
+        },
+        {
+          "title": "Wähle dein Bundesland",
+          "body": "Wähle das Bundesland, in dem das Fahrrad gestohlen wurde. Du wirst zur Onlinewache dieses Bundeslandes weitergeleitet."
+        },
+        {
+          "title": "Anzeige erstatten",
+          "body": "Wähle **'Diebstahl'** und anschließend **'Fahrrad'** als Gegenstand."
+        },
+        {
+          "title": "Fülle das Formular aus",
+          "body": "• Persönliche Daten als Anzeigenerstatter\n• Tatort: wo und wann gestohlen?\n• Gegenstand: alle Details des Fahrrads (Marke, Modell, Farbe, Rahmennummer)",
+          "tip": "Öffne dein Velopass, um alle Fahrraddaten und die Rahmennummer auf einen Blick zur Hand zu haben."
+        },
+        {
+          "title": "Prüfen und absenden",
+          "body": "Prüfe die Angaben und sende ab. Du erhältst eine Bestätigung (Aktenzeichen) von der Polizei des jeweiligen Bundeslandes."
+        }
+      ]
     }
   },
   "step3": {
