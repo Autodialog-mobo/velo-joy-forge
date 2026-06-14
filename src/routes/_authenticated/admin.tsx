@@ -222,6 +222,29 @@ function AdminPage() {
     return arr;
   }, [orders, filter, statusFilter, sort]);
 
+  const gotoNav = (delta: number) => {
+    if (!detailOrder || navIds.length === 0) return;
+    const next = navIndex + delta;
+    if (next < 0 || next >= navIds.length) return;
+    const targetId = navIds[next];
+    const target = orders.find((o: any) => o.id === targetId);
+    if (!target) return;
+    setDetailOrder(target);
+    setNavIndex(next);
+    // Re-anchor batch context to the newly displayed order (no status changes)
+    initBatchFor(target, filtered);
+  };
+
+  useEffect(() => {
+    if (!detailOrder) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); gotoNav(-1); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); gotoNav(1); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
   const toggle = (id: string) => {
     setSelected((prev) => {
       const next = new Set(prev);
