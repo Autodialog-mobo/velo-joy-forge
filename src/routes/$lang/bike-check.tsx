@@ -75,6 +75,96 @@ function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: s
   return <div ref={containerRef} />;
 }
 
+function SlotCodeInput({
+  value,
+  onChange,
+  maxLength = 10,
+  placeholder,
+  sanitize,
+  id,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  maxLength?: number;
+  placeholder?: string;
+  sanitize: (v: string) => string;
+  id?: string;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [focused, setFocused] = useState(false);
+
+  const showSlots = value.length > 0 || focused;
+
+  return (
+    <div
+      onClick={() => inputRef.current?.focus()}
+      style={{
+        ...inputStyle,
+        display: "flex",
+        alignItems: "center",
+        gap: 4,
+        cursor: "text",
+        position: "relative",
+        minHeight: 46,
+        overflow: "hidden",
+      }}
+    >
+      <input
+        ref={inputRef}
+        id={id}
+        type="text"
+        inputMode="text"
+        autoCapitalize="characters"
+        autoCorrect="off"
+        spellCheck={false}
+        value={value}
+        onChange={(e) => onChange(sanitize(e.target.value))}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        placeholder={showSlots ? undefined : placeholder}
+        maxLength={maxLength}
+        style={{
+          position: "absolute",
+          opacity: 0,
+          pointerEvents: "none",
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      />
+      {showSlots ? (
+        <div style={{ display: "flex", width: "100%", gap: 4 }}>
+          {Array.from({ length: maxLength }).map((_, i) => (
+            <span
+              key={i}
+              style={{
+                flex: 1,
+                textAlign: "center",
+                fontSize: 15,
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: i < value.length ? 500 : 400,
+                color: i < value.length ? "#0D1F3C" : "#CBD5E1",
+                borderBottom: `2px solid ${i < value.length ? "#0D1F3C" : "#E2E8F0"}`,
+                paddingBottom: 2,
+                minWidth: 0,
+                transition: "all 0.15s ease",
+              }}
+            >
+              {i < value.length ? value[i] : "_"}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <span style={{ color: "#9CA3AF", fontSize: 15, fontFamily: "'DM Sans', sans-serif" }}>
+          {placeholder}
+        </span>
+      )}
+    </div>
+  );
+}
+
+
 const BIKE_CHECK_META = {
   nl: nlBikeCheck.meta,
   en: enBikeCheck.meta,
