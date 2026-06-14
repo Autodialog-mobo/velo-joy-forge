@@ -32,7 +32,7 @@
     "title": "Über Marke und Rahmennummer",
     "desc": "Suche anhand der Marke und der Rahmennummer des Fahrrads.",
     "brand": "Marke",
-    "brand_placeholder": "Wähle eine Marke",
+    "brand_placeholder": "Trek, Specialized, Gazelle…",
     "frame_number": "Bildnummer",
     "check": "Überprüfen",
     "loading": "Wird geprüft...",

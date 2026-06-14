@@ -32,7 +32,7 @@
     "title": "Via la marque et le numéro de châssis",
     "desc": "Effectue une recherche en utilisant la marque et le numéro de cadre du vélo.",
     "brand": "Marque",
-    "brand_placeholder": "Choisis une marque",
+    "brand_placeholder": "Trek, Specialized, Gazelle…",
     "frame_number": "Numéro de châssis",
     "check": "Vérifier",
     "loading": "Je vérifie...",
