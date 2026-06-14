@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
@@ -119,6 +119,7 @@ function AdminPage() {
     dir: "desc",
   });
   const [detailOrder, setDetailOrder] = useState<any>(null);
+  const [labelCopied, setLabelCopied] = useState(false);
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
@@ -798,6 +799,12 @@ function AdminPage() {
                         {detailOrder.shipping_name || "—"}
                       </p>
                       <p className="text-[13px]" style={{ color: TEXT_SEC }}>{detailOrder.customer_email}</p>
+                      <p className="text-[12px] mt-1 flex items-center gap-1.5" style={{ color: TEXT_MUTED }}>
+                        <Languages className="w-3 h-3" />
+                        Taal: <span style={{ color: TEXT_SEC, fontWeight: 600 }}>
+                          {detailOrder.lang ? String(detailOrder.lang).toUpperCase() : "—"}
+                        </span>
+                      </p>
                     </div>
 
                     <div>
@@ -813,6 +820,56 @@ function AdminPage() {
                         {detailOrder.shipping_state && `, ${detailOrder.shipping_state}`}
                       </p>
                       <p className="text-[13px]" style={{ color: TEXT_SEC }}>{detailOrder.shipping_country}</p>
+
+                      {(() => {
+                        const labelLines = [
+                          detailOrder.shipping_name,
+                          detailOrder.shipping_line1,
+                          detailOrder.shipping_line2,
+                          [detailOrder.shipping_postal_code, detailOrder.shipping_city].filter(Boolean).join(" "),
+                          detailOrder.shipping_country ? String(detailOrder.shipping_country).toUpperCase() : null,
+                        ].filter((l) => l && String(l).trim().length > 0) as string[];
+                        const labelText = labelLines.join("\n");
+                        return (
+                          <div
+                            className="mt-3 rounded-[10px] p-3"
+                            style={{
+                              background: "rgba(255,255,255,0.03)",
+                              border: `1px solid ${SURFACE_BORDER}`,
+                            }}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <pre
+                                className="text-[13px] leading-[1.45] m-0 whitespace-pre-wrap"
+                                style={{
+                                  color: TEXT_PRI,
+                                  fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+                                }}
+                              >{labelText}</pre>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  try {
+                                    await navigator.clipboard.writeText(labelText);
+                                    setLabelCopied(true);
+                                    setTimeout(() => setLabelCopied(false), 1600);
+                                  } catch {}
+                                }}
+                                className="inline-flex items-center gap-1.5 h-[28px] px-2.5 rounded-[8px] text-[11px] font-medium shrink-0 transition-colors focus:outline-none focus-visible:ring-2"
+                                style={{
+                                  background: "transparent",
+                                  border: `1px solid ${SURFACE_BORDER}`,
+                                  color: labelCopied ? GREEN : TEXT_SEC,
+                                }}
+                                aria-label="Kopieer adreslabel"
+                              >
+                                {labelCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                                {labelCopied ? "Gekopieerd" : "Kopieer adreslabel"}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     <div>
