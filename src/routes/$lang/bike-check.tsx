@@ -483,8 +483,8 @@ function BikeSearchPage() {
 
             <button
               type="submit"
-              disabled={loadingB || !brand || !frame.trim() || !turnstileToken}
-              style={navyBtn(loadingB || !brand || !frame.trim() || !turnstileToken)}
+              disabled={loadingB || !brand || !frame.trim()}
+              style={navyBtn(loadingB || !brand || !frame.trim())}
             >
               {loadingB ? (
                 <>
