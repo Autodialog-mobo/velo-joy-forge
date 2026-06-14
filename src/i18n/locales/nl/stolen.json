@@ -53,7 +53,8 @@
       "BE": "🇧🇪 België",
       "NL": "🇳🇱 Nederland",
       "FR": "🇫🇷 Frankrijk",
-      "DE": "🇩🇪 Duitsland"
+      "DE": "🇩🇪 Duitsland",
+      "UK": "🇬🇧 Verenigd Koninkrijk"
     },
     "coming_soon": "Binnenkort beschikbaar",
     "checklist_title": "Wat heb je vooraf nodig?",
@@ -313,6 +314,56 @@
         {
           "title": "Controleer en verzend",
           "body": "Controleer de gegevens en verstuur. Je ontvangt een bevestiging (Aktenzeichen/dossiernummer) van de betreffende deelstaat-politie."
+        }
+      ]
+    },
+    "UK": {
+      "intro": "In het Verenigd Koninkrijk doe je online aangifte via police.uk. Net als in België heeft elke regio een eigen politiekorps (force) — police.uk stuurt je via je postcode naar het juiste korps.",
+      "important_title": "Belangrijk om vooraf te weten",
+      "important_body": "Voor een spoedeisend geval of een diefstal die nog bezig is, bel 999. Voor een aangifte achteraf gebruik je de online aangifte of bel je het niet-spoednummer 101. Je ontvangt een crime reference number — dat heb je nodig voor je verzekering.",
+      "checklist": [
+        {
+          "text": "Merk, model, kleur en type fiets",
+          "velopass": "Al beschikbaar in je Velopass"
+        },
+        {
+          "text": "Het framenummer (frame number)",
+          "velopass": "Al beschikbaar in je Velopass"
+        },
+        {
+          "text": "Exacte locatie, datum en tijdstip van de diefstal",
+          "velopass": "Al ingegeven bij je melding in Velopass"
+        },
+        {
+          "text": "Foto's van de fiets",
+          "velopass": "Al opgeslagen in je Velopass"
+        },
+        {
+          "text": "Aankoopfactuur (indien beschikbaar)",
+          "velopass": "Gekoppeld aan je Velopass"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Ga naar police.uk",
+          "body": "[www.police.uk](https://www.police.uk/pu/contact-us/) → kies **'Contact us and report'**."
+        },
+        {
+          "title": "Vind je lokale politiekorps",
+          "body": "Vul je postcode in; je wordt doorgestuurd naar de online aangifte van het juiste korps (force)."
+        },
+        {
+          "title": "Start een online aangifte (Report a crime)",
+          "body": "Kies **'theft'** en daarna **'bicycle/cycle'** als voorwerp."
+        },
+        {
+          "title": "Vul het formulier in",
+          "body": "• Je gegevens als eigenaar\n• Where and when: locatie, datum en tijdstip\n• Item details: merk, model, kleur, frame number",
+          "tip": "Open je Velopass om alle fietsgegevens in één oogopslag bij de hand te hebben."
+        },
+        {
+          "title": "Noteer je crime reference number",
+          "body": "Na verzending ontvang je een crime reference number. Bewaar dit — je verzekeraar heeft het nodig voor je claim."
         }
       ]
     }

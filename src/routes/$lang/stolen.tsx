@@ -123,7 +123,9 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
   );
 }
 
-function getBrowserCountry(): "BE" | "NL" | "FR" | "DE" {
+type CountryCode = "BE" | "NL" | "FR" | "DE" | "UK";
+
+function getBrowserCountry(): CountryCode {
   // Default to BE on both server and client to avoid SSR hydration mismatch.
   // The real visitor country is detected via cf-ipcountry in a useEffect.
   return "BE";
@@ -259,7 +261,7 @@ function GestolenPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["stolen", "common"]);
   const [navOpen, setNavOpen] = useState(false);
-  const [country, setCountry] = useState<"BE" | "NL" | "FR" | "DE">(getBrowserCountry);
+  const [country, setCountry] = useState<CountryCode>(getBrowserCountry);
   const fetchVisitorCountry = useServerFn(getVisitorCountry);
   useEffect(() => {
     let cancelled = false;
@@ -468,7 +470,7 @@ function GestolenPage() {
               flexWrap: "wrap",
             }}
           >
-            {(["BE", "NL", "FR", "DE"] as const).map((code) => {
+            {(["BE", "NL", "FR", "DE", "UK"] as const).map((code) => {
               const active = country === code;
               return (
                 <button
@@ -500,6 +502,7 @@ function GestolenPage() {
           {country === "NL" && <CountryNL getList={getList} t={t} />}
           {country === "FR" && <CountryFR getList={getList} t={t} />}
           {country === "DE" && <CountryDE getList={getList} t={t} />}
+          {country === "UK" && <CountryUK getList={getList} t={t} />}
         </section>
 
         {/* STAP 3 */}
@@ -1012,6 +1015,25 @@ function CountryDE({ getList, t }: { getList: GetList; t: TFn }) {
       />
       <ChecklistCard title={t("step2.checklist_title")} items={checklist} keyPrefix="de-cl" />
       <StepsList steps={steps} keyPrefix="de-st" />
+    </div>
+  );
+}
+
+/* ============== UK ============== */
+function CountryUK({ getList, t }: { getList: GetList; t: TFn }) {
+  const checklist = getList<ChecklistItem>("step2.UK.checklist");
+  const steps = getList<StepItem>("step2.UK.steps");
+  return (
+    <div style={{ display: "grid", gap: 24 }}>
+      <GreenIntroCard text={t("step2.UK.intro")} />
+      <AmberTipCard
+        icon={<Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />}
+        title={t("step2.UK.important_title")}
+        body={t("step2.UK.important_body")}
+        keyPrefix="uk-important"
+      />
+      <ChecklistCard title={t("step2.checklist_title")} items={checklist} keyPrefix="uk-cl" />
+      <StepsList steps={steps} keyPrefix="uk-st" />
     </div>
   );
 }

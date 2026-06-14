@@ -53,7 +53,8 @@
       "BE": "🇧🇪 Belgien",
       "NL": "🇳🇱 Niederlande",
       "FR": "🇫🇷 Frankreich",
-      "DE": "🇩🇪 Deutschland"
+      "DE": "🇩🇪 Deutschland",
+      "UK": "🇬🇧 Vereinigtes Königreich"
     },
     "coming_soon": "Demnächst verfügbar",
     "checklist_title": "Was brauchst du vorab?",
@@ -313,6 +314,56 @@
         {
           "title": "Prüfen und absenden",
           "body": "Prüfe die Angaben und sende ab. Du erhältst eine Bestätigung (Aktenzeichen) von der Polizei des jeweiligen Bundeslandes."
+        }
+      ]
+    },
+    "UK": {
+      "intro": "Im Vereinigten Königreich erstattest du online Anzeige über police.uk. Wie in Belgien hat jede Region ihre eigene Polizei (force) — police.uk leitet dich anhand deiner Postleitzahl zur richtigen Force.",
+      "important_title": "Wichtig zu wissen",
+      "important_body": "Im Notfall oder bei einem laufenden Diebstahl wähle die 999. Für eine nachträgliche Anzeige nutzt du die Online-Anzeige oder rufst die Nicht-Notrufnummer 101 an. Du erhältst eine crime reference number — die brauchst du für deine Versicherung.",
+      "checklist": [
+        {
+          "text": "Marke, Modell, Farbe und Fahrradtyp",
+          "velopass": "Bereits in deinem Velopass verfügbar"
+        },
+        {
+          "text": "Die Rahmennummer (frame number)",
+          "velopass": "Bereits in deinem Velopass verfügbar"
+        },
+        {
+          "text": "Genauer Ort, Datum und Uhrzeit des Diebstahls",
+          "velopass": "Bereits bei deiner Meldung im Velopass eingetragen"
+        },
+        {
+          "text": "Fotos des Fahrrads",
+          "velopass": "Bereits in deinem Velopass gespeichert"
+        },
+        {
+          "text": "Kaufrechnung (falls vorhanden)",
+          "velopass": "Mit deinem Velopass verknüpft"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Geh auf police.uk",
+          "body": "[www.police.uk](https://www.police.uk/pu/contact-us/) → wähle **'Contact us and report'**."
+        },
+        {
+          "title": "Finde deine lokale Polizei",
+          "body": "Gib deine Postleitzahl ein; du wirst zur Online-Anzeige der zuständigen Force weitergeleitet."
+        },
+        {
+          "title": "Starte eine Online-Anzeige (Report a crime)",
+          "body": "Wähle **'theft'** und dann **'bicycle/cycle'** als Gegenstand."
+        },
+        {
+          "title": "Fülle das Formular aus",
+          "body": "• Deine Daten als Eigentümer\n• Where and when: Ort, Datum und Uhrzeit\n• Item details: Marke, Modell, Farbe, Rahmennummer",
+          "tip": "Öffne deinen Velopass, um alle Fahrraddaten griffbereit zu haben."
+        },
+        {
+          "title": "Notiere deine crime reference number",
+          "body": "Nach dem Absenden erhältst du eine crime reference number. Bewahre sie auf — deine Versicherung braucht sie für deine Schadensmeldung."
         }
       ]
     }

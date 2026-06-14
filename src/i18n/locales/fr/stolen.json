@@ -53,7 +53,8 @@
       "BE": "🇧🇪 Belgique",
       "NL": "🇳🇱 Pays-Bas",
       "FR": "🇫🇷 France",
-      "DE": "🇩🇪 Allemagne"
+      "DE": "🇩🇪 Allemagne",
+      "UK": "🇬🇧 Royaume-Uni"
     },
     "coming_soon": "Bientôt disponible",
     "checklist_title": "De quoi as-tu besoin au préalable ?",
@@ -313,6 +314,56 @@
         {
           "title": "Vérifie et envoie",
           "body": "Vérifie les informations et envoie. Tu recevras une confirmation (Aktenzeichen / numéro de dossier) de la police du Land concerné."
+        }
+      ]
+    },
+    "UK": {
+      "intro": "Au Royaume-Uni, tu fais une déclaration en ligne via police.uk. Comme en Belgique, chaque région a sa propre police (force) — police.uk te redirige via ton code postal vers la bonne force.",
+      "important_title": "Important à savoir au préalable",
+      "important_body": "En cas d'urgence ou de vol en cours, appelle le 999. Pour une déclaration a posteriori, utilise la déclaration en ligne ou appelle le numéro non urgent 101. Tu reçois un crime reference number — tu en as besoin pour ton assurance.",
+      "checklist": [
+        {
+          "text": "Marque, modèle, couleur et type de vélo",
+          "velopass": "Déjà disponible dans ton Velopass"
+        },
+        {
+          "text": "Le numéro de cadre (frame number)",
+          "velopass": "Déjà disponible dans ton Velopass"
+        },
+        {
+          "text": "Localisation exacte, date et heure du vol",
+          "velopass": "Déjà saisie lors de ta déclaration dans Velopass"
+        },
+        {
+          "text": "Photos du vélo",
+          "velopass": "Déjà enregistrées dans ton Velopass"
+        },
+        {
+          "text": "Facture d'achat (si disponible)",
+          "velopass": "Liée à ton Velopass"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Va sur police.uk",
+          "body": "[www.police.uk](https://www.police.uk/pu/contact-us/) → choisis **'Contact us and report'**."
+        },
+        {
+          "title": "Trouve ta police locale",
+          "body": "Saisis ton code postal ; tu es redirigé vers la déclaration en ligne de la bonne force."
+        },
+        {
+          "title": "Lance une déclaration en ligne (Report a crime)",
+          "body": "Choisis **'theft'** puis **'bicycle/cycle'** comme objet."
+        },
+        {
+          "title": "Remplis le formulaire",
+          "body": "• Tes coordonnées en tant que propriétaire\n• Where and when : lieu, date et heure\n• Item details : marque, modèle, couleur, frame number",
+          "tip": "Ouvre ton Velopass pour avoir toutes les infos du vélo sous la main."
+        },
+        {
+          "title": "Note ton crime reference number",
+          "body": "Après l'envoi, tu reçois un crime reference number. Conserve-le — ton assureur en a besoin pour ta demande."
         }
       ]
     }

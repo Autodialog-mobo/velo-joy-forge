@@ -53,7 +53,8 @@
       "BE": "🇧🇪 Belgium",
       "NL": "🇳🇱 Netherlands",
       "FR": "🇫🇷 France",
-      "DE": "🇩🇪 Germany"
+      "DE": "🇩🇪 Germany",
+      "UK": "🇬🇧 United Kingdom"
     },
     "coming_soon": "Coming soon",
     "checklist_title": "What do you need beforehand?",
@@ -313,6 +314,56 @@
         {
           "title": "Review and submit",
           "body": "Check the details and send. You'll receive a confirmation (Aktenzeichen / case number) from the police of the relevant state."
+        }
+      ]
+    },
+    "UK": {
+      "intro": "In the United Kingdom you file an online report via police.uk. Like in Belgium, each region has its own police force — police.uk routes you to the right force via your postcode.",
+      "important_title": "Important to know upfront",
+      "important_body": "For an emergency or a theft in progress, call 999. For a report after the fact, use the online report or call the non-emergency number 101. You'll receive a crime reference number — you'll need it for your insurance.",
+      "checklist": [
+        {
+          "text": "Brand, model, colour and bike type",
+          "velopass": "Already available in your Velopass"
+        },
+        {
+          "text": "The frame number",
+          "velopass": "Already available in your Velopass"
+        },
+        {
+          "text": "Exact location, date and time of the theft",
+          "velopass": "Already entered when you reported it in Velopass"
+        },
+        {
+          "text": "Photos of the bike",
+          "velopass": "Already stored in your Velopass"
+        },
+        {
+          "text": "Purchase invoice (if available)",
+          "velopass": "Linked to your Velopass"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Go to police.uk",
+          "body": "[www.police.uk](https://www.police.uk/pu/contact-us/) → choose **'Contact us and report'**."
+        },
+        {
+          "title": "Find your local police force",
+          "body": "Enter your postcode; you'll be redirected to the online report of the right force."
+        },
+        {
+          "title": "Start an online report (Report a crime)",
+          "body": "Choose **'theft'** and then **'bicycle/cycle'** as the object."
+        },
+        {
+          "title": "Fill in the form",
+          "body": "• Your details as the owner\n• Where and when: location, date and time\n• Item details: brand, model, colour, frame number",
+          "tip": "Open your Velopass to have all bike details at a glance."
+        },
+        {
+          "title": "Note your crime reference number",
+          "body": "After submitting you'll receive a crime reference number. Keep it — your insurer needs it for your claim."
         }
       ]
     }
