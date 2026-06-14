@@ -1055,7 +1055,6 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
     <div style={resultCard("#F59E0B")}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>{t("status_cards.all_clear.badge")}</span>
         <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>{t("status_cards.reported.badge")}</span>
         <AlertTriangle color="#F59E0B" size={24} style={{ marginLeft: 4 }} />
       </div>
