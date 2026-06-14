@@ -553,8 +553,6 @@ function GestolenPage() {
             <Link
               to="/$lang"
               params={{ lang }}
-              hash="nieuwe-sticker"
-              hashScrollIntoView={{ behavior: "smooth", block: "start" }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
