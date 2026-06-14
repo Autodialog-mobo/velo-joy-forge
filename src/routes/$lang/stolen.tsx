@@ -259,14 +259,14 @@ function GestolenPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["stolen", "common"]);
   const [navOpen, setNavOpen] = useState(false);
-  const [country, setCountry] = useState<"BE" | "NL" | "FR">(getBrowserCountry);
+  const [country, setCountry] = useState<"BE" | "NL" | "FR" | "DE">(getBrowserCountry);
   const fetchVisitorCountry = useServerFn(getVisitorCountry);
   useEffect(() => {
     let cancelled = false;
     fetchVisitorCountry()
       .then((res) => {
         if (cancelled) return;
-        if (res.country === "BE" || res.country === "NL" || res.country === "FR") {
+        if (res.country === "BE" || res.country === "NL" || res.country === "FR" || res.country === "DE") {
           setCountry(res.country);
         }
       })
