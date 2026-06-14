@@ -12,6 +12,16 @@ export interface BikeCheckResult {
   primaryColor: string | null;
   bikeType: string | null;
   yearOfCreation: number | null;
+  lostReportUrl: string | null;
+}
+
+const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+
+function extractLostReportUrl(bike: Record<string, unknown>): string | null {
+  const url = pick<string>(bike, ["url", "bicycleUrl", "link"]);
+  const direct = typeof url === "string" ? url.match(UUID_RE)?.[0] : null;
+  const id = direct ?? (pick<string>(bike, ["id", "uuid", "bicycleId"]) ?? "").match(UUID_RE)?.[0];
+  return id ? `https://app.velopass.com/lost/${id}` : null;
 }
 
 function pick<T = unknown>(obj: Record<string, unknown>, keys: string[]): T | null {
