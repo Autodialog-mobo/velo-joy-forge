@@ -11,6 +11,7 @@
     "tldr": "Demande le numéro de cadre et la facture d'origine, vérifie le vélo via le Velopass Bike Check, et fais transférer la propriété par le vendeur via son compte Velopass. Un vendeur honnête partage l'enregistrement et la facture sans hésiter. S'ils manquent ? Tu peux passer ton chemin l'esprit tranquille.",
     "cta_primary": "Vérifier un vélo maintenant",
     "cta_secondary": "Signaler un vélo volé",
+    "back": "Retour",
     "sections": [
       {
         "title": "1. Demande toujours le numéro de cadre",
