@@ -249,7 +249,7 @@ function BuyingSecondHandGuide() {
             ))}
           </section>
         )}
-      </main>
+      </div>
       <Footer />
     </>
   );
