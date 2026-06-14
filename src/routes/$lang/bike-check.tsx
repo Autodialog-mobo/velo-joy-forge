@@ -256,7 +256,9 @@ function BikeSearchPage() {
     setLoadingB(true);
     setLastMethod("b");
     try {
-      const res = await runCheckBike({ data: { code: cleanFrame, turnstileToken } });
+      const res = await runCheckByFrame({
+        data: { brand, frameNumber: cleanFrame, turnstileToken },
+      });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
