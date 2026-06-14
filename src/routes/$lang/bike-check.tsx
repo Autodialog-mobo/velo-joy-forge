@@ -67,21 +67,32 @@ function BikeSearchPage() {
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
 
-  const submitA = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!codeA.trim()) return;
+  const runCheck = async (code: string) => {
+    const clean = sanitizeCode(code);
+    if (!clean) return;
     setError(null);
     setResult(null);
     setLoadingA(true);
     setLastMethod("a");
     try {
-      const res = await runCheckBike({ data: { code: codeA.trim() } });
+      const res = await runCheckBike({ data: { code: clean } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
     } finally {
       setLoadingA(false);
     }
+  };
+
+  const submitA = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await runCheck(codeA);
+  };
+
+  const handleScanResult = (raw: string) => {
+    const clean = sanitizeCode(raw);
+    setCodeA(clean);
+    void runCheck(clean);
   };
 
   const submitB = async (e: React.FormEvent) => {
