@@ -162,6 +162,7 @@ const NOT_FOUND: BikeCheckResult = {
   primaryColor: null,
   bikeType: null,
   yearOfCreation: null,
+  lostReportUrl: null,
 };
 
 export const checkBikeByFrame = createServerFn({ method: "POST" })
