@@ -79,6 +79,8 @@
     "reported_title": "Dieses Fahrrad wurde gemeldet",
     "reported_body": "Dieses Fahrrad ist registriert und wird von seinem Besitzer aktiv gemeldet. Die „Velopass“-Community sucht aktiv danach.",
     "reported_cta_primary": "Ein gefundenes Fahrrad melden →",
+    "contact_owner": "Let the owner know you found it →",
+    "contact_owner_note": "You send a message directly to the owner. You can do this anonymously too.",
     "not_registered_title": "Nicht registriert",
     "not_registered_body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Registriere es, um es zu schützen.",
     "not_registered_cta": "Registriere dein Fahrrad →",

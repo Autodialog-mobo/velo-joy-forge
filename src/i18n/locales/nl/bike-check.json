@@ -79,6 +79,8 @@
     "reported_title": "Deze fiets is gemeld",
     "reported_body": "Deze fiets is geregistreerd en actief als vermist gemeld door de eigenaar. De Velopass Community zoekt mee.",
     "reported_cta_primary": "Gevonden fiets melden →",
+    "contact_owner": "Laat de eigenaar weten dat je 'm gevonden hebt →",
+    "contact_owner_note": "Je stuurt een bericht rechtstreeks aan de eigenaar. Je kunt dit ook anoniem doen.",
     "not_registered_title": "Nog niet geregistreerd",
     "not_registered_body": "Deze fiets staat nog niet in Velopass. Registreer 'm om hem te beschermen.",
     "not_registered_cta": "Registreer je fiets →",
