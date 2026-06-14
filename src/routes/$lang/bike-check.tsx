@@ -17,8 +17,8 @@ import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
 import deBikeCheck from "@/i18n/locales/de/bike-check.json";
 
-// Cloudflare Turnstile site key — placeholder; replace with the real key from the Cloudflare dashboard.
-const TURNSTILE_SITE_KEY = "0x4AAAAAAA_PLACEHOLDER_REPLACE_ME";
+// Cloudflare Turnstile site key — real production key.
+const TURNSTILE_SITE_KEY = "0x4AAAAAADkaXNe7SmFnETSM";
 
 declare global {
   interface Window {
