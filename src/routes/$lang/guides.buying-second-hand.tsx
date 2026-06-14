@@ -55,6 +55,27 @@ function BuyingSecondHandGuide() {
 
   return (
     <>
+      <button
+        onClick={() => window.history.back()}
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 24,
+          zIndex: 50,
+          background: "none",
+          border: "none",
+          color: "var(--navy)",
+          fontSize: 14,
+          fontWeight: 500,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          padding: "4px 0",
+        }}
+      >
+        ← {t(`${base}.back`)}
+      </button>
       <div style={{ position: "absolute", top: 20, right: 24, zIndex: 50 }}>
         <LangSwitcher currentLang={lang} tone="light" />
       </div>
