@@ -296,6 +296,8 @@ function GestolenPage() {
           <li><Link to="/$lang" params={{ lang }} hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.already_have_one")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="nieuwe-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.order_sticker")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.community")}</Link></li>
+          <li><Link to="/$lang/bike-check" params={{ lang }} search={{ lng: "nl-nl" }}>{t("common:nav.bike_check")}</Link></li>
+          <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "rider" }}>{t("common:nav.contact")}</Link></li>
           <li><Link to="/$lang/shop" params={{ lang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
