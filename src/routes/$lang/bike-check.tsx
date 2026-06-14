@@ -680,6 +680,17 @@ function BikeSearchPage() {
               <p style={statusBodyStyle}>
                 {t("status_cards.reported.body")}
               </p>
+              <p
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: "#0D1F3C",
+                  margin: "16px 0 12px",
+                }}
+              >
+                {t("outcomes.reported_cta")}
+              </p>
             </div>
           </div>
         </div>

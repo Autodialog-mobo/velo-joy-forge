@@ -105,5 +105,8 @@
   "police_note_be": "Vous avez trouvé ce vélo ? Déposez plainte via Police-on-web ou trouvez votre zone de police locale.",
   "police_note_nl": "Vous avez trouvé ce vélo ? Déposez plainte auprès de la police néerlandaise.",
   "police_note_fr": "Vous avez trouvé ce vélo ? Déposez plainte en ligne auprès de la police française.",
-  "police_note_de": "Vous avez trouvé ce vélo ? Déposez plainte via l'Onlinewache de la police allemande."
+  "police_note_de": "Vous avez trouvé ce vélo ? Déposez plainte via l'Onlinewache de la police allemande.",
+  "outcomes": {
+    "reported_cta": "Found this bike? Let the owner know you found it."
+  }
 }

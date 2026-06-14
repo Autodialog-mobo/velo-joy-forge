@@ -105,5 +105,8 @@
   "police_note_be": "Heb je deze fiets gevonden? Doe aangifte via Police-on-web of vind je lokale politiezone.",
   "police_note_nl": "Heb je deze fiets gevonden? Doe aangifte of melding bij de politie.",
   "police_note_fr": "Heb je deze fiets gevonden? Doe aangifte via de Franse politie (pré-plainte en ligne).",
-  "police_note_de": "Heb je deze fiets gevonden? Doe aangifte via de Duitse Onlinewache."
+  "police_note_de": "Heb je deze fiets gevonden? Doe aangifte via de Duitse Onlinewache.",
+  "outcomes": {
+    "reported_cta": "Deze fiets gevonden? Laat de eigenaar weten dat je 'm gevonden hebt."
+  }
 }
