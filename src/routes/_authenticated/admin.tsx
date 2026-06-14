@@ -917,6 +917,14 @@ function AdminPage() {
 
                       {/* Contextual status transition */}
                       {(() => {
+                        if (batchDone && batchStatus) {
+                          return (
+                            <div className="flex items-center gap-2 mt-3 text-[12px]" style={{ color: TEXT_MUTED }}>
+                              <Check className="w-3.5 h-3.5" style={{ color: GREEN }} />
+                              Alle {statusLabelNl(batchStatus).toLowerCase()} orders verwerkt
+                            </div>
+                          );
+                        }
                         if (detailOrder.status === "paid") {
                           return (
                             <button
@@ -926,8 +934,7 @@ function AdminPage() {
                                 setDetailBusy(true);
                                 try {
                                   await doPrint({ data: { orderIds: [detailOrder.id] } });
-                                  setDetailOrder((prev: any) => (prev ? { ...prev, status: "printed" } : prev));
-                                  await refetch();
+                                  await advanceBatch();
                                 } finally {
                                   setDetailBusy(false);
                                 }
@@ -947,8 +954,7 @@ function AdminPage() {
                                 setDetailBusy(true);
                                 try {
                                   await doShip({ data: { orderIds: [detailOrder.id] } });
-                                  setDetailOrder((prev: any) => (prev ? { ...prev, status: "shipped" } : prev));
-                                  await refetch();
+                                  await advanceBatch();
                                 } finally {
                                   setDetailBusy(false);
                                 }
