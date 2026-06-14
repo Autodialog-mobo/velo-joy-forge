@@ -416,7 +416,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               <button
                 type="button"
                 disabled={manualCode.length === 0}
-                onClick={() => setResult(manualCode)}
+                onClick={() => emitResult(manualCode)}
                 style={{
                   width: "100%",
                   marginTop: 14,
