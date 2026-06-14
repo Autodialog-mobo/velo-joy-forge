@@ -110,6 +110,7 @@ function AdminPage() {
   const doShip = useServerFn(markShipped);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
+  const [statusFilter, setStatusFilter] = useState<string>("any");
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
