@@ -125,15 +125,24 @@ function AdminPage() {
   const [batchQueue, setBatchQueue] = useState<string[]>([]);
   const [batchIndex, setBatchIndex] = useState(0);
   const [batchDone, setBatchDone] = useState(false);
+  // Read-only browse navigation across the current filtered list
+  const [navIds, setNavIds] = useState<string[]>([]);
+  const [navIndex, setNavIndex] = useState(0);
 
-  const openDetail = (o: any, queueSource?: any[]) => {
-    setDetailOrder(o);
+  const initBatchFor = (o: any, source: any[]) => {
     setBatchStatus(o.status);
-    const source = queueSource ?? [];
     const queue = source.filter((x: any) => x.status === o.status).map((x: any) => x.id);
     setBatchQueue(queue);
     setBatchIndex(Math.max(0, queue.indexOf(o.id)));
     setBatchDone(false);
+  };
+
+  const openDetail = (o: any, queueSource?: any[]) => {
+    const source = queueSource ?? [];
+    setDetailOrder(o);
+    setNavIds(source.map((x: any) => x.id));
+    setNavIndex(Math.max(0, source.findIndex((x: any) => x.id === o.id)));
+    initBatchFor(o, source);
   };
 
   const closeDetail = () => {
@@ -142,6 +151,8 @@ function AdminPage() {
     setBatchQueue([]);
     setBatchIndex(0);
     setBatchDone(false);
+    setNavIds([]);
+    setNavIndex(0);
   };
 
   const advanceBatch = async () => {
