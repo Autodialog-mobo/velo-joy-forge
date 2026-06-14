@@ -1,0 +1,66 @@
+{
+  "buying_second_hand": {
+    "meta": {
+      "title": "Is deze fiets gestolen? Veilig een tweedehands fiets kopen — Velopass",
+      "description": "Controleer of een tweedehands fiets gestolen is. Checklist met framenummer, factuur en registratiecontrole via Velopass Bike Check."
+    },
+    "eyebrow": "Gids",
+    "title": "Hoe weet je of een fiets gestolen is?",
+    "intro": "Een tweedehands fiets kopen is slim — maar alleen als je zeker weet dat hij niet gestolen is. Deze checklist helpt je in vijf minuten te controleren of de fiets schoon is, en hoe je veilig de eigendomsoverdracht regelt.",
+    "tldr_title": "In het kort",
+    "tldr": "Vraag het framenummer en de originele factuur, controleer de fiets op bikesearch.velopass.com, en laat de verkoper het eigendom overdragen via zijn Velopass-account. Geen registratie of geen factuur? Loop weg.",
+    "cta_primary": "Controleer een fiets nu",
+    "cta_secondary": "Meld een gestolen fiets",
+    "sections": [
+      {
+        "title": "1. Vraag altijd het framenummer",
+        "body": "Het framenummer is de unieke seriecode die de fabrikant in het frame heeft gegraveerd — meestal onderaan de trapas, op de balhoofdbuis of bij het achterwiel. Vraag de verkoper om een duidelijke foto vóór je langsgaat. Geen framenummer = geen deal."
+      },
+      {
+        "title": "2. Controleer de fiets via Velopass Bike Check",
+        "body": "Voer het framenummer of de Velopass-code (op de Frame-ID-sticker) in op onze Bike Check. Je ziet direct of de fiets als gestolen of vermist staat geregistreerd, en of er een actieve eigenaar aan gekoppeld is. Gratis, anoniem, ongeveer 10 seconden."
+      },
+      {
+        "title": "3. Vraag de originele aankoopfactuur",
+        "body": "Een eerlijke verkoper heeft de originele factuur (of een eerdere overdrachtsbon). Controleer de naam, datum en het framenummer op de factuur — die moeten overeenkomen met de fiets én met de verkoper. Twijfel je? Vraag een kopie van zijn ID en vergelijk."
+      },
+      {
+        "title": "4. Let op verdachte signalen",
+        "list": [
+          "Prijs ver onder de marktwaarde van het model",
+          "Verkoper haastig, geen vaste ontmoetingsplek, alleen contant",
+          "Krassen of beschadigingen rond het framenummer (mogelijk weggevijld)",
+          "Geen sleutel voor het slot, geen handleiding, geen historie",
+          "Verhaal klopt niet: \"van een vriend\", \"erfenis\", \"geen tijd om uit te leggen\""
+        ]
+      },
+      {
+        "title": "5. Regel de eigendomsoverdracht direct",
+        "body": "Heeft de fiets een Velopass-registratie? Vraag de verkoper om ter plekke de overdracht te starten via zijn Velopass-account. Daarna staat de fiets officieel op jouw naam — en kun jij hem terugkrijgen als hij later wordt gestolen. Geen Velopass? Registreer hem zelf zodra je hem koopt."
+      },
+      {
+        "title": "6. Wat als de fiets als gestolen blijkt?",
+        "body": "Koop hem niet. Een gestolen fiets blijft eigendom van de oorspronkelijke eigenaar, dus jij raakt je geld én de fiets kwijt. Meld de advertentie bij het platform (Marktplaats, Facebook, 2dehands) en, als je de verkoper kunt identificeren, bij de politie."
+      }
+    ],
+    "faq_title": "Veelgestelde vragen",
+    "faq": [
+      {
+        "q": "Kan ik aan het uiterlijk zien of een fiets gestolen is?",
+        "a": "Niet betrouwbaar. Een verzorgde, schone fiets kan gestolen zijn; een verwaarloosde fiets kan eerlijk verkocht worden. Alleen het framenummer + een registratiecheck geven zekerheid."
+      },
+      {
+        "q": "Wat als de verkoper geen framenummer wil delen?",
+        "a": "Dat is een rode vlag. Een eerlijke verkoper heeft niets te verbergen. Loop weg."
+      },
+      {
+        "q": "Is de Velopass Bike Check gratis?",
+        "a": "Ja. De check is gratis, anoniem en werkt voor elke fiets — ook fietsen die niet bij Velopass geregistreerd staan worden gecontroleerd tegen onze diefstaldatabase."
+      },
+      {
+        "q": "Wat doe ik als ik per ongeluk een gestolen fiets heb gekocht?",
+        "a": "Meld het bij de politie en geef de fiets terug aan de rechtmatige eigenaar. Je kunt proberen je geld terug te krijgen van de verkoper, maar juridisch ben je niet beschermd."
+      }
+    ]
+  }
+}

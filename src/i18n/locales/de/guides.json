@@ -1,0 +1,66 @@
+{
+  "buying_second_hand": {
+    "meta": {
+      "title": "Ist dieses Fahrrad gestohlen? Gebrauchtes Rad sicher kaufen — Velopass",
+      "description": "Prüfe, ob ein gebrauchtes Fahrrad gestohlen ist. Checkliste mit Rahmennummer, Originalrechnung und Registrierungscheck via Velopass Bike Check."
+    },
+    "eyebrow": "Ratgeber",
+    "title": "Woran erkennst du, ob ein Fahrrad gestohlen ist?",
+    "intro": "Ein gebrauchtes Fahrrad zu kaufen ist clever — aber nur, wenn du sicher bist, dass es nicht gestohlen ist. Diese Checkliste hilft dir in fünf Minuten zu prüfen, ob das Rad sauber ist, und wie du den Eigentumsübergang sicher regelst.",
+    "tldr_title": "Kurz gesagt",
+    "tldr": "Frag nach der Rahmennummer und der Originalrechnung, prüfe das Rad auf bikesearch.velopass.com, und lass den Verkäufer den Eigentumsübergang über sein Velopass-Konto durchführen. Keine Registrierung oder keine Rechnung? Lass die Finger davon.",
+    "cta_primary": "Jetzt ein Fahrrad prüfen",
+    "cta_secondary": "Gestohlenes Fahrrad melden",
+    "sections": [
+      {
+        "title": "1. Frag immer nach der Rahmennummer",
+        "body": "Die Rahmennummer ist der eindeutige Seriencode, den der Hersteller in den Rahmen graviert hat — meist unter dem Tretlager, am Steuerrohr oder in der Nähe des Hinterrads. Verlange vom Verkäufer ein scharfes Foto, bevor du hinfährst. Keine Rahmennummer = kein Kauf."
+      },
+      {
+        "title": "2. Prüfe das Rad mit Velopass Bike Check",
+        "body": "Gib die Rahmennummer oder den Velopass-Code (auf dem Frame-ID-Aufkleber) in unseren Bike Check ein. Du siehst sofort, ob das Rad als gestohlen oder vermisst gemeldet ist und ob ein aktiver Besitzer hinterlegt ist. Kostenlos, anonym, etwa 10 Sekunden."
+      },
+      {
+        "title": "3. Verlange die Originalrechnung",
+        "body": "Ein ehrlicher Verkäufer hat die Originalrechnung (oder einen früheren Übergabebeleg). Prüfe Name, Datum und Rahmennummer auf der Rechnung — sie müssen zum Rad und zum Verkäufer passen. Zweifel? Lass dir den Ausweis zeigen und vergleiche."
+      },
+      {
+        "title": "4. Achte auf Warnsignale",
+        "list": [
+          "Preis deutlich unter dem Marktwert des Modells",
+          "Verkäufer hat es eilig, kein fester Treffpunkt, nur Bargeld",
+          "Kratzer oder Beschädigungen rund um die Rahmennummer (eventuell abgefeilt)",
+          "Kein Schlüssel fürs Schloss, keine Bedienungsanleitung, keine Historie",
+          "Geschichte passt nicht: „von einem Freund", „Erbschaft", „keine Zeit zu erklären"
+        ]
+      },
+      {
+        "title": "5. Regele den Eigentumsübergang sofort",
+        "body": "Hat das Rad eine Velopass-Registrierung? Bitte den Verkäufer, den Übergang direkt vor Ort über sein Velopass-Konto zu starten. Danach läuft das Rad offiziell auf deinen Namen — und du bekommst es zurück, falls es später gestohlen wird. Noch kein Velopass? Registriere es selbst, sobald du es kaufst."
+      },
+      {
+        "title": "6. Was tun, wenn sich das Rad als gestohlen herausstellt?",
+        "body": "Kauf es nicht. Ein gestohlenes Rad bleibt Eigentum des ursprünglichen Besitzers — du verlierst also Geld und Rad. Melde die Anzeige der Plattform (eBay Kleinanzeigen, Facebook) und, falls du den Verkäufer identifizieren kannst, der Polizei."
+      }
+    ],
+    "faq_title": "Häufige Fragen",
+    "faq": [
+      {
+        "q": "Kann man am Aussehen erkennen, ob ein Rad gestohlen ist?",
+        "a": "Nicht zuverlässig. Ein gepflegtes Rad kann gestohlen sein; ein abgenutztes kann ehrlich verkauft werden. Nur Rahmennummer + Registrierungscheck geben Sicherheit."
+      },
+      {
+        "q": "Was, wenn der Verkäufer die Rahmennummer nicht herausgeben will?",
+        "a": "Das ist ein Warnsignal. Ein ehrlicher Verkäufer hat nichts zu verbergen. Lass es."
+      },
+      {
+        "q": "Ist Velopass Bike Check kostenlos?",
+        "a": "Ja. Die Prüfung ist kostenlos, anonym und funktioniert für jedes Rad — auch Räder, die nicht bei Velopass registriert sind, werden gegen unsere Diebstahldatenbank abgeglichen."
+      },
+      {
+        "q": "Was tun, wenn ich versehentlich ein gestohlenes Rad gekauft habe?",
+        "a": "Melde es der Polizei und gib das Rad an den rechtmäßigen Besitzer zurück. Du kannst versuchen, dein Geld vom Verkäufer zurückzubekommen, rechtlich bist du aber nicht geschützt."
+      }
+    ]
+  }
+}
