@@ -187,11 +187,6 @@ export const Route = createFileRoute("/$lang/bike-check")({
   component: BikeSearchPage,
 });
 
-const BRANDS = [
-  "Trek", "Specialized", "Cube", "Giant", "Cannondale", "Scott", "Bianchi",
-  "BMC", "Canyon", "Merida", "Ridley", "KTM", "Stevens", "Koga", "Gazelle",
-  "Batavus", "Cortina", "Cowboy", "VanMoof", "Riese & Müller", "Andere",
-];
 
 type TFn = ReturnType<typeof useTranslation>["t"];
 
