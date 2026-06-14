@@ -86,7 +86,10 @@
     "reported_be_secondary": "Vind je lokale politiezone →",
     "reported_nl_primary": "Doe aangifte of melding bij de politie →",
     "reported_nl_note": "Geen spoed? Bel 0900-8844.",
-    "reported_fr_primary": "Déposer plainte en ligne →"
+    "reported_fr_primary": "Déposer plainte en ligne →",
+    "reported_de_primary": "Anzeige über die Onlinewache →",
+    "switch_country": "Niet in dit land? Kies een ander land",
+    "country_label": "Land"
   },
   "bike_details": {
     "heading": "Details van de fiets",
@@ -99,5 +102,6 @@
   },
   "police_note_be": "Heb je deze fiets gevonden? Doe aangifte via Police-on-web of vind je lokale politiezone.",
   "police_note_nl": "Heb je deze fiets gevonden? Doe aangifte of melding bij de politie.",
-  "police_note_fr": "Heb je deze fiets gevonden? Doe aangifte via de Franse politie (pré-plainte en ligne)."
+  "police_note_fr": "Heb je deze fiets gevonden? Doe aangifte via de Franse politie (pré-plainte en ligne).",
+  "police_note_de": "Heb je deze fiets gevonden? Doe aangifte via de Duitse Onlinewache."
 }
