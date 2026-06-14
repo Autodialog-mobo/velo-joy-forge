@@ -996,3 +996,22 @@ function CountryFR({ getList, t }: { getList: GetList; t: TFn }) {
     </div>
   );
 }
+
+/* ============== DE ============== */
+function CountryDE({ getList, t }: { getList: GetList; t: TFn }) {
+  const checklist = getList<ChecklistItem>("step2.DE.checklist");
+  const steps = getList<StepItem>("step2.DE.steps");
+  return (
+    <div style={{ display: "grid", gap: 24 }}>
+      <GreenIntroCard text={t("step2.DE.intro")} />
+      <AmberTipCard
+        icon={<Lightbulb size={22} strokeWidth={2} color="#D97706" style={{ flexShrink: 0, marginTop: 2 }} />}
+        title={t("step2.DE.important_title")}
+        body={t("step2.DE.important_body")}
+        keyPrefix="de-important"
+      />
+      <ChecklistCard title={t("step2.checklist_title")} items={checklist} keyPrefix="de-cl" />
+      <StepsList steps={steps} keyPrefix="de-st" />
+    </div>
+  );
+}
