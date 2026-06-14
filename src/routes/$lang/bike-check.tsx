@@ -57,8 +57,9 @@ function BikeSearchPage() {
   const [frame, setFrame] = useState("");
   const [captcha, setCaptcha] = useState(false);
   const [scanOpen, setScanOpen] = useState(false);
-  const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+
+  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
@@ -66,21 +67,32 @@ function BikeSearchPage() {
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
 
-  const submitA = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!codeA.trim()) return;
+  const runCheck = async (code: string) => {
+    const clean = sanitizeCode(code);
+    if (!clean) return;
     setError(null);
     setResult(null);
     setLoadingA(true);
     setLastMethod("a");
     try {
-      const res = await runCheckBike({ data: { code: codeA.trim() } });
+      const res = await runCheckBike({ data: { code: clean } });
       setResult(res);
     } catch {
       setError(t("errors.generic"));
     } finally {
       setLoadingA(false);
     }
+  };
+
+  const submitA = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await runCheck(codeA);
+  };
+
+  const handleScanResult = (raw: string) => {
+    const clean = sanitizeCode(raw);
+    setCodeA(clean);
+    void runCheck(clean);
   };
 
   const submitB = async (e: React.FormEvent) => {
@@ -223,25 +235,26 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{t("method_a.title")}</h2>
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
+            <input
+              id="bs-code"
+              type="text"
+              inputMode="text"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              spellCheck={false}
+              value={codeA}
+              onChange={(e) => setCodeA(sanitizeCode(e.target.value))}
+              placeholder="87CH9810171"
+              maxLength={32}
+              style={{ ...inputStyle, letterSpacing: 2, fontVariantNumeric: "tabular-nums" }}
+            />
+
+            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
               <button
                 type="button"
-                onClick={() => { setScanManual(false); setScanOpen(true); }}
+                onClick={() => setScanOpen(true)}
                 style={{
-                  ...navyBtn(false),
-                  marginTop: 0,
-                  width: "auto",
-                  flex: "1 1 200px",
-                  background: "#0D1F3C",
-                }}
-              >
-                <QrCode size={16} strokeWidth={2} /> {t("method_a.scan_cta")}
-              </button>
-              <button
-                type="button"
-                onClick={() => { setScanManual(true); setScanOpen(true); }}
-                style={{
-                  marginTop: 0,
                   background: "transparent",
                   color: "#0D1F3C",
                   border: "1.5px solid rgba(13,31,60,0.2)",
@@ -251,10 +264,27 @@ function BikeSearchPage() {
                   fontWeight: 500,
                   fontSize: 14,
                   cursor: "pointer",
-                  flex: "1 1 200px",
+                  flex: "1 1 180px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
                 }}
               >
-                {t("method_a.manual_cta")} →
+                <QrCode size={16} strokeWidth={2} /> {t("method_a.scan_cta")}
+              </button>
+              <button
+                type="submit"
+                disabled={loadingA || !codeA}
+                style={{ ...navyBtn(loadingA || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
+              >
+                {loadingA ? (
+                  <>
+                    <Loader2 size={16} className="bs-spin" /> {t("method_b.loading")}
+                  </>
+                ) : (
+                  t("method_b.check")
+                )}
               </button>
             </div>
           </form>
@@ -626,7 +656,7 @@ function BikeSearchPage() {
         @keyframes bs-spin { to { transform: rotate(360deg); } }
       `}</style>
 
-      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} initialManual={scanManual} />
+      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} onResult={handleScanResult} />
     </div>
   );
 }

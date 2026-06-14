@@ -7,9 +7,15 @@ type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialManual?: boolean;
+  /**
+   * When provided, the dialog skips the built-in "Overdracht starten" confirmation
+   * step and instead emits the recognised/typed code immediately, then closes.
+   * Used by flows like the bike-check page that just want the raw code.
+   */
+  onResult?: (code: string) => void;
 };
 
-export function QrScanDialog({ open, onOpenChange, initialManual = false }: Props) {
+export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult }: Props) {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [manual, setManual] = useState(initialManual);
@@ -20,10 +26,22 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
     if (open) setManual(initialManual);
   }, [open, initialManual]);
 
+  const emitResult = (value: string) => {
+    if (onResult) {
+      onResult(value);
+      setResult(null);
+      setError(null);
+      setManual(false);
+      setManualCode("");
+      onOpenChange(false);
+      return;
+    }
+    setResult(value);
+  };
+
   const handleScan = (codes: IDetectedBarcode[]) => {
     if (codes.length > 0) {
-      const value = codes[0].rawValue;
-      setResult(value);
+      emitResult(codes[0].rawValue);
     }
   };
 
@@ -398,7 +416,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false }: Prop
               <button
                 type="button"
                 disabled={manualCode.length === 0}
-                onClick={() => setResult(manualCode)}
+                onClick={() => emitResult(manualCode)}
                 style={{
                   width: "100%",
                   marginTop: 14,
