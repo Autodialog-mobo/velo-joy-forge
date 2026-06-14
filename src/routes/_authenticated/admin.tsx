@@ -826,6 +826,11 @@ function AdminPage() {
                       <span className="text-[11px]" style={{ color: TEXT_MUTED }}>
                         {detailOrder.environment === "live" ? "Live" : "Sandbox"}
                       </span>
+                      {batchStatus && batchQueue.length > 1 && (
+                        <span className="ml-auto text-[11px]" style={{ color: TEXT_MUTED }}>
+                          Order {Math.min(batchIndex + 1, batchQueue.length)} van {batchQueue.length} {statusLabelNl(batchStatus).toLowerCase()}
+                        </span>
+                      )}
                     </div>
                   </div>
 
