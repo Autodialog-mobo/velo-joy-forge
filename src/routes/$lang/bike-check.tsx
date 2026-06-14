@@ -459,23 +459,71 @@ function BikeSearchPage() {
             <p style={cardDesc}>{t("method_b.desc")}</p>
 
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
-            <input
-              id="bs-brand"
-              type="text"
-              autoCorrect="off"
-              spellCheck={false}
-              autoComplete="off"
-              list="bs-brand-list"
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              placeholder={t("method_b.brand_placeholder")}
-              style={inputStyle}
-            />
-            <datalist id="bs-brand-list">
-              {(BIKE_BRANDS as string[]).map((b) => (
-                <option key={b} value={b} />
-              ))}
-            </datalist>
+            <div style={{ position: "relative" }}>
+              <input
+                id="bs-brand"
+                type="text"
+                autoCorrect="off"
+                spellCheck={false}
+                autoComplete="off"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                onFocus={() => setBrandFocused(true)}
+                onBlur={() => setTimeout(() => setBrandFocused(false), 120)}
+                placeholder={t("method_b.brand_placeholder")}
+                style={inputStyle}
+              />
+              {brandFocused && brandSuggestions.length > 0 && (
+                <ul
+                  role="listbox"
+                  style={{
+                    position: "absolute",
+                    top: "100%",
+                    left: 0,
+                    right: 0,
+                    margin: "4px 0 0",
+                    padding: 4,
+                    listStyle: "none",
+                    background: "#fff",
+                    border: "1px solid #d6dde6",
+                    borderRadius: 8,
+                    boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
+                    zIndex: 20,
+                    maxHeight: 280,
+                    overflowY: "auto",
+                  }}
+                >
+                  {brandSuggestions.map((b) => (
+                    <li key={b}>
+                      <button
+                        type="button"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          setBrand(b);
+                          setBrandFocused(false);
+                        }}
+                        style={{
+                          display: "block",
+                          width: "100%",
+                          textAlign: "left",
+                          padding: "8px 10px",
+                          border: "none",
+                          background: "transparent",
+                          borderRadius: 6,
+                          cursor: "pointer",
+                          fontSize: 15,
+                          color: "#0F172A",
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                      >
+                        {b}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
