@@ -7,6 +7,8 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { createIsomorphicFn } from "@tanstack/react-start";
+import { getRequestUrl } from "@tanstack/react-start/server";
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
@@ -15,11 +17,14 @@ import { CookieConsent } from "@/components/CookieConsent";
 
 const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
 
-function getClientDocumentLang(): string {
-  if (typeof window === "undefined") return "nl";
-  const segment = window.location.pathname.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];
+function langFromPathname(pathname: string): string {
+  const segment = pathname.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];
   return segment && DOCUMENT_LANGS.has(segment) ? segment : "nl";
 }
+
+const getDocumentLang = createIsomorphicFn()
+  .server(() => langFromPathname(getRequestUrl().pathname))
+  .client(() => langFromPathname(window.location.pathname));
 
 function NotFoundComponent() {
   return (
@@ -110,7 +115,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 });
 
 function RootShell({ children }: { children: React.ReactNode }) {
-  const lang = getClientDocumentLang();
+  const lang = getDocumentLang();
 
   return (
     <html lang={lang}>
