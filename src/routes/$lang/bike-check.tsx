@@ -244,15 +244,16 @@ function BikeSearchPage() {
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanBrand = brand.trim();
     const cleanFrame = sanitizeAlnum(frame);
-    if (!brand || !cleanFrame) return;
+    if (!cleanBrand || !cleanFrame) return;
     setError(null);
     setResult(null);
     setLoadingB(true);
     setLastMethod("b");
     try {
       const res = await runCheckByFrame({
-        data: { brand, frameNumber: cleanFrame, turnstileToken },
+        data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken },
       });
       setResult(res);
     } catch {
