@@ -145,8 +145,18 @@ function AdminPage() {
     return c;
   }, [orders]);
 
+  const availableStatuses = useMemo(() => {
+    const s = new Set<string>();
+    for (const o of orders) if (o.status) s.add(o.status);
+    return Array.from(s).sort();
+  }, [orders]);
+
   const filtered = useMemo(() => {
-    const arr = orders.filter((o: any) => filter === "all" || o.status === filter);
+    const arr = orders.filter((o: any) => {
+      const pipelineMatch = filter === "all" || o.status === filter;
+      const secondaryMatch = statusFilter === "any" || o.status === statusFilter;
+      return pipelineMatch && secondaryMatch;
+    });
     arr.sort((a: any, b: any) => {
       if (sort.column === "date") {
         const da = new Date(a.created_at).getTime();
@@ -159,7 +169,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [orders, filter, sort]);
+  }, [orders, filter, statusFilter, sort]);
 
   const toggle = (id: string) => {
     setSelected((prev) => {
