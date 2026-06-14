@@ -203,6 +203,14 @@ function BikeSearchPage() {
   const [turnstileToken, setTurnstileToken] = useState("");
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [brandFocused, setBrandFocused] = useState(false);
+  const brandSuggestions = (() => {
+    const q = brand.trim().toLowerCase();
+    if (!q) return [] as string[];
+    return (BIKE_BRANDS as string[])
+      .filter((b) => b.toLowerCase().includes(q) && b.toLowerCase() !== q)
+      .slice(0, 8);
+  })();
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
   const sanitizeAlnum = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
