@@ -683,7 +683,7 @@ function AdminPage() {
                     return (
                       <tr
                         key={o.id}
-                        onClick={() => setDetailOrder(o)}
+                        onClick={() => openDetail(o, filtered)}
                         className="row-link cursor-pointer"
                         style={{
                           borderBottom: isLast ? "none" : `1px solid ${SURFACE_BORDER}`,
