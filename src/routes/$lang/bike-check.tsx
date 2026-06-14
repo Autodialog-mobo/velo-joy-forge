@@ -1092,7 +1092,9 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
           {t("result.reported_cta_primary")}
         </a>
         <a
-          href="tel:101"
+          href="https://www.police-on-web.be"
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             background: "transparent",
             color: "#0D1F3C",
@@ -1104,9 +1106,24 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
             fontWeight: 500,
           }}
         >
-          {t("result.reported_cta_secondary")}
+          {t("result.reported_cta_police_web")}
         </a>
       </div>
+      <a
+        href="https://www.police.be/nl/zonefinder"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: "#5A7090",
+          fontWeight: 500,
+          textDecoration: "underline",
+          fontSize: 14,
+          marginTop: 10,
+          display: "inline-block",
+        }}
+      >
+        {t("result.reported_cta_zone_finder")}
+      </a>
     </div>
   );
 }
