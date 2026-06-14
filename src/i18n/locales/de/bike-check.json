@@ -1,112 +1,112 @@
 {
-  "_translated": false,
+  "_translated": true,
   "meta": {
-    "title": "Den Status eines Fahrrads prüfen — Velopass",
-    "description": "Prüfe, ob ein Fahrrad in der „Velopass“-Community registriert ist – ganz ohne Konto und in wenigen Sekunden.",
-    "ogDescription": "Überprüfe ein Fahrrad anhand seiner VIN-Nummer (Velopass) oder anhand der Marke und der Rahmennummer."
+    "title": "Status eines Fahrrads prüfen — Velopass",
+    "description": "Prüfe in wenigen Sekunden, ob ein Fahrrad in der Velopass Community registriert ist — ohne Konto.",
+    "ogDescription": "Prüfe ein Fahrrad über den Velopass-Code oder Marke + Rahmennummer."
   },
   "nav": {
     "what_you_get": "Was du bekommst",
-    "already_have_one": "Hast du schon einen Aufkleber?",
-    "order_sticker": "Bestelle einen Aufkleber",
+    "already_have_one": "Schon eine Frame-ID?",
+    "order_sticker": "Frame-ID bestellen",
     "community": "Community",
-    "bike_check": "Fahrrad-Check",
-    "for_professionals": "Für Fachleute",
+    "bike_check": "Fahrrad prüfen",
+    "for_professionals": "Für Profis",
     "login": "Anmelden",
     "menu_label": "Menü"
   },
   "page": {
     "back": "← Zurück",
-    "eyebrow": "FAHRRAD-CHECK",
-    "title": "Den Status eines Fahrrads prüfen",
-    "subtitle": "Prüfe, ob ein Fahrrad in der „Velopass“-Community registriert ist – ganz ohne Konto und in wenigen Sekunden."
+    "eyebrow": "FAHRRAD PRÜFEN",
+    "title": "Status eines Fahrrads prüfen",
+    "subtitle": "Prüfe in wenigen Sekunden, ob ein Fahrrad in der Velopass Community registriert ist — ohne Konto."
   },
   "method_a": {
-    "title": "Über den Code „Velopass“",
-    "desc": "Scanne den QR-Code auf der Seite Frame-ID oder gib die Adresse Velopass manuell ein.",
+    "title": "Über den Velopass-Code",
+    "desc": "Scanne den QR-Code auf der Frame-ID oder gib den Velopass-Code ein.",
     "code_label": "Velopass-Code",
-    "scan_cta": "Scanne den QR-Code",
-    "manual_cta": "Gib den Code manuell ein"
+    "scan_cta": "QR-Code scannen",
+    "manual_cta": "Code manuell eingeben"
   },
   "method_b": {
     "title": "Über Marke und Rahmennummer",
-    "desc": "Suche anhand der Marke und der Rahmennummer des Fahrrads.",
+    "desc": "Suche nach Marke und Rahmennummer des Fahrrads.",
     "brand": "Marke",
     "brand_placeholder": "Trek, Specialized, Gazelle…",
-    "frame_number": "Bildnummer",
-    "check": "Überprüfen",
-    "loading": "Wird geprüft...",
+    "frame_number": "Rahmennummer",
+    "check": "Prüfen",
+    "loading": "Wird geprüft…",
     "captcha": "Ich bin kein Roboter",
-    "captcha_meta_privacy": "Datenschutz · Nutzungsbedingungen"
+    "captcha_meta_privacy": "Datenschutz · Bedingungen"
   },
   "errors": {
-    "generic": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut."
+    "generic": "Etwas ist schiefgelaufen. Versuche es erneut."
   },
   "status_overview": {
     "eyebrow": "WAS BEDEUTET DER STATUS?",
     "title": "Drei mögliche Ergebnisse",
-    "subtitle": "Nach der Suche wird dir immer einer dieser drei Status angezeigt.",
-    "secured_group_label": "SICHER — Registriert in der „Velopass“-Community",
-    "not_secured_group_label": "NICHT GESICHERT — Nicht unter Velopass registriert",
+    "subtitle": "Nach der Suche siehst du immer einen dieser drei Status.",
+    "secured_group_label": "GESICHERT — In der Velopass Community registriert",
+    "not_secured_group_label": "NICHT GESICHERT — Nicht in Velopass registriert",
     "divider_or": "oder",
     "is_this_your_bike": "Ist das dein Fahrrad?",
-    "order_frameid_cta": "Bestelle einen „Frame-ID“ →",
-    "order_frameid_hint": "Schütze dein Fahrrad mit einem „Velopass“ Frame-ID – erhältlich im Fahrradfachgeschäft oder in unserem Webshop.",
+    "order_frameid_cta": "Frame-ID bestellen →",
+    "order_frameid_hint": "Schütze dein Fahrrad mit einer Velopass Frame-ID — über deinen Fahrradhändler oder unseren Webshop.",
     "register_bike_cta": "Registriere dein Fahrrad →",
-    "register_bike_hint": "Du hast bereits ein „Frame-ID“ an deinem Fahrrad. Registriere es in wenigen Schritten."
+    "register_bike_hint": "Du hast bereits eine Frame-ID an deinem Fahrrad. Registriere es in wenigen Schritten."
   },
   "status_cards": {
     "all_clear": {
-      "badge": "ALLES IN ORDNUNG",
-      "title": "Kostenlos und sicher",
-      "body": "In der „Velopass“-Community registriert und nicht als vermisst gemeldet."
+      "badge": "IN ORDNUNG",
+      "title": "Frei und in Ordnung",
+      "body": "In der Velopass Community registriert und nicht als vermisst gemeldet."
     },
     "reported": {
       "badge": "GEMELDET",
       "title": "Als vermisst gemeldet",
-      "body": "Vom Besitzer gemeldet und aktiv gesucht. Die „Velopass“-Community hilft bei der Suche."
+      "body": "Registriert und aktiv vom Eigentümer als vermisst gemeldet. Die Velopass Community hilft bei der Suche."
     },
     "not_registered": {
-      "badge": "NICHT REGISTRIERT",
-      "title": "Nicht registriert",
-      "body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Es ist noch nicht geschützt."
+      "badge": "NOCH NICHT REGISTRIERT",
+      "title": "Noch nicht registriert",
+      "body": "Dieses Fahrrad ist noch nicht in Velopass. Es ist also noch nicht geschützt."
     }
   },
   "result": {
-    "secured_title": "Dieses Fahrrad ist angeschlossen",
-    "secured_body": "Dieses Fahrrad ist in der „Velopass“-Community registriert und wurde nicht als vermisst gemeldet.",
-    "secured_cta": "Gehört das Fahrrad dir? Öffne deinen Velopass →",
+    "secured_title": "Dieses Fahrrad ist gesichert",
+    "secured_body": "Dieses Fahrrad ist in der Velopass Community registriert und nicht als vermisst gemeldet.",
+    "secured_cta": "Ist das dein Fahrrad? Öffne dein Velopass →",
     "reported_title": "Dieses Fahrrad wurde gemeldet",
-    "reported_body": "Dieses Fahrrad ist registriert und wird von seinem Besitzer aktiv gemeldet. Die „Velopass“-Community sucht aktiv danach.",
-    "reported_cta_primary": "Ein gefundenes Fahrrad melden →",
-    "contact_owner": "Let the owner know you found it →",
-    "contact_owner_note": "You send a message directly to the owner. You can do this anonymously too.",
-    "not_registered_title": "Nicht registriert",
-    "not_registered_body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Registriere es, um es zu schützen.",
+    "reported_body": "Dieses Fahrrad ist registriert und wurde vom Eigentümer aktiv als vermisst gemeldet. Die Velopass Community hilft bei der Suche.",
+    "reported_cta_primary": "Gefundenes Fahrrad melden →",
+    "contact_owner": "Lass den Eigentümer wissen, dass du es gefunden hast →",
+    "contact_owner_note": "Du sendest eine Nachricht direkt an den Eigentümer. Du kannst das auch anonym tun.",
+    "not_registered_title": "Noch nicht registriert",
+    "not_registered_body": "Dieses Fahrrad ist noch nicht in Velopass. Registriere es, um es zu schützen.",
     "not_registered_cta": "Registriere dein Fahrrad →",
     "reported_be_primary": "Anzeige über Police-on-web erstatten →",
-    "reported_be_secondary": "Lokale Polizeizone finden →",
-    "reported_nl_primary": "Anzeige bei der Polizei erstatten →",
-    "reported_nl_note": "Kein Notfall? Rufen Sie 0900-8844 an.",
-    "reported_fr_primary": "Online-Anzeige erstatten →",
-    "reported_de_primary": "Anzeige über die Onlinewache erstatten →",
+    "reported_be_secondary": "Finde deine lokale Polizeizone →",
+    "reported_nl_primary": "Anzeige oder Meldung bei der Polizei →",
+    "reported_nl_note": "Kein Notfall? Ruf 0900-8844 an.",
+    "reported_fr_primary": "Anzeige online erstatten →",
+    "reported_de_primary": "Anzeige über die Onlinewache →",
     "switch_country": "Nicht in diesem Land? Wähle ein anderes Land",
     "country_label": "Land"
   },
   "bike_details": {
-    "heading": "Details van de fiets",
-    "brand": "Merk",
-    "model": "Model",
-    "color": "Kleur",
-    "type": "Type",
-    "year": "Bouwjaar",
-    "unknown": "Onbekend"
+    "heading": "Details des Fahrrads",
+    "brand": "Marke",
+    "model": "Modell",
+    "color": "Farbe",
+    "type": "Typ",
+    "year": "Baujahr",
+    "unknown": "Unbekannt"
   },
-  "police_note_be": "Dieses Fahrrad gefunden? Anzeige über Police-on-web erstatten oder lokale Polizeizone finden.",
-  "police_note_nl": "Dieses Fahrrad gefunden? Anzeige bei der niederländischen Polizei erstatten.",
-  "police_note_fr": "Dieses Fahrrad gefunden? Online-Anzeige bei der französischen Polizei erstatten.",
-  "police_note_de": "Dieses Fahrrad gefunden? Anzeige über die Onlinewache der deutschen Polizei erstatten.",
+  "police_note_be": "Hast du dieses Fahrrad gefunden? Erstatte Anzeige über Police-on-web oder finde deine lokale Polizeizone.",
+  "police_note_nl": "Hast du dieses Fahrrad gefunden? Erstatte Anzeige oder mache eine Meldung bei der Polizei.",
+  "police_note_fr": "Hast du dieses Fahrrad gefunden? Erstatte Anzeige bei der französischen Polizei (pré-plainte en ligne).",
+  "police_note_de": "Hast du dieses Fahrrad gefunden? Erstatte Anzeige über die deutsche Onlinewache.",
   "outcomes": {
-    "reported_cta": "Found this bike? Let the owner know you found it."
+    "reported_cta": "Dieses Fahrrad gefunden? Lass den Eigentümer wissen, dass du es gefunden hast."
   }
 }
