@@ -86,7 +86,10 @@
     "reported_be_secondary": "Lokale Polizeizone finden →",
     "reported_nl_primary": "Anzeige bei der Polizei erstatten →",
     "reported_nl_note": "Kein Notfall? Rufen Sie 0900-8844 an.",
-    "reported_fr_primary": "Online-Anzeige erstatten →"
+    "reported_fr_primary": "Online-Anzeige erstatten →",
+    "reported_de_primary": "Anzeige über die Onlinewache erstatten →",
+    "switch_country": "Nicht in diesem Land? Wähle ein anderes Land",
+    "country_label": "Land"
   },
   "bike_details": {
     "heading": "Details van de fiets",
@@ -99,5 +102,6 @@
   },
   "police_note_be": "Dieses Fahrrad gefunden? Anzeige über Police-on-web erstatten oder lokale Polizeizone finden.",
   "police_note_nl": "Dieses Fahrrad gefunden? Anzeige bei der niederländischen Polizei erstatten.",
-  "police_note_fr": "Dieses Fahrrad gefunden? Online-Anzeige bei der französischen Polizei erstatten."
+  "police_note_fr": "Dieses Fahrrad gefunden? Online-Anzeige bei der französischen Polizei erstatten.",
+  "police_note_de": "Dieses Fahrrad gefunden? Anzeige über die Onlinewache der deutschen Polizei erstatten."
 }

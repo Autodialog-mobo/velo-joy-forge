@@ -86,7 +86,10 @@
     "reported_be_secondary": "Trouver votre zone de police locale →",
     "reported_nl_primary": "Déposer plainte à la police (Pays-Bas) →",
     "reported_nl_note": "Pas d'urgence ? Appelez le 0900-8844.",
-    "reported_fr_primary": "Déposer plainte en ligne →"
+    "reported_fr_primary": "Déposer plainte en ligne →",
+    "reported_de_primary": "Déposer plainte via Onlinewache →",
+    "switch_country": "Pas dans ce pays ? Choisis un autre pays",
+    "country_label": "Pays"
   },
   "bike_details": {
     "heading": "Details van de fiets",
@@ -99,5 +102,6 @@
   },
   "police_note_be": "Vous avez trouvé ce vélo ? Déposez plainte via Police-on-web ou trouvez votre zone de police locale.",
   "police_note_nl": "Vous avez trouvé ce vélo ? Déposez plainte auprès de la police néerlandaise.",
-  "police_note_fr": "Vous avez trouvé ce vélo ? Déposez plainte en ligne auprès de la police française."
+  "police_note_fr": "Vous avez trouvé ce vélo ? Déposez plainte en ligne auprès de la police française.",
+  "police_note_de": "Vous avez trouvé ce vélo ? Déposez plainte via l'Onlinewache de la police allemande."
 }
