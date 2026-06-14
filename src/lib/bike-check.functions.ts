@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequestIP } from "@tanstack/react-start/server";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
 
@@ -21,14 +22,66 @@ function pick<T = unknown>(obj: Record<string, unknown>, keys: string[]): T | nu
   return null;
 }
 
+// Simple in-memory rate limiter: max 10 requests per IP per minute.
+// Note: state is per Worker isolate, so the cap is best-effort across the fleet.
+const RATE_LIMIT_MAX = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const rateBuckets = new Map<string, number[]>();
+
+function rateLimit(ip: string): boolean {
+  const now = Date.now();
+  const cutoff = now - RATE_LIMIT_WINDOW_MS;
+  const hits = (rateBuckets.get(ip) ?? []).filter((t) => t > cutoff);
+  if (hits.length >= RATE_LIMIT_MAX) {
+    rateBuckets.set(ip, hits);
+    return false;
+  }
+  hits.push(now);
+  rateBuckets.set(ip, hits);
+  return true;
+}
+
+async function verifyTurnstile(token: string, remoteip: string | undefined): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  // If no secret is configured yet (placeholder phase), skip verification.
+  // Once the real secret is added, every call is enforced.
+  if (!secret) return true;
+  if (!token) return false;
+  const body = new URLSearchParams();
+  body.set("secret", secret);
+  body.set("response", token);
+  if (remoteip) body.set("remoteip", remoteip);
+  const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    body,
+  });
+  if (!res.ok) return false;
+  const json = (await res.json()) as { success?: boolean };
+  return Boolean(json.success);
+}
+
 export const checkBike = createServerFn({ method: "POST" })
-  .inputValidator((input: { code: string }) => {
+  .inputValidator((input: { code: string; turnstileToken?: string }) => {
     if (!input || typeof input.code !== "string" || !input.code.trim()) {
       throw new Error("code_required");
     }
-    return { code: input.code.trim() };
+    return {
+      code: input.code.trim(),
+      turnstileToken: typeof input.turnstileToken === "string" ? input.turnstileToken : "",
+    };
   })
   .handler(async ({ data }): Promise<BikeCheckResult> => {
+    const ip = getRequestIP({ xForwardedFor: true }) ?? "unknown";
+
+    if (!rateLimit(ip)) {
+      const err = new Error("rate_limited") as Error & { statusCode?: number };
+      err.statusCode = 429;
+      throw err;
+    }
+
+    const captchaOk = await verifyTurnstile(data.turnstileToken, ip);
+    if (!captchaOk) throw new Error("captcha_failed");
+
     const apiKey = process.env.VELOPASS_API_KEY;
     if (!apiKey) throw new Error("server_misconfigured");
 
