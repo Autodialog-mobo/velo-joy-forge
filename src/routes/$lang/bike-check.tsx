@@ -386,18 +386,13 @@ function BikeSearchPage() {
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
             <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
-            <input
+            <SlotCodeInput
               id="bs-code"
-              type="text"
-              inputMode="text"
-              autoCapitalize="characters"
-              autoCorrect="off"
-              spellCheck={false}
               value={codeA}
-              onChange={(e) => setCodeA(sanitizeCode(e.target.value))}
+              onChange={setCodeA}
               placeholder="UC9K4D3NCJ"
               maxLength={10}
-              style={{ ...inputStyle, letterSpacing: 2, fontVariantNumeric: "tabular-nums" }}
+              sanitize={sanitizeCode}
             />
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
