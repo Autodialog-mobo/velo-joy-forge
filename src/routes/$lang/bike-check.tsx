@@ -219,10 +219,8 @@ function BikeSearchPage() {
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
     if (!clean) return;
-    if (!turnstileToken) {
-      setError(t("errors.generic"));
-      return;
-    }
+
+
     setError(null);
     setResult(null);
     setLoadingA(true);
@@ -251,7 +249,7 @@ function BikeSearchPage() {
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanFrame = sanitizeAlnum(frame);
-    if (!brand || !cleanFrame || !turnstileToken) return;
+    if (!brand || !cleanFrame) return;
     setError(null);
     setResult(null);
     setLoadingB(true);
@@ -430,8 +428,8 @@ function BikeSearchPage() {
               </button>
               <button
                 type="submit"
-                disabled={loadingA || !codeA || !turnstileToken}
-                style={{ ...navyBtn(loadingA || !codeA || !turnstileToken), marginTop: 0, width: "auto", flex: "1 1 180px" }}
+                disabled={loadingA || !codeA}
+                style={{ ...navyBtn(loadingA || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
               >
                 {loadingA ? (
                   <>
@@ -485,8 +483,8 @@ function BikeSearchPage() {
 
             <button
               type="submit"
-              disabled={loadingB || !brand || !frame.trim() || !turnstileToken}
-              style={navyBtn(loadingB || !brand || !frame.trim() || !turnstileToken)}
+              disabled={loadingB || !brand || !frame.trim()}
+              style={navyBtn(loadingB || !brand || !frame.trim())}
             >
               {loadingB ? (
                 <>
