@@ -395,6 +395,12 @@ function BikeSearchPage() {
               sanitize={sanitizeCode}
             />
 
+            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
+            <div style={{ marginTop: 12 }}>
+              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
+            </div>
+
+
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
               <button
                 type="button"
