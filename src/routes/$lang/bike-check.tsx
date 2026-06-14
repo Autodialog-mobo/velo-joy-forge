@@ -450,17 +450,16 @@ function BikeSearchPage() {
             <p style={cardDesc}>{t("method_b.desc")}</p>
 
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
-            <select
+            <input
               id="bs-brand"
+              type="text"
+              autoCorrect="off"
+              spellCheck={false}
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
-              style={{ ...inputStyle, appearance: "none", background: "#fff" }}
-            >
-              <option value="">{t("method_b.brand_placeholder")}</option>
-              {BRANDS.map((b) => (
-                <option key={b} value={b}>{b}</option>
-              ))}
-            </select>
+              placeholder={t("method_b.brand_placeholder")}
+              style={inputStyle}
+            />
 
             <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
