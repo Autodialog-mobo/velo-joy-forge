@@ -1051,7 +1051,70 @@ function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   );
 }
 
+function detectCountry(): "BE" | "NL" | "FR" {
+  if (typeof navigator === "undefined") return "BE";
+  const lang = navigator.language || "";
+  const region = lang.split("-")[1]?.toUpperCase();
+  if (region === "BE" || region === "NL" || region === "FR") return region;
+  if (lang.startsWith("nl")) return "NL";
+  if (lang.startsWith("fr")) return "FR";
+  return "BE";
+}
+
 function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
+  const country = detectCountry();
+  const outlinedBtn = {
+    background: "transparent",
+    color: "#0D1F3C",
+    border: "1.5px solid #0D1F3C",
+    padding: "12px 20px",
+    borderRadius: 10,
+    textDecoration: "none",
+    fontSize: 14,
+    fontWeight: 500,
+  } as const;
+
+  let policyButtons: ReactNode = null;
+  let secondary: ReactNode = null;
+  let noteKey: "police_note_be" | "police_note_nl" | "police_note_fr" = "police_note_be";
+
+  if (country === "NL") {
+    noteKey = "police_note_nl";
+    policyButtons = (
+      <a href="https://www.politie.nl/aangifte-of-melding-doen" target="_blank" rel="noopener noreferrer" style={outlinedBtn}>
+        {t("result.reported_nl_primary")}
+      </a>
+    );
+    secondary = (
+      <span style={{ color: "#5A7090", fontWeight: 500, fontSize: 14, marginTop: 10, display: "inline-block" }}>
+        {t("result.reported_nl_note")}
+      </span>
+    );
+  } else if (country === "FR") {
+    noteKey = "police_note_fr";
+    policyButtons = (
+      <a href="https://www.pre-plainte-en-ligne.gouv.fr" target="_blank" rel="noopener noreferrer" style={outlinedBtn}>
+        {t("result.reported_fr_primary")}
+      </a>
+    );
+  } else {
+    policyButtons = (
+      <a href="https://www.police-on-web.be" target="_blank" rel="noopener noreferrer" style={outlinedBtn}>
+        {t("result.reported_be_primary")}
+      </a>
+    );
+    secondary = (
+      <a
+        href="https://www.politie.be/nl"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#5A7090", fontWeight: 500, textDecoration: "underline", fontSize: 14, marginTop: 10, display: "inline-block" }}
+      >
+        {t("result.reported_be_secondary")}
+      </a>
+    );
+  }
+
   return (
     <div style={resultCard("#F59E0B")}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
@@ -1074,7 +1137,7 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
           lineHeight: 1.5,
         }}
       >
-        {t("police_note")}
+        {t(noteKey)}
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <a
@@ -1091,39 +1154,9 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
         >
           {t("result.reported_cta_primary")}
         </a>
-        <a
-          href="https://www.police-on-web.be"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            background: "transparent",
-            color: "#0D1F3C",
-            border: "1.5px solid #0D1F3C",
-            padding: "12px 20px",
-            borderRadius: 10,
-            textDecoration: "none",
-            fontSize: 14,
-            fontWeight: 500,
-          }}
-        >
-          {t("result.reported_cta_police_web")}
-        </a>
+        {policyButtons}
       </div>
-      <a
-        href="https://www.politie.be/nl"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          color: "#5A7090",
-          fontWeight: 500,
-          textDecoration: "underline",
-          fontSize: 14,
-          marginTop: 10,
-          display: "inline-block",
-        }}
-      >
-        {t("result.reported_cta_zone_finder")}
-      </a>
+      {secondary}
     </div>
   );
 }
