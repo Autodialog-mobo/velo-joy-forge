@@ -103,9 +103,10 @@ function mapBikePayload(raw: unknown): BikeCheckResult {
     };
   }
   const reported = Boolean(
-    pick(bike, ["isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
+    pick(bike, ["isLost", "isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
       String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("REPORT") ||
-      String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("STOLEN"),
+      String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("STOLEN") ||
+      String(pick(bike, ["status", "state"]) ?? "").toUpperCase().includes("LOST"),
   );
   const year = pick<number | string>(bike, ["yearOfCreation", "year", "buildYear"]);
   const yearNum = year === null ? null : Number(year);
@@ -129,6 +130,9 @@ async function fetchByBrandFrame(
   const res = await fetch(url, {
     method: "GET",
     headers: { "X-Api-Key": apiKey, Accept: "application/json" },
+    cache: "no-store",
+    // @ts-expect-error Cloudflare Workers-specific fetch option
+    cf: { cacheTtl: 0, cacheEverything: false },
   });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`upstream_error_${res.status}`);
@@ -232,6 +236,9 @@ export const checkBike = createServerFn({ method: "POST" })
     const res = await fetch(url, {
       method: "GET",
       headers: { "X-Api-Key": apiKey, Accept: "application/json" },
+      cache: "no-store",
+      // @ts-expect-error Cloudflare Workers-specific fetch option
+      cf: { cacheTtl: 0, cacheEverything: false },
     });
 
     if (res.status === 404) {
@@ -263,13 +270,16 @@ export const checkBike = createServerFn({ method: "POST" })
     }
 
     const reported = Boolean(
-      pick(bike, ["isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
+      pick(bike, ["isLost", "isReported", "reportedAsStolen", "isStolen", "reported", "isMissing"]) ||
         String(pick(bike, ["status", "state"]) ?? "")
           .toUpperCase()
           .includes("REPORT") ||
         String(pick(bike, ["status", "state"]) ?? "")
           .toUpperCase()
-          .includes("STOLEN"),
+          .includes("STOLEN") ||
+        String(pick(bike, ["status", "state"]) ?? "")
+          .toUpperCase()
+          .includes("LOST"),
     );
 
     const year = pick<number | string>(bike, ["yearOfCreation", "year", "buildYear"]);
