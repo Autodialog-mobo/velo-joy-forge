@@ -105,5 +105,8 @@
   "police_note_be": "Found this bike? File a report via Police-on-web or find your local police zone.",
   "police_note_nl": "Found this bike? File a police report or notice in the Netherlands.",
   "police_note_fr": "Found this bike? File a complaint online with the French police.",
-  "police_note_de": "Found this bike? File a report via the German Onlinewache."
+  "police_note_de": "Found this bike? File a report via the German Onlinewache.",
+  "outcomes": {
+    "reported_cta": "Found this bike? Let the owner know you found it."
+  }
 }
