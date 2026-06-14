@@ -64,6 +64,13 @@ export const Route = createFileRoute("/sitemap.xml")({
             );
           }
         }
+        for (const s of STANDALONE_PATHS) {
+          urls.push(
+            `  <url>\n    <loc>${BASE_URL}${s.path}</loc>${
+              s.changefreq ? `\n    <changefreq>${s.changefreq}</changefreq>` : ""
+            }${s.priority ? `\n    <priority>${s.priority}</priority>` : ""}\n  </url>`,
+          );
+        }
         const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join("\n")}\n</urlset>\n`;
         return new Response(xml, {
           headers: { "Content-Type": "application/xml", "Cache-Control": "public, max-age=3600" },
