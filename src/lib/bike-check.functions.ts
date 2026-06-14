@@ -3,6 +3,7 @@ import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
 import BIKE_BRANDS from "@/data/bike-brands.json";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
+export type BikeCheckCountry = "BE" | "NL" | "FR" | "DE";
 
 export interface BikeCheckResult {
   found: boolean;
@@ -13,6 +14,17 @@ export interface BikeCheckResult {
   bikeType: string | null;
   yearOfCreation: number | null;
   lostReportUrl: string | null;
+  country: BikeCheckCountry;
+}
+
+function resolveCountry(lang: string | undefined): BikeCheckCountry {
+  const cf = (getRequestHeader("cf-ipcountry") ?? "").toUpperCase();
+  if (cf === "BE" || cf === "NL" || cf === "FR" || cf === "DE") return cf;
+  const l = (lang ?? "").toLowerCase();
+  if (l.startsWith("de")) return "DE";
+  if (l.startsWith("fr")) return "BE";
+  if (l.startsWith("nl")) return "BE";
+  return "BE";
 }
 
 const UUID_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
