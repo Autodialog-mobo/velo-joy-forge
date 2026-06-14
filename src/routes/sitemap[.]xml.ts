@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { SUPPORTED_LANGS } from "@/i18n/config";
 
-const BASE_URL = "https://velopass.com";
+const BASE_URL = "https://velo-joy-forge.lovable.app";
 
 interface SitemapEntry {
   /** Path WITHOUT a language prefix (e.g. "/order", "/" for home). */
@@ -17,6 +17,7 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/shop", changefreq: "weekly", priority: "0.8" },
   { path: "/bike-check", changefreq: "weekly", priority: "0.8" },
   { path: "/stolen", changefreq: "monthly", priority: "0.7" },
+  { path: "/already-have-one", changefreq: "monthly", priority: "0.6" },
   { path: "/manufacturer", changefreq: "monthly", priority: "0.6" },
   { path: "/insurance", changefreq: "monthly", priority: "0.6" },
   { path: "/leasing", changefreq: "monthly", priority: "0.6" },
@@ -24,6 +25,16 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/pro", changefreq: "monthly", priority: "0.6" },
   { path: "/contact", changefreq: "monthly", priority: "0.5" },
   { path: "/privacy", changefreq: "yearly", priority: "0.3" },
+];
+
+/** Standalone (non-language-prefixed) routes to include in the sitemap. */
+const STANDALONE_PATHS: { path: string; changefreq?: SitemapEntry["changefreq"]; priority?: string }[] = [
+  { path: "/al-een-sticker", changefreq: "monthly", priority: "0.6" },
+  { path: "/bestellen", changefreq: "weekly", priority: "0.8" },
+  { path: "/bikesearch", changefreq: "weekly", priority: "0.7" },
+  { path: "/fiets-controleren", changefreq: "weekly", priority: "0.7" },
+  { path: "/gestolen", changefreq: "monthly", priority: "0.6" },
+  { path: "/professionals", changefreq: "monthly", priority: "0.6" },
 ];
 
 function entryUrl(lang: string, path: string): string {
