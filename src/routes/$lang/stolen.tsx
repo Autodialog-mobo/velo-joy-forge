@@ -499,7 +499,7 @@ function GestolenPage() {
           {country === "BE" && <CountryBE getList={getList} t={t} />}
           {country === "NL" && <CountryNL getList={getList} t={t} />}
           {country === "FR" && <CountryFR getList={getList} t={t} />}
-          {country === "DE" && <CountryDE getList={getList} t={t} />
+          {country === "DE" && <CountryDE getList={getList} t={t} />}
         </section>
 
         {/* STAP 3 */}
