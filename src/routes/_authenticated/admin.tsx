@@ -38,9 +38,16 @@ function formatEur(cents: number) {
 function statusDotColor(status: string) {
   switch (status) {
     case "paid": return "#2ECC8A";
-    case "printed": return "#F5B547";
-    case "shipped": return "rgba(255,255,255,0.40)";
-    default: return "rgba(255,255,255,0.30)";
+    case "printed": return "#E0A33E";
+    case "shipped": return "rgba(255,255,255,0.60)";
+    case "pending": return "rgba(255,255,255,0.50)";
+    case "expired":
+    case "failed":
+    case "cancelled":
+    case "canceled":
+      return "#E05252";
+    case "refunded": return "rgba(255,255,255,0.50)";
+    default: return "rgba(255,255,255,0.40)";
   }
 }
 function statusLabelNl(status: string) {
@@ -48,6 +55,13 @@ function statusLabelNl(status: string) {
     case "paid": return "Betaald";
     case "printed": return "Geprint";
     case "shipped": return "Verzonden";
+    case "pending": return "Wachtend";
+    case "expired": return "Verlopen";
+    case "cancelled":
+    case "canceled":
+      return "Geannuleerd";
+    case "failed": return "Mislukt";
+    case "refunded": return "Terugbetaald";
     default: return status;
   }
 }
@@ -56,11 +70,20 @@ function statusPillStyle(status: string): React.CSSProperties {
     case "paid":
       return { background: "rgba(46,204,138,0.12)", color: "#2ECC8A", border: "1px solid rgba(46,204,138,0.30)" };
     case "printed":
-      return { background: "rgba(245,181,71,0.10)", color: "#F5B547", border: "1px solid rgba(245,181,71,0.28)" };
+      return { background: "rgba(224,163,62,0.12)", color: "#E0A33E", border: "1px solid rgba(224,163,62,0.30)" };
     case "shipped":
-      return { background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.10)" };
+      return { background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.12)" };
+    case "pending":
+      return { background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.60)", border: "1px solid rgba(255,255,255,0.10)" };
+    case "expired":
+    case "failed":
+    case "cancelled":
+    case "canceled":
+      return { background: "rgba(224,82,82,0.12)", color: "#E05252", border: "1px solid rgba(224,82,82,0.30)" };
+    case "refunded":
+      return { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.10)" };
     default:
-      return { background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.50)", border: "1px solid rgba(255,255,255,0.08)" };
+      return { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.55)", border: "1px solid rgba(255,255,255,0.10)" };
   }
 }
 
@@ -87,6 +110,7 @@ function AdminPage() {
   const doShip = useServerFn(markShipped);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
+  const [statusFilter, setStatusFilter] = useState<string>("any");
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
@@ -121,8 +145,18 @@ function AdminPage() {
     return c;
   }, [orders]);
 
+  const availableStatuses = useMemo(() => {
+    const s = new Set<string>();
+    for (const o of orders) if (o.status) s.add(o.status);
+    return Array.from(s).sort();
+  }, [orders]);
+
   const filtered = useMemo(() => {
-    const arr = orders.filter((o: any) => filter === "all" || o.status === filter);
+    const arr = orders.filter((o: any) => {
+      const pipelineMatch = filter === "all" || o.status === filter;
+      const secondaryMatch = statusFilter === "any" || o.status === statusFilter;
+      return pipelineMatch && secondaryMatch;
+    });
     arr.sort((a: any, b: any) => {
       if (sort.column === "date") {
         const da = new Date(a.created_at).getTime();
@@ -135,7 +169,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [orders, filter, sort]);
+  }, [orders, filter, statusFilter, sort]);
 
   const toggle = (id: string) => {
     setSelected((prev) => {
@@ -495,13 +529,40 @@ function AdminPage() {
               className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-4"
               style={{ borderBottom: `1px solid ${SURFACE_BORDER}` }}
             >
-              <div className="flex items-baseline gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <span style={EYEBROW}>Bestellingen</span>
                 <span className="text-[12px]" style={{ color: TEXT_MUTED }}>
                   {selectedOrders.length > 0
                     ? `${selectedOrders.length} geselecteerd`
                     : `${filtered.length} weergegeven`}
                 </span>
+                <label className="inline-flex items-center gap-2 ml-1">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Status:
+                  </span>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => {
+                      setStatusFilter(e.target.value);
+                      setSelected(new Set());
+                    }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op status"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle statussen</option>
+                    {availableStatuses.map((s) => (
+                      <option key={s} value={s} style={{ background: NAVY }}>
+                        {statusLabelNl(s)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
