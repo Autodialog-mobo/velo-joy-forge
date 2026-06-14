@@ -91,7 +91,7 @@ const pathIconBox: React.CSSProperties = {
 export const Route = createFileRoute("/$lang/")({
   head: ({ params }) => {
     const lang = isLang(params.lang) ? params.lang : "en";
-    return buildLocalizedHead({
+    const base = buildLocalizedHead({
       lang,
       path: "",
       title: `Velopass — ${lang === "nl" ? "Altijd op de fiets. Alles geregeld." : "Every bike. A customer for life."}`,
@@ -103,6 +103,13 @@ export const Route = createFileRoute("/$lang/")({
       ogDescription:
         "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop.",
     });
+    return {
+      ...base,
+      scripts: buildHomeJsonLd(lang).map((data) => ({
+        type: "application/ld+json",
+        children: JSON.stringify(data),
+      })),
+    };
   },
   component: VelopassHome,
 });
