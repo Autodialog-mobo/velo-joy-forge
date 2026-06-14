@@ -145,10 +145,9 @@ function AdminPage() {
   };
 
   const advanceBatch = async () => {
-    await refetch();
+    const res = await refetch();
     if (!batchStatus) return;
-    // Find next id in queue, after current index, that still has the original batchStatus
-    const latest = (await refetch()).data?.orders ?? [];
+    const latest = res.data?.orders ?? [];
     const byId = new Map<string, any>(latest.map((o: any) => [o.id, o]));
     for (let i = batchIndex + 1; i < batchQueue.length; i++) {
       const candidate = byId.get(batchQueue[i]);
