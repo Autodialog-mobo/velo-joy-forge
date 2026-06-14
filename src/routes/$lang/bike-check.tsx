@@ -194,6 +194,7 @@ type TFn = ReturnType<typeof useTranslation>["t"];
 function BikeSearchPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["bike-check", "common"]);
+  const { t: tGuides } = useTranslation("guides");
   const runCheckBike = useServerFn(checkBike);
   const runCheckByFrame = useServerFn(checkBikeByFrame);
 
