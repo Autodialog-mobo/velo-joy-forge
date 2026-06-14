@@ -79,11 +79,14 @@
     "reported_title": "This bike has been reported",
     "reported_body": "This bike is registered and actively reported by its owner. The Velopass Community is searching actively.",
     "reported_cta_primary": "Report a found bike →",
-    "reported_cta_police_web": "Doe aangifte via Police-on-web →",
-    "reported_cta_zone_finder": "Vind je lokale politiezone →",
     "not_registered_title": "Not registered",
     "not_registered_body": "This bike is not in the Velopass database. Register it to protect it.",
-    "not_registered_cta": "Register your bike →"
+    "not_registered_cta": "Register your bike →",
+    "reported_be_primary": "File a report via Police-on-web →",
+    "reported_be_secondary": "Find your local police zone →",
+    "reported_nl_primary": "File a police report or notice →",
+    "reported_nl_note": "Non-emergency? Call 0900-8844.",
+    "reported_fr_primary": "File a complaint online →"
   },
   "bike_details": {
     "heading": "Details van de fiets",
@@ -94,5 +97,7 @@
     "year": "Bouwjaar",
     "unknown": "Onbekend"
   },
-  "police_note": "Heb je deze fiets gevonden? Doe aangifte via Police-on-web of vind je lokale politiezone."
+  "police_note_be": "Found this bike? File a report via Police-on-web or find your local police zone.",
+  "police_note_nl": "Found this bike? File a police report or notice in the Netherlands.",
+  "police_note_fr": "Found this bike? File a complaint online with the French police."
 }
