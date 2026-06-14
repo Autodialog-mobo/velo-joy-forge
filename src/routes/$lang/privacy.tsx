@@ -49,7 +49,7 @@ function PrivacyPage() {
       <div style={{ position: "absolute", top: 20, right: 24, zIndex: 50 }}>
         <LangSwitcher currentLang={lang} tone="light" />
       </div>
-      <main
+      <div
         style={{
           maxWidth: 800,
           margin: "0 auto",
@@ -96,7 +96,7 @@ function PrivacyPage() {
         {sections.map((section, idx) => (
           <SectionBlock key={idx} section={section} lang={lang} />
         ))}
-      </main>
+      </div>
       <Footer />
     </>
   );

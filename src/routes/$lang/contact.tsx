@@ -292,7 +292,7 @@ function ContactPage() {
           {t("back")}
         </button>
       </div>
-      <main style={{ background: "var(--bg)", paddingTop: 8, minHeight: "100vh" }}>
+      <div style={{ background: "var(--bg)", paddingTop: 8, minHeight: "100vh" }}>
         {/* HEADER */}
         <section style={{ padding: "8px 6vw 8px", maxWidth: 900, margin: "0 auto", textAlign: "center" }}>
           <h1
@@ -369,7 +369,7 @@ function ContactPage() {
             {t("legal.line", { email: activeTab === "shop" ? "info@velopass.com" : "support@velopass.com" })}
           </p>
         </section>
-      </main>
+      </div>
 
       <style>{`
         .back-btn-wrap { padding: 88px 6vw 0; max-width: 1100px; margin: 0 auto; }

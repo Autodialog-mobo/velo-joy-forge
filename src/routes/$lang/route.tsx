@@ -52,7 +52,9 @@ function LangLayout() {
 
   return (
     <I18nextProvider i18n={scoped}>
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </I18nextProvider>
   );
 }
