@@ -251,11 +251,12 @@ function AdminPage() {
 
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen vp-pro-page"
       style={{
-        background: NAVY,
+        backgroundColor: NAVY,
         color: TEXT_PRI,
         fontFamily: "'DM Sans', sans-serif",
+        minHeight: "100dvh",
       }}
     >
       <style>{`
@@ -294,6 +295,7 @@ function AdminPage() {
           outline-offset: 2px;
         }
         .vp-pro-admin .stage-card { transition: all 0.18s ease; }
+        .vp-pro-page { background-color: #0D1F3C !important; min-height: 100dvh; }
         .vp-pro-admin .stage-card:hover { background: rgba(255,255,255,0.06); }
         .vp-pro-admin .stage-card.active {
           background: rgba(46,204,138,0.08);
