@@ -110,6 +110,7 @@ function mapBikePayload(raw: unknown): BikeCheckResult {
       primaryColor: null,
       bikeType: null,
       yearOfCreation: null,
+      lostReportUrl: null,
     };
   }
   const reported = Boolean(
@@ -128,6 +129,7 @@ function mapBikePayload(raw: unknown): BikeCheckResult {
     primaryColor: pick<string>(bike, ["primaryColor", "color", "mainColor"]),
     bikeType: pick<string>(bike, ["bikeType", "category", "frameType"]),
     yearOfCreation: yearNum !== null && !Number.isNaN(yearNum) ? yearNum : null,
+    lostReportUrl: reported ? extractLostReportUrl(bike) : null,
   };
 }
 
