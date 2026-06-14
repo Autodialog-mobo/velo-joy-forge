@@ -121,6 +121,45 @@ function AdminPage() {
   const [detailOrder, setDetailOrder] = useState<any>(null);
   const [labelCopied, setLabelCopied] = useState(false);
   const [detailBusy, setDetailBusy] = useState(false);
+  const [batchStatus, setBatchStatus] = useState<string | null>(null);
+  const [batchQueue, setBatchQueue] = useState<string[]>([]);
+  const [batchIndex, setBatchIndex] = useState(0);
+  const [batchDone, setBatchDone] = useState(false);
+
+  const openDetail = (o: any, queueSource?: any[]) => {
+    setDetailOrder(o);
+    setBatchStatus(o.status);
+    const source = queueSource ?? [];
+    const queue = source.filter((x: any) => x.status === o.status).map((x: any) => x.id);
+    setBatchQueue(queue);
+    setBatchIndex(Math.max(0, queue.indexOf(o.id)));
+    setBatchDone(false);
+  };
+
+  const closeDetail = () => {
+    setDetailOrder(null);
+    setBatchStatus(null);
+    setBatchQueue([]);
+    setBatchIndex(0);
+    setBatchDone(false);
+  };
+
+  const advanceBatch = async () => {
+    await refetch();
+    if (!batchStatus) return;
+    // Find next id in queue, after current index, that still has the original batchStatus
+    const latest = (await refetch()).data?.orders ?? [];
+    const byId = new Map<string, any>(latest.map((o: any) => [o.id, o]));
+    for (let i = batchIndex + 1; i < batchQueue.length; i++) {
+      const candidate = byId.get(batchQueue[i]);
+      if (candidate && candidate.status === batchStatus) {
+        setDetailOrder(candidate);
+        setBatchIndex(i);
+        return;
+      }
+    }
+    setBatchDone(true);
+  };
 
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
