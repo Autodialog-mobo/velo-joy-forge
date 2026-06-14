@@ -113,11 +113,12 @@ function BikeSearchPage() {
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
   const [frame, setFrame] = useState("");
-  const [captcha, setCaptcha] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+  const sanitizeAlnum = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
 
   const [loadingA, setLoadingA] = useState(false);
   const [loadingB, setLoadingB] = useState(false);
