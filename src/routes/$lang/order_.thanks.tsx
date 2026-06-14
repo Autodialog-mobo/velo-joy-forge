@@ -80,7 +80,7 @@ function BedanktPage() {
         </div>
       </header>
 
-      <main style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px 72px" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "48px 24px 72px" }}>
         <div style={{ background: "#fff", borderRadius: 16, padding: 36, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", textAlign: "center" }}>
           {loading ? (
             <p>{t("states.loading")}</p>
@@ -159,7 +159,7 @@ function BedanktPage() {
             </>
           )}
         </div>
-      </main>
+      </div>
 
       <Footer />
     </div>

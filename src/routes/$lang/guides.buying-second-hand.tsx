@@ -58,7 +58,7 @@ function BuyingSecondHandGuide() {
       <div style={{ position: "absolute", top: 20, right: 24, zIndex: 50 }}>
         <LangSwitcher currentLang={lang} tone="light" />
       </div>
-      <main
+      <div
         style={{
           maxWidth: 760,
           margin: "0 auto",

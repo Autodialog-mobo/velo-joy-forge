@@ -342,7 +342,7 @@ function GestolenPage() {
         </button>
       </div>
 
-      <main style={{ background: "var(--bg)", paddingTop: 16, paddingBottom: 80, minHeight: "100vh" }}>
+      <div style={{ background: "var(--bg)", paddingTop: 16, paddingBottom: 80, minHeight: "100vh" }}>
         {/* HERO */}
         <section style={{ ...sectionStyle, textAlign: "center", padding: "24px 6vw 48px", maxWidth: 880 }}>
           <p
@@ -578,7 +578,7 @@ function GestolenPage() {
             </Link>
           </div>
         </section>
-      </main>
+      </div>
 
       <Footer />
 

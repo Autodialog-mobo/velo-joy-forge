@@ -18,7 +18,7 @@ export const Route = createFileRoute("/$lang/pro")({
 function PartnerLogin() {
   const lang = useCurrentLang();
   return (
-    <main className="partner-login">
+    <div className="partner-login">
       <div className="pl-card">
         <a href={`/${lang}`} className="pl-logo" aria-label="Velopass Pro">
           <div className="pl-logo-mark"><VelopassMark /></div>
@@ -29,6 +29,6 @@ function PartnerLogin() {
         <a href="https://app.velopass.pro" className="pl-btn">Inloggen →</a>
         <a href={`/${lang}/shop`} className="pl-foot">Nog geen partner? Lees meer op velopass.com/shop →</a>
       </div>
-    </main>
+    </div>
   );
 }
