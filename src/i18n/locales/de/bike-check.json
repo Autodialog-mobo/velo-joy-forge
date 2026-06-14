@@ -79,7 +79,8 @@
     "reported_title": "Dieses Fahrrad wurde gemeldet",
     "reported_body": "Dieses Fahrrad ist registriert und wird von seinem Besitzer aktiv gemeldet. Die „Velopass“-Community sucht aktiv danach.",
     "reported_cta_primary": "Ein gefundenes Fahrrad melden →",
-    "reported_cta_secondary": "Ruf die Polizei an: 101",
+    "reported_cta_police_web": "Doe aangifte via Police-on-web →",
+    "reported_cta_zone_finder": "Vind je lokale politiezone →",
     "not_registered_title": "Nicht registriert",
     "not_registered_body": "Dieses Fahrrad ist nicht in der Datenbank von „Velopass“ verzeichnet. Registriere es, um es zu schützen.",
     "not_registered_cta": "Registriere dein Fahrrad →"
@@ -93,5 +94,5 @@
     "year": "Bouwjaar",
     "unknown": "Onbekend"
   },
-  "police_note": "Heb je deze fiets gevonden? Neem contact op met de politie of meld het bij Velopass."
+  "police_note": "Heb je deze fiets gevonden? Doe aangifte via Police-on-web of vind je lokale politiezone."
 }
