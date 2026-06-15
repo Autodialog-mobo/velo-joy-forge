@@ -112,6 +112,7 @@ function AdminPage() {
   const doRevertPrinted = useServerFn(revertToPrinted);
   const doSoftDelete = useServerFn(softDeleteOrder);
   const doRestore = useServerFn(restoreOrder);
+  const fetchEvents = useServerFn(listOrderEvents);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
