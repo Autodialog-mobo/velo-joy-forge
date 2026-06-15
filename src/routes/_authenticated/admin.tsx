@@ -777,6 +777,50 @@ function AdminPage() {
                     </option>
                   </select>
                 </label>
+                <label className="inline-flex items-center gap-2">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Taal:
+                  </span>
+                  <select
+                    value={langFilter}
+                    onChange={(e) => { setLangFilter(e.target.value); setSelected(new Set()); }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op taal"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle talen</option>
+                    {["NL", "FR", "DE", "EN"].map((l) => (
+                      <option key={l} value={l} style={{ background: NAVY }}>{l}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="inline-flex items-center gap-2">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Land:
+                  </span>
+                  <select
+                    value={countryFilter}
+                    onChange={(e) => { setCountryFilter(e.target.value); setSelected(new Set()); }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op land"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle landen</option>
+                    {availableCountries.map((c) => (
+                      <option key={c} value={c} style={{ background: NAVY }}>{c}</option>
+                    ))}
+                  </select>
+                </label>
                 <div className="relative inline-flex items-center">
                   <Search
                     className="absolute left-2 pointer-events-none"
