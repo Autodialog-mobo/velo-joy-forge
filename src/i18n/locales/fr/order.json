@@ -2,7 +2,7 @@
   "_translated": false,
   "meta": {
     "title": "Commande un «Velopass» Frame-ID — à partir de 12,95 €",
-    "description": "Commande ton « Velopass » sur Frame-ID. Un autocollant, un carnet d'entretien numérique à vie pour ta moto. Livraison gratuite dans toute l'UE.",
+    "description": "Commande ton « Velopass » sur Frame-ID. Un autocollant, un carnet d'entretien numérique à vie pour ta moto.",
     "ogDescription": "Protège ton vélo. Livraison gratuite. Paiements sécurisés via Mollie."
   },
   "header": {
@@ -11,8 +11,8 @@
   "hero": {
     "eyebrow": "Commande un «Frame-ID »",
     "title": "Protège ton vélo. À partir de 12,95 €.",
-    "subtitle": "Une seule commande sur Frame-ID pour ta moto, et tu bénéficies d'un accès illimité à la protection contre le vol, à l'assistance routière, à l'assurance et à ton carnet d'entretien numérique. Livraison gratuite dans toute l'UE.",
-    "feature_shipping": "Livraison gratuite dans toute l'UE",
+    "subtitle": "Une seule commande sur Frame-ID pour ta moto, et tu bénéficies d'un accès illimité à la protection contre le vol, à l'assistance routière, à l'assurance et à ton carnet d'entretien numérique.",
+    "feature_shipping": "Livraison dans l'UE",
     "feature_secure": "Paiements sécurisés via Mollie"
   },
   "bundles": {
@@ -43,7 +43,7 @@
     "title": "Panier",
     "empty": "Ajoute au moins un lot pour continuer.",
     "shipping": "Livraison",
-    "shipping_free": "Gratuit dans toute l'UE",
+    "shipping_free": "1,95 €",
     "total": "Total",
     "email_label": "Adresse e-mail",
     "email_placeholder": "you@example.com",
