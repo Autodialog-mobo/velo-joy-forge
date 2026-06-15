@@ -115,6 +115,20 @@ export const createMolliePayment = createServerFn({ method: "POST" })
       const mollieLocale = LANG_TO_MOLLIE_LOCALE[data.lang];
       const redirectBase = `${data.origin}/${data.lang}/order/thanks`;
 
+      // Mollie must be able to reach the webhook. The id-preview/preview-- lovable.app
+      // hosts sit behind auth-bridge and 302 unauthenticated POSTs, so we route the
+      // webhook through the stable project URL which bypasses auth on /api/public/*.
+      const LOVABLE_PROJECT_ID = "973248f2-3aa9-493e-b716-2b089779e41a";
+      let webhookBase = data.origin;
+      try {
+        const host = new URL(data.origin).host;
+        if (host.endsWith(".lovable.app") && (host.startsWith("id-preview--") || host.startsWith("preview--"))) {
+          webhookBase = `https://project--${LOVABLE_PROJECT_ID}-dev.lovable.app`;
+        }
+      } catch {
+        // fall through with origin as-is
+      }
+
       // Create payment with placeholder redirect; we'll patch with real ID after.
       const payment = await mollieFetch("/payments", {
         method: "POST",
@@ -122,7 +136,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           amount: { currency: "EUR", value: formatAmount(totalCents) },
           description: `Velopass — ${description}`,
           redirectUrl: `${redirectBase}?payment_id=pending`,
-          webhookUrl: `${data.origin}/api/public/payments/mollie-webhook`,
+          webhookUrl: `${webhookBase}/api/public/payments/mollie-webhook`,
           billingEmail: data.customerEmail,
           shippingAddress,
           locale: mollieLocale,
