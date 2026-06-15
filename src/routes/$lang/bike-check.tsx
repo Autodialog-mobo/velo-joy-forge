@@ -713,14 +713,6 @@ function BikeSearchPage() {
               style={inputStyle}
             />
 
-            {/* Single shared Turnstile widget is rendered once outside the forms. */}
-            <div ref={(el) => {
-              if (el && !el.dataset.tsMounted) {
-                el.dataset.tsMounted = "1";
-              }
-            }} />
-
-
             <button
               type="submit"
               disabled={loadingB || !brand || !frame.trim()}
@@ -736,6 +728,12 @@ function BikeSearchPage() {
             </button>
           </form>
         </div>
+
+        {/* Single shared invisible Turnstile widget for both forms.
+            Tokens are fetched on-demand per submit via the imperative ref,
+            so each submission gets a fresh single-use token. */}
+        <TurnstileWidget ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} />
+
 
         {/* ERROR */}
         {error && (
