@@ -731,6 +731,10 @@ function BikeSearchPage() {
                 <>
                   <Loader2 size={16} className="bs-spin" /> {t("method_b.loading")}
                 </>
+              ) : loadingA ? (
+                <>
+                  <Loader2 size={16} className="bs-spin" />
+                </>
               ) : (
                 t("method_b.check")
               )}
