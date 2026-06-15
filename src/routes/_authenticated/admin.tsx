@@ -956,10 +956,14 @@ function AdminPage() {
                         <div className="flex flex-col items-center justify-center text-center" style={{ padding: "80px 24px" }}>
                           <Inbox className="w-10 h-10 mb-4" strokeWidth={1.5} style={{ color: TEXT_MUTED }} />
                           <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
-                            Geen bestellingen in deze status
+                            {searchQuery
+                              ? `Geen bestellingen gevonden voor "${searchInput.trim()}"`
+                              : "Geen bestellingen in deze status"}
                           </p>
                           <p className="text-[13px] mt-1 max-w-sm" style={{ color: TEXT_SEC }}>
-                            Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden.
+                            {searchQuery
+                              ? "Probeer een andere zoekterm of wis de zoekopdracht."
+                              : "Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden."}
                           </p>
                         </div>
                       </td>
