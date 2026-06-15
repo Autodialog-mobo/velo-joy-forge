@@ -474,7 +474,7 @@ function AdminPage() {
             <p className="mt-1.5 text-[13px]" style={{ color: TEXT_SEC }}>
               Beheer betaalde bestellingen en print verzendlabels ·{" "}
               <a
-                href="/admin/webhooks"
+                href="/admin-webhooks"
                 style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
               >
                 Webhook status

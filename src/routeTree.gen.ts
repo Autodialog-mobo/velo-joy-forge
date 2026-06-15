@@ -22,6 +22,7 @@ import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
+import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin-webhooks'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
 import { Route as LangShopRouteImport } from './routes/$lang/shop'
@@ -36,7 +37,6 @@ import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
 import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
 import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
-import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin.webhooks'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -105,6 +105,12 @@ const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   path: '/bedankt',
   getParentRoute: () => BestellenRoute,
 } as any)
+const AuthenticatedAdminWebhooksRoute =
+  AuthenticatedAdminWebhooksRouteImport.update({
+    id: '/admin-webhooks',
+    path: '/admin-webhooks',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -175,12 +181,6 @@ const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   path: '/api/public/vies-lookup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminWebhooksRoute =
-  AuthenticatedAdminWebhooksRouteImport.update({
-    id: '/webhooks',
-    path: '/webhooks',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
 const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
   id: '/order_/thanks',
   path: '/order/thanks',
@@ -222,12 +222,12 @@ export interface FileRoutesByFullPath {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
+  '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
-  '/admin/webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -253,12 +253,12 @@ export interface FileRoutesByTo {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
+  '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
-  '/admin/webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -287,12 +287,12 @@ export interface FileRoutesById {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
-  '/_authenticated/admin/webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -322,11 +322,11 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/admin'
+    | '/admin-webhooks'
     | '/bestellen/bedankt'
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
-    | '/admin/webhooks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -353,11 +353,11 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/admin'
+    | '/admin-webhooks'
     | '/bestellen/bedankt'
     | '/$lang'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
-    | '/admin/webhooks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   id:
@@ -386,11 +386,11 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/_authenticated/admin'
+    | '/_authenticated/admin-webhooks'
     | '/bestellen/bedankt'
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
-    | '/_authenticated/admin/webhooks'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
@@ -504,6 +504,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestellenBedanktRouteImport
       parentRoute: typeof BestellenRoute
     }
+    '/_authenticated/admin-webhooks': {
+      id: '/_authenticated/admin-webhooks'
+      path: '/admin-webhooks'
+      fullPath: '/admin-webhooks'
+      preLoaderRoute: typeof AuthenticatedAdminWebhooksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -602,13 +609,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/webhooks': {
-      id: '/_authenticated/admin/webhooks'
-      path: '/webhooks'
-      fullPath: '/admin/webhooks'
-      preLoaderRoute: typeof AuthenticatedAdminWebhooksRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
     '/$lang/order_/thanks': {
       id: '/$lang/order_/thanks'
       path: '/order/thanks'
@@ -673,23 +673,14 @@ const LangRouteRouteWithChildren = LangRouteRoute._addFileChildren(
   LangRouteRouteChildren,
 )
 
-interface AuthenticatedAdminRouteChildren {
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
 }
 
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-}
-
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

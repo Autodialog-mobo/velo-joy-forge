@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, RefreshCw, CheckCircle2, AlertCircle, Clock } from "lucide-react";
 import { listWebhookEvents } from "@/lib/admin.functions";
 
-export const Route = createFileRoute("/_authenticated/admin/webhooks")({
+export const Route = createFileRoute("/_authenticated/admin-webhooks")({
   component: WebhookStatusPage,
   head: () => ({
     meta: [{ title: "Webhook status — Velopass admin" }],
