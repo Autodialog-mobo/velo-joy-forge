@@ -1184,6 +1184,66 @@ function AdminPage() {
                         })}
                       </div>
                     </div>
+
+                    <div className="pt-4 mt-2 flex justify-end" style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
+                      {detailOrder.deleted_at ? (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            setDetailBusy(true);
+                            try {
+                              await doRestore({ data: { orderId: detailOrder.id } });
+                              const res = await refetch();
+                              const updated = res.data?.orders.find((x: any) => x.id === detailOrder.id);
+                              if (updated) setDetailOrder(updated);
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[10px] text-[12px] font-medium transition-colors"
+                          style={{
+                            background: "rgba(46,204,138,0.10)",
+                            color: GREEN,
+                            border: "1px solid rgba(46,204,138,0.30)",
+                          }}
+                        >
+                          <RotateCcw className="w-3.5 h-3.5" /> Herstellen
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            if (!window.confirm("Order verwijderen? Je kunt 'm later terugvinden en herstellen.")) return;
+                            setDetailBusy(true);
+                            try {
+                              await doSoftDelete({ data: { orderId: detailOrder.id } });
+                              await refetch();
+                              closeDetail();
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[10px] text-[12px] font-medium transition-colors"
+                          style={{
+                            background: "transparent",
+                            color: "rgba(224,82,82,0.80)",
+                            border: "1px solid rgba(224,82,82,0.25)",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(224,82,82,0.10)";
+                            e.currentTarget.style.color = "#E05252";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.color = "rgba(224,82,82,0.80)";
+                          }}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" /> Verwijderen
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </DialogContent>
               )}
