@@ -1057,6 +1057,7 @@ function AdminPage() {
 
                       {/* Contextual status transition */}
                       {(() => {
+                        if (detailOrder.deleted_at) return null;
                         if (batchDone && batchStatus) {
                           return (
                             <div className="flex items-center gap-2 mt-3 text-[12px]" style={{ color: TEXT_MUTED }}>
