@@ -333,6 +333,9 @@ function BikeSearchPage() {
     setLoadingA(true);
     setLastMethod("a");
     try {
+      // Always fetch a fresh, single-use Turnstile token immediately before
+      // calling the server fn (tokens become invalid after one siteverify).
+      const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
     } catch (e) {
@@ -364,6 +367,7 @@ function BikeSearchPage() {
     setLoadingB(true);
     setLastMethod("b");
     try {
+      const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckByFrame({
         data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken, lang },
       });
@@ -375,6 +379,7 @@ function BikeSearchPage() {
       setLoadingB(false);
     }
   };
+
 
   return (
     <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
