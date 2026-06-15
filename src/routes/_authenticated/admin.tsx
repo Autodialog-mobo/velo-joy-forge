@@ -181,6 +181,12 @@ function AdminPage() {
     queryFn: () => fetchOrders({ data: { environment } }),
   });
 
+  const eventsQuery = useQuery({
+    queryKey: ["order-events", detailOrder?.id, detailOrder?.status, detailOrder?.deleted_at],
+    queryFn: () => fetchEvents({ data: { orderId: detailOrder.id } }),
+    enabled: !!detailOrder?.id,
+  });
+
   const orders = data?.orders ?? [];
   const lines = data?.lines ?? [];
   const linesByOrder = useMemo(() => {
