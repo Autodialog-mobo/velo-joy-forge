@@ -1235,7 +1235,13 @@ function AdminPage() {
                         </span>
                       </div>
                       <div className="flex justify-between text-[14px]">
-                        <span style={{ color: TEXT_SEC }}>BTW</span>
+                        <span style={{ color: TEXT_SEC }}>Verzending</span>
+                        <span style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}>
+                          {formatEur(detailOrder.amount_shipping ?? 0)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-[14px]">
+                        <span style={{ color: TEXT_SEC }}>BTW (21%, incl.)</span>
                         <span style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}>
                           {formatEur(detailOrder.amount_tax)}
                         </span>
