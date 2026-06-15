@@ -534,6 +534,7 @@ function AdminPage() {
                     type="button"
                     onClick={() => {
                       setFilter(stage.key);
+                      setStatusFilter("any");
                       setSelected(new Set());
                     }}
                     aria-pressed={active}
