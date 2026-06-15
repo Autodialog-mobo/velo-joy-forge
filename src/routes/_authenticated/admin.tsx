@@ -716,6 +716,20 @@ function AdminPage() {
                 >
                   Markeer verzonden
                 </button>
+                <div aria-hidden="true" className="w-px self-stretch mx-2" style={{ background: SURFACE_BORDER }} />
+                <button
+                  onClick={handleBulkDelete}
+                  disabled={busy || !hasSelection || viewingDeleted}
+                  className="h-9 px-4 rounded-[12px] text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{
+                    background: "transparent",
+                    color: "rgba(248, 113, 113, 0.85)",
+                    border: "1px solid rgba(248, 113, 113, 0.35)",
+                  }}
+                  title="Geselecteerde orders verwijderen"
+                >
+                  Verwijderen ({viewingDeleted ? 0 : selectedOrders.length})
+                </button>
               </div>
             </div>
 
