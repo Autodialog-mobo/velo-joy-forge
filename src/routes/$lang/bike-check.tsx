@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -28,43 +28,73 @@ declare global {
       render: (el: HTMLElement, opts: Record<string, unknown>) => string;
       remove: (id: string) => void;
       reset: (id?: string) => void;
+      execute: (id?: string, opts?: Record<string, unknown>) => void;
+      getResponse: (id?: string) => string | undefined;
     };
   }
 }
 
-function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: string) => void }) {
+export interface TurnstileHandle {
+  /** Reset the widget and resolve with a fresh single-use token. */
+  getFreshToken: () => Promise<string>;
+}
+
+// Single shared, invisible Turnstile widget in manual `execute` mode.
+// Tokens are single-use and tied to a single siteverify call — we reset before
+// every submission to avoid replaying a consumed token (which fails with
+// `captcha_failed` on a second submit without a page refresh).
+const TurnstileWidget = forwardRef<TurnstileHandle, { siteKey: string }>(function TurnstileWidget(
+  { siteKey },
+  ref,
+) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const onTokenRef = useRef(onToken);
-  onTokenRef.current = onToken;
+  const pendingRef = useRef<{ resolve: (t: string) => void; reject: (e: Error) => void } | null>(null);
+  const readyRef = useRef<Promise<void> | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    const render = () => {
-      if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) return;
-      widgetIdRef.current = window.turnstile.render(containerRef.current, {
-        sitekey: siteKey,
-        size: "invisible",
-        callback: (token: string) => onTokenRef.current(token),
-        "refresh-expired": "auto",
-        "error-callback": () => onTokenRef.current(""),
-        "expired-callback": () => onTokenRef.current(""),
-      });
-    };
-    if (window.turnstile) {
-      render();
-    } else {
-      const SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
-      let script = document.querySelector<HTMLScriptElement>(`script[src^="${SRC}"]`);
-      if (!script) {
-        script = document.createElement("script");
-        script.src = SRC;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
+    readyRef.current = new Promise<void>((resolve) => {
+      const render = () => {
+        if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) {
+          if (widgetIdRef.current) resolve();
+          return;
+        }
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          size: "invisible",
+          execution: "execute",
+          callback: (token: string) => {
+            pendingRef.current?.resolve(token);
+            pendingRef.current = null;
+          },
+          "error-callback": () => {
+            pendingRef.current?.reject(new Error("captcha_failed"));
+            pendingRef.current = null;
+          },
+          "expired-callback": () => {
+            if (widgetIdRef.current && window.turnstile) {
+              try { window.turnstile.reset(widgetIdRef.current); } catch { /* ignore */ }
+            }
+          },
+        });
+        resolve();
+      };
+      if (window.turnstile) {
+        render();
+      } else {
+        const SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+        let script = document.querySelector<HTMLScriptElement>(`script[src^="${SRC}"]`);
+        if (!script) {
+          script = document.createElement("script");
+          script.src = SRC;
+          script.async = true;
+          script.defer = true;
+          document.head.appendChild(script);
+        }
+        script.addEventListener("load", render);
       }
-      script.addEventListener("load", render);
-    }
+    });
     return () => {
       cancelled = true;
       if (widgetIdRef.current && window.turnstile) {
@@ -74,8 +104,34 @@ function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: s
     };
   }, [siteKey]);
 
+  useImperativeHandle(ref, () => ({
+    getFreshToken: async () => {
+      await readyRef.current;
+      if (!window.turnstile || !widgetIdRef.current) throw new Error("captcha_failed");
+      // Always reset first so we never reuse a consumed token.
+      try { window.turnstile.reset(widgetIdRef.current); } catch { /* ignore */ }
+      return new Promise<string>((resolve, reject) => {
+        pendingRef.current = { resolve, reject };
+        try {
+          window.turnstile!.execute(widgetIdRef.current!);
+        } catch (e) {
+          pendingRef.current = null;
+          reject(e instanceof Error ? e : new Error("captcha_failed"));
+        }
+        // Safety timeout (15s) so the UI never hangs on a silent failure.
+        setTimeout(() => {
+          if (pendingRef.current) {
+            pendingRef.current.reject(new Error("captcha_failed"));
+            pendingRef.current = null;
+          }
+        }, 15_000);
+      });
+    },
+  }), []);
+
   return <div ref={containerRef} />;
-}
+});
+
 
 function SlotCodeInput({
   value,
