@@ -188,3 +188,56 @@ export const restoreOrder = createServerFn({ method: "POST" })
     });
     return { ok: true };
   });
+
+export const listWebhookEvents = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { limit?: number } = {}) => d ?? {})
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdmin(supabase, userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const limit = Math.min(Math.max(data?.limit ?? 100, 1), 500);
+
+    const { data: events, error } = await (supabaseAdmin as any)
+      .from("webhook_events")
+      .select("*")
+      .order("received_at", { ascending: false })
+      .limit(limit);
+    if (error) throw new Error(error.message);
+
+    const kinds = ["production", "preview", "other"] as const;
+    const summary: Record<string, {
+      total: number;
+      success: number;
+      error: number;
+      last_received_at: string | null;
+      last_success_at: string | null;
+      last_error_at: string | null;
+      last_error_message: string | null;
+      last_24h: number;
+    }> = {};
+    const now = Date.now();
+    for (const k of kinds) {
+      summary[k] = {
+        total: 0, success: 0, error: 0,
+        last_received_at: null, last_success_at: null,
+        last_error_at: null, last_error_message: null, last_24h: 0,
+      };
+    }
+    for (const ev of events ?? []) {
+      const k = (ev.origin_kind as string) in summary ? ev.origin_kind : "other";
+      const s = summary[k];
+      s.total += 1;
+      if (ev.status === "success") s.success += 1;
+      else s.error += 1;
+      if (!s.last_received_at) s.last_received_at = ev.received_at;
+      if (!s.last_success_at && ev.status === "success") s.last_success_at = ev.received_at;
+      if (!s.last_error_at && ev.status === "error") {
+        s.last_error_at = ev.received_at;
+        s.last_error_message = ev.error_message ?? null;
+      }
+      if (now - new Date(ev.received_at).getTime() < 24 * 3600 * 1000) s.last_24h += 1;
+    }
+
+    return { events: events ?? [], summary };
+  });
