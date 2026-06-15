@@ -259,6 +259,15 @@ function AdminPage() {
 
   const viewingDeleted = statusFilter === "deleted";
 
+  const availableCountries = useMemo(() => {
+    const set = new Set<string>();
+    for (const o of activeOrders) {
+      const c = (o.shipping_country || "").toString().trim().toUpperCase();
+      if (c) set.add(c);
+    }
+    return Array.from(set).sort();
+  }, [activeOrders]);
+
   const filtered = useMemo(() => {
     const base = viewingDeleted ? deletedOrders : activeOrders;
     const q = searchQuery;
@@ -269,6 +278,14 @@ function AdminPage() {
           ? o.status === statusFilter
           : filter === "all" || o.status === filter;
       if (!stagePass) return false;
+      if (langFilter !== "any") {
+        const l = (o.lang || "").toString().trim().toUpperCase();
+        if (l !== langFilter) return false;
+      }
+      if (countryFilter !== "any") {
+        const c = (o.shipping_country || "").toString().trim().toUpperCase();
+        if (c !== countryFilter) return false;
+      }
       if (!q) return true;
       const hay = [
         o.shipping_name,
@@ -297,7 +314,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, searchQuery, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, searchQuery, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
