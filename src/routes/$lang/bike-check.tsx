@@ -18,6 +18,8 @@ import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
 import deBikeCheck from "@/i18n/locales/de/bike-check.json";
+import velopassStickerAsset from "@/assets/velopass-sticker.png.asset.json";
+import frameNumberAsset from "@/assets/frame-number.png.asset.json";
 
 // Cloudflare Turnstile site key — real production key.
 const TURNSTILE_SITE_KEY = "0x4AAAAAADkaXNe7SmFnETSM";
@@ -510,6 +512,16 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{t("method_a.title")}</h2>
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
+            <figure style={refImgFigure}>
+              <img
+                src={velopassStickerAsset.url}
+                alt={t("method_a.image_alt")}
+                style={refImg}
+                loading="lazy"
+              />
+              <figcaption style={refImgCaption}>{t("method_a.image_caption")}</figcaption>
+            </figure>
+
             <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
             <SlotCodeInput
               id="bs-code"
@@ -574,6 +586,16 @@ function BikeSearchPage() {
             </div>
             <h2 style={cardTitle}>{t("method_b.title")}</h2>
             <p style={cardDesc}>{t("method_b.desc")}</p>
+
+            <figure style={refImgFigure}>
+              <img
+                src={frameNumberAsset.url}
+                alt={t("method_b.image_alt")}
+                style={refImg}
+                loading="lazy"
+              />
+              <figcaption style={refImgCaption}>{t("method_b.image_caption")}</figcaption>
+            </figure>
 
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
             <div style={{ position: "relative" }}>
