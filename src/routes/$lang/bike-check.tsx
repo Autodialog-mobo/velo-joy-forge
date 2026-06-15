@@ -272,7 +272,7 @@ function BikeSearchPage() {
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
-    const cleanBrand = brand.trim();
+    const cleanBrand = resolveCanonicalBrand(brand);
     const cleanFrame = sanitizeAlnum(frame);
     if (!cleanBrand || !cleanFrame) return;
     setError(null);
