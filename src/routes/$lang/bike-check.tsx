@@ -327,9 +327,8 @@ function BikeSearchPage() {
 
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
-    if (!clean) return;
-
-
+    if (!clean || submitLockRef.current) return;
+    submitLockRef.current = true;
     setError(null);
     setResult(null);
     setLoadingA(true);
@@ -345,6 +344,7 @@ function BikeSearchPage() {
       setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingA(false);
+      submitLockRef.current = false;
     }
   };
 
