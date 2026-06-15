@@ -85,6 +85,7 @@ export type Database = {
           created_at: string
           currency: string
           customer_email: string
+          deleted_at: string | null
           environment: string
           id: string
           lang: string | null
@@ -111,6 +112,7 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_email: string
+          deleted_at?: string | null
           environment?: string
           id?: string
           lang?: string | null
@@ -137,6 +139,7 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_email?: string
+          deleted_at?: string | null
           environment?: string
           id?: string
           lang?: string | null

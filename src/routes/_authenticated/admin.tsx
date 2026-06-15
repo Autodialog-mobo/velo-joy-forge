@@ -2,9 +2,9 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { listOrders, markPrinted, markShipped } from "@/lib/admin.functions";
+import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -108,6 +108,10 @@ function AdminPage() {
   const fetchOrders = useServerFn(listOrders);
   const doPrint = useServerFn(markPrinted);
   const doShip = useServerFn(markShipped);
+  const doRevertPaid = useServerFn(revertToPaid);
+  const doRevertPrinted = useServerFn(revertToPrinted);
+  const doSoftDelete = useServerFn(softDeleteOrder);
+  const doRestore = useServerFn(restoreOrder);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
@@ -188,22 +192,29 @@ function AdminPage() {
     return m;
   }, [lines]);
 
+  const activeOrders = useMemo(() => orders.filter((o: any) => !o.deleted_at), [orders]);
+  const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
+
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: orders.length, paid: 0, printed: 0, shipped: 0 };
-    for (const o of orders) {
+    const c: Record<string, number> = { all: activeOrders.length, paid: 0, printed: 0, shipped: 0 };
+    for (const o of activeOrders) {
       if (c[o.status] !== undefined) c[o.status]++;
     }
     return c;
-  }, [orders]);
+  }, [activeOrders]);
 
   const availableStatuses = useMemo(() => {
     const s = new Set<string>();
-    for (const o of orders) if (o.status) s.add(o.status);
+    for (const o of activeOrders) if (o.status) s.add(o.status);
     return Array.from(s).sort();
-  }, [orders]);
+  }, [activeOrders]);
+
+  const viewingDeleted = statusFilter === "deleted";
 
   const filtered = useMemo(() => {
-    const arr = orders.filter((o: any) => {
+    const base = viewingDeleted ? deletedOrders : activeOrders;
+    const arr = base.filter((o: any) => {
+      if (viewingDeleted) return true;
       const pipelineMatch = filter === "all" || o.status === filter;
       const secondaryMatch = statusFilter === "any" || o.status === statusFilter;
       return pipelineMatch && secondaryMatch;
@@ -220,7 +231,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [orders, filter, statusFilter, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
@@ -635,34 +646,37 @@ function AdminPage() {
                         {statusLabelNl(s)}
                       </option>
                     ))}
+                    <option value="deleted" style={{ background: NAVY }}>
+                      Verwijderd{deletedOrders.length ? ` (${deletedOrders.length})` : ""}
+                    </option>
                   </select>
                 </label>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={generateLabels}
-                  disabled={!hasSelection}
+                  disabled={!hasSelection || viewingDeleted}
                   className="btn-primary h-9 px-4 rounded-[12px] text-[13px]"
                 >
-                  Labels PDF ({selectedOrders.length})
+                  Labels PDF ({viewingDeleted ? 0 : selectedOrders.length})
                 </button>
                 <button
                   onClick={exportCsv}
-                  disabled={!hasSelection}
+                  disabled={!hasSelection || viewingDeleted}
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   CSV export
                 </button>
                 <button
                   onClick={handleMarkPrinted}
-                  disabled={busy || !hasSelection}
+                  disabled={busy || !hasSelection || viewingDeleted}
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer geprint
                 </button>
                 <button
                   onClick={handleMarkShipped}
-                  disabled={busy || !hasSelection}
+                  disabled={busy || !hasSelection || viewingDeleted}
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer verzonden
@@ -895,10 +909,64 @@ function AdminPage() {
                         />
                         {statusLabelNl(detailOrder.status)}
                       </span>
+                      {detailOrder.deleted_at && (
+                        <span
+                          className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-full text-[11px] font-semibold"
+                          style={{ background: "rgba(224,82,82,0.12)", color: "#E05252", border: "1px solid rgba(224,82,82,0.30)" }}
+                        >
+                          <Trash2 className="w-3 h-3" /> Verwijderd
+                        </span>
+                      )}
+                      {!detailOrder.deleted_at && detailOrder.status === "printed" && (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            setDetailBusy(true);
+                            try {
+                              await doRevertPaid({ data: { orderId: detailOrder.id } });
+                              const res = await refetch();
+                              const updated = res.data?.orders.find((x: any) => x.id === detailOrder.id);
+                              if (updated) setDetailOrder(updated);
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="text-[11px] inline-flex items-center gap-1 transition-colors"
+                          style={{ color: TEXT_MUTED, textDecoration: "underline", textUnderlineOffset: 3 }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = TEXT_SEC)}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = TEXT_MUTED)}
+                        >
+                          <Undo2 className="w-3 h-3" /> Terug naar betaald
+                        </button>
+                      )}
+                      {!detailOrder.deleted_at && detailOrder.status === "shipped" && (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            setDetailBusy(true);
+                            try {
+                              await doRevertPrinted({ data: { orderId: detailOrder.id } });
+                              const res = await refetch();
+                              const updated = res.data?.orders.find((x: any) => x.id === detailOrder.id);
+                              if (updated) setDetailOrder(updated);
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="text-[11px] inline-flex items-center gap-1 transition-colors"
+                          style={{ color: TEXT_MUTED, textDecoration: "underline", textUnderlineOffset: 3 }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = TEXT_SEC)}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = TEXT_MUTED)}
+                        >
+                          <Undo2 className="w-3 h-3" /> Terug naar geprint
+                        </button>
+                      )}
                       <span className="text-[11px]" style={{ color: TEXT_MUTED }}>
                         {detailOrder.environment === "live" ? "Live" : "Sandbox"}
                       </span>
-                      {batchStatus && batchQueue.length > 1 && (
+                      {batchStatus && batchQueue.length > 1 && !detailOrder.deleted_at && (
                         <span className="ml-auto text-[11px]" style={{ color: TEXT_MUTED }}>
                           Order {Math.min(batchIndex + 1, batchQueue.length)} van {batchQueue.length} {statusLabelNl(batchStatus).toLowerCase()}
                         </span>
@@ -989,6 +1057,7 @@ function AdminPage() {
 
                       {/* Contextual status transition */}
                       {(() => {
+                        if (detailOrder.deleted_at) return null;
                         if (batchDone && batchStatus) {
                           return (
                             <div className="flex items-center gap-2 mt-3 text-[12px]" style={{ color: TEXT_MUTED }}>
@@ -1114,6 +1183,66 @@ function AdminPage() {
                           timeStyle: "short",
                         })}
                       </div>
+                    </div>
+
+                    <div className="pt-4 mt-2 flex justify-end" style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
+                      {detailOrder.deleted_at ? (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            setDetailBusy(true);
+                            try {
+                              await doRestore({ data: { orderId: detailOrder.id } });
+                              const res = await refetch();
+                              const updated = res.data?.orders.find((x: any) => x.id === detailOrder.id);
+                              if (updated) setDetailOrder(updated);
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[10px] text-[12px] font-medium transition-colors"
+                          style={{
+                            background: "rgba(46,204,138,0.10)",
+                            color: GREEN,
+                            border: "1px solid rgba(46,204,138,0.30)",
+                          }}
+                        >
+                          <RotateCcw className="w-3.5 h-3.5" /> Herstellen
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            if (!window.confirm("Order verwijderen? Je kunt 'm later terugvinden en herstellen.")) return;
+                            setDetailBusy(true);
+                            try {
+                              await doSoftDelete({ data: { orderId: detailOrder.id } });
+                              await refetch();
+                              closeDetail();
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[10px] text-[12px] font-medium transition-colors"
+                          style={{
+                            background: "transparent",
+                            color: "rgba(224,82,82,0.80)",
+                            border: "1px solid rgba(224,82,82,0.25)",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = "rgba(224,82,82,0.10)";
+                            e.currentTarget.style.color = "#E05252";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.color = "rgba(224,82,82,0.80)";
+                          }}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" /> Verwijderen
+                        </button>
+                      )}
                     </div>
                   </div>
                 </DialogContent>
