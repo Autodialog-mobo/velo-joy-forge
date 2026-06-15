@@ -231,10 +231,21 @@ function AdminPage() {
   const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
 
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: activeOrders.length, paid: 0, printed: 0, shipped: 0 };
+    // Paid/Printed: full outstanding work (any age).
+    // Shipped: rolling 30-day window (recently shipped).
+    // All: active in pipeline = paid + printed + shipped(30d).
+    const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+    const cutoff = Date.now() - THIRTY_DAYS_MS;
+    const c: Record<string, number> = { all: 0, paid: 0, printed: 0, shipped: 0 };
     for (const o of activeOrders) {
-      if (c[o.status] !== undefined) c[o.status]++;
+      if (o.status === "paid") c.paid++;
+      else if (o.status === "printed") c.printed++;
+      else if (o.status === "shipped") {
+        const t = new Date(o.updated_at ?? o.created_at).getTime();
+        if (t >= cutoff) c.shipped++;
+      }
     }
+    c.all = c.paid + c.printed + c.shipped;
     return c;
   }, [activeOrders]);
 
@@ -451,10 +462,10 @@ function AdminPage() {
 
   // Pipeline stage definition
   const PIPELINE: { key: StatusFilter; label: string; caption: string; dot: string }[] = [
-    { key: "all", label: "Alle", caption: "totaal in pipeline", dot: "rgba(255,255,255,0.35)" },
+    { key: "all", label: "Alle", caption: "actief in pipeline", dot: "rgba(255,255,255,0.35)" },
     { key: "paid", label: "Betaald", caption: "klaar om te printen", dot: "#2ECC8A" },
     { key: "printed", label: "Geprint", caption: "klaar om te verzenden", dot: "#F5B547" },
-    { key: "shipped", label: "Verzonden", caption: "afgerond", dot: "rgba(255,255,255,0.40)" },
+    { key: "shipped", label: "Verzonden · 30 dgn", caption: "afgerond", dot: "rgba(255,255,255,0.40)" },
   ];
 
   return (
