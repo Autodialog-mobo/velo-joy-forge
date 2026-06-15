@@ -735,19 +735,19 @@ function AdminPage() {
               border: `1px solid ${SURFACE_BORDER}`,
             }}
           >
-            {/* Toolbar */}
+            {/* Toolbar Row 1 — Filters & Search */}
             <div
-              className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-4"
+              className="flex flex-col sm:flex-row sm:items-center gap-3 px-6 py-4"
               style={{ borderBottom: `1px solid ${SURFACE_BORDER}` }}
             >
-              <div className="flex items-center gap-3 flex-wrap">
+              <div className="flex flex-wrap items-center gap-3">
                 <span style={EYEBROW}>Bestellingen</span>
                 <span className="text-[12px]" style={{ color: TEXT_MUTED }}>
                   {selectedOrders.length > 0
                     ? `${selectedOrders.length} geselecteerd`
                     : `${filtered.length} weergegeven`}
                 </span>
-                <label className="inline-flex items-center gap-2 ml-1">
+                <label className="inline-flex items-center gap-2">
                   <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
                     Status:
                   </span>
@@ -821,72 +821,92 @@ function AdminPage() {
                     ))}
                   </select>
                 </label>
-                <div className="relative inline-flex items-center">
-                  <Search
-                    className="absolute left-2 pointer-events-none"
-                    style={{ width: 13, height: 13, color: TEXT_MUTED }}
-                    strokeWidth={2}
-                  />
-                  <input
-                    type="text"
-                    value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="Zoek op naam, e-mail of order…"
-                    aria-label="Zoeken in bestellingen"
-                    className="h-7 pl-7 pr-7 rounded-[8px] text-[12px] w-[240px] focus:outline-none"
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      color: TEXT_PRI,
-                      border: `1px solid ${SURFACE_BORDER}`,
-                    }}
-                  />
-                  {searchInput && (
-                    <button
-                      type="button"
-                      onClick={() => { setSearchInput(""); setSearchQuery(""); }}
-                      aria-label="Zoekopdracht wissen"
-                      className="absolute right-1 inline-flex items-center justify-center rounded-[6px]"
-                      style={{ width: 18, height: 18, color: TEXT_MUTED }}
-                    >
-                      <X style={{ width: 12, height: 12 }} strokeWidth={2.25} />
-                    </button>
-                  )}
-                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={generateLabels}
-                  disabled={!hasSelection || viewingDeleted}
-                  className="btn-primary h-9 px-4 rounded-[12px] text-[13px]"
-                >
-                  Labels PDF ({viewingDeleted ? 0 : selectedOrders.length})
-                </button>
-                <button
-                  onClick={exportCsv}
-                  disabled={!hasSelection || viewingDeleted}
-                  className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
-                >
-                  CSV export
-                </button>
+              <div className="flex-1 min-w-[0]" />
+              <div className="relative inline-flex items-center">
+                <Search
+                  className="absolute left-2 pointer-events-none"
+                  style={{ width: 13, height: 13, color: TEXT_MUTED }}
+                  strokeWidth={2}
+                />
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="Zoek op naam, e-mail of order…"
+                  aria-label="Zoeken in bestellingen"
+                  className="h-7 pl-7 pr-7 rounded-[8px] text-[12px] w-[240px] focus:outline-none"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    color: TEXT_PRI,
+                    border: `1px solid ${SURFACE_BORDER}`,
+                  }}
+                />
+                {searchInput && (
+                  <button
+                    type="button"
+                    onClick={() => { setSearchInput(""); setSearchQuery(""); }}
+                    aria-label="Zoekopdracht wissen"
+                    className="absolute right-1 inline-flex items-center justify-center rounded-[6px]"
+                    style={{ width: 18, height: 18, color: TEXT_MUTED }}
+                  >
+                    <X style={{ width: 12, height: 12 }} strokeWidth={2.25} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Toolbar Row 2 — Bulk Actions */}
+            <div
+              className="flex flex-col sm:flex-row sm:items-center gap-3 px-6 py-3"
+              style={{ borderBottom: `1px solid ${SURFACE_BORDER}` }}
+            >
+              {/* Fulfillment actions */}
+              <div className="flex items-center gap-2 flex-wrap">
                 <button
                   onClick={handleMarkPrinted}
                   disabled={busy || !hasSelection || viewingDeleted}
-                  className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
                 >
                   Markeer geprint
                 </button>
                 <button
                   onClick={handleMarkShipped}
                   disabled={busy || !hasSelection || viewingDeleted}
-                  className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
                 >
                   Markeer verzonden
                 </button>
-                <div aria-hidden="true" className="w-px self-stretch mx-2" style={{ background: SURFACE_BORDER }} />
+              </div>
+
+              <div aria-hidden="true" className="w-px self-stretch hidden sm:block" style={{ background: SURFACE_BORDER }} />
+
+              {/* Output actions */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  onClick={generateLabels}
+                  disabled={!hasSelection || viewingDeleted}
+                  className="btn-primary h-8 px-3 rounded-[10px] text-[12px] font-semibold"
+                >
+                  Labels PDF ({viewingDeleted ? 0 : selectedOrders.length})
+                </button>
+                <button
+                  onClick={exportCsv}
+                  disabled={!hasSelection || viewingDeleted}
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
+                >
+                  CSV export
+                </button>
+              </div>
+
+              <div className="flex-1 min-w-[0]" />
+
+              {/* Destructive action */}
+              <div className="flex items-center gap-2 flex-wrap">
                 <button
                   onClick={handleBulkDelete}
                   disabled={busy || !hasSelection || viewingDeleted}
-                  className="h-9 px-4 rounded-[12px] text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="h-8 px-3 rounded-[10px] text-[12px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   style={{
                     background: "transparent",
                     color: "rgba(248, 113, 113, 0.85)",
