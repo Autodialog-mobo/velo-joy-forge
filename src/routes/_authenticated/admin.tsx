@@ -351,6 +351,27 @@ function AdminPage() {
     }
   };
 
+  const handleBulkDelete = async () => {
+    const n = selectedOrders.length;
+    if (!n) return;
+    if (
+      !window.confirm(
+        `${n} ${n === 1 ? "order" : "orders"} verwijderen? Je kunt ze later terugvinden en herstellen onder het 'Verwijderd'-filter.`,
+      )
+    )
+      return;
+    setBusy(true);
+    try {
+      await Promise.all(
+        selectedOrders.map((o: any) => doSoftDelete({ data: { orderId: o.id } })),
+      );
+      setSelected(new Set());
+      await refetch();
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
@@ -694,6 +715,20 @@ function AdminPage() {
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer verzonden
+                </button>
+                <div aria-hidden="true" className="w-px self-stretch mx-2" style={{ background: SURFACE_BORDER }} />
+                <button
+                  onClick={handleBulkDelete}
+                  disabled={busy || !hasSelection || viewingDeleted}
+                  className="h-9 px-4 rounded-[12px] text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  style={{
+                    background: "transparent",
+                    color: "rgba(248, 113, 113, 0.85)",
+                    border: "1px solid rgba(248, 113, 113, 0.35)",
+                  }}
+                  title="Geselecteerde orders verwijderen"
+                >
+                  Verwijderen ({viewingDeleted ? 0 : selectedOrders.length})
                 </button>
               </div>
             </div>
