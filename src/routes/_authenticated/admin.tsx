@@ -373,6 +373,8 @@ function AdminPage() {
     }
   };
 
+  const UNDO_WINDOW_MS = 8000;
+
   const handleBulkDelete = async () => {
     const n = selectedOrders.length;
     if (!n) return;
@@ -382,12 +384,25 @@ function AdminPage() {
       )
     )
       return;
+    const ids = selectedOrders.map((o: any) => o.id);
     setBusy(true);
     try {
-      await Promise.all(
-        selectedOrders.map((o: any) => doSoftDelete({ data: { orderId: o.id } })),
-      );
+      await Promise.all(ids.map((id: string) => doSoftDelete({ data: { orderId: id } })));
       setSelected(new Set());
+      await refetch();
+      setUndoState({ ids, expiresAt: Date.now() + UNDO_WINDOW_MS });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleUndoDelete = async () => {
+    const snap = undoState;
+    if (!snap || !snap.ids.length) return;
+    setUndoState(null);
+    setBusy(true);
+    try {
+      await Promise.all(snap.ids.map((id) => doRestore({ data: { orderId: id } })));
       await refetch();
     } finally {
       setBusy(false);
