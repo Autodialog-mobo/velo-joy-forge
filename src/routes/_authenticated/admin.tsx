@@ -116,6 +116,8 @@ function AdminPage() {
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
+  const [langFilter, setLangFilter] = useState<string>("any");
+  const [countryFilter, setCountryFilter] = useState<string>("any");
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   useEffect(() => {
@@ -257,6 +259,15 @@ function AdminPage() {
 
   const viewingDeleted = statusFilter === "deleted";
 
+  const availableCountries = useMemo(() => {
+    const set = new Set<string>();
+    for (const o of activeOrders) {
+      const c = (o.shipping_country || "").toString().trim().toUpperCase();
+      if (c) set.add(c);
+    }
+    return Array.from(set).sort();
+  }, [activeOrders]);
+
   const filtered = useMemo(() => {
     const base = viewingDeleted ? deletedOrders : activeOrders;
     const q = searchQuery;
@@ -267,6 +278,14 @@ function AdminPage() {
           ? o.status === statusFilter
           : filter === "all" || o.status === filter;
       if (!stagePass) return false;
+      if (langFilter !== "any") {
+        const l = (o.lang || "").toString().trim().toUpperCase();
+        if (l !== langFilter) return false;
+      }
+      if (countryFilter !== "any") {
+        const c = (o.shipping_country || "").toString().trim().toUpperCase();
+        if (c !== countryFilter) return false;
+      }
       if (!q) return true;
       const hay = [
         o.shipping_name,
@@ -295,7 +314,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, searchQuery, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, searchQuery, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
@@ -758,6 +777,50 @@ function AdminPage() {
                     </option>
                   </select>
                 </label>
+                <label className="inline-flex items-center gap-2">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Taal:
+                  </span>
+                  <select
+                    value={langFilter}
+                    onChange={(e) => { setLangFilter(e.target.value); setSelected(new Set()); }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op taal"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle talen</option>
+                    {["NL", "FR", "DE", "EN"].map((l) => (
+                      <option key={l} value={l} style={{ background: NAVY }}>{l}</option>
+                    ))}
+                  </select>
+                </label>
+                <label className="inline-flex items-center gap-2">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Land:
+                  </span>
+                  <select
+                    value={countryFilter}
+                    onChange={(e) => { setCountryFilter(e.target.value); setSelected(new Set()); }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op land"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle landen</option>
+                    {availableCountries.map((c) => (
+                      <option key={c} value={c} style={{ background: NAVY }}>{c}</option>
+                    ))}
+                  </select>
+                </label>
                 <div className="relative inline-flex items-center">
                   <Search
                     className="absolute left-2 pointer-events-none"
@@ -924,8 +987,22 @@ function AdminPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 align-middle">
-                          <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
-                            {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
+                          <div className="flex items-center gap-2">
+                            <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
+                              {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
+                            </div>
+                            <span
+                              className="text-[10px] px-1.5 py-[1px] rounded-[4px] font-medium"
+                              style={{
+                                color: TEXT_MUTED,
+                                border: `1px solid ${SURFACE_BORDER}`,
+                                background: "rgba(255,255,255,0.03)",
+                                letterSpacing: "0.04em",
+                              }}
+                              title="Taal"
+                            >
+                              {o.lang ? String(o.lang).toUpperCase() : "—"}
+                            </span>
                           </div>
                           <div className="text-[12px] leading-[1.4]" style={{ color: TEXT_SEC }}>
                             {o.customer_email}
@@ -933,9 +1010,24 @@ function AdminPage() {
                         </td>
                         <td className="px-6 py-4 text-[13px] hidden md:table-cell align-middle">
                           <div style={{ color: TEXT_PRI }}>{o.shipping_line1 || "—"}</div>
-                          <div style={{ color: TEXT_SEC }}>
-                            {o.shipping_postal_code} {o.shipping_city}{" "}
-                            <span style={{ color: TEXT_MUTED }}>{o.shipping_country}</span>
+                          <div className="flex items-center gap-2">
+                            <span style={{ color: TEXT_SEC }}>
+                              {o.shipping_postal_code} {o.shipping_city}
+                            </span>
+                            {o.shipping_country && (
+                              <span
+                                className="text-[10px] px-1.5 py-[1px] rounded-[4px] font-medium"
+                                style={{
+                                  color: TEXT_MUTED,
+                                  border: `1px solid ${SURFACE_BORDER}`,
+                                  background: "rgba(255,255,255,0.03)",
+                                  letterSpacing: "0.04em",
+                                }}
+                                title="Land"
+                              >
+                                {String(o.shipping_country).toUpperCase()}
+                              </span>
+                            )}
                           </div>
                         </td>
                         <td
