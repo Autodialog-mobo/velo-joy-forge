@@ -133,6 +133,28 @@ function AdminPage() {
   // Read-only browse navigation across the current filtered list
   const [navIds, setNavIds] = useState<string[]>([]);
   const [navIndex, setNavIndex] = useState(0);
+  const [undoState, setUndoState] = useState<{ ids: string[]; expiresAt: number } | null>(null);
+  const [nowTs, setNowTs] = useState(() => Date.now());
+  useEffect(() => {
+    if (!undoState) return;
+    const tick = setInterval(() => setNowTs(Date.now()), 250);
+    return () => clearInterval(tick);
+  }, [undoState]);
+  useEffect(() => {
+    if (undoState && nowTs >= undoState.expiresAt) setUndoState(null);
+  }, [undoState, nowTs]);
+  useEffect(() => {
+    if (!undoState) return;
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.key === "z" || e.key === "Z") && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleUndoDelete();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [undoState]);
 
   const initBatchFor = (o: any, source: any[]) => {
     setBatchStatus(o.status);
