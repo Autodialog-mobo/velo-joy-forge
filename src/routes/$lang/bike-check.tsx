@@ -361,9 +361,11 @@ function BikeSearchPage() {
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLockRef.current) return;
     const cleanBrand = resolveCanonicalBrand(brand);
     const cleanFrame = sanitizeAlnum(frame);
     if (!cleanBrand || !cleanFrame) return;
+    submitLockRef.current = true;
     setError(null);
     setResult(null);
     setLoadingB(true);
@@ -379,6 +381,7 @@ function BikeSearchPage() {
       setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingB(false);
+      submitLockRef.current = false;
     }
   };
 
