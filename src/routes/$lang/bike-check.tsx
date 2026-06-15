@@ -515,10 +515,8 @@ function BikeSearchPage() {
               sanitize={sanitizeCode}
             />
 
-            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
-            <div style={{ marginTop: 12 }}>
-              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
-            </div>
+            {/* Turnstile widget is rendered once for the whole page (below). */}
+
 
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
