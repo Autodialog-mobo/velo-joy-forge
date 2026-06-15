@@ -909,10 +909,64 @@ function AdminPage() {
                         />
                         {statusLabelNl(detailOrder.status)}
                       </span>
+                      {detailOrder.deleted_at && (
+                        <span
+                          className="inline-flex items-center gap-1.5 h-[24px] px-2.5 rounded-full text-[11px] font-semibold"
+                          style={{ background: "rgba(224,82,82,0.12)", color: "#E05252", border: "1px solid rgba(224,82,82,0.30)" }}
+                        >
+                          <Trash2 className="w-3 h-3" /> Verwijderd
+                        </span>
+                      )}
+                      {!detailOrder.deleted_at && detailOrder.status === "printed" && (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            setDetailBusy(true);
+                            try {
+                              await doRevertPaid({ data: { orderId: detailOrder.id } });
+                              const res = await refetch();
+                              const updated = res.data?.orders.find((x: any) => x.id === detailOrder.id);
+                              if (updated) setDetailOrder(updated);
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="text-[11px] inline-flex items-center gap-1 transition-colors"
+                          style={{ color: TEXT_MUTED, textDecoration: "underline", textUnderlineOffset: 3 }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = TEXT_SEC)}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = TEXT_MUTED)}
+                        >
+                          <Undo2 className="w-3 h-3" /> Terug naar betaald
+                        </button>
+                      )}
+                      {!detailOrder.deleted_at && detailOrder.status === "shipped" && (
+                        <button
+                          type="button"
+                          disabled={detailBusy}
+                          onClick={async () => {
+                            setDetailBusy(true);
+                            try {
+                              await doRevertPrinted({ data: { orderId: detailOrder.id } });
+                              const res = await refetch();
+                              const updated = res.data?.orders.find((x: any) => x.id === detailOrder.id);
+                              if (updated) setDetailOrder(updated);
+                            } finally {
+                              setDetailBusy(false);
+                            }
+                          }}
+                          className="text-[11px] inline-flex items-center gap-1 transition-colors"
+                          style={{ color: TEXT_MUTED, textDecoration: "underline", textUnderlineOffset: 3 }}
+                          onMouseEnter={(e) => (e.currentTarget.style.color = TEXT_SEC)}
+                          onMouseLeave={(e) => (e.currentTarget.style.color = TEXT_MUTED)}
+                        >
+                          <Undo2 className="w-3 h-3" /> Terug naar geprint
+                        </button>
+                      )}
                       <span className="text-[11px]" style={{ color: TEXT_MUTED }}>
                         {detailOrder.environment === "live" ? "Live" : "Sandbox"}
                       </span>
-                      {batchStatus && batchQueue.length > 1 && (
+                      {batchStatus && batchQueue.length > 1 && !detailOrder.deleted_at && (
                         <span className="ml-auto text-[11px]" style={{ color: TEXT_MUTED }}>
                           Order {Math.min(batchIndex + 1, batchQueue.length)} van {batchQueue.length} {statusLabelNl(batchStatus).toLowerCase()}
                         </span>
