@@ -248,11 +248,29 @@ function AdminPage() {
 
   const filtered = useMemo(() => {
     const base = viewingDeleted ? deletedOrders : activeOrders;
+    const q = searchQuery;
     const arr = base.filter((o: any) => {
-      if (viewingDeleted) return true;
-      // Status dropdown overrides the pipeline stage when set; otherwise pipeline drives the view.
-      if (statusFilter !== "any") return o.status === statusFilter;
-      return filter === "all" || o.status === filter;
+      const stagePass = viewingDeleted
+        ? true
+        : statusFilter !== "any"
+          ? o.status === statusFilter
+          : filter === "all" || o.status === filter;
+      if (!stagePass) return false;
+      if (!q) return true;
+      const hay = [
+        o.shipping_name,
+        o.customer_email,
+        o.id,
+        o.id ? String(o.id).slice(0, 8) : "",
+        o.shipping_line1,
+        o.shipping_city,
+        o.shipping_postal_code,
+        o.shipping_country,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return hay.includes(q);
     });
     arr.sort((a: any, b: any) => {
       if (sort.column === "date") {
@@ -266,7 +284,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, searchQuery, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
