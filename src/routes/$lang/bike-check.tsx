@@ -13,6 +13,7 @@ import { buildLocalizedHead } from "@/i18n/seo";
 import { isLang } from "@/i18n/config";
 import { checkBike, checkBikeByFrame, type BikeCheckResult } from "@/lib/bike-check.functions";
 import BIKE_BRANDS from "@/data/bike-brands.json";
+import { searchBrands, resolveCanonicalBrand } from "@/lib/brand-search";
 import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
@@ -205,13 +206,30 @@ function BikeSearchPage() {
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [brandFocused, setBrandFocused] = useState(false);
+  const [brandQuery, setBrandQuery] = useState("");
+  const [activeIdx, setActiveIdx] = useState(-1);
+
+  // Debounce filter (~120ms) — enough to keep input snappy on ~940 items.
+  useEffect(() => {
+    const id = setTimeout(() => setBrandQuery(brand), 120);
+    return () => clearTimeout(id);
+  }, [brand]);
+
   const brandSuggestions = (() => {
-    const q = brand.trim().toLowerCase();
+    const q = brandQuery.trim();
     if (!q) return [] as string[];
-    return (BIKE_BRANDS as string[])
-      .filter((b) => b.toLowerCase().includes(q) && b.toLowerCase() !== q)
-      .slice(0, 8);
+    return searchBrands(q, 10).map((s) => s.name);
   })();
+  // +1 extra slot for the "Merk niet in de lijst / onbekend" option.
+  const optionCount = brandSuggestions.length + 1;
+  const UNKNOWN_VALUE = "Onbekend";
+
+  useEffect(() => {
+    setActiveIdx(-1);
+  }, [brandQuery]);
+
+  // Silence unused import warning — BIKE_BRANDS is referenced via brand-search.
+  void BIKE_BRANDS;
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
   const sanitizeAlnum = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
