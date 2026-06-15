@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
@@ -28,43 +28,73 @@ declare global {
       render: (el: HTMLElement, opts: Record<string, unknown>) => string;
       remove: (id: string) => void;
       reset: (id?: string) => void;
+      execute: (id?: string, opts?: Record<string, unknown>) => void;
+      getResponse: (id?: string) => string | undefined;
     };
   }
 }
 
-function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: string) => void }) {
+export interface TurnstileHandle {
+  /** Reset the widget and resolve with a fresh single-use token. */
+  getFreshToken: () => Promise<string>;
+}
+
+// Single shared, invisible Turnstile widget in manual `execute` mode.
+// Tokens are single-use and tied to a single siteverify call — we reset before
+// every submission to avoid replaying a consumed token (which fails with
+// `captcha_failed` on a second submit without a page refresh).
+const TurnstileWidget = forwardRef<TurnstileHandle, { siteKey: string }>(function TurnstileWidget(
+  { siteKey },
+  ref,
+) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const onTokenRef = useRef(onToken);
-  onTokenRef.current = onToken;
+  const pendingRef = useRef<{ resolve: (t: string) => void; reject: (e: Error) => void } | null>(null);
+  const readyRef = useRef<Promise<void> | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    const render = () => {
-      if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) return;
-      widgetIdRef.current = window.turnstile.render(containerRef.current, {
-        sitekey: siteKey,
-        size: "invisible",
-        callback: (token: string) => onTokenRef.current(token),
-        "refresh-expired": "auto",
-        "error-callback": () => onTokenRef.current(""),
-        "expired-callback": () => onTokenRef.current(""),
-      });
-    };
-    if (window.turnstile) {
-      render();
-    } else {
-      const SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
-      let script = document.querySelector<HTMLScriptElement>(`script[src^="${SRC}"]`);
-      if (!script) {
-        script = document.createElement("script");
-        script.src = SRC;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
+    readyRef.current = new Promise<void>((resolve) => {
+      const render = () => {
+        if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) {
+          if (widgetIdRef.current) resolve();
+          return;
+        }
+        widgetIdRef.current = window.turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          size: "invisible",
+          execution: "execute",
+          callback: (token: string) => {
+            pendingRef.current?.resolve(token);
+            pendingRef.current = null;
+          },
+          "error-callback": () => {
+            pendingRef.current?.reject(new Error("captcha_failed"));
+            pendingRef.current = null;
+          },
+          "expired-callback": () => {
+            if (widgetIdRef.current && window.turnstile) {
+              try { window.turnstile.reset(widgetIdRef.current); } catch { /* ignore */ }
+            }
+          },
+        });
+        resolve();
+      };
+      if (window.turnstile) {
+        render();
+      } else {
+        const SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+        let script = document.querySelector<HTMLScriptElement>(`script[src^="${SRC}"]`);
+        if (!script) {
+          script = document.createElement("script");
+          script.src = SRC;
+          script.async = true;
+          script.defer = true;
+          document.head.appendChild(script);
+        }
+        script.addEventListener("load", render);
       }
-      script.addEventListener("load", render);
-    }
+    });
     return () => {
       cancelled = true;
       if (widgetIdRef.current && window.turnstile) {
@@ -74,8 +104,34 @@ function TurnstileWidget({ siteKey, onToken }: { siteKey: string; onToken: (t: s
     };
   }, [siteKey]);
 
+  useImperativeHandle(ref, () => ({
+    getFreshToken: async () => {
+      await readyRef.current;
+      if (!window.turnstile || !widgetIdRef.current) throw new Error("captcha_failed");
+      // Always reset first so we never reuse a consumed token.
+      try { window.turnstile.reset(widgetIdRef.current); } catch { /* ignore */ }
+      return new Promise<string>((resolve, reject) => {
+        pendingRef.current = { resolve, reject };
+        try {
+          window.turnstile!.execute(widgetIdRef.current!);
+        } catch (e) {
+          pendingRef.current = null;
+          reject(e instanceof Error ? e : new Error("captcha_failed"));
+        }
+        // Safety timeout (15s) so the UI never hangs on a silent failure.
+        setTimeout(() => {
+          if (pendingRef.current) {
+            pendingRef.current.reject(new Error("captcha_failed"));
+            pendingRef.current = null;
+          }
+        }, 15_000);
+      });
+    },
+  }), []);
+
   return <div ref={containerRef} />;
-}
+});
+
 
 function SlotCodeInput({
   value,
@@ -229,7 +285,7 @@ function BikeSearchPage() {
   const [codeA, setCodeA] = useState("");
   const [brand, setBrand] = useState("");
   const [frame, setFrame] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<TurnstileHandle>(null);
   const [scanOpen, setScanOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [brandFocused, setBrandFocused] = useState(false);
@@ -277,6 +333,9 @@ function BikeSearchPage() {
     setLoadingA(true);
     setLastMethod("a");
     try {
+      // Always fetch a fresh, single-use Turnstile token immediately before
+      // calling the server fn (tokens become invalid after one siteverify).
+      const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
     } catch (e) {
@@ -308,6 +367,7 @@ function BikeSearchPage() {
     setLoadingB(true);
     setLastMethod("b");
     try {
+      const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckByFrame({
         data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken, lang },
       });
@@ -319,6 +379,7 @@ function BikeSearchPage() {
       setLoadingB(false);
     }
   };
+
 
   return (
     <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
@@ -454,10 +515,8 @@ function BikeSearchPage() {
               sanitize={sanitizeCode}
             />
 
-            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
-            <div style={{ marginTop: 12 }}>
-              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
-            </div>
+            {/* Turnstile widget is rendered once for the whole page (below). */}
+
 
 
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
@@ -654,11 +713,6 @@ function BikeSearchPage() {
               style={inputStyle}
             />
 
-            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
-            <div style={{ marginTop: 14 }}>
-              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
-            </div>
-
             <button
               type="submit"
               disabled={loadingB || !brand || !frame.trim()}
@@ -674,6 +728,12 @@ function BikeSearchPage() {
             </button>
           </form>
         </div>
+
+        {/* Single shared invisible Turnstile widget for both forms.
+            Tokens are fetched on-demand per submit via the imperative ref,
+            so each submission gets a fresh single-use token. */}
+        <TurnstileWidget ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} />
+
 
         {/* ERROR */}
         {error && (
