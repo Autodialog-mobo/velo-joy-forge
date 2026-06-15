@@ -1182,6 +1182,66 @@ function AdminPage() {
                       )}
                     </div>
 
+                    <div>
+                      <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
+                        <History className="w-3.5 h-3.5" /> Geschiedenis
+                      </h4>
+                      {(() => {
+                        const events = eventsQuery.data?.events ?? [];
+                        if (eventsQuery.isLoading) {
+                          return <p className="text-[12px]" style={{ color: TEXT_MUTED }}>Laden…</p>;
+                        }
+                        if (!events.length) {
+                          return (
+                            <p className="text-[12px]" style={{ color: TEXT_MUTED }}>
+                              Geen eerdere gebeurtenissen geregistreerd
+                            </p>
+                          );
+                        }
+                        const labelFor = (e: any): string => {
+                          switch (e.event_type) {
+                            case "paid": return "Betaling bevestigd";
+                            case "printed": return "Gemarkeerd als geprint";
+                            case "shipped": return "Gemarkeerd als verzonden";
+                            case "reverted":
+                              return `Teruggezet naar ${statusLabelNl(e.to_status || "")}`;
+                            case "deleted": return "Verwijderd";
+                            case "restored": return "Hersteld";
+                            case "expired": return "Verlopen";
+                            case "failed": return "Mislukt";
+                            case "canceled":
+                            case "cancelled": return "Geannuleerd";
+                            case "refunded": return "Terugbetaald";
+                            default: return e.event_type;
+                          }
+                        };
+                        const actorFor = (e: any): string => {
+                          if (e.actor_type === "system") return `via ${e.actor || "systeem"}`;
+                          return `door ${e.actor || "admin"}`;
+                        };
+                        return (
+                          <ul className="space-y-2">
+                            {events.map((e: any) => (
+                              <li key={e.id} className="text-[13px] leading-[1.45]">
+                                <div style={{ color: TEXT_PRI }}>{labelFor(e)}</div>
+                                <div className="text-[11px]" style={{ color: TEXT_MUTED }}>
+                                  {actorFor(e)} ·{" "}
+                                  {new Date(e.created_at).toLocaleString("nl-BE", {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      })()}
+                    </div>
+
+
                     <div className="pt-2" style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
                       <div className="flex items-center gap-1.5 text-[11px]" style={{ color: TEXT_MUTED }}>
                         <Calendar className="w-3 h-3" />
