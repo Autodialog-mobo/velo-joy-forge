@@ -486,15 +486,48 @@ function BikeSearchPage() {
                 autoCorrect="off"
                 spellCheck={false}
                 autoComplete="off"
+                role="combobox"
+                aria-expanded={brandFocused && optionCount > 0}
+                aria-autocomplete="list"
+                aria-controls="bs-brand-listbox"
+                aria-activedescendant={activeIdx >= 0 ? `bs-brand-opt-${activeIdx}` : undefined}
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
                 onFocus={() => setBrandFocused(true)}
-                onBlur={() => setTimeout(() => setBrandFocused(false), 120)}
+                onBlur={() => setTimeout(() => {
+                  setBrandFocused(false);
+                  // Normalize to canonical on blur if the typed value is an alias or accent variant.
+                  const canon = resolveCanonicalBrand(brand);
+                  if (canon && canon !== brand && brand.trim()) setBrand(canon);
+                }, 120)}
+                onKeyDown={(e) => {
+                  if (!brandFocused || optionCount === 0) return;
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setActiveIdx((i) => (i + 1) % optionCount);
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setActiveIdx((i) => (i <= 0 ? optionCount - 1 : i - 1));
+                  } else if (e.key === "Enter") {
+                    if (activeIdx >= 0) {
+                      e.preventDefault();
+                      if (activeIdx < brandSuggestions.length) {
+                        setBrand(brandSuggestions[activeIdx]);
+                      } else {
+                        setBrand(UNKNOWN_VALUE);
+                      }
+                      setBrandFocused(false);
+                    }
+                  } else if (e.key === "Escape") {
+                    setBrandFocused(false);
+                  }
+                }}
                 placeholder={t("method_b.brand_placeholder")}
                 style={inputStyle}
               />
-              {brandFocused && brandSuggestions.length > 0 && (
+              {brandFocused && optionCount > 0 && (
                 <ul
+                  id="bs-brand-listbox"
                   role="listbox"
                   style={{
                     position: "absolute",
@@ -509,12 +542,12 @@ function BikeSearchPage() {
                     borderRadius: 8,
                     boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
                     zIndex: 20,
-                    maxHeight: 280,
+                    maxHeight: 320,
                     overflowY: "auto",
                   }}
                 >
-                  {brandSuggestions.map((b) => (
-                    <li key={b}>
+                  {brandSuggestions.map((b, i) => (
+                    <li key={b} id={`bs-brand-opt-${i}`} role="option" aria-selected={activeIdx === i}>
                       <button
                         type="button"
                         onMouseDown={(e) => {
@@ -522,25 +555,59 @@ function BikeSearchPage() {
                           setBrand(b);
                           setBrandFocused(false);
                         }}
+                        onMouseEnter={() => setActiveIdx(i)}
                         style={{
                           display: "block",
                           width: "100%",
                           textAlign: "left",
                           padding: "8px 10px",
                           border: "none",
-                          background: "transparent",
+                          background: activeIdx === i ? "#f1f5f9" : "transparent",
                           borderRadius: 6,
                           cursor: "pointer",
                           fontSize: 15,
                           color: "#0F172A",
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                       >
                         {b}
                       </button>
                     </li>
                   ))}
+                  <li
+                    id={`bs-brand-opt-${brandSuggestions.length}`}
+                    role="option"
+                    aria-selected={activeIdx === brandSuggestions.length}
+                    style={{
+                      borderTop: brandSuggestions.length > 0 ? "1px solid #e2e8f0" : undefined,
+                      marginTop: brandSuggestions.length > 0 ? 4 : 0,
+                      paddingTop: brandSuggestions.length > 0 ? 4 : 0,
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setBrand(UNKNOWN_VALUE);
+                        setBrandFocused(false);
+                      }}
+                      onMouseEnter={() => setActiveIdx(brandSuggestions.length)}
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        textAlign: "left",
+                        padding: "8px 10px",
+                        border: "none",
+                        background: activeIdx === brandSuggestions.length ? "#f1f5f9" : "transparent",
+                        borderRadius: 6,
+                        cursor: "pointer",
+                        fontSize: 14,
+                        color: "#5A7090",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      Merk niet in de lijst / onbekend
+                    </button>
+                  </li>
                 </ul>
               )}
             </div>
