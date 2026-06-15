@@ -125,7 +125,9 @@ const TurnstileWidget = forwardRef<TurnstileHandle, { siteKey: string }>(functio
 
   useImperativeHandle(ref, () => ({
     getFreshToken: async () => {
+      if (isPreviewHost()) return "";
       await readyRef.current;
+
       if (!window.turnstile || !widgetIdRef.current) throw new Error("captcha_failed");
       // Always reset first so we never reuse a consumed token.
       try { window.turnstile.reset(widgetIdRef.current); } catch { /* ignore */ }
