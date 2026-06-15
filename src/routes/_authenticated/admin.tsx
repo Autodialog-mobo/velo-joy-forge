@@ -222,9 +222,9 @@ function AdminPage() {
     const base = viewingDeleted ? deletedOrders : activeOrders;
     const arr = base.filter((o: any) => {
       if (viewingDeleted) return true;
-      const pipelineMatch = filter === "all" || o.status === filter;
-      const secondaryMatch = statusFilter === "any" || o.status === statusFilter;
-      return pipelineMatch && secondaryMatch;
+      // Status dropdown overrides the pipeline stage when set; otherwise pipeline drives the view.
+      if (statusFilter !== "any") return o.status === statusFilter;
+      return filter === "all" || o.status === filter;
     });
     arr.sort((a: any, b: any) => {
       if (sort.column === "date") {
