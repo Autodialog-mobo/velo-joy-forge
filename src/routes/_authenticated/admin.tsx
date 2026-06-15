@@ -472,7 +472,13 @@ function AdminPage() {
               Fulfillment
             </h1>
             <p className="mt-1.5 text-[13px]" style={{ color: TEXT_SEC }}>
-              Beheer betaalde bestellingen en print verzendlabels
+              Beheer betaalde bestellingen en print verzendlabels ·{" "}
+              <a
+                href="/admin-webhooks"
+                style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+              >
+                Webhook status
+              </a>
             </p>
           </div>
           <div className="flex items-center gap-4">

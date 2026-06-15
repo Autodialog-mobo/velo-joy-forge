@@ -233,6 +233,42 @@ export type Database = {
         }
         Relationships: []
       }
+      webhook_events: {
+        Row: {
+          error_message: string | null
+          id: string
+          origin_host: string | null
+          origin_kind: string
+          payload_id: string | null
+          payment_status: string | null
+          received_at: string
+          source: string
+          status: string
+        }
+        Insert: {
+          error_message?: string | null
+          id?: string
+          origin_host?: string | null
+          origin_kind?: string
+          payload_id?: string | null
+          payment_status?: string | null
+          received_at?: string
+          source?: string
+          status: string
+        }
+        Update: {
+          error_message?: string | null
+          id?: string
+          origin_host?: string | null
+          origin_kind?: string
+          payload_id?: string | null
+          payment_status?: string | null
+          received_at?: string
+          source?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       orders_for_fulfillment: {

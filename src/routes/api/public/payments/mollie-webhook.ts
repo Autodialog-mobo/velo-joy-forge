@@ -20,20 +20,56 @@ const BUNDLE_META: Record<string, { sku: string; stickersPerBundle: number; unit
   frameid_family_onetime: { sku: "VP-FID-5", stickersPerBundle: 5, unitPriceCents: 4995 },
 };
 
+function classifyOrigin(host: string | null | undefined): "production" | "preview" | "other" {
+  if (!host) return "other";
+  const h = host.toLowerCase();
+  if (h.startsWith("id-preview--") || h.startsWith("preview--") || h.endsWith("-dev.lovable.app")) {
+    return "preview";
+  }
+  if (h.endsWith(".lovable.app") || h === "velopass.com" || h.endsWith(".velopass.com")) {
+    return "production";
+  }
+  return "other";
+}
+
 export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        const originHost = request.headers.get("host");
+        const originKind = classifyOrigin(originHost);
+        let payloadId: string | null = null;
+        let paymentStatus: string | null = null;
+
+        const logCall = async (status: "success" | "error", errorMessage: string | null = null) => {
+          try {
+            await (supabaseAdmin.from("webhook_events") as any).insert({
+              source: "mollie",
+              origin_host: originHost,
+              origin_kind: originKind,
+              payload_id: payloadId,
+              payment_status: paymentStatus,
+              status,
+              error_message: errorMessage,
+            });
+          } catch (e) {
+            console.error("webhook_events insert failed:", e);
+          }
+        };
+
         try {
           const form = await request.formData();
           const id = form.get("id");
           if (typeof id !== "string" || !/^tr_[a-zA-Z0-9]+$/.test(id)) {
+            await logCall("error", "Invalid id");
             return new Response("Invalid id", { status: 400 });
           }
+          payloadId = id;
 
           const payment = await fetchMolliePayment(id);
           const p: any = payment;
           const status: string = p.status;
+          paymentStatus = status;
           const amountCents = Math.round(parseFloat(p.amount.value) * 100);
           const environment = process.env.MOLLIE_API_KEY?.startsWith("live_")
             ? "live"
@@ -90,7 +126,6 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
 
           const orderId = upserted?.id;
           if (orderId && items.length) {
-            // Replace lines for idempotency on webhook retries
             await (supabaseAdmin.from("order_lines") as any).delete().eq("order_id", orderId);
             const rows = items
               .filter((i) => i.priceId in BUNDLE_META)
@@ -110,12 +145,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             }
           }
 
-          // Audit log: record status transitions (system actor = Mollie)
           if (orderId && status !== prevStatus) {
             try {
               await (supabaseAdmin.from("order_events") as any).insert({
                 order_id: orderId,
-                event_type: status, // e.g. "paid", "expired", "failed", "canceled"
+                event_type: status,
                 from_status: prevStatus,
                 to_status: status,
                 actor: "Mollie",
@@ -126,10 +160,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             }
           }
 
-
+          await logCall("success");
           return new Response("ok", { status: 200 });
-        } catch (e) {
+        } catch (e: any) {
           console.error("Mollie webhook error:", e);
+          await logCall("error", e?.message ? String(e.message).slice(0, 500) : "unknown error");
           return new Response("Webhook error", { status: 500 });
         }
       },
