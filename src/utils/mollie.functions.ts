@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { computeB2CTotals, SHIPPING_FEE_CENTS } from "@/lib/shipping";
 
 type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_family_onetime";
 
@@ -93,10 +94,8 @@ export const createMolliePayment = createServerFn({ method: "POST" })
     try {
       const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-      const totalCents = data.items.reduce(
-        (sum, i) => sum + BUNDLES[i.priceId as BundleKey].amountCents * i.quantity,
-        0,
-      );
+      const { productSubtotalCents, shippingCents, totalCents, vatCents } =
+        computeB2CTotals(data.items);
       const description = data.items
         .map((i) => `${BUNDLES[i.priceId as BundleKey].name} × ${i.quantity}`)
         .join(", ");
@@ -167,8 +166,9 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           price_id: firstItem.priceId,
           product_name: totalsByBundle,
           quantity: data.items.reduce((s, i) => s + i.quantity, 0),
-          amount_subtotal: totalCents,
-          amount_tax: 0,
+          amount_subtotal: productSubtotalCents,
+          amount_shipping: shippingCents,
+          amount_tax: vatCents,
           amount_total: totalCents,
           currency: "eur",
           status: "pending",
