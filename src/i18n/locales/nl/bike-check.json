@@ -26,7 +26,8 @@
     "desc": "Scan de QR-code op de Frame-ID of typ de Velopass-code in.",
     "code_label": "Velopass-code",
     "scan_cta": "Scan de QR-code",
-    "manual_cta": "Code zelf invoeren"
+    "manual_cta": "Code zelf invoeren",
+    "loading": "Bezig met controleren…"
   },
   "method_b": {
     "title": "Via merk en framenummer",
