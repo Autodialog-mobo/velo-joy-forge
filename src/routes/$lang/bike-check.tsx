@@ -1154,6 +1154,30 @@ const cardDesc: React.CSSProperties = {
   lineHeight: 1.55,
   marginBottom: 16,
 };
+const refImgFigure: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 12,
+  margin: "0 0 18px",
+  padding: 10,
+  background: "rgba(13,31,60,0.03)",
+  border: "1px solid rgba(13,31,60,0.08)",
+  borderRadius: 12,
+};
+const refImg: React.CSSProperties = {
+  width: 96,
+  height: 96,
+  objectFit: "cover",
+  borderRadius: 8,
+  flexShrink: 0,
+  background: "#0D1F3C",
+};
+const refImgCaption: React.CSSProperties = {
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 13,
+  color: "#5A7090",
+  lineHeight: 1.45,
+};
 const labelStyle: React.CSSProperties = {
   display: "block",
   fontFamily: "'DM Sans', sans-serif",
