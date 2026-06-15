@@ -554,14 +554,14 @@ function BikeSearchPage() {
               >
                 {loadingA ? (
                   <>
-                    <Loader2 size={16} className="bs-spin" /> {t("method_a:loading")}
+                    <Loader2 size={16} className="bs-spin" /> {t("method_a.loading")}
                   </>
                 ) : loadingB ? (
                   <>
                     <Loader2 size={16} className="bs-spin" />
                   </>
                 ) : (
-                  t("method_b:check")
+                  t("method_b.check")
                 )}
               </button>
             </div>
