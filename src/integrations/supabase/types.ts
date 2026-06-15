@@ -29,6 +29,57 @@ export type Database = {
         }
         Relationships: []
       }
+      order_events: {
+        Row: {
+          actor: string | null
+          actor_type: string
+          created_at: string
+          event_type: string
+          from_status: string | null
+          id: string
+          note: string | null
+          order_id: string
+          to_status: string | null
+        }
+        Insert: {
+          actor?: string | null
+          actor_type?: string
+          created_at?: string
+          event_type: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          order_id: string
+          to_status?: string | null
+        }
+        Update: {
+          actor?: string | null
+          actor_type?: string
+          created_at?: string
+          event_type?: string
+          from_status?: string | null
+          id?: string
+          note?: string | null
+          order_id?: string
+          to_status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_events_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders_for_fulfillment"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       order_lines: {
         Row: {
           bundle_key: string
