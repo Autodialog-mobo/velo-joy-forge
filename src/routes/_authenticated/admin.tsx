@@ -655,28 +655,28 @@ function AdminPage() {
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={generateLabels}
-                  disabled={!hasSelection}
+                  disabled={!hasSelection || viewingDeleted}
                   className="btn-primary h-9 px-4 rounded-[12px] text-[13px]"
                 >
-                  Labels PDF ({selectedOrders.length})
+                  Labels PDF ({viewingDeleted ? 0 : selectedOrders.length})
                 </button>
                 <button
                   onClick={exportCsv}
-                  disabled={!hasSelection}
+                  disabled={!hasSelection || viewingDeleted}
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   CSV export
                 </button>
                 <button
                   onClick={handleMarkPrinted}
-                  disabled={busy || !hasSelection}
+                  disabled={busy || !hasSelection || viewingDeleted}
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer geprint
                 </button>
                 <button
                   onClick={handleMarkShipped}
-                  disabled={busy || !hasSelection}
+                  disabled={busy || !hasSelection || viewingDeleted}
                   className="btn-ghost h-9 px-4 rounded-[12px] text-[13px] font-medium"
                 >
                   Markeer verzonden
