@@ -1030,13 +1030,6 @@ function AdminPage() {
                             )}
                           </div>
                         </td>
-                        <td className="px-6 py-4 text-[13px] hidden md:table-cell align-middle">
-                          <div style={{ color: TEXT_PRI }}>{o.shipping_line1 || "—"}</div>
-                          <div style={{ color: TEXT_SEC }}>
-                            {o.shipping_postal_code} {o.shipping_city}{" "}
-                            <span style={{ color: TEXT_MUTED }}>{o.shipping_country}</span>
-                          </div>
-                        </td>
                         <td
                           className="px-6 py-4 text-[13px] hidden md:table-cell align-middle"
                           style={{ color: TEXT_SEC }}
