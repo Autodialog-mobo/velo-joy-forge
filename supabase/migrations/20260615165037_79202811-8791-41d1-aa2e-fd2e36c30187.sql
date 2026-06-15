@@ -1,0 +1,1 @@
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS amount_shipping integer NOT NULL DEFAULT 0;

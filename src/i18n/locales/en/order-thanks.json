@@ -21,7 +21,7 @@
     "shipping_note_many": "Your Frame-IDs will ship within 2 business days.",
     "card_confirmation": "Confirmation",
     "card_shipping": "Shipping",
-    "shipping_value": "Free · 2 business days",
+    "shipping_value": "€1.95 · 2 business days",
     "amount_paid": "{{amount}} paid",
     "status_line": "A payment confirmation is in your mailbox. Status: {{status}}.",
     "back_button": "Back to Velopass"

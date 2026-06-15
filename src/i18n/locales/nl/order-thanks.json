@@ -21,7 +21,7 @@
     "shipping_note_many": "Je Frame-ID's worden verzonden binnen 2 werkdagen.",
     "card_confirmation": "Bevestiging",
     "card_shipping": "Verzending",
-    "shipping_value": "Gratis · 2 werkdagen",
+    "shipping_value": "€1,95 · 2 werkdagen",
     "amount_paid": "{{amount}} betaald",
     "status_line": "Een betalingsbevestiging staat in je mailbox. Status: {{status}}.",
     "back_button": "Terug naar Velopass"

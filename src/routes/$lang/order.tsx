@@ -7,6 +7,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { createMolliePayment } from "@/utils/mollie.functions";
+import { SHIPPING_FEE_CENTS } from "@/lib/shipping";
 
 type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_family_onetime";
 
@@ -111,8 +112,10 @@ function BestellenPage() {
       })),
     [quantities],
   );
-  const total = items.reduce((sum, i) => sum + i.bundle.price * i.quantity, 0);
+  const productSubtotal = items.reduce((sum, i) => sum + i.bundle.price * i.quantity, 0);
   const hasItems = items.length > 0;
+  const shippingCents = hasItems ? SHIPPING_FEE_CENTS : 0;
+  const total = productSubtotal + shippingCents;
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const shippingValid =
     firstName.trim().length > 0 &&
@@ -356,7 +359,7 @@ function BestellenPage() {
 
               <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", fontSize: 13, color: "rgba(13,31,60,0.7)", borderTop: "1px solid rgba(13,31,60,0.08)" }}>
                 <span>{t("cart.shipping")}</span>
-                <span style={{ color: "#2ECC8A", fontWeight: 600 }}>{t("cart.shipping_free")}</span>
+                <span style={{ fontWeight: 600, color: "#0D1F3C" }}>{hasItems ? eur(shippingCents) : t("cart.shipping_free")}</span>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderTop: "1px solid rgba(13,31,60,0.08)" }}>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 16, color: "#0D1F3C" }}>{t("cart.total")}</span>

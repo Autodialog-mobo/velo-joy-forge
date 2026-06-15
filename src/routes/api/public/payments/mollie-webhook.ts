@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { computeB2CTotals } from "@/lib/shipping";
 
 async function fetchMolliePayment(id: string) {
   const apiKey = process.env.MOLLIE_API_KEY;
@@ -107,8 +108,9 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               quantity: items.length
                 ? items.reduce((s, i) => s + (i.quantity ?? 1), 0)
                 : 1,
-              amount_subtotal: amountCents,
-              amount_tax: 0,
+              amount_subtotal: items.length ? computeB2CTotals(items).productSubtotalCents : amountCents,
+              amount_shipping: items.length ? computeB2CTotals(items).shippingCents : 0,
+              amount_tax: items.length ? computeB2CTotals(items).vatCents : 0,
               amount_total: amountCents,
               currency: (p.amount.currency ?? "EUR").toLowerCase(),
               status,

@@ -130,6 +130,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          amount_shipping: number
           amount_subtotal: number
           amount_tax: number
           amount_total: number
@@ -157,6 +158,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          amount_shipping?: number
           amount_subtotal: number
           amount_tax?: number
           amount_total: number
@@ -184,6 +186,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          amount_shipping?: number
           amount_subtotal?: number
           amount_tax?: number
           amount_total?: number
