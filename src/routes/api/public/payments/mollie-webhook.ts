@@ -52,6 +52,13 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? p.metadata.lang
             : null;
 
+          // Fetch previous status (if any) for transition logging
+          const { data: existing } = await (supabaseAdmin.from("orders") as any)
+            .select("id, status")
+            .eq("mollie_payment_id", p.id)
+            .maybeSingle();
+          const prevStatus: string | null = existing?.status ?? null;
+
           const { data: upserted } = await (supabaseAdmin.from("orders") as any).upsert(
             {
               mollie_payment_id: p.id,
