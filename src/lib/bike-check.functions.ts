@@ -165,7 +165,9 @@ async function fetchByBrandFrame(
   const res = await fetch(url, {
     method: "GET",
     headers: { "X-Api-Key": apiKey, Accept: "application/json" },
-    cache: "no-store",
+    // Cloudflare Workers reject `cache: "no-store"` combined with cf.cacheTtl,
+    // so we rely solely on the `cf` hint to bypass the edge cache.
+
     // @ts-expect-error Cloudflare Workers-specific fetch option
     cf: { cacheTtl: 0, cacheEverything: false },
   });
@@ -277,7 +279,7 @@ export const checkBike = createServerFn({ method: "POST" })
     const res = await fetch(url, {
       method: "GET",
       headers: { "X-Api-Key": apiKey, Accept: "application/json" },
-      cache: "no-store",
+      // See note above: don't combine `cache` with cf.cacheTtl on Workers.
       // @ts-expect-error Cloudflare Workers-specific fetch option
       cf: { cacheTtl: 0, cacheEverything: false },
     });
