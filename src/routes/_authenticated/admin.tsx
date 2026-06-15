@@ -987,11 +987,47 @@ function AdminPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 align-middle">
-                          <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
-                            {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
+                          <div className="flex items-center gap-2">
+                            <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
+                              {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
+                            </div>
+                            <span
+                              className="text-[10px] px-1.5 py-[1px] rounded-[4px] font-medium"
+                              style={{
+                                color: TEXT_MUTED,
+                                border: `1px solid ${SURFACE_BORDER}`,
+                                background: "rgba(255,255,255,0.03)",
+                                letterSpacing: "0.04em",
+                              }}
+                              title="Taal"
+                            >
+                              {o.lang ? String(o.lang).toUpperCase() : "—"}
+                            </span>
                           </div>
                           <div className="text-[12px] leading-[1.4]" style={{ color: TEXT_SEC }}>
                             {o.customer_email}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-[13px] hidden md:table-cell align-middle">
+                          <div style={{ color: TEXT_PRI }}>{o.shipping_line1 || "—"}</div>
+                          <div className="flex items-center gap-2">
+                            <span style={{ color: TEXT_SEC }}>
+                              {o.shipping_postal_code} {o.shipping_city}
+                            </span>
+                            {o.shipping_country && (
+                              <span
+                                className="text-[10px] px-1.5 py-[1px] rounded-[4px] font-medium"
+                                style={{
+                                  color: TEXT_MUTED,
+                                  border: `1px solid ${SURFACE_BORDER}`,
+                                  background: "rgba(255,255,255,0.03)",
+                                  letterSpacing: "0.04em",
+                                }}
+                                title="Land"
+                              >
+                                {String(o.shipping_country).toUpperCase()}
+                              </span>
+                            )}
                           </div>
                         </td>
                         <td className="px-6 py-4 text-[13px] hidden md:table-cell align-middle">
