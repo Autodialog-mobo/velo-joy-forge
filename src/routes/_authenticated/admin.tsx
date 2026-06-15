@@ -133,6 +133,28 @@ function AdminPage() {
   // Read-only browse navigation across the current filtered list
   const [navIds, setNavIds] = useState<string[]>([]);
   const [navIndex, setNavIndex] = useState(0);
+  const [undoState, setUndoState] = useState<{ ids: string[]; expiresAt: number } | null>(null);
+  const [nowTs, setNowTs] = useState(() => Date.now());
+  useEffect(() => {
+    if (!undoState) return;
+    const tick = setInterval(() => setNowTs(Date.now()), 250);
+    return () => clearInterval(tick);
+  }, [undoState]);
+  useEffect(() => {
+    if (undoState && nowTs >= undoState.expiresAt) setUndoState(null);
+  }, [undoState, nowTs]);
+  useEffect(() => {
+    if (!undoState) return;
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.key === "z" || e.key === "Z") && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleUndoDelete();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [undoState]);
 
   const initBatchFor = (o: any, source: any[]) => {
     setBatchStatus(o.status);
@@ -351,6 +373,8 @@ function AdminPage() {
     }
   };
 
+  const UNDO_WINDOW_MS = 8000;
+
   const handleBulkDelete = async () => {
     const n = selectedOrders.length;
     if (!n) return;
@@ -360,12 +384,25 @@ function AdminPage() {
       )
     )
       return;
+    const ids = selectedOrders.map((o: any) => o.id);
     setBusy(true);
     try {
-      await Promise.all(
-        selectedOrders.map((o: any) => doSoftDelete({ data: { orderId: o.id } })),
-      );
+      await Promise.all(ids.map((id: string) => doSoftDelete({ data: { orderId: id } })));
       setSelected(new Set());
+      await refetch();
+      setUndoState({ ids, expiresAt: Date.now() + UNDO_WINDOW_MS });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleUndoDelete = async () => {
+    const snap = undoState;
+    if (!snap || !snap.ids.length) return;
+    setUndoState(null);
+    setBusy(true);
+    try {
+      await Promise.all(snap.ids.map((id) => doRestore({ data: { orderId: id } })));
       await refetch();
     } finally {
       setBusy(false);
@@ -1360,6 +1397,69 @@ function AdminPage() {
           </div>
         )}
       </div>
+      {undoState && (() => {
+        const remaining = Math.max(0, undoState.expiresAt - nowTs);
+        const secs = Math.ceil(remaining / 1000);
+        const pct = Math.max(0, Math.min(100, (remaining / UNDO_WINDOW_MS) * 100));
+        const n = undoState.ids.length;
+        return (
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed bottom-6 right-6 z-50 vp-pro"
+            style={{
+              minWidth: 320,
+              background: "rgba(15,23,42,0.96)",
+              border: `1px solid ${SURFACE_BORDER}`,
+              borderRadius: 14,
+              boxShadow: "0 10px 30px rgba(0,0,0,0.45)",
+              backdropFilter: "blur(8px)",
+              overflow: "hidden",
+            }}
+          >
+            <div className="flex items-center gap-3 px-4 py-3">
+              <Trash2 size={16} style={{ color: "rgba(248,113,113,0.85)" }} />
+              <div className="text-[13px] flex-1" style={{ color: "rgba(255,255,255,0.92)" }}>
+                {n} {n === 1 ? "order" : "orders"} verwijderd
+                <span className="ml-2" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  {secs}s
+                </span>
+              </div>
+              <button
+                onClick={handleUndoDelete}
+                disabled={busy}
+                className="h-8 px-3 rounded-[10px] text-[12px] font-medium inline-flex items-center gap-1.5 disabled:opacity-50"
+                style={{
+                  background: "rgba(255,255,255,0.08)",
+                  color: "white",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                }}
+                autoFocus
+              >
+                <Undo2 size={14} /> Ongedaan maken
+              </button>
+              <button
+                onClick={() => setUndoState(null)}
+                aria-label="Sluiten"
+                className="h-8 w-8 rounded-[10px] text-[14px] inline-flex items-center justify-center"
+                style={{ color: "rgba(255,255,255,0.5)" }}
+              >
+                ×
+              </button>
+            </div>
+            <div style={{ height: 2, background: "rgba(255,255,255,0.06)" }}>
+              <div
+                style={{
+                  height: "100%",
+                  width: `${pct}%`,
+                  background: "rgba(248,113,113,0.7)",
+                  transition: "width 250ms linear",
+                }}
+              />
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
