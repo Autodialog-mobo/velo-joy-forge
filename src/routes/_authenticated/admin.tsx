@@ -646,6 +646,9 @@ function AdminPage() {
                         {statusLabelNl(s)}
                       </option>
                     ))}
+                    <option value="deleted" style={{ background: NAVY }}>
+                      Verwijderd{deletedOrders.length ? ` (${deletedOrders.length})` : ""}
+                    </option>
                   </select>
                 </label>
               </div>
