@@ -2,8 +2,8 @@
   "_translated": false,
   "meta": {
     "title": "Bestelle „Velopass“ unter Frame-ID – ab 12,95 €",
-    "description": "Bestelle dein „Velopass“ unter Frame-ID. Ein Aufkleber, ein digitales Serviceheft für dein Fahrrad, das ein Leben lang gilt. Kostenloser Versand innerhalb der EU.",
-    "ogDescription": "Schütze dein Fahrrad. Kostenloser Versand. Sichere Zahlungen über Mollie."
+    "description": "Bestelle dein „Velopass“ unter Frame-ID. Ein Aufkleber, ein digitales Serviceheft für dein Fahrrad, das ein Leben lang gilt.",
+    "ogDescription": "Schütze dein Fahrrad. Sichere Zahlungen über Mollie."
   },
   "header": {
     "back": "Zurück"
@@ -11,8 +11,8 @@
   "hero": {
     "eyebrow": "Bestelle einen „Frame-ID“",
     "title": "Schütze dein Fahrrad. Ab 12,95 €.",
-    "subtitle": "Einmal „Frame-ID“ auf dein Fahrrad – und schon hast du jederzeit Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft. Kostenloser Versand in die gesamte EU.",
-    "feature_shipping": "Kostenloser Versand innerhalb der EU",
+    "subtitle": "Einmal „Frame-ID“ auf dein Fahrrad – und schon hast du jederzeit Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft.",
+    "feature_shipping": "Versand innerhalb der EU",
     "feature_secure": "Sichere Zahlungen über Mollie"
   },
   "bundles": {
@@ -43,7 +43,7 @@
     "title": "Warenkorb",
     "empty": "Füge mindestens ein Paket hinzu, um fortzufahren.",
     "shipping": "Versand",
-    "shipping_free": "Kostenlos in der gesamten EU",
+    "shipping_free": "1,95 €",
     "total": "Insgesamt",
     "email_label": "E-Mail-Adresse",
     "email_placeholder": "you@example.com",

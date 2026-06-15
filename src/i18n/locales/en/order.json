@@ -2,8 +2,8 @@
   "_translated": true,
   "meta": {
     "title": "Order a Velopass Frame-ID — from €12.95",
-    "description": "Order your Velopass Frame-ID. One sticker, a lifetime digital service book for your bike. Free shipping across the EU.",
-    "ogDescription": "Protect your bike. Free shipping. Secure payments via Mollie."
+    "description": "Order your Velopass Frame-ID. One sticker, a lifetime digital service book for your bike.",
+    "ogDescription": "Protect your bike. Secure payments via Mollie."
   },
   "header": {
     "back": "Back"
@@ -11,8 +11,8 @@
   "hero": {
     "eyebrow": "Order a Frame-ID",
     "title": "Protect your bike. From €12.95.",
-    "subtitle": "One Frame-ID on your bike — and you always have access to theft protection, roadside assistance, insurance and your digital service book. Free shipping across the EU.",
-    "feature_shipping": "Free shipping across the EU",
+    "subtitle": "One Frame-ID on your bike — and you always have access to theft protection, roadside assistance, insurance and your digital service book.",
+    "feature_shipping": "Shipping within the EU",
     "feature_secure": "Secure payments via Mollie"
   },
   "bundles": {
@@ -43,7 +43,7 @@
     "title": "Cart",
     "empty": "Add at least one bundle to continue.",
     "shipping": "Shipping",
-    "shipping_free": "Free across the EU",
+    "shipping_free": "€1.95",
     "total": "Total",
     "email_label": "Email address",
     "email_placeholder": "you@example.com",

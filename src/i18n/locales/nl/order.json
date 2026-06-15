@@ -2,8 +2,8 @@
   "_translated": true,
   "meta": {
     "title": "Bestel een Velopass Frame-ID — vanaf €12,95",
-    "description": "Bestel je Velopass Frame-ID. Eén Frame-ID, een leven lang een digitaal serviceboekje voor je fiets. Gratis verzending in de hele EU.",
-    "ogDescription": "Bescherm je fiets. Gratis verzending. Veilig betalen via Mollie."
+    "description": "Bestel je Velopass Frame-ID. Eén Frame-ID, een leven lang een digitaal serviceboekje voor je fiets.",
+    "ogDescription": "Bescherm je fiets. Veilig betalen via Mollie."
   },
   "header": {
     "back": "Terug"
@@ -11,8 +11,8 @@
   "hero": {
     "eyebrow": "Bestel een Frame-ID",
     "title": "Bescherm je fiets. Vanaf €12,95.",
-    "subtitle": "Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalbescherming, pechhulp, verzekering en je digitaal serviceboekje. Gratis verzending in de hele EU.",
-    "feature_shipping": "Gratis verzending in de hele EU",
+    "subtitle": "Eén Frame-ID op je fiets — en je hebt altijd toegang tot diefstalbescherming, pechhulp, verzekering en je digitaal serviceboekje.",
+    "feature_shipping": "Verzending binnen de EU",
     "feature_secure": "Veilig betalen via Mollie"
   },
   "bundles": {
@@ -43,7 +43,7 @@
     "title": "Winkelmandje",
     "empty": "Voeg minstens één bundel toe om verder te gaan.",
     "shipping": "Verzending",
-    "shipping_free": "Gratis in de hele EU",
+    "shipping_free": "€1,95",
     "total": "Totaal",
     "email_label": "E-mailadres",
     "email_placeholder": "jij@voorbeeld.com",
