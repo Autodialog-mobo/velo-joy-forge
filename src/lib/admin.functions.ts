@@ -14,7 +14,9 @@ async function assertAdmin(supabase: any, userId: string) {
 
 export const listOrders = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((d: { environment?: "live" | "sandbox" } = {}) => d ?? {})
+  .inputValidator(
+    (d: { environment?: "live" | "sandbox"; includeDeleted?: boolean } = {}) => d ?? {},
+  )
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context as any;
     await assertAdmin(supabase, userId);
@@ -39,6 +41,7 @@ export const listOrders = createServerFn({ method: "POST" })
     }
     return { orders: orders ?? [], lines };
   });
+
 
 export const markPrinted = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
