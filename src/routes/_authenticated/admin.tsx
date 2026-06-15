@@ -462,10 +462,10 @@ function AdminPage() {
 
   // Pipeline stage definition
   const PIPELINE: { key: StatusFilter; label: string; caption: string; dot: string }[] = [
-    { key: "all", label: "Alle", caption: "totaal in pipeline", dot: "rgba(255,255,255,0.35)" },
+    { key: "all", label: "Alle", caption: "actief in pipeline", dot: "rgba(255,255,255,0.35)" },
     { key: "paid", label: "Betaald", caption: "klaar om te printen", dot: "#2ECC8A" },
     { key: "printed", label: "Geprint", caption: "klaar om te verzenden", dot: "#F5B547" },
-    { key: "shipped", label: "Verzonden", caption: "afgerond", dot: "rgba(255,255,255,0.40)" },
+    { key: "shipped", label: "Verzonden · 30 dgn", caption: "afgerond", dot: "rgba(255,255,255,0.40)" },
   ];
 
   return (
