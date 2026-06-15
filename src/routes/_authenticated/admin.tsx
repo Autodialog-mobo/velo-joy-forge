@@ -108,6 +108,10 @@ function AdminPage() {
   const fetchOrders = useServerFn(listOrders);
   const doPrint = useServerFn(markPrinted);
   const doShip = useServerFn(markShipped);
+  const doRevertPaid = useServerFn(revertToPaid);
+  const doRevertPrinted = useServerFn(revertToPrinted);
+  const doSoftDelete = useServerFn(softDeleteOrder);
+  const doRestore = useServerFn(restoreOrder);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
