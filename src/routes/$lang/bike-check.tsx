@@ -252,8 +252,9 @@ function BikeSearchPage() {
     try {
       const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
-    } catch {
-      setError(t("errors.generic"));
+    } catch (e) {
+      console.error("[bike-check] code lookup failed", e);
+      setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingA(false);
     }
