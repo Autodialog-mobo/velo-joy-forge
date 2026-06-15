@@ -194,7 +194,7 @@ function BestellenPage() {
       </nav>
 
       {/* Hero */}
-      <section style={{ background: "#0D1F3C", color: "#fff", padding: "56px 24px 72px" }}>
+      <section style={{ background: "#0D1F3C", color: "#fff", padding: "88px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ color: "#2ECC8A", fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>
             {t("hero.eyebrow")}
