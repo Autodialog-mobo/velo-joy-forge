@@ -2,9 +2,9 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder } from "@/lib/admin.functions";
+import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -112,6 +112,7 @@ function AdminPage() {
   const doRevertPrinted = useServerFn(revertToPrinted);
   const doSoftDelete = useServerFn(softDeleteOrder);
   const doRestore = useServerFn(restoreOrder);
+  const fetchEvents = useServerFn(listOrderEvents);
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
@@ -178,6 +179,12 @@ function AdminPage() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["admin-orders", environment],
     queryFn: () => fetchOrders({ data: { environment } }),
+  });
+
+  const eventsQuery = useQuery({
+    queryKey: ["order-events", detailOrder?.id, detailOrder?.status, detailOrder?.deleted_at],
+    queryFn: () => fetchEvents({ data: { orderId: detailOrder.id } }),
+    enabled: !!detailOrder?.id,
   });
 
   const orders = data?.orders ?? [];
@@ -1174,6 +1181,66 @@ function AdminPage() {
                         </p>
                       )}
                     </div>
+
+                    <div>
+                      <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
+                        <History className="w-3.5 h-3.5" /> Geschiedenis
+                      </h4>
+                      {(() => {
+                        const events = eventsQuery.data?.events ?? [];
+                        if (eventsQuery.isLoading) {
+                          return <p className="text-[12px]" style={{ color: TEXT_MUTED }}>Laden…</p>;
+                        }
+                        if (!events.length) {
+                          return (
+                            <p className="text-[12px]" style={{ color: TEXT_MUTED }}>
+                              Geen eerdere gebeurtenissen geregistreerd
+                            </p>
+                          );
+                        }
+                        const labelFor = (e: any): string => {
+                          switch (e.event_type) {
+                            case "paid": return "Betaling bevestigd";
+                            case "printed": return "Gemarkeerd als geprint";
+                            case "shipped": return "Gemarkeerd als verzonden";
+                            case "reverted":
+                              return `Teruggezet naar ${statusLabelNl(e.to_status || "")}`;
+                            case "deleted": return "Verwijderd";
+                            case "restored": return "Hersteld";
+                            case "expired": return "Verlopen";
+                            case "failed": return "Mislukt";
+                            case "canceled":
+                            case "cancelled": return "Geannuleerd";
+                            case "refunded": return "Terugbetaald";
+                            default: return e.event_type;
+                          }
+                        };
+                        const actorFor = (e: any): string => {
+                          if (e.actor_type === "system") return `via ${e.actor || "systeem"}`;
+                          return `door ${e.actor || "admin"}`;
+                        };
+                        return (
+                          <ul className="space-y-2">
+                            {events.map((e: any) => (
+                              <li key={e.id} className="text-[13px] leading-[1.45]">
+                                <div style={{ color: TEXT_PRI }}>{labelFor(e)}</div>
+                                <div className="text-[11px]" style={{ color: TEXT_MUTED }}>
+                                  {actorFor(e)} ·{" "}
+                                  {new Date(e.created_at).toLocaleString("nl-BE", {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  })}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      })()}
+                    </div>
+
 
                     <div className="pt-2" style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
                       <div className="flex items-center gap-1.5 text-[11px]" style={{ color: TEXT_MUTED }}>

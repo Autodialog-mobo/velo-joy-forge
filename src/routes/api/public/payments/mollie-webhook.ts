@@ -52,6 +52,13 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? p.metadata.lang
             : null;
 
+          // Fetch previous status (if any) for transition logging
+          const { data: existing } = await (supabaseAdmin.from("orders") as any)
+            .select("id, status")
+            .eq("mollie_payment_id", p.id)
+            .maybeSingle();
+          const prevStatus: string | null = existing?.status ?? null;
+
           const { data: upserted } = await (supabaseAdmin.from("orders") as any).upsert(
             {
               mollie_payment_id: p.id,
@@ -102,6 +109,23 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               await (supabaseAdmin.from("order_lines") as any).insert(rows);
             }
           }
+
+          // Audit log: record status transitions (system actor = Mollie)
+          if (orderId && status !== prevStatus) {
+            try {
+              await (supabaseAdmin.from("order_events") as any).insert({
+                order_id: orderId,
+                event_type: status, // e.g. "paid", "expired", "failed", "canceled"
+                from_status: prevStatus,
+                to_status: status,
+                actor: "Mollie",
+                actor_type: "system",
+              });
+            } catch (e) {
+              console.error("order_events insert failed:", e);
+            }
+          }
+
 
           return new Response("ok", { status: 200 });
         } catch (e) {

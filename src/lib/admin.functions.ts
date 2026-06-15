@@ -12,6 +12,34 @@ async function assertAdmin(supabase: any, userId: string) {
   if (!data) throw new Error("Forbidden: admin role required");
 }
 
+function actorEmail(context: any): string {
+  return (
+    context?.claims?.email ||
+    context?.claims?.user_metadata?.email ||
+    context?.userId ||
+    "admin"
+  );
+}
+
+async function logEvent(
+  admin: any,
+  row: {
+    order_id: string;
+    event_type: string;
+    from_status?: string | null;
+    to_status?: string | null;
+    actor?: string | null;
+    actor_type: "admin" | "system";
+    note?: string | null;
+  },
+) {
+  try {
+    await admin.from("order_events").insert(row);
+  } catch (e) {
+    console.error("logEvent failed:", e);
+  }
+}
+
 export const listOrders = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
@@ -42,70 +70,82 @@ export const listOrders = createServerFn({ method: "POST" })
     return { orders: orders ?? [], lines };
   });
 
+export const listOrderEvents = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { orderId: string }) => d)
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdmin(supabase, userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: events, error } = await (supabaseAdmin as any)
+      .from("order_events")
+      .select("*")
+      .eq("order_id", data.orderId)
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return { events: events ?? [] };
+  });
+
+async function bulkStatusUpdate(
+  context: any,
+  orderIds: string[],
+  fromStatus: string,
+  toStatus: string,
+  eventType: "printed" | "shipped" | "reverted",
+) {
+  const { supabase, userId } = context as any;
+  await assertAdmin(supabase, userId);
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data: updated, error } = await (supabaseAdmin as any)
+    .from("orders")
+    .update({ status: toStatus, updated_at: new Date().toISOString() })
+    .in("id", orderIds)
+    .eq("status", fromStatus)
+    .select("id");
+  if (error) throw new Error(error.message);
+  const actor = actorEmail(context);
+  await Promise.all(
+    (updated ?? []).map((r: any) =>
+      logEvent(supabaseAdmin, {
+        order_id: r.id,
+        event_type: eventType,
+        from_status: fromStatus,
+        to_status: toStatus,
+        actor,
+        actor_type: "admin",
+      }),
+    ),
+  );
+  return { ok: true };
+}
 
 export const markPrinted = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { orderIds: string[] }) => d)
-  .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin
-      .from("orders")
-      .update({ status: "printed", updated_at: new Date().toISOString() })
-      .in("id", data.orderIds)
-      .eq("status", "paid");
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+  .handler(async ({ data, context }) =>
+    bulkStatusUpdate(context, data.orderIds, "paid", "printed", "printed"),
+  );
 
 export const markShipped = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { orderIds: string[] }) => d)
-  .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin
-      .from("orders")
-      .update({ status: "shipped", updated_at: new Date().toISOString() })
-      .in("id", data.orderIds)
-      .eq("status", "printed");
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+  .handler(async ({ data, context }) =>
+    bulkStatusUpdate(context, data.orderIds, "printed", "shipped", "shipped"),
+  );
 
 export const revertToPaid = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { orderId: string }) => d)
-  .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin
-      .from("orders")
-      .update({ status: "paid", updated_at: new Date().toISOString() })
-      .eq("id", data.orderId)
-      .eq("status", "printed");
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+  .handler(async ({ data, context }) =>
+    bulkStatusUpdate(context, [data.orderId], "printed", "paid", "reverted"),
+  );
 
 export const revertToPrinted = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { orderId: string }) => d)
-  .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin
-      .from("orders")
-      .update({ status: "printed", updated_at: new Date().toISOString() })
-      .eq("id", data.orderId)
-      .eq("status", "shipped");
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+  .handler(async ({ data, context }) =>
+    bulkStatusUpdate(context, [data.orderId], "shipped", "printed", "reverted"),
+  );
 
 export const softDeleteOrder = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -119,6 +159,12 @@ export const softDeleteOrder = createServerFn({ method: "POST" })
       .update({ deleted_at: new Date().toISOString(), updated_at: new Date().toISOString() })
       .eq("id", data.orderId);
     if (error) throw new Error(error.message);
+    await logEvent(supabaseAdmin, {
+      order_id: data.orderId,
+      event_type: "deleted",
+      actor: actorEmail(context),
+      actor_type: "admin",
+    });
     return { ok: true };
   });
 
@@ -134,6 +180,11 @@ export const restoreOrder = createServerFn({ method: "POST" })
       .update({ deleted_at: null, updated_at: new Date().toISOString() })
       .eq("id", data.orderId);
     if (error) throw new Error(error.message);
+    await logEvent(supabaseAdmin, {
+      order_id: data.orderId,
+      event_type: "restored",
+      actor: actorEmail(context),
+      actor_type: "admin",
+    });
     return { ok: true };
   });
-
