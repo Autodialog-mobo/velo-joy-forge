@@ -322,12 +322,13 @@ function BikeSearchPage() {
   const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
+  // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
+  const submitLockRef = useRef(false);
 
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
-    if (!clean) return;
-
-
+    if (!clean || submitLockRef.current) return;
+    submitLockRef.current = true;
     setError(null);
     setResult(null);
     setLoadingA(true);
@@ -343,6 +344,7 @@ function BikeSearchPage() {
       setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingA(false);
+      submitLockRef.current = false;
     }
   };
 
@@ -359,9 +361,11 @@ function BikeSearchPage() {
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitLockRef.current) return;
     const cleanBrand = resolveCanonicalBrand(brand);
     const cleanFrame = sanitizeAlnum(frame);
     if (!cleanBrand || !cleanFrame) return;
+    submitLockRef.current = true;
     setError(null);
     setResult(null);
     setLoadingB(true);
@@ -377,6 +381,7 @@ function BikeSearchPage() {
       setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingB(false);
+      submitLockRef.current = false;
     }
   };
 
@@ -544,8 +549,8 @@ function BikeSearchPage() {
               </button>
               <button
                 type="submit"
-                disabled={loadingA || !codeA}
-                style={{ ...navyBtn(loadingA || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
+                disabled={loadingA || loadingB || !codeA}
+                style={{ ...navyBtn(loadingA || loadingB || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
               >
                 {loadingA ? (
                   <>
@@ -715,8 +720,8 @@ function BikeSearchPage() {
 
             <button
               type="submit"
-              disabled={loadingB || !brand || !frame.trim()}
-              style={navyBtn(loadingB || !brand || !frame.trim())}
+              disabled={loadingA || loadingB || !brand || !frame.trim()}
+              style={navyBtn(loadingA || loadingB || !brand || !frame.trim())}
             >
               {loadingB ? (
                 <>
