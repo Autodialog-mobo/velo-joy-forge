@@ -747,6 +747,37 @@ function AdminPage() {
                     </option>
                   </select>
                 </label>
+                <div className="relative inline-flex items-center">
+                  <Search
+                    className="absolute left-2 pointer-events-none"
+                    style={{ width: 13, height: 13, color: TEXT_MUTED }}
+                    strokeWidth={2}
+                  />
+                  <input
+                    type="text"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    placeholder="Zoek op naam, e-mail of order…"
+                    aria-label="Zoeken in bestellingen"
+                    className="h-7 pl-7 pr-7 rounded-[8px] text-[12px] w-[240px] focus:outline-none"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                    }}
+                  />
+                  {searchInput && (
+                    <button
+                      type="button"
+                      onClick={() => { setSearchInput(""); setSearchQuery(""); }}
+                      aria-label="Zoekopdracht wissen"
+                      className="absolute right-1 inline-flex items-center justify-center rounded-[6px]"
+                      style={{ width: 18, height: 18, color: TEXT_MUTED }}
+                    >
+                      <X style={{ width: 12, height: 12 }} strokeWidth={2.25} />
+                    </button>
+                  )}
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
