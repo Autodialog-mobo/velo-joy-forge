@@ -554,7 +554,11 @@ function BikeSearchPage() {
               >
                 {loadingA ? (
                   <>
-                    <Loader2 size={16} className="bs-spin" /> {t("method_b.loading")}
+                    <Loader2 size={16} className="bs-spin" /> {t("method_a.loading")}
+                  </>
+                ) : loadingB ? (
+                  <>
+                    <Loader2 size={16} className="bs-spin" />
                   </>
                 ) : (
                   t("method_b.check")
@@ -726,6 +730,10 @@ function BikeSearchPage() {
               {loadingB ? (
                 <>
                   <Loader2 size={16} className="bs-spin" /> {t("method_b.loading")}
+                </>
+              ) : loadingA ? (
+                <>
+                  <Loader2 size={16} className="bs-spin" />
                 </>
               ) : (
                 t("method_b.check")
