@@ -713,10 +713,13 @@ function BikeSearchPage() {
               style={inputStyle}
             />
 
-            {/* Cloudflare Turnstile (invisible) — token is verified server-side */}
-            <div style={{ marginTop: 14 }}>
-              <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setTurnstileToken} />
-            </div>
+            {/* Single shared Turnstile widget is rendered once outside the forms. */}
+            <div ref={(el) => {
+              if (el && !el.dataset.tsMounted) {
+                el.dataset.tsMounted = "1";
+              }
+            }} />
+
 
             <button
               type="submit"
