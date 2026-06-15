@@ -192,22 +192,29 @@ function AdminPage() {
     return m;
   }, [lines]);
 
+  const activeOrders = useMemo(() => orders.filter((o: any) => !o.deleted_at), [orders]);
+  const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
+
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: orders.length, paid: 0, printed: 0, shipped: 0 };
-    for (const o of orders) {
+    const c: Record<string, number> = { all: activeOrders.length, paid: 0, printed: 0, shipped: 0 };
+    for (const o of activeOrders) {
       if (c[o.status] !== undefined) c[o.status]++;
     }
     return c;
-  }, [orders]);
+  }, [activeOrders]);
 
   const availableStatuses = useMemo(() => {
     const s = new Set<string>();
-    for (const o of orders) if (o.status) s.add(o.status);
+    for (const o of activeOrders) if (o.status) s.add(o.status);
     return Array.from(s).sort();
-  }, [orders]);
+  }, [activeOrders]);
+
+  const viewingDeleted = statusFilter === "deleted";
 
   const filtered = useMemo(() => {
-    const arr = orders.filter((o: any) => {
+    const base = viewingDeleted ? deletedOrders : activeOrders;
+    const arr = base.filter((o: any) => {
+      if (viewingDeleted) return true;
       const pipelineMatch = filter === "all" || o.status === filter;
       const secondaryMatch = statusFilter === "any" || o.status === statusFilter;
       return pipelineMatch && secondaryMatch;
@@ -224,7 +231,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [orders, filter, statusFilter, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
