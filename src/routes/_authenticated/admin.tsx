@@ -351,6 +351,27 @@ function AdminPage() {
     }
   };
 
+  const handleBulkDelete = async () => {
+    const n = selectedOrders.length;
+    if (!n) return;
+    if (
+      !window.confirm(
+        `${n} ${n === 1 ? "order" : "orders"} verwijderen? Je kunt ze later terugvinden en herstellen onder het 'Verwijderd'-filter.`,
+      )
+    )
+      return;
+    setBusy(true);
+    try {
+      await Promise.all(
+        selectedOrders.map((o: any) => doSoftDelete({ data: { orderId: o.id } })),
+      );
+      setSelected(new Set());
+      await refetch();
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
     navigate({ to: "/auth" });
