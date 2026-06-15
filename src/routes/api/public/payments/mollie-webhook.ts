@@ -110,6 +110,23 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             }
           }
 
+          // Audit log: record status transitions (system actor = Mollie)
+          if (orderId && status !== prevStatus) {
+            try {
+              await (supabaseAdmin.from("order_events") as any).insert({
+                order_id: orderId,
+                event_type: status, // e.g. "paid", "expired", "failed", "canceled"
+                from_status: prevStatus,
+                to_status: status,
+                actor: "Mollie",
+                actor_type: "system",
+              });
+            } catch (e) {
+              console.error("order_events insert failed:", e);
+            }
+          }
+
+
           return new Response("ok", { status: 200 });
         } catch (e) {
           console.error("Mollie webhook error:", e);
