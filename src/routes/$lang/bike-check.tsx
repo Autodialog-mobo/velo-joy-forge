@@ -1032,7 +1032,7 @@ function BikeSearchPage() {
         style={{
           maxWidth: 900,
           margin: "40px auto 0",
-          padding: "0 6vw",
+          padding: "0 6vw 64px",
         }}
       >
         <Link
