@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP, getRequestHeader } from "@tanstack/react-start/server";
 import BIKE_BRANDS from "@/data/bike-brands.json";
+import BRAND_ALIASES from "@/data/brand-aliases.json";
+import { resolveCanonicalBrand } from "@/lib/brand-search";
 
 export type BikeCheckStatus = "ALL_CLEAR" | "REPORTED";
 export type BikeCheckCountry = "BE" | "NL" | "FR" | "DE";
@@ -84,9 +86,16 @@ async function verifyTurnstile(token: string, remoteip: string | undefined): Pro
 }
 
 async function normalizeBrand(raw: string): Promise<string> {
+  // First, try cheap local resolution via alias map / canonical list (accent + case insensitive).
+  const local = resolveCanonicalBrand(raw);
+  if (local && local.toLowerCase() !== raw.toLowerCase()) return local;
+
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return raw;
   try {
+    const aliasLines = Object.entries(BRAND_ALIASES as Record<string, string[]>)
+      .map(([canon, list]) => `${canon} <- ${list.join(", ")}`)
+      .join("\n");
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -98,7 +107,7 @@ async function normalizeBrand(raw: string): Promise<string> {
         model: "claude-haiku-4-5-20251001",
         max_tokens: 20,
         system:
-          `You are a bicycle brand normalizer. Match the user's input to the closest brand from this list: [${(BIKE_BRANDS as string[]).join(", ")}]. If the input clearly matches one of these brands (even with spelling or phonetic errors), return that exact brand name. If it does not match any brand in the list, return the input unchanged. Return ONLY the brand name, nothing else.`,
+          `You are a bicycle brand normalizer. Match the user's input to the closest canonical brand from this list: [${(BIKE_BRANDS as string[]).join(", ")}].\n\nKnown aliases (canonical <- alias):\n${aliasLines}\n\nIf the input matches a canonical brand or one of its aliases (including spelling, accent, casing or phonetic variants), return the exact canonical brand name. If it does not match, return the input unchanged. Return ONLY the brand name, nothing else.`,
         messages: [{ role: "user", content: raw }],
       }),
     });
