@@ -116,6 +116,12 @@ function AdminPage() {
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  useEffect(() => {
+    const t = setTimeout(() => setSearchQuery(searchInput.trim().toLowerCase()), 250);
+    return () => clearTimeout(t);
+  }, [searchInput]);
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
