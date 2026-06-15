@@ -41,6 +41,21 @@ export interface TurnstileHandle {
   getFreshToken: () => Promise<string>;
 }
 
+// Detect preview/dev hosts where Turnstile sitekey isn't whitelisted.
+// The server-side handler already skips captcha verification on these hosts,
+// so we skip the widget entirely on the client to avoid error 110200.
+function isPreviewHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const h = window.location.hostname.toLowerCase();
+  return (
+    h === "localhost" ||
+    h.startsWith("127.") ||
+    h.includes("id-preview--") ||
+    h.endsWith(".lovableproject.com") ||
+    h.endsWith("-dev.lovable.app")
+  );
+}
+
 // Single shared, invisible Turnstile widget in manual `execute` mode.
 // Tokens are single-use and tied to a single siteverify call — we reset before
 // every submission to avoid replaying a consumed token (which fails with
@@ -55,7 +70,9 @@ const TurnstileWidget = forwardRef<TurnstileHandle, { siteKey: string }>(functio
   const readyRef = useRef<Promise<void> | null>(null);
 
   useEffect(() => {
+    if (isPreviewHost()) return;
     let cancelled = false;
+
     readyRef.current = new Promise<void>((resolve) => {
       const render = () => {
         if (cancelled || !window.turnstile || !containerRef.current || widgetIdRef.current) {
@@ -108,7 +125,9 @@ const TurnstileWidget = forwardRef<TurnstileHandle, { siteKey: string }>(functio
 
   useImperativeHandle(ref, () => ({
     getFreshToken: async () => {
+      if (isPreviewHost()) return "";
       await readyRef.current;
+
       if (!window.turnstile || !widgetIdRef.current) throw new Error("captcha_failed");
       // Always reset first so we never reuse a consumed token.
       try { window.turnstile.reset(widgetIdRef.current); } catch { /* ignore */ }
