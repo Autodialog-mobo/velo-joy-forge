@@ -21,7 +21,7 @@
     "shipping_note_many": "Deine Frame-IDs werden innerhalb von 2 Werktagen versandt.",
     "card_confirmation": "Bestätigung",
     "card_shipping": "Versand",
-    "shipping_value": "Kostenlos · 2 Werktage",
+    "shipping_value": "1,95 € · 2 Werktage",
     "amount_paid": "{{amount}} bezahlt",
     "status_line": "Eine Zahlungsbestätigung liegt in deinem Postfach. Status: {{status}}.",
     "back_button": "Zurück zu Velopass"
