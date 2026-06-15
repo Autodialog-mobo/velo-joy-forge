@@ -285,8 +285,9 @@ function BikeSearchPage() {
         data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken, lang },
       });
       setResult(res);
-    } catch {
-      setError(t("errors.generic"));
+    } catch (e) {
+      console.error("[bike-check] frame lookup failed", e);
+      setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingB(false);
     }
