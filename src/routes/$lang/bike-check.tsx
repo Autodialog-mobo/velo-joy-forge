@@ -192,6 +192,33 @@ export const Route = createFileRoute("/$lang/bike-check")({
 
 type TFn = ReturnType<typeof useTranslation>["t"];
 
+const ERROR_HINTS: Record<string, string> = {
+  rate_limited: "Te veel pogingen — probeer over een minuut opnieuw.",
+  captcha_failed: "Captcha-verificatie mislukt. Herlaad de pagina en probeer opnieuw.",
+  server_misconfigured: "Server is niet correct geconfigureerd (ontbrekende API-sleutel).",
+  brand_required: "Merk is verplicht.",
+  frame_required: "Framenummer is verplicht.",
+  code_required: "Velopass-code is verplicht.",
+};
+
+function formatBikeCheckError(e: unknown, t: TFn): string {
+  const raw =
+    e instanceof Error
+      ? e.message
+      : typeof e === "string"
+        ? e
+        : (e as { message?: string })?.message ?? "";
+  if (!raw) return t("errors.generic");
+  const key = raw.trim();
+  if (ERROR_HINTS[key]) return `${t("errors.generic")} (${key}: ${ERROR_HINTS[key]})`;
+  const upstream = key.match(/^upstream_error_(\d+)$/);
+  if (upstream) {
+    const status = upstream[1];
+    return `${t("errors.generic")} (upstream HTTP ${status} — externe Velopass-API is niet bereikbaar)`;
+  }
+  return `${t("errors.generic")} (${key})`;
+}
+
 function BikeSearchPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["bike-check", "common"]);
@@ -252,8 +279,9 @@ function BikeSearchPage() {
     try {
       const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
-    } catch {
-      setError(t("errors.generic"));
+    } catch (e) {
+      console.error("[bike-check] code lookup failed", e);
+      setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingA(false);
     }
@@ -284,8 +312,9 @@ function BikeSearchPage() {
         data: { brand: cleanBrand, frameNumber: cleanFrame, turnstileToken, lang },
       });
       setResult(res);
-    } catch {
-      setError(t("errors.generic"));
+    } catch (e) {
+      console.error("[bike-check] frame lookup failed", e);
+      setError(formatBikeCheckError(e, t));
     } finally {
       setLoadingB(false);
     }
