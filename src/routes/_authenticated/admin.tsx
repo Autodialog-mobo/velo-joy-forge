@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
@@ -116,6 +116,12 @@ function AdminPage() {
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
   const [statusFilter, setStatusFilter] = useState<string>("any");
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  useEffect(() => {
+    const t = setTimeout(() => setSearchQuery(searchInput.trim().toLowerCase()), 250);
+    return () => clearTimeout(t);
+  }, [searchInput]);
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
@@ -242,11 +248,29 @@ function AdminPage() {
 
   const filtered = useMemo(() => {
     const base = viewingDeleted ? deletedOrders : activeOrders;
+    const q = searchQuery;
     const arr = base.filter((o: any) => {
-      if (viewingDeleted) return true;
-      // Status dropdown overrides the pipeline stage when set; otherwise pipeline drives the view.
-      if (statusFilter !== "any") return o.status === statusFilter;
-      return filter === "all" || o.status === filter;
+      const stagePass = viewingDeleted
+        ? true
+        : statusFilter !== "any"
+          ? o.status === statusFilter
+          : filter === "all" || o.status === filter;
+      if (!stagePass) return false;
+      if (!q) return true;
+      const hay = [
+        o.shipping_name,
+        o.customer_email,
+        o.id,
+        o.id ? String(o.id).slice(0, 8) : "",
+        o.shipping_line1,
+        o.shipping_city,
+        o.shipping_postal_code,
+        o.shipping_country,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return hay.includes(q);
     });
     arr.sort((a: any, b: any) => {
       if (sort.column === "date") {
@@ -260,7 +284,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, searchQuery, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
@@ -723,6 +747,37 @@ function AdminPage() {
                     </option>
                   </select>
                 </label>
+                <div className="relative inline-flex items-center">
+                  <Search
+                    className="absolute left-2 pointer-events-none"
+                    style={{ width: 13, height: 13, color: TEXT_MUTED }}
+                    strokeWidth={2}
+                  />
+                  <input
+                    type="text"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    placeholder="Zoek op naam, e-mail of order…"
+                    aria-label="Zoeken in bestellingen"
+                    className="h-7 pl-7 pr-7 rounded-[8px] text-[12px] w-[240px] focus:outline-none"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                    }}
+                  />
+                  {searchInput && (
+                    <button
+                      type="button"
+                      onClick={() => { setSearchInput(""); setSearchQuery(""); }}
+                      aria-label="Zoekopdracht wissen"
+                      className="absolute right-1 inline-flex items-center justify-center rounded-[6px]"
+                      style={{ width: 18, height: 18, color: TEXT_MUTED }}
+                    >
+                      <X style={{ width: 12, height: 12 }} strokeWidth={2.25} />
+                    </button>
+                  )}
+                </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button
@@ -901,10 +956,14 @@ function AdminPage() {
                         <div className="flex flex-col items-center justify-center text-center" style={{ padding: "80px 24px" }}>
                           <Inbox className="w-10 h-10 mb-4" strokeWidth={1.5} style={{ color: TEXT_MUTED }} />
                           <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
-                            Geen bestellingen in deze status
+                            {searchQuery
+                              ? `Geen bestellingen gevonden voor "${searchInput.trim()}"`
+                              : "Geen bestellingen in deze status"}
                           </p>
                           <p className="text-[13px] mt-1 max-w-sm" style={{ color: TEXT_SEC }}>
-                            Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden.
+                            {searchQuery
+                              ? "Probeer een andere zoekterm of wis de zoekopdracht."
+                              : "Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden."}
                           </p>
                         </div>
                       </td>
