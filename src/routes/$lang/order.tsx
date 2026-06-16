@@ -212,6 +212,27 @@ function BestellenPage() {
       {/* Hero */}
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "88px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <button
+            type="button"
+            onClick={handleBack}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "transparent",
+              border: "none",
+              color: "rgba(255,255,255,0.72)",
+              fontFamily: "DM Sans, sans-serif",
+              fontSize: 14,
+              fontWeight: 500,
+              cursor: "pointer",
+              padding: "0 0 16px",
+              margin: 0,
+            }}
+          >
+            <ArrowLeft size={16} strokeWidth={2.2} />
+            {t("header.back")}
+          </button>
           <p style={{ color: "#2ECC8A", fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>
             {t("hero.eyebrow")}
           </p>
