@@ -347,6 +347,14 @@ function BikeSearchPage() {
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
 
+  useEffect(() => {
+    if (result || error) {
+      requestAnimationFrame(() => {
+        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [result, error]);
+
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
     if (!clean || submitLockRef.current) return;
