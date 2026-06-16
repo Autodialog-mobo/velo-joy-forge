@@ -343,6 +343,7 @@ function BikeSearchPage() {
   const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
 
