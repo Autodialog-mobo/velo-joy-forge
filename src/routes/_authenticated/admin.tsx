@@ -1439,7 +1439,18 @@ function AdminPage() {
                       </div>
                       {detailOrder.mollie_payment_id && (
                         <p className="text-[11px] mt-2 font-mono" style={{ color: TEXT_MUTED }}>
-                          Mollie: {detailOrder.mollie_payment_id}
+                          Mollie:{" "}
+                          <a
+                            href={`https://my.mollie.com/dashboard/payments/${detailOrder.mollie_payment_id}${detailOrder.environment === "sandbox" ? "?testmode=true" : ""}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="vp-pro inline-flex items-center gap-1 underline decoration-dotted underline-offset-2 hover:opacity-80"
+                            style={{ color: TEXT_PRI }}
+                            title={detailOrder.environment === "sandbox" ? "Open in Mollie dashboard (testmode)" : "Open in Mollie dashboard"}
+                          >
+                            {detailOrder.mollie_payment_id}
+                            <ExternalLink size={10} />
+                          </a>
                         </p>
                       )}
                       {detailOrder.stripe_session_id && (
