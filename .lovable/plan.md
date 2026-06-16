@@ -1,48 +1,50 @@
-# Sprint 2 — String-extractie plan
+## Doel
 
-## Scope
-3 pages naar 4 talen tillen (EN als bron, NL/FR/DE als placeholders met `_translated: false`):
+Een mobile-first herziening van de hele Velopass-site. Niet alleen "kleiner stapelen": echte mobiele patronen (sticky CTA's, bottom sheets, touch-vriendelijke targets, leesbare typografie, snellere visuele hiërarchie).
 
-| Page | Regels | Namespace | Reset nodig? |
-|---|---|---|---|
-| `$lang/stolen.tsx` | 1253 | `stolen` | Ja — eerdere refactor was gerevert; huidige file is NL-hardcoded. EN-bundle bestaat alleen met meta-stub |
-| `$lang/contact.tsx` | 726 | `contact` | Nee — bundle ontbreekt nog volledig, page heeft 9 bestaande t()-calls |
-| `$lang/order_.thanks.tsx` | 163 | `order-thanks` | Nee — bundle ontbreekt, page heeft 3 bestaande t()-calls |
+## Aanpak in fases
 
-## Werkwijze per page (identiek aan sprint 1)
-1. Page volledig lezen om alle UI-strings te inventariseren
-2. **NL-bundle eerst** schrijven naar `src/i18n/locales/nl/<ns>.json` (originele bron-taal van stolen, EN voor de andere twee)
-3. **EN-bundle** schrijven (vertaling van NL voor stolen; bron voor contact/order-thanks)
-4. **FR + DE placeholder-bundles** kopiëren met `_translated: false`
-5. Component refactoren naar `useTranslation("<ns>")` + `t()`-calls. Structuur met genummerde steps blijft een structured array zoals bij privacy.
-6. Verificatie: browser test op /nl, /en, /fr, /de met console open — geen missing-key warnings, geen hydration errors
+Ik werk in volgorde, één fase per beurt zodat je tussendoor kan bijsturen.
 
-## Wat blijft hardcoded (per stap 6A-briefing)
-- Merknamen: Velopass, Frame-ID
-- Partnernamen: Police-on-web, MyBike, Joule, Mollie
-- Bedragen: € 19, € 29 etc.
-- Adressen / e-mails / telefoonnummers: support@velopass.com, +32 471 60 15 73, BTW-nummers
-- WhatsApp-nummer in contact-page
-- App-URLs: app.velopass.com, login URLs
-- Mollie payment-ID's en order-data in thanks-page (dynamisch)
+### Fase 1 — Fundamenten (eenmalig, raakt elke pagina)
+- `src/styles.css`: mobiele typografische schaal (clamp), fluid spacing, container paddings, focus-states, `safe-area-inset` voor iOS notch/home indicator.
+- Globale regels: minimum tap-target 44×44, `font-size: 16px` op inputs (voorkomt iOS zoom), `text-wrap: balance` op headings, betere line-height < 480px.
+- Utility-klassen voor sticky bottom CTA-bar, bottom-sheet, mobiel-only/desktop-only.
+- Snelle audit van overflow-bugs (horizontal scroll) en fix `min-w-0` / `overflow-x: clip` waar nodig.
 
-## Volgorde + tussenrapport
-Ik stel voor in deze volgorde, met **tussenverificatie na elke page** zodat we niet één grote untested batch krijgen:
+### Fase 2 — Navigatie & header
+- Sticky header verkleinen op scroll (mobiel), hamburger → full-screen panel met grote tap targets, taalswitcher als bottom-sheet, login als secundaire actie.
+- Footer: accordion-secties op mobiel i.p.v. lange lijsten.
 
-1. **order-thanks** eerst (163 regels, kleinste — snelle validatie van het patroon)
-2. **contact** (726 regels — middel, 2 tabs)
-3. **stolen** (1253 regels — grootste, structured steps array)
+### Fase 3 — Homepage + hero (`shop.tsx`, `index.tsx`)
+- Hero: dashboard-mockup onder de titel op mobiel (niet ernaast), CTA full-width, eyebrow + sub kleiner, achtergrondoverlay aangepast voor portrait.
+- Paths-cards: horizontale snap-scroll i.p.v. stapel van 3 grote blokken.
+- Benefits: 2-koloms grid → 1-kolom met emoji/icon-bullet ritme.
+- Community: kaart krijgt sticky filter-bar + bottom-sheet voor shop details (bestaande `ShopPanel` is al sheet — fine-tune drag-thresholds).
+- Sticker-sectie: foto boven, tekst onder, badges in scrollbare rij.
 
-Per page rapporteer ik:
-- (a) EN-bundle compleet ✅
-- (b) NL/FR/DE placeholders bestaan ✅
-- (c) Page rendert console-clean op alle 4 talen ✅
+### Fase 4 — Order/checkout (`order.tsx`)
+- Bundels: horizontale snap-carousel op mobiel met "POPULAIRST" badge.
+- Winkelmandje: collapseert naar **sticky bottom bar** met totaal + "Betalen →"; tik opent volledig sheet met formulier.
+- Formulier: inputs 16px, `inputmode`/`autocomplete` correct, postcode/stad op één rij ook op mobiel maar met juiste flex.
+- Betaalstadium: full-screen op mobiel met grote terug-knop.
 
-## Verwachte omvang
-~30–45 tool calls totaal verspreid over de 3 pages. Stolen alleen al is ~15–20 calls door de omvang. Wil je dat ik:
+### Fase 5 — Overige pagina's
+Pass over: `bike-check`, `contact`, `stolen`, `pro`, `privacy`, `faq`, `guides.buying-second-hand`, `order_.thanks`. Geen redesign per sectie, maar:
+- Headings clamp-schaal, secties krijgen mobiel spacing-ritme.
+- Tabellen/grids → cards op mobiel.
+- Forms krijgen dezelfde inputregels als fase 4.
 
-**A.** Alles in één doorloop afhandel (zelfde turn, lang antwoord, ik werk de drie pages sequentieel af en rapporteer per page tussentijds)?
+## Verificatie per fase
+- `browser--view_preview` op 390×844 (iPhone) en 360×800 (Android) na elke fase.
+- Console + network check.
+- Spot-check op 768 tablet om geen regressies te krijgen.
 
-**B.** Per page in aparte turns — ik doe nu order-thanks volledig + verificatie, jij bevestigt, dan contact, dan stolen?
+## Wat ik NU ga doen na akkoord
+Fase 1 + 2 in één beurt (fundamenten + navigatie), daarna toon ik je het resultaat en wacht ik op je go voor fase 3.
 
-Optie B geeft je tussentijdse review-momenten; A is sneller maar minder controle. Laat me weten welke je wilt — bij geen voorkeur ga ik voor B (kleinste eerst, dan opbouwen).
+## Technische details
+- Geen nieuwe dependencies.
+- Tailwind v4 tokens in `src/styles.css` (geen JS-config).
+- Bestaande `useIsMobile` hook hergebruiken; nieuwe utility-classes via `@utility`.
+- Geen wijzigingen aan i18n keys, backend, server functions, of routes-structuur.
