@@ -162,6 +162,63 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             }
           }
 
+          // Send the order confirmation email once, when the payment is paid.
+          // Atomic guard: only the first webhook delivery that flips
+          // email_confirmation_sent_at from NULL → now() actually sends.
+          if (orderId && status === "paid") {
+            try {
+              const { data: claimed } = await (supabaseAdmin.from("orders") as any)
+                .update({ email_confirmation_sent_at: new Date().toISOString() })
+                .eq("id", orderId)
+                .is("email_confirmation_sent_at", null)
+                .select("id, customer_email, lang, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country")
+                .maybeSingle();
+
+              if (claimed?.customer_email) {
+                const { data: lines } = await (supabaseAdmin.from("order_lines") as any)
+                  .select("bundle_key, quantity, unit_price_cents")
+                  .eq("order_id", orderId);
+
+                const { sendOrderConfirmationEmail } = await import("@/lib/email/order-confirmation.server");
+                const result = await sendOrderConfirmationEmail({
+                  to: claimed.customer_email,
+                  lang: claimed.lang,
+                  orderId: claimed.id,
+                  items: (lines ?? []).map((l: any) => ({
+                    bundleKey: l.bundle_key,
+                    quantity: l.quantity,
+                    unitPriceCents: l.unit_price_cents,
+                  })),
+                  amountSubtotalCents: claimed.amount_subtotal ?? 0,
+                  amountShippingCents: claimed.amount_shipping ?? 0,
+                  amountTotalCents: claimed.amount_total ?? 0,
+                  amountVatCents: claimed.amount_tax ?? 0,
+                  shipping: {
+                    name: claimed.shipping_name ?? "",
+                    line1: claimed.shipping_line1 ?? "",
+                    postalCode: claimed.shipping_postal_code ?? "",
+                    city: claimed.shipping_city ?? "",
+                    country: claimed.shipping_country ?? "",
+                  },
+                });
+                if (!result.ok) {
+                  // Roll back the claim so a future retry can try again.
+                  await (supabaseAdmin.from("orders") as any)
+                    .update({ email_confirmation_sent_at: null })
+                    .eq("id", orderId);
+                  console.error("order confirmation email failed:", result.error);
+                }
+              }
+            } catch (e) {
+              console.error("order confirmation email error:", e);
+              try {
+                await (supabaseAdmin.from("orders") as any)
+                  .update({ email_confirmation_sent_at: null })
+                  .eq("id", orderId);
+              } catch {}
+            }
+          }
+
           await logCall("success");
           return new Response("ok", { status: 200 });
         } catch (e: any) {
