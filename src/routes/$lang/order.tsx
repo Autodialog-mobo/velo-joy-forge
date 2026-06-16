@@ -366,13 +366,17 @@ function BestellenPage() {
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 20, color: "#0D1F3C" }}>{eur(total)}</span>
               </div>
 
+              <form onSubmit={(e) => e.preventDefault()} autoComplete="on">
               <div style={{ display: "grid", gap: 6, margin: "16px 0 12px" }}>
                 <label htmlFor="email" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
                   {t("cart.email_label")}
                 </label>
                 <input
                   id="email"
+                  name="email"
                   type="email"
+                  autoComplete="email"
+                  inputMode="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("cart.email_placeholder")}
@@ -382,18 +386,20 @@ function BestellenPage() {
 
               <div style={{ display: "grid", gap: 10, margin: "0 0 12px" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                  <LabeledInput label={t("cart.first_name")} value={firstName} onChange={setFirstName} placeholder={t("cart.first_name_placeholder")} />
-                  <LabeledInput label={t("cart.last_name")} value={lastName} onChange={setLastName} placeholder={t("cart.last_name_placeholder")} />
+                  <LabeledInput name="given-name" autoComplete="given-name" label={t("cart.first_name")} value={firstName} onChange={setFirstName} placeholder={t("cart.first_name_placeholder")} />
+                  <LabeledInput name="family-name" autoComplete="family-name" label={t("cart.last_name")} value={lastName} onChange={setLastName} placeholder={t("cart.last_name_placeholder")} />
                 </div>
-                <LabeledInput label={t("cart.address")} value={address} onChange={setAddress} placeholder={t("cart.address_placeholder")} />
+                <LabeledInput name="street-address" autoComplete="street-address" label={t("cart.address")} value={address} onChange={setAddress} placeholder={t("cart.address_placeholder")} />
                 <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 8 }}>
-                  <LabeledInput label={t("cart.postal_code")} value={postalCode} onChange={setPostalCode} placeholder={t("cart.postal_code_placeholder")} />
-                  <LabeledInput label={t("cart.city")} value={city} onChange={setCity} placeholder={t("cart.city_placeholder")} />
+                  <LabeledInput name="postal-code" autoComplete="postal-code" inputMode="numeric" label={t("cart.postal_code")} value={postalCode} onChange={setPostalCode} placeholder={t("cart.postal_code_placeholder")} />
+                  <LabeledInput name="address-level2" autoComplete="address-level2" label={t("cart.city")} value={city} onChange={setCity} placeholder={t("cart.city_placeholder")} />
                 </div>
                 <div style={{ display: "grid", gap: 6 }}>
                   <label htmlFor="country" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{t("cart.country")}</label>
                   <select
                     id="country"
+                    name="country"
+                    autoComplete="country"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
@@ -406,6 +412,8 @@ function BestellenPage() {
                   </select>
                 </div>
               </div>
+              </form>
+
 
 
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
@@ -547,17 +555,30 @@ function LabeledInput({
   value,
   onChange,
   placeholder,
+  name,
+  autoComplete,
+  type = "text",
+  inputMode,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  name?: string;
+  autoComplete?: string;
+  type?: string;
+  inputMode?: "text" | "tel" | "email" | "numeric" | "decimal" | "search" | "url" | "none";
 }) {
+  const id = name ? `f-${name}` : undefined;
   return (
     <div style={{ display: "grid", gap: 6, minWidth: 0 }}>
-      <label style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{label}</label>
+      <label htmlFor={id} style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{label}</label>
       <input
-        type="text"
+        id={id}
+        name={name}
+        autoComplete={autoComplete}
+        type={type}
+        inputMode={inputMode}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
