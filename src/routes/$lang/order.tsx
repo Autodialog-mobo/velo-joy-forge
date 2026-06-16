@@ -250,7 +250,7 @@ function BestellenPage() {
         </div>
       </section>
 
-      <div style={{ maxWidth: 1100, margin: "-40px auto 0", padding: "0 24px 72px", position: "relative" }}>
+      <div className="order-page-body" style={{ maxWidth: 1100, margin: "-40px auto 0", padding: "0 24px 72px", position: "relative" }}>
         {stage === "select" && (
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 360px", gap: 24, alignItems: "start" }} className="bestel-grid">
             {/* Cards column */}
@@ -365,7 +365,7 @@ function BestellenPage() {
             </div>
 
             {/* Cart sidebar */}
-            <aside style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", position: "sticky", top: 20 }}>
+            <aside id="order-cart" style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", position: "sticky", top: 20, scrollMarginTop: 80 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <ShoppingBag size={18} color="#0D1F3C" />
                 <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: 0, color: "#0D1F3C" }}>{t("cart.title")}</h2>
@@ -560,11 +560,85 @@ function BestellenPage() {
         )}
       </div>
 
+      {stage === "select" && (
+        <div
+          className="mobile-pay-bar"
+          role="region"
+          aria-label={t("cart.title")}
+        >
+          <div className="mobile-pay-bar__inner">
+            <div className="mobile-pay-bar__total">
+              <span className="mobile-pay-bar__label">{t("cart.total")}</span>
+              <span className="mobile-pay-bar__amount">{hasItems ? eur(total) : eur(0)}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                if (!hasItems) return;
+                if (canCheckout) {
+                  void startCheckout();
+                  return;
+                }
+                const el = document.getElementById("order-cart");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                  window.setTimeout(() => {
+                    const target = !emailValid
+                      ? document.getElementById("email")
+                      : document.getElementById("f-given-name");
+                    (target as HTMLInputElement | null)?.focus({ preventScroll: true });
+                  }, 450);
+                }
+              }}
+              disabled={!hasItems}
+              aria-disabled={!hasItems}
+              className="mobile-pay-bar__cta"
+            >
+              {t("cart.pay_arrow")}
+            </button>
+          </div>
+        </div>
+      )}
+
       <style>{`
         @media (max-width: 900px) {
           .bestel-grid { grid-template-columns: 1fr !important; }
         }
+        .mobile-pay-bar { display: none; }
+        @media (max-width: 900px) {
+          .mobile-pay-bar {
+            display: block;
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            z-index: 50;
+            background: #fff;
+            border-top: 1px solid rgba(13,31,60,0.1);
+            box-shadow: 0 -6px 24px rgba(13,31,60,0.12);
+            padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+            font-family: 'DM Sans', sans-serif;
+          }
+          .mobile-pay-bar__inner {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            max-width: 600px; margin: 0 auto;
+          }
+          .mobile-pay-bar__total { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+          .mobile-pay-bar__label { font-size: 11px; color: rgba(13,31,60,0.6); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+          .mobile-pay-bar__amount { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; color: #0D1F3C; }
+          .mobile-pay-bar__cta {
+            background: #2ECC8A; color: #0D1F3C; border: none;
+            padding: 14px 22px; border-radius: 12px;
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 15px;
+            cursor: pointer; white-space: nowrap;
+            box-shadow: 0 4px 14px rgba(46,204,138,0.35);
+          }
+          .mobile-pay-bar__cta:disabled {
+            background: rgba(46,204,138,0.25); cursor: not-allowed; opacity: 0.7; box-shadow: none;
+          }
+          /* Reserve space so content isn't hidden behind the bar */
+          .order-page-body { padding-bottom: 96px !important; }
+        }
       `}</style>
+
 
       <Footer />
     </div>
