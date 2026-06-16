@@ -547,17 +547,30 @@ function LabeledInput({
   value,
   onChange,
   placeholder,
+  name,
+  autoComplete,
+  type = "text",
+  inputMode,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   placeholder?: string;
+  name?: string;
+  autoComplete?: string;
+  type?: string;
+  inputMode?: "text" | "tel" | "email" | "numeric" | "decimal" | "search" | "url" | "none";
 }) {
+  const id = name ? `f-${name}` : undefined;
   return (
     <div style={{ display: "grid", gap: 6, minWidth: 0 }}>
-      <label style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{label}</label>
+      <label htmlFor={id} style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>{label}</label>
       <input
-        type="text"
+        id={id}
+        name={name}
+        autoComplete={autoComplete}
+        type={type}
+        inputMode={inputMode}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
