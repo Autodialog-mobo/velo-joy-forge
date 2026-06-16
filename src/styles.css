@@ -799,3 +799,150 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
   outline: 3px solid var(--green);
   outline-offset: 3px;
 }
+
+/* =================================================================
+   MOBILE FOUNDATIONS — Fase 1 + 2 (additive, non-destructive)
+   ================================================================= */
+
+/* Prevent any stray horizontal scroll on the root */
+html { overflow-x: clip; }
+
+/* iOS safe-area helpers */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Visibility utilities */
+.mobile-only { display: none; }
+.desktop-only { display: initial; }
+@media (max-width: 768px) {
+  .mobile-only { display: initial; }
+  .desktop-only { display: none !important; }
+}
+
+/* Hide scrollbar but keep scroll (used for horizontal snap rails) */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Horizontal snap row utility (cards rail on mobile) */
+.h-snap {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-inline: 6vw;
+  padding-inline: 6vw;
+  margin-inline: -6vw;
+}
+.h-snap > * {
+  scroll-snap-align: start;
+  flex: 0 0 86%;
+  min-width: 0;
+}
+
+/* Sticky bottom CTA bar (mobile checkout/order) */
+.sticky-cta-bar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 200;
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px calc(12px + var(--safe-bottom));
+  background: rgba(255,255,255,0.96);
+  border-top: 1px solid rgba(13,31,60,0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 -8px 24px rgba(13,31,60,0.08);
+}
+.sticky-cta-bar > .cta-total { flex: 1; min-width: 0; }
+.sticky-cta-bar > .cta-action { flex-shrink: 0; }
+.sticky-cta-spacer { height: calc(80px + var(--safe-bottom)); }
+
+@media (min-width: 769px) {
+  .sticky-cta-bar { display: none; }
+  .sticky-cta-spacer { display: none; }
+}
+
+/* Mobile typography & touch-target polish */
+@media (max-width: 768px) {
+  /* Avoid iOS auto-zoom on focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+  /* Minimum 44px tap target for primary interactives */
+  .btn-p, .btn-g, .btn-s, .btn-login, .btn-nav-cta,
+  .hero-cta-primary, .pl-btn, .sf-cta, .stk-btn, .stk-btn-ghost,
+  .btn-submit, .btn-qr, .btn-lookup, .pcm-cta {
+    min-height: 44px;
+  }
+  /* Headings balance better on phones */
+  h1, h2, .hero-title, .sec-title, .sf-headline, .pcm-title, .pro-hero-title {
+    text-wrap: balance;
+  }
+  /* Body paragraphs avoid orphaned words */
+  p { text-wrap: pretty; }
+}
+
+/* Compact nav on mobile + hide login text below 480 */
+@media (max-width: 480px) {
+  .vp-nav { padding: 0 4vw; height: 60px; }
+  .nav-backdrop.open { inset: 60px 0 0 0; }
+  .nav-links { top: 60px !important; }
+  .btn-login { padding: 8px 10px !important; font-size: 0 !important; gap: 0 !important; }
+  .btn-login svg { width: 18px; height: 18px; }
+  .logo-text { font-size: 16px; }
+  .nav-toggle { padding: 10px; min-width: 44px; min-height: 44px; }
+}
+
+/* Bigger, more touchable nav menu items on mobile */
+@media (max-width: 900px) {
+  .nav-links a {
+    padding: 14px 4px !important;
+    font-size: 16px !important;
+    min-height: 44px;
+    display: flex !important;
+    align-items: center;
+  }
+}
+
+/* Footer mobile — readable, organized */
+@media (max-width: 768px) {
+  .vp-footer {
+    padding: 36px 6vw calc(28px + var(--safe-bottom));
+    gap: 24px;
+    text-align: left;
+    align-items: stretch;
+  }
+  .vp-footer > div:first-child { text-align: left; }
+  .flogo { font-size: 18px; }
+  .ftagline { font-size: 13px; margin-top: 6px; }
+  .flinks {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+    width: 100%;
+    justify-content: stretch !important;
+  }
+  .flinks a {
+    font-size: 14px;
+    padding: 8px 0;
+    display: block;
+    min-height: 40px;
+    line-height: 1.4;
+  }
+  .fcopy { text-align: center; font-size: 12px; opacity: 0.7; margin-top: 8px; }
+}
+
+/* Lock body scroll when mobile nav is open */
+.nav-backdrop.open ~ * { /* purely visual; no functional dependency */ }
+@media (max-width: 900px) {
+  body:has(.nav-links.open) { overflow: hidden; }
+}
+
+/* Min-w-0 safety for common flex rows that risk overflow */
+@media (max-width: 768px) {
+  .nav-actions { min-width: 0; }
+  .vp-nav .nav-logo { min-width: 0; }
+  .vp-nav .nav-logo .logo-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+}
+
