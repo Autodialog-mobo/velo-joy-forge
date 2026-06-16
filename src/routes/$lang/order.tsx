@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
@@ -85,6 +85,7 @@ export const Route = createFileRoute("/$lang/order")({
 function BestellenPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation("order");
+  const navigate = useNavigate();
   const [quantities, setQuantities] = useState<Record<BundleKey, number>>({
     frameid_solo_onetime: 0,
     frameid_duo_onetime: 0,
@@ -101,6 +102,18 @@ function BestellenPage() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [navOpen, setNavOpen] = useState(false);
+
+  const handleBack = useCallback(() => {
+    if (typeof window !== "undefined") {
+      const referrer = document.referrer;
+      const isInternal = referrer && new URL(referrer).origin === window.location.origin;
+      if (isInternal && window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+    }
+    navigate({ to: "/$lang", params: { lang } });
+  }, [navigate, lang]);
 
 
   const items = useMemo(
@@ -199,6 +212,27 @@ function BestellenPage() {
       {/* Hero */}
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "88px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <button
+            type="button"
+            onClick={handleBack}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "transparent",
+              border: "none",
+              color: "rgba(255,255,255,0.72)",
+              fontFamily: "DM Sans, sans-serif",
+              fontSize: 14,
+              fontWeight: 500,
+              cursor: "pointer",
+              padding: "0 0 16px",
+              margin: 0,
+            }}
+          >
+            <ArrowLeft size={16} strokeWidth={2.2} />
+            {t("header.back")}
+          </button>
           <p style={{ color: "#2ECC8A", fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 12, letterSpacing: 2, textTransform: "uppercase", margin: 0 }}>
             {t("hero.eyebrow")}
           </p>
