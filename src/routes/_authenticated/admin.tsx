@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
@@ -1439,7 +1439,18 @@ function AdminPage() {
                       </div>
                       {detailOrder.mollie_payment_id && (
                         <p className="text-[11px] mt-2 font-mono" style={{ color: TEXT_MUTED }}>
-                          Mollie: {detailOrder.mollie_payment_id}
+                          Mollie:{" "}
+                          <a
+                            href={`https://my.mollie.com/dashboard/payments/${detailOrder.mollie_payment_id}${detailOrder.environment === "sandbox" ? "?testmode=true" : ""}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="vp-pro inline-flex items-center gap-1 underline decoration-dotted underline-offset-2 hover:opacity-80"
+                            style={{ color: TEXT_PRI }}
+                            title={detailOrder.environment === "sandbox" ? "Open in Mollie dashboard (testmode)" : "Open in Mollie dashboard"}
+                          >
+                            {detailOrder.mollie_payment_id}
+                            <ExternalLink size={10} />
+                          </a>
                         </p>
                       )}
                       {detailOrder.stripe_session_id && (
