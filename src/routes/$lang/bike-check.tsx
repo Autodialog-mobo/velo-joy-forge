@@ -790,33 +790,36 @@ function BikeSearchPage() {
         <TurnstileWidget ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} />
 
 
-        {/* ERROR */}
-        {error && (
-          <div
-            style={{
-              maxWidth: 680,
-              margin: "24px auto 0",
-              padding: "14px 18px",
-              background: "#FEF2F2",
-              border: "1px solid #FECACA",
-              borderRadius: 10,
-              color: "#E05252",
-              fontSize: 14,
-              textAlign: "center",
-            }}
-          >
-            {error}
-          </div>
-        )}
+        {/* ERROR + RESULT scroll target */}
+        <div ref={resultRef}>
+          {/* ERROR */}
+          {error && (
+            <div
+              style={{
+                maxWidth: 680,
+                margin: "24px auto 0",
+                padding: "14px 18px",
+                background: "#FEF2F2",
+                border: "1px solid #FECACA",
+                borderRadius: 10,
+                color: "#E05252",
+                fontSize: 14,
+                textAlign: "center",
+              }}
+            >
+              {error}
+            </div>
+          )}
 
-        {/* RESULT */}
-        {result && (
-          <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
-            {!result.found && <NotRegCard t={t} />}
-            {result.found && result.status === "ALL_CLEAR" && <SecuredCard t={t} bike={result} />}
-            {result.found && result.status === "REPORTED" && <ReportedCard t={t} bike={result} />}
-          </div>
-        )}
+          {/* RESULT */}
+          {result && (
+            <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
+              {!result.found && <NotRegCard t={t} />}
+              {result.found && result.status === "ALL_CLEAR" && <SecuredCard t={t} bike={result} />}
+              {result.found && result.status === "REPORTED" && <ReportedCard t={t} bike={result} />}
+            </div>
+          )}
+        </div>
       </section>
 
       {/* STATUS OVERVIEW */}
