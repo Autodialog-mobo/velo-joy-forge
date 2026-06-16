@@ -85,6 +85,7 @@ export const Route = createFileRoute("/$lang/order")({
 function BestellenPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation("order");
+  const navigate = useNavigate();
   const [quantities, setQuantities] = useState<Record<BundleKey, number>>({
     frameid_solo_onetime: 0,
     frameid_duo_onetime: 0,
@@ -101,6 +102,18 @@ function BestellenPage() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [navOpen, setNavOpen] = useState(false);
+
+  const handleBack = useCallback(() => {
+    if (typeof window !== "undefined") {
+      const referrer = document.referrer;
+      const isInternal = referrer && new URL(referrer).origin === window.location.origin;
+      if (isInternal && window.history.length > 1) {
+        window.history.back();
+        return;
+      }
+    }
+    navigate({ to: "/$lang", params: { lang } });
+  }, [navigate, lang]);
 
 
   const items = useMemo(
