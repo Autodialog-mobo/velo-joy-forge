@@ -250,7 +250,7 @@ function BestellenPage() {
         </div>
       </section>
 
-      <div style={{ maxWidth: 1100, margin: "-40px auto 0", padding: "0 24px 72px", position: "relative" }}>
+      <div className="order-page-body" style={{ maxWidth: 1100, margin: "-40px auto 0", padding: "0 24px 72px", position: "relative" }}>
         {stage === "select" && (
           <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 360px", gap: 24, alignItems: "start" }} className="bestel-grid">
             {/* Cards column */}
