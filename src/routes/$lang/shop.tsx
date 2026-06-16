@@ -119,7 +119,7 @@ function VelopassPro() {
       <section
         className="pro-hero"
         style={{
-          backgroundImage: `linear-gradient(105deg, rgba(13,31,60,0.88) 0%, rgba(13,31,60,0.80) 45%, rgba(13,31,60,0.55) 100%), url('https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80')`,
+          backgroundImage: `linear-gradient(105deg, rgba(8,20,40,0.96) 0%, rgba(10,24,48,0.92) 40%, rgba(13,31,60,0.78) 70%, rgba(13,31,60,0.62) 100%), radial-gradient(ellipse at 20% 50%, rgba(8,20,40,0.55) 0%, rgba(8,20,40,0) 60%), url('https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
