@@ -138,6 +138,7 @@ export type Database = {
           currency: string
           customer_email: string
           deleted_at: string | null
+          email_confirmation_sent_at: string | null
           environment: string
           id: string
           lang: string | null
@@ -166,6 +167,7 @@ export type Database = {
           currency?: string
           customer_email: string
           deleted_at?: string | null
+          email_confirmation_sent_at?: string | null
           environment?: string
           id?: string
           lang?: string | null
@@ -194,6 +196,7 @@ export type Database = {
           currency?: string
           customer_email?: string
           deleted_at?: string | null
+          email_confirmation_sent_at?: string | null
           environment?: string
           id?: string
           lang?: string | null
