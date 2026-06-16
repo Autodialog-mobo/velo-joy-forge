@@ -294,7 +294,13 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 
 /* ============= PRO HERO ============= */
 .pro-hero { min-height: 100vh; padding-top: 64px; background: var(--navy); display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
-.pro-hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 5vw 80px 8vw; position: relative; z-index: 1; }
+.pro-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 0; }
+.pro-hero-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 80% at 22% 50%, rgba(6,14,28,0.78) 0%, rgba(6,14,28,0) 55%),
+    linear-gradient(105deg, rgba(6,14,28,0.94) 0%, rgba(10,24,48,0.86) 35%, rgba(13,31,60,0.52) 65%, rgba(13,31,60,0.18) 100%);
+}
+.pro-hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 5vw 80px 8vw; position: relative; z-index: 2; }
 .pro-hero-left .hero-eyebrow { width: fit-content; margin: 0 0 28px; }
 .pro-hero-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(38px, 4.5vw, 58px); line-height: 1.05; letter-spacing: -1.5px; color: #fff; margin-bottom: 10px; text-shadow: 0 2px 24px rgba(0,0,0,0.45); }
 .pro-hero-title em { font-style: normal; color: var(--green); }
@@ -304,7 +310,7 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 .stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
 .stat-num span { color: var(--green); }
 .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
-.pro-hero-right { display: flex; align-items: center; justify-content: center; padding: 80px 6vw; position: relative; z-index: 1; }
+.pro-hero-right { display: flex; align-items: center; justify-content: center; padding: 80px 6vw; position: relative; z-index: 2; }
 
 /* DASHBOARD MOCKUP */
 .dash { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--r-xl); padding: 24px; width: 100%; max-width: 400px; }
