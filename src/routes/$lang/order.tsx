@@ -579,15 +579,17 @@ function BestellenPage() {
                   void startCheckout();
                   return;
                 }
-                const el = document.getElementById("order-cart");
+                const firstMissing =
+                  !emailValid ? document.getElementById("email") :
+                  !firstName.trim() ? document.getElementById("f-given-name") :
+                  !lastName.trim() ? document.getElementById("f-family-name") :
+                  !address.trim() ? document.getElementById("f-street-address") :
+                  !postalCode.trim() ? document.getElementById("f-postal-code") :
+                  !city.trim() ? document.getElementById("f-address-level2") :
+                  null;
+                const el = firstMissing as HTMLInputElement | null;
                 if (el) {
-                  el.scrollIntoView({ behavior: "smooth", block: "start" });
-                  window.setTimeout(() => {
-                    const target = !emailValid
-                      ? document.getElementById("email")
-                      : document.getElementById("f-given-name");
-                    (target as HTMLInputElement | null)?.focus({ preventScroll: true });
-                  }, 450);
+                  el.focus();
                 }
               }}
               disabled={!hasItems}
