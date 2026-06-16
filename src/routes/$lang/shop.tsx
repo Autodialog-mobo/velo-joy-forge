@@ -69,6 +69,25 @@ function VelopassPro() {
     setCurrentMonthYear(new Date().toLocaleDateString(locale, { month: "long", year: "numeric" }));
   }, [lang]);
 
+  // Dev-only WCAG contrast check for hero text over (image + overlay).
+  useEffect(() => {
+    verifyHeroContrast({
+      imageUrl:
+        "https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80",
+      textColor: "rgb(255,255,255)",
+      // Overlay stack applied at the text region (left side of hero).
+      overlays: ["rgba(6,14,28,0.78)", "rgba(6,14,28,0.90)"],
+      label: "hero title (white on image+overlay)",
+    });
+    verifyHeroContrast({
+      imageUrl:
+        "https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80",
+      textColor: "rgba(255,255,255,0.85)",
+      overlays: ["rgba(6,14,28,0.78)", "rgba(6,14,28,0.90)"],
+      label: "hero subtitle (85% white on image+overlay)",
+    });
+  }, []);
+
   const bikes = [
     { name: "Trek Domane AL 4", sub: t("hero.dash.bike1Sub"), a: true },
     { name: "Specialized Turbo Como", sub: t("hero.dash.bike2Sub"), a: false },
