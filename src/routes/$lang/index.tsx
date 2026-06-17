@@ -349,6 +349,7 @@ function VelopassHome() {
               event.stopPropagation();
               if (!("PointerEvent" in window)) {
                 setNavOpen((o) => !o);
+                setLangOpen(false);
               }
             }}
             onKeyDown={(event) => {
