@@ -137,6 +137,7 @@ function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
   const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   const QR_STORAGE_KEY = "velopass:qr-overlay:v2";
   const [qrX, setQrX] = useState(50);
@@ -307,13 +308,13 @@ function VelopassHome() {
 
   return (
     <>
-      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
+      <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => { setNavOpen(false); setLangOpen(false); }} aria-hidden="true" />
       <nav className="vp-nav">
         <Link to="/$lang" params={{ lang: currentLang }} className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
-        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => { setNavOpen(false); setLangOpen(false); }}>
           <li><a href="#wat-je-krijgt">{t("common:nav.what_you_get")}</a></li>
           <li><a href="#already-have-one">{t("common:nav.already_have_one")}</a></li>
           <li><a href="#order-sticker">{t("common:nav.order_sticker")}</a></li>
@@ -323,7 +324,7 @@ function VelopassHome() {
           <li><Link to="/$lang/shop" params={{ lang: currentLang }} style={{ color: "var(--green-mid)", display: "inline-flex", alignItems: "center", gap: 6 }}><ArrowUpRight size={15} strokeWidth={2.2} />{t("common:nav.for_professionals")}</Link></li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
-          <LangSwitcher currentLang={currentLang} tone="light" />
+          <LangSwitcher currentLang={currentLang} tone="light" isOpen={langOpen} onOpenChange={(o) => { setLangOpen(o); if (o) setNavOpen(false); }} />
           <a href="https://login.velopass.com/login?state=hKFo2SB5ODJtdjhZMGxXRGlPN1NVWFdQM3pqV3JUS1pFQTlkSaFupWxvZ2luo3RpZNkgM3R1ZXU4M2FxM3RqUk1FYVR3UUZCSTRhZV92dTlhRzmjY2lk2SBWak0xVFBUQUFFcG11aWhGNndYeEdGdVFybE5hVTY5MQ&client=VjM1TPTAAEpmuihF6wXxGFuQrlNaU691&protocol=oauth2&scope=openid%20profile%20email&audience=https%3A%2F%2Fcyclistapi.prod.velopass.com&redirect_uri=https%3A%2F%2Fapp.velopass.com%2Fdashboard&response_type=code&response_mode=query&nonce=a3hmZVl5aENNeU95d1U0SUlBaEM3NV9MbkZXNFdXRkg2c3RpOXJlMW5BUQ%3D%3D&code_challenge=5vSSWCjxdP-6B0z5HV38kaBGFWP4KSmv4gORKjvtzi0&code_challenge_method=S256&auth0Client=eyJuYW1lIjoiYXV0aDAtcmVhY3QiLCJ2ZXJzaW9uIjoiMi45LjAifQ%3D%3D#page=cyclist/login&method=standard&lng=nl-nl" className="btn-login">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
@@ -341,12 +342,14 @@ function VelopassHome() {
               event.preventDefault();
               event.stopPropagation();
               setNavOpen((o) => !o);
+              setLangOpen(false);
             }}
             onClick={(event) => {
               event.preventDefault();
               event.stopPropagation();
               if (!("PointerEvent" in window)) {
                 setNavOpen((o) => !o);
+                setLangOpen(false);
               }
             }}
             onKeyDown={(event) => {
@@ -354,6 +357,7 @@ function VelopassHome() {
                 event.preventDefault();
                 event.stopPropagation();
                 setNavOpen((o) => !o);
+                setLangOpen(false);
               }
             }}
           >
