@@ -90,7 +90,17 @@ function BuyingSecondHandGuide() {
             className="nav-toggle"
             aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
-            onClick={() => setNavOpen((o) => !o)}
+            onPointerUp={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              setNavOpen((o) => !o);
+            }}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setNavOpen((o) => !o);
+              }
+            }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               {navOpen ? (
