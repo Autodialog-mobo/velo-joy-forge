@@ -56,6 +56,7 @@ function LangLayout() {
       <main>
         <Outlet />
       </main>
+      <CookieConsent />
     </I18nextProvider>
   );
 }
