@@ -111,19 +111,32 @@
 
 /* ============= HERO (consumer) ============= */
 .hero { min-height: 100vh; padding: 64px 6vw 40px; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
-.hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; border-radius: 50%; background: rgba(46,204,138,0.04); pointer-events: none; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,204,138,0.12); color: var(--green); font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin: 28px 0; border: 1px solid rgba(46,204,138,0.2); position: relative; z-index: 1; }
+.hero::before { content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; border-radius: 50%; background: rgba(46,204,138,0.06); pointer-events: none; z-index: 1; }
+.hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 0; }
+.hero-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(13,31,60,0.72) 0%, rgba(13,31,60,0.88) 70%, rgba(6,14,28,0.95) 100%),
+    linear-gradient(180deg, rgba(6,14,28,0.55) 0%, rgba(13,31,60,0.55) 50%, rgba(6,14,28,0.78) 100%);
+}
+@media (max-width: 640px) {
+  .hero-overlay {
+    background:
+      radial-gradient(ellipse 90% 70% at 50% 45%, rgba(13,31,60,0.82) 0%, rgba(6,14,28,0.92) 70%, rgba(6,14,28,0.97) 100%),
+      linear-gradient(180deg, rgba(6,14,28,0.7) 0%, rgba(13,31,60,0.7) 50%, rgba(6,14,28,0.88) 100%);
+  }
+}
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,204,138,0.12); color: var(--green); font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin: 28px 0; border: 1px solid rgba(46,204,138,0.2); position: relative; z-index: 2; }
 .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
-.hero-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(42px, 6vw, 88px); line-height: 1.03; letter-spacing: -2px; color: #fff; margin-bottom: 20px; max-width: 1100px; position: relative; z-index: 1; }
+.hero-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(42px, 6vw, 88px); line-height: 1.03; letter-spacing: -2px; color: #fff; margin-bottom: 20px; max-width: 1100px; position: relative; z-index: 2; text-shadow: 0 2px 24px rgba(0,0,0,0.5); }
 .hero-title em { font-style: normal; color: var(--green); font-weight: 800; }
-.hero-sub { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.65; max-width: 520px; margin: 0 auto 32px; position: relative; z-index: 1; }
-.hero-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0 auto 40px; position: relative; z-index: 1; width: 100%; }
+.hero-sub { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.78); line-height: 1.65; max-width: 520px; margin: 0 auto 32px; position: relative; z-index: 2; text-shadow: 0 1px 12px rgba(0,0,0,0.45); }
+.hero-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0 auto 40px; position: relative; z-index: 2; width: 100%; }
 .hero-cta-primary { display: inline-block; background: #2ECC8A; color: #0D1F3C; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 16px; padding: 14px 24px; border-radius: 10px; text-decoration: none; width: 100%; max-width: 320px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
 .hero-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(46,204,138,0.3); }
 .hero-cta-sub { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.55); }
 
 /* PATH SPLIT */
-.path-split { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1000px; width: 100%; margin-bottom: 48px; position: relative; z-index: 1; }
+.path-split { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 1000px; width: 100%; margin-bottom: 48px; position: relative; z-index: 2; }
 .path-card { border-radius: var(--r-xl); padding: 32px 28px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-align: left; text-decoration: none; display: block; }
 .path-card.primary { background: var(--green); color: var(--navy); }
 .path-card.primary:hover { transform: translateY(-3px); box-shadow: 0 20px 48px rgba(46,204,138,0.25); }
@@ -146,7 +159,7 @@
 .path-cta { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 500; }
 .path-card.primary .path-cta { color: var(--navy); }
 .path-card.secondary .path-cta, .path-card.tertiary .path-cta { color: var(--green); }
-.hero-trust { display: flex; align-items: center; justify-content: center; gap: 16px; position: relative; z-index: 1; }
+.hero-trust { display: flex; align-items: center; justify-content: center; gap: 16px; position: relative; z-index: 2; }
 .avatars { display: flex; }
 .av { width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15); background: rgba(46,204,138,0.15); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; color: var(--green); margin-left: -8px; flex-shrink: 0; }
 .av:first-child { margin-left: 0; }
@@ -223,7 +236,7 @@
 .voordelen::before { content: ''; position: absolute; bottom: -200px; right: -100px; width: 500px; height: 500px; border-radius: 50%; background: rgba(46,204,138,0.05); pointer-events: none; }
 .voordelen .eyebrow { color: var(--green); }
 .voordelen .sec-title { color: var(--navy); margin-bottom: 56px; max-width: 520px; }
-.vgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; position: relative; z-index: 1; }
+.vgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; position: relative; z-index: 2; }
 .vc { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px 24px; display: flex; gap: 18px; align-items: flex-start; transition: background 0.2s; }
 .vc:hover { background: rgba(13,31,60,0.03); }
 .vc-icon { width: 44px; height: 44px; background: rgba(13,31,60,0.06); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(13,31,60,0.1); }

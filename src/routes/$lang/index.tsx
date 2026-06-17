@@ -210,6 +210,12 @@ function VelopassHome() {
 
       {/* HERO */}
       <section className="hero scroll-target" id="hero">
+        <div
+          className="hero-bg"
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=80')` }}
+          aria-hidden="true"
+        />
+        <div className="hero-overlay" aria-hidden="true" />
         <span className="hero-eyebrow"><span className="eyebrow-dot" />{t("home:hero.eyebrow")}</span>
         <h1 className="hero-title">{t("home:hero.title_line_1")}<br /><em>{t("home:hero.title_line_2_em")}<br />{t("home:hero.title_line_3_em")}</em></h1>
         <p className="hero-sub">{t("home:hero.sub")}</p>
