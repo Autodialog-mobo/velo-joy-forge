@@ -59,7 +59,7 @@ export function LangSwitcher({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("lang_switcher.current")}
-        onClick={() => setOpen((o) => !o)}
+        onClick={() => setOpen(!open)}
         style={{
           display: "inline-flex",
           alignItems: "center",
