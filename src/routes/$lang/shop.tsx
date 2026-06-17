@@ -16,7 +16,7 @@ import fabGranville from "@/assets/fab-granville.jpg";
 import kbcLogo from "@/assets/kbc-logo.png";
 
 import { buildLocalizedHead } from "@/i18n/seo";
-import { verifyHeroContrast } from "@/lib/a11y/contrast-check";
+import { verifyHeroContrastMatrix } from "@/lib/a11y/contrast-check";
 import enBundle from "@/i18n/locales/en/shop.json";
 import nlBundle from "@/i18n/locales/nl/shop.json";
 import frBundle from "@/i18n/locales/fr/shop.json";
@@ -71,20 +71,22 @@ function VelopassPro() {
 
   // Dev-only WCAG contrast check for hero text over (image + overlay).
   useEffect(() => {
-    verifyHeroContrast({
-      imageUrl:
-        "https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80",
-      textColor: "rgb(255,255,255)",
-      // Overlay stack applied at the text region (left side of hero).
-      overlays: ["rgba(6,14,28,0.78)", "rgba(6,14,28,0.90)"],
-      label: "hero title (white on image+overlay)",
-    });
-    verifyHeroContrast({
-      imageUrl:
-        "https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80",
-      textColor: "rgba(255,255,255,0.85)",
-      overlays: ["rgba(6,14,28,0.78)", "rgba(6,14,28,0.90)"],
-      label: "hero subtitle (85% white on image+overlay)",
+    const imageUrl =
+      "https://images.unsplash.com/photo-1675798225739-d8919b7a23f7?w=1920&q=80";
+    const overlays = ["rgba(6,14,28,0.78)", "rgba(6,14,28,0.90)"];
+    verifyHeroContrastMatrix({
+      variants: [
+        {
+          name: "shop hero (image + overlay)",
+          imageUrl,
+          textRegion: { x: 0.08, y: 0.35, w: 0.35, h: 0.3 },
+          overlays,
+        },
+      ],
+      texts: [
+        { name: "title", textColor: "rgb(255,255,255)", size: "large" },
+        { name: "subtitle", textColor: "rgba(255,255,255,0.85)", size: "normal" },
+      ],
     });
   }, []);
 

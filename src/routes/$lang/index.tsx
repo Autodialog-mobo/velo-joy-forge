@@ -159,6 +159,48 @@ function VelopassHome() {
     } catch {}
   }, [qrX, qrY, qrSize]);
 
+  // Dev-only WCAG contrast check: title, subtitle and badge on both
+  // desktop and mobile hero background variants.
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    import("@/lib/a11y/contrast-check").then(({ verifyHeroContrastMatrix }) => {
+      // Desktop: object-position 72% center → text sits over the left/center
+      // of the source image (roughly x≈0.5 of the photo).
+      // Mobile: object-position 65% center → text region shifts slightly left.
+      verifyHeroContrastMatrix({
+        variants: [
+          {
+            name: "hero desktop (webp + desktop overlay)",
+            imageUrl: heroBgWebp.url,
+            textRegion: { x: 0.30, y: 0.30, w: 0.40, h: 0.40 },
+            overlays: [
+              "rgba(6,14,28,0.55)", // radial center
+              "rgba(6,14,28,0.70)", // linear mid
+            ],
+          },
+          {
+            name: "hero mobile (webp-mobile + mobile overlay)",
+            imageUrl: heroBgWebpMobile.url,
+            textRegion: { x: 0.20, y: 0.30, w: 0.50, h: 0.45 },
+            overlays: [
+              "rgba(6,14,28,0.65)", // radial center
+              "rgba(6,14,28,0.80)", // linear mid
+            ],
+          },
+        ],
+        texts: [
+          // Title is huge (>=42px) → "large" thresholds (3:1 AA, 4.5:1 AAA).
+          { name: "title", textColor: "rgb(255,255,255)", size: "large" },
+          { name: "title-em", textColor: "rgb(79,227,168)", size: "large" },
+          // Subtitle is 18px regular → "normal" thresholds.
+          { name: "subtitle", textColor: "rgba(255,255,255,0.95)", size: "normal" },
+          // Eyebrow badge is 12.5px → "normal" thresholds (strictest).
+          { name: "badge", textColor: "rgb(79,227,168)", size: "normal" },
+        ],
+      });
+    });
+  }, []);
+
   return (
     <>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
