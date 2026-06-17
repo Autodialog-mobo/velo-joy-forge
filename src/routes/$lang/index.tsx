@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
+import heroBgImg from "@/assets/hero-cyclist-bg.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
