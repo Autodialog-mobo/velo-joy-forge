@@ -337,8 +337,8 @@ function ExampleCopy({
       >
         {value}
       </span>
-      <span style={{ fontSize: 12, color: copied ? "#16A34A" : "#5A7090" }}>
-        {copied ? "✓" : "📋"}
+      <span style={{ display: "inline-flex", alignItems: "center", color: copied ? "#16A34A" : "#5A7090" }}>
+        {copied ? <Check size={14} strokeWidth={2.2} /> : <Copy size={14} strokeWidth={2} />}
       </span>
     </button>
   );
