@@ -51,7 +51,7 @@
       },
       "final": {
         "title": "Altijd op de fiets. Alles geregeld.",
-        "body": "Jouw Velopass is actief. Diefstalprotectie, pechhulp en verzekering — één scan van je Frame-ID ver."
+        "body": "Jouw Velopass is actief. Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID."
       }
     },
     "second_hand": {
@@ -100,7 +100,7 @@
     "optional_badge": "Optioneel",
     "secured_pill": "Jouw fiets. SECURED.",
     "cards": {
-      "theft": "Diefstalprotectie",
+      "theft": "Diefstalbescherming",
       "service_book": "Jouw digitale serviceboekje",
       "roadside": "Pechhulp",
       "insurance": "Verzekering",
