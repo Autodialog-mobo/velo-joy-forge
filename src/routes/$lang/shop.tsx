@@ -102,7 +102,7 @@ function VelopassPro() {
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass<span className="logo-pro">pro</span></span>
         </Link>
-        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href="#voordelen">{t("nav.voordelen")}</a></li>
           <li><a href="#hoe-werkt-het">{t("nav.howItWorks")}</a></li>
           <li><a href="#fabrikanten">{t("nav.fabrikanten")}</a></li>
@@ -120,7 +120,7 @@ function VelopassPro() {
           <a href="#registreer" className="btn-nav-cta">{t("nav.registerCta")}</a>
           <button
             type="button"
-            className="nav-toggle"
+            className="nav-toggle" aria-controls="primary-navigation" aria-haspopup="true"
             aria-label={t("nav.menuLabel")}
             aria-expanded={navOpen}
             onPointerDown={(event) => {

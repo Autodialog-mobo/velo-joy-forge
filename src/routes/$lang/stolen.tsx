@@ -294,7 +294,7 @@ function GestolenPage() {
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
-        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><Link to="/$lang" params={{ lang }} hash="voordelen" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.what_you_get")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="al-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.already_have_one")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="nieuwe-sticker" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>{t("common:nav.order_sticker")}</Link></li>
@@ -314,7 +314,7 @@ function GestolenPage() {
           </a>
           <button
             type="button"
-            className="nav-toggle"
+            className="nav-toggle" aria-controls="primary-navigation" aria-haspopup="true"
             aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
             onPointerDown={(event) => {

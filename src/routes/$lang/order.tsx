@@ -181,7 +181,7 @@ function BestellenPage() {
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
-        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><Link to="/$lang" params={{ lang }} hash="wat-je-krijgt">{t("common:nav.what_you_get")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="already-have-one">{t("common:nav.already_have_one")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="community">{t("common:nav.community")}</Link></li>
@@ -193,7 +193,7 @@ function BestellenPage() {
           <LangSwitcher currentLang={lang} tone="light" />
           <button
             type="button"
-            className="nav-toggle"
+            className="nav-toggle" aria-controls="primary-navigation" aria-haspopup="true"
             aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
             onPointerDown={(event) => {

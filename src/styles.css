@@ -102,6 +102,9 @@
 .nav-toggle, .nav-toggle * { pointer-events: auto; }
 .nav-toggle svg, .nav-toggle path { pointer-events: none; }
 .vp-nav.dark .nav-toggle { color: #fff; }
+.nav-toggle:focus { outline: none; }
+.nav-toggle:focus-visible { outline: 2px solid var(--green, #00B67A); outline-offset: 3px; border-radius: 6px; box-shadow: 0 0 0 4px rgba(0, 182, 122, 0.25); }
+.vp-nav.dark .nav-toggle:focus-visible { outline-color: #fff; box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3); }
 .nav-actions { display: flex; align-items: center; gap: 12px; }
 .btn-nav-cta { font-size: 13px; font-weight: 500; background: var(--green); color: var(--navy); border: none; padding: 8px 18px; border-radius: var(--r-md); cursor: pointer; text-decoration: none; transition: all 0.2s; }
 .btn-nav-cta:hover { background: #25B87A; }

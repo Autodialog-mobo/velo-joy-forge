@@ -151,7 +151,7 @@ function VelopassHome() {
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </Link>
-        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href="#wat-je-krijgt">{t("common:nav.what_you_get")}</a></li>
           <li><a href="#already-have-one">{t("common:nav.already_have_one")}</a></li>
           <li><a href="#order-sticker">{t("common:nav.order_sticker")}</a></li>
@@ -171,7 +171,7 @@ function VelopassHome() {
           </a>
           <button
             type="button"
-            className="nav-toggle"
+            className="nav-toggle" aria-controls="primary-navigation" aria-haspopup="true"
             aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
             onPointerDown={(event) => {
