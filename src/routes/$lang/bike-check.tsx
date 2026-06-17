@@ -272,6 +272,80 @@ function SlotCodeInput({
 }
 
 
+function ExampleCopy({
+  label,
+  value,
+  onCopy,
+}: {
+  label: string;
+  value: string;
+  onCopy?: (v: string) => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = value;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      onCopy?.(value);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      // Fallback: still fill the field so the user can continue.
+      onCopy?.(value);
+    }
+  };
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      style={{
+        marginTop: 8,
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        background: "transparent",
+        border: "none",
+        padding: 0,
+        cursor: "pointer",
+        fontFamily: "'DM Sans', sans-serif",
+        fontSize: 13,
+        color: "#5A7090",
+      }}
+      aria-label={`${label}: ${value}`}
+    >
+      <span>{label}:</span>
+      <span
+        style={{
+          fontFamily: "'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+          fontWeight: 500,
+          color: "#0D1F3C",
+          background: "#F1F5F9",
+          padding: "2px 6px",
+          borderRadius: 6,
+          letterSpacing: 0.4,
+        }}
+      >
+        {value}
+      </span>
+      <span style={{ fontSize: 12, color: copied ? "#16A34A" : "#5A7090" }}>
+        {copied ? "✓" : "📋"}
+      </span>
+    </button>
+  );
+}
+
+
+
 const BIKE_CHECK_META = {
   nl: nlBikeCheck.meta,
   en: enBikeCheck.meta,
