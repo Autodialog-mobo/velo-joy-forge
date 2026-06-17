@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
+import heroBgImg from "@/assets/hero-cyclist-bg.jpg";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
@@ -212,7 +213,7 @@ function VelopassHome() {
       <section className="hero scroll-target" id="hero">
         <div
           className="hero-bg"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1485965120184-e224f723d5f1?w=1920&q=80')` }}
+          style={{ backgroundImage: `url(${heroBgImg})` }}
           aria-hidden="true"
         />
         <div className="hero-overlay" aria-hidden="true" />
