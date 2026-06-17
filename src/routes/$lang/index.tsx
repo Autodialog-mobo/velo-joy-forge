@@ -199,6 +199,110 @@ function VelopassHome() {
         ],
       });
     });
+
+    // Consolidated section-level audit (all landing sections except hero,
+    // which needs image-pixel sampling above).
+    import("@/lib/a11y/contrast-check").then(({ verifySectionContrastMatrix }) => {
+      verifySectionContrastMatrix([
+        {
+          name: "Nav",
+          rootSelector: ".vp-nav",
+          probes: [
+            { selector: ".logo-text", name: "logo" },
+            { selector: ".nav-links a", name: "link", limit: 3 },
+            { selector: ".btn-login", name: "login btn" },
+          ],
+        },
+        {
+          name: "Frame-ID (sticker)",
+          rootSelector: "#frame-id",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: ".st-line-1", name: "title line 1" },
+            { selector: ".st-line-2", name: "title line 2 (em)" },
+            { selector: ".sec-sub", name: "intro" },
+            { selector: ".sticker-feat strong", name: "feat title", limit: 3 },
+            { selector: ".sticker-feat span", name: "feat body", limit: 3 },
+          ],
+        },
+        {
+          name: "Voordelen",
+          rootSelector: "#wat-je-krijgt",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: ".sec-title", name: "title" },
+            { selector: ".vc h3", name: "card title", limit: 4 },
+            { selector: ".vc p", name: "card body", limit: 4 },
+            { selector: ".optional-badge", name: "optional badge" },
+            { selector: ".secured-pill", name: "secured pill" },
+          ],
+        },
+        {
+          name: "Path — already have one",
+          rootSelector: "#already-have-one",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: ".sec-title", name: "title" },
+            { selector: ".sec-sub", name: "lead" },
+            { selector: ".sf h4", name: "step title", limit: 3 },
+            { selector: ".sf p", name: "step body", limit: 3 },
+            { selector: ".btn-p", name: "primary cta" },
+            { selector: ".btn-s", name: "secondary cta" },
+          ],
+        },
+        {
+          name: "Path — order sticker (dark)",
+          rootSelector: "#order-sticker",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: ".sec-title", name: "title" },
+            { selector: ".sec-sub", name: "lead" },
+            { selector: ".sn h4", name: "card title", limit: 2 },
+            { selector: ".sn p", name: "card body", limit: 2 },
+            { selector: ".path-final h4", name: "final title" },
+            { selector: ".path-final p", name: "final body" },
+          ],
+        },
+        {
+          name: "Path — second hand",
+          rootSelector: "#tweedehands",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: ".sec-title", name: "title" },
+            { selector: ".sec-sub", name: "lead" },
+            { selector: ".sf h4", name: "step title", limit: 3 },
+            { selector: ".sf p", name: "step body", limit: 3 },
+          ],
+        },
+        {
+          name: "Community / Shop finder",
+          rootSelector: "#community",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: "h2, .sec-title", name: "title" },
+            { selector: "p", name: "body", limit: 2 },
+          ],
+        },
+        {
+          name: "FAQ",
+          rootSelector: "#faq, .faq-section",
+          probes: [
+            { selector: ".eyebrow", name: "eyebrow" },
+            { selector: "h2, .sec-title", name: "title" },
+            { selector: "button, summary, [role='button']", name: "question", limit: 3 },
+            { selector: "p", name: "answer", limit: 3 },
+          ],
+        },
+        {
+          name: "Footer",
+          rootSelector: "footer",
+          probes: [
+            { selector: "a", name: "link", limit: 4 },
+            { selector: "p, span, small", name: "text", limit: 3 },
+          ],
+        },
+      ]);
+    });
   }, []);
 
   return (
