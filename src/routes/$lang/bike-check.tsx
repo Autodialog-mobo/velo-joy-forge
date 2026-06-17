@@ -212,7 +212,7 @@ function SlotCodeInput({
           e.preventDefault();
           onChange(sanitize(text).slice(0, maxLength));
         }}
-        onFocus={() => setFocused(true)}
+        onFocus={(e) => { setFocused(true); e.target.select(); }}
         onBlur={() => setFocused(false)}
         placeholder={showSlots ? undefined : placeholder}
         maxLength={maxLength}
