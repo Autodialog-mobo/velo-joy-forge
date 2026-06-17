@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
-import heroBgWebp from "@/assets/hero-cyclist-bg.webp.asset.json";
+import heroBgWebp from "@/assets/hero-cyclist-bg-edited.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-mobile.webp.asset.json";
 import heroBgAvif from "@/assets/hero-cyclist-bg.avif.asset.json";
 import heroBgAvifMobile from "@/assets/hero-cyclist-bg-mobile.avif.asset.json";
