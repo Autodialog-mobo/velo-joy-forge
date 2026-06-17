@@ -175,3 +175,159 @@ export const verifyHeroContrastMatrix = async (opts: {
   // eslint-disable-next-line no-console
   console.groupEnd();
 };
+
+// ============================================================
+// Section-level WCAG audit (DOM-driven)
+// ============================================================
+//
+// Walks each section's representative text nodes, reads their *computed*
+// color and resolves the effective background color from the closest
+// non-transparent ancestor. Far more robust than guessing tokens, because
+// it reflects whatever CSS actually paints — including theme overrides,
+// gradients reduced to solid mid-stops, and inherited surface colors.
+//
+// Sections that overlay text on an image (the hero) MUST be checked with
+// `verifyHeroContrastMatrix` instead — image pixels can't be resolved via
+// getComputedStyle.
+
+export type SectionTextProbe = {
+  /** CSS selector within the section root. First N matches are sampled. */
+  selector: string;
+  /** Human label for the log row. */
+  name: string;
+  /** "large" if >=24px, or >=18.66px and bold; otherwise "normal". */
+  size?: "normal" | "large";
+  /** Sample at most this many matches (default 1). */
+  limit?: number;
+};
+
+export type SectionConfig = {
+  name: string;
+  /** Selector for the section root. Skipped if not present in DOM. */
+  rootSelector: string;
+  probes: SectionTextProbe[];
+};
+
+const parseAnyColor = (input: string): RGBA | null => {
+  const s = input.trim();
+  if (!s || s === "transparent") return { r: 0, g: 0, b: 0, a: 0 };
+  // rgb()/rgba()
+  const rgba = parseRGBA(s);
+  if (rgba) return rgba;
+  // #rgb / #rrggbb (computed styles rarely return these, but be defensive)
+  const hex = s.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (hex) {
+    const h = hex[1];
+    const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+    return {
+      r: parseInt(full.slice(0, 2), 16),
+      g: parseInt(full.slice(2, 4), 16),
+      b: parseInt(full.slice(4, 6), 16),
+      a: 1,
+    };
+  }
+  return null;
+};
+
+/** Walk ancestors and resolve effective background by blending alpha layers
+ *  on top of an assumed page background (white). */
+const resolveBackground = (el: Element): RGB => {
+  const layers: RGBA[] = [];
+  let cur: Element | null = el;
+  while (cur) {
+    const cs = getComputedStyle(cur);
+    const bg = parseAnyColor(cs.backgroundColor);
+    if (bg && bg.a > 0) layers.push(bg);
+    if (bg && bg.a >= 0.999) break;
+    cur = cur.parentElement;
+  }
+  // Page default: prefer <html> background, else white.
+  const htmlBg =
+    parseAnyColor(getComputedStyle(document.documentElement).backgroundColor) ??
+    { r: 255, g: 255, b: 255, a: 1 };
+  let base: RGB = { r: htmlBg.r, g: htmlBg.g, b: htmlBg.b };
+  // Apply ancestor layers from outermost to innermost.
+  for (let i = layers.length - 1; i >= 0; i--) base = blend(base, layers[i]);
+  return base;
+};
+
+/** Heuristic: WCAG "large text" = >=24px regular OR >=18.66px bold (>=700). */
+const inferSize = (el: Element): "normal" | "large" => {
+  const cs = getComputedStyle(el);
+  const px = parseFloat(cs.fontSize) || 16;
+  const weight = parseInt(cs.fontWeight, 10) || 400;
+  if (px >= 24) return "large";
+  if (px >= 18.66 && weight >= 700) return "large";
+  return "normal";
+};
+
+export const verifySectionContrastMatrix = async (
+  sections: SectionConfig[],
+) => {
+  if (!import.meta.env.DEV) return;
+  if (typeof document === "undefined") return;
+
+  // Defer until layout/paint settled so computed styles are accurate.
+  await new Promise<void>((r) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => r())),
+  );
+
+  /* eslint-disable no-console */
+  console.groupCollapsed("[a11y] Landing sections — WCAG contrast matrix");
+  let totalFail = 0;
+  let totalChecked = 0;
+
+  for (const section of sections) {
+    const root = document.querySelector(section.rootSelector);
+    if (!root) {
+      console.info(`[a11y] ${section.name}: not in DOM (skipped)`);
+      continue;
+    }
+    const rows: Array<{ ok: "pass" | "warn" | "fail"; line: string }> = [];
+
+    for (const probe of section.probes) {
+      const matches = Array.from(root.querySelectorAll(probe.selector)).slice(
+        0,
+        probe.limit ?? 1,
+      );
+      if (matches.length === 0) {
+        rows.push({ ok: "warn", line: `  ${probe.name.padEnd(18)} — selector "${probe.selector}" not found` });
+        continue;
+      }
+      matches.forEach((el, idx) => {
+        const cs = getComputedStyle(el);
+        const fg = parseAnyColor(cs.color);
+        if (!fg) return;
+        const bg = resolveBackground(el);
+        const effectiveFg: RGB = fg.a < 1 ? blend(bg, fg) : { r: fg.r, g: fg.g, b: fg.b };
+        const size = probe.size ?? inferSize(el);
+        const ratio = contrastRatio(effectiveFg, bg);
+        const v = verdict(ratio, size);
+        totalChecked++;
+        const tag = matches.length > 1 ? `[${idx + 1}]` : "";
+        const fontPx = Math.round(parseFloat(cs.fontSize) || 0);
+        const line = `  ${(probe.name + tag).padEnd(18)} ${String(fontPx).padStart(3)}px ${size.padEnd(6)} ${v.label}`;
+        if (!v.passAA) { rows.push({ ok: "fail", line }); totalFail++; }
+        else if (!v.passAAA) rows.push({ ok: "warn", line });
+        else rows.push({ ok: "pass", line });
+      });
+    }
+
+    const hasFail = rows.some((r) => r.ok === "fail");
+    const groupLabel = `[a11y] ${section.name} ${hasFail ? "❌" : "✅"}`;
+    (hasFail ? console.group : console.groupCollapsed)(groupLabel);
+    for (const r of rows) {
+      if (r.ok === "fail") console.error(r.line);
+      else if (r.ok === "warn") console.warn(r.line);
+      else console.info(r.line);
+    }
+    console.groupEnd();
+  }
+
+  const summary = `[a11y] Sections summary — ${totalChecked} checks, ${totalFail} AA failure(s)`;
+  if (totalFail > 0) console.error(summary);
+  else console.info(summary);
+  console.groupEnd();
+  /* eslint-enable no-console */
+};
+
