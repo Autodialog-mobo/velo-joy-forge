@@ -5,7 +5,7 @@ import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, A
 import stickerImg from "@/assets/velopass-sticker.jpg";
 import heroBgWebp from "@/assets/hero-cyclist-bg-edited.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-mobile.webp.asset.json";
-import heroBgAvif from "@/assets/hero-cyclist-bg.avif.asset.json";
+import heroBgAvif from "@/assets/hero-cyclist-bg-edited.webp.asset.json";
 import heroBgAvifMobile from "@/assets/hero-cyclist-bg-mobile.avif.asset.json";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
