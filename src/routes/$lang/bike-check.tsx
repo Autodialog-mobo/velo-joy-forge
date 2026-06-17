@@ -681,11 +681,21 @@ function BikeSearchPage() {
               value="UC9K4D3NCJ"
               onCopy={(v) => setCodeA(sanitizeCode(v))}
             />
-
-
-
+            <p
+              style={{
+                marginTop: 6,
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "#94A3B8",
+                lineHeight: 1.4,
+              }}
+            >
+              {t("method_a.code_hint")}
+            </p>
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
+
+
 
 
 
@@ -910,8 +920,17 @@ function BikeSearchPage() {
               placeholder="WTU212C0774E"
               style={inputStyle}
             />
-
-
+            <p
+              style={{
+                marginTop: 6,
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 13,
+                color: "#94A3B8",
+                lineHeight: 1.4,
+              }}
+            >
+              {t("method_b.frame_hint")}
+            </p>
 
             <button
               type="submit"
