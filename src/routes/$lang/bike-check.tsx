@@ -681,7 +681,15 @@ function BikeSearchPage() {
                 aria-activedescendant={activeIdx >= 0 ? `bs-brand-opt-${activeIdx}` : undefined}
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
+                onPaste={(e) => {
+                  const text = e.clipboardData?.getData("text") ?? "";
+                  if (!text) return;
+                  e.preventDefault();
+                  setBrand(text.replace(/\s+/g, " ").trim());
+                  setBrandFocused(true);
+                }}
                 onFocus={() => setBrandFocused(true)}
+
                 onBlur={() => setTimeout(() => {
                   setBrandFocused(false);
                   // Normalize to canonical on blur if the typed value is an alias or accent variant.
