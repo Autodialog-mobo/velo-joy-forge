@@ -130,7 +130,7 @@
 .hero-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(42px, 6vw, 88px); line-height: 1.03; letter-spacing: -2px; color: #fff; margin-bottom: 20px; max-width: 1100px; position: relative; z-index: 2; text-shadow: 0 2px 24px rgba(0,0,0,0.5); }
 .hero-title em { font-style: normal; color: var(--green); font-weight: 800; }
 .hero-sub { font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.78); line-height: 1.65; max-width: 520px; margin: 0 auto 32px; position: relative; z-index: 2; text-shadow: 0 1px 12px rgba(0,0,0,0.45); }
-.hero-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0 auto 40px; position: relative; z-index: 1; width: 100%; }
+.hero-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0 auto 40px; position: relative; z-index: 2; width: 100%; }
 .hero-cta-primary { display: inline-block; background: #2ECC8A; color: #0D1F3C; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 16px; padding: 14px 24px; border-radius: 10px; text-decoration: none; width: 100%; max-width: 320px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
 .hero-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(46,204,138,0.3); }
 .hero-cta-sub { font-family: 'DM Sans', sans-serif; font-size: 13px; color: rgba(255,255,255,0.55); }
