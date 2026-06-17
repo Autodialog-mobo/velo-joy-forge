@@ -838,6 +838,12 @@ function BikeSearchPage() {
               placeholder="WTU212C0774E"
               style={inputStyle}
             />
+            <ExampleCopy
+              label={t("method_b.example_label", { defaultValue: "Voorbeeld" })}
+              value="WTU212C0774E"
+              onCopy={(v) => setFrame(sanitizeAlnum(v))}
+            />
+
 
 
             <button
