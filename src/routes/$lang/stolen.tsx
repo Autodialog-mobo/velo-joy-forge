@@ -317,14 +317,23 @@ function GestolenPage() {
             className="nav-toggle"
             aria-label={t("common:nav.menu")}
             aria-expanded={navOpen}
-            onPointerUp={(event) => {
+            onPointerDown={(event) => {
+              if (event.button !== 0) return;
               event.preventDefault();
               event.stopPropagation();
               setNavOpen((o) => !o);
             }}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (!("PointerEvent" in window)) {
+                setNavOpen((o) => !o);
+              }
+            }}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
+                event.stopPropagation();
                 setNavOpen((o) => !o);
               }
             }}
