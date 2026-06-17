@@ -13,7 +13,6 @@ import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { initAnalytics } from "../lib/analytics";
-import { CookieConsent } from "@/components/CookieConsent";
 
 const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
 
