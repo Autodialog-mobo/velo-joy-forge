@@ -234,7 +234,7 @@ function SlotCodeInput({
       />
 
       {showSlots ? (
-        <div style={{ display: "flex", width: "100%", gap: 4 }}>
+        <div style={{ display: "flex", width: "100%", gap: 4, pointerEvents: "none" }}>
           {Array.from({ length: maxLength }).map((_, i) => (
             <span
               key={i}
@@ -256,10 +256,11 @@ function SlotCodeInput({
           ))}
         </div>
       ) : (
-        <span style={{ color: "#9CA3AF", fontSize: 15, fontFamily: "'DM Sans', sans-serif" }}>
+        <span style={{ color: "#9CA3AF", fontSize: 15, fontFamily: "'DM Sans', sans-serif", pointerEvents: "none" }}>
           {placeholder}
         </span>
       )}
+
     </div>
   );
 }
