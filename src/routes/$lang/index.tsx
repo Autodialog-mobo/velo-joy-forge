@@ -3,7 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.jpg";
-import heroBgAsset from "@/assets/hero-cyclist-bg.jpg.asset.json";
+import heroBgWebp from "@/assets/hero-cyclist-bg.webp.asset.json";
+import heroBgWebpMobile from "@/assets/hero-cyclist-bg-mobile.webp.asset.json";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
@@ -106,6 +107,18 @@ export const Route = createFileRoute("/$lang/")({
     });
     return {
       ...base,
+      links: [
+        ...(base.links ?? []),
+        {
+          rel: "preload",
+          as: "image",
+          href: heroBgWebp.url,
+          type: "image/webp",
+          fetchpriority: "high",
+          imagesrcset: `${heroBgWebpMobile.url} 800w, ${heroBgWebp.url} 1248w`,
+          imagesizes: "100vw",
+        } as never,
+      ],
       scripts: buildHomeJsonLd(lang).map((data) => ({
         type: "application/ld+json",
         children: JSON.stringify(data),
@@ -211,10 +224,15 @@ function VelopassHome() {
 
       {/* HERO */}
       <section className="hero scroll-target" id="hero">
-        <div
+        <img
           className="hero-bg"
-          style={{ backgroundImage: `url(${heroBgAsset.url})` }}
+          src={heroBgWebp.url}
+          srcSet={`${heroBgWebpMobile.url} 800w, ${heroBgWebp.url} 1248w`}
+          sizes="100vw"
+          alt=""
           aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="hero-overlay" aria-hidden="true" />
         <span className="hero-eyebrow"><span className="eyebrow-dot" />{t("home:hero.eyebrow")}</span>
