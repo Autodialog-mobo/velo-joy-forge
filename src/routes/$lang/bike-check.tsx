@@ -177,6 +177,14 @@ function SlotCodeInput({
   return (
     <div
       onClick={() => inputRef.current?.focus()}
+      onPaste={(e) => {
+        // Forward paste from wrapper (when context menu targets the slot spans) into the hidden input.
+        const text = e.clipboardData?.getData("text") ?? "";
+        if (!text) return;
+        e.preventDefault();
+        inputRef.current?.focus();
+        onChange(sanitize(text).slice(0, maxLength));
+      }}
       style={{
         ...inputStyle,
         display: "flex",
@@ -198,6 +206,12 @@ function SlotCodeInput({
         spellCheck={false}
         value={value}
         onChange={(e) => onChange(sanitize(e.target.value))}
+        onPaste={(e) => {
+          const text = e.clipboardData?.getData("text") ?? "";
+          if (!text) return;
+          e.preventDefault();
+          onChange(sanitize(text).slice(0, maxLength));
+        }}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder={showSlots ? undefined : placeholder}
@@ -210,8 +224,15 @@ function SlotCodeInput({
           width: "100%",
           height: "100%",
           cursor: "text",
+          // Keep caret invisible but allow native paste/selection UI to attach.
+          color: "transparent",
+          background: "transparent",
+          border: "none",
+          padding: 0,
+          font: "inherit",
         }}
       />
+
       {showSlots ? (
         <div style={{ display: "flex", width: "100%", gap: 4 }}>
           {Array.from({ length: maxLength }).map((_, i) => (
