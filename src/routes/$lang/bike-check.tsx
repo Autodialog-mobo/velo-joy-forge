@@ -817,9 +817,16 @@ function BikeSearchPage() {
               spellCheck={false}
               value={frame}
               onChange={(e) => setFrame(sanitizeAlnum(e.target.value))}
+              onPaste={(e) => {
+                const text = e.clipboardData?.getData("text") ?? "";
+                if (!text) return;
+                e.preventDefault();
+                setFrame(sanitizeAlnum(text));
+              }}
               placeholder="WTU212C0774E"
               style={inputStyle}
             />
+
 
             <button
               type="submit"
