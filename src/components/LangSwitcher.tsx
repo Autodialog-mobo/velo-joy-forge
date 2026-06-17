@@ -4,12 +4,23 @@ import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { SUPPORTED_LANGS, LANG_LABELS, LANG_COOKIE, isLang, type Lang } from "@/i18n/config";
 
-export function LangSwitcher({ currentLang, tone = "dark" }: { currentLang: Lang; tone?: "light" | "dark" }) {
+export function LangSwitcher({
+  currentLang,
+  tone = "dark",
+  isOpen,
+  onOpenChange,
+}: {
+  currentLang: Lang;
+  tone?: "light" | "dark";
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}) {
   const isLight = tone === "light";
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = isOpen !== undefined ? isOpen : internalOpen;
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,6 +30,11 @@ export function LangSwitcher({ currentLang, tone = "dark" }: { currentLang: Lang
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
+
+  function setOpen(value: boolean) {
+    if (isOpen === undefined) setInternalOpen(value);
+    onOpenChange?.(value);
+  }
 
   function swap(next: Lang) {
     setOpen(false);
