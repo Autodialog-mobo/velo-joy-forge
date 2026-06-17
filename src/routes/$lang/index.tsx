@@ -226,16 +226,26 @@ function VelopassHome() {
 
       {/* HERO */}
       <section className="hero scroll-target" id="hero">
-        <img
-          className="hero-bg"
-          src={heroBgWebp.url}
-          srcSet={`${heroBgWebpMobile.url} 800w, ${heroBgWebp.url} 1248w`}
-          sizes="100vw"
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          decoding="async"
-        />
+        <picture>
+          <source
+            type="image/avif"
+            srcSet={`${heroBgAvifMobile.url} 800w, ${heroBgAvif.url} 1248w`}
+            sizes="100vw"
+          />
+          <source
+            type="image/webp"
+            srcSet={`${heroBgWebpMobile.url} 800w, ${heroBgWebp.url} 1248w`}
+            sizes="100vw"
+          />
+          <img
+            className="hero-bg"
+            src={heroBgWebp.url}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
         <div className="hero-overlay" aria-hidden="true" />
         <span className="hero-eyebrow"><span className="eyebrow-dot" />{t("home:hero.eyebrow")}</span>
         <h1 className="hero-title">{t("home:hero.title_line_1")}<br /><em>{t("home:hero.title_line_2_em")}<br />{t("home:hero.title_line_3_em")}</em></h1>
