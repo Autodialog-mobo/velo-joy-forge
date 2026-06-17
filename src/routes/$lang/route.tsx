@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { I18nextProvider } from "react-i18next";
 import i18n, { isLang, SUPPORTED_LANGS, type Lang } from "@/i18n/config";
 import { useScrollToHash } from "@/hooks/useScrollToHash";
+import { CookieConsent } from "@/components/CookieConsent";
 
 export const Route = createFileRoute("/$lang")({
   beforeLoad: ({ params }) => {
@@ -55,6 +56,7 @@ function LangLayout() {
       <main>
         <Outlet />
       </main>
+      <CookieConsent />
     </I18nextProvider>
   );
 }
