@@ -690,7 +690,7 @@ function BikeSearchPage() {
                 lineHeight: 1.4,
               }}
             >
-              {t("method_a.code_hint")}
+              {t("method_a.code_hint", { defaultValue: "10 tekens, bijv. UC9K4D3NCJ" })}
             </p>
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
@@ -929,7 +929,7 @@ function BikeSearchPage() {
                 lineHeight: 1.4,
               }}
             >
-              {t("method_b.frame_hint")}
+              {t("method_b.frame_hint", { defaultValue: "Alfanumeriek, bijv. WTU212C0774E" })}
             </p>
 
             <button
