@@ -218,18 +218,24 @@ function SlotCodeInput({
         maxLength={maxLength}
         style={{
           position: "absolute",
-          opacity: 0,
           left: 0,
           top: 0,
           width: "100%",
           height: "100%",
           cursor: "text",
-          // Keep caret invisible but allow native paste/selection UI to attach.
+          // Keep input visible to the OS (no opacity:0) so the mobile paste
+          // callout attaches, but make text/caret/background transparent so
+          // the slot UI shows through.
           color: "transparent",
+          caretColor: "transparent",
+          WebkitTextFillColor: "transparent",
           background: "transparent",
           border: "none",
+          outline: "none",
           padding: 0,
+          margin: 0,
           font: "inherit",
+          zIndex: 2,
         }}
       />
 
