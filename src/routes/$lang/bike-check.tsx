@@ -424,7 +424,7 @@ function BikeSearchPage() {
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
         </a>
-        <ul className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
+        <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href={`/${lang}#wat-je-krijgt`}>{t("nav.what_you_get")}</a></li>
           <li><a href={`/${lang}#already-have-one`}>{t("nav.already_have_one")}</a></li>
           <li><a href={`/${lang}#order-sticker`}>{t("nav.order_sticker")}</a></li>
@@ -444,7 +444,7 @@ function BikeSearchPage() {
           </a>
           <button
             type="button"
-            className="nav-toggle"
+            className="nav-toggle" aria-controls="primary-navigation" aria-haspopup="true"
             aria-label={t("nav.menu_label")}
             aria-expanded={navOpen}
             onPointerDown={(event) => {
