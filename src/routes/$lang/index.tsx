@@ -137,6 +137,7 @@ function VelopassHome() {
   const [scanOpen, setScanOpen] = useState(false);
   const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
   const QR_STORAGE_KEY = "velopass:qr-overlay:v2";
   const [qrX, setQrX] = useState(50);
