@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle } from "lucide-react";
+import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle, Copy, Check } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
@@ -271,8 +271,76 @@ function SlotCodeInput({
   );
 }
 
-
-
+function ExampleCopy({
+  label,
+  value,
+  onCopy,
+}: {
+  label: string;
+  value: string;
+  onCopy?: (v: string) => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = value;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      onCopy?.(value);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      onCopy?.(value);
+    }
+  };
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      style={{
+        marginTop: 8,
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 6,
+        background: "transparent",
+        border: "none",
+        padding: 0,
+        cursor: "pointer",
+        fontFamily: "'DM Sans', sans-serif",
+        fontSize: 13,
+        color: "#5A7090",
+      }}
+      aria-label={`${label}: ${value}`}
+    >
+      <span>{label}:</span>
+      <span
+        style={{
+          fontFamily: "'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+          fontWeight: 500,
+          color: "#0D1F3C",
+          background: "#F1F5F9",
+          padding: "2px 6px",
+          borderRadius: 6,
+          letterSpacing: 0.4,
+        }}
+      >
+        {value}
+      </span>
+      <span style={{ display: "inline-flex", alignItems: "center", color: copied ? "#16A34A" : "#5A7090" }}>
+        {copied ? <Check size={14} strokeWidth={2.2} /> : <Copy size={14} strokeWidth={2} />}
+      </span>
+    </button>
+  );
+}
 
 const BIKE_CHECK_META = {
   nl: nlBikeCheck.meta,
@@ -608,6 +676,13 @@ function BikeSearchPage() {
               maxLength={10}
               sanitize={sanitizeCode}
             />
+            <ExampleCopy
+              label={t("method_a.example_label", { defaultValue: "Voorbeeld" })}
+              value="UC9K4D3NCJ"
+              onCopy={(v) => setCodeA(sanitizeCode(v))}
+            />
+
+
 
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
