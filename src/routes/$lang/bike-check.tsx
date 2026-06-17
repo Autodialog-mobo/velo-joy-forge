@@ -606,6 +606,12 @@ function BikeSearchPage() {
               maxLength={10}
               sanitize={sanitizeCode}
             />
+            <ExampleCopy
+              label={t("method_a.example_label", { defaultValue: "Voorbeeld" })}
+              value="UC9K4D3NCJ"
+              onCopy={(v) => setCodeA(sanitizeCode(v))}
+            />
+
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
 
