@@ -114,10 +114,10 @@ export const Route = createFileRoute("/$lang/")({
         {
           rel: "preload",
           as: "image",
-          href: heroBgWebp.url,
-          type: "image/webp",
+          href: heroBgAvif.url,
+          type: "image/avif",
           fetchpriority: "high",
-          imagesrcset: `${heroBgWebpMobile.url} 800w, ${heroBgWebp.url} 1248w`,
+          imagesrcset: `${heroBgAvifMobile.url} 800w, ${heroBgAvif.url} 1248w`,
           imagesizes: "100vw",
         } as never,
       ],
