@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle } from "lucide-react";
+import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle, Copy, Check } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
@@ -337,8 +337,8 @@ function ExampleCopy({
       >
         {value}
       </span>
-      <span style={{ fontSize: 12, color: copied ? "#16A34A" : "#5A7090" }}>
-        {copied ? "✓" : "📋"}
+      <span style={{ display: "inline-flex", alignItems: "center", color: copied ? "#16A34A" : "#5A7090" }}>
+        {copied ? <Check size={14} strokeWidth={2.2} /> : <Copy size={14} strokeWidth={2} />}
       </span>
     </button>
   );
