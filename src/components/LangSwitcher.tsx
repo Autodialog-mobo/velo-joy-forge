@@ -95,7 +95,7 @@ export function LangSwitcher({
             border: "1px solid rgba(255,255,255,0.12)",
             borderRadius: 10,
             boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
-            zIndex: 50,
+            zIndex: 350,
           }}
         >
           {SUPPORTED_LANGS.map((code) => (
