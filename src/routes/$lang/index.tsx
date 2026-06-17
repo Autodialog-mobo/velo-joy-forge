@@ -342,6 +342,7 @@ function VelopassHome() {
               event.preventDefault();
               event.stopPropagation();
               setNavOpen((o) => !o);
+              setLangOpen(false);
             }}
             onClick={(event) => {
               event.preventDefault();
