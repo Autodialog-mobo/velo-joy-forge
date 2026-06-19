@@ -199,5 +199,12 @@ export const removeAdmin = createServerFn({ method: "POST" })
         .eq("user_id", data.userId)
         .in("role", ["admin", "staff"]);
     }
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "admin.removed",
+      target_type: "user",
+      target_id: data.userId ?? email,
+      metadata: { email },
+    });
     return { ok: true };
   });
