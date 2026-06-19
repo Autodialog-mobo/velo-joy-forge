@@ -590,6 +590,13 @@ function AdminPage() {
                 style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
               >
                 Webhook status
+              </a>{" "}
+              ·{" "}
+              <a
+                href="/admin-users"
+                style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+              >
+                Gebruikers
               </a>
             </p>
           </div>

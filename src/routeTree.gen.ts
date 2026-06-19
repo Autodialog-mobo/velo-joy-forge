@@ -24,6 +24,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin-webhooks'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin-users'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
 import { Route as LangShopRouteImport } from './routes/$lang/shop'
@@ -117,6 +118,11 @@ const AuthenticatedAdminWebhooksRoute =
     path: '/admin-webhooks',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/admin-users',
+  path: '/admin-users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -230,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang/': typeof LangIndexRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang': typeof LangIndexRoute
@@ -297,6 +305,7 @@ export interface FileRoutesById {
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin-users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/$lang/': typeof LangIndexRoute
@@ -332,6 +341,7 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/admin'
+    | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
     | '/$lang/'
@@ -364,6 +374,7 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/admin'
+    | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
     | '/$lang'
@@ -398,6 +409,7 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/_authenticated/admin'
+    | '/_authenticated/admin-users'
     | '/_authenticated/admin-webhooks'
     | '/bestellen/bedankt'
     | '/$lang/'
@@ -529,6 +541,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-webhooks'
       fullPath: '/admin-webhooks'
       preLoaderRoute: typeof AuthenticatedAdminWebhooksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin-users': {
+      id: '/_authenticated/admin-users'
+      path: '/admin-users'
+      fullPath: '/admin-users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin': {
@@ -695,11 +714,13 @@ const LangRouteRouteWithChildren = LangRouteRoute._addFileChildren(
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
 }
 
