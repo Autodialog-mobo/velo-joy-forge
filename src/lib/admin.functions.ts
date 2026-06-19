@@ -6,10 +6,11 @@ async function assertAdmin(supabase: any, userId: string) {
     .from("user_roles")
     .select("role")
     .eq("user_id", userId)
-    .eq("role", "admin")
+    .in("role", ["admin", "staff"])
+    .limit(1)
     .maybeSingle();
   if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: admin role required");
+  if (!data) throw new Error("Forbidden: admin or staff role required");
 }
 
 function actorEmail(context: any): string {
