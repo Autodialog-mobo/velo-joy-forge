@@ -25,6 +25,7 @@ import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin-webhooks'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin-users'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin-audit'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
 import { Route as LangShopRouteImport } from './routes/$lang/shop'
@@ -121,6 +122,11 @@ const AuthenticatedAdminWebhooksRoute =
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   id: '/admin-users',
   path: '/admin-users',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+  id: '/admin-audit',
+  path: '/admin-audit',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -236,6 +242,7 @@ export interface FileRoutesByFullPath {
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -269,6 +276,7 @@ export interface FileRoutesByTo {
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -305,6 +313,7 @@ export interface FileRoutesById {
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin-users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -341,6 +350,7 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/admin'
+    | '/admin-audit'
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
@@ -374,6 +384,7 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/admin'
+    | '/admin-audit'
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
@@ -409,6 +420,7 @@ export interface FileRouteTypes {
     | '/$lang/shop'
     | '/$lang/stolen'
     | '/_authenticated/admin'
+    | '/_authenticated/admin-audit'
     | '/_authenticated/admin-users'
     | '/_authenticated/admin-webhooks'
     | '/bestellen/bedankt'
@@ -548,6 +560,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-users'
       fullPath: '/admin-users'
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin-audit': {
+      id: '/_authenticated/admin-audit'
+      path: '/admin-audit'
+      fullPath: '/admin-audit'
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin': {
@@ -714,12 +733,14 @@ const LangRouteRouteWithChildren = LangRouteRoute._addFileChildren(
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
 }

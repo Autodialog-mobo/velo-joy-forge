@@ -609,6 +609,13 @@ function AdminPage() {
                   >
                     Gebruikers
                   </a>
+                  {" · "}
+                  <a
+                    href="/admin-audit"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Audit log
+                  </a>
                 </>
               )}
             </p>
