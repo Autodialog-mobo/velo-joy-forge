@@ -108,6 +108,7 @@ async function bulkStatusUpdate(
   const { supabase, userId } = context as any;
   await assertAdmin(supabase, userId);
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { writeAudit } = await import("./audit.server");
   const { data: updated, error } = await (supabaseAdmin as any)
     .from("orders")
     .update({ status: toStatus, updated_at: new Date().toISOString() })
@@ -116,10 +117,11 @@ async function bulkStatusUpdate(
     .select("id");
   if (error) throw new Error(error.message);
   const actor = actorEmail(context);
+  const updatedIds = (updated ?? []).map((r: any) => r.id);
   await Promise.all(
-    (updated ?? []).map((r: any) =>
+    updatedIds.map((id: string) =>
       logEvent(supabaseAdmin, {
-        order_id: r.id,
+        order_id: id,
         event_type: eventType,
         from_status: fromStatus,
         to_status: toStatus,
@@ -128,6 +130,12 @@ async function bulkStatusUpdate(
       }),
     ),
   );
+  await writeAudit(context, {
+    action: `order.${eventType}`,
+    target_type: "order",
+    target_id: updatedIds.length === 1 ? updatedIds[0] : null,
+    metadata: { ids: updatedIds, from: fromStatus, to: toStatus, count: updatedIds.length },
+  });
   return { ok: true };
 }
 
@@ -177,6 +185,12 @@ export const softDeleteOrder = createServerFn({ method: "POST" })
       actor: actorEmail(context),
       actor_type: "admin",
     });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "order.deleted",
+      target_type: "order",
+      target_id: data.orderId,
+    });
     return { ok: true };
   });
 
@@ -197,6 +211,12 @@ export const restoreOrder = createServerFn({ method: "POST" })
       event_type: "restored",
       actor: actorEmail(context),
       actor_type: "admin",
+    });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "order.restored",
+      target_type: "order",
+      target_id: data.orderId,
     });
     return { ok: true };
   });
@@ -252,4 +272,23 @@ export const listWebhookEvents = createServerFn({ method: "POST" })
     }
 
     return { events: events ?? [], summary };
+  });
+
+export const listAuditLog = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { limit?: number; action?: string | null } = {}) => d ?? {})
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdminStrict(supabase, userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const limit = Math.min(Math.max(data?.limit ?? 200, 1), 1000);
+    let q = (supabaseAdmin as any)
+      .from("admin_audit_log")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    if (data?.action) q = q.eq("action", data.action);
+    const { data: entries, error } = await q;
+    if (error) throw new Error(error.message);
+    return { entries: entries ?? [] };
   });

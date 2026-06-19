@@ -118,6 +118,13 @@ export const inviteAdmin = createServerFn({ method: "POST" })
         .from("user_roles")
         .upsert({ user_id: existingUserId, role: data.role }, { onConflict: "user_id,role" });
       await (supabaseAdmin as any).auth.resetPasswordForEmail(data.email, { redirectTo });
+      const { writeAudit } = await import("./audit.server");
+      await writeAudit(context, {
+        action: "admin.invite",
+        target_type: "user",
+        target_id: existingUserId,
+        metadata: { email: data.email, role: data.role, status: "existing_user_role_granted" },
+      });
       return { ok: true, status: "existing_user_role_granted" as const };
     }
 
@@ -127,6 +134,13 @@ export const inviteAdmin = createServerFn({ method: "POST" })
     );
     if (invErr) throw new Error(invErr.message);
 
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "admin.invite",
+      target_type: "email",
+      target_id: data.email,
+      metadata: { role: data.role, status: "invited" },
+    });
     return { ok: true, status: "invited" as const };
   });
 
@@ -155,6 +169,13 @@ export const updateMemberRole = createServerFn({ method: "POST" })
     await (supabaseAdmin as any)
       .from("user_roles")
       .upsert({ user_id: data.userId, role }, { onConflict: "user_id,role" });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "admin.role_updated",
+      target_type: "user",
+      target_id: data.userId,
+      metadata: { email, role },
+    });
     return { ok: true };
   });
 
@@ -178,5 +199,12 @@ export const removeAdmin = createServerFn({ method: "POST" })
         .eq("user_id", data.userId)
         .in("role", ["admin", "staff"]);
     }
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "admin.removed",
+      target_type: "user",
+      target_id: data.userId ?? email,
+      metadata: { email },
+    });
     return { ok: true };
   });
