@@ -592,20 +592,25 @@ function AdminPage() {
               Fulfillment
             </h1>
             <p className="mt-1.5 text-[13px]" style={{ color: TEXT_SEC }}>
-              Beheer betaalde bestellingen en print verzendlabels ·{" "}
-              <a
-                href="/admin-webhooks"
-                style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
-              >
-                Webhook status
-              </a>{" "}
-              ·{" "}
-              <a
-                href="/admin-users"
-                style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
-              >
-                Gebruikers
-              </a>
+              Beheer betaalde bestellingen en print verzendlabels
+              {isAdmin && (
+                <>
+                  {" · "}
+                  <a
+                    href="/admin-webhooks"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Webhook status
+                  </a>
+                  {" · "}
+                  <a
+                    href="/admin-users"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Gebruikers
+                  </a>
+                </>
+              )}
             </p>
           </div>
           <div className="flex items-center gap-4">
