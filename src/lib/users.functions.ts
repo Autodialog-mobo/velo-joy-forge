@@ -127,6 +127,13 @@ export const inviteAdmin = createServerFn({ method: "POST" })
     );
     if (invErr) throw new Error(invErr.message);
 
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "admin.invite",
+      target_type: "email",
+      target_id: data.email,
+      metadata: { role: data.role, status: "invited" },
+    });
     return { ok: true, status: "invited" as const };
   });
 
