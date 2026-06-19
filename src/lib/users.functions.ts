@@ -169,6 +169,13 @@ export const updateMemberRole = createServerFn({ method: "POST" })
     await (supabaseAdmin as any)
       .from("user_roles")
       .upsert({ user_id: data.userId, role }, { onConflict: "user_id,role" });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "admin.role_updated",
+      target_type: "user",
+      target_id: data.userId,
+      metadata: { email, role },
+    });
     return { ok: true };
   });
 
