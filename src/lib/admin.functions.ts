@@ -185,6 +185,12 @@ export const softDeleteOrder = createServerFn({ method: "POST" })
       actor: actorEmail(context),
       actor_type: "admin",
     });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "order.deleted",
+      target_type: "order",
+      target_id: data.orderId,
+    });
     return { ok: true };
   });
 
