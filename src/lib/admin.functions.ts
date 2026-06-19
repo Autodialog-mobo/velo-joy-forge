@@ -6,6 +6,18 @@ async function assertAdmin(supabase: any, userId: string) {
     .from("user_roles")
     .select("role")
     .eq("user_id", userId)
+    .in("role", ["admin", "staff"])
+    .limit(1)
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!data) throw new Error("Forbidden: admin or staff role required");
+}
+
+async function assertAdminStrict(supabase: any, userId: string) {
+  const { data, error } = await supabase
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
     .eq("role", "admin")
     .maybeSingle();
   if (error) throw new Error(error.message);
@@ -194,7 +206,7 @@ export const listWebhookEvents = createServerFn({ method: "POST" })
   .inputValidator((d: { limit?: number } = {}) => d ?? {})
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    await assertAdminStrict(supabase, userId);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const limit = Math.min(Math.max(data?.limit ?? 100, 1), 500);
 
