@@ -108,6 +108,7 @@ async function bulkStatusUpdate(
   const { supabase, userId } = context as any;
   await assertAdmin(supabase, userId);
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { writeAudit } = await import("./audit.server");
   const { data: updated, error } = await (supabaseAdmin as any)
     .from("orders")
     .update({ status: toStatus, updated_at: new Date().toISOString() })
@@ -116,10 +117,11 @@ async function bulkStatusUpdate(
     .select("id");
   if (error) throw new Error(error.message);
   const actor = actorEmail(context);
+  const updatedIds = (updated ?? []).map((r: any) => r.id);
   await Promise.all(
-    (updated ?? []).map((r: any) =>
+    updatedIds.map((id: string) =>
       logEvent(supabaseAdmin, {
-        order_id: r.id,
+        order_id: id,
         event_type: eventType,
         from_status: fromStatus,
         to_status: toStatus,
@@ -128,6 +130,12 @@ async function bulkStatusUpdate(
       }),
     ),
   );
+  await writeAudit(context, {
+    action: `order.${eventType}`,
+    target_type: "order",
+    target_id: updatedIds.length === 1 ? updatedIds[0] : null,
+    metadata: { ids: updatedIds, from: fromStatus, to: toStatus, count: updatedIds.length },
+  });
   return { ok: true };
 }
 
