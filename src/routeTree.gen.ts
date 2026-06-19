@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
 import { Route as GestolenRouteImport } from './routes/gestolen'
 import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
@@ -44,6 +45,11 @@ import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfessionalsRoute = ProfessionalsRouteImport.update({
@@ -209,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
@@ -240,6 +247,7 @@ export interface FileRoutesByTo {
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
@@ -274,6 +282,7 @@ export interface FileRoutesById {
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
@@ -308,6 +317,7 @@ export interface FileRouteTypes {
     | '/fiets-controleren'
     | '/gestolen'
     | '/professionals'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/$lang/already-have-one'
     | '/$lang/assistance'
@@ -339,6 +349,7 @@ export interface FileRouteTypes {
     | '/fiets-controleren'
     | '/gestolen'
     | '/professionals'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/$lang/already-have-one'
     | '/$lang/assistance'
@@ -372,6 +383,7 @@ export interface FileRouteTypes {
     | '/fiets-controleren'
     | '/gestolen'
     | '/professionals'
+    | '/reset-password'
     | '/sitemap.xml'
     | '/$lang/already-have-one'
     | '/$lang/assistance'
@@ -406,6 +418,7 @@ export interface RootRouteChildren {
   FietsControlerenRoute: typeof FietsControlerenRoute
   GestolenRoute: typeof GestolenRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
@@ -418,6 +431,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/professionals': {
@@ -709,6 +729,7 @@ const rootRouteChildren: RootRouteChildren = {
   FietsControlerenRoute: FietsControlerenRoute,
   GestolenRoute: GestolenRoute,
   ProfessionalsRoute: ProfessionalsRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
