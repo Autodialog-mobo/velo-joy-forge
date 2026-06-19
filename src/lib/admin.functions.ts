@@ -212,6 +212,12 @@ export const restoreOrder = createServerFn({ method: "POST" })
       actor: actorEmail(context),
       actor_type: "admin",
     });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: "order.restored",
+      target_type: "order",
+      target_id: data.orderId,
+    });
     return { ok: true };
   });
 
