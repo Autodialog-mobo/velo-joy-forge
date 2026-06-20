@@ -1,11 +1,7 @@
 // Server-only: sends the Velopass order confirmation email via Resend.
-// Verified domain is pending — until velopass.com is verified in Resend we send
-// from onboarding@resend.dev (Resend's sandbox sender). Flip EMAIL_FROM to
-// go@velopass.com once the domain is verified.
+// Domain velopass.com is verified — sender uses the branded address.
 
-type Lang = "nl" | "fr" | "de" | "en";
-
-const EMAIL_FROM = "Velopass <onboarding@resend.dev>";
+const EMAIL_FROM = "Velopass <go@velopass.com>";
 
 
 const BRAND = {
