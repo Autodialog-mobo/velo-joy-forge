@@ -133,17 +133,6 @@ function AdminPage() {
   });
   const isAdmin = !!roleData?.roles?.includes("admin");
 
-  // Auto-open order from URL search param (e.g. coming from email-events page)
-  useEffect(() => {
-    if (!search.order || !data) return;
-    const target = (data.orders ?? []).find((o: any) => o.id === search.order);
-    if (target) {
-      openDetail(target, (data.orders ?? []).filter((o: any) => !o.deleted_at));
-      // Clear the search param so a refresh doesn't reopen
-      navigate({ search: (prev) => ({ ...prev, order: undefined }) });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search.order, data?.orders]);
 
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
