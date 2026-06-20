@@ -221,6 +221,59 @@ export const restoreOrder = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const sendTestOrderConfirmation = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: { orderId: string; to?: string }) => d)
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdmin(supabase, userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const { data: order, error } = await (supabaseAdmin as any)
+      .from("orders")
+      .select("id, customer_email, lang, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country")
+      .eq("id", data.orderId)
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    if (!order) throw new Error("Order niet gevonden");
+
+    const { data: lines } = await (supabaseAdmin as any)
+      .from("order_lines")
+      .select("bundle_key, quantity, unit_price_cents")
+      .eq("order_id", data.orderId);
+
+    const recipient = (data.to && data.to.trim()) || actorEmail(context);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(recipient)) {
+      throw new Error("Geen geldig admin-e-mailadres beschikbaar");
+    }
+
+    const { sendOrderConfirmationEmail } = await import("@/lib/email/order-confirmation.server");
+    const result = await sendOrderConfirmationEmail({
+      to: recipient,
+      lang: order.lang,
+      orderId: order.id,
+      items: (lines ?? []).map((l: any) => ({
+        bundleKey: l.bundle_key,
+        quantity: l.quantity,
+        unitPriceCents: l.unit_price_cents,
+      })),
+      amountSubtotalCents: order.amount_subtotal ?? 0,
+      amountShippingCents: order.amount_shipping ?? 0,
+      amountTotalCents: order.amount_total ?? 0,
+      amountVatCents: order.amount_tax ?? 0,
+      shipping: {
+        name: order.shipping_name ?? "",
+        line1: order.shipping_line1 ?? "",
+        postalCode: order.shipping_postal_code ?? "",
+        city: order.shipping_city ?? "",
+        country: order.shipping_country ?? "",
+      },
+    });
+
+    if (!result.ok) throw new Error(result.error);
+    return { ok: true, to: recipient, originalCustomer: order.customer_email, shippingName: order.shipping_name };
+  });
+
 export const listWebhookEvents = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: { limit?: number } = {}) => d ?? {})
