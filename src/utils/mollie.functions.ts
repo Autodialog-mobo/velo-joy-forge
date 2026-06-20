@@ -137,6 +137,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           redirectUrl: `${redirectBase}?payment_id=pending`,
           webhookUrl: `${webhookBase}/api/public/payments/mollie-webhook`,
           billingEmail: data.customerEmail,
+          billingAddress: shippingAddress,
           shippingAddress,
           locale: mollieLocale,
           metadata: {
