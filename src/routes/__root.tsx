@@ -12,6 +12,10 @@ import { getRequestUrl } from "@tanstack/react-start/server";
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import ogShareImage from "../assets/og-share.jpg?url";
+
+const SITE_URL = "https://velopass.com";
+const OG_IMAGE_URL = `${SITE_URL}${ogShareImage}`;
 import { initAnalytics } from "../lib/analytics";
 
 const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
