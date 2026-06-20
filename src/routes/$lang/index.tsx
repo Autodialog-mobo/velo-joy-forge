@@ -184,8 +184,8 @@ function VelopassHome() {
             imageUrl: heroBgWebpMobile.url,
             textRegion: { x: 0.20, y: 0.30, w: 0.50, h: 0.45 },
             overlays: [
-              "rgba(6,14,28,0.65)", // radial center
-              "rgba(6,14,28,0.80)", // linear mid
+              "rgba(6,14,28,0.32)", // upper-mid (30%)
+              "rgba(6,14,28,0.62)", // lower-mid (65%)
             ],
           },
         ],
