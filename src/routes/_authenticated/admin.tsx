@@ -12,7 +12,7 @@ import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/
 import { supabase } from "@/integrations/supabase/client";
 
 const adminSearchSchema = z.object({
-  order: fallback(z.string().optional(), undefined).default(undefined),
+  order: z.string().optional(),
 });
 
 export const Route = createFileRoute("/_authenticated/admin")({
