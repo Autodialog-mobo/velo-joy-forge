@@ -284,9 +284,10 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
           }
 
           await logCall("success");
+          wlog("info", "webhook completed", { durationMs: Date.now() - webhookStartedAt });
           return new Response("ok", { status: 200 });
         } catch (e: any) {
-          console.error("Mollie webhook error:", e);
+          wlog("error", "Mollie webhook threw exception", { error: e?.message, stack: e?.stack, durationMs: Date.now() - webhookStartedAt });
           await logCall("error", e?.message ? String(e.message).slice(0, 500) : "unknown error");
           return new Response("Webhook error", { status: 500 });
         }
