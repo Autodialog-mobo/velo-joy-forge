@@ -452,6 +452,7 @@ function VelopassHome() {
           <Link
             to="/$lang/stolen"
             params={{ lang: currentLang }}
+            className="stolen-link"
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontWeight: 400,

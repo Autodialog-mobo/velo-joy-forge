@@ -566,6 +566,11 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
   .hero-sub { font-size: 15px; margin-bottom: 20px; }
   .hero-cta-wrap { margin-bottom: 28px; }
   .hero-cta-primary { max-width: 100%; }
+  .hero-cta-sub { color: rgba(255,255,255,0.92); text-shadow: 0 1px 8px rgba(0,0,0,0.85), 0 1px 2px rgba(0,0,0,0.6); }
+  .hero .stolen-link { color: rgba(255,255,255,0.9) !important; text-shadow: 0 1px 8px rgba(0,0,0,0.85), 0 1px 2px rgba(0,0,0,0.6); }
+  .trust-text { color: rgba(255,255,255,0.85); text-shadow: 0 1px 8px rgba(0,0,0,0.85), 0 1px 2px rgba(0,0,0,0.6); }
+  .trust-text strong { color: #fff; }
+  .av { border-color: rgba(255,255,255,0.45); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
   .path-split { gap: 12px; margin-bottom: 32px; }
   .path-card { padding: 20px 18px; }
 }
