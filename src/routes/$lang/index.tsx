@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
-import stickerImg from "@/assets/velopass-sticker.jpg";
+import stickerImg from "@/assets/velopass-sticker.webp";
 import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.asset.json";
 import heroBgAvif from "@/assets/hero-cyclist-bg-harmonized-desktop.avif.asset.json";
@@ -484,7 +484,7 @@ function VelopassHome() {
                 ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
-              <img src={stickerImg} alt={t("home:sticker.img_alt")} width={1024} height={1024} />
+              <img src={stickerImg} alt={t("home:sticker.img_alt")} width={1024} height={1024} loading="lazy" decoding="async" />
               <div className="scan-overlay" aria-hidden="true">
                 <span className="scan-corner tl" />
                 <span className="scan-corner tr" />
