@@ -144,6 +144,7 @@ function AdminPage() {
     dir: "desc",
   });
   const [detailOrder, setDetailOrder] = useState<any>(null);
+  useEffect(() => { setTestEmailMsg(null); }, [detailOrder?.id]);
   const [labelCopied, setLabelCopied] = useState(false);
   const [detailBusy, setDetailBusy] = useState(false);
   const [batchStatus, setBatchStatus] = useState<string | null>(null);
