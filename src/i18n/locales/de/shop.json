@@ -60,7 +60,7 @@
     },
     "p3": {
       "title": "Ein Scan, das ganze Bild",
-      "body": "Scanne den QR-Code an jedem Fahrrad – auch an solchen, die du noch nie verkauft hast. Du siehst sofort die Wartungshistorie, aktive Serviceleistungen und Vertragsinformationen wie das verbleibende Leasingbudget. Ein unbekanntes Fahrrad? Es wird automatisch in deinem Kassensystem angelegt.",
+      "body": "Scanne den QR-Code an jedem Fahrrad – auch an solchen, die du noch nie verkauft hast. Du siehst sofort die Wartungshistorie, aktive Serviceleistungen und Vertragsinformationen wie das verbleibende Leasingbudget. Ein unbekanntes Fahrrad? Es wird automatisch in deinem Kassensystem angelegt. Kunden zeigen ihren Velopass als Pass in Apple Wallet oder Google Wallet — du scannst ihn an der Theke und siehst sofort, um welches Fahrrad es geht, laufende Verträge (Leasing, verbleibendes Wartungsbudget) und die Servicehistorie. Eine reibungslose Interaktion, die den Kunden an dein Geschäft bindet.",
       "reported": "Ein <strong>als gestohlen gemeldetes</strong> Fahrrad gescannt? Über Velopass kannst du den Besitzer und/oder die Polizei benachrichtigen."
     },
     "p4": {

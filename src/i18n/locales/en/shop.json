@@ -60,7 +60,7 @@
     },
     "p3": {
       "title": "One scan, full picture",
-      "body": "Scan the QR on any bike — even bikes you've never sold. You immediately see the maintenance history, active services and contract info like a remaining lease budget. An unknown bike? Automatically created in your POS system.",
+      "body": "Scan the QR on any bike — even bikes you've never sold. You immediately see the maintenance history, active services and contract info like a remaining lease budget. An unknown bike? Automatically created in your POS system. Customers show their Velopass as a pass in Apple Wallet or Google Wallet — you scan it at the counter and instantly see which bike, running contracts (lease, remaining maintenance budget) and service history. One smooth counter interaction that keeps the customer tied to your shop.",
       "reported": "Scan a <strong>REPORTED</strong> bike? Via Velopass you can notify the owner and/or police."
     },
     "p4": {

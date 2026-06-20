@@ -60,7 +60,7 @@
     },
     "p3": {
       "title": "Un seul scan, une image complète",
-      "body": "Scanne le QR code sur n'importe quel vélo, même ceux que tu n'as jamais vendus. Tu verras immédiatement l'historique d'entretien, les services en cours et les informations contractuelles, comme le budget de location restant. Un vélo inconnu ? Il est automatiquement créé dans ton système de caisse.",
+      "body": "Scanne le QR code sur n'importe quel vélo, même ceux que tu n'as jamais vendus. Tu verras immédiatement l'historique d'entretien, les services en cours et les informations contractuelles, comme le budget de location restant. Un vélo inconnu ? Il est automatiquement créé dans ton système de caisse. Les clients présentent leur Velopass sous forme de pass dans Apple Wallet ou Google Wallet — tu le scannes au comptoir et tu vois aussitôt le vélo, les contrats en cours (leasing, budget d'entretien restant) et l'historique d'entretien. Une interaction fluide qui rattache le client à ton magasin.",
       "reported": "Tu as repéré un vélo <strong>signalé</strong> ? Rends-toi sur Velopass pour prévenir le propriétaire et/ou la police."
     },
     "p4": {
