@@ -5,9 +5,6 @@ type Lang = "nl" | "fr" | "de" | "en";
 
 const EMAIL_FROM = "Velopass <go@velopass.com>";
 
-
-
-
 const BRAND = {
   bg: "#ffffff",
   ink: "#0D1F3C", // Velopass navy
