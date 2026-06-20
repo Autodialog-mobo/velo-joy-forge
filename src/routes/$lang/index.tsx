@@ -633,7 +633,7 @@ function VelopassHome() {
           ))}
         </div>
         <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-start" }}>
-          <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-p">{t("home:paths.shop.cta_primary")}</a>
+          <a href="https://app.velopass.com" className="btn-p">{t("home:paths.shop.cta_primary")}</a>
           <div className="no-mail-help" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
             <button
               type="button"
