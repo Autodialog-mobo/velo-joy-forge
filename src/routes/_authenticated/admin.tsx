@@ -1,15 +1,22 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink } from "lucide-react";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
+import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation } from "@/lib/admin.functions";
 import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
 
+const adminSearchSchema = z.object({
+  order: z.string().optional(),
+});
+
 export const Route = createFileRoute("/_authenticated/admin")({
+  validateSearch: zodValidator(adminSearchSchema),
   component: AdminPage,
 });
 
@@ -105,7 +112,8 @@ const EYEBROW: React.CSSProperties = {
 };
 
 function AdminPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: "/admin" });
+  const search = Route.useSearch();
   const fetchOrders = useServerFn(listOrders);
   const doPrint = useServerFn(markPrinted);
   const doShip = useServerFn(markShipped);
@@ -124,6 +132,7 @@ function AdminPage() {
     queryFn: () => fetchRoles({ data: {} as any }),
   });
   const isAdmin = !!roleData?.roles?.includes("admin");
+
 
 
   const [filter, setFilter] = useState<StatusFilter>("paid");
@@ -241,6 +250,18 @@ function AdminPage() {
     }
     return m;
   }, [lines]);
+
+  // Auto-open order from URL search param (e.g. coming from email-events page)
+  useEffect(() => {
+    if (!search.order || !data) return;
+    const target = orders.find((o: any) => o.id === search.order);
+    if (target) {
+      openDetail(target, activeOrders);
+      // Clear the search param so a refresh doesn't reopen
+      navigate({ search: (prev: any) => ({ ...prev, order: undefined }) });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search.order, data]);
 
   const activeOrders = useMemo(() => orders.filter((o: any) => !o.deleted_at), [orders]);
   const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
@@ -620,6 +641,13 @@ function AdminPage() {
                     style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
                   >
                     Audit log
+                  </a>
+                  {" · "}
+                  <a
+                    href="/admin-email-events"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    E-mail events
                   </a>
                 </>
               )}
