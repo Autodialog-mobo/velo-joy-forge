@@ -8,12 +8,12 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import shopsData from "@/data/shops.json";
 import { RegisterForm } from "@/components/ProRegisterForm";
-import leasingAppMockup from "@/assets/leasing-app-mockup-v2.png";
-import fabOxford from "@/assets/fab-oxford.jpg";
-import fabBike43 from "@/assets/fab-bike43.jpg";
-import fabFrameId from "@/assets/fab-frameid.jpg";
-import fabGranville from "@/assets/fab-granville.jpg";
-import kbcLogo from "@/assets/kbc-logo.png";
+import leasingAppMockup from "@/assets/leasing-app-mockup-v2.webp";
+import fabOxford from "@/assets/fab-oxford.webp";
+import fabBike43 from "@/assets/fab-bike43.webp";
+import fabFrameId from "@/assets/fab-frameid.webp";
+import fabGranville from "@/assets/fab-granville.webp";
+import kbcLogo from "@/assets/kbc-logo.webp";
 
 import { buildLocalizedHead } from "@/i18n/seo";
 import { verifyHeroContrastMatrix } from "@/lib/a11y/contrast-check";
