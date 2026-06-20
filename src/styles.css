@@ -1007,3 +1007,23 @@ html { overflow-x: clip; }
   .vp-nav .nav-logo .logo-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 }
 
+
+.vc-wallet-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex: 1;
+}
+.vc-wallet-img {
+  width: 120px;
+  height: auto;
+  border-radius: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 12px 28px rgba(13,31,60,0.18), 0 2px 6px rgba(13,31,60,0.08);
+  border: 1px solid rgba(13,31,60,0.06);
+  background: #fff;
+}
+@media (max-width: 640px) {
+  .vc-wallet-row { flex-direction: column; align-items: stretch; gap: 16px; }
+  .vc-wallet-img { width: 180px; align-self: center; }
+}
