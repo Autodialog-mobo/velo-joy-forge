@@ -1014,6 +1014,32 @@ html { overflow-x: clip; }
   align-items: flex-start;
   flex: 1;
 }
+.vc-wallet-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.vc-wallet-body {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
+.vc-wallet-load {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+.vc-wallet-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0;
+}
 .vc-wallet-img {
   width: 120px;
   height: auto;
@@ -1025,5 +1051,13 @@ html { overflow-x: clip; }
 }
 @media (max-width: 640px) {
   .vc-wallet-row { flex-direction: column; align-items: stretch; gap: 16px; }
-  .vc-wallet-img { width: 180px; align-self: center; }
+  .vc-wallet-img { width: 160px; align-self: center; }
+  .vc-wallet-body { font-size: 13.5px; }
+}
+@media (max-width: 480px) {
+  .vc-wallet-img { width: 140px; }
+  .vc-wallet-text { gap: 8px; }
+  .vc-wallet-body { font-size: 13px; line-height: 1.6; }
+  .vc-wallet-load { font-size: 12.5px; }
+  .vc-wallet-note { font-size: 12.5px; }
 }
