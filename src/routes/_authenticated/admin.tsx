@@ -1418,7 +1418,7 @@ function AdminPage() {
                       })()}
 
                       {!detailOrder.deleted_at && (
-                        <div className="mt-3">
+                        <div className="mt-3 space-y-2">
                           <button
                             type="button"
                             disabled={testEmailBusy}
@@ -1446,6 +1446,50 @@ function AdminPage() {
                           >
                             {testEmailBusy ? "Verzenden…" : "Stuur testmail naar mij"}
                           </button>
+                          {(() => {
+                            const customerEmail = (detailOrder as any).customer_email as string | undefined;
+                            return (
+                              <button
+                                type="button"
+                                disabled={testEmailBusy || !customerEmail}
+                                onClick={async () => {
+                                  if (!customerEmail) return;
+                                  const ok = window.confirm(
+                                    `Bevestigingsemail opnieuw versturen naar ${customerEmail}?`,
+                                  );
+                                  if (!ok) return;
+                                  setTestEmailBusy(true);
+                                  setTestEmailMsg(null);
+                                  try {
+                                    const res: any = await doSendTestEmail({
+                                      data: { orderId: detailOrder.id, to: customerEmail },
+                                    });
+                                    setTestEmailMsg({
+                                      kind: "ok",
+                                      text: `Bevestigingsemail opnieuw verstuurd naar ${res.to}`,
+                                    });
+                                  } catch (e: any) {
+                                    setTestEmailMsg({ kind: "err", text: e?.message || "Versturen mislukt" });
+                                  } finally {
+                                    setTestEmailBusy(false);
+                                  }
+                                }}
+                                className="h-9 px-3 rounded-[10px] text-[12px] font-medium w-full"
+                                style={{
+                                  background: GREEN,
+                                  border: `1px solid ${GREEN}`,
+                                  color: "#fff",
+                                  opacity: !customerEmail ? 0.5 : 1,
+                                }}
+                              >
+                                {testEmailBusy
+                                  ? "Verzenden…"
+                                  : customerEmail
+                                  ? `Stuur bevestiging opnieuw naar klant (${customerEmail})`
+                                  : "Geen klant-e-mail bekend"}
+                              </button>
+                            );
+                          })()}
                           {testEmailMsg && (
                             <p
                               className="mt-2 text-[12px]"
