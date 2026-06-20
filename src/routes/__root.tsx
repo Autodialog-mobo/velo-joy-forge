@@ -12,6 +12,10 @@ import { getRequestUrl } from "@tanstack/react-start/server";
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import ogShareImage from "../assets/og-share.jpg?url";
+
+const SITE_URL = "https://velopass.com";
+const OG_IMAGE_URL = `${SITE_URL}${ogShareImage}`;
 import { initAnalytics } from "../lib/analytics";
 
 const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
@@ -95,8 +99,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "VeloPass NextGen is a web application for ordering Frame-IDs with a shopping cart and integrated payment." },
       { property: "og:description", content: "VeloPass NextGen is a web application for ordering Frame-IDs with a shopping cart and integrated payment." },
       { name: "twitter:description", content: "VeloPass NextGen is a web application for ordering Frame-IDs with a shopping cart and integrated payment." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ef7836eb-afea-48b5-b10d-bfa22cac85ef/id-preview-11bb7c97--973248f2-3aa9-493e-b716-2b089779e41a.lovable.app-1780933438182.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/ef7836eb-afea-48b5-b10d-bfa22cac85ef/id-preview-11bb7c97--973248f2-3aa9-493e-b716-2b089779e41a.lovable.app-1780933438182.png" },
+      { property: "og:image", content: OG_IMAGE_URL },
+      { name: "twitter:image", content: OG_IMAGE_URL },
       { property: "og:type", content: "website" },
     ],
     links: [
