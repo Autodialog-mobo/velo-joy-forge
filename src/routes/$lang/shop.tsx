@@ -726,6 +726,8 @@ function Leasing() {
             <img
               src={leasingAppMockup}
               alt={t("leasing.appAlt")}
+              loading="lazy"
+              decoding="async"
               style={{ width: "100%", maxHeight: 520, objectFit: "contain", borderRadius: 12, filter: "drop-shadow(0 20px 40px rgba(13,31,60,0.15))" }}
             />
           </div>
