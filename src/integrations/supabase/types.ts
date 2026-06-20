@@ -74,6 +74,48 @@ export type Database = {
         }
         Relationships: []
       }
+      email_send_log: {
+        Row: {
+          created_at: string
+          duration_ms: number | null
+          error_message: string | null
+          http_status: number | null
+          id: string
+          metadata: Json | null
+          order_id: string | null
+          recipient: string | null
+          resend_id: string | null
+          status: string
+          template: string
+        }
+        Insert: {
+          created_at?: string
+          duration_ms?: number | null
+          error_message?: string | null
+          http_status?: number | null
+          id?: string
+          metadata?: Json | null
+          order_id?: string | null
+          recipient?: string | null
+          resend_id?: string | null
+          status: string
+          template: string
+        }
+        Update: {
+          created_at?: string
+          duration_ms?: number | null
+          error_message?: string | null
+          http_status?: number | null
+          id?: string
+          metadata?: Json | null
+          order_id?: string | null
+          recipient?: string | null
+          resend_id?: string | null
+          status?: string
+          template?: string
+        }
+        Relationships: []
+      }
       order_events: {
         Row: {
           actor: string | null
