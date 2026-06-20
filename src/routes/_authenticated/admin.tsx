@@ -1607,6 +1607,8 @@ function AdminPage() {
                             case "canceled":
                             case "cancelled": return "Geannuleerd";
                             case "refunded": return "Terugbetaald";
+                            case "confirmation_email_resent": return "Bevestigingsemail opnieuw verstuurd";
+                            case "confirmation_email_test_sent": return "Testmail verstuurd";
                             default: return e.event_type;
                           }
                         };
@@ -1619,6 +1621,11 @@ function AdminPage() {
                             {events.map((e: any) => (
                               <li key={e.id} className="text-[13px] leading-[1.45]">
                                 <div style={{ color: TEXT_PRI }}>{labelFor(e)}</div>
+                                {e.note && (
+                                  <div className="text-[11px]" style={{ color: TEXT_MUTED }}>
+                                    {e.note}
+                                  </div>
+                                )}
                                 <div className="text-[11px]" style={{ color: TEXT_MUTED }}>
                                   {actorFor(e)} ·{" "}
                                   {new Date(e.created_at).toLocaleString("nl-BE", {
