@@ -287,9 +287,51 @@ function renderHtml(input: OrderConfirmationInput, lang: Lang): string {
 }
 
 export async function sendOrderConfirmationEmail(input: OrderConfirmationInput): Promise<{ ok: true; id?: string } | { ok: false; error: string }> {
+  const startedAt = Date.now();
+  const logPrefix = `[order-email order=${input.orderId.slice(0, 8)}]`;
+  const log = (level: "info" | "warn" | "error", msg: string, extra?: Record<string, unknown>) => {
+    const line = `${logPrefix} ${msg}`;
+    if (level === "error") console.error(line, extra ?? "");
+    else if (level === "warn") console.warn(line, extra ?? "");
+    else console.log(line, extra ?? "");
+  };
+
+  const writeLog = async (row: {
+    status: string;
+    resend_id?: string | null;
+    http_status?: number | null;
+    error_message?: string | null;
+    metadata?: Record<string, unknown>;
+  }) => {
+    try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      await (supabaseAdmin.from("email_send_log") as any).insert({
+        template: "order_confirmation",
+        order_id: input.orderId,
+        recipient: input.to ?? null,
+        status: row.status,
+        resend_id: row.resend_id ?? null,
+        http_status: row.http_status ?? null,
+        error_message: row.error_message ?? null,
+        duration_ms: Date.now() - startedAt,
+        metadata: row.metadata ?? null,
+      });
+    } catch (e) {
+      console.error(`${logPrefix} email_send_log insert failed:`, e);
+    }
+  };
+
+  log("info", "send started", { to: input.to, lang: input.lang, items: input.items.length, total: input.amountTotalCents });
+
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return { ok: false, error: "RESEND_API_KEY not configured" };
+  if (!apiKey) {
+    log("error", "RESEND_API_KEY not configured");
+    await writeLog({ status: "config_error", error_message: "RESEND_API_KEY not configured" });
+    return { ok: false, error: "RESEND_API_KEY not configured" };
+  }
   if (!input.to || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.to)) {
+    log("error", "invalid recipient", { to: input.to });
+    await writeLog({ status: "invalid_recipient", error_message: `Invalid recipient: ${input.to}` });
     return { ok: false, error: "Invalid recipient email" };
   }
 
@@ -300,7 +342,13 @@ export async function sendOrderConfirmationEmail(input: OrderConfirmationInput):
   const subject = t.subject(ref);
 
   const lovableKey = process.env.LOVABLE_API_KEY;
-  if (!lovableKey) return { ok: false, error: "LOVABLE_API_KEY not configured" };
+  if (!lovableKey) {
+    log("error", "LOVABLE_API_KEY not configured");
+    await writeLog({ status: "config_error", error_message: "LOVABLE_API_KEY not configured" });
+    return { ok: false, error: "LOVABLE_API_KEY not configured" };
+  }
+
+  log("info", "calling Resend gateway", { from: EMAIL_FROM, subject, htmlBytes: html.length });
 
   try {
     const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
@@ -318,11 +366,32 @@ export async function sendOrderConfirmationEmail(input: OrderConfirmationInput):
       }),
     });
     const body = await res.json().catch(() => ({}));
+    const resendId = (body as any)?.id ?? null;
+
     if (!res.ok) {
-      return { ok: false, error: (body as any)?.message || (body as any)?.error || `Resend HTTP ${res.status}` };
+      const errorMsg = (body as any)?.message || (body as any)?.error || `Resend HTTP ${res.status}`;
+      log("error", "Resend gateway returned error", { httpStatus: res.status, body });
+      await writeLog({
+        status: "gateway_error",
+        http_status: res.status,
+        error_message: String(errorMsg).slice(0, 1000),
+        metadata: { from: EMAIL_FROM, subject, body },
+      });
+      return { ok: false, error: errorMsg };
     }
-    return { ok: true, id: (body as any)?.id };
+
+    log("info", "Resend accepted email", { httpStatus: res.status, resendId });
+    await writeLog({
+      status: "sent",
+      http_status: res.status,
+      resend_id: resendId,
+      metadata: { from: EMAIL_FROM, subject },
+    });
+    return { ok: true, id: resendId ?? undefined };
   } catch (e: any) {
-    return { ok: false, error: e?.message ? String(e.message) : "Resend request failed" };
+    const msg = e?.message ? String(e.message) : "Resend request failed";
+    log("error", "Resend request threw", { error: msg, stack: e?.stack });
+    await writeLog({ status: "exception", error_message: msg.slice(0, 1000) });
+    return { ok: false, error: msg };
   }
 }
