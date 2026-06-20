@@ -98,6 +98,44 @@ export const listOrderEvents = createServerFn({ method: "POST" })
     return { events: events ?? [] };
   });
 
+export const listEmailEvents = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: {
+      eventType?: "confirmation_email_resent" | "confirmation_email_test_sent" | "all";
+      orderId?: string | null;
+      recipient?: string | null;
+      limit?: number;
+    } = {}) => d ?? {},
+  )
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdmin(supabase, userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const limit = Math.min(Math.max(data?.limit ?? 200, 1), 1000);
+
+    let q = (supabaseAdmin as any)
+      .from("order_events")
+      .select("*")
+      .in("event_type", ["confirmation_email_resent", "confirmation_email_test_sent"])
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (data?.eventType && data.eventType !== "all") {
+      q = q.eq("event_type", data.eventType);
+    }
+    if (data?.orderId && data.orderId.trim()) {
+      q = q.ilike("order_id", `%${data.orderId.trim()}%`);
+    }
+    if (data?.recipient && data.recipient.trim()) {
+      q = q.ilike("note", `%${data.recipient.trim()}%`);
+    }
+
+    const { data: events, error } = await q;
+    if (error) throw new Error(error.message);
+    return { events: events ?? [] };
+  });
+
 async function bulkStatusUpdate(
   context: any,
   orderIds: string[],
