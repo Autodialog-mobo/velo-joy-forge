@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents } from "@/lib/admin.functions";
+import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation } from "@/lib/admin.functions";
 import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
@@ -114,6 +114,10 @@ function AdminPage() {
   const doSoftDelete = useServerFn(softDeleteOrder);
   const doRestore = useServerFn(restoreOrder);
   const fetchEvents = useServerFn(listOrderEvents);
+  const doSendTestEmail = useServerFn(sendTestOrderConfirmation);
+  const [testEmailBusy, setTestEmailBusy] = useState(false);
+  const [testEmailMsg, setTestEmailMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
+  // reset further below once detailOrder is declared
   const fetchRoles = useServerFn(getMyRoles);
   const { data: roleData } = useQuery({
     queryKey: ["my-roles"],
@@ -140,6 +144,7 @@ function AdminPage() {
     dir: "desc",
   });
   const [detailOrder, setDetailOrder] = useState<any>(null);
+  useEffect(() => { setTestEmailMsg(null); }, [detailOrder?.id]);
   const [labelCopied, setLabelCopied] = useState(false);
   const [detailBusy, setDetailBusy] = useState(false);
   const [batchStatus, setBatchStatus] = useState<string | null>(null);
@@ -1411,7 +1416,48 @@ function AdminPage() {
                         }
                         return null;
                       })()}
+
+                      {!detailOrder.deleted_at && (
+                        <div className="mt-3">
+                          <button
+                            type="button"
+                            disabled={testEmailBusy}
+                            onClick={async () => {
+                              setTestEmailBusy(true);
+                              setTestEmailMsg(null);
+                              try {
+                                const res: any = await doSendTestEmail({ data: { orderId: detailOrder.id } });
+                                setTestEmailMsg({
+                                  kind: "ok",
+                                  text: `Testmail verstuurd naar ${res.to} — klantnaam: ${res.shippingName || "(leeg)"}`,
+                                });
+                              } catch (e: any) {
+                                setTestEmailMsg({ kind: "err", text: e?.message || "Versturen mislukt" });
+                              } finally {
+                                setTestEmailBusy(false);
+                              }
+                            }}
+                            className="h-9 px-3 rounded-[10px] text-[12px] font-medium w-full"
+                            style={{
+                              background: SURFACE,
+                              border: `1px solid ${SURFACE_BORDER}`,
+                              color: TEXT_PRI,
+                            }}
+                          >
+                            {testEmailBusy ? "Verzenden…" : "Stuur testmail naar mij"}
+                          </button>
+                          {testEmailMsg && (
+                            <p
+                              className="mt-2 text-[12px]"
+                              style={{ color: testEmailMsg.kind === "ok" ? GREEN : "#E05252" }}
+                            >
+                              {testEmailMsg.text}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
+
 
                     <div>
                       <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
