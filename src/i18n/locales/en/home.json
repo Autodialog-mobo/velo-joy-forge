@@ -30,7 +30,11 @@
         "s3": { "title": "Your Velopass is ready", "body": "Theft protection, roadside assistance, insurance and your digital service book — all accessible via one scan of the QR code on your Frame-ID." }
       },
       "cta_primary": "Open your Velopass",
-      "cta_secondary": "Didn't get the email? →"
+      "cta_secondary": "Didn't get the email? →",
+      "no_mail_trigger": "Didn't get the email?",
+      "no_mail_step1": "First, check your spam or junk folder. The activation email is often there.",
+      "no_mail_step2": "Still nothing? Find your bike via the Velopass scan or brand and frame number.",
+      "no_mail_step2_cta": "Check your bike →"
     },
     "order": {
       "tag": "No Frame-ID yet?",

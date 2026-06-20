@@ -30,7 +30,11 @@
         "s3": { "title": "Je Velopass is klaar", "body": "Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID." }
       },
       "cta_primary": "Open je Velopass",
-      "cta_secondary": "Geen mail ontvangen? →"
+      "cta_secondary": "Geen mail ontvangen? →",
+      "no_mail_trigger": "Geen mail ontvangen?",
+      "no_mail_step1": "Controleer eerst je spam- of ongewenste-mailmap. De activatiemail staat er vaak.",
+      "no_mail_step2": "Geen mail? Vind je fiets via de Velopass-scan of merk en framenummer.",
+      "no_mail_step2_cta": "Fiets controleren →"
     },
     "order": {
       "tag": "Nog geen Frame-ID?",

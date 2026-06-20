@@ -30,7 +30,11 @@
         "s3": { "title": "Dein Velopass ist bereit", "body": "Dein Fahrrad und dein digitaler Pass sind mit deinem Namen verknüpft." }
       },
       "cta_primary": "Öffne deinen Velopass",
-      "cta_secondary": "Keine E-Mail erhalten? →"
+      "cta_secondary": "Keine E-Mail erhalten? →",
+      "no_mail_trigger": "Keine E-Mail erhalten?",
+      "no_mail_step1": "Überprüfe zuerst deinen Spam- oder Junk-Ordner. Die Aktivierungsmail landet oft dort.",
+      "no_mail_step2": "Keine Mail gefunden? Finde dein Fahrrad über den Velopass-Scan oder Marke und Rahmennummer.",
+      "no_mail_step2_cta": "Fahrrad prüfen →"
     },
     "order": {
       "tag": "Noch kein Frame-ID?",
