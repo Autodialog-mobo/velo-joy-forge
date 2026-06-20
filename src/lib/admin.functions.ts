@@ -446,7 +446,7 @@ export const listEmailSendLog = createServerFn({ method: "POST" })
       .select("status")
       .order("created_at", { ascending: false })
       .limit(2000);
-    const statuses = Array.from(new Set((statusRows ?? []).map((r: any) => r.status))).sort();
+    const statuses = Array.from(new Set((statusRows ?? []).map((r: any) => String(r.status)))).sort() as string[];
 
     return { entries: entries ?? [], statuses };
   });
