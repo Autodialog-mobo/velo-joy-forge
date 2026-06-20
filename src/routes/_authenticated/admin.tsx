@@ -251,6 +251,18 @@ function AdminPage() {
     return m;
   }, [lines]);
 
+  // Auto-open order from URL search param (e.g. coming from email-events page)
+  useEffect(() => {
+    if (!search.order || !data) return;
+    const target = orders.find((o: any) => o.id === search.order);
+    if (target) {
+      openDetail(target, activeOrders);
+      // Clear the search param so a refresh doesn't reopen
+      navigate({ search: (prev: any) => ({ ...prev, order: undefined }) });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search.order, data]);
+
   const activeOrders = useMemo(() => orders.filter((o: any) => !o.deleted_at), [orders]);
   const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
 
