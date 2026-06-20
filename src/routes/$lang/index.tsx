@@ -573,7 +573,7 @@ function VelopassHome() {
           </div>
           <div className="vc">
             <div className="vc-icon"><Store size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
-            <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flex: 1 }}>
+            <div className="vc-wallet-row">
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
                 <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
@@ -587,20 +587,13 @@ function VelopassHome() {
                 </p>
               </div>
               <img
+                className="vc-wallet-img"
                 src={walletPassImg.url}
                 alt={t("home:benefits.cards.service_book_wallet_alt")}
                 loading="lazy"
-                style={{
-                  width: 120,
-                  height: "auto",
-                  borderRadius: 14,
-                  flexShrink: 0,
-                  boxShadow: "0 12px 28px rgba(13,31,60,0.18), 0 2px 6px rgba(13,31,60,0.08)",
-                  border: "1px solid rgba(13,31,60,0.06)",
-                  background: "#fff",
-                }}
               />
             </div>
+
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg></div>
