@@ -574,17 +574,11 @@ function VelopassHome() {
           <div className="vc">
             <div className="vc-icon"><Store size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
             <div className="vc-wallet-row">
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="vc-wallet-text">
                 <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
-                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
-                  {t("home:benefits.cards.service_book_body")}
-                </p>
-                <p style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 10, lineHeight: 1.6 }}>
-                  {t("home:benefits.cards.service_book_wallet_load")}
-                </p>
-                <p style={{ fontSize: 13, color: "var(--text-muted)", fontStyle: "italic", marginTop: 10, lineHeight: 1.6 }}>
-                  {t("home:benefits.cards.service_book_note")}
-                </p>
+                <p className="vc-wallet-body">{t("home:benefits.cards.service_book_body")}</p>
+                <p className="vc-wallet-load">{t("home:benefits.cards.service_book_wallet_load")}</p>
+                <p className="vc-wallet-note">{t("home:benefits.cards.service_book_note")}</p>
               </div>
               <img
                 className="vc-wallet-img"
@@ -593,7 +587,6 @@ function VelopassHome() {
                 loading="lazy"
               />
             </div>
-
           </div>
           <div className="vc">
             <div className="vc-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round"><circle cx="12" cy="12" r="10" /><path d="M12 8v4l3 3" /></svg></div>
