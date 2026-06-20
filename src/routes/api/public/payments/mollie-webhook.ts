@@ -39,8 +39,15 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
       POST: async ({ request }) => {
         const originHost = request.headers.get("host");
         const originKind = classifyOrigin(originHost);
+        const webhookStartedAt = Date.now();
         let payloadId: string | null = null;
         let paymentStatus: string | null = null;
+        const wlog = (level: "info" | "warn" | "error", msg: string, extra?: Record<string, unknown>) => {
+          const line = `[mollie-webhook host=${originHost} id=${payloadId ?? "?"}] ${msg}`;
+          if (level === "error") console.error(line, extra ?? "");
+          else if (level === "warn") console.warn(line, extra ?? "");
+          else console.log(line, extra ?? "");
+        };
 
         const logCall = async (status: "success" | "error", errorMessage: string | null = null) => {
           try {
@@ -58,19 +65,24 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
           }
         };
 
+        wlog("info", "webhook received", { originKind });
+
         try {
           const form = await request.formData();
           const id = form.get("id");
           if (typeof id !== "string" || !/^tr_[a-zA-Z0-9]+$/.test(id)) {
+            wlog("error", "invalid payment id in body", { id });
             await logCall("error", "Invalid id");
             return new Response("Invalid id", { status: 400 });
           }
           payloadId = id;
+          wlog("info", "fetching Mollie payment");
 
           const payment = await fetchMolliePayment(id);
           const p: any = payment;
           const status: string = p.status;
           paymentStatus = status;
+          wlog("info", "Mollie payment fetched", { status, amount: p.amount, hasShipping: !!(p.shippingAddress ?? p.metadata?.shipping) });
           const amountCents = Math.round(parseFloat(p.amount.value) * 100);
           const environment = process.env.MOLLIE_API_KEY?.startsWith("live_")
             ? "live"
@@ -91,16 +103,26 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
 
           // Fetch previous status (if any) for transition logging
           const { data: existing } = await (supabaseAdmin.from("orders") as any)
-            .select("id, status")
+            .select("id, status, email_confirmation_sent_at, customer_email")
             .eq("mollie_payment_id", p.id)
             .maybeSingle();
           const prevStatus: string | null = existing?.status ?? null;
+          wlog("info", "previous order state", {
+            existed: !!existing,
+            prevStatus,
+            alreadyEmailed: !!existing?.email_confirmation_sent_at,
+            existingEmail: existing?.customer_email,
+          });
 
-          const { data: upserted } = await (supabaseAdmin.from("orders") as any).upsert(
+          const customerEmail = p.metadata?.email ?? p.billingEmail ?? p.customerEmail ?? "";
+          if (!customerEmail) {
+            wlog("warn", "no customer email in Mollie payload", { metadataKeys: Object.keys(p.metadata ?? {}) });
+          }
+
+          const { data: upserted, error: upsertError } = await (supabaseAdmin.from("orders") as any).upsert(
             {
               mollie_payment_id: p.id,
-              customer_email:
-                p.metadata?.email ?? p.billingEmail ?? p.customerEmail ?? "",
+              customer_email: customerEmail,
               price_id: items[0]?.priceId ?? "unknown",
               product_name: items.length
                 ? items.map((i) => `${i.priceId} × ${i.quantity}`).join(", ")
@@ -126,7 +148,13 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             { onConflict: "mollie_payment_id" },
           ).select("id").single();
 
+          if (upsertError) {
+            wlog("error", "order upsert failed", { error: upsertError });
+          }
+
           const orderId = upserted?.id;
+          wlog("info", "order upserted", { orderId, statusTransition: `${prevStatus} → ${status}` });
+
           if (orderId && items.length) {
             await (supabaseAdmin.from("order_lines") as any).delete().eq("order_id", orderId);
             const rows = items
@@ -143,7 +171,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                 };
               });
             if (rows.length) {
-              await (supabaseAdmin.from("order_lines") as any).insert(rows);
+              const { error: linesError } = await (supabaseAdmin.from("order_lines") as any).insert(rows);
+              if (linesError) wlog("error", "order_lines insert failed", { error: linesError });
+              else wlog("info", "order_lines inserted", { count: rows.length });
+            } else {
+              wlog("warn", "no recognized bundle items to insert", { items });
             }
           }
 
@@ -158,7 +190,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                 actor_type: "system",
               });
             } catch (e) {
-              console.error("order_events insert failed:", e);
+              wlog("error", "order_events insert failed", { error: e });
             }
           }
 
@@ -166,18 +198,47 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
           // Atomic guard: only the first webhook delivery that flips
           // email_confirmation_sent_at from NULL → now() actually sends.
           if (orderId && status === "paid") {
+            wlog("info", "status is paid — attempting email claim");
             try {
-              const { data: claimed } = await (supabaseAdmin.from("orders") as any)
+              const { data: claimed, error: claimError } = await (supabaseAdmin.from("orders") as any)
                 .update({ email_confirmation_sent_at: new Date().toISOString() })
                 .eq("id", orderId)
                 .is("email_confirmation_sent_at", null)
                 .select("id, customer_email, lang, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country")
                 .maybeSingle();
 
-              if (claimed?.customer_email) {
+              if (claimError) {
+                wlog("error", "email claim update failed", { error: claimError });
+              }
+
+              if (!claimed) {
+                wlog("info", "email already claimed by another delivery — skipping send");
+              } else if (!claimed.customer_email) {
+                wlog("warn", "claimed order has empty customer_email — cannot send", { orderId });
+                // Release the claim since we did not actually send
+                await (supabaseAdmin.from("orders") as any)
+                  .update({ email_confirmation_sent_at: null })
+                  .eq("id", orderId);
+                try {
+                  const { supabaseAdmin: sa } = { supabaseAdmin };
+                  await (sa.from("email_send_log") as any).insert({
+                    template: "order_confirmation",
+                    order_id: orderId,
+                    recipient: null,
+                    status: "skipped_no_recipient",
+                    error_message: "Order has no customer_email",
+                  });
+                } catch {}
+              } else {
                 const { data: lines } = await (supabaseAdmin.from("order_lines") as any)
                   .select("bundle_key, quantity, unit_price_cents")
                   .eq("order_id", orderId);
+
+                wlog("info", "calling sendOrderConfirmationEmail", {
+                  to: claimed.customer_email,
+                  lang: claimed.lang,
+                  lineCount: lines?.length ?? 0,
+                });
 
                 const { sendOrderConfirmationEmail } = await import("@/lib/email/order-confirmation.server");
                 const result = await sendOrderConfirmationEmail({
@@ -202,21 +263,24 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                   },
                 });
                 if (!result.ok) {
-                  // Roll back the claim so a future retry can try again.
+                  wlog("error", "order confirmation email failed — releasing claim", { error: result.error });
                   await (supabaseAdmin.from("orders") as any)
                     .update({ email_confirmation_sent_at: null })
                     .eq("id", orderId);
-                  console.error("order confirmation email failed:", result.error);
+                } else {
+                  wlog("info", "order confirmation email sent", { resendId: result.id });
                 }
               }
-            } catch (e) {
-              console.error("order confirmation email error:", e);
+            } catch (e: any) {
+              wlog("error", "order confirmation email threw exception", { error: e?.message, stack: e?.stack });
               try {
                 await (supabaseAdmin.from("orders") as any)
                   .update({ email_confirmation_sent_at: null })
                   .eq("id", orderId);
               } catch {}
             }
+          } else if (orderId && status !== "paid") {
+            wlog("info", "status is not paid — no email sent", { status });
           }
 
           await logCall("success");
