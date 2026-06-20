@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents } from "@/lib/admin.functions";
+import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation } from "@/lib/admin.functions";
 import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
@@ -114,6 +114,9 @@ function AdminPage() {
   const doSoftDelete = useServerFn(softDeleteOrder);
   const doRestore = useServerFn(restoreOrder);
   const fetchEvents = useServerFn(listOrderEvents);
+  const doSendTestEmail = useServerFn(sendTestOrderConfirmation);
+  const [testEmailBusy, setTestEmailBusy] = useState(false);
+  const [testEmailMsg, setTestEmailMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
   const fetchRoles = useServerFn(getMyRoles);
   const { data: roleData } = useQuery({
     queryKey: ["my-roles"],
