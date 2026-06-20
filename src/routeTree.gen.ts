@@ -25,6 +25,7 @@ import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin-webhooks'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin-users'
+import { Route as AuthenticatedAdminEmailLogRouteImport } from './routes/_authenticated/admin-email-log'
 import { Route as AuthenticatedAdminEmailEventsRouteImport } from './routes/_authenticated/admin-email-events'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin-audit'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -125,6 +126,12 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
   path: '/admin-users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminEmailLogRoute =
+  AuthenticatedAdminEmailLogRouteImport.update({
+    id: '/admin-email-log',
+    path: '/admin-email-log',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAdminEmailEventsRoute =
   AuthenticatedAdminEmailEventsRouteImport.update({
     id: '/admin-email-events',
@@ -251,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
+  '/admin-email-log': typeof AuthenticatedAdminEmailLogRoute
   '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -286,6 +294,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
+  '/admin-email-log': typeof AuthenticatedAdminEmailLogRoute
   '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -324,6 +333,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
+  '/_authenticated/admin-email-log': typeof AuthenticatedAdminEmailLogRoute
   '/_authenticated/admin-users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -362,6 +372,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin-audit'
     | '/admin-email-events'
+    | '/admin-email-log'
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
@@ -397,6 +408,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin-audit'
     | '/admin-email-events'
+    | '/admin-email-log'
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
@@ -434,6 +446,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/admin-audit'
     | '/_authenticated/admin-email-events'
+    | '/_authenticated/admin-email-log'
     | '/_authenticated/admin-users'
     | '/_authenticated/admin-webhooks'
     | '/bestellen/bedankt'
@@ -573,6 +586,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-users'
       fullPath: '/admin-users'
       preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin-email-log': {
+      id: '/_authenticated/admin-email-log'
+      path: '/admin-email-log'
+      fullPath: '/admin-email-log'
+      preLoaderRoute: typeof AuthenticatedAdminEmailLogRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin-email-events': {
@@ -755,6 +775,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminEmailEventsRoute: typeof AuthenticatedAdminEmailEventsRoute
+  AuthenticatedAdminEmailLogRoute: typeof AuthenticatedAdminEmailLogRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
 }
@@ -763,6 +784,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminEmailEventsRoute: AuthenticatedAdminEmailEventsRoute,
+  AuthenticatedAdminEmailLogRoute: AuthenticatedAdminEmailLogRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
 }
