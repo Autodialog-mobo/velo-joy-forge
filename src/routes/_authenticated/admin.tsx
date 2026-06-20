@@ -1414,7 +1414,48 @@ function AdminPage() {
                         }
                         return null;
                       })()}
+
+                      {!detailOrder.deleted_at && (
+                        <div className="mt-3">
+                          <button
+                            type="button"
+                            disabled={testEmailBusy}
+                            onClick={async () => {
+                              setTestEmailBusy(true);
+                              setTestEmailMsg(null);
+                              try {
+                                const res: any = await doSendTestEmail({ data: { orderId: detailOrder.id } });
+                                setTestEmailMsg({
+                                  kind: "ok",
+                                  text: `Testmail verstuurd naar ${res.to} — klantnaam: ${res.shippingName || "(leeg)"}`,
+                                });
+                              } catch (e: any) {
+                                setTestEmailMsg({ kind: "err", text: e?.message || "Versturen mislukt" });
+                              } finally {
+                                setTestEmailBusy(false);
+                              }
+                            }}
+                            className="h-9 px-3 rounded-[10px] text-[12px] font-medium w-full"
+                            style={{
+                              background: SURFACE,
+                              border: `1px solid ${SURFACE_BORDER}`,
+                              color: TEXT_PRI,
+                            }}
+                          >
+                            {testEmailBusy ? "Verzenden…" : "Stuur testmail naar mij"}
+                          </button>
+                          {testEmailMsg && (
+                            <p
+                              className="mt-2 text-[12px]"
+                              style={{ color: testEmailMsg.kind === "ok" ? GREEN : "#E05252" }}
+                            >
+                              {testEmailMsg.text}
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
+
 
                     <div>
                       <h4 className="mb-2 flex items-center gap-1.5" style={EYEBROW}>
