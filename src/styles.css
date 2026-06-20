@@ -560,7 +560,7 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
 
 @media (max-width: 768px) {
   .hero { padding: 96px 5vw 32px; min-height: auto; }
-  .hero-eyebrow { margin: 12px 0 16px; font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; padding: 6px 16px; }
+  .hero-eyebrow { margin: 12px 0 16px; font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; padding: 6px 16px; background: rgba(13,31,60,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(46,204,138,0.25); text-shadow: 0 1px 8px rgba(0,0,0,0.9); }
   .eyebrow-dot { width: 6px; height: 6px; }
   .hero-title { font-size: 36px !important; letter-spacing: -1px; margin-bottom: 16px; }
   .hero-sub { font-size: 15px; margin-bottom: 20px; }
