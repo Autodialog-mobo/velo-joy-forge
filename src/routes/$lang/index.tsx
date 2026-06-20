@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight } from "lucide-react";
+import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.webp";
 import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.asset.json";
@@ -144,6 +144,7 @@ function VelopassHome() {
   const [qrY, setQrY] = useState(49);
   const [qrSize, setQrSize] = useState(26);
   const [tunerOpen, setTunerOpen] = useState(false);
+  const [noMailOpen, setNoMailOpen] = useState(false);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(QR_STORAGE_KEY);
@@ -631,9 +632,35 @@ function VelopassHome() {
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <div style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-start" }}>
           <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-p">{t("home:paths.shop.cta_primary")}</a>
-          <a href="https://login.velopass.com/login?lng=nl-nl" className="btn-s">{t("home:paths.shop.cta_secondary")}</a>
+          <div className="no-mail-help" style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+            <button
+              type="button"
+              className="btn-s no-mail-trigger"
+              onClick={() => setNoMailOpen((o) => !o)}
+              aria-expanded={noMailOpen}
+              style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+            >
+              {t("home:paths.shop.no_mail_trigger")}
+              <ChevronDown size={14} strokeWidth={2.2} style={{ transform: noMailOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease" }} />
+            </button>
+            {noMailOpen && (
+              <div className="no-mail-steps" style={{ marginTop: 12, padding: "16px 18px", background: "rgba(13,31,60,0.45)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.08)", maxWidth: 380 }}>
+                <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
+                  <span style={{ flexShrink: 0, width: 22, height: 22, borderRadius: "50%", background: "rgba(46,204,138,0.15)", color: "#2ECC8A", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700 }}>1</span>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: "rgba(255,255,255,0.85)" }}>{t("home:paths.shop.no_mail_step1")}</p>
+                </div>
+                <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <span style={{ flexShrink: 0, width: 22, height: 22, borderRadius: "50%", background: "rgba(46,204,138,0.15)", color: "#2ECC8A", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700 }}>2</span>
+                  <div>
+                    <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: "rgba(255,255,255,0.85)" }}>{t("home:paths.shop.no_mail_step2")}</p>
+                    <Link to="/$lang/bike-check" params={{ lang: currentLang }} style={{ display: "inline-block", marginTop: 8, fontSize: 14, fontWeight: 600, color: "#2ECC8A", textDecoration: "none" }}>{t("home:paths.shop.no_mail_step2_cta")}</Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
