@@ -649,6 +649,13 @@ function AdminPage() {
                   >
                     E-mail events
                   </a>
+                  {" · "}
+                  <a
+                    href="/admin-email-log"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Verzendlog
+                  </a>
                 </>
               )}
             </p>
