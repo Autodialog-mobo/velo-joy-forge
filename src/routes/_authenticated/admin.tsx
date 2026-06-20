@@ -117,7 +117,7 @@ function AdminPage() {
   const doSendTestEmail = useServerFn(sendTestOrderConfirmation);
   const [testEmailBusy, setTestEmailBusy] = useState(false);
   const [testEmailMsg, setTestEmailMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
-  useEffect(() => { setTestEmailMsg(null); }, [/* reset when switching order */ ]);
+  // reset further below once detailOrder is declared
   const fetchRoles = useServerFn(getMyRoles);
   const { data: roleData } = useQuery({
     queryKey: ["my-roles"],
