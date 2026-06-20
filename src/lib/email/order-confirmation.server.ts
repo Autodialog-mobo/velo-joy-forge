@@ -5,8 +5,8 @@
 
 type Lang = "nl" | "fr" | "de" | "en";
 
-const EMAIL_FROM = "Velopass <onboarding@resend.dev>";
-// const EMAIL_FROM = "Velopass <go@velopass.com>"; // enable once velopass.com is verified in Resend
+const EMAIL_FROM = "Velopass <go@velopass.com>";
+
 
 const BRAND = {
   bg: "#ffffff",
