@@ -271,8 +271,28 @@ export const sendTestOrderConfirmation = createServerFn({ method: "POST" })
     });
 
     if (!result.ok) throw new Error(result.error);
+
+    const isCustomer =
+      !!order.customer_email &&
+      recipient.toLowerCase() === String(order.customer_email).toLowerCase();
+    await logEvent(supabaseAdmin, {
+      order_id: order.id,
+      event_type: isCustomer ? "confirmation_email_resent" : "confirmation_email_test_sent",
+      actor: actorEmail(context),
+      actor_type: "admin",
+      note: `Verzonden naar ${recipient}`,
+    });
+    const { writeAudit } = await import("./audit.server");
+    await writeAudit(context, {
+      action: isCustomer ? "order.email.resent" : "order.email.test_sent",
+      target_type: "order",
+      target_id: order.id,
+      metadata: { recipient, is_customer: isCustomer },
+    });
+
     return { ok: true, to: recipient, originalCustomer: order.customer_email, shippingName: order.shipping_name };
   });
+
 
 export const listWebhookEvents = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
