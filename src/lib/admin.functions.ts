@@ -403,3 +403,50 @@ export const listAuditLog = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { entries: entries ?? [] };
   });
+
+export const listEmailSendLog = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: {
+      status?: string | null;
+      orderId?: string | null;
+      recipient?: string | null;
+      sinceIso?: string | null;
+      untilIso?: string | null;
+      limit?: number;
+    } = {}) => d ?? {},
+  )
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdmin(supabase, userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const limit = Math.min(Math.max(data?.limit ?? 500, 1), 2000);
+
+    let q = (supabaseAdmin as any)
+      .from("email_send_log")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+
+    if (data?.status && data.status !== "all") q = q.eq("status", data.status);
+    if (data?.orderId && data.orderId.trim()) {
+      q = q.ilike("order_id", `%${data.orderId.trim()}%`);
+    }
+    if (data?.recipient && data.recipient.trim()) {
+      q = q.ilike("recipient", `%${data.recipient.trim()}%`);
+    }
+    if (data?.sinceIso) q = q.gte("created_at", data.sinceIso);
+    if (data?.untilIso) q = q.lte("created_at", data.untilIso);
+
+    const { data: entries, error } = await q;
+    if (error) throw new Error(error.message);
+
+    const { data: statusRows } = await (supabaseAdmin as any)
+      .from("email_send_log")
+      .select("status")
+      .order("created_at", { ascending: false })
+      .limit(2000);
+    const statuses = Array.from(new Set((statusRows ?? []).map((r: any) => r.status))).sort();
+
+    return { entries: entries ?? [], statuses };
+  });
