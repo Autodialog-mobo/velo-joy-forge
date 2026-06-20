@@ -290,11 +290,15 @@ export async function sendOrderConfirmationEmail(input: OrderConfirmationInput):
   const html = renderHtml(input, lang);
   const subject = t.subject(ref);
 
+  const lovableKey = process.env.LOVABLE_API_KEY;
+  if (!lovableKey) return { ok: false, error: "LOVABLE_API_KEY not configured" };
+
   try {
-    const res = await fetch("https://api.resend.com/emails", {
+    const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${lovableKey}`,
+        "X-Connection-Api-Key": apiKey,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -306,7 +310,7 @@ export async function sendOrderConfirmationEmail(input: OrderConfirmationInput):
     });
     const body = await res.json().catch(() => ({}));
     if (!res.ok) {
-      return { ok: false, error: (body as any)?.message || `Resend HTTP ${res.status}` };
+      return { ok: false, error: (body as any)?.message || (body as any)?.error || `Resend HTTP ${res.status}` };
     }
     return { ok: true, id: (body as any)?.id };
   } catch (e: any) {
