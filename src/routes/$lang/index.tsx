@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
 import stickerImg from "@/assets/velopass-sticker.webp";
+import walletPassImg from "@/assets/velopass-wallet-pass.png.asset.json";
 import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.asset.json";
 import heroBgAvif from "@/assets/hero-cyclist-bg-harmonized-desktop.avif.asset.json";
@@ -572,14 +573,33 @@ function VelopassHome() {
           </div>
           <div className="vc">
             <div className="vc-icon"><Store size={22} color="#0D1F3C" strokeWidth={1.8} /></div>
-            <div>
-              <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
-              <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
-                {t("home:benefits.cards.service_book_body")}
-              </p>
-              <p style={{ fontSize: 13, color: "var(--text-muted)", fontStyle: "italic", marginTop: 10, lineHeight: 1.6 }}>
-                {t("home:benefits.cards.service_book_note")}
-              </p>
+            <div style={{ display: "flex", gap: 20, alignItems: "flex-start", flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="vc-head"><h3>{t("home:benefits.cards.service_book")}</h3></div>
+                <p style={{ fontSize: 14, color: "var(--text-muted)", lineHeight: 1.65 }}>
+                  {t("home:benefits.cards.service_book_body")}
+                </p>
+                <p style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 10, lineHeight: 1.6 }}>
+                  {t("home:benefits.cards.service_book_wallet_load")}
+                </p>
+                <p style={{ fontSize: 13, color: "var(--text-muted)", fontStyle: "italic", marginTop: 10, lineHeight: 1.6 }}>
+                  {t("home:benefits.cards.service_book_note")}
+                </p>
+              </div>
+              <img
+                src={walletPassImg.url}
+                alt={t("home:benefits.cards.service_book_wallet_alt")}
+                loading="lazy"
+                style={{
+                  width: 120,
+                  height: "auto",
+                  borderRadius: 14,
+                  flexShrink: 0,
+                  boxShadow: "0 12px 28px rgba(13,31,60,0.18), 0 2px 6px rgba(13,31,60,0.08)",
+                  border: "1px solid rgba(13,31,60,0.06)",
+                  background: "#fff",
+                }}
+              />
             </div>
           </div>
           <div className="vc">
