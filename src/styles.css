@@ -122,8 +122,13 @@
 @media (max-width: 640px) {
   .hero-overlay {
     background:
-      radial-gradient(ellipse 120% 80% at 50% 50%, rgba(6,14,28,0.65) 0%, rgba(6,14,28,0.35) 70%, rgba(6,14,28,0.20) 100%),
-      linear-gradient(180deg, rgba(6,14,28,0.65) 0%, rgba(6,14,28,0.80) 50%, rgba(6,14,28,0.70) 100%);
+      linear-gradient(
+        180deg,
+        rgba(6,14,28,0.10) 0%,
+        rgba(6,14,28,0.22) 30%,
+        rgba(6,14,28,0.50) 55%,
+        rgba(6,14,28,0.78) 100%
+      );
   }
 }
 .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,204,138,0.18); color: #4FE3A8; font-size: 12.5px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin: 28px 0; border: 1px solid rgba(46,204,138,0.3); position: relative; z-index: 2; text-shadow: 0 1px 10px rgba(0,0,0,0.6); }
