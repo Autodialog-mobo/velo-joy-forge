@@ -573,6 +573,15 @@ select.finput { appearance: none; background-image: url("data:image/svg+xml,%3Cs
   .av { border-color: rgba(255,255,255,0.45); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
   .path-split { gap: 12px; margin-bottom: 32px; }
   .path-card { padding: 20px 18px; }
+  /* Boost contrast on translucent path-cards over hero photo */
+  .path-card.secondary, .path-card.tertiary {
+    background: rgba(13,31,60,0.62);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-color: rgba(255,255,255,0.18);
+  }
+  .path-card.secondary .path-tag, .path-card.tertiary .path-tag { color: rgba(255,255,255,0.78); }
+  .path-card.secondary .path-desc, .path-card.tertiary .path-desc { color: rgba(255,255,255,0.78); }
 }
 
 /* Two-path layout for "nog geen sticker" */
