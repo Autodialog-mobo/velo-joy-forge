@@ -1607,6 +1607,8 @@ function AdminPage() {
                             case "canceled":
                             case "cancelled": return "Geannuleerd";
                             case "refunded": return "Terugbetaald";
+                            case "confirmation_email_resent": return "Bevestigingsemail opnieuw verstuurd";
+                            case "confirmation_email_test_sent": return "Testmail verstuurd";
                             default: return e.event_type;
                           }
                         };
