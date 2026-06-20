@@ -10,12 +10,17 @@ const EMAIL_FROM = "Velopass <onboarding@resend.dev>";
 
 const BRAND = {
   bg: "#ffffff",
-  ink: "#0F172A",
+  ink: "#0D1F3C", // Velopass navy
   muted: "#64748B",
   border: "#E2E8F0",
-  accent: "#0EA5E9", // Velopass cyan
-  soft: "#F8FAFC",
+  accent: "#2ECC8A", // Velopass green
+  soft: "#F6F9F7",
 };
+
+// Inline SVG logomark (green rounded square + navy check) as data URI so it
+// renders in every email client without external hosting.
+const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="22" fill="#2ECC8A"/><path d="M24 54 L42 72 L76 30" fill="none" stroke="#0D1F3C" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const LOGO_DATA_URI = `data:image/svg+xml;utf8,${encodeURIComponent(LOGO_SVG)}`;
 
 const BUNDLE_LABELS: Record<Lang, Record<string, string>> = {
   nl: {
@@ -217,8 +222,15 @@ function renderHtml(input: OrderConfirmationInput, lang: Lang): string {
       <td align="center" style="padding:32px 16px;">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:${BRAND.bg};border:1px solid ${BRAND.border};border-radius:12px;overflow:hidden;">
           <tr>
-            <td style="padding:24px 28px;border-bottom:3px solid ${BRAND.accent};">
-              <div style="font-size:20px;font-weight:700;color:${BRAND.ink};letter-spacing:-0.01em;">Velopass</div>
+            <td style="padding:22px 28px;background:${BRAND.ink};border-bottom:3px solid ${BRAND.accent};">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+                <td style="vertical-align:middle;padding-right:12px;line-height:0;">
+                  <img src="${LOGO_DATA_URI}" width="36" height="36" alt="Velopass" style="display:block;border:0;outline:none;text-decoration:none;" />
+                </td>
+                <td style="vertical-align:middle;font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.01em;">
+                  Velopass
+                </td>
+              </tr></table>
             </td>
           </tr>
           <tr>
