@@ -144,4 +144,146 @@ function EmailEventsPage() {
               E-mail events
             </h1>
             <p className="mt-1 text-[13px]" style={{ color: TEXT_SEC }}>
-              Overzicht van alle testmails en handmatige resends.{
+              Overzicht van alle testmails en handmatige resends. {events.length} geregistreerd.
+            </p>
+          </div>
+          <button
+            onClick={() => refetch()}
+            disabled={isFetching}
+            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px]"
+            style={{ background: SURFACE, border: `1px solid ${SURFACE_BORDER}`, color: TEXT_PRI }}
+          >
+            <RefreshCw size={14} className={isFetching ? "animate-spin" : ""} />
+            Vernieuwen
+          </button>
+        </div>
+
+        {/* Filters */}
+        <div
+          className="mt-6 flex flex-wrap items-center gap-3"
+          style={{ background: SURFACE, border: `1px solid ${SURFACE_BORDER}`, borderRadius: 14, padding: "14px 16px" }}
+        >
+          {/* Type filter */}
+          <div className="flex items-center gap-2">
+            <Mail size={14} style={{ color: TEXT_MUTED }} />
+            <select
+              value={typeFilter}
+              onChange={(e) => setTypeFilter(e.target.value as any)}
+              className="rounded-[10px] px-3 py-2 text-[13px] outline-none"
+              style={{ background: "rgba(255,255,255,0.06)", color: TEXT_PRI, border: `1px solid ${SURFACE_BORDER}` }}
+            >
+              <option value="all">Alle types</option>
+              <option value="confirmation_email_resent">Bevestiging opnieuw</option>
+              <option value="confirmation_email_test_sent">Testmail</option>
+            </select>
+          </div>
+
+          {/* Order ID filter */}
+          <div className="flex items-center gap-2 flex-1 min-w-[200px]">
+            <Search size={14} style={{ color: TEXT_MUTED }} />
+            <input
+              type="text"
+              placeholder="Order-ID…"
+              value={orderIdInput}
+              onChange={(e) => setOrderIdInput(e.target.value)}
+              className="w-full rounded-[10px] px-3 py-2 text-[13px] outline-none"
+              style={{ background: "rgba(255,255,255,0.06)", color: TEXT_PRI, border: `1px solid ${SURFACE_BORDER}` }}
+            />
+          </div>
+
+          {/* Recipient filter */}
+          <div className="flex items-center gap-2 flex-1 min-w-[200px]">
+            <Send size={14} style={{ color: TEXT_MUTED }} />
+            <input
+              type="text"
+              placeholder="Ontvanger (e-mail)…"
+              value={recipientInput}
+              onChange={(e) => setRecipientInput(e.target.value)}
+              className="w-full rounded-[10px] px-3 py-2 text-[13px] outline-none"
+              style={{ background: "rgba(255,255,255,0.06)", color: TEXT_PRI, border: `1px solid ${SURFACE_BORDER}` }}
+            />
+          </div>
+
+          {hasFilters && (
+            <button
+              onClick={() => {
+                setTypeFilter("all");
+                setOrderIdInput("");
+                setOrderIdQuery("");
+                setRecipientInput("");
+                setRecipientQuery("");
+              }}
+              className="inline-flex items-center gap-1.5 rounded-[10px] px-3 py-2 text-[12px] font-medium"
+              style={{ background: "transparent", color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}` }}
+            >
+              <X size={12} /> Wis filters
+            </button>
+          )}
+        </div>
+
+        {/* Table */}
+        <div className="mt-4 overflow-hidden rounded-2xl" style={{ background: SURFACE, border: `1px solid ${SURFACE_BORDER}` }}>
+          <table className="w-full text-[13px]">
+            <thead>
+              <tr style={{ color: TEXT_MUTED, textAlign: "left" }}>
+                <th className="px-4 py-3 font-medium">Tijdstip</th>
+                <th className="px-4 py-3 font-medium">Type</th>
+                <th className="px-4 py-3 font-medium">Order-ID</th>
+                <th className="px-4 py-3 font-medium">Ontvanger</th>
+                <th className="px-4 py-3 font-medium">Acteur</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading && (
+                <tr>
+                  <td colSpan={5} className="px-4 py-8 text-center" style={{ color: TEXT_MUTED }}>
+                    Laden…
+                  </td>
+                </tr>
+              )}
+              {!isLoading && filtered.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-4 py-8 text-center" style={{ color: TEXT_MUTED }}>
+                    {hasFilters ? "Geen events gevonden voor deze filters." : "Nog geen e-mail events geregistreerd."}
+                  </td>
+                </tr>
+              )}
+              {filtered.map((e: any) => (
+                <tr key={e.id} style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
+                  <td className="px-4 py-3 whitespace-nowrap" style={{ color: TEXT_SEC }}>
+                    {fmtDateTime(e.created_at)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className="rounded-full px-2 py-0.5 text-[11px] inline-flex items-center gap-1.5"
+                      style={EVENT_PILL[e.event_type] ?? { background: SURFACE, color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}` }}
+                    >
+                      {e.event_type === "confirmation_email_resent" ? <Send size={11} /> : <Mail size={11} />}
+                      {EVENT_LABELS[e.event_type] || e.event_type}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3" style={{ color: TEXT_PRI, fontFamily: "ui-monospace, monospace", fontSize: 12 }}>
+                    <Link
+                      to="/admin"
+                      search={{ order: e.order_id }}
+                      className="underline decoration-dotted underline-offset-2 hover:opacity-80"
+                      style={{ color: TEXT_PRI }}
+                    >
+                      {String(e.order_id).slice(0, 12)}
+                    </Link>
+                  </td>
+                  <td className="px-4 py-3" style={{ color: TEXT_PRI }}>
+                    {extractRecipient(e.note)}
+                  </td>
+                  <td className="px-4 py-3" style={{ color: TEXT_SEC }}>
+                    {e.actor || "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
