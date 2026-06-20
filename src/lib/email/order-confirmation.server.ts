@@ -1,7 +1,11 @@
 // Server-only: sends the Velopass order confirmation email via Resend.
 // Domain velopass.com is verified — sender uses the branded address.
 
+type Lang = "nl" | "fr" | "de" | "en";
+
 const EMAIL_FROM = "Velopass <go@velopass.com>";
+
+
 
 
 const BRAND = {
