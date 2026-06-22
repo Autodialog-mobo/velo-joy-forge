@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite dev",
     "validate:i18n": "node scripts/validate-i18n.mjs",
-    "prebuild": "node scripts/validate-i18n.mjs",
-    "prebuild:dev": "node scripts/validate-i18n.mjs",
+    "check:emdash": "node scripts/check-emdash.mjs",
+    "prebuild": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs",
+    "prebuild:dev": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
