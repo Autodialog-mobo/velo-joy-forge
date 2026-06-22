@@ -21,7 +21,7 @@
       "tag": "VÉLO FRAÎCHEMENT ACHETÉ ?",
       "eyebrow": "Invitation reçue ?",
       "title": "Votre Velopass est prêt",
-      "desc": "Il y a de fortes chances que votre Velopass soit déjà prêt via votre vélociste. Votre vélo est enregistré — choisissez simplement un mot de passe et tout est prêt.",
+      "desc": "Il y a de fortes chances que votre Velopass soit déjà prêt via votre vélociste. Votre vélo est enregistré. Choisissez simplement un mot de passe et tout est prêt.",
       "body": "Votre vélociste a posé le Frame-ID et enregistré votre vélo à votre nom. Il ne vous reste qu'à choisir un mot de passe.",
       "cta": "Ouvrez votre Velopass →",
       "steps": {
@@ -41,7 +41,7 @@
       "eyebrow": "Commander un Frame-ID",
       "title": "Commandez un Velopass Frame-ID",
       "desc": "À partir de 12,95 €. Protection immédiate via votre passeport vélo numérique.",
-      "body": "Un Frame-ID active votre passeport numérique pour toute la durée de vie de votre vélo. Achat unique — pas d'abonnement, pas de frais cachés.",
+      "body": "Un Frame-ID active votre passeport numérique pour toute la durée de vie de votre vélo. Achat unique : pas d'abonnement, pas de frais cachés.",
       "cta": "Voir les formules →",
       "shop_path": {
         "title": "Via un magasin de vélos",
@@ -112,13 +112,13 @@
       "theft_body": "{{shopCount}}+ vélocistes scannent automatiquement via leur caisse. Les cyclistes et la police qui scannent le QR voient aussi tout de suite que ton vélo est recherché.",
       "theft_mybike": "Également lié à MyBike, le registre national belge des vélos.",
       "theft_stolen_link": "Vélo volé ou disparu ? Lis ce que tu dois faire →",
-      "service_book_body": "Chaque entretien, chaque réparation — documenté et toujours à portée de main. Tu vends ton vélo ? Un historique d'entretien complet augmente sa valeur de revente.",
-      "service_book_wallet_load": "Charge ton Velopass dans Apple Wallet ou Google Wallet — il est toujours sur ton téléphone. Pas d'appli, pas de connexion au comptoir.",
+      "service_book_body": "Chaque entretien et chaque réparation : documenté et toujours à portée de main. Tu vends ton vélo ? Un historique d'entretien complet augmente sa valeur de revente.",
+      "service_book_wallet_load": "Charge ton Velopass dans Apple Wallet ou Google Wallet. Il est toujours sur ton téléphone. Pas d'appli, pas de connexion au comptoir.",
       "service_book_wallet_alt": "Pass numérique Velopass dans Apple Wallet avec photo du vélo, marque, modèle, numéro de cadre et QR code",
       "service_book_note": "Géré par ton vélociste Velopass — l'expert qui connaît ton vélo. Montre ton Wallet à chaque visite, même chez un autre magasin quand tu voyages.",
-      "roadside_body": "Une panne en route ? L'aide est à un scan près. Accès direct à l'assistance dépannage — sans chercher, sans attendre. Tu as déjà un abonnement d'assistance dépannage ? Ajoute-le à ton Velopass pour tout réunir au même endroit.",
-      "insurance_body": "Souscris une assurance vélo directement depuis ton Velopass — en quelques clics. Déjà assuré ? Ajoute ton assurance à ton Velopass pour tout réunir au même endroit.",
-      "ownership_body": "Tout sur ton vélo au même endroit — caractéristiques, garantie, historique d'entretien complet et services actifs. Tu vends ton vélo ? Transfère le passeport au nouveau propriétaire en un clic. Ton investissement garde sa valeur, à vie."
+      "roadside_body": "Une panne en route ? L'aide est à un scan près. Accès direct à l'assistance dépannage, sans chercher ni attendre. Tu as déjà un abonnement d'assistance dépannage ? Ajoute-le à ton Velopass pour tout réunir au même endroit.",
+      "insurance_body": "Souscris une assurance vélo directement depuis ton Velopass, en quelques clics. Déjà assuré ? Ajoute ton assurance à ton Velopass pour tout réunir au même endroit.",
+      "ownership_body": "Tout sur ton vélo au même endroit : caractéristiques, garantie, historique d'entretien complet et services actifs. Tu vends ton vélo ? Transfère le passeport au nouveau propriétaire en un clic. Ton investissement garde sa valeur, à vie."
     }
   },
   "community": {
