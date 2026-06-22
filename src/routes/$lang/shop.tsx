@@ -16,6 +16,7 @@ import fabGranville from "@/assets/fab-granville.webp";
 import kbcLogo from "@/assets/kbc-logo.webp";
 
 import { buildLocalizedHead } from "@/i18n/seo";
+import { trackProLoginClick } from "@/lib/analytics";
 import { verifyHeroContrastMatrix } from "@/lib/a11y/contrast-check";
 import enBundle from "@/i18n/locales/en/shop.json";
 import nlBundle from "@/i18n/locales/nl/shop.json";
