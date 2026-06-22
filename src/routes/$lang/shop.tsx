@@ -117,12 +117,12 @@ function VelopassPro() {
             </Link>
           </li>
           <li className="nav-link-pro-login">
-            <a href="https://app.velopass.pro" className="vp-pro">{t("nav.proLogin")}</a>
+            <a href="https://app.velopass.pro" className="vp-pro" onClick={() => trackProLoginClick("mobile_menu", lang)}>{t("nav.proLogin")}</a>
           </li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
           <LangSwitcher currentLang={lang} />
-          <a href="https://app.velopass.pro" className="btn-pro-login">{t("nav.proLogin")}</a>
+          <a href="https://app.velopass.pro" className="btn-pro-login" onClick={() => trackProLoginClick("header", lang)}>{t("nav.proLogin")}</a>
           <a href="#registreer" className="btn-nav-cta">{t("nav.registerCta")}</a>
           <button
             type="button"
