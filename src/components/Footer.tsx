@@ -8,6 +8,7 @@ interface FooterProps {
 }
 
 const APP_LOGIN = "https://app.velopass.com";
+const PRO_LOGIN = "https://app.velopass.pro";
 
 export function Footer({ variant = "default" }: FooterProps) {
   const lang = useCurrentLang();
