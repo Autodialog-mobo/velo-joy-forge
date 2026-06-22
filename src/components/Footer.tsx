@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
+import { trackProLoginClick } from "@/lib/analytics";
 
 interface FooterProps {
   variant?: "default" | "pro";
