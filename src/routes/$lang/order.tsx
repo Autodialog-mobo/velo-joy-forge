@@ -282,7 +282,7 @@ function BestellenPage() {
                     <div
                       key={b.key}
                       style={{
-                        background: isFeatured ? "rgba(46,204,138,0.06)" : "#fff",
+                        background: isFeatured ? "#EAFAF3" : "#fff",
                         borderRadius: "0 16px 16px 0",
                         padding: 24,
                         border: isFeatured ? "2px solid #2ECC8A" : "1px solid rgba(13,31,60,0.06)",
