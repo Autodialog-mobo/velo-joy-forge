@@ -36,7 +36,7 @@ export function Footer({ variant = "default" }: FooterProps) {
           <li><a href="#">{t("footer.terms")}</a></li>
           <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "shop" }}>{t("footer.contact")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="faq" onClick={scrollToFaq}>{t("footer.faq")}</Link></li>
-          <li><a href={APP_LOGIN}>{t("nav.login")}</a></li>
+          <li><a href={PRO_LOGIN}>{t("nav.proLogin")}</a></li>
         </ul>
         <div className="fswitch">
           <Link
