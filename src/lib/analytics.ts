@@ -52,3 +52,12 @@ export function trackEvent(name: string, params: Record<string, unknown> = {}) {
 export function trackRegisterBikeClick(page: string, variant: string) {
   trackEvent("register_bike_click", { page, variant });
 }
+
+/**
+ * Track a click on the Pro-login link that sends shop owners to app.velopass.pro.
+ * @param location Where the click originated: "header", "mobile_menu", "hero", "footer"
+ * @param lang     Active UI language (e.g. "nl", "en")
+ */
+export function trackProLoginClick(location: "header" | "mobile_menu" | "hero" | "footer", lang: string) {
+  trackEvent("pro_login_click", { location, lang, destination: "https://app.velopass.pro" });
+}
