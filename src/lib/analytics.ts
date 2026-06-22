@@ -53,11 +53,38 @@ export function trackRegisterBikeClick(page: string, variant: string) {
   trackEvent("register_bike_click", { page, variant });
 }
 
+// Stable per-element IDs so each UI surface is attributable in GA4 reports.
+const PRO_LOGIN_ELEMENT_IDS = {
+  header: "pl_hdr",
+  mobile_menu: "pl_mob",
+  hero: "pl_hero",
+  footer: "pl_ftr",
+} as const;
+
+type ProLoginLocation = keyof typeof PRO_LOGIN_ELEMENT_IDS;
+
+function makeClickId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 /**
  * Track a click on the Pro-login link that sends shop owners to app.velopass.pro.
- * @param location Where the click originated: "header", "mobile_menu", "hero", "footer"
- * @param lang     Active UI language (e.g. "nl", "en")
+ * Each click gets a unique `click_id` (UUID) plus a stable `element_id` per surface,
+ * so individual clicks are dedupable and attributable to the originating UI element.
  */
-export function trackProLoginClick(location: "header" | "mobile_menu" | "hero" | "footer", lang: string) {
-  trackEvent("pro_login_click", { location, lang, destination: "https://app.velopass.pro" });
+export function trackProLoginClick(location: ProLoginLocation, lang: string) {
+  const click_id = makeClickId();
+  const element_id = PRO_LOGIN_ELEMENT_IDS[location];
+  trackEvent("pro_login_click", {
+    click_id,
+    element_id,
+    location,
+    lang,
+    destination: "https://app.velopass.pro",
+  });
+  return click_id;
 }
+
