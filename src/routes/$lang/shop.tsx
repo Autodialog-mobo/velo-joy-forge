@@ -176,7 +176,7 @@ function VelopassPro() {
             <a href="#registreer" className="btn-g">{t("hero.ctaPrimary")}</a>
             <a href="#hoe-werkt-het" className="btn-s dark">{t("hero.ctaSecondary")}</a>
           </div>
-          <a href="https://app.velopass.pro" className="hero-pro-login-link">
+          <a href="https://app.velopass.pro" className="hero-pro-login-link" onClick={() => trackProLoginClick("hero", lang)}>
             <ArrowUpRight size={14} strokeWidth={2.2} /> {t("nav.alreadyPartner")}
           </a>
           <div className="hero-stats">
