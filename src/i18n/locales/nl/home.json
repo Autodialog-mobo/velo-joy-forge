@@ -21,12 +21,12 @@
       "tag": "NET EEN FIETS GEKOCHT",
       "eyebrow": "Uitnodiging ontvangen?",
       "title": "Jouw Velopass staat klaar",
-      "desc": "Grote kans dat je Velopass al klaarstaat via je fietswinkel. Je fiets is geregistreerd — kies een wachtwoord en je bent vertrokken.",
+      "desc": "Grote kans dat je Velopass al klaarstaat via je fietswinkel. Je fiets is geregistreerd. Kies een wachtwoord en je bent vertrokken.",
       "body": "Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.",
       "cta": "Open je Velopass →",
       "steps": {
         "s1": { "title": "Controleer je e-mail", "body": "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen." },
-        "s2": { "title": "Kies een wachtwoord", "body": "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord — en je Velopass gaat open." },
+        "s2": { "title": "Kies een wachtwoord", "body": "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord en je Velopass gaat open." },
         "s3": { "title": "Je Velopass is klaar", "body": "Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID." }
       },
       "cta_primary": "Open je Velopass",
@@ -41,7 +41,7 @@
       "eyebrow": "Nog geen Frame-ID",
       "title": "Bestel een Velopass Frame-ID",
       "desc": "Vanaf €12,95. Direct beschermd via je digitaal fietspaspoort.",
-      "body": "Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop — geen abonnement, geen verborgen kosten.",
+      "body": "Eén Frame-ID activeert je digitaal paspoort voor de volledige levensduur van je fiets. Eenmalige aankoop: geen abonnement, geen verborgen kosten.",
       "cta": "Kies je bundel →",
       "shop_path": {
         "title": "Via een fietswinkel",
@@ -50,7 +50,7 @@
       },
       "web_path": {
         "title": "Via de Velopass webshop",
-        "body": "Bestel een Frame-ID rechtstreeks bij Velopass — geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.",
+        "body": "Bestel een Frame-ID rechtstreeks bij Velopass, geleverd aan huis. Plak hem zelf op je fiets en registreer via velopass.com. Ideaal als er geen Velopass-winkel in de buurt is of voor internationale bestellingen.",
         "cta": "Bestel via de Velopass webshop →"
       },
       "final": {
@@ -112,13 +112,13 @@
       "theft_body": "{{shopCount}}+ fietswinkels scannen automatisch via hun kassasysteem. Ook fietsers en politie die de QR scannen zien meteen dat jouw fiets gezocht wordt.",
       "theft_mybike": "Ook gelinkt aan MyBike, het Belgisch nationaal fietsregister.",
       "theft_stolen_link": "Fiets gestolen of vermist? Lees wat je moet doen →",
-      "service_book_body": "Elke onderhoudsbeurt, elke herstelling — gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.",
-      "service_book_wallet_load": "Laad je Velopass in Apple Wallet of Google Wallet — zo zit hij altijd op je telefoon. Geen app, geen login aan de toonbank.",
+      "service_book_body": "Elke onderhoudsbeurt en elke herstelling: gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.",
+      "service_book_wallet_load": "Laad je Velopass in Apple Wallet of Google Wallet. Zo zit hij altijd op je telefoon. Geen app, geen login aan de toonbank.",
       "service_book_wallet_alt": "Velopass digitaal pasje in Apple Wallet met fietsfoto, merk, model, framenummer en QR-code",
       "service_book_note": "Beheerd door jouw Velopass-fietswinkel — de expert die jouw fiets kent. Toon je Wallet bij elk bezoek, ook bij een andere winkel als je op reis bent.",
-      "roadside_body": "Panne onderweg? Hulp is één scan ver. Directe toegang tot pechhulp — zonder zoeken, zonder wachten. Heb je al een pechhulpabonnement? Voeg dat toe aan je Velopass zodat alles op één plek staat.",
-      "insurance_body": "Sluit een fietsverzekering af rechtstreeks vanuit je Velopass — in enkele klikken. Heb je al een verzekering? Voeg die toe aan je Velopass zodat alles op één plek staat.",
-      "ownership_body": "Alles over je fiets op één plek — specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang."
+      "roadside_body": "Panne onderweg? Hulp is één scan ver. Directe toegang tot pechhulp, zonder zoeken of wachten. Heb je al een pechhulpabonnement? Voeg dat toe aan je Velopass zodat alles op één plek staat.",
+      "insurance_body": "Sluit een fietsverzekering af rechtstreeks vanuit je Velopass, in enkele klikken. Heb je al een verzekering? Voeg die toe aan je Velopass zodat alles op één plek staat.",
+      "ownership_body": "Alles over je fiets op één plek: specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang."
     }
   },
 

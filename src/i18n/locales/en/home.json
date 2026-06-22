@@ -21,12 +21,12 @@
       "tag": "JUST BOUGHT A BIKE?",
       "eyebrow": "Got an invitation?",
       "title": "Your Velopass is ready",
-      "desc": "Chances are your Velopass is already waiting for you via your bike shop. Your bike is registered — just pick a password and everything is ready.",
+      "desc": "Chances are your Velopass is already waiting for you via your bike shop. Your bike is registered. Just pick a password and everything is ready.",
       "body": "Your bike shop has applied the Frame-ID and registered your bike in your name. All you need to do is choose a password.",
       "cta": "Open your Velopass →",
       "steps": {
         "s1": { "title": "Check your email", "body": "You've received an invitation from your bike shop via Velopass. Click the link in that email to open your Velopass." },
-        "s2": { "title": "Choose a password", "body": "Your details are already filled in. Just pick a password — and your Velopass opens." },
+        "s2": { "title": "Choose a password", "body": "Your details are already filled in. Just pick a password and your Velopass opens." },
         "s3": { "title": "Your Velopass is ready", "body": "Theft protection, roadside assistance, insurance and your digital service book — all accessible via one scan of the QR code on your Frame-ID." }
       },
       "cta_primary": "Open your Velopass",
@@ -41,7 +41,7 @@
       "eyebrow": "No Frame-ID yet",
       "title": "Order a Velopass Frame-ID",
       "desc": "From €12.95. Instantly protected via your digital bike passport.",
-      "body": "One Frame-ID activates your digital passport for the entire lifetime of your bike. One-time purchase — no subscription, no hidden costs.",
+      "body": "One Frame-ID activates your digital passport for the entire lifetime of your bike. One-time purchase: no subscription, no hidden costs.",
       "cta": "View the bundles →",
       "shop_path": {
         "title": "Via a bike shop",
@@ -50,7 +50,7 @@
       },
       "web_path": {
         "title": "Via the Velopass webshop",
-        "body": "Order a Frame-ID directly from Velopass — delivered to your door. Apply it yourself and register via velopass.com. Ideal if there's no Velopass shop nearby, or for international orders.",
+        "body": "Order a Frame-ID directly from Velopass, delivered to your door. Apply it yourself and register via velopass.com. Ideal if there's no Velopass shop nearby, or for international orders.",
         "cta": "Order via the Velopass webshop →"
       },
       "final": {
@@ -112,13 +112,13 @@
       "theft_body": "{{shopCount}}+ bike shops scan automatically through their point-of-sale system. Cyclists and police who scan the QR also see right away that your bike is being looked for.",
       "theft_mybike": "Also linked to MyBike, the Belgian national bike register.",
       "theft_stolen_link": "Bike stolen or missing? Read what to do →",
-      "service_book_body": "Every service, every repair — documented and always at hand. Selling your bike? A complete service history raises its resale value.",
-      "service_book_wallet_load": "Load your Velopass into Apple Wallet or Google Wallet — it's always on your phone. No app, no login at the counter.",
+      "service_book_body": "Every service and every repair: documented and always at hand. Selling your bike? A complete service history raises its resale value.",
+      "service_book_wallet_load": "Load your Velopass into Apple Wallet or Google Wallet. It's always on your phone. No app, no login at the counter.",
       "service_book_wallet_alt": "Velopass digital pass in Apple Wallet showing bike photo, brand, model, frame number and QR code",
       "service_book_note": "Managed by your Velopass bike shop — the expert who knows your bike. Show your Wallet at every visit, even at another shop when you're travelling.",
-      "roadside_body": "Breakdown on the road? Help is one scan away. Instant access to roadside assistance — no searching, no waiting. Already have a roadside assistance subscription? Add it to your Velopass so everything is in one place.",
-      "insurance_body": "Take out bike insurance straight from your Velopass — in just a few clicks. Already insured? Add it to your Velopass so everything is in one place.",
-      "ownership_body": "Everything about your bike in one place — specs, warranty, full service history and active services. Selling your bike? Transfer the passport to the new owner in one click. Your investment keeps its value, for life."
+      "roadside_body": "Breakdown on the road? Help is one scan away. Instant access to roadside assistance, with no searching and no waiting. Already have a roadside assistance subscription? Add it to your Velopass so everything is in one place.",
+      "insurance_body": "Take out bike insurance straight from your Velopass, in just a few clicks. Already insured? Add it to your Velopass so everything is in one place.",
+      "ownership_body": "Everything about your bike in one place: specs, warranty, full service history and active services. Selling your bike? Transfer the passport to the new owner in one click. Your investment keeps its value, for life."
     }
   },
   "community": {

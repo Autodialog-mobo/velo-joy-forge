@@ -21,7 +21,7 @@
       "tag": "HAST DU DIR GERADE EIN FAHRRAD GEKAUFT?",
       "eyebrow": "Einladung erhalten?",
       "title": "Dein Velopass ist fertig",
-      "desc": "Wahrscheinlich wartet dein Velopass schon in deinem Fahrradhändler auf dich. Dein Fahrrad ist bereits registriert – du musst nur noch ein Passwort wählen, und schon ist alles bereit.",
+      "desc": "Wahrscheinlich wartet dein Velopass schon in deinem Fahrradhändler auf dich. Dein Fahrrad ist bereits registriert. Du musst nur noch ein Passwort wählen, und schon ist alles bereit.",
       "body": "Dein Fahrradhändler hat die Frame-ID angebracht und dein Fahrrad bereits auf deinen Namen registriert. Du musst nur noch ein Passwort wählen.",
       "cta": "Öffne deinen Velopass →",
       "steps": {
@@ -41,7 +41,7 @@
       "eyebrow": "Frame-ID bestellen",
       "title": "Velopass Frame-ID bestellen",
       "desc": "Ab 12,95 €. Sofortiger Schutz über deinen digitalen Fahrradpass.",
-      "body": "Eine Frame-ID aktiviert deinen digitalen Pass für die gesamte Lebensdauer deines Fahrrads. Einmaliger Kauf — kein Abo, keine versteckten Kosten.",
+      "body": "Eine Frame-ID aktiviert deinen digitalen Pass für die gesamte Lebensdauer deines Fahrrads. Einmaliger Kauf: kein Abo, keine versteckten Kosten.",
       "cta": "Bundles ansehen →",
       "shop_path": {
         "title": "Über einen Fahrradhändler",
@@ -112,13 +112,13 @@
       "theft_body": "{{shopCount}}+ Fahrradhändler scannen automatisch über ihr Kassensystem. Auch Radfahrer und Polizei, die den QR scannen, sehen sofort, dass dein Fahrrad gesucht wird.",
       "theft_mybike": "Ebenfalls mit MyBike verknüpft, dem belgischen nationalen Fahrradregister.",
       "theft_stolen_link": "Fahrrad gestohlen oder verschwunden? Lies, was zu tun ist →",
-      "service_book_body": "Jeder Service, jede Reparatur — dokumentiert und immer zur Hand. Verkaufst du dein Fahrrad? Eine vollständige Servicehistorie erhöht den Wiederverkaufswert.",
-      "service_book_wallet_load": "Lade deinen Velopass in Apple Wallet oder Google Wallet — er ist immer auf deinem Handy. Keine App, kein Login an der Theke.",
+      "service_book_body": "Jeder Service und jede Reparatur: dokumentiert und immer zur Hand. Verkaufst du dein Fahrrad? Eine vollständige Servicehistorie erhöht den Wiederverkaufswert.",
+      "service_book_wallet_load": "Lade deinen Velopass in Apple Wallet oder Google Wallet. Er ist immer auf deinem Handy. Keine App, kein Login an der Theke.",
       "service_book_wallet_alt": "Digitaler Velopass-Pass in Apple Wallet mit Fahrradfoto, Marke, Modell, Rahmennummer und QR-Code",
       "service_book_note": "Verwaltet von deinem Velopass-Fahrradhändler — dem Experten, der dein Fahrrad kennt. Zeig deine Wallet bei jedem Besuch, auch bei einem anderen Händler, wenn du unterwegs bist.",
-      "roadside_body": "Panne unterwegs? Hilfe ist nur einen Scan entfernt. Direkter Zugang zur Pannenhilfe — ohne Suchen, ohne Warten. Hast du schon ein Pannenhilfe-Abo? Füg es zu deinem Velopass hinzu, damit alles an einem Ort ist.",
-      "insurance_body": "Schließ eine Fahrradversicherung direkt über deinen Velopass ab — mit wenigen Klicks. Schon versichert? Füg deine Versicherung zu deinem Velopass hinzu, damit alles an einem Ort ist.",
-      "ownership_body": "Alles über dein Fahrrad an einem Ort — Spezifikationen, Garantie, vollständige Servicehistorie und aktive Services. Verkaufst du dein Fahrrad? Übertrag den Pass mit einem Klick an den neuen Eigentümer. Deine Investition behält ihren Wert, ein Leben lang."
+      "roadside_body": "Panne unterwegs? Hilfe ist nur einen Scan entfernt. Direkter Zugang zur Pannenhilfe, ohne Suchen oder Warten. Hast du schon ein Pannenhilfe-Abo? Füg es zu deinem Velopass hinzu, damit alles an einem Ort ist.",
+      "insurance_body": "Schließ eine Fahrradversicherung direkt über deinen Velopass ab, mit wenigen Klicks. Schon versichert? Füg deine Versicherung zu deinem Velopass hinzu, damit alles an einem Ort ist.",
+      "ownership_body": "Alles über dein Fahrrad an einem Ort: Spezifikationen, Garantie, vollständige Servicehistorie und aktive Services. Verkaufst du dein Fahrrad? Übertrag den Pass mit einem Klick an den neuen Eigentümer. Deine Investition behält ihren Wert, ein Leben lang."
     }
   },
   "community": {
