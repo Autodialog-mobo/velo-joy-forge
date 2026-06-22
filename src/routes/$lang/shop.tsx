@@ -16,6 +16,7 @@ import fabGranville from "@/assets/fab-granville.webp";
 import kbcLogo from "@/assets/kbc-logo.webp";
 
 import { buildLocalizedHead } from "@/i18n/seo";
+import { trackProLoginClick } from "@/lib/analytics";
 import { verifyHeroContrastMatrix } from "@/lib/a11y/contrast-check";
 import enBundle from "@/i18n/locales/en/shop.json";
 import nlBundle from "@/i18n/locales/nl/shop.json";
@@ -117,12 +118,12 @@ function VelopassPro() {
             </Link>
           </li>
           <li className="nav-link-pro-login">
-            <a href="https://app.velopass.pro" className="vp-pro">{t("nav.proLogin")}</a>
+            <a href="https://app.velopass.pro" className="vp-pro" onClick={() => trackProLoginClick("mobile_menu", lang)}>{t("nav.proLogin")}</a>
           </li>
         </ul>
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
           <LangSwitcher currentLang={lang} />
-          <a href="https://app.velopass.pro" className="btn-pro-login">{t("nav.proLogin")}</a>
+          <a href="https://app.velopass.pro" className="btn-pro-login" onClick={() => trackProLoginClick("header", lang)}>{t("nav.proLogin")}</a>
           <a href="#registreer" className="btn-nav-cta">{t("nav.registerCta")}</a>
           <button
             type="button"
@@ -175,7 +176,7 @@ function VelopassPro() {
             <a href="#registreer" className="btn-g">{t("hero.ctaPrimary")}</a>
             <a href="#hoe-werkt-het" className="btn-s dark">{t("hero.ctaSecondary")}</a>
           </div>
-          <a href="https://app.velopass.pro" className="hero-pro-login-link">
+          <a href="https://app.velopass.pro" className="hero-pro-login-link" onClick={() => trackProLoginClick("hero", lang)}>
             <ArrowUpRight size={14} strokeWidth={2.2} /> {t("nav.alreadyPartner")}
           </a>
           <div className="hero-stats">
