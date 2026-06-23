@@ -2303,7 +2303,7 @@ function AdminPage() {
                       </span>
                     </div>
                     {labelShowOverlay && (() => {
-                      const swatch = (bg: string, border?: string): React.CSSProperties => ({
+                      const swatch = (bg: string, border?: string) => ({
                         width: 18,
                         height: 12,
                         borderRadius: 3,
@@ -2312,7 +2312,7 @@ function AdminPage() {
                         flexShrink: 0,
                       });
                       const clipBg = `repeating-linear-gradient(135deg, ${labelClipColor}55 0 4px, transparent 4px 8px)`;
-                      const items: { label: string; hint: string; preview: React.ReactNode; color: string; onChange: (v: string) => void }[] = [
+                      const items = [
                         {
                           label: "Clip-zone (printer snijdt af)",
                           hint: "Rechterstrook die de 87 mm-printer fysiek wegsnijdt",
