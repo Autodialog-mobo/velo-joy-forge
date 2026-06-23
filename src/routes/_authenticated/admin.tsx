@@ -1536,12 +1536,14 @@ function AdminPage() {
                               if (!payer) return null;
                               if (normalizeNameForCompare(o.shipping_name) === normalizeNameForCompare(payer)) return null;
                               return (
-                                <Users
-                                  size={13}
-                                  aria-label="Naam verzending en naam betaler verschillen"
+                                <span
+                                  className="inline-flex items-center"
                                   style={{ color: TEXT_MUTED, flexShrink: 0 }}
                                   title={`Naam verzending en naam betaler verschillen — Verzending: ${o.shipping_name || "—"} · Betaler: ${payer}`}
-                                />
+                                  aria-label="Naam verzending en naam betaler verschillen"
+                                >
+                                  <Users size={13} aria-hidden />
+                                </span>
                               );
                             })()}
                             <span
