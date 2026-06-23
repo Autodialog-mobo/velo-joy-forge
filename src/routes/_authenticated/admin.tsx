@@ -2403,6 +2403,65 @@ function AdminPage() {
                     {zoomItem ? (
                       <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
                         {renderLabel(zoomItem, 8)}
+                        {(() => {
+                          const fields: { key: keyof LabelData; label: string; col: number }[] = [
+                            { key: "shipping_name", label: "Naam", col: 2 },
+                            { key: "shipping_line1", label: "Straat + nr", col: 2 },
+                            { key: "shipping_line2", label: "Adres regel 2", col: 2 },
+                            { key: "shipping_postal_code", label: "Postcode", col: 1 },
+                            { key: "shipping_city", label: "Gemeente", col: 1 },
+                            { key: "shipping_country", label: "Land", col: 2 },
+                          ];
+                          const inputStyle: React.CSSProperties = {
+                            width: "100%",
+                            background: "#0E1116",
+                            color: "#E6EAF2",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            borderRadius: 6,
+                            padding: "6px 8px",
+                            fontSize: 13,
+                            fontFamily: "inherit",
+                          };
+                          return (
+                            <div
+                              className="w-full p-3 rounded-[8px]"
+                              style={{
+                                background: "#0E1116",
+                                border: "1px solid rgba(255,255,255,0.12)",
+                                color: "#E6EAF2",
+                                display: "grid",
+                                gridTemplateColumns: "1fr 1fr",
+                                gap: 10,
+                                maxWidth: 720,
+                              }}
+                            >
+                              <div style={{ gridColumn: "1 / -1", fontSize: 11, letterSpacing: 0.4, textTransform: "uppercase", color: "rgba(230,234,242,0.7)", fontWeight: 600 }}>
+                                Adres bewerken (alleen deze PDF — order blijft ongewijzigd)
+                              </div>
+                              {fields.map((f) => (
+                                <label
+                                  key={f.key}
+                                  style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    gap: 4,
+                                    gridColumn: f.col === 2 ? "1 / -1" : "auto",
+                                    fontSize: 11,
+                                    color: "rgba(230,234,242,0.75)",
+                                  }}
+                                >
+                                  <span>{f.label}</span>
+                                  <input
+                                    type="text"
+                                    value={(zoomItem[f.key] as string | null) ?? ""}
+                                    onChange={(e) => updateLabelField(zoomItem.id, f.key, e.target.value)}
+                                    style={inputStyle}
+                                  />
+                                </label>
+                              ))}
+                            </div>
+                          );
+                        })()}
                         <button
                           onClick={() => setLabelZoomId(null)}
                           className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
