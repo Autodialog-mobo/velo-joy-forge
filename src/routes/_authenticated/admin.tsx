@@ -2072,34 +2072,40 @@ function AdminPage() {
                         overflow: "hidden",
                       }}
                     >
-                      {/* Safe-area / margin indicator (2 mm dashed inset, 4 mm right for printer clip) */}
-                      <div
-                        aria-hidden
-                        style={{
-                          position: "absolute",
-                          left: PAD,
-                          top: PAD,
-                          width: W - PAD - PAD_R,
-                          height: H - PAD * 2,
-                          border: "1px dashed #2ECC8A",
-                          pointerEvents: "none",
-                          boxSizing: "border-box",
-                        }}
-                      />
-                      {/* Printer clip strip (right ~2 mm is physically cut by 87 mm feed) */}
-                      <div
-                        aria-hidden
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          width: PAD_R - PAD,
-                          height: H,
-                          background:
-                            "repeating-linear-gradient(135deg, rgba(231,76,60,0.18) 0 4px, rgba(231,76,60,0) 4px 8px)",
-                          pointerEvents: "none",
-                        }}
-                      />
+                      {/* Safe-area / margin indicator (dashed inset) */}
+                      {labelShowOverlay && (
+                        <div
+                          aria-hidden
+                          style={{
+                            position: "absolute",
+                            left: PAD,
+                            top: PAD,
+                            width: Math.max(0, W - PAD - PAD_R),
+                            height: Math.max(0, H - PAD * 2),
+                            border: "1px dashed #2ECC8A",
+                            pointerEvents: "none",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      )}
+                      {/* Printer clip strip (right edge the printer physically cuts) */}
+                      {labelShowOverlay && clipMm > 0 && (
+                        <div
+                          aria-hidden
+                          title={`Printer clip: rechts ${clipMm.toFixed(1)} mm wordt afgesneden`}
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                            width: clipMm * mm,
+                            height: H,
+                            background:
+                              "repeating-linear-gradient(135deg, rgba(231,76,60,0.22) 0 4px, rgba(231,76,60,0) 4px 8px)",
+                            borderLeft: "1px dashed rgba(231,76,60,0.7)",
+                            pointerEvents: "none",
+                          }}
+                        />
+                      )}
                       {/* Cut marks at each corner */}
                       {[
                         { top: 0, left: 0, bt: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
