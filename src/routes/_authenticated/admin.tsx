@@ -23,6 +23,18 @@ export const Route = createFileRoute("/_authenticated/admin")({
 const STATUS_FILTERS = ["all", "paid", "printed", "shipped"] as const;
 type StatusFilter = (typeof STATUS_FILTERS)[number];
 
+const REFERRAL_LABEL_NL: Record<string, string> = {
+  bike_shop: "Via mijn fietswinkel",
+  friend_family: "Via een vriend of familielid",
+  social: "Social media",
+  search: "Google / zoekmachine",
+  ai: "Via AI (ChatGPT, …)",
+  insurance: "Via mijn verzekering",
+  roadside: "Via mijn pechhulpverlener",
+  other: "Anders",
+};
+const referralLabel = (key?: string | null) => (key && REFERRAL_LABEL_NL[key]) || "—";
+
 const LEGACY_SKU_MAP: Record<string, string> = {
   frameid_solo_onetime: "VP-FID-1",
   frameid_duo_onetime: "VP-FID-2",
@@ -428,6 +440,7 @@ function AdminPage() {
         shipping_postal_code: o.shipping_postal_code,
         shipping_city: o.shipping_city,
         shipping_country: o.shipping_country,
+        referral_source: o.referral_source ?? "",
         items: ls.map((l) => `${l.bundle_sku}x${l.quantity}`).join(" "),
         sticker_total: ls.reduce((s, l) => s + l.sticker_count, 0),
         amount_total_eur: (o.amount_total / 100).toFixed(2),
@@ -1325,8 +1338,8 @@ function AdminPage() {
                         </span>
                       </p>
                       <p className="text-[12px] mt-1" style={{ color: TEXT_MUTED }}>
-                        Bron: <span style={{ color: TEXT_SEC, fontWeight: 600 }}>
-                          {(detailOrder as any).referral_source ?? "—"}
+                        Hoe gevonden: <span style={{ color: TEXT_SEC, fontWeight: 600 }}>
+                          {referralLabel((detailOrder as any).referral_source)}
                         </span>
                       </p>
                     </div>
