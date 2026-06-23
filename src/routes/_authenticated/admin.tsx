@@ -1601,7 +1601,7 @@ function AdminPage() {
             </div>
 
             {/* Order Detail Modal */}
-            <Dialog open={!!detailOrder} onOpenChange={(open) => !open && closeDetail()}>
+            <Dialog open={!!detailOrder} onOpenChange={(open) => { if (!open) { setPrintReport(null); closeDetail(); } }}>
               {detailOrder && (
                 <DialogContent
                   className="max-w-lg p-0 overflow-hidden rounded-[18px]"
