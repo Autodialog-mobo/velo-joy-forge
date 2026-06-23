@@ -2,7 +2,16 @@ import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router"
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink } from "lucide-react";
+import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink, Users } from "lucide-react";
+
+function normalizeNameForCompare(s: string | null | undefined): string {
+  if (!s) return "";
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "");
+}
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -1522,6 +1531,21 @@ function AdminPage() {
                             <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
                               {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
                             </div>
+                            {(() => {
+                              const payer = o.payment_consumer_name;
+                              if (!payer) return null;
+                              if (normalizeNameForCompare(o.shipping_name) === normalizeNameForCompare(payer)) return null;
+                              return (
+                                <span
+                                  className="inline-flex items-center"
+                                  style={{ color: TEXT_MUTED, flexShrink: 0 }}
+                                  title={`Naam verzending en naam betaler verschillen — Verzending: ${o.shipping_name || "—"} · Betaler: ${payer}`}
+                                  aria-label="Naam verzending en naam betaler verschillen"
+                                >
+                                  <Users size={13} aria-hidden />
+                                </span>
+                              );
+                            })()}
                             <span
                               className="text-[10px] px-1.5 py-[1px] rounded-[4px] font-medium"
                               style={{
