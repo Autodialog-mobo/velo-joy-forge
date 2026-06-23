@@ -384,7 +384,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, searchQuery, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, stickerFilter, stickerTotalById, searchQuery, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
