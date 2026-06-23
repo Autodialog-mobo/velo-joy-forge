@@ -23,6 +23,18 @@ export const Route = createFileRoute("/_authenticated/admin")({
 const STATUS_FILTERS = ["all", "paid", "printed", "shipped"] as const;
 type StatusFilter = (typeof STATUS_FILTERS)[number];
 
+const REFERRAL_LABEL_NL: Record<string, string> = {
+  bike_shop: "Via mijn fietswinkel",
+  friend_family: "Via een vriend of familielid",
+  social: "Social media",
+  search: "Google / zoekmachine",
+  ai: "Via AI (ChatGPT, …)",
+  insurance: "Via mijn verzekering",
+  roadside: "Via mijn pechhulpverlener",
+  other: "Anders",
+};
+const referralLabel = (key?: string | null) => (key && REFERRAL_LABEL_NL[key]) || "—";
+
 const LEGACY_SKU_MAP: Record<string, string> = {
   frameid_solo_onetime: "VP-FID-1",
   frameid_duo_onetime: "VP-FID-2",
