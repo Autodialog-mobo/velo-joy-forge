@@ -221,7 +221,7 @@ function renderHtml(input: OrderConfirmationInput, lang: Lang): string {
             <td style="padding:22px 28px;background:${BRAND.ink};border-bottom:3px solid ${BRAND.accent};">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
                 <td style="vertical-align:middle;padding-right:12px;line-height:0;">
-                  <img src="${LOGO_DATA_URI}" width="36" height="36" alt="Velopass" style="display:block;border:0;outline:none;text-decoration:none;" />
+                  <img src="${LOGO_URL}" width="36" height="36" alt="Velopass" style="display:block;border:0;outline:none;text-decoration:none;" />
                 </td>
                 <td style="vertical-align:middle;font-family:'Syne','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#ffffff;letter-spacing:-0.3px;">
                   velopass
