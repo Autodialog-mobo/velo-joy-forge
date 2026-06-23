@@ -471,6 +471,22 @@ function AdminPage() {
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [zoomDraft, setZoomDraft] = useState<Partial<LabelData> | null>(null);
   const [zoomSaving, setZoomSaving] = useState<boolean>(false);
+  type PrintRow = {
+    id: string;
+    oldStatus: string | null;
+    newStatus: string | null;
+    rollback?: "not_needed" | "reverted" | "failed";
+    rollbackError?: string;
+  };
+  const [printReport, setPrintReport] = useState<
+    | {
+        kind: "success" | "error" | "partial";
+        message: string;
+        error?: string;
+        rows: PrintRow[];
+      }
+    | null
+  >(null);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
@@ -648,10 +664,33 @@ function AdminPage() {
     const eligibleIds = ids.filter((id) => ordersById.get(id)?.status === "paid");
     try {
       await doPrint({ data: { orderIds: ids } });
+      const successRows: PrintRow[] = ids.map((id) => {
+        const wasEligible = eligibleIds.includes(id);
+        const oldStatus = ordersById.get(id)?.status ?? null;
+        return {
+          id,
+          oldStatus,
+          newStatus: wasEligible ? "printed" : oldStatus,
+        };
+      });
+      const changedCount = successRows.filter((r) => r.oldStatus !== r.newStatus).length;
+      setPrintReport({
+        kind: "success",
+        message:
+          changedCount === 0
+            ? "Geen statuswijziging — alle bestellingen stonden al op 'geprint' of 'verzonden'."
+            : changedCount === 1
+              ? "1 bestelling op 'geprint' gezet."
+              : `${changedCount} bestellingen op 'geprint' gezet.`,
+        rows: successRows,
+      });
       toast.success(
-        ids.length === 1
-          ? "Bestelling op 'geprint' gezet"
-          : `${ids.length} bestellingen op 'geprint' gezet`,
+        changedCount === 1 ? "Bestelling op 'geprint' gezet" : `${changedCount} bestellingen op 'geprint' gezet`,
+        {
+          description: "Klik 'Details' voor de IDs en oude/nieuwe status.",
+          action: { label: "Details", onClick: () => setPrintReport((r) => r) },
+          duration: 8_000,
+        },
       );
       await refetch();
     } catch (err) {
@@ -660,29 +699,51 @@ function AdminPage() {
       // Best-effort rollback: revertToPaid only flips orders currently in
       // 'printed' back to 'paid', so it's a safe no-op for anything that
       // didn't transition. Run in parallel and surface partial failures.
-      let rolledBack = 0;
-      let rollbackFailed = 0;
+      const rollbackByMap = new Map<string, PromiseSettledResult<unknown>>();
       if (eligibleIds.length) {
         const results = await Promise.allSettled(
           eligibleIds.map((id) => doRevertPaid({ data: { orderId: id } })),
         );
-        for (const r of results) {
-          if (r.status === "fulfilled") rolledBack++;
-          else rollbackFailed++;
+        eligibleIds.forEach((id, i) => rollbackByMap.set(id, results[i]));
+      }
+      const rows: PrintRow[] = ids.map((id) => {
+        const oldStatus = ordersById.get(id)?.status ?? null;
+        const eligible = eligibleIds.includes(id);
+        if (!eligible) {
+          return { id, oldStatus, newStatus: oldStatus, rollback: "not_needed" };
         }
-      }
+        const r = rollbackByMap.get(id);
+        if (r?.status === "fulfilled") {
+          return { id, oldStatus, newStatus: oldStatus, rollback: "reverted" };
+        }
+        const reason = r?.status === "rejected" ? r.reason : undefined;
+        return {
+          id,
+          oldStatus,
+          newStatus: "printed",
+          rollback: "failed",
+          rollbackError: reason instanceof Error ? reason.message : reason ? String(reason) : undefined,
+        };
+      });
+      const failed = rows.filter((r) => r.rollback === "failed").length;
+      const reverted = rows.filter((r) => r.rollback === "reverted").length;
       await refetch().catch(() => undefined);
-      if (rollbackFailed > 0) {
-        toast.error("Status bijwerken mislukt — rollback onvolledig", {
-          description: `${message} ${rolledBack} hersteld, ${rollbackFailed} kon niet teruggezet worden. Controleer de bestellingen handmatig.`,
-          duration: 12_000,
-        });
-      } else {
-        toast.error("Status bijwerken mislukt — wijzigingen teruggedraaid", {
-          description: `${message}${eligibleIds.length ? ` ${rolledBack} bestelling(en) teruggezet naar 'betaald'.` : ""} De PDF blijft beschikbaar; probeer opnieuw te printen.`,
-          duration: 10_000,
-        });
-      }
+      const kind: "error" | "partial" = failed > 0 ? "partial" : "error";
+      const summary =
+        failed > 0
+          ? `Rollback onvolledig: ${reverted} hersteld, ${failed} kon niet teruggezet worden — controleer handmatig.`
+          : eligibleIds.length
+            ? `Wijzigingen teruggedraaid: ${reverted} bestelling(en) terug op 'betaald'.`
+            : "Geen statuswijziging om terug te draaien.";
+      setPrintReport({ kind, message: summary, error: message, rows });
+      toast.error(
+        failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
+        {
+          description: `${message} Klik 'Details' voor IDs en oude/nieuwe status.`,
+          action: { label: "Details", onClick: () => setPrintReport((r) => r) },
+          duration: 14_000,
+        },
+      );
     }
   };
 
@@ -2102,6 +2163,131 @@ function AdminPage() {
                 </DialogContent>
               )}
             </Dialog>
+
+            <Dialog open={!!printReport} onOpenChange={(open) => !open && setPrintReport(null)}>
+              {printReport && (
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>
+                      {printReport.kind === "success"
+                        ? "Print — statusupdate geslaagd"
+                        : printReport.kind === "partial"
+                          ? "Print — statusupdate mislukt, rollback onvolledig"
+                          : "Print — statusupdate mislukt, wijzigingen teruggedraaid"}
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-3 text-sm">
+                    <div
+                      className="p-3 rounded-md"
+                      style={{
+                        background:
+                          printReport.kind === "success"
+                            ? "rgba(46,204,138,0.12)"
+                            : printReport.kind === "partial"
+                              ? "rgba(245,158,11,0.12)"
+                              : "rgba(224,82,82,0.12)",
+                        border: `1px solid ${
+                          printReport.kind === "success"
+                            ? "rgba(46,204,138,0.35)"
+                            : printReport.kind === "partial"
+                              ? "rgba(245,158,11,0.4)"
+                              : "rgba(224,82,82,0.4)"
+                        }`,
+                      }}
+                    >
+                      <div className="font-medium">{printReport.message}</div>
+                      {printReport.error && (
+                        <div className="mt-1 text-xs opacity-80">
+                          Fout: <code>{printReport.error}</code>
+                        </div>
+                      )}
+                    </div>
+                    <div className="max-h-[50vh] overflow-auto rounded-md border border-border">
+                      <table className="w-full text-xs">
+                        <thead className="sticky top-0 bg-muted">
+                          <tr className="text-left">
+                            <th className="px-2 py-1.5 font-semibold">Order ID</th>
+                            <th className="px-2 py-1.5 font-semibold">Oude status</th>
+                            <th className="px-2 py-1.5 font-semibold">Nieuwe status</th>
+                            <th className="px-2 py-1.5 font-semibold">Rollback</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {printReport.rows.map((r) => {
+                            const changed = r.oldStatus !== r.newStatus;
+                            const rb = r.rollback;
+                            const rbLabel =
+                              rb === "reverted"
+                                ? "✓ teruggezet"
+                                : rb === "failed"
+                                  ? "✕ mislukt"
+                                  : rb === "not_needed"
+                                    ? "— niet nodig"
+                                    : "—";
+                            const rbColor =
+                              rb === "reverted"
+                                ? "#2ECC8A"
+                                : rb === "failed"
+                                  ? "#E05252"
+                                  : "rgba(230,234,242,0.6)";
+                            return (
+                              <tr key={r.id} className="border-t border-border align-top">
+                                <td className="px-2 py-1.5 font-mono text-[11px] break-all">{r.id}</td>
+                                <td className="px-2 py-1.5">{r.oldStatus ?? "—"}</td>
+                                <td
+                                  className="px-2 py-1.5"
+                                  style={{
+                                    color: changed ? "#2ECC8A" : "rgba(230,234,242,0.7)",
+                                    fontWeight: changed ? 600 : 400,
+                                  }}
+                                >
+                                  {r.newStatus ?? "—"}
+                                </td>
+                                <td className="px-2 py-1.5" style={{ color: rbColor }}>
+                                  {rbLabel}
+                                  {r.rollbackError && (
+                                    <div className="text-[10px] opacity-70 mt-0.5">{r.rollbackError}</div>
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="flex items-center justify-between gap-2 pt-1">
+                      <button
+                        type="button"
+                        className="text-xs underline opacity-80 hover:opacity-100"
+                        onClick={() => {
+                          const text = printReport.rows
+                            .map(
+                              (r) =>
+                                `${r.id}\t${r.oldStatus ?? ""}\t${r.newStatus ?? ""}\t${r.rollback ?? ""}${r.rollbackError ? `\t${r.rollbackError}` : ""}`,
+                            )
+                            .join("\n");
+                          navigator.clipboard.writeText(text).then(
+                            () => toast.success("Gekopieerd naar klembord"),
+                            () => toast.error("Kopiëren mislukt"),
+                          );
+                        }}
+                      >
+                        Kopieer rapport
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-ghost h-8 px-3 rounded-md text-xs"
+                        onClick={() => setPrintReport(null)}
+                      >
+                        Sluiten
+                      </button>
+                    </div>
+                  </div>
+                </DialogContent>
+              )}
+            </Dialog>
+
+
 
             <Dialog
               open={!!labelItems}
