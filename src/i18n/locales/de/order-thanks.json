@@ -26,6 +26,19 @@
     "status_line": "Eine Zahlungsbestätigung liegt in deinem Postfach. Status: {{status}}.",
     "back_button": "Zurück zu Velopass"
   },
+  "pending": {
+    "eyebrow": "Zahlung wird verarbeitet",
+    "title": "Deine Zahlung wird noch verarbeitet",
+    "body": "Wir warten auf die Bestätigung deiner Zahlung. Das kann ein paar Sekunden dauern — aktualisiere diese Seite gleich.",
+    "refresh": "Status aktualisieren"
+  },
+  "unpaid": {
+    "eyebrow": "Zahlung nicht abgeschlossen",
+    "title": "Deine Zahlung wurde nicht abgeschlossen",
+    "body": "Der vorherige Zahlungsversuch ist abgelaufen oder wurde abgebrochen. Keine Sorge — deine Bestellung ist noch da. Klicke unten, um die Zahlung abzuschließen.",
+    "retry_button": "Zahlung abschließen",
+    "retrying": "Einen Moment…"
+  },
   "bundles": {
     "frameid_solo_onetime": "Velopass Frame-ID Solo",
     "frameid_duo_onetime": "Velopass Frame-ID Duo",
