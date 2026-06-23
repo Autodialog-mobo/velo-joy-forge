@@ -53,6 +53,7 @@ type Strings = {
   shipping: string;
   total: string;
   orderRef: string;
+  validUntil: string;
   footer: string;
 };
 
@@ -71,6 +72,7 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Verzending",
     total: "Totaal",
     orderRef: "Bestelnummer",
+    validUntil: "Deze betaallink is geldig tot {{date}}.",
     footer: "Vragen? Antwoord gewoon op deze mail.",
   },
   fr: {
@@ -87,6 +89,7 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Livraison",
     total: "Total",
     orderRef: "Numéro de commande",
+    validUntil: "Ce lien de paiement est valable jusqu'au {{date}}.",
     footer: "Des questions ? Réponds simplement à ce message.",
   },
   de: {
@@ -103,6 +106,7 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Versand",
     total: "Gesamt",
     orderRef: "Bestellnummer",
+    validUntil: "Dieser Zahlungslink ist gültig bis zum {{date}}.",
     footer: "Fragen? Antworte einfach auf diese E-Mail.",
   },
   en: {
@@ -119,9 +123,32 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Shipping",
     total: "Total",
     orderRef: "Order number",
+    validUntil: "This payment link is valid until {{date}}.",
     footer: "Questions? Just reply to this email.",
   },
 };
+
+const DATE_LOCALES: Record<Lang, string> = {
+  nl: "nl-NL",
+  fr: "fr-FR",
+  de: "de-DE",
+  en: "en-GB",
+};
+
+function formatExpiry(iso: string | null | undefined, lang: Lang): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  try {
+    return new Intl.DateTimeFormat(DATE_LOCALES[lang], {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(d);
+  } catch {
+    return d.toISOString().slice(0, 10);
+  }
+}
 
 function pickLang(raw: string | null | undefined): Lang {
   if (raw === "nl" || raw === "fr" || raw === "de" || raw === "en") return raw;
@@ -153,6 +180,7 @@ export type OrderRecoveryInput = {
   amountShippingCents: number;
   amountTotalCents: number;
   firstName?: string | null;
+  expiresAt?: string | null;
 };
 
 function renderHtml(input: OrderRecoveryInput, lang: Lang): string {
@@ -178,6 +206,12 @@ function renderHtml(input: OrderRecoveryInput, lang: Lang): string {
   const shippingStr = formatEUR(input.amountShippingCents, lang);
   const totalStr = formatEUR(input.amountTotalCents, lang);
   const firstName = (input.firstName ?? "").trim();
+  const expiryFormatted = formatExpiry(input.expiresAt, lang);
+  const validUntilHtml = expiryFormatted
+    ? `<p style="margin:0 0 24px;font-size:13px;color:${BRAND.muted};">${escapeHtml(
+        t.validUntil.replace("{{date}}", expiryFormatted),
+      )}</p>`
+    : "";
 
   return `<!doctype html>
 <html lang="${lang}">
@@ -219,6 +253,8 @@ function renderHtml(input: OrderRecoveryInput, lang: Lang): string {
               <p style="margin:0 0 24px;font-size:12px;color:${BRAND.muted};word-break:break-all;">
                 <a href="${checkoutUrl}" style="color:${BRAND.muted};">${checkoutUrl}</a>
               </p>
+
+              ${validUntilHtml}
 
               <h2 style="margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:${BRAND.muted};">${escapeHtml(t.items)}</h2>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border:1px solid ${BRAND.border};border-radius:8px;overflow:hidden;">
