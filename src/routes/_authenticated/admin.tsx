@@ -478,7 +478,14 @@ function AdminPage() {
     const included = labelItems.filter((l) => !labelExcluded.has(l.id));
     if (!included.length) return;
     const blob = generateLabelsPdf(included);
-    downloadBlob(blob, `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`);
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, "_blank");
+    if (!win) {
+      // popup blocked — fall back to download
+      downloadBlob(blob, `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`);
+    }
+    // Revoke later so the new tab has time to load the blob
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
   };
 
 
