@@ -655,7 +655,7 @@ function AdminPage() {
 
   const hasSelection = selectedOrders.length > 0;
 
-  const SortIcon = ({ column }: { column: "date" | "amount" }) => {
+  const SortIcon = ({ column }: { column: "date" | "amount" | "stickers" }) => {
     if (sort.column !== column) return null;
     return sort.dir === "asc" ? (
       <ArrowUp className="w-3 h-3" style={{ color: GREEN }} />
