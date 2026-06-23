@@ -2119,7 +2119,7 @@ function AdminPage() {
                         disabled={includedCount === 0}
                         className="btn-primary h-9 px-3 rounded-[10px] text-[13px] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Download PDF ({includedCount})
+                        Printen ({includedCount}) →
                       </button>
                     </div>
                   </DialogContent>
