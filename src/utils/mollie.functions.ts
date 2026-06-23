@@ -65,6 +65,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         city: string;
         country: string;
       };
+      referralSource?: string | null;
     }) => {
       if (!Array.isArray(data.items) || data.items.length === 0) {
         throw new Error("Minstens één bundel is vereist");
