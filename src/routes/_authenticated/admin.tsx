@@ -381,6 +381,11 @@ function AdminPage() {
       if (sort.column === "amount") {
         return sort.dir === "asc" ? a.amount_total - b.amount_total : b.amount_total - a.amount_total;
       }
+      if (sort.column === "stickers") {
+        const na = stickerTotalById.get(a.id) ?? 0;
+        const nb = stickerTotalById.get(b.id) ?? 0;
+        return sort.dir === "asc" ? na - nb : nb - na;
+      }
       return 0;
     });
     return arr;
