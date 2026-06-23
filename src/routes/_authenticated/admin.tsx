@@ -500,6 +500,24 @@ function AdminPage() {
     });
   };
 
+  useEffect(() => {
+    if (!labelZoomId) {
+      setZoomDraft(null);
+      return;
+    }
+    const item = labelItems?.find((l) => l.id === labelZoomId);
+    if (!item) return;
+    setZoomDraft({
+      shipping_name: item.shipping_name,
+      shipping_line1: item.shipping_line1,
+      shipping_line2: item.shipping_line2,
+      shipping_postal_code: item.shipping_postal_code,
+      shipping_city: item.shipping_city,
+      shipping_country: item.shipping_country,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [labelZoomId]);
+
 
 
   const generateLabels = () => {
