@@ -53,7 +53,7 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
     // collides with it. Caption is ~5pt ≈ 1.76 mm tall, plus a 0.6 mm gap.
     const CAPTION_SIZE = 5; // pt
     const CAPTION_H = CAPTION_SIZE * PT_TO_MM + 0.6; // ≈ 2.4 mm
-    const availW = W - PAD_X * 2;
+    const availW = W - PAD_X - PAD_R;
     const availH = H - PAD_Y * 2 - CAPTION_H;
 
     // Auto-fit: start at 11pt, shrink until everything fits both width and height.
