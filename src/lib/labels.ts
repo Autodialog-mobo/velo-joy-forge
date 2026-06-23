@@ -15,8 +15,8 @@ export interface LabelData {
 // Physical label: 28 mm (height) × 89 mm (width), landscape
 const W = 89; // page width  (mm)
 const H = 28; // page height (mm)
-const PAD_X = 3; // ~3 mm left/right padding
-const PAD_Y = 2; // ~2 mm top/bottom padding
+const PAD_X = 2; // 2 mm left/right padding (leading-edge safe area)
+const PAD_Y = 2; // 2 mm top/bottom padding
 
 const PT_TO_MM = 0.3528;
 
@@ -47,36 +47,35 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
     const availH = H - PAD_Y * 2;
 
     // Auto-fit: start at 11pt, shrink until everything fits both width and height.
-    const LINE_GAP = 1.25; // line-height multiplier
+    const LINE_GAP = 1.25;
     let fontSize = 11;
     let fitted: string[] = [];
     while (fontSize >= 6) {
       doc.setFontSize(fontSize);
       fitted = [];
-      let overflow = false;
       for (const ln of rawLines) {
         doc.setFont("helvetica", ln.bold ? "bold" : "normal");
         const wrapped = doc.splitTextToSize(ln.text, availW) as string[];
-        // Tag each wrapped line with its weight by re-emitting later — store with marker.
         for (const w of wrapped) fitted.push((ln.bold ? "\x01" : "\x00") + w);
       }
       const lineH = fontSize * PT_TO_MM * LINE_GAP;
       const totalH = fitted.length * lineH;
-      if (totalH <= availH && !overflow) break;
+      if (totalH <= availH) break;
       fontSize -= 0.5;
     }
 
     doc.setFontSize(fontSize);
     doc.setTextColor(0, 0, 0);
     const lineH = fontSize * PT_TO_MM * LINE_GAP;
-    const totalH = fitted.length * lineH;
-    let y = PAD_Y + (availH - totalH) / 2 + fontSize * PT_TO_MM * 0.85;
+    // Anchor at top-left (leading edge of the DYMO label). Baseline is the
+    // text bottom in jsPDF, so offset by ~0.85 × cap height for the first line.
+    let y = PAD_Y + fontSize * PT_TO_MM * 0.85;
 
     for (const tagged of fitted) {
       const bold = tagged.charCodeAt(0) === 1;
       const text = tagged.slice(1);
       doc.setFont("helvetica", bold ? "bold" : "normal");
-      doc.text(text, PAD_X, y);
+      doc.text(text, PAD_X, y, { align: "left" });
       y += lineH;
     }
   });
