@@ -636,6 +636,23 @@ function AdminPage() {
       URL.revokeObjectURL(htmlUrl);
       URL.revokeObjectURL(pdfUrl);
     }, 120_000);
+
+    // Mark printed: DB function only updates orders currently in status 'paid',
+    // so reprints of already-printed/shipped orders are safely ignored.
+    const ids = included.map((l) => l.id);
+    try {
+      await doPrint({ data: { orderIds: ids } });
+      toast.success(
+        ids.length === 1
+          ? "Bestelling op 'geprint' gezet"
+          : `${ids.length} bestellingen op 'geprint' gezet`,
+      );
+      await refetch();
+    } catch (err) {
+      toast.error("Status bijwerken mislukt", {
+        description: err instanceof Error ? err.message : "Probeer opnieuw via 'Markeer als geprint'.",
+      });
+    }
   };
 
 
