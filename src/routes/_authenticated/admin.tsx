@@ -1319,7 +1319,7 @@ function AdminPage() {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Zoek op naam, e-mail of order…"
+                  placeholder="Zoek op naam, e-mail of Mollie ID…"
                   aria-label="Zoeken in bestellingen"
                   className="h-7 pl-7 pr-7 rounded-[8px] text-[12px] w-[240px] focus:outline-none"
                   style={{
