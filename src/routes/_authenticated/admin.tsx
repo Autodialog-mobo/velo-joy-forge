@@ -2164,6 +2164,131 @@ function AdminPage() {
               )}
             </Dialog>
 
+            <Dialog open={!!printReport} onOpenChange={(open) => !open && setPrintReport(null)}>
+              {printReport && (
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>
+                      {printReport.kind === "success"
+                        ? "Print — statusupdate geslaagd"
+                        : printReport.kind === "partial"
+                          ? "Print — statusupdate mislukt, rollback onvolledig"
+                          : "Print — statusupdate mislukt, wijzigingen teruggedraaid"}
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-3 text-sm">
+                    <div
+                      className="p-3 rounded-md"
+                      style={{
+                        background:
+                          printReport.kind === "success"
+                            ? "rgba(46,204,138,0.12)"
+                            : printReport.kind === "partial"
+                              ? "rgba(245,158,11,0.12)"
+                              : "rgba(224,82,82,0.12)",
+                        border: `1px solid ${
+                          printReport.kind === "success"
+                            ? "rgba(46,204,138,0.35)"
+                            : printReport.kind === "partial"
+                              ? "rgba(245,158,11,0.4)"
+                              : "rgba(224,82,82,0.4)"
+                        }`,
+                      }}
+                    >
+                      <div className="font-medium">{printReport.message}</div>
+                      {printReport.error && (
+                        <div className="mt-1 text-xs opacity-80">
+                          Fout: <code>{printReport.error}</code>
+                        </div>
+                      )}
+                    </div>
+                    <div className="max-h-[50vh] overflow-auto rounded-md border border-border">
+                      <table className="w-full text-xs">
+                        <thead className="sticky top-0 bg-muted">
+                          <tr className="text-left">
+                            <th className="px-2 py-1.5 font-semibold">Order ID</th>
+                            <th className="px-2 py-1.5 font-semibold">Oude status</th>
+                            <th className="px-2 py-1.5 font-semibold">Nieuwe status</th>
+                            <th className="px-2 py-1.5 font-semibold">Rollback</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {printReport.rows.map((r) => {
+                            const changed = r.oldStatus !== r.newStatus;
+                            const rb = r.rollback;
+                            const rbLabel =
+                              rb === "reverted"
+                                ? "✓ teruggezet"
+                                : rb === "failed"
+                                  ? "✕ mislukt"
+                                  : rb === "not_needed"
+                                    ? "— niet nodig"
+                                    : "—";
+                            const rbColor =
+                              rb === "reverted"
+                                ? "#2ECC8A"
+                                : rb === "failed"
+                                  ? "#E05252"
+                                  : "rgba(230,234,242,0.6)";
+                            return (
+                              <tr key={r.id} className="border-t border-border align-top">
+                                <td className="px-2 py-1.5 font-mono text-[11px] break-all">{r.id}</td>
+                                <td className="px-2 py-1.5">{r.oldStatus ?? "—"}</td>
+                                <td
+                                  className="px-2 py-1.5"
+                                  style={{
+                                    color: changed ? "#2ECC8A" : "rgba(230,234,242,0.7)",
+                                    fontWeight: changed ? 600 : 400,
+                                  }}
+                                >
+                                  {r.newStatus ?? "—"}
+                                </td>
+                                <td className="px-2 py-1.5" style={{ color: rbColor }}>
+                                  {rbLabel}
+                                  {r.rollbackError && (
+                                    <div className="text-[10px] opacity-70 mt-0.5">{r.rollbackError}</div>
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="flex items-center justify-between gap-2 pt-1">
+                      <button
+                        type="button"
+                        className="text-xs underline opacity-80 hover:opacity-100"
+                        onClick={() => {
+                          const text = printReport.rows
+                            .map(
+                              (r) =>
+                                `${r.id}\t${r.oldStatus ?? ""}\t${r.newStatus ?? ""}\t${r.rollback ?? ""}${r.rollbackError ? `\t${r.rollbackError}` : ""}`,
+                            )
+                            .join("\n");
+                          navigator.clipboard.writeText(text).then(
+                            () => toast.success("Gekopieerd naar klembord"),
+                            () => toast.error("Kopiëren mislukt"),
+                          );
+                        }}
+                      >
+                        Kopieer rapport
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-ghost h-8 px-3 rounded-md text-xs"
+                        onClick={() => setPrintReport(null)}
+                      >
+                        Sluiten
+                      </button>
+                    </div>
+                  </div>
+                </DialogContent>
+              )}
+            </Dialog>
+
+
+
             <Dialog
               open={!!labelItems}
               onOpenChange={(open) => {
