@@ -11,71 +11,74 @@ export interface LabelData {
   lines: { bundle_sku: string; quantity: number }[];
 }
 
-const SENDER = "Velopass BV · Stokerijstraat 29/a1 · 2110 Wijnegem";
+// DYMO LabelWriter 450 — Standard Address Label S0722370
+// Physical label: 28 mm (height) × 89 mm (width), landscape
+const W = 89; // page width  (mm)
+const H = 28; // page height (mm)
+const PAD_X = 3; // ~3 mm left/right padding
+const PAD_Y = 2; // ~2 mm top/bottom padding
 
-// C6 envelope: 162 x 114 mm
-const W = 162;
-const H = 114;
-const MX = 12; // horizontal margin
-const MY = 8;  // vertical margin
-
-// Convert pt to mm (1pt = 0.3528mm)
-const PT = 0.3528;
+const PT_TO_MM = 0.3528;
 
 export function generateLabelsPdf(orders: LabelData[]): Blob {
-  const doc = new jsPDF({ unit: "mm", format: [W, H], orientation: "landscape" });
+  const doc = new jsPDF({
+    unit: "mm",
+    format: [W, H],
+    orientation: "landscape",
+  });
 
   orders.forEach((o, idx) => {
     if (idx > 0) doc.addPage([W, H], "landscape");
 
-    // ── AFZENDER (top, 8mm from top) ──
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(8);
-    doc.setTextColor(136, 136, 136);
-    doc.text(SENDER, MX, MY + 8 * PT);
-
-    // ── KLANT (vertically centered) ──
-    const name = (o.shipping_name || "").trim() || "—";
+    const name = (o.shipping_name || "").trim();
     const line1 = (o.shipping_line1 || "").trim();
     const line2 = (o.shipping_line2 || "").trim();
     const cityLine = `${o.shipping_postal_code ?? ""} ${o.shipping_city ?? ""}`.trim();
     const country = (o.shipping_country || "").toUpperCase().trim();
 
-    const nameLineH = 16 * PT * 1.3;   // ~7.3mm
-    const addrLineH = 14 * PT * 1.4;   // ~6.9mm
+    const rawLines: { text: string; bold: boolean }[] = [];
+    if (name) rawLines.push({ text: name, bold: true });
+    if (line1) rawLines.push({ text: line1, bold: false });
+    if (line2) rawLines.push({ text: line2, bold: false });
+    if (cityLine) rawLines.push({ text: cityLine, bold: false });
+    if (country) rawLines.push({ text: country, bold: false });
 
-    const addrLines = [line1, line2, cityLine, country].filter(Boolean);
-    const blockH = nameLineH + addrLines.length * addrLineH;
-    let y = (H - blockH) / 2 + nameLineH * 0.75; // baseline of first line
+    const availW = W - PAD_X * 2;
+    const availH = H - PAD_Y * 2;
 
-    doc.setTextColor(13, 31, 60); // #0D1F3C navy
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(16);
-    doc.text(name, MX, y);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(14);
-    for (const ln of addrLines) {
-      y += addrLineH;
-      doc.text(ln, MX, y);
+    // Auto-fit: start at 11pt, shrink until everything fits both width and height.
+    const LINE_GAP = 1.25; // line-height multiplier
+    let fontSize = 11;
+    let fitted: string[] = [];
+    while (fontSize >= 6) {
+      doc.setFontSize(fontSize);
+      fitted = [];
+      let overflow = false;
+      for (const ln of rawLines) {
+        doc.setFont("helvetica", ln.bold ? "bold" : "normal");
+        const wrapped = doc.splitTextToSize(ln.text, availW) as string[];
+        // Tag each wrapped line with its weight by re-emitting later — store with marker.
+        for (const w of wrapped) fitted.push((ln.bold ? "\x01" : "\x00") + w);
+      }
+      const lineH = fontSize * PT_TO_MM * LINE_GAP;
+      const totalH = fitted.length * lineH;
+      if (totalH <= availH && !overflow) break;
+      fontSize -= 0.5;
     }
 
-    // ── META (bottom, 8mm from bottom) ──
-    const skuStr = o.lines.map((l) => `${l.bundle_sku}×${l.quantity}`).join(", ");
-    const orderShort = o.id.slice(0, 8).toUpperCase();
-    const metaText = `${skuStr || "—"} · #${orderShort}`;
+    doc.setFontSize(fontSize);
+    doc.setTextColor(0, 0, 0);
+    const lineH = fontSize * PT_TO_MM * LINE_GAP;
+    const totalH = fitted.length * lineH;
+    let y = PAD_Y + (availH - totalH) / 2 + fontSize * PT_TO_MM * 0.85;
 
-    const metaBaselineY = H - MY;
-    const dividerY = metaBaselineY - 7 * PT - 2; // ~2mm above meta
-
-    doc.setDrawColor(221, 221, 221);
-    doc.setLineWidth(0.2);
-    doc.line(MX, dividerY, W - MX, dividerY);
-
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(7);
-    doc.setTextColor(136, 136, 136);
-    doc.text(metaText, MX, metaBaselineY);
+    for (const tagged of fitted) {
+      const bold = tagged.charCodeAt(0) === 1;
+      const text = tagged.slice(1);
+      doc.setFont("helvetica", bold ? "bold" : "normal");
+      doc.text(text, PAD_X, y);
+      y += lineH;
+    }
   });
 
   return doc.output("blob");
