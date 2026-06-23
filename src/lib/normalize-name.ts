@@ -67,3 +67,29 @@ export function namesLooselyEqual(
   }
   return true;
 }
+
+/**
+ * Returns the normalised surname (last token) of a name.
+ * Single-word names are treated as the surname themselves.
+ * Empty/null input returns "".
+ */
+export function surnameKey(s: string | null | undefined): string {
+  const tokens = nameTokens(s);
+  if (tokens.length === 0) return "";
+  return tokens[tokens.length - 1].replace(/[^a-z0-9]/g, "");
+}
+
+/**
+ * True when the surnames (last tokens) of both names match after
+ * normalisation. Returns false if either side is empty — caller decides
+ * whether "can't compare" should show an indicator.
+ */
+export function surnamesMatch(
+  a: string | null | undefined,
+  b: string | null | undefined,
+): boolean {
+  const sa = surnameKey(a);
+  const sb = surnameKey(b);
+  if (!sa || !sb) return false;
+  return sa === sb;
+}
