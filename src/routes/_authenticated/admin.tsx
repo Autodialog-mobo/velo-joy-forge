@@ -1531,6 +1531,19 @@ function AdminPage() {
                             <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
                               {o.shipping_name || <span style={{ color: TEXT_MUTED }}>—</span>}
                             </div>
+                            {(() => {
+                              const payer = o.payment_consumer_name;
+                              if (!payer) return null;
+                              if (normalizeNameForCompare(o.shipping_name) === normalizeNameForCompare(payer)) return null;
+                              return (
+                                <Users
+                                  size={13}
+                                  aria-label="Naam verzending en naam betaler verschillen"
+                                  style={{ color: TEXT_MUTED, flexShrink: 0 }}
+                                  title={`Naam verzending en naam betaler verschillen — Verzending: ${o.shipping_name || "—"} · Betaler: ${payer}`}
+                                />
+                              );
+                            })()}
                             <span
                               className="text-[10px] px-1.5 py-[1px] rounded-[4px] font-medium"
                               style={{
