@@ -471,6 +471,22 @@ function AdminPage() {
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [zoomDraft, setZoomDraft] = useState<Partial<LabelData> | null>(null);
   const [zoomSaving, setZoomSaving] = useState<boolean>(false);
+  type PrintRow = {
+    id: string;
+    oldStatus: string | null;
+    newStatus: string | null;
+    rollback?: "not_needed" | "reverted" | "failed";
+    rollbackError?: string;
+  };
+  const [printReport, setPrintReport] = useState<
+    | {
+        kind: "success" | "error" | "partial";
+        message: string;
+        error?: string;
+        rows: PrintRow[];
+      }
+    | null
+  >(null);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
