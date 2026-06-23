@@ -2189,7 +2189,7 @@ function AdminPage() {
                           const ctx = canvas.getContext("2d");
                           if (ctx) {
                             const fitsAt = (pt: number) => {
-                              ctx.font = `400 ${ptToPx(pt)}px Helvetica, Arial, sans-serif`;
+                              ctx.font = `700 ${ptToPx(pt)}px Helvetica, Arial, sans-serif`;
                               const widthMm = ctx.measureText(caption).width / mm;
                               return widthMm <= availMm;
                             };
