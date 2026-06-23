@@ -2964,7 +2964,7 @@ function AdminPage() {
                         Sluiten
                       </button>
                       <button
-                        onClick={downloadLabelsPdf}
+                        onClick={() => downloadLabelsPdf()}
                         disabled={includedCount === 0 || printJobBusy !== false}
                         title="Open het printvenster en sluit deze preview"
                         aria-label={`Printen van ${includedCount} label${includedCount === 1 ? "" : "s"}`}
