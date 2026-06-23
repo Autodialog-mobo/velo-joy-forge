@@ -2420,76 +2420,130 @@ function AdminPage() {
 
 
 
-                    {zoomItem ? (
-                      <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
-                        {renderLabel(zoomItem, 8)}
-                        {(() => {
-                          const fields: { key: keyof LabelData; label: string; col: number }[] = [
-                            { key: "shipping_name", label: "Naam", col: 2 },
-                            { key: "shipping_line1", label: "Straat + nr", col: 2 },
-                            { key: "shipping_line2", label: "Adres regel 2", col: 2 },
-                            { key: "shipping_postal_code", label: "Postcode", col: 1 },
-                            { key: "shipping_city", label: "Gemeente", col: 1 },
-                            { key: "shipping_country", label: "Land", col: 2 },
-                          ];
-                          const inputStyle: React.CSSProperties = {
-                            width: "100%",
-                            background: "#0E1116",
-                            color: "#E6EAF2",
-                            border: "1px solid rgba(255,255,255,0.15)",
-                            borderRadius: 6,
-                            padding: "6px 8px",
-                            fontSize: 13,
-                            fontFamily: "inherit",
-                          };
-                          return (
-                            <div
-                              className="w-full p-3 rounded-[8px]"
-                              style={{
-                                background: "#0E1116",
-                                border: "1px solid rgba(255,255,255,0.12)",
-                                color: "#E6EAF2",
-                                display: "grid",
-                                gridTemplateColumns: "1fr 1fr",
-                                gap: 10,
-                                maxWidth: 720,
-                              }}
-                            >
-                              <div style={{ gridColumn: "1 / -1", fontSize: 11, letterSpacing: 0.4, textTransform: "uppercase", color: "rgba(230,234,242,0.7)", fontWeight: 600 }}>
-                                Adres bewerken (alleen deze PDF — order blijft ongewijzigd)
-                              </div>
-                              {fields.map((f) => (
-                                <label
-                                  key={f.key}
-                                  style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: 4,
-                                    gridColumn: f.col === 2 ? "1 / -1" : "auto",
-                                    fontSize: 11,
-                                    color: "rgba(230,234,242,0.75)",
-                                  }}
-                                >
-                                  <span>{f.label}</span>
-                                  <input
-                                    type="text"
-                                    value={(zoomItem[f.key] as string | null) ?? ""}
-                                    onChange={(e) => updateLabelField(zoomItem.id, f.key, e.target.value)}
-                                    style={inputStyle}
-                                  />
-                                </label>
-                              ))}
+                    {zoomItem ? (() => {
+                      const previewItem = zoomDraft ? { ...zoomItem, ...zoomDraft } : zoomItem;
+                      const isDirty = !!zoomDraft && (
+                        (zoomDraft.shipping_name ?? "") !== (zoomItem.shipping_name ?? "") ||
+                        (zoomDraft.shipping_line1 ?? "") !== (zoomItem.shipping_line1 ?? "") ||
+                        (zoomDraft.shipping_line2 ?? "") !== (zoomItem.shipping_line2 ?? "") ||
+                        (zoomDraft.shipping_postal_code ?? "") !== (zoomItem.shipping_postal_code ?? "") ||
+                        (zoomDraft.shipping_city ?? "") !== (zoomItem.shipping_city ?? "") ||
+                        (zoomDraft.shipping_country ?? "") !== (zoomItem.shipping_country ?? "")
+                      );
+                      const fields: { key: keyof LabelData; label: string; col: number }[] = [
+                        { key: "shipping_name", label: "Naam", col: 2 },
+                        { key: "shipping_line1", label: "Straat + nr", col: 2 },
+                        { key: "shipping_line2", label: "Adres regel 2", col: 2 },
+                        { key: "shipping_postal_code", label: "Postcode", col: 1 },
+                        { key: "shipping_city", label: "Gemeente", col: 1 },
+                        { key: "shipping_country", label: "Land", col: 2 },
+                      ];
+                      const inputStyle: React.CSSProperties = {
+                        width: "100%",
+                        background: "#0E1116",
+                        color: "#E6EAF2",
+                        border: "1px solid rgba(255,255,255,0.15)",
+                        borderRadius: 6,
+                        padding: "6px 8px",
+                        fontSize: 13,
+                        fontFamily: "inherit",
+                      };
+                      const handleSave = () => {
+                        if (!zoomDraft) return;
+                        setLabelItems((prev) => {
+                          if (!prev) return prev;
+                          return prev.map((p) => (p.id === zoomItem.id ? { ...p, ...zoomDraft } : p));
+                        });
+                        toast.success("Adres bijgewerkt", {
+                          description: "Wijzigingen zijn opgeslagen voor deze PDF.",
+                        });
+                      };
+                      const handleReset = () => {
+                        setZoomDraft({
+                          shipping_name: zoomItem.shipping_name,
+                          shipping_line1: zoomItem.shipping_line1,
+                          shipping_line2: zoomItem.shipping_line2,
+                          shipping_postal_code: zoomItem.shipping_postal_code,
+                          shipping_city: zoomItem.shipping_city,
+                          shipping_country: zoomItem.shipping_country,
+                        });
+                      };
+                      return (
+                        <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
+                          {renderLabel(previewItem as LabelData, 8)}
+                          <div
+                            className="w-full p-3 rounded-[8px]"
+                            style={{
+                              background: "#0E1116",
+                              border: "1px solid rgba(255,255,255,0.12)",
+                              color: "#E6EAF2",
+                              display: "grid",
+                              gridTemplateColumns: "1fr 1fr",
+                              gap: 10,
+                              maxWidth: 720,
+                            }}
+                          >
+                            <div style={{ gridColumn: "1 / -1", fontSize: 11, letterSpacing: 0.4, textTransform: "uppercase", color: "rgba(230,234,242,0.7)", fontWeight: 600 }}>
+                              Adres bewerken (alleen deze PDF — order blijft ongewijzigd)
                             </div>
-                          );
-                        })()}
-                        <button
-                          onClick={() => setLabelZoomId(null)}
-                          className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
-                        >
-                          ← Terug naar overzicht
-                        </button>
-                      </div>
-                    ) : (
+                            {fields.map((f) => (
+                              <label
+                                key={f.key}
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  gap: 4,
+                                  gridColumn: f.col === 2 ? "1 / -1" : "auto",
+                                  fontSize: 11,
+                                  color: "rgba(230,234,242,0.75)",
+                                }}
+                              >
+                                <span>{f.label}</span>
+                                <input
+                                  type="text"
+                                  value={(zoomDraft?.[f.key] as string | null | undefined) ?? ""}
+                                  onChange={(e) =>
+                                    setZoomDraft((prev) => ({ ...(prev ?? {}), [f.key]: e.target.value }))
+                                  }
+                                  style={inputStyle}
+                                />
+                              </label>
+                            ))}
+                            <div style={{ gridColumn: "1 / -1", display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 4 }}>
+                              <button
+                                type="button"
+                                onClick={handleReset}
+                                disabled={!isDirty}
+                                className="btn-ghost h-8 px-3 rounded-[8px] text-[12px] font-medium"
+                                style={{ opacity: isDirty ? 1 : 0.5 }}
+                              >
+                                Herstellen
+                              </button>
+                              <button
+                                type="button"
+                                onClick={handleSave}
+                                disabled={!isDirty}
+                                className="h-8 px-4 rounded-[8px] text-[12px] font-semibold"
+                                style={{
+                                  background: isDirty ? "#2ECC8A" : "rgba(46,204,138,0.35)",
+                                  color: "#0E1116",
+                                  cursor: isDirty ? "pointer" : "not-allowed",
+                                  border: "none",
+                                }}
+                              >
+                                {isDirty ? "Wijzigingen opslaan" : "Opgeslagen"}
+                              </button>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => setLabelZoomId(null)}
+                            className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
+                          >
+                            ← Terug naar overzicht
+                          </button>
+                        </div>
+                      );
+                    })() : (
                       <div
                         className="grid gap-3"
                         style={{
