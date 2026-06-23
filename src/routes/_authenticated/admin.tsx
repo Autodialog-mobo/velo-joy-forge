@@ -151,6 +151,7 @@ function AdminPage() {
   const [statusFilter, setStatusFilter] = useState<string>("any");
   const [langFilter, setLangFilter] = useState<string>("any");
   const [countryFilter, setCountryFilter] = useState<string>("any");
+  const [stickerFilter, setStickerFilter] = useState<string>("any");
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   useEffect(() => {
