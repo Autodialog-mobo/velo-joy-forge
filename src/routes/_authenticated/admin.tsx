@@ -2551,13 +2551,13 @@ function AdminPage() {
                                 {zoomSaving && (
                                   <span
                                     aria-hidden
+                                    className="animate-spin"
                                     style={{
                                       width: 12,
                                       height: 12,
                                       borderRadius: "50%",
                                       border: "2px solid rgba(14,17,22,0.35)",
                                       borderTopColor: "#0E1116",
-                                      animation: "spin 0.7s linear infinite",
                                       display: "inline-block",
                                     }}
                                   />
