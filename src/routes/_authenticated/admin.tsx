@@ -6,7 +6,7 @@ import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User,
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation } from "@/lib/admin.functions";
+import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation, logPrintAudit } from "@/lib/admin.functions";
 import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
@@ -131,6 +131,7 @@ function AdminPage() {
   const doPrint = useServerFn(markPrinted);
   const doShip = useServerFn(markShipped);
   const doRevertPaid = useServerFn(revertToPaid);
+  const doLogPrintAudit = useServerFn(logPrintAudit);
   const doRevertPrinted = useServerFn(revertToPrinted);
   const doSoftDelete = useServerFn(softDeleteOrder);
   const doRestore = useServerFn(restoreOrder);
@@ -692,6 +693,16 @@ function AdminPage() {
           duration: 8_000,
         },
       );
+      doLogPrintAudit({
+        data: {
+          kind: "success",
+          message: changedCount === 0
+            ? "Geen statuswijziging — alle al geprint/verzonden."
+            : `${changedCount} bestelling(en) op 'geprint' gezet`,
+          requestedIds: ids,
+          rows: successRows,
+        },
+      }).catch((e) => console.error("logPrintAudit failed:", e));
       await refetch();
     } catch (err) {
       const message =
@@ -736,6 +747,15 @@ function AdminPage() {
             ? `Wijzigingen teruggedraaid: ${reverted} bestelling(en) terug op 'betaald'.`
             : "Geen statuswijziging om terug te draaien.";
       setPrintReport({ kind, message: summary, error: message, rows });
+      doLogPrintAudit({
+        data: {
+          kind,
+          message: summary,
+          error: message,
+          requestedIds: ids,
+          rows,
+        },
+      }).catch((e) => console.error("logPrintAudit failed:", e));
       toast.error(
         failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
         {

@@ -404,6 +404,48 @@ export const listAuditLog = createServerFn({ method: "POST" })
     return { entries: entries ?? [] };
   });
 
+export const logPrintAudit = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator(
+    (d: {
+      kind: "success" | "error" | "partial";
+      message: string;
+      error?: string | null;
+      requestedIds: string[];
+      rows: Array<{
+        id: string;
+        oldStatus: string | null;
+        newStatus: string | null;
+        rollback?: "not_needed" | "reverted" | "failed";
+        rollbackError?: string | null;
+      }>;
+    }) => d,
+  )
+  .handler(async ({ data, context }) => {
+    const { supabase, userId } = context as any;
+    await assertAdmin(supabase, userId);
+    const { writeAudit } = await import("./audit.server");
+    const changed = data.rows.filter((r) => r.oldStatus !== r.newStatus).length;
+    const rolledBack = data.rows.filter((r) => r.rollback === "reverted").length;
+    const rollbackFailed = data.rows.filter((r) => r.rollback === "failed").length;
+    await writeAudit(context, {
+      action: data.kind === "success" ? "order.print_batch" : "order.print_batch_failed",
+      target_type: "order",
+      target_id: data.rows.length === 1 ? data.rows[0].id : null,
+      metadata: {
+        kind: data.kind,
+        message: data.message,
+        error: data.error ?? null,
+        requested_count: data.requestedIds.length,
+        changed_count: changed,
+        rolled_back_count: rolledBack,
+        rollback_failed_count: rollbackFailed,
+        rows: data.rows,
+      },
+    });
+    return { ok: true };
+  });
+
 export const listEmailSendLog = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
