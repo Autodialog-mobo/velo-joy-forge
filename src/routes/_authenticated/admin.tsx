@@ -469,6 +469,7 @@ function AdminPage() {
 
   const [labelItems, setLabelItems] = useState<LabelData[] | null>(null);
   const [labelExcluded, setLabelExcluded] = useState<Set<string>>(new Set());
+  const [printJobBusy, setPrintJobBusy] = useState<false | "generating" | "updating">(false);
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [zoomDraft, setZoomDraft] = useState<Partial<LabelData> | null>(null);
   const [zoomSaving, setZoomSaving] = useState<boolean>(false);
