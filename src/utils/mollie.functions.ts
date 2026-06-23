@@ -209,20 +209,162 @@ export const getOrderByMolliePayment = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }) => {
     try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
       const payment = await mollieFetch(`/payments/${data.paymentId}`);
       const metadata: any = payment?.metadata ?? {};
       const items: Array<{ priceId: string; quantity: number }> = Array.isArray(metadata.items)
         ? metadata.items
         : [];
       const amountCents = Math.round(parseFloat(payment.amount.value) * 100);
+
+      // Authoritative status: prefer the DB order's status when present
+      // (covers recovery-payment links where this payment is unpaid but the
+      // original order was paid via another payment). Falls back to Mollie.
+      let orderStatus: string = payment.status as string;
+      const recoveryForOrderId =
+        typeof metadata.recovery_for_order_id === "string" ? metadata.recovery_for_order_id : null;
+      if (recoveryForOrderId) {
+        const { data: orig } = await (supabaseAdmin.from("orders") as any)
+          .select("status")
+          .eq("id", recoveryForOrderId)
+          .maybeSingle();
+        if (orig?.status === "paid" || orig?.status === "printed" || orig?.status === "shipped") {
+          orderStatus = "paid";
+        }
+      } else {
+        const { data: row } = await (supabaseAdmin.from("orders") as any)
+          .select("status")
+          .eq("mollie_payment_id", data.paymentId)
+          .maybeSingle();
+        if (row?.status === "paid" || row?.status === "printed" || row?.status === "shipped") {
+          orderStatus = "paid";
+        }
+      }
+
       return {
-        status: payment.status as string,
+        status: orderStatus,
+        paymentStatus: payment.status as string,
         email: metadata.email ?? null,
         amountTotal: amountCents,
         items,
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : "Kon bestelling niet ophalen";
+      return { error: message };
+    }
+  });
+
+export const retryOrderPayment = createServerFn({ method: "POST" })
+  .inputValidator((data: { paymentId: string; origin: string }) => {
+    if (!/^tr_[a-zA-Z0-9]+$/.test(data.paymentId)) throw new Error("Ongeldige paymentId");
+    if (!/^https?:\/\//.test(data.origin)) throw new Error("Ongeldige origin");
+    return data;
+  })
+  .handler(async ({ data }): Promise<{ checkoutUrl: string } | { error: string }> => {
+    try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const originalPayment = await mollieFetch(`/payments/${data.paymentId}`);
+      const meta: any = originalPayment?.metadata ?? {};
+
+      // Find the order — either by mollie_payment_id, or via recovery metadata.
+      let originalOrderId: string | null =
+        typeof meta.recovery_for_order_id === "string" ? meta.recovery_for_order_id : null;
+      let order: any = null;
+      if (originalOrderId) {
+        const { data: o } = await (supabaseAdmin.from("orders") as any)
+          .select("id, status, customer_email, lang, amount_total, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country")
+          .eq("id", originalOrderId)
+          .maybeSingle();
+        order = o;
+      } else {
+        const { data: o } = await (supabaseAdmin.from("orders") as any)
+          .select("id, status, customer_email, lang, amount_total, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country")
+          .eq("mollie_payment_id", data.paymentId)
+          .maybeSingle();
+        order = o;
+        originalOrderId = o?.id ?? null;
+      }
+      if (!order || !originalOrderId) return { error: "Order niet gevonden" };
+      if (["paid", "printed", "shipped"].includes(order.status)) {
+        return { error: "Order is al betaald" };
+      }
+
+      const items: Array<{ priceId: string; quantity: number }> = Array.isArray(meta.items)
+        ? meta.items
+        : [];
+      const lang: SupportedLang =
+        meta.lang && /^(nl|en|fr|de)$/.test(meta.lang)
+          ? meta.lang
+          : ((order.lang as SupportedLang) ?? "nl");
+      const nameParts = (order.shipping_name ?? "").trim().split(/\s+/);
+      const shippingAddress = meta.shipping ?? {
+        givenName: nameParts[0] ?? "",
+        familyName: nameParts.slice(1).join(" ") || nameParts[0] || "",
+        streetAndNumber: order.shipping_line1 ?? "",
+        postalCode: order.shipping_postal_code ?? "",
+        city: order.shipping_city ?? "",
+        country: order.shipping_country ?? "BE",
+        email: order.customer_email,
+      };
+
+      const totalCents = order.amount_total;
+      const description =
+        items.length > 0
+          ? items
+              .map((i) => `${BUNDLES[i.priceId as BundleKey]?.name ?? i.priceId} × ${i.quantity}`)
+              .join(", ")
+          : "Velopass Frame-ID";
+
+      const redirectBase = `${data.origin}/${lang}/order/thanks`;
+      const LOVABLE_PROJECT_ID = "973248f2-3aa9-493e-b716-2b089779e41a";
+      let webhookBase = data.origin;
+      try {
+        const host = new URL(data.origin).host;
+        if (host.endsWith(".lovable.app") && (host.startsWith("id-preview--") || host.startsWith("preview--"))) {
+          webhookBase = `https://project--${LOVABLE_PROJECT_ID}-dev.lovable.app`;
+        }
+      } catch {
+        // fall through
+      }
+
+      const expiresAt = new Date(Date.now() + 7 * 24 * 3600 * 1000)
+        .toISOString()
+        .slice(0, 10);
+
+      const payment = await mollieFetch("/payments", {
+        method: "POST",
+        body: JSON.stringify({
+          amount: { currency: "EUR", value: formatAmount(totalCents) },
+          description: `Velopass — ${description}`,
+          redirectUrl: `${redirectBase}?payment_id=pending`,
+          webhookUrl: `${webhookBase}/api/public/payments/mollie-webhook`,
+          billingEmail: order.customer_email,
+          billingAddress: shippingAddress,
+          shippingAddress,
+          locale: LANG_TO_MOLLIE_LOCALE[lang],
+          expiresAt,
+          metadata: {
+            items,
+            email: order.customer_email,
+            shipping: shippingAddress,
+            lang,
+            recovery_for_order_id: originalOrderId,
+          },
+        }),
+      });
+
+      const realRedirect = `${redirectBase}?payment_id=${payment.id}`;
+      await mollieFetch(`/payments/${payment.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ redirectUrl: realRedirect }),
+      });
+
+      const checkoutUrl = payment?._links?.checkout?.href;
+      if (!checkoutUrl) throw new Error("Mollie gaf geen checkout-URL terug");
+      return { checkoutUrl };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Kon betaling niet hervatten";
+      console.error("retryOrderPayment error:", message);
       return { error: message };
     }
   });
