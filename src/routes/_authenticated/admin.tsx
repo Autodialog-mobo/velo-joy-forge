@@ -499,12 +499,25 @@ function AdminPage() {
         bundle_sku: l.bundle_sku,
         quantity: l.quantity,
       })),
+      sticker_count: stickerTotalById.get(o.id) ?? 0,
+      lang: o.lang ?? null,
     }));
     if (!labelData.length) return;
+    // Sort: country asc → language asc → sticker count asc
+    labelData.sort((a, b) => {
+      const ca = (a.shipping_country || "").toUpperCase();
+      const cb = (b.shipping_country || "").toUpperCase();
+      if (ca !== cb) return ca.localeCompare(cb);
+      const la = (a.lang || "").toUpperCase();
+      const lb = (b.lang || "").toUpperCase();
+      if (la !== lb) return la.localeCompare(lb);
+      return (Number(a.sticker_count) || 0) - (Number(b.sticker_count) || 0);
+    });
     setLabelItems(labelData);
     setLabelExcluded(new Set());
     setLabelZoomId(null);
   };
+
 
   const moveLabel = (id: string, dir: -1 | 1) => {
     setLabelItems((prev) => {
