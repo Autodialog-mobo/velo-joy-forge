@@ -9,6 +9,8 @@ export interface LabelData {
   shipping_country: string | null;
   id: string;
   lines: { bundle_sku: string; quantity: number }[];
+  sticker_count?: number | null;
+  lang?: string | null;
 }
 
 // DYMO LabelWriter 450 — Standard Address Label S0722370
