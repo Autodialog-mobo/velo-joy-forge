@@ -26,6 +26,19 @@
     "status_line": "A payment confirmation is in your mailbox. Status: {{status}}.",
     "back_button": "Back to Velopass"
   },
+  "pending": {
+    "eyebrow": "Payment processing",
+    "title": "Your payment is still processing",
+    "body": "We're waiting for confirmation of your payment. This may take a few seconds — please refresh this page in a moment.",
+    "refresh": "Refresh status"
+  },
+  "unpaid": {
+    "eyebrow": "Payment not completed",
+    "title": "Your payment wasn't completed",
+    "body": "The previous payment attempt expired or was canceled. No worries — your order is still here. Click below to complete your payment.",
+    "retry_button": "Complete payment",
+    "retrying": "One moment…"
+  },
   "bundles": {
     "frameid_solo_onetime": "Velopass Frame-ID Solo",
     "frameid_duo_onetime": "Velopass Frame-ID Duo",
