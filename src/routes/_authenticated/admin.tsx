@@ -161,7 +161,7 @@ function AdminPage() {
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
-  const [sort, setSort] = useState<{ column: "date" | "amount"; dir: "asc" | "desc" }>({
+  const [sort, setSort] = useState<{ column: "date" | "amount" | "stickers"; dir: "asc" | "desc" }>({
     column: "date",
     dir: "desc",
   });
