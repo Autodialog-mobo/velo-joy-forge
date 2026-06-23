@@ -782,11 +782,14 @@ function AdminPage() {
       toast.error(
         failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
         {
+          id: toastId,
           description: `${message} Klik 'Details' voor IDs en oude/nieuwe status.`,
           action: { label: "Details", onClick: () => setPrintReport((r) => r) },
           duration: 14_000,
         },
       );
+    } finally {
+      setPrintJobBusy(false);
     }
   };
 
