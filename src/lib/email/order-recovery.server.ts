@@ -206,6 +206,12 @@ function renderHtml(input: OrderRecoveryInput, lang: Lang): string {
   const shippingStr = formatEUR(input.amountShippingCents, lang);
   const totalStr = formatEUR(input.amountTotalCents, lang);
   const firstName = (input.firstName ?? "").trim();
+  const expiryFormatted = formatExpiry(input.expiresAt, lang);
+  const validUntilHtml = expiryFormatted
+    ? `<p style="margin:0 0 24px;font-size:13px;color:${BRAND.muted};">${escapeHtml(
+        t.validUntil.replace("{{date}}", expiryFormatted),
+      )}</p>`
+    : "";
 
   return `<!doctype html>
 <html lang="${lang}">
