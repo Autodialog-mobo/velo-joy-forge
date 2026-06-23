@@ -578,7 +578,7 @@ function AdminPage() {
     setLabelExcluded(new Set());
     setLabelZoomId(null);
   };
-  const downloadLabelsPdf = () => {
+  const downloadLabelsPdf = async () => {
     if (!labelItems) return;
     const included = labelItems.filter((l) => !labelExcluded.has(l.id));
     if (!included.length) return;
