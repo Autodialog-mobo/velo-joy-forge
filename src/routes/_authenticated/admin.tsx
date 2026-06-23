@@ -2131,9 +2131,33 @@ function AdminPage() {
                           </div>
                         ))}
                       </div>
+                      {/* Caption: sticker count · language (bottom-right) */}
+                      {(() => {
+                        const sc = Number(l.sticker_count ?? 0);
+                        const lc = (l.lang || "").toString().trim().toUpperCase();
+                        const parts = [sc > 0 ? String(sc) : null, lc || null].filter(Boolean) as string[];
+                        if (!parts.length) return null;
+                        return (
+                          <div
+                            style={{
+                              position: "absolute",
+                              right: PAD,
+                              bottom: PAD * 0.25,
+                              fontSize: mm * 1.7,
+                              color: "#6e6e6e",
+                              lineHeight: 1,
+                              fontWeight: 400,
+                              letterSpacing: 0.2,
+                            }}
+                          >
+                            {parts.join(" · ")}
+                          </div>
+                        );
+                      })()}
                     </div>
                   );
                 };
+
                 return (
                   <DialogContent className="vp-pro max-w-4xl">
                     <DialogHeader>
