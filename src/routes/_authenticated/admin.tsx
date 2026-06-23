@@ -396,6 +396,8 @@ function AdminPage() {
         o.shipping_city,
         o.shipping_postal_code,
         o.shipping_country,
+        o.mollie_payment_id,
+        o.payment_consumer_name,
       ]
         .filter(Boolean)
         .join(" ")
