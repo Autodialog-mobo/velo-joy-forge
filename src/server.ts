@@ -132,13 +132,33 @@ function maybeRedirect(request: Request): Response | null {
   return new Response(null, { status: 301, headers: { Location: location } });
 }
 
+// TEMPORARY: interim scan→register redirect while AWS-level fix is pending (Daniël).
+// Turn off TEMP_SCAN_REDIRECT_ENABLED once the CloudFront redirect is live and verified.
+// Added 2026-06-23. Scanned stickers hit https://www.velopass.com/scan?code={code}
+// (and the apex without www), which currently 404s. Forward to app.velopass.com/register.
+const TEMP_SCAN_REDIRECT_ENABLED = true;
+
+function maybeScanRedirect(request: Request): Response | null {
+  if (!TEMP_SCAN_REDIRECT_ENABLED) return null;
+  const url = new URL(request.url);
+  if (url.pathname !== "/scan") return null;
+  const code = url.searchParams.get("code")?.trim();
+  const location = code
+    ? `https://app.velopass.com/register?code=${encodeURIComponent(code)}`
+    : "https://app.velopass.com/register";
+  return new Response(null, { status: 302, headers: { Location: location, "cache-control": "no-store" } });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const robotsResponse = maybeRobotsTxt(request);
       if (robotsResponse) return robotsResponse;
+      const scanRedirectResponse = maybeScanRedirect(request);
+      if (scanRedirectResponse) return scanRedirectResponse;
       const redirectResponse = maybeRedirect(request);
       if (redirectResponse) return redirectResponse;
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       const normalizedResponse = await normalizeCatastrophicSsrResponse(response);
