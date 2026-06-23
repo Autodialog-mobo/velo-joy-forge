@@ -788,8 +788,14 @@ function AdminPage() {
         failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
         {
           id: toastId,
-          description: `${message} Klik 'Details' voor IDs en oude/nieuwe status.`,
-          action: { label: "Details", onClick: () => setPrintReport((r) => r) },
+          description: `${message} Klik 'Opnieuw' om hetzelfde batch nogmaals te proberen.`,
+          action: {
+            label: "Opnieuw",
+            onClick: () => {
+              const batch = included;
+              if (batch.length) downloadLabelsPdf(batch);
+            },
+          },
           duration: 14_000,
         },
       );
