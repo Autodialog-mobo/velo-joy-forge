@@ -6,7 +6,7 @@ import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User,
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation } from "@/lib/admin.functions";
+import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation, logPrintAudit } from "@/lib/admin.functions";
 import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
