@@ -88,6 +88,110 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? "live"
             : "sandbox";
 
+          // Recovery payments are tied to an existing order via metadata.
+          // Route them to the original order instead of upserting a brand-new
+          // orders row (which would have its own fresh recovery_email_sent_at
+          // and cause a SECOND recovery email when the recovery payment
+          // itself expires). One recovery email per order, ever.
+          const recoveryForOrderId =
+            typeof p.metadata?.recovery_for_order_id === "string"
+              ? p.metadata.recovery_for_order_id
+              : null;
+          if (recoveryForOrderId) {
+            wlog("info", "recovery payment webhook — routing to original order", {
+              originalOrderId: recoveryForOrderId,
+              status,
+            });
+            const { data: originalOrder } = await (supabaseAdmin.from("orders") as any)
+              .select(
+                "id, status, customer_email, lang, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country, email_confirmation_sent_at",
+              )
+              .eq("id", recoveryForOrderId)
+              .maybeSingle();
+
+            if (!originalOrder) {
+              wlog("warn", "recovery: original order not found — ignoring", { recoveryForOrderId });
+              await logCall("success");
+              return new Response("ok", { status: 200 });
+            }
+
+            if (status === "paid") {
+              // Mark original order as paid (if not already) and send the
+              // confirmation email exactly once, using the same atomic claim.
+              await (supabaseAdmin.from("orders") as any)
+                .update({
+                  status: "paid",
+                  payment_method: typeof p.method === "string" ? p.method : null,
+                  payment_consumer_name:
+                    (typeof p.details?.consumerName === "string" && p.details.consumerName) ||
+                    (typeof p.details?.cardHolder === "string" && p.details.cardHolder) ||
+                    null,
+                  updated_at: new Date().toISOString(),
+                })
+                .eq("id", originalOrder.id);
+
+              try {
+                const { data: claimed } = await (supabaseAdmin.from("orders") as any)
+                  .update({ email_confirmation_sent_at: new Date().toISOString() })
+                  .eq("id", originalOrder.id)
+                  .is("email_confirmation_sent_at", null)
+                  .select("id, customer_email, lang, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country")
+                  .maybeSingle();
+
+                if (claimed && claimed.customer_email) {
+                  const { data: lines } = await (supabaseAdmin.from("order_lines") as any)
+                    .select("bundle_key, quantity, unit_price_cents")
+                    .eq("order_id", originalOrder.id);
+                  const { sendOrderConfirmationEmail } = await import(
+                    "@/lib/email/order-confirmation.server"
+                  );
+                  const result = await sendOrderConfirmationEmail({
+                    to: claimed.customer_email,
+                    lang: claimed.lang,
+                    orderId: claimed.id,
+                    items: (lines ?? []).map((l: any) => ({
+                      bundleKey: l.bundle_key,
+                      quantity: l.quantity,
+                      unitPriceCents: l.unit_price_cents,
+                    })),
+                    amountSubtotalCents: claimed.amount_subtotal ?? 0,
+                    amountShippingCents: claimed.amount_shipping ?? 0,
+                    amountTotalCents: claimed.amount_total ?? 0,
+                    amountVatCents: claimed.amount_tax ?? 0,
+                    shipping: {
+                      name: claimed.shipping_name ?? "",
+                      line1: claimed.shipping_line1 ?? "",
+                      postalCode: claimed.shipping_postal_code ?? "",
+                      city: claimed.shipping_city ?? "",
+                      country: claimed.shipping_country ?? "",
+                    },
+                  });
+                  if (!result.ok) {
+                    wlog("error", "recovery-paid: confirmation email failed — releasing claim", { error: result.error });
+                    await (supabaseAdmin.from("orders") as any)
+                      .update({ email_confirmation_sent_at: null })
+                      .eq("id", originalOrder.id);
+                  } else {
+                    wlog("info", "recovery-paid: confirmation email sent", { resendId: result.id });
+                  }
+                } else {
+                  wlog("info", "recovery-paid: confirmation already sent or no email — skipping");
+                }
+              } catch (e: any) {
+                wlog("error", "recovery-paid: confirmation email threw", { error: e?.message });
+              }
+            } else {
+              // expired / canceled / failed on a recovery payment: do NOT
+              // create another recovery payment or send another email. The
+              // original order already has recovery_email_sent_at set.
+              wlog("info", "recovery payment non-paid status — no further action", { status });
+            }
+
+            await logCall("success");
+            wlog("info", "webhook completed (recovery path)", { durationMs: Date.now() - webhookStartedAt });
+            return new Response("ok", { status: 200 });
+          }
+
           const shipping = p.shippingAddress ?? p.metadata?.shipping ?? null;
           const shippingName = shipping
             ? `${shipping.givenName ?? ""} ${shipping.familyName ?? ""}`.trim()
