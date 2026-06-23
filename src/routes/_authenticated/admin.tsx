@@ -2127,7 +2127,7 @@ function AdminPage() {
                           position: "absolute",
                           left: PAD,
                           top: PAD,
-                          right: PAD,
+                          right: PAD_R,
                           bottom: PAD,
                           textAlign: "left",
                         }}
