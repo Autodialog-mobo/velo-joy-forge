@@ -2297,7 +2297,7 @@ function AdminPage() {
                       <button
                         type="button"
                         className="btn-ghost h-8 px-3 rounded-md text-xs"
-                        onClick={() => setPrintReport(null)}
+                        onClick={() => { setPrintReport(null); closeDetail(); }}
                       >
                         Sluiten
                       </button>
