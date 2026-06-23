@@ -747,6 +747,15 @@ function AdminPage() {
             ? `Wijzigingen teruggedraaid: ${reverted} bestelling(en) terug op 'betaald'.`
             : "Geen statuswijziging om terug te draaien.";
       setPrintReport({ kind, message: summary, error: message, rows });
+      doLogPrintAudit({
+        data: {
+          kind,
+          message: summary,
+          error: message,
+          requestedIds: ids,
+          rows,
+        },
+      }).catch((e) => console.error("logPrintAudit failed:", e));
       toast.error(
         failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
         {
