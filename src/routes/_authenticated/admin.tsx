@@ -2223,6 +2223,74 @@ function AdminPage() {
                     <div className="text-[12px] mb-3" style={{ color: "rgba(255,255,255,0.7)" }}>
                       Klik op een label om groter te bekijken. Gebruik ↑↓ om te herordenen en ✕ om uit te sluiten.
                     </div>
+                    <div
+                      className="flex flex-wrap items-center gap-3 mb-3 p-2 rounded-[8px]"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        color: "rgba(255,255,255,0.85)",
+                        fontSize: 12,
+                      }}
+                    >
+                      <label className="flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={labelShowOverlay}
+                          onChange={(e) => setLabelShowOverlay(e.target.checked)}
+                        />
+                        Overlay tonen
+                      </label>
+                      <label className="flex items-center gap-2">
+                        Printer-breedte
+                        <input
+                          type="number"
+                          min={40}
+                          max={89}
+                          step={0.5}
+                          value={labelPrinterWidthMm}
+                          onChange={(e) => {
+                            const v = Number(e.target.value);
+                            if (Number.isFinite(v)) setLabelPrinterWidthMm(Math.min(89, Math.max(40, v)));
+                          }}
+                          style={{
+                            width: 64,
+                            background: "rgba(0,0,0,0.3)",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            borderRadius: 6,
+                            padding: "2px 6px",
+                            color: "inherit",
+                          }}
+                        />
+                        mm
+                      </label>
+                      <label className="flex items-center gap-2">
+                        Veilige marge
+                        <input
+                          type="number"
+                          min={0}
+                          max={10}
+                          step={0.5}
+                          value={labelSafePadMm}
+                          onChange={(e) => {
+                            const v = Number(e.target.value);
+                            if (Number.isFinite(v)) setLabelSafePadMm(Math.min(10, Math.max(0, v)));
+                          }}
+                          style={{
+                            width: 56,
+                            background: "rgba(0,0,0,0.3)",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            borderRadius: 6,
+                            padding: "2px 6px",
+                            color: "inherit",
+                          }}
+                        />
+                        mm
+                      </label>
+                      <span style={{ color: "rgba(255,255,255,0.55)" }}>
+                        Clip-zone rechts: {Math.max(0, 89 - labelPrinterWidthMm).toFixed(1)} mm
+                      </span>
+                    </div>
+
 
                     {zoomItem ? (
                       <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
