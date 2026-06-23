@@ -264,6 +264,16 @@ function AdminPage() {
     return m;
   }, [lines]);
 
+  // Total Frame-ID stickers per order (sum of sticker_count across its lines).
+  // sticker_count is already bundle_size × quantity in the DB.
+  const stickerTotalById = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const [orderId, ls] of linesByOrder) {
+      m.set(orderId, ls.reduce((s, l) => s + (Number(l.sticker_count) || 0), 0));
+    }
+    return m;
+  }, [linesByOrder]);
+
   // Auto-open order from URL search param (e.g. coming from email-events page)
   useEffect(() => {
     if (!search.order || !data) return;
