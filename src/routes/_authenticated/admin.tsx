@@ -2302,6 +2302,94 @@ function AdminPage() {
                         Clip-zone rechts: {Math.max(0, 89 - labelPrinterWidthMm).toFixed(1)} mm
                       </span>
                     </div>
+                    {labelShowOverlay && (() => {
+                      const swatch = (bg: string, border?: string): React.CSSProperties => ({
+                        width: 18,
+                        height: 12,
+                        borderRadius: 3,
+                        background: bg,
+                        border: border ?? "1px solid rgba(255,255,255,0.2)",
+                        flexShrink: 0,
+                      });
+                      const clipBg = `repeating-linear-gradient(135deg, ${labelClipColor}55 0 4px, transparent 4px 8px)`;
+                      const items: { label: string; hint: string; preview: React.ReactNode; color: string; onChange: (v: string) => void }[] = [
+                        {
+                          label: "Clip-zone (printer snijdt af)",
+                          hint: "Rechterstrook die de 87 mm-printer fysiek wegsnijdt",
+                          preview: <div style={swatch(clipBg, `1px dashed ${labelClipColor}`)} />,
+                          color: labelClipColor,
+                          onChange: setLabelClipColor,
+                        },
+                        {
+                          label: "Veilige marge",
+                          hint: "Binnen deze gestippelde rand blijft alles zichtbaar",
+                          preview: <div style={swatch("transparent", `1px dashed ${labelSafeColor}`)} />,
+                          color: labelSafeColor,
+                          onChange: setLabelSafeColor,
+                        },
+                        {
+                          label: "Afsnij-rand (cut marks)",
+                          hint: "Hoekmarkeringen op de fysieke labelrand",
+                          preview: (
+                            <div style={{ position: "relative", ...swatch("transparent") }}>
+                              <span style={{ position: "absolute", top: 0, left: 0, width: 6, height: 6, borderTop: `2px solid ${labelCutColor}`, borderLeft: `2px solid ${labelCutColor}` }} />
+                              <span style={{ position: "absolute", bottom: 0, right: 0, width: 6, height: 6, borderBottom: `2px solid ${labelCutColor}`, borderRight: `2px solid ${labelCutColor}` }} />
+                            </div>
+                          ),
+                          color: labelCutColor,
+                          onChange: setLabelCutColor,
+                        },
+                      ];
+                      return (
+                        <div
+                          className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-3 p-2 rounded-[8px]"
+                          style={{
+                            background: "rgba(255,255,255,0.03)",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                            color: "rgba(255,255,255,0.85)",
+                            fontSize: 12,
+                          }}
+                        >
+                          <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 600, letterSpacing: 0.4, textTransform: "uppercase", fontSize: 10 }}>
+                            Legenda
+                          </span>
+                          {items.map((it) => (
+                            <div key={it.label} className="flex items-center gap-2" title={it.hint}>
+                              {it.preview}
+                              <span>{it.label}</span>
+                              <input
+                                type="color"
+                                value={it.color}
+                                onChange={(e) => it.onChange(e.target.value)}
+                                aria-label={`Kleur voor ${it.label}`}
+                                style={{
+                                  width: 22,
+                                  height: 18,
+                                  padding: 0,
+                                  border: "1px solid rgba(255,255,255,0.15)",
+                                  borderRadius: 4,
+                                  background: "transparent",
+                                  cursor: "pointer",
+                                }}
+                              />
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setLabelClipColor("#E74C3C");
+                              setLabelSafeColor("#2ECC8A");
+                              setLabelCutColor("#E74C3C");
+                            }}
+                            className="btn-ghost h-6 px-2 rounded-[6px] text-[11px]"
+                          >
+                            Reset
+                          </button>
+                        </div>
+                      );
+                    })()}
+
+
 
 
                     {zoomItem ? (
