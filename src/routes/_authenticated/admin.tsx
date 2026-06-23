@@ -1034,6 +1034,30 @@ function AdminPage() {
                     ))}
                   </select>
                 </label>
+                <label className="inline-flex items-center gap-2">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Frame-IDs:
+                  </span>
+                  <select
+                    value={stickerFilter}
+                    onChange={(e) => { setStickerFilter(e.target.value); setSelected(new Set()); }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op exact aantal Frame-IDs"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle aantallen</option>
+                    {availableStickerCounts.map((n) => (
+                      <option key={n} value={String(n)} style={{ background: NAVY }}>
+                        {n} {n === 1 ? "sticker" : "stickers"}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
               <div className="flex-1 min-w-[0]" />
               <div className="relative inline-flex items-center">
