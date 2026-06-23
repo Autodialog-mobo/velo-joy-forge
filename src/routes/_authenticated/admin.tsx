@@ -473,6 +473,9 @@ function AdminPage() {
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
   const [labelPrinterWidthMm, setLabelPrinterWidthMm] = useState<number>(87);
   const [labelSafePadMm, setLabelSafePadMm] = useState<number>(2);
+  const [labelClipColor, setLabelClipColor] = useState<string>("#E74C3C");
+  const [labelSafeColor, setLabelSafeColor] = useState<string>("#2ECC8A");
+  const [labelCutColor, setLabelCutColor] = useState<string>("#E74C3C");
 
   const reorderLabel = (dragId: string, dropId: string) => {
     if (dragId === dropId) return;
@@ -2033,6 +2036,16 @@ function AdminPage() {
                 const includedCount = labelItems.filter((l) => !labelExcluded.has(l.id)).length;
                 const zoomItem = labelZoomId ? labelItems.find((l) => l.id === labelZoomId) : null;
                 // 1 mm = 4 px for thumbs, 8 px for zoom
+                const hexToRgba = (hex: string, a: number) => {
+                  const h = hex.replace("#", "");
+                  const n = h.length === 3
+                    ? h.split("").map((c) => c + c).join("")
+                    : h.padEnd(6, "0").slice(0, 6);
+                  const r = parseInt(n.slice(0, 2), 16);
+                  const g = parseInt(n.slice(2, 4), 16);
+                  const b = parseInt(n.slice(4, 6), 16);
+                  return `rgba(${r},${g},${b},${a})`;
+                };
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
@@ -2082,7 +2095,7 @@ function AdminPage() {
                             top: PAD,
                             width: Math.max(0, W - PAD - PAD_R),
                             height: Math.max(0, H - PAD * 2),
-                            border: "1px dashed #2ECC8A",
+                            border: `1px dashed ${labelSafeColor}`,
                             pointerEvents: "none",
                             boxSizing: "border-box",
                           }}
@@ -2099,19 +2112,18 @@ function AdminPage() {
                             right: 0,
                             width: clipMm * mm,
                             height: H,
-                            background:
-                              "repeating-linear-gradient(135deg, rgba(231,76,60,0.22) 0 4px, rgba(231,76,60,0) 4px 8px)",
-                            borderLeft: "1px dashed rgba(231,76,60,0.7)",
+                            background: `repeating-linear-gradient(135deg, ${hexToRgba(labelClipColor, 0.22)} 0 4px, ${hexToRgba(labelClipColor, 0)} 4px 8px)`,
+                            borderLeft: `1px dashed ${hexToRgba(labelClipColor, 0.7)}`,
                             pointerEvents: "none",
                           }}
                         />
                       )}
                       {/* Cut marks at each corner */}
                       {labelShowOverlay && [
-                        { top: 0, left: 0, bt: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
-                        { top: 0, right: 0, bt: "2px solid #E74C3C", br: "2px solid #E74C3C" },
-                        { bottom: 0, left: 0, bb: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
-                        { bottom: 0, right: 0, bb: "2px solid #E74C3C", br: "2px solid #E74C3C" },
+                        { top: 0, left: 0, bt: `2px solid ${labelCutColor}`, bl: `2px solid ${labelCutColor}` },
+                        { top: 0, right: 0, bt: `2px solid ${labelCutColor}`, br: `2px solid ${labelCutColor}` },
+                        { bottom: 0, left: 0, bb: `2px solid ${labelCutColor}`, bl: `2px solid ${labelCutColor}` },
+                        { bottom: 0, right: 0, bb: `2px solid ${labelCutColor}`, br: `2px solid ${labelCutColor}` },
                       ].map((c, i) => (
                         <div
                           key={i}
@@ -2290,6 +2302,94 @@ function AdminPage() {
                         Clip-zone rechts: {Math.max(0, 89 - labelPrinterWidthMm).toFixed(1)} mm
                       </span>
                     </div>
+                    {labelShowOverlay && (() => {
+                      const swatch = (bg: string, border?: string) => ({
+                        width: 18,
+                        height: 12,
+                        borderRadius: 3,
+                        background: bg,
+                        border: border ?? "1px solid rgba(255,255,255,0.2)",
+                        flexShrink: 0,
+                      });
+                      const clipBg = `repeating-linear-gradient(135deg, ${labelClipColor}55 0 4px, transparent 4px 8px)`;
+                      const items = [
+                        {
+                          label: "Clip-zone (printer snijdt af)",
+                          hint: "Rechterstrook die de 87 mm-printer fysiek wegsnijdt",
+                          preview: <div style={swatch(clipBg, `1px dashed ${labelClipColor}`)} />,
+                          color: labelClipColor,
+                          onChange: setLabelClipColor,
+                        },
+                        {
+                          label: "Veilige marge",
+                          hint: "Binnen deze gestippelde rand blijft alles zichtbaar",
+                          preview: <div style={swatch("transparent", `1px dashed ${labelSafeColor}`)} />,
+                          color: labelSafeColor,
+                          onChange: setLabelSafeColor,
+                        },
+                        {
+                          label: "Afsnij-rand (cut marks)",
+                          hint: "Hoekmarkeringen op de fysieke labelrand",
+                          preview: (
+                            <div style={{ position: "relative", ...swatch("transparent") }}>
+                              <span style={{ position: "absolute", top: 0, left: 0, width: 6, height: 6, borderTop: `2px solid ${labelCutColor}`, borderLeft: `2px solid ${labelCutColor}` }} />
+                              <span style={{ position: "absolute", bottom: 0, right: 0, width: 6, height: 6, borderBottom: `2px solid ${labelCutColor}`, borderRight: `2px solid ${labelCutColor}` }} />
+                            </div>
+                          ),
+                          color: labelCutColor,
+                          onChange: setLabelCutColor,
+                        },
+                      ];
+                      return (
+                        <div
+                          className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-3 p-2 rounded-[8px]"
+                          style={{
+                            background: "rgba(255,255,255,0.03)",
+                            border: "1px solid rgba(255,255,255,0.08)",
+                            color: "rgba(255,255,255,0.85)",
+                            fontSize: 12,
+                          }}
+                        >
+                          <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 600, letterSpacing: 0.4, textTransform: "uppercase", fontSize: 10 }}>
+                            Legenda
+                          </span>
+                          {items.map((it) => (
+                            <div key={it.label} className="flex items-center gap-2" title={it.hint}>
+                              {it.preview}
+                              <span>{it.label}</span>
+                              <input
+                                type="color"
+                                value={it.color}
+                                onChange={(e) => it.onChange(e.target.value)}
+                                aria-label={`Kleur voor ${it.label}`}
+                                style={{
+                                  width: 22,
+                                  height: 18,
+                                  padding: 0,
+                                  border: "1px solid rgba(255,255,255,0.15)",
+                                  borderRadius: 4,
+                                  background: "transparent",
+                                  cursor: "pointer",
+                                }}
+                              />
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setLabelClipColor("#E74C3C");
+                              setLabelSafeColor("#2ECC8A");
+                              setLabelCutColor("#E74C3C");
+                            }}
+                            className="btn-ghost h-6 px-2 rounded-[6px] text-[11px]"
+                          >
+                            Reset
+                          </button>
+                        </div>
+                      );
+                    })()}
+
+
 
 
                     {zoomItem ? (
