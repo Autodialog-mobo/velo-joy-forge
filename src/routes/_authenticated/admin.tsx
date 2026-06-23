@@ -1825,64 +1825,158 @@ function AdminPage() {
             </Dialog>
 
             <Dialog
-              open={!!labelPreview}
+              open={!!labelItems}
               onOpenChange={(open) => {
-                if (!open) {
-                  if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
-                  setLabelPreview(null);
-                }
+                if (!open) closeLabelPreview();
               }}
             >
-              {labelPreview && (
-                <DialogContent className="vp-pro max-w-3xl">
-                  <DialogHeader>
-                    <DialogTitle>
-                      Preview labels ({labelPreview.count} × 89 × 28 mm)
-                    </DialogTitle>
-                  </DialogHeader>
-                  <div className="text-[12px] mb-2" style={{ color: "rgba(255,255,255,0.7)" }}>
-                    Controleer of de adressen netjes binnen de pagina vallen. Eén pagina = één DYMO-label.
-                  </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "60vh",
-                      background: "#fff",
-                      borderRadius: 8,
-                      overflow: "hidden",
-                    }}
-                  >
-                    <iframe
-                      src={labelPreview.url}
-                      title="Labels PDF preview"
-                      style={{ width: "100%", height: "100%", border: 0 }}
-                    />
-                  </div>
-                  <div className="flex justify-end gap-2 mt-3">
-                    <button
-                      onClick={() => {
-                        if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
-                        setLabelPreview(null);
+              {labelItems && (() => {
+                const includedCount = labelItems.filter((l) => !labelExcluded.has(l.id)).length;
+                const zoomItem = labelZoomId ? labelItems.find((l) => l.id === labelZoomId) : null;
+                // 1 mm = 4 px for thumbs, 8 px for zoom
+                const renderLabel = (l: LabelData, mm: number) => {
+                  const W = 89 * mm;
+                  const H = 28 * mm;
+                  const PAD = 3 * mm;
+                  const lines = [
+                    l.shipping_name?.trim(),
+                    l.shipping_line1?.trim(),
+                    l.shipping_line2?.trim(),
+                    `${l.shipping_postal_code ?? ""} ${l.shipping_city ?? ""}`.trim(),
+                    (l.shipping_country || "").toUpperCase().trim(),
+                  ].filter(Boolean) as string[];
+                  return (
+                    <div
+                      style={{
+                        width: W,
+                        height: H,
+                        background: "#fff",
+                        color: "#000",
+                        border: "1px solid #d4d4d4",
+                        borderRadius: 4,
+                        padding: PAD,
+                        boxSizing: "border-box",
+                        fontFamily: "Helvetica, Arial, sans-serif",
+                        fontSize: mm * 3,
+                        lineHeight: 1.25,
+                        overflow: "hidden",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
                       }}
-                      className="btn-ghost h-9 px-3 rounded-[10px] text-[13px] font-medium"
                     >
-                      Sluiten
-                    </button>
-                    <button
-                      onClick={() => {
-                        downloadBlob(
-                          labelPreview.blob,
-                          `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`,
-                        );
-                      }}
-                      className="btn-primary h-9 px-3 rounded-[10px] text-[13px] font-semibold"
-                    >
-                      Download PDF
-                    </button>
-                  </div>
-                </DialogContent>
-              )}
+                      {lines.map((t, i) => (
+                        <div key={i} style={{ fontWeight: i === 0 ? 700 : 400, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                          {t}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                };
+                return (
+                  <DialogContent className="vp-pro max-w-4xl">
+                    <DialogHeader>
+                      <DialogTitle>
+                        Preview labels — {includedCount}/{labelItems.length} × 89 × 28 mm
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="text-[12px] mb-3" style={{ color: "rgba(255,255,255,0.7)" }}>
+                      Klik op een label om groter te bekijken. Gebruik ↑↓ om te herordenen en ✕ om uit te sluiten.
+                    </div>
+
+                    {zoomItem ? (
+                      <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
+                        {renderLabel(zoomItem, 8)}
+                        <button
+                          onClick={() => setLabelZoomId(null)}
+                          className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
+                        >
+                          ← Terug naar overzicht
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        className="grid gap-3"
+                        style={{
+                          gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))",
+                          maxHeight: "60vh",
+                          overflow: "auto",
+                          paddingRight: 4,
+                        }}
+                      >
+                        {labelItems.map((l, idx) => {
+                          const excluded = labelExcluded.has(l.id);
+                          return (
+                            <div
+                              key={l.id}
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: 6,
+                                padding: 8,
+                                borderRadius: 8,
+                                background: "rgba(255,255,255,0.04)",
+                                border: "1px solid rgba(255,255,255,0.08)",
+                                opacity: excluded ? 0.4 : 1,
+                              }}
+                            >
+                              <div className="flex items-center justify-between text-[11px]" style={{ color: "rgba(255,255,255,0.7)" }}>
+                                <span>Pagina {idx + 1}{excluded ? " (uitgesloten)" : ""}</span>
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    onClick={() => moveLabel(l.id, -1)}
+                                    disabled={idx === 0}
+                                    title="Omhoog"
+                                    className="btn-ghost h-6 px-1.5 rounded text-[11px] disabled:opacity-40"
+                                  >↑</button>
+                                  <button
+                                    onClick={() => moveLabel(l.id, 1)}
+                                    disabled={idx === labelItems.length - 1}
+                                    title="Omlaag"
+                                    className="btn-ghost h-6 px-1.5 rounded text-[11px] disabled:opacity-40"
+                                  >↓</button>
+                                  <button
+                                    onClick={() => toggleExclude(l.id)}
+                                    title={excluded ? "Opnieuw opnemen" : "Uitsluiten"}
+                                    className="btn-ghost h-6 px-1.5 rounded text-[11px]"
+                                  >{excluded ? "+" : "✕"}</button>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => setLabelZoomId(l.id)}
+                                title="Klik om te vergroten"
+                                style={{ background: "transparent", border: 0, padding: 0, cursor: "zoom-in" }}
+                              >
+                                {renderLabel(l, 4)}
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    <div className="flex justify-end gap-2 mt-3">
+                      <button
+                        onClick={closeLabelPreview}
+                        className="btn-ghost h-9 px-3 rounded-[10px] text-[13px] font-medium"
+                      >
+                        Sluiten
+                      </button>
+                      <button
+                        onClick={downloadLabelsPdf}
+                        disabled={includedCount === 0}
+                        className="btn-primary h-9 px-3 rounded-[10px] text-[13px] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Download PDF ({includedCount})
+                      </button>
+                    </div>
+                  </DialogContent>
+                );
+              })()}
             </Dialog>
+
+
 
           </div>
         )}
