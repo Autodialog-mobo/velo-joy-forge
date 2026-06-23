@@ -285,7 +285,195 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               } catch {}
             }
           } else if (orderId && status !== "paid") {
-            wlog("info", "status is not paid — no email sent", { status });
+            wlog("info", "status is not paid — no confirmation email sent", { status });
+          }
+
+          // Recovery email: when payment expires without ever being paid, send
+          // ONE follow-up email with a fresh Mollie checkout URL. Atomic claim
+          // on recovery_email_sent_at guarantees a single send per order.
+          if (orderId && status === "expired") {
+            try {
+              const { data: orderRow } = await (supabaseAdmin.from("orders") as any)
+                .select(
+                  "id, customer_email, lang, amount_subtotal, amount_shipping, amount_total, shipping_name, shipping_line1, shipping_postal_code, shipping_city, shipping_country, email_confirmation_sent_at, recovery_email_sent_at",
+                )
+                .eq("id", orderId)
+                .maybeSingle();
+
+              if (!orderRow) {
+                wlog("warn", "expired: order row vanished", { orderId });
+              } else if (orderRow.email_confirmation_sent_at) {
+                wlog("info", "expired: order was already paid — skip recovery", { orderId });
+              } else if (orderRow.recovery_email_sent_at) {
+                wlog("info", "expired: recovery email already sent — skip", { orderId });
+              } else if (!orderRow.customer_email) {
+                wlog("warn", "expired: order has no customer_email — cannot send recovery", { orderId });
+              } else {
+                wlog("info", "expired: attempting recovery email claim");
+                const { data: claimed } = await (supabaseAdmin.from("orders") as any)
+                  .update({ recovery_email_sent_at: new Date().toISOString() })
+                  .eq("id", orderId)
+                  .is("recovery_email_sent_at", null)
+                  .neq("status", "paid")
+                  .select("id")
+                  .maybeSingle();
+
+                if (!claimed) {
+                  wlog("info", "expired: recovery claim lost to concurrent delivery — skipping");
+                } else {
+                  const { data: lines } = await (supabaseAdmin.from("order_lines") as any)
+                    .select("bundle_key, quantity, unit_price_cents")
+                    .eq("order_id", orderId);
+
+                  const items = (lines ?? []).map((l: any) => ({
+                    priceId: l.bundle_key as string,
+                    quantity: l.quantity as number,
+                  }));
+
+                  if (!items.length) {
+                    wlog("warn", "expired: order has no recognizable lines — releasing claim", { orderId });
+                    await (supabaseAdmin.from("orders") as any)
+                      .update({ recovery_email_sent_at: null })
+                      .eq("id", orderId);
+                  } else {
+                    const totals = computeB2CTotals(items);
+                    const lang: "nl" | "fr" | "de" | "en" =
+                      orderRow.lang === "fr" || orderRow.lang === "de" || orderRow.lang === "en"
+                        ? orderRow.lang
+                        : "nl";
+
+                    // Split shipping name into given/family for Mollie.
+                    const fullName = (orderRow.shipping_name ?? "").trim();
+                    const parts = fullName.split(/\s+/);
+                    const givenName = parts.length > 1 ? parts.slice(0, -1).join(" ") : (parts[0] ?? "");
+                    const familyName = parts.length > 1 ? parts[parts.length - 1] : (parts[0] ?? "");
+
+                    const shippingAddress = {
+                      givenName: givenName || "Klant",
+                      familyName: familyName || "—",
+                      streetAndNumber: orderRow.shipping_line1 ?? "",
+                      postalCode: orderRow.shipping_postal_code ?? "",
+                      city: orderRow.shipping_city ?? "",
+                      country: orderRow.shipping_country || "BE",
+                      email: orderRow.customer_email,
+                    };
+
+                    const LOVABLE_PROJECT_ID = "973248f2-3aa9-493e-b716-2b089779e41a";
+                    const isProd = environment === "live";
+                    const siteBase = isProd
+                      ? "https://www.velopass.com"
+                      : `https://project--${LOVABLE_PROJECT_ID}-dev.lovable.app`;
+                    const webhookBase = isProd
+                      ? `https://project--${LOVABLE_PROJECT_ID}.lovable.app`
+                      : `https://project--${LOVABLE_PROJECT_ID}-dev.lovable.app`;
+                    const redirectBase = `${siteBase}/${lang}/order/thanks`;
+
+                    const LOCALE_MAP: Record<string, string> = {
+                      nl: "nl_BE",
+                      en: "en_US",
+                      fr: "fr_BE",
+                      de: "de_DE",
+                    };
+
+                    try {
+                      const mollieApiKey = process.env.MOLLIE_API_KEY;
+                      if (!mollieApiKey) throw new Error("MOLLIE_API_KEY not configured");
+
+                      const createRes = await fetch("https://api.mollie.com/v2/payments", {
+                        method: "POST",
+                        headers: {
+                          Authorization: `Bearer ${mollieApiKey}`,
+                          "Content-Type": "application/json",
+                          Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                          amount: { currency: "EUR", value: (totals.totalCents / 100).toFixed(2) },
+                          description: `Velopass — afronden bestelling #${orderId.replace(/-/g, "").slice(0, 8)}`,
+                          redirectUrl: `${redirectBase}?payment_id=pending`,
+                          webhookUrl: `${webhookBase}/api/public/payments/mollie-webhook`,
+                          billingEmail: orderRow.customer_email,
+                          billingAddress: shippingAddress,
+                          shippingAddress,
+                          locale: LOCALE_MAP[lang],
+                          metadata: {
+                            items,
+                            email: orderRow.customer_email,
+                            shipping: shippingAddress,
+                            lang,
+                            recovery_for_order_id: orderId,
+                          },
+                        }),
+                      });
+                      const newPayment: any = await createRes.json().catch(() => ({}));
+                      if (!createRes.ok || !newPayment?.id || !newPayment?._links?.checkout?.href) {
+                        throw new Error(
+                          `Mollie create HTTP ${createRes.status}: ${JSON.stringify(newPayment).slice(0, 300)}`,
+                        );
+                      }
+                      const newCheckoutUrl: string = newPayment._links.checkout.href;
+                      const newPaymentId: string = newPayment.id;
+
+                      // Patch redirect with real new payment id (mirrors createMolliePayment).
+                      await fetch(`https://api.mollie.com/v2/payments/${newPaymentId}`, {
+                        method: "PATCH",
+                        headers: {
+                          Authorization: `Bearer ${mollieApiKey}`,
+                          "Content-Type": "application/json",
+                          Accept: "application/json",
+                        },
+                        body: JSON.stringify({
+                          redirectUrl: `${redirectBase}?payment_id=${newPaymentId}`,
+                        }),
+                      });
+
+                      await (supabaseAdmin.from("orders") as any)
+                        .update({ recovery_mollie_payment_id: newPaymentId })
+                        .eq("id", orderId);
+
+                      wlog("info", "recovery: new Mollie payment created", { newPaymentId });
+
+                      const { sendOrderRecoveryEmail } = await import(
+                        "@/lib/email/order-recovery.server"
+                      );
+                      const result = await sendOrderRecoveryEmail({
+                        to: orderRow.customer_email,
+                        lang,
+                        orderId,
+                        checkoutUrl: newCheckoutUrl,
+                        items: (lines ?? []).map((l: any) => ({
+                          bundleKey: l.bundle_key,
+                          quantity: l.quantity,
+                          unitPriceCents: l.unit_price_cents,
+                        })),
+                        amountSubtotalCents: orderRow.amount_subtotal ?? totals.productSubtotalCents,
+                        amountShippingCents: orderRow.amount_shipping ?? totals.shippingCents,
+                        amountTotalCents: orderRow.amount_total ?? totals.totalCents,
+                        firstName: givenName || null,
+                      });
+
+                      if (!result.ok) {
+                        wlog("error", "recovery email failed — releasing claim", { error: result.error });
+                        await (supabaseAdmin.from("orders") as any)
+                          .update({ recovery_email_sent_at: null })
+                          .eq("id", orderId);
+                      } else {
+                        wlog("info", "recovery email sent", { resendId: result.id });
+                      }
+                    } catch (e: any) {
+                      wlog("error", "recovery flow threw — releasing claim", {
+                        error: e?.message,
+                        stack: e?.stack,
+                      });
+                      await (supabaseAdmin.from("orders") as any)
+                        .update({ recovery_email_sent_at: null })
+                        .eq("id", orderId);
+                    }
+                  }
+                }
+              }
+            } catch (e: any) {
+              wlog("error", "recovery outer block threw", { error: e?.message });
+            }
           }
 
           await logCall("success");
