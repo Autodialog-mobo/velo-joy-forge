@@ -26,6 +26,19 @@
     "status_line": "Een betalingsbevestiging staat in je mailbox. Status: {{status}}.",
     "back_button": "Terug naar Velopass"
   },
+  "pending": {
+    "eyebrow": "Betaling wordt verwerkt",
+    "title": "Je betaling wordt nog verwerkt",
+    "body": "We wachten op de bevestiging van je betaling. Dit kan een paar seconden duren — ververs deze pagina zo even.",
+    "refresh": "Status vernieuwen"
+  },
+  "unpaid": {
+    "eyebrow": "Betaling niet afgerond",
+    "title": "Je betaling is niet afgerond",
+    "body": "De vorige betaalpoging is verlopen of geannuleerd. Geen zorgen — je bestelling staat klaar. Klik hieronder om je betaling alsnog af te ronden.",
+    "retry_button": "Betaling afronden",
+    "retrying": "Even geduld…"
+  },
   "bundles": {
     "frameid_solo_onetime": "Velopass Frame-ID Solo",
     "frameid_duo_onetime": "Velopass Frame-ID Duo",
