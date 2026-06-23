@@ -1923,9 +1923,36 @@ function AdminPage() {
                       >
                         {labelItems.map((l, idx) => {
                           const excluded = labelExcluded.has(l.id);
+                          const isDragging = labelDragId === l.id;
+                          const isDragOver = labelDragOverId === l.id && labelDragId && labelDragId !== l.id;
                           return (
                             <div
                               key={l.id}
+                              draggable
+                              onDragStart={(e) => {
+                                setLabelDragId(l.id);
+                                e.dataTransfer.effectAllowed = "move";
+                                try { e.dataTransfer.setData("text/plain", l.id); } catch {}
+                              }}
+                              onDragOver={(e) => {
+                                if (!labelDragId || labelDragId === l.id) return;
+                                e.preventDefault();
+                                e.dataTransfer.dropEffect = "move";
+                                if (labelDragOverId !== l.id) setLabelDragOverId(l.id);
+                              }}
+                              onDragLeave={() => {
+                                if (labelDragOverId === l.id) setLabelDragOverId(null);
+                              }}
+                              onDrop={(e) => {
+                                e.preventDefault();
+                                if (labelDragId) reorderLabel(labelDragId, l.id);
+                                setLabelDragId(null);
+                                setLabelDragOverId(null);
+                              }}
+                              onDragEnd={() => {
+                                setLabelDragId(null);
+                                setLabelDragOverId(null);
+                              }}
                               style={{
                                 display: "flex",
                                 flexDirection: "column",
@@ -1933,12 +1960,17 @@ function AdminPage() {
                                 padding: 8,
                                 borderRadius: 8,
                                 background: "rgba(255,255,255,0.04)",
-                                border: "1px solid rgba(255,255,255,0.08)",
-                                opacity: excluded ? 0.4 : 1,
+                                border: isDragOver
+                                  ? "1px dashed #2ECC8A"
+                                  : "1px solid rgba(255,255,255,0.08)",
+                                opacity: excluded ? 0.4 : isDragging ? 0.5 : 1,
+                                cursor: "grab",
+                                transition: "border-color 120ms",
                               }}
                             >
                               <div className="flex items-center justify-between text-[11px]" style={{ color: "rgba(255,255,255,0.7)" }}>
-                                <span>Pagina {idx + 1}{excluded ? " (uitgesloten)" : ""}</span>
+                                <span title="Sleep om te herschikken" style={{ cursor: "grab" }}>⋮⋮ Pagina {idx + 1}{excluded ? " (uitgesloten)" : ""}</span>
+
                                 <div className="flex items-center gap-1">
                                   <button
                                     onClick={() => moveLabel(l.id, -1)}
