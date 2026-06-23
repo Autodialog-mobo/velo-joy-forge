@@ -1200,8 +1200,17 @@ function AdminPage() {
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Klant</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Adres</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Items</th>
-                    <th className="px-6 py-3 text-right" style={EYEBROW}>
-                      <span title="Totaal aantal Frame-IDs in de bestelling">Frame-IDs</span>
+                    <th
+                      className="px-6 py-3 text-right cursor-pointer select-none"
+                      style={EYEBROW}
+                      onClick={() => handleSort("stickers")}
+                    >
+                      <span
+                        className="inline-flex items-center gap-1 justify-end"
+                        title="Sorteer op totaal aantal Frame-IDs"
+                      >
+                        Frame-IDs <SortIcon column="stickers" />
+                      </span>
                     </th>
                     <th
                       className="px-6 py-3 text-right cursor-pointer select-none"
