@@ -491,6 +491,14 @@ function AdminPage() {
     });
   };
 
+  const updateLabelField = (id: string, key: keyof LabelData, value: string) => {
+    setLabelItems((prev) => {
+      if (!prev) return prev;
+      return prev.map((p) => (p.id === id ? { ...p, [key]: value } : p));
+    });
+  };
+
+
 
   const generateLabels = () => {
     const labelData: LabelData[] = selectedOrders.map((o: any) => ({
