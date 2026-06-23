@@ -161,7 +161,7 @@ function AdminPage() {
   const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
-  const [sort, setSort] = useState<{ column: "date" | "amount"; dir: "asc" | "desc" }>({
+  const [sort, setSort] = useState<{ column: "date" | "amount" | "stickers"; dir: "asc" | "desc" }>({
     column: "date",
     dir: "desc",
   });
@@ -381,6 +381,11 @@ function AdminPage() {
       if (sort.column === "amount") {
         return sort.dir === "asc" ? a.amount_total - b.amount_total : b.amount_total - a.amount_total;
       }
+      if (sort.column === "stickers") {
+        const na = stickerTotalById.get(a.id) ?? 0;
+        const nb = stickerTotalById.get(b.id) ?? 0;
+        return sort.dir === "asc" ? na - nb : nb - na;
+      }
       return 0;
     });
     return arr;
@@ -423,7 +428,7 @@ function AdminPage() {
     else setSelected(new Set(filtered.map((o: any) => o.id)));
   };
 
-  const handleSort = (column: "date" | "amount") => {
+  const handleSort = (column: "date" | "amount" | "stickers") => {
     setSort((prev) => {
       if (prev.column === column) return { column, dir: prev.dir === "asc" ? "desc" : "asc" };
       return { column, dir: "desc" };
@@ -650,7 +655,7 @@ function AdminPage() {
 
   const hasSelection = selectedOrders.length > 0;
 
-  const SortIcon = ({ column }: { column: "date" | "amount" }) => {
+  const SortIcon = ({ column }: { column: "date" | "amount" | "stickers" }) => {
     if (sort.column !== column) return null;
     return sort.dir === "asc" ? (
       <ArrowUp className="w-3 h-3" style={{ color: GREEN }} />
@@ -1195,8 +1200,17 @@ function AdminPage() {
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Klant</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Adres</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Items</th>
-                    <th className="px-6 py-3 text-right" style={EYEBROW}>
-                      <span title="Totaal aantal Frame-IDs in de bestelling">Frame-IDs</span>
+                    <th
+                      className="px-6 py-3 text-right cursor-pointer select-none"
+                      style={EYEBROW}
+                      onClick={() => handleSort("stickers")}
+                    >
+                      <span
+                        className="inline-flex items-center gap-1 justify-end"
+                        title="Sorteer op totaal aantal Frame-IDs"
+                      >
+                        Frame-IDs <SortIcon column="stickers" />
+                      </span>
                     </th>
                     <th
                       className="px-6 py-3 text-right cursor-pointer select-none"
