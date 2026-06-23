@@ -151,6 +151,7 @@ function AdminPage() {
   const [statusFilter, setStatusFilter] = useState<string>("any");
   const [langFilter, setLangFilter] = useState<string>("any");
   const [countryFilter, setCountryFilter] = useState<string>("any");
+  const [stickerFilter, setStickerFilter] = useState<string>("any");
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   useEffect(() => {
@@ -263,6 +264,16 @@ function AdminPage() {
     return m;
   }, [lines]);
 
+  // Total Frame-ID stickers per order (sum of sticker_count across its lines).
+  // sticker_count is already bundle_size × quantity in the DB.
+  const stickerTotalById = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const [orderId, ls] of linesByOrder) {
+      m.set(orderId, ls.reduce((s, l) => s + (Number(l.sticker_count) || 0), 0));
+    }
+    return m;
+  }, [linesByOrder]);
+
   // Auto-open order from URL search param (e.g. coming from email-events page)
   useEffect(() => {
     if (!search.order || !data) return;
@@ -314,6 +325,15 @@ function AdminPage() {
     return Array.from(set).sort();
   }, [activeOrders]);
 
+  const availableStickerCounts = useMemo(() => {
+    const set = new Set<number>();
+    for (const o of activeOrders) {
+      const n = stickerTotalById.get(o.id);
+      if (n && n > 0) set.add(n);
+    }
+    return Array.from(set).sort((a, b) => a - b);
+  }, [activeOrders, stickerTotalById]);
+
   const filtered = useMemo(() => {
     const base = viewingDeleted ? deletedOrders : activeOrders;
     const q = searchQuery;
@@ -331,6 +351,10 @@ function AdminPage() {
       if (countryFilter !== "any") {
         const c = (o.shipping_country || "").toString().trim().toUpperCase();
         if (c !== countryFilter) return false;
+      }
+      if (stickerFilter !== "any") {
+        const n = stickerTotalById.get(o.id) ?? 0;
+        if (n !== Number(stickerFilter)) return false;
       }
       if (!q) return true;
       const hay = [
@@ -360,7 +384,7 @@ function AdminPage() {
       return 0;
     });
     return arr;
-  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, searchQuery, sort]);
+  }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, stickerFilter, stickerTotalById, searchQuery, sort]);
 
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
@@ -1010,6 +1034,30 @@ function AdminPage() {
                     ))}
                   </select>
                 </label>
+                <label className="inline-flex items-center gap-2">
+                  <span className="text-[11px]" style={{ color: TEXT_MUTED, letterSpacing: "0.02em" }}>
+                    Frame-IDs:
+                  </span>
+                  <select
+                    value={stickerFilter}
+                    onChange={(e) => { setStickerFilter(e.target.value); setSelected(new Set()); }}
+                    className="h-7 px-2 rounded-[8px] text-[12px]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      color: TEXT_PRI,
+                      border: `1px solid ${SURFACE_BORDER}`,
+                      outline: "none",
+                    }}
+                    aria-label="Filter op exact aantal Frame-IDs"
+                  >
+                    <option value="any" style={{ background: NAVY }}>Alle aantallen</option>
+                    {availableStickerCounts.map((n) => (
+                      <option key={n} value={String(n)} style={{ background: NAVY }}>
+                        {n} {n === 1 ? "sticker" : "stickers"}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               </div>
               <div className="flex-1 min-w-[0]" />
               <div className="relative inline-flex items-center">
@@ -1147,6 +1195,9 @@ function AdminPage() {
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Klant</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Adres</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Items</th>
+                    <th className="px-6 py-3 text-right" style={EYEBROW}>
+                      <span title="Totaal aantal Frame-IDs in de bestelling">Frame-IDs</span>
+                    </th>
                     <th
                       className="px-6 py-3 text-right cursor-pointer select-none"
                       style={EYEBROW}
@@ -1258,6 +1309,27 @@ function AdminPage() {
                         >
                           {items}
                         </td>
+                        <td
+                          className="px-6 py-4 text-right align-middle"
+                          style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}
+                        >
+                          {(() => {
+                            const n = stickerTotalById.get(o.id) ?? 0;
+                            return (
+                              <span
+                                className="inline-flex items-center justify-center h-[22px] min-w-[28px] px-2 rounded-full text-[12px] font-semibold"
+                                style={{
+                                  background: "rgba(255,255,255,0.05)",
+                                  border: `1px solid ${SURFACE_BORDER}`,
+                                  color: n > 0 ? TEXT_PRI : TEXT_MUTED,
+                                }}
+                                title={`${n} ${n === 1 ? "Frame-ID" : "Frame-IDs"} in deze bestelling`}
+                              >
+                                {n}
+                              </span>
+                            );
+                          })()}
+                        </td>
                         <td className="px-6 py-4 text-right align-middle">
                           <div
                             className="text-[15px] font-semibold"
@@ -1277,7 +1349,7 @@ function AdminPage() {
                   })}
                   {!filtered.length && (
                     <tr>
-                      <td colSpan={7}>
+                      <td colSpan={8}>
                         <div className="flex flex-col items-center justify-center text-center" style={{ padding: "80px 24px" }}>
                           <Inbox className="w-10 h-10 mb-4" strokeWidth={1.5} style={{ color: TEXT_MUTED }} />
                           <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
