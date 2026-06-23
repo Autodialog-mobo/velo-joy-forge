@@ -352,6 +352,10 @@ function AdminPage() {
         const c = (o.shipping_country || "").toString().trim().toUpperCase();
         if (c !== countryFilter) return false;
       }
+      if (stickerFilter !== "any") {
+        const n = stickerTotalById.get(o.id) ?? 0;
+        if (n !== Number(stickerFilter)) return false;
+      }
       if (!q) return true;
       const hay = [
         o.shipping_name,
