@@ -408,6 +408,14 @@ function AdminPage() {
 
   const selectedOrders = filtered.filter((o: any) => selected.has(o.id));
 
+  const [labelPreview, setLabelPreview] = useState<{ url: string; blob: Blob; count: number } | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
+    };
+  }, [labelPreview?.url]);
+
   const generateLabels = () => {
     const labelData: LabelData[] = selectedOrders.map((o: any) => ({
       shipping_name: o.shipping_name,
@@ -424,8 +432,11 @@ function AdminPage() {
     }));
     if (!labelData.length) return;
     const blob = generateLabelsPdf(labelData);
-    downloadBlob(blob, `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`);
+    if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
+    const url = URL.createObjectURL(blob);
+    setLabelPreview({ url, blob, count: labelData.length });
   };
+
 
   const exportCsv = () => {
     const rows = selectedOrders.map((o: any) => {
@@ -1783,6 +1794,67 @@ function AdminPage() {
                 </DialogContent>
               )}
             </Dialog>
+
+            <Dialog
+              open={!!labelPreview}
+              onOpenChange={(open) => {
+                if (!open) {
+                  if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
+                  setLabelPreview(null);
+                }
+              }}
+            >
+              {labelPreview && (
+                <DialogContent className="vp-pro max-w-3xl">
+                  <DialogHeader>
+                    <DialogTitle>
+                      Preview labels ({labelPreview.count} × 89 × 28 mm)
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="text-[12px] mb-2" style={{ color: "rgba(255,255,255,0.7)" }}>
+                    Controleer of de adressen netjes binnen de pagina vallen. Eén pagina = één DYMO-label.
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "60vh",
+                      background: "#fff",
+                      borderRadius: 8,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <iframe
+                      src={labelPreview.url}
+                      title="Labels PDF preview"
+                      style={{ width: "100%", height: "100%", border: 0 }}
+                    />
+                  </div>
+                  <div className="flex justify-end gap-2 mt-3">
+                    <button
+                      onClick={() => {
+                        if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
+                        setLabelPreview(null);
+                      }}
+                      className="btn-ghost h-9 px-3 rounded-[10px] text-[13px] font-medium"
+                    >
+                      Sluiten
+                    </button>
+                    <button
+                      onClick={() => {
+                        downloadBlob(
+                          labelPreview.blob,
+                          `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`,
+                        );
+                      }}
+                      className="btn-primary h-9 px-3 rounded-[10px] text-[13px] font-semibold"
+                    >
+                      Download PDF
+                    </button>
+                  </div>
+                </DialogContent>
+              )}
+            </Dialog>
+
           </div>
         )}
       </div>
