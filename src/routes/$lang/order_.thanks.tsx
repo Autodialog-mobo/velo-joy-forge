@@ -42,26 +42,59 @@ function BedanktPage() {
   const [retrying, setRetrying] = useState(false);
   const [retryError, setRetryError] = useState<string | null>(null);
 
+  const status = order?.status ?? null;
+  const isPaid = status === "paid" || status === "printed" || status === "shipped";
+  const isPending =
+    status === "open" || status === "pending" || status === "authorized" || status === null;
+
   useEffect(() => {
     if (!payment_id) {
       setLoading(false);
       return;
     }
     const unknownErr = t("states.error_unknown");
-    getOrderByMolliePayment({ data: { paymentId: payment_id } })
-      .then((res) => {
-        if ("error" in res) setError(res.error ?? unknownErr);
-        else
-          setOrder({
-            status: res.status,
-            paymentStatus: res.paymentStatus,
-            email: res.email,
-            amountTotal: res.amountTotal,
-            items: res.items,
-          });
-      })
-      .catch((e: unknown) => setError(e instanceof Error ? e.message : unknownErr))
-      .finally(() => setLoading(false));
+    let cancelled = false;
+
+    const fetchOnce = () =>
+      getOrderByMolliePayment({ data: { paymentId: payment_id } })
+        .then((res) => {
+          if (cancelled) return;
+          if ("error" in res) setError(res.error ?? unknownErr);
+          else {
+            setError(null);
+            setOrder({
+              status: res.status,
+              paymentStatus: res.paymentStatus,
+              email: res.email,
+              amountTotal: res.amountTotal,
+              items: res.items,
+            });
+          }
+        })
+        .catch((e: unknown) => {
+          if (!cancelled) setError(e instanceof Error ? e.message : unknownErr);
+        })
+        .finally(() => {
+          if (!cancelled) setLoading(false);
+        });
+
+    fetchOnce();
+
+    // Poll while payment is still pending so the UI flips to "paid" as soon
+    // as Mollie confirms — no manual refresh required.
+    const interval = setInterval(() => {
+      if (cancelled) return;
+      const s = order?.status ?? null;
+      const stillPending =
+        s === null || s === "open" || s === "pending" || s === "authorized";
+      if (stillPending) fetchOnce();
+    }, 3000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payment_id, t]);
 
   const totalStickers =
@@ -91,11 +124,8 @@ function BedanktPage() {
     }
   };
 
-  const status = order?.status ?? null;
-  const isPaid = status === "paid" || status === "printed" || status === "shipped";
-  const isPending =
-    status === "open" || status === "pending" || status === "authorized" || status === null;
   // expired / failed / canceled → unpaid retry state
+
 
   return (
     <div
