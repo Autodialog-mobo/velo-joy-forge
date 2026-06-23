@@ -610,7 +610,10 @@ function AdminPage() {
     if (!labelItems) return;
     const included = labelItems.filter((l) => !labelExcluded.has(l.id));
     if (!included.length) return;
-    const blob = generateLabelsPdf(included);
+    // Capture items before closing the preview modal (closeLabelPreview clears state).
+    const includedSnapshot = included;
+    closeLabelPreview();
+    const blob = generateLabelsPdf(includedSnapshot);
     const pdfUrl = URL.createObjectURL(blob);
     const filename = `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`;
     const html = `<!doctype html><html lang="nl"><head><meta charset="utf-8"><title>${filename}</title>
