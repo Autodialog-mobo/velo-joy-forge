@@ -693,6 +693,16 @@ function AdminPage() {
           duration: 8_000,
         },
       );
+      doLogPrintAudit({
+        data: {
+          kind: "success",
+          message: changedCount === 0
+            ? "Geen statuswijziging — alle al geprint/verzonden."
+            : `${changedCount} bestelling(en) op 'geprint' gezet`,
+          requestedIds: ids,
+          rows: successRows,
+        },
+      }).catch((e) => console.error("logPrintAudit failed:", e));
       await refetch();
     } catch (err) {
       const message =
