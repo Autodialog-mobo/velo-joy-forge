@@ -2137,24 +2137,42 @@ function AdminPage() {
                         const lc = (l.lang || "").toString().trim().toUpperCase();
                         const parts = [sc > 0 ? String(sc) : null, lc || null].filter(Boolean) as string[];
                         if (!parts.length) return null;
+                        const caption = parts.join(" · ");
+                        const maxW = W - PAD * 2; // px, inside safe area
+                        // Measure with canvas to auto-shrink for long lang codes.
+                        let captionPx = mm * 1.4;
+                        const minPx = Math.max(6, mm * 0.9);
+                        if (typeof document !== "undefined") {
+                          const canvas = document.createElement("canvas");
+                          const ctx = canvas.getContext("2d");
+                          if (ctx) {
+                            const measure = (px: number) => {
+                              ctx.font = `400 ${px}px Helvetica, Arial, sans-serif`;
+                              return ctx.measureText(caption).width;
+                            };
+                            while (captionPx > minPx && measure(captionPx) > maxW) {
+                              captionPx -= 0.5;
+                            }
+                          }
+                        }
                         return (
                           <div
                             style={{
                               position: "absolute",
                               right: PAD,
                               bottom: PAD,
-                              maxWidth: `calc(100% - ${PAD * 2}px)`,
-                              fontSize: mm * 1.4,
+                              maxWidth: maxW,
+                              fontSize: captionPx,
                               color: "#6e6e6e",
                               lineHeight: 1,
                               fontWeight: 400,
                               letterSpacing: 0.2,
                               whiteSpace: "nowrap",
                               overflow: "hidden",
-                              textOverflow: "clip",
+                              fontFamily: "Helvetica, Arial, sans-serif",
                             }}
                           >
-                            {parts.join(" · ")}
+                            {caption}
                           </div>
                         );
                       })()}
