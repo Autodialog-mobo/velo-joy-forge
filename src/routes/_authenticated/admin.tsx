@@ -2033,7 +2033,8 @@ function AdminPage() {
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
-                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y
+                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y (left/top/bottom)
+                  const PAD_R = 4 * mm; // matches PDF PAD_R (right, accounts for 87 mm printer feed)
                   const lines = [
                     l.shipping_name?.trim(),
                     l.shipping_line1?.trim(),
