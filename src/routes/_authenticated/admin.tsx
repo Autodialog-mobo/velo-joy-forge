@@ -2569,7 +2569,9 @@ function AdminPage() {
 
                           <button
                             onClick={() => setLabelZoomId(null)}
+                            disabled={zoomSaving}
                             className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
+                            style={{ opacity: zoomSaving ? 0.5 : 1, cursor: zoomSaving ? "not-allowed" : "pointer" }}
                           >
                             ← Terug naar overzicht
                           </button>
