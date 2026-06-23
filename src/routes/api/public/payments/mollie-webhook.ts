@@ -483,6 +483,15 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                       const mollieApiKey = process.env.MOLLIE_API_KEY;
                       if (!mollieApiKey) throw new Error("MOLLIE_API_KEY not configured");
 
+                      // Give the customer plenty of time to read the email and pay.
+                      // Mollie accepts expiresAt as YYYY-MM-DD; for payment methods
+                      // that cap the maximum expiry below this, Mollie clamps to
+                      // the method maximum and returns the actual expiresAt on the
+                      // payment — we read that back and surface it in the email so
+                      // the date shown always matches reality.
+                      const desiredExpiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+                      const desiredExpiryYmd = desiredExpiryDate.toISOString().slice(0, 10);
+
                       const createRes = await fetch("https://api.mollie.com/v2/payments", {
                         method: "POST",
                         headers: {
@@ -499,6 +508,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                           billingAddress: shippingAddress,
                           shippingAddress,
                           locale: LOCALE_MAP[lang],
+                          expiresAt: desiredExpiryYmd,
                           metadata: {
                             items,
                             email: orderRow.customer_email,
@@ -514,6 +524,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                           `Mollie create HTTP ${createRes.status}: ${JSON.stringify(newPayment).slice(0, 300)}`,
                         );
                       }
+                      // Mollie returns expiresAt as an ISO 8601 timestamp; fall back
+                      // to our requested date when absent (some methods omit it).
+                      const actualExpiresAt: Date = newPayment.expiresAt
+                        ? new Date(newPayment.expiresAt)
+                        : desiredExpiryDate;
                       const newCheckoutUrl: string = newPayment._links.checkout.href;
                       const newPaymentId: string = newPayment.id;
 
