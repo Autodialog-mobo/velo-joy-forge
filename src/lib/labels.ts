@@ -17,7 +17,11 @@ export interface LabelData {
 // Physical label: 28 mm (height) × 89 mm (width), landscape
 const W = 89; // page width  (mm)
 const H = 28; // page height (mm)
-const PAD_X = 2; // 2 mm left/right padding (leading-edge safe area)
+const PAD_X = 2; // 2 mm left padding (leading-edge safe area)
+// The printer can only feed 87 mm-wide stock for our 89 mm labels, so the
+// rightmost ~2 mm is physically clipped. Reserve an extra 2 mm on the right
+// (4 mm total) so no glyphs are cut off in practice.
+const PAD_R = 4;
 const PAD_Y = 2; // 2 mm top/bottom padding
 
 const PT_TO_MM = 0.3528;
