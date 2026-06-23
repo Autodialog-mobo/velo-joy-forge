@@ -325,6 +325,15 @@ function AdminPage() {
     return Array.from(set).sort();
   }, [activeOrders]);
 
+  const availableStickerCounts = useMemo(() => {
+    const set = new Set<number>();
+    for (const o of activeOrders) {
+      const n = stickerTotalById.get(o.id);
+      if (n && n > 0) set.add(n);
+    }
+    return Array.from(set).sort((a, b) => a - b);
+  }, [activeOrders, stickerTotalById]);
+
   const filtered = useMemo(() => {
     const base = viewingDeleted ? deletedOrders : activeOrders;
     const q = searchQuery;
