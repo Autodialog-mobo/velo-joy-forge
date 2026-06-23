@@ -1891,7 +1891,7 @@ function AdminPage() {
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
-                  const PAD = 3 * mm;
+                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y
                   const lines = [
                     l.shipping_name?.trim(),
                     l.shipping_line1?.trim(),
@@ -1899,31 +1899,96 @@ function AdminPage() {
                     `${l.shipping_postal_code ?? ""} ${l.shipping_city ?? ""}`.trim(),
                     (l.shipping_country || "").toUpperCase().trim(),
                   ].filter(Boolean) as string[];
+                  // 1 mm grid (lighter every mm, stronger every 5 mm)
+                  const gridBg = `
+                    repeating-linear-gradient(to right, rgba(0,0,0,0.06) 0 1px, transparent 1px ${mm}px),
+                    repeating-linear-gradient(to bottom, rgba(0,0,0,0.06) 0 1px, transparent 1px ${mm}px),
+                    repeating-linear-gradient(to right, rgba(0,0,0,0.14) 0 1px, transparent 1px ${5 * mm}px),
+                    repeating-linear-gradient(to bottom, rgba(0,0,0,0.14) 0 1px, transparent 1px ${5 * mm}px),
+                    #fff
+                  `;
                   return (
                     <div
                       style={{
+                        position: "relative",
                         width: W,
                         height: H,
-                        background: "#fff",
+                        background: gridBg,
                         color: "#000",
                         border: "1px solid #d4d4d4",
                         borderRadius: 4,
-                        padding: PAD,
                         boxSizing: "border-box",
                         fontFamily: "Helvetica, Arial, sans-serif",
                         fontSize: mm * 3,
                         lineHeight: 1.25,
                         overflow: "hidden",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
                       }}
                     >
-                      {lines.map((t, i) => (
-                        <div key={i} style={{ fontWeight: i === 0 ? 700 : 400, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                          {t}
-                        </div>
+                      {/* Safe-area / margin indicator (2 mm dashed inset) */}
+                      <div
+                        aria-hidden
+                        style={{
+                          position: "absolute",
+                          left: PAD,
+                          top: PAD,
+                          width: W - PAD * 2,
+                          height: H - PAD * 2,
+                          border: "1px dashed #2ECC8A",
+                          pointerEvents: "none",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                      {/* Cut marks at each corner */}
+                      {[
+                        { top: 0, left: 0, bt: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
+                        { top: 0, right: 0, bt: "2px solid #E74C3C", br: "2px solid #E74C3C" },
+                        { bottom: 0, left: 0, bb: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
+                        { bottom: 0, right: 0, bb: "2px solid #E74C3C", br: "2px solid #E74C3C" },
+                      ].map((c, i) => (
+                        <div
+                          key={i}
+                          aria-hidden
+                          style={{
+                            position: "absolute",
+                            width: Math.max(6, mm * 2),
+                            height: Math.max(6, mm * 2),
+                            top: (c as any).top,
+                            left: (c as any).left,
+                            right: (c as any).right,
+                            bottom: (c as any).bottom,
+                            borderTop: (c as any).bt,
+                            borderBottom: (c as any).bb,
+                            borderLeft: (c as any).bl,
+                            borderRight: (c as any).br,
+                            pointerEvents: "none",
+                          }}
+                        />
                       ))}
+                      {/* Address content, anchored top-left like the PDF */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          left: PAD,
+                          top: PAD,
+                          right: PAD,
+                          bottom: PAD,
+                          textAlign: "left",
+                        }}
+                      >
+                        {lines.map((t, i) => (
+                          <div
+                            key={i}
+                            style={{
+                              fontWeight: i === 0 ? 700 : 400,
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {t}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   );
                 };
