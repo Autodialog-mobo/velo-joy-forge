@@ -1324,6 +1324,11 @@ function AdminPage() {
                           {detailOrder.lang ? String(detailOrder.lang).toUpperCase() : "—"}
                         </span>
                       </p>
+                      <p className="text-[12px] mt-1" style={{ color: TEXT_MUTED }}>
+                        Bron: <span style={{ color: TEXT_SEC, fontWeight: 600 }}>
+                          {(detailOrder as any).referral_source ?? "—"}
+                        </span>
+                      </p>
                     </div>
 
                     <div>
