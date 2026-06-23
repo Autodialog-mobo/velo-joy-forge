@@ -2131,42 +2131,49 @@ function AdminPage() {
                           </div>
                         ))}
                       </div>
-                      {/* Caption: sticker count · language (bottom-right) */}
+                      {/* Caption: sticker count · language (bottom-right).
+                          Mirrors the PDF shrink logic exactly: start at 5pt,
+                          step down by 0.5pt to a 3pt floor until the rendered
+                          width fits inside the 85 mm safe area. */}
                       {(() => {
                         const sc = Number(l.sticker_count ?? 0);
                         const lc = (l.lang || "").toString().trim().toUpperCase();
                         const parts = [sc > 0 ? String(sc) : null, lc || null].filter(Boolean) as string[];
                         if (!parts.length) return null;
-                        const caption = parts.join(" · ");
-                        const maxW = W - PAD * 2; // px, inside safe area
-                        // Measure with canvas to auto-shrink for long lang codes.
-                        let captionPx = mm * 1.4;
-                        const minPx = Math.max(6, mm * 0.9);
+                        const caption = parts.join(" \u00B7 ");
+                        const PT_TO_MM = 0.3528;
+                        const availMm = 89 - 2 * 2; // W - 2·PAD in mm
+                        const ptToPx = (pt: number) => pt * PT_TO_MM * mm;
+                        let captionPt = 5;
+                        const minPt = 3;
                         if (typeof document !== "undefined") {
                           const canvas = document.createElement("canvas");
                           const ctx = canvas.getContext("2d");
                           if (ctx) {
-                            const measure = (px: number) => {
-                              ctx.font = `400 ${px}px Helvetica, Arial, sans-serif`;
-                              return ctx.measureText(caption).width;
+                            const fitsAt = (pt: number) => {
+                              ctx.font = `400 ${ptToPx(pt)}px Helvetica, Arial, sans-serif`;
+                              const widthMm = ctx.measureText(caption).width / mm;
+                              return widthMm <= availMm;
                             };
-                            while (captionPx > minPx && measure(captionPx) > maxW) {
-                              captionPx -= 0.5;
+                            while (captionPt > minPt && !fitsAt(captionPt)) {
+                              captionPt -= 0.5;
                             }
                           }
                         }
+                        const captionPx = ptToPx(captionPt);
+                        const descPx = ptToPx(captionPt) * 0.25;
                         return (
                           <div
                             style={{
                               position: "absolute",
                               right: PAD,
-                              bottom: PAD,
-                              maxWidth: maxW,
+                              // Match PDF: descender bottom sits at safe-area edge.
+                              bottom: PAD - descPx,
+                              maxWidth: availMm * mm,
                               fontSize: captionPx,
-                              color: "#6e6e6e",
+                              color: "rgb(110,110,110)",
                               lineHeight: 1,
                               fontWeight: 400,
-                              letterSpacing: 0.2,
                               whiteSpace: "nowrap",
                               overflow: "hidden",
                               fontFamily: "Helvetica, Arial, sans-serif",
