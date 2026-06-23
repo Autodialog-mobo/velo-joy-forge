@@ -100,14 +100,14 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       ].filter(Boolean) as string[];
       const caption = captionParts.join(" \u00B7 ");
       let captionSize = CAPTION_SIZE;
-      doc.setFont("helvetica", "normal");
+      doc.setFont("helvetica", "bold");
       doc.setFontSize(captionSize);
       // Shrink caption if (unexpectedly) too wide for the safe area.
-      while (captionSize > 3 && doc.getTextWidth(caption) > availW) {
+      while (captionSize > 4 && doc.getTextWidth(caption) > availW) {
         captionSize -= 0.5;
         doc.setFontSize(captionSize);
       }
-      doc.setTextColor(110, 110, 110);
+      doc.setTextColor(70, 70, 70);
       // Baseline placed so the cap height sits fully inside the safe area
       // and descenders never clip the page edge.
       const capH = captionSize * PT_TO_MM * 0.72;
