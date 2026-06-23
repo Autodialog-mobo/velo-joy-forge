@@ -2350,7 +2350,7 @@ function AdminPage() {
                             fontSize: 12,
                           }}
                         >
-                          <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 600, letterSpacing: 0.4, textTransform: "uppercase", fontSize: 10 }}>
+                          <span style={{ color: "rgba(230,234,242,0.7)", fontWeight: 600, letterSpacing: 0.4, textTransform: "uppercase", fontSize: 10 }}>
                             Legenda
                           </span>
                           {items.map((it) => (
