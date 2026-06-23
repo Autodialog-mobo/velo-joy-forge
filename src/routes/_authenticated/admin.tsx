@@ -607,16 +607,21 @@ function AdminPage() {
     setLabelExcluded(new Set());
     setLabelZoomId(null);
   };
-  const downloadLabelsPdf = async () => {
-    if (!labelItems) return;
-    const included = labelItems.filter((l) => !labelExcluded.has(l.id));
+  const [lastPrintBatch, setLastPrintBatch] = useState<LabelData[] | null>(null);
+  const downloadLabelsPdf = async (retryWith?: LabelData[]) => {
+    const included = retryWith
+      ? retryWith
+      : labelItems
+        ? labelItems.filter((l) => !labelExcluded.has(l.id))
+        : [];
     if (!included.length) return;
+    setLastPrintBatch(included);
     const toastId = toast.loading(
       `PDF genereren voor ${included.length} label${included.length === 1 ? "" : "s"}…`,
     );
     setPrintJobBusy("generating");
-    // Close the preview modal as soon as printing starts.
-    closeLabelPreview();
+    // Close the preview modal as soon as printing starts (no-op on retry).
+    if (!retryWith) closeLabelPreview();
     const blob = generateLabelsPdf(included);
     const pdfUrl = URL.createObjectURL(blob);
     const filename = `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`;
@@ -783,8 +788,14 @@ function AdminPage() {
         failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
         {
           id: toastId,
-          description: `${message} Klik 'Details' voor IDs en oude/nieuwe status.`,
-          action: { label: "Details", onClick: () => setPrintReport((r) => r) },
+          description: `${message} Klik 'Opnieuw' om hetzelfde batch nogmaals te proberen.`,
+          action: {
+            label: "Opnieuw",
+            onClick: () => {
+              const batch = included;
+              if (batch.length) downloadLabelsPdf(batch);
+            },
+          },
           duration: 14_000,
         },
       );
@@ -2320,13 +2331,34 @@ function AdminPage() {
                       >
                         Kopieer rapport
                       </button>
-                      <button
-                        type="button"
-                        className="btn-ghost h-8 px-3 rounded-md text-xs"
-                        onClick={() => { setPrintReport(null); closeDetail(); }}
-                      >
-                        Sluiten
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {printReport.kind !== "success" && lastPrintBatch && lastPrintBatch.length > 0 && (
+                          <button
+                            type="button"
+                            disabled={printJobBusy !== false}
+                            className="btn-primary h-8 px-3 rounded-md text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-1.5"
+                            onClick={() => {
+                              if (!lastPrintBatch) return;
+                              setPrintReport(null);
+                              downloadLabelsPdf(lastPrintBatch);
+                            }}
+                            title="Probeer dezelfde labels opnieuw te genereren en te printen"
+                          >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <polyline points="23 4 23 10 17 10" />
+                              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                            </svg>
+                            Opnieuw proberen
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          className="btn-ghost h-8 px-3 rounded-md text-xs"
+                          onClick={() => { setPrintReport(null); closeDetail(); }}
+                        >
+                          Sluiten
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </DialogContent>
@@ -2959,7 +2991,7 @@ function AdminPage() {
                         Sluiten
                       </button>
                       <button
-                        onClick={downloadLabelsPdf}
+                        onClick={() => downloadLabelsPdf()}
                         disabled={includedCount === 0 || printJobBusy !== false}
                         title="Open het printvenster en sluit deze preview"
                         aria-label={`Printen van ${includedCount} label${includedCount === 1 ? "" : "s"}`}
