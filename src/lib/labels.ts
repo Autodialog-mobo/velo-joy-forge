@@ -94,8 +94,8 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       doc.setFont("helvetica", "normal");
       doc.setFontSize(captionSize);
       doc.setTextColor(110, 110, 110);
-      // Baseline near the bottom edge, right-aligned inside the safe area.
-      const cy = H - PAD_Y + captionSize * PT_TO_MM * 0.15;
+      // Baseline near the bottom of the safe area, right-aligned.
+      const cy = H - PAD_Y;
       doc.text(caption, W - PAD_X, cy, { align: "right" });
     }
   });
