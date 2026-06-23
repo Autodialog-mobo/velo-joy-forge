@@ -185,6 +185,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           shipping_city: shippingAddress.city,
           shipping_country: shippingAddress.country,
           lang: data.lang,
+          referral_source: data.referralSource && data.referralSource !== "" ? data.referralSource : null,
           updated_at: new Date().toISOString(),
 
         },
