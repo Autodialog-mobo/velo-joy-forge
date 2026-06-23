@@ -640,6 +640,12 @@ function AdminPage() {
     // Mark printed: DB function only updates orders currently in status 'paid',
     // so reprints of already-printed/shipped orders are safely ignored.
     const ids = included.map((l) => l.id);
+    // Snapshot which orders were eligible (status 'paid') before the call — only
+    // those could have transitioned to 'printed', so only those need rollback.
+    const ordersById = new Map<string, any>(
+      (data?.orders ?? []).map((o: any) => [o.id, o]),
+    );
+    const eligibleIds = ids.filter((id) => ordersById.get(id)?.status === "paid");
     try {
       await doPrint({ data: { orderIds: ids } });
       toast.success(
@@ -649,9 +655,34 @@ function AdminPage() {
       );
       await refetch();
     } catch (err) {
-      toast.error("Status bijwerken mislukt", {
-        description: err instanceof Error ? err.message : "Probeer opnieuw via 'Markeer als geprint'.",
-      });
+      const message =
+        err instanceof Error ? err.message : "Onbekende fout bij het bijwerken van de status.";
+      // Best-effort rollback: revertToPaid only flips orders currently in
+      // 'printed' back to 'paid', so it's a safe no-op for anything that
+      // didn't transition. Run in parallel and surface partial failures.
+      let rolledBack = 0;
+      let rollbackFailed = 0;
+      if (eligibleIds.length) {
+        const results = await Promise.allSettled(
+          eligibleIds.map((id) => doRevertPaid({ data: { orderId: id } })),
+        );
+        for (const r of results) {
+          if (r.status === "fulfilled") rolledBack++;
+          else rollbackFailed++;
+        }
+      }
+      await refetch().catch(() => undefined);
+      if (rollbackFailed > 0) {
+        toast.error("Status bijwerken mislukt — rollback onvolledig", {
+          description: `${message} ${rolledBack} hersteld, ${rollbackFailed} kon niet teruggezet worden. Controleer de bestellingen handmatig.`,
+          duration: 12_000,
+        });
+      } else {
+        toast.error("Status bijwerken mislukt — wijzigingen teruggedraaid", {
+          description: `${message}${eligibleIds.length ? ` ${rolledBack} bestelling(en) teruggezet naar 'betaald'.` : ""} De PDF blijft beschikbaar; probeer opnieuw te printen.`,
+          duration: 10_000,
+        });
+      }
     }
   };
 
