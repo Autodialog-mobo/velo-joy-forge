@@ -966,10 +966,22 @@ function AdminPage() {
                 <button
                   onClick={generateLabels}
                   disabled={!hasSelection || viewingDeleted}
-                  className="btn-primary h-8 px-3 rounded-[10px] text-[12px] font-semibold"
+                  title={!hasSelection ? "Selecteer eerst minstens één bestelling" : undefined}
+                  aria-describedby="labels-pdf-hint"
+                  className="btn-primary h-8 px-3 rounded-[10px] text-[12px] font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Labels PDF ({viewingDeleted ? 0 : selectedOrders.length})
                 </button>
+                {!hasSelection && !viewingDeleted && (
+                  <span
+                    id="labels-pdf-hint"
+                    role="status"
+                    className="text-[12px]"
+                    style={{ color: "rgba(255,255,255,0.7)" }}
+                  >
+                    Selecteer eerst minstens één bestelling.
+                  </span>
+                )}
                 <button
                   onClick={exportCsv}
                   disabled={!hasSelection || viewingDeleted}
@@ -978,6 +990,7 @@ function AdminPage() {
                   CSV export
                 </button>
               </div>
+
 
               <div className="flex-1 min-w-[0]" />
 
