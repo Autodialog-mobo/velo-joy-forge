@@ -2184,7 +2184,7 @@ function AdminPage() {
               )}
             </Dialog>
 
-            <Dialog open={!!printReport} onOpenChange={(open) => !open && setPrintReport(null)}>
+            <Dialog open={!!printReport} onOpenChange={(open) => { if (!open) { setPrintReport(null); closeDetail(); } }}>
               {printReport && (
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
@@ -2297,7 +2297,7 @@ function AdminPage() {
                       <button
                         type="button"
                         className="btn-ghost h-8 px-3 rounded-md text-xs"
-                        onClick={() => setPrintReport(null)}
+                        onClick={() => { setPrintReport(null); closeDetail(); }}
                       >
                         Sluiten
                       </button>
