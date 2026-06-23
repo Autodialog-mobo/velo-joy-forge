@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowUp, ArrowDown, Inbox, Package, CreditCard, MapPin, Calendar, User, Hash, ArrowRight, Copy, Check, Languages, ChevronLeft, ChevronRight, Undo2, Trash2, RotateCcw, History, Search, X, ExternalLink, Users } from "lucide-react";
-import { namesLooselyEqual } from "@/lib/normalize-name";
+import { surnamesMatch } from "@/lib/normalize-name";
 import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -1526,7 +1526,7 @@ function AdminPage() {
                             {(() => {
                               const payer = o.payment_consumer_name;
                               if (!payer) return null;
-                              if (namesLooselyEqual(o.shipping_name, payer)) return null;
+                              if (surnamesMatch(o.shipping_name, payer)) return null;
                               return (
                                 <span
                                   className="inline-flex items-center"
