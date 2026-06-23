@@ -2157,7 +2157,7 @@ function AdminPage() {
                         if (!parts.length) return null;
                         const caption = parts.join(" \u00B7 ");
                         const PT_TO_MM = 0.3528;
-                        const availMm = 89 - 2 * 2; // W - 2·PAD in mm
+                        const availMm = 89 - 2 - 4; // W - PAD - PAD_R (mm)
                         const ptToPx = (pt: number) => pt * PT_TO_MM * mm;
                         let captionPt = 5;
                         const minPt = 3;
