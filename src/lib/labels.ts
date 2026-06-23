@@ -113,7 +113,7 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       const capH = captionSize * PT_TO_MM * 0.72;
       const descH = captionSize * PT_TO_MM * 0.25;
       const cy = H - PAD_Y - descH;
-      doc.text(caption, W - PAD_X, cy, { align: "right", baseline: "alphabetic" });
+      doc.text(caption, W - PAD_R, cy, { align: "right", baseline: "alphabetic" });
       // Reset for any subsequent page.
       doc.setFontSize(fontSize);
       doc.setTextColor(0, 0, 0);
