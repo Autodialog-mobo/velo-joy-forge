@@ -428,7 +428,7 @@ function AdminPage() {
     else setSelected(new Set(filtered.map((o: any) => o.id)));
   };
 
-  const handleSort = (column: "date" | "amount") => {
+  const handleSort = (column: "date" | "amount" | "stickers") => {
     setSort((prev) => {
       if (prev.column === column) return { column, dir: prev.dir === "asc" ? "desc" : "asc" };
       return { column, dir: "desc" };
