@@ -1338,8 +1338,8 @@ function AdminPage() {
                         </span>
                       </p>
                       <p className="text-[12px] mt-1" style={{ color: TEXT_MUTED }}>
-                        Bron: <span style={{ color: TEXT_SEC, fontWeight: 600 }}>
-                          {(detailOrder as any).referral_source ?? "—"}
+                        Hoe gevonden: <span style={{ color: TEXT_SEC, fontWeight: 600 }}>
+                          {referralLabel((detailOrder as any).referral_source)}
                         </span>
                       </p>
                     </div>
