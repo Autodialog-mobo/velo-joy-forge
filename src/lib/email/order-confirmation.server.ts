@@ -14,10 +14,9 @@ const BRAND = {
   soft: "#F6F9F7",
 };
 
-// Inline SVG logomark (green rounded square + navy check) as data URI so it
-// renders in every email client without external hosting.
-const LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36" height="36"><rect width="100" height="100" rx="22" fill="#2ECC8A"/><path d="M24 54 L42 72 L76 30" fill="none" stroke="#0D1F3C" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const LOGO_DATA_URI = `data:image/svg+xml;utf8,${encodeURIComponent(LOGO_SVG)}`;
+// Hosted PNG logomark on the production domain. Gmail blocks data: URIs and
+// does not render SVG in email, so we reference an absolute https URL to a PNG.
+const LOGO_URL = "https://www.velopass.com/email/velopass-logo.png";
 
 const BUNDLE_LABELS: Record<Lang, Record<string, string>> = {
   nl: {
