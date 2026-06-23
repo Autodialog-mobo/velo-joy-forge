@@ -2036,8 +2036,10 @@ function AdminPage() {
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
-                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y (left/top/bottom)
-                  const PAD_R = 4 * mm; // matches PDF PAD_R (right, accounts for 87 mm printer feed)
+                  const SAFE = Math.max(0, labelSafePadMm) * mm;
+                  const PAD = SAFE; // left/top/bottom safe margin
+                  const clipMm = Math.max(0, 89 - labelPrinterWidthMm);
+                  const PAD_R = Math.max(SAFE, clipMm * mm + SAFE); // right safe margin includes printer clip strip
                   const lines = [
                     l.shipping_name?.trim(),
                     l.shipping_line1?.trim(),
