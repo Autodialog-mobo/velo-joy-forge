@@ -411,6 +411,23 @@ function AdminPage() {
   const [labelItems, setLabelItems] = useState<LabelData[] | null>(null);
   const [labelExcluded, setLabelExcluded] = useState<Set<string>>(new Set());
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
+  const [labelDragId, setLabelDragId] = useState<string | null>(null);
+  const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
+
+  const reorderLabel = (dragId: string, dropId: string) => {
+    if (dragId === dropId) return;
+    setLabelItems((prev) => {
+      if (!prev) return prev;
+      const from = prev.findIndex((p) => p.id === dragId);
+      const to = prev.findIndex((p) => p.id === dropId);
+      if (from < 0 || to < 0) return prev;
+      const next = prev.slice();
+      const [moved] = next.splice(from, 1);
+      next.splice(to, 0, moved);
+      return next;
+    });
+  };
+
 
   const generateLabels = () => {
     const labelData: LabelData[] = selectedOrders.map((o: any) => ({
