@@ -10,6 +10,7 @@ import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, so
 import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const adminSearchSchema = z.object({
   order: z.string().optional(),
@@ -468,6 +469,7 @@ function AdminPage() {
   const [labelItems, setLabelItems] = useState<LabelData[] | null>(null);
   const [labelExcluded, setLabelExcluded] = useState<Set<string>>(new Set());
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
+  const [zoomDraft, setZoomDraft] = useState<Partial<LabelData> | null>(null);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
