@@ -470,6 +470,9 @@ function AdminPage() {
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
+  const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
+  const [labelPrinterWidthMm, setLabelPrinterWidthMm] = useState<number>(87);
+  const [labelSafePadMm, setLabelSafePadMm] = useState<number>(2);
 
   const reorderLabel = (dragId: string, dropId: string) => {
     if (dragId === dropId) return;
@@ -2033,8 +2036,10 @@ function AdminPage() {
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
-                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y (left/top/bottom)
-                  const PAD_R = 4 * mm; // matches PDF PAD_R (right, accounts for 87 mm printer feed)
+                  const SAFE = Math.max(0, labelSafePadMm) * mm;
+                  const PAD = SAFE; // left/top/bottom safe margin
+                  const clipMm = Math.max(0, 89 - labelPrinterWidthMm);
+                  const PAD_R = Math.max(SAFE, clipMm * mm + SAFE); // right safe margin includes printer clip strip
                   const lines = [
                     l.shipping_name?.trim(),
                     l.shipping_line1?.trim(),
@@ -2067,36 +2072,42 @@ function AdminPage() {
                         overflow: "hidden",
                       }}
                     >
-                      {/* Safe-area / margin indicator (2 mm dashed inset, 4 mm right for printer clip) */}
-                      <div
-                        aria-hidden
-                        style={{
-                          position: "absolute",
-                          left: PAD,
-                          top: PAD,
-                          width: W - PAD - PAD_R,
-                          height: H - PAD * 2,
-                          border: "1px dashed #2ECC8A",
-                          pointerEvents: "none",
-                          boxSizing: "border-box",
-                        }}
-                      />
-                      {/* Printer clip strip (right ~2 mm is physically cut by 87 mm feed) */}
-                      <div
-                        aria-hidden
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          right: 0,
-                          width: PAD_R - PAD,
-                          height: H,
-                          background:
-                            "repeating-linear-gradient(135deg, rgba(231,76,60,0.18) 0 4px, rgba(231,76,60,0) 4px 8px)",
-                          pointerEvents: "none",
-                        }}
-                      />
+                      {/* Safe-area / margin indicator (dashed inset) */}
+                      {labelShowOverlay && (
+                        <div
+                          aria-hidden
+                          style={{
+                            position: "absolute",
+                            left: PAD,
+                            top: PAD,
+                            width: Math.max(0, W - PAD - PAD_R),
+                            height: Math.max(0, H - PAD * 2),
+                            border: "1px dashed #2ECC8A",
+                            pointerEvents: "none",
+                            boxSizing: "border-box",
+                          }}
+                        />
+                      )}
+                      {/* Printer clip strip (right edge the printer physically cuts) */}
+                      {labelShowOverlay && clipMm > 0 && (
+                        <div
+                          aria-hidden
+                          title={`Printer clip: rechts ${clipMm.toFixed(1)} mm wordt afgesneden`}
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                            width: clipMm * mm,
+                            height: H,
+                            background:
+                              "repeating-linear-gradient(135deg, rgba(231,76,60,0.22) 0 4px, rgba(231,76,60,0) 4px 8px)",
+                            borderLeft: "1px dashed rgba(231,76,60,0.7)",
+                            pointerEvents: "none",
+                          }}
+                        />
+                      )}
                       {/* Cut marks at each corner */}
-                      {[
+                      {labelShowOverlay && [
                         { top: 0, left: 0, bt: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
                         { top: 0, right: 0, bt: "2px solid #E74C3C", br: "2px solid #E74C3C" },
                         { bottom: 0, left: 0, bb: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
@@ -2212,6 +2223,74 @@ function AdminPage() {
                     <div className="text-[12px] mb-3" style={{ color: "rgba(255,255,255,0.7)" }}>
                       Klik op een label om groter te bekijken. Gebruik ↑↓ om te herordenen en ✕ om uit te sluiten.
                     </div>
+                    <div
+                      className="flex flex-wrap items-center gap-3 mb-3 p-2 rounded-[8px]"
+                      style={{
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        color: "rgba(255,255,255,0.85)",
+                        fontSize: 12,
+                      }}
+                    >
+                      <label className="flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={labelShowOverlay}
+                          onChange={(e) => setLabelShowOverlay(e.target.checked)}
+                        />
+                        Overlay tonen
+                      </label>
+                      <label className="flex items-center gap-2">
+                        Printer-breedte
+                        <input
+                          type="number"
+                          min={40}
+                          max={89}
+                          step={0.5}
+                          value={labelPrinterWidthMm}
+                          onChange={(e) => {
+                            const v = Number(e.target.value);
+                            if (Number.isFinite(v)) setLabelPrinterWidthMm(Math.min(89, Math.max(40, v)));
+                          }}
+                          style={{
+                            width: 64,
+                            background: "rgba(0,0,0,0.3)",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            borderRadius: 6,
+                            padding: "2px 6px",
+                            color: "inherit",
+                          }}
+                        />
+                        mm
+                      </label>
+                      <label className="flex items-center gap-2">
+                        Veilige marge
+                        <input
+                          type="number"
+                          min={0}
+                          max={10}
+                          step={0.5}
+                          value={labelSafePadMm}
+                          onChange={(e) => {
+                            const v = Number(e.target.value);
+                            if (Number.isFinite(v)) setLabelSafePadMm(Math.min(10, Math.max(0, v)));
+                          }}
+                          style={{
+                            width: 56,
+                            background: "rgba(0,0,0,0.3)",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            borderRadius: 6,
+                            padding: "2px 6px",
+                            color: "inherit",
+                          }}
+                        />
+                        mm
+                      </label>
+                      <span style={{ color: "rgba(255,255,255,0.55)" }}>
+                        Clip-zone rechts: {Math.max(0, 89 - labelPrinterWidthMm).toFixed(1)} mm
+                      </span>
+                    </div>
+
 
                     {zoomItem ? (
                       <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
