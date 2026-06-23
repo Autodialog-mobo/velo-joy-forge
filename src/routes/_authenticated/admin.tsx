@@ -2036,6 +2036,16 @@ function AdminPage() {
                 const includedCount = labelItems.filter((l) => !labelExcluded.has(l.id)).length;
                 const zoomItem = labelZoomId ? labelItems.find((l) => l.id === labelZoomId) : null;
                 // 1 mm = 4 px for thumbs, 8 px for zoom
+                const hexToRgba = (hex: string, a: number) => {
+                  const h = hex.replace("#", "");
+                  const n = h.length === 3
+                    ? h.split("").map((c) => c + c).join("")
+                    : h.padEnd(6, "0").slice(0, 6);
+                  const r = parseInt(n.slice(0, 2), 16);
+                  const g = parseInt(n.slice(2, 4), 16);
+                  const b = parseInt(n.slice(4, 6), 16);
+                  return `rgba(${r},${g},${b},${a})`;
+                };
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
