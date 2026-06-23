@@ -2238,9 +2238,9 @@ function AdminPage() {
                     <div
                       className="flex flex-wrap items-center gap-3 mb-3 p-2 rounded-[8px]"
                       style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        color: "rgba(255,255,255,0.85)",
+                        background: "#0E1116",
+                        border: "1px solid rgba(255,255,255,0.12)",
+                        color: "#E6EAF2",
                         fontSize: 12,
                       }}
                     >
@@ -2344,13 +2344,13 @@ function AdminPage() {
                         <div
                           className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-3 p-2 rounded-[8px]"
                           style={{
-                            background: "rgba(255,255,255,0.03)",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                            color: "rgba(255,255,255,0.85)",
+                            background: "#0E1116",
+                            border: "1px solid rgba(255,255,255,0.12)",
+                            color: "#E6EAF2",
                             fontSize: 12,
                           }}
                         >
-                          <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 600, letterSpacing: 0.4, textTransform: "uppercase", fontSize: 10 }}>
+                          <span style={{ color: "rgba(230,234,242,0.7)", fontWeight: 600, letterSpacing: 0.4, textTransform: "uppercase", fontSize: 10 }}>
                             Legenda
                           </span>
                           {items.map((it) => (
