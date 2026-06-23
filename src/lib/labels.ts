@@ -9,6 +9,8 @@ export interface LabelData {
   shipping_country: string | null;
   id: string;
   lines: { bundle_sku: string; quantity: number }[];
+  sticker_count?: number | null;
+  lang?: string | null;
 }
 
 // DYMO LabelWriter 450 — Standard Address Label S0722370
@@ -77,6 +79,24 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       doc.setFont("helvetica", bold ? "bold" : "normal");
       doc.text(text, PAD_X, y, { align: "left" });
       y += lineH;
+    }
+
+    // Caption (bottom-right): "<count> · <LANG>"
+    const stickerCount = Number(o.sticker_count ?? 0);
+    const langCode = (o.lang || "").toString().trim().toUpperCase();
+    if (stickerCount > 0 || langCode) {
+      const captionParts = [
+        stickerCount > 0 ? String(stickerCount) : null,
+        langCode || null,
+      ].filter(Boolean) as string[];
+      const caption = captionParts.join(" \u00B7 ");
+      const captionSize = 6;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(captionSize);
+      doc.setTextColor(110, 110, 110);
+      // Baseline near the bottom of the safe area, right-aligned.
+      const cy = H - PAD_Y;
+      doc.text(caption, W - PAD_X, cy, { align: "right" });
     }
   });
 
