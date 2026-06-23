@@ -131,6 +131,7 @@ function AdminPage() {
   const doPrint = useServerFn(markPrinted);
   const doShip = useServerFn(markShipped);
   const doRevertPaid = useServerFn(revertToPaid);
+  const doLogPrintAudit = useServerFn(logPrintAudit);
   const doRevertPrinted = useServerFn(revertToPrinted);
   const doSoftDelete = useServerFn(softDeleteOrder);
   const doRestore = useServerFn(restoreOrder);
