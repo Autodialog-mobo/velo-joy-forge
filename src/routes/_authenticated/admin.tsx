@@ -482,19 +482,34 @@ function AdminPage() {
     const filename = `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`;
     const html = `<!doctype html><html lang="nl"><head><meta charset="utf-8"><title>${filename}</title>
 <style>
-  html,body{margin:0;height:100%;background:#0E1116;color:#E6EAF2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
-  .bar{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#161B22;border-bottom:1px solid #222831;z-index:10;}
-  .bar h1{font-size:14px;margin:0;font-weight:600;}
-  .actions{display:flex;gap:8px;}
-  button,a.btn{background:#2ECC8A;color:#0E1116;border:0;padding:8px 14px;border-radius:6px;font-weight:600;cursor:pointer;font-size:13px;text-decoration:none;display:inline-block;}
-  a.btn.secondary{background:transparent;color:#E6EAF2;border:1px solid #2A313B;}
-  iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 52px);border:0;background:#fff;}
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:#0E1116;color:#E6EAF2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+  .bar{position:sticky;position:-webkit-sticky;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(22,27,34,0.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid #222831;z-index:10;}
+  .meta{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .meta .title{font-size:13px;font-weight:600;color:#E6EAF2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .meta .sub{font-size:11px;color:rgba(230,234,242,0.6);}
+  .actions{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+  .btn{display:inline-flex;align-items:center;gap:6px;border:0;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-size:13px;text-decoration:none;line-height:1;transition:transform 80ms ease, box-shadow 120ms ease, background 120ms ease;font-family:inherit;}
+  .btn.secondary{background:transparent;color:#E6EAF2;border:1px solid #2A313B;}
+  .btn.secondary:hover{background:rgba(255,255,255,0.06);border-color:#3A4250;}
+  .btn.primary{background:#2ECC8A;color:#0E1116;box-shadow:0 1px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(46,204,138,0.4);}
+  .btn.primary:hover{background:#34D896;transform:translateY(-1px);box-shadow:0 4px 12px rgba(46,204,138,0.35);}
+  .btn.primary:active{transform:translateY(0);}
+  .btn svg{width:14px;height:14px;flex-shrink:0;}
+  /* Native tooltip styling via title attr; add a subtle hint label */
+  iframe{position:fixed;top:60px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 60px);border:0;background:#fff;}
 </style></head><body>
 <div class="bar">
-  <h1>${filename} — ${included.length} label${included.length === 1 ? "" : "s"}</h1>
+  <div class="meta">
+    <span class="title">${filename}</span>
+    <span class="sub">${included.length} label${included.length === 1 ? "" : "s"} · 89 × 28 mm · DYMO LabelWriter</span>
+  </div>
   <div class="actions">
-    <a class="btn secondary" href="${pdfUrl}" download="${filename}">Download</a>
-    <button id="printBtn" type="button">Print →</button>
+    <a class="btn secondary" href="${pdfUrl}" download="${filename}" title="Bewaar de PDF lokaal">Download</a>
+    <button id="printBtn" class="btn primary" type="button" title="Open het printvenster — kies je DYMO LabelWriter en print direct" aria-label="Printen naar DYMO">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      Printen
+    </button>
   </div>
 </div>
 <iframe id="pdf" src="${pdfUrl}#toolbar=0&view=Fit"></iframe>
