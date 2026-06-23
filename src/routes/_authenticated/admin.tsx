@@ -1349,7 +1349,7 @@ function AdminPage() {
                   })}
                   {!filtered.length && (
                     <tr>
-                      <td colSpan={7}>
+                      <td colSpan={8}>
                         <div className="flex flex-col items-center justify-center text-center" style={{ padding: "80px 24px" }}>
                           <Inbox className="w-10 h-10 mb-4" strokeWidth={1.5} style={{ color: TEXT_MUTED }} />
                           <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
