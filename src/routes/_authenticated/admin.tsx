@@ -469,6 +469,7 @@ function AdminPage() {
 
   const [labelItems, setLabelItems] = useState<LabelData[] | null>(null);
   const [labelExcluded, setLabelExcluded] = useState<Set<string>>(new Set());
+  const [printJobBusy, setPrintJobBusy] = useState<false | "generating" | "updating">(false);
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [zoomDraft, setZoomDraft] = useState<Partial<LabelData> | null>(null);
   const [zoomSaving, setZoomSaving] = useState<boolean>(false);
@@ -610,6 +611,10 @@ function AdminPage() {
     if (!labelItems) return;
     const included = labelItems.filter((l) => !labelExcluded.has(l.id));
     if (!included.length) return;
+    const toastId = toast.loading(
+      `PDF genereren voor ${included.length} label${included.length === 1 ? "" : "s"}…`,
+    );
+    setPrintJobBusy("generating");
     // Close the preview modal as soon as printing starts.
     closeLabelPreview();
     const blob = generateLabelsPdf(included);
@@ -661,6 +666,9 @@ function AdminPage() {
     const win = window.open(htmlUrl, "_blank");
     if (!win) {
       downloadBlob(blob, filename);
+      toast.message("Printvenster geblokkeerd — PDF is gedownload.", { id: toastId });
+    } else {
+      toast.loading("Printvenster geopend — status bijwerken…", { id: toastId });
     }
     setTimeout(() => {
       URL.revokeObjectURL(htmlUrl);
@@ -676,6 +684,7 @@ function AdminPage() {
       (data?.orders ?? []).map((o: any) => [o.id, o]),
     );
     const eligibleIds = ids.filter((id) => ordersById.get(id)?.status === "paid");
+    setPrintJobBusy("updating");
     try {
       await doPrint({ data: { orderIds: ids } });
       const successRows: PrintRow[] = ids.map((id) => {
@@ -699,8 +708,9 @@ function AdminPage() {
         rows: successRows,
       });
       toast.success(
-        changedCount === 1 ? "Bestelling op 'geprint' gezet" : `${changedCount} bestellingen op 'geprint' gezet`,
+        changedCount === 1 ? "Klaar — 1 bestelling op 'geprint' gezet" : `Klaar — ${changedCount} bestellingen op 'geprint' gezet`,
         {
+          id: toastId,
           description: "Klik 'Details' voor de IDs en oude/nieuwe status.",
           action: { label: "Details", onClick: () => setPrintReport((r) => r) },
           duration: 8_000,
@@ -772,11 +782,14 @@ function AdminPage() {
       toast.error(
         failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
         {
+          id: toastId,
           description: `${message} Klik 'Details' voor IDs en oude/nieuwe status.`,
           action: { label: "Details", onClick: () => setPrintReport((r) => r) },
           duration: 14_000,
         },
       );
+    } finally {
+      setPrintJobBusy(false);
     }
   };
 
@@ -2947,17 +2960,29 @@ function AdminPage() {
                       </button>
                       <button
                         onClick={downloadLabelsPdf}
-                        disabled={includedCount === 0}
+                        disabled={includedCount === 0 || printJobBusy !== false}
                         title="Open het printvenster en sluit deze preview"
                         aria-label={`Printen van ${includedCount} label${includedCount === 1 ? "" : "s"}`}
+                        aria-busy={printJobBusy !== false}
                         className="btn-primary h-9 px-4 rounded-[10px] text-[13px] font-semibold disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-2"
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <polyline points="6 9 6 2 18 2 18 9" />
-                          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-                          <rect x="6" y="14" width="12" height="8" />
-                        </svg>
-                        Printen ({includedCount})
+                        {printJobBusy !== false ? (
+                          <>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true" className="animate-spin">
+                              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                            </svg>
+                            {printJobBusy === "generating" ? "PDF genereren…" : "Status bijwerken…"}
+                          </>
+                        ) : (
+                          <>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <polyline points="6 9 6 2 18 2 18 9" />
+                              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                              <rect x="6" y="14" width="12" height="8" />
+                            </svg>
+                            Printen ({includedCount})
+                          </>
+                        )}
                       </button>
                     </div>
                   </DialogContent>
