@@ -2449,17 +2449,29 @@ function AdminPage() {
                         fontSize: 13,
                         fontFamily: "inherit",
                       };
-                      const handleSave = () => {
-                        if (!zoomDraft) return;
-                        setLabelItems((prev) => {
-                          if (!prev) return prev;
-                          return prev.map((p) => (p.id === zoomItem.id ? { ...p, ...zoomDraft } : p));
-                        });
-                        toast.success("Adres bijgewerkt", {
-                          description: "Wijzigingen zijn opgeslagen voor deze PDF.",
-                        });
+                      const handleSave = async () => {
+                        if (!zoomDraft || zoomSaving) return;
+                        setZoomSaving(true);
+                        try {
+                          // Mimic async save to prevent race conditions and double-clicks
+                          await new Promise((r) => setTimeout(r, 350));
+                          setLabelItems((prev) => {
+                            if (!prev) return prev;
+                            return prev.map((p) => (p.id === zoomItem.id ? { ...p, ...zoomDraft } : p));
+                          });
+                          toast.success("Adres bijgewerkt", {
+                            description: "Wijzigingen zijn opgeslagen voor deze PDF.",
+                          });
+                        } catch (err) {
+                          toast.error("Opslaan mislukt", {
+                            description: err instanceof Error ? err.message : "Probeer opnieuw.",
+                          });
+                        } finally {
+                          setZoomSaving(false);
+                        }
                       };
                       const handleReset = () => {
+                        if (zoomSaving) return;
                         setZoomDraft({
                           shipping_name: zoomItem.shipping_name,
                           shipping_line1: zoomItem.shipping_line1,
@@ -2469,6 +2481,8 @@ function AdminPage() {
                           shipping_country: zoomItem.shipping_country,
                         });
                       };
+                      const canSave = isDirty && !zoomSaving;
+                      const canReset = isDirty && !zoomSaving;
                       return (
                         <div className="flex flex-col items-center gap-3" style={{ maxHeight: "60vh", overflow: "auto" }}>
                           {renderLabel(previewItem as LabelData, 8)}
@@ -2503,10 +2517,11 @@ function AdminPage() {
                                 <input
                                   type="text"
                                   value={(zoomDraft?.[f.key] as string | null | undefined) ?? ""}
+                                  disabled={zoomSaving}
                                   onChange={(e) =>
                                     setZoomDraft((prev) => ({ ...(prev ?? {}), [f.key]: e.target.value }))
                                   }
-                                  style={inputStyle}
+                                  style={{ ...inputStyle, opacity: zoomSaving ? 0.6 : 1 }}
                                 />
                               </label>
                             ))}
@@ -2514,28 +2529,44 @@ function AdminPage() {
                               <button
                                 type="button"
                                 onClick={handleReset}
-                                disabled={!isDirty}
+                                disabled={!canReset}
                                 className="btn-ghost h-8 px-3 rounded-[8px] text-[12px] font-medium"
-                                style={{ opacity: isDirty ? 1 : 0.5 }}
+                                style={{ opacity: canReset ? 1 : 0.5, cursor: canReset ? "pointer" : "not-allowed" }}
                               >
                                 Herstellen
                               </button>
                               <button
                                 type="button"
                                 onClick={handleSave}
-                                disabled={!isDirty}
-                                className="h-8 px-4 rounded-[8px] text-[12px] font-semibold"
+                                disabled={!canSave}
+                                aria-busy={zoomSaving}
+                                className="h-8 px-4 rounded-[8px] text-[12px] font-semibold inline-flex items-center gap-2"
                                 style={{
-                                  background: isDirty ? "#2ECC8A" : "rgba(46,204,138,0.35)",
+                                  background: canSave ? "#2ECC8A" : "rgba(46,204,138,0.35)",
                                   color: "#0E1116",
-                                  cursor: isDirty ? "pointer" : "not-allowed",
+                                  cursor: canSave ? "pointer" : "not-allowed",
                                   border: "none",
                                 }}
                               >
-                                {isDirty ? "Wijzigingen opslaan" : "Opgeslagen"}
+                                {zoomSaving && (
+                                  <span
+                                    aria-hidden
+                                    style={{
+                                      width: 12,
+                                      height: 12,
+                                      borderRadius: "50%",
+                                      border: "2px solid rgba(14,17,22,0.35)",
+                                      borderTopColor: "#0E1116",
+                                      animation: "spin 0.7s linear infinite",
+                                      display: "inline-block",
+                                    }}
+                                  />
+                                )}
+                                {zoomSaving ? "Opslaan…" : isDirty ? "Wijzigingen opslaan" : "Opgeslagen"}
                               </button>
                             </div>
                           </div>
+
                           <button
                             onClick={() => setLabelZoomId(null)}
                             className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium"
