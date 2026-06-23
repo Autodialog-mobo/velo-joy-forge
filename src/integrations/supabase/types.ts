@@ -235,6 +235,8 @@ export type Database = {
           price_id: string
           product_name: string
           quantity: number
+          recovery_email_sent_at: string | null
+          recovery_mollie_payment_id: string | null
           referral_source: string | null
           shipping_city: string | null
           shipping_country: string | null
@@ -267,6 +269,8 @@ export type Database = {
           price_id: string
           product_name: string
           quantity?: number
+          recovery_email_sent_at?: string | null
+          recovery_mollie_payment_id?: string | null
           referral_source?: string | null
           shipping_city?: string | null
           shipping_country?: string | null
@@ -299,6 +303,8 @@ export type Database = {
           price_id?: string
           product_name?: string
           quantity?: number
+          recovery_email_sent_at?: string | null
+          recovery_mollie_payment_id?: string | null
           referral_source?: string | null
           shipping_city?: string | null
           shipping_country?: string | null
