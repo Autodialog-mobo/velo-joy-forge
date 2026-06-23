@@ -45,8 +45,12 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
     if (cityLine) rawLines.push({ text: cityLine, bold: false });
     if (country) rawLines.push({ text: country, bold: false });
 
+    // Reserve a small strip at the bottom for the caption so the address never
+    // collides with it. Caption is ~5pt ≈ 1.76 mm tall, plus a 0.6 mm gap.
+    const CAPTION_SIZE = 5; // pt
+    const CAPTION_H = CAPTION_SIZE * PT_TO_MM + 0.6; // ≈ 2.4 mm
     const availW = W - PAD_X * 2;
-    const availH = H - PAD_Y * 2;
+    const availH = H - PAD_Y * 2 - CAPTION_H;
 
     // Auto-fit: start at 11pt, shrink until everything fits both width and height.
     const LINE_GAP = 1.25;
