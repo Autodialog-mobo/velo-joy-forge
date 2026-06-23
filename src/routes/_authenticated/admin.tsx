@@ -607,16 +607,21 @@ function AdminPage() {
     setLabelExcluded(new Set());
     setLabelZoomId(null);
   };
-  const downloadLabelsPdf = async () => {
-    if (!labelItems) return;
-    const included = labelItems.filter((l) => !labelExcluded.has(l.id));
+  const [lastPrintBatch, setLastPrintBatch] = useState<LabelData[] | null>(null);
+  const downloadLabelsPdf = async (retryWith?: LabelData[]) => {
+    const included = retryWith
+      ? retryWith
+      : labelItems
+        ? labelItems.filter((l) => !labelExcluded.has(l.id))
+        : [];
     if (!included.length) return;
+    setLastPrintBatch(included);
     const toastId = toast.loading(
       `PDF genereren voor ${included.length} label${included.length === 1 ? "" : "s"}…`,
     );
     setPrintJobBusy("generating");
-    // Close the preview modal as soon as printing starts.
-    closeLabelPreview();
+    // Close the preview modal as soon as printing starts (no-op on retry).
+    if (!retryWith) closeLabelPreview();
     const blob = generateLabelsPdf(included);
     const pdfUrl = URL.createObjectURL(blob);
     const filename = `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`;
