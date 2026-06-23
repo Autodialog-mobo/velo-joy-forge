@@ -254,6 +254,8 @@ function renderHtml(input: OrderRecoveryInput, lang: Lang): string {
                 <a href="${checkoutUrl}" style="color:${BRAND.muted};">${checkoutUrl}</a>
               </p>
 
+              ${validUntilHtml}
+
               <h2 style="margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:0.06em;color:${BRAND.muted};">${escapeHtml(t.items)}</h2>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border:1px solid ${BRAND.border};border-radius:8px;overflow:hidden;">
                 <tbody>${itemRows}</tbody>
