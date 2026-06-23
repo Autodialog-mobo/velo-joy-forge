@@ -2325,13 +2325,34 @@ function AdminPage() {
                       >
                         Kopieer rapport
                       </button>
-                      <button
-                        type="button"
-                        className="btn-ghost h-8 px-3 rounded-md text-xs"
-                        onClick={() => { setPrintReport(null); closeDetail(); }}
-                      >
-                        Sluiten
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {printReport.kind !== "success" && lastPrintBatch && lastPrintBatch.length > 0 && (
+                          <button
+                            type="button"
+                            disabled={printJobBusy !== false}
+                            className="btn-primary h-8 px-3 rounded-md text-xs font-semibold disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center gap-1.5"
+                            onClick={() => {
+                              if (!lastPrintBatch) return;
+                              setPrintReport(null);
+                              downloadLabelsPdf(lastPrintBatch);
+                            }}
+                            title="Probeer dezelfde labels opnieuw te genereren en te printen"
+                          >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                              <polyline points="23 4 23 10 17 10" />
+                              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+                            </svg>
+                            Opnieuw proberen
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          className="btn-ghost h-8 px-3 rounded-md text-xs"
+                          onClick={() => { setPrintReport(null); closeDetail(); }}
+                        >
+                          Sluiten
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </DialogContent>
