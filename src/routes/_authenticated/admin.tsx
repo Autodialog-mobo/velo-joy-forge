@@ -2182,14 +2182,14 @@ function AdminPage() {
                         const PT_TO_MM = 0.3528;
                         const availMm = 89 - 2 - 4; // W - PAD - PAD_R (mm)
                         const ptToPx = (pt: number) => pt * PT_TO_MM * mm;
-                        let captionPt = 5;
-                        const minPt = 3;
+                        let captionPt = 7.5;
+                        const minPt = 4;
                         if (typeof document !== "undefined") {
                           const canvas = document.createElement("canvas");
                           const ctx = canvas.getContext("2d");
                           if (ctx) {
                             const fitsAt = (pt: number) => {
-                              ctx.font = `400 ${ptToPx(pt)}px Helvetica, Arial, sans-serif`;
+                              ctx.font = `700 ${ptToPx(pt)}px Helvetica, Arial, sans-serif`;
                               const widthMm = ctx.measureText(caption).width / mm;
                               return widthMm <= availMm;
                             };
@@ -2209,9 +2209,9 @@ function AdminPage() {
                               bottom: PAD - descPx,
                               maxWidth: availMm * mm,
                               fontSize: captionPx,
-                              color: "rgb(110,110,110)",
+                              color: "rgb(70,70,70)",
                               lineHeight: 1,
-                              fontWeight: 400,
+                              fontWeight: 700,
                               whiteSpace: "nowrap",
                               overflow: "hidden",
                               fontFamily: "Helvetica, Arial, sans-serif",

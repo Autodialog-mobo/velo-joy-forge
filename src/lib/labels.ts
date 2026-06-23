@@ -49,10 +49,10 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
     if (cityLine) rawLines.push({ text: cityLine, bold: false });
     if (country) rawLines.push({ text: country, bold: false });
 
-    // Reserve a small strip at the bottom for the caption so the address never
-    // collides with it. Caption is ~5pt ≈ 1.76 mm tall, plus a 0.6 mm gap.
-    const CAPTION_SIZE = 5; // pt
-    const CAPTION_H = CAPTION_SIZE * PT_TO_MM + 0.6; // ≈ 2.4 mm
+    // Reserve a strip at the bottom for the caption so the address never
+    // collides with it. Caption is ~7.5pt ≈ 2.6 mm tall, plus a 0.7 mm gap.
+    const CAPTION_SIZE = 7.5; // pt — slightly bolder/larger for legibility
+    const CAPTION_H = CAPTION_SIZE * PT_TO_MM + 0.7; // ≈ 3.4 mm
     const availW = W - PAD_X - PAD_R;
     const availH = H - PAD_Y * 2 - CAPTION_H;
 
@@ -100,14 +100,14 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       ].filter(Boolean) as string[];
       const caption = captionParts.join(" \u00B7 ");
       let captionSize = CAPTION_SIZE;
-      doc.setFont("helvetica", "normal");
+      doc.setFont("helvetica", "bold");
       doc.setFontSize(captionSize);
       // Shrink caption if (unexpectedly) too wide for the safe area.
-      while (captionSize > 3 && doc.getTextWidth(caption) > availW) {
+      while (captionSize > 4 && doc.getTextWidth(caption) > availW) {
         captionSize -= 0.5;
         doc.setFontSize(captionSize);
       }
-      doc.setTextColor(110, 110, 110);
+      doc.setTextColor(70, 70, 70);
       // Baseline placed so the cap height sits fully inside the safe area
       // and descenders never clip the page edge.
       const capH = captionSize * PT_TO_MM * 0.72;
