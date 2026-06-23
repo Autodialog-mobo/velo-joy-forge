@@ -664,10 +664,33 @@ function AdminPage() {
     const eligibleIds = ids.filter((id) => ordersById.get(id)?.status === "paid");
     try {
       await doPrint({ data: { orderIds: ids } });
+      const successRows: PrintRow[] = ids.map((id) => {
+        const wasEligible = eligibleIds.includes(id);
+        const oldStatus = ordersById.get(id)?.status ?? null;
+        return {
+          id,
+          oldStatus,
+          newStatus: wasEligible ? "printed" : oldStatus,
+        };
+      });
+      const changedCount = successRows.filter((r) => r.oldStatus !== r.newStatus).length;
+      setPrintReport({
+        kind: "success",
+        message:
+          changedCount === 0
+            ? "Geen statuswijziging — alle bestellingen stonden al op 'geprint' of 'verzonden'."
+            : changedCount === 1
+              ? "1 bestelling op 'geprint' gezet."
+              : `${changedCount} bestellingen op 'geprint' gezet.`,
+        rows: successRows,
+      });
       toast.success(
-        ids.length === 1
-          ? "Bestelling op 'geprint' gezet"
-          : `${ids.length} bestellingen op 'geprint' gezet`,
+        changedCount === 1 ? "Bestelling op 'geprint' gezet" : `${changedCount} bestellingen op 'geprint' gezet`,
+        {
+          description: "Klik 'Details' voor de IDs en oude/nieuwe status.",
+          action: { label: "Details", onClick: () => setPrintReport((r) => r) },
+          duration: 8_000,
+        },
       );
       await refetch();
     } catch (err) {
@@ -676,29 +699,51 @@ function AdminPage() {
       // Best-effort rollback: revertToPaid only flips orders currently in
       // 'printed' back to 'paid', so it's a safe no-op for anything that
       // didn't transition. Run in parallel and surface partial failures.
-      let rolledBack = 0;
-      let rollbackFailed = 0;
+      const rollbackByMap = new Map<string, PromiseSettledResult<unknown>>();
       if (eligibleIds.length) {
         const results = await Promise.allSettled(
           eligibleIds.map((id) => doRevertPaid({ data: { orderId: id } })),
         );
-        for (const r of results) {
-          if (r.status === "fulfilled") rolledBack++;
-          else rollbackFailed++;
+        eligibleIds.forEach((id, i) => rollbackByMap.set(id, results[i]));
+      }
+      const rows: PrintRow[] = ids.map((id) => {
+        const oldStatus = ordersById.get(id)?.status ?? null;
+        const eligible = eligibleIds.includes(id);
+        if (!eligible) {
+          return { id, oldStatus, newStatus: oldStatus, rollback: "not_needed" };
         }
-      }
+        const r = rollbackByMap.get(id);
+        if (r?.status === "fulfilled") {
+          return { id, oldStatus, newStatus: oldStatus, rollback: "reverted" };
+        }
+        const reason = r?.status === "rejected" ? r.reason : undefined;
+        return {
+          id,
+          oldStatus,
+          newStatus: "printed",
+          rollback: "failed",
+          rollbackError: reason instanceof Error ? reason.message : reason ? String(reason) : undefined,
+        };
+      });
+      const failed = rows.filter((r) => r.rollback === "failed").length;
+      const reverted = rows.filter((r) => r.rollback === "reverted").length;
       await refetch().catch(() => undefined);
-      if (rollbackFailed > 0) {
-        toast.error("Status bijwerken mislukt — rollback onvolledig", {
-          description: `${message} ${rolledBack} hersteld, ${rollbackFailed} kon niet teruggezet worden. Controleer de bestellingen handmatig.`,
-          duration: 12_000,
-        });
-      } else {
-        toast.error("Status bijwerken mislukt — wijzigingen teruggedraaid", {
-          description: `${message}${eligibleIds.length ? ` ${rolledBack} bestelling(en) teruggezet naar 'betaald'.` : ""} De PDF blijft beschikbaar; probeer opnieuw te printen.`,
-          duration: 10_000,
-        });
-      }
+      const kind: "error" | "partial" = failed > 0 ? "partial" : "error";
+      const summary =
+        failed > 0
+          ? `Rollback onvolledig: ${reverted} hersteld, ${failed} kon niet teruggezet worden — controleer handmatig.`
+          : eligibleIds.length
+            ? `Wijzigingen teruggedraaid: ${reverted} bestelling(en) terug op 'betaald'.`
+            : "Geen statuswijziging om terug te draaien.";
+      setPrintReport({ kind, message: summary, error: message, rows });
+      toast.error(
+        failed > 0 ? "Status bijwerken mislukt — rollback onvolledig" : "Status bijwerken mislukt",
+        {
+          description: `${message} Klik 'Details' voor IDs en oude/nieuwe status.`,
+          action: { label: "Details", onClick: () => setPrintReport((r) => r) },
+          duration: 14_000,
+        },
+      );
     }
   };
 
