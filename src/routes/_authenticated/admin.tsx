@@ -1648,7 +1648,7 @@ function AdminPage() {
             <Dialog open={!!detailOrder} onOpenChange={(open) => { if (!open) { setPrintReport(null); closeDetail(); } }}>
               {detailOrder && (
                 <DialogContent
-                  className="max-w-lg p-0 overflow-hidden rounded-[18px]"
+                  className="max-w-lg p-0 rounded-[18px] overflow-hidden max-h-[90vh] flex flex-col"
                   style={{
                     background: "#13294D",
                     border: `1px solid ${SURFACE_BORDER}`,
