@@ -408,6 +408,14 @@ function AdminPage() {
 
   const selectedOrders = filtered.filter((o: any) => selected.has(o.id));
 
+  const [labelPreview, setLabelPreview] = useState<{ url: string; blob: Blob; count: number } | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
+    };
+  }, [labelPreview?.url]);
+
   const generateLabels = () => {
     const labelData: LabelData[] = selectedOrders.map((o: any) => ({
       shipping_name: o.shipping_name,
@@ -424,8 +432,11 @@ function AdminPage() {
     }));
     if (!labelData.length) return;
     const blob = generateLabelsPdf(labelData);
-    downloadBlob(blob, `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`);
+    if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
+    const url = URL.createObjectURL(blob);
+    setLabelPreview({ url, blob, count: labelData.length });
   };
+
 
   const exportCsv = () => {
     const rows = selectedOrders.map((o: any) => {
