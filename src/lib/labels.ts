@@ -80,6 +80,24 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       doc.text(text, PAD_X, y, { align: "left" });
       y += lineH;
     }
+
+    // Caption (bottom-right): "<count> · <LANG>"
+    const stickerCount = Number(o.sticker_count ?? 0);
+    const langCode = (o.lang || "").toString().trim().toUpperCase();
+    if (stickerCount > 0 || langCode) {
+      const captionParts = [
+        stickerCount > 0 ? String(stickerCount) : null,
+        langCode || null,
+      ].filter(Boolean) as string[];
+      const caption = captionParts.join(" \u00B7 ");
+      const captionSize = 6;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(captionSize);
+      doc.setTextColor(110, 110, 110);
+      // Baseline near the bottom edge, right-aligned inside the safe area.
+      const cy = H - PAD_Y + captionSize * PT_TO_MM * 0.15;
+      doc.text(caption, W - PAD_X, cy, { align: "right" });
+    }
   });
 
   return doc.output("blob");
