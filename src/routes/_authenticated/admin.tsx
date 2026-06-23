@@ -408,13 +408,9 @@ function AdminPage() {
 
   const selectedOrders = filtered.filter((o: any) => selected.has(o.id));
 
-  const [labelPreview, setLabelPreview] = useState<{ url: string; blob: Blob; count: number } | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
-    };
-  }, [labelPreview?.url]);
+  const [labelItems, setLabelItems] = useState<LabelData[] | null>(null);
+  const [labelExcluded, setLabelExcluded] = useState<Set<string>>(new Set());
+  const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
 
   const generateLabels = () => {
     const labelData: LabelData[] = selectedOrders.map((o: any) => ({
@@ -431,11 +427,44 @@ function AdminPage() {
       })),
     }));
     if (!labelData.length) return;
-    const blob = generateLabelsPdf(labelData);
-    if (labelPreview?.url) URL.revokeObjectURL(labelPreview.url);
-    const url = URL.createObjectURL(blob);
-    setLabelPreview({ url, blob, count: labelData.length });
+    setLabelItems(labelData);
+    setLabelExcluded(new Set());
+    setLabelZoomId(null);
   };
+
+  const moveLabel = (id: string, dir: -1 | 1) => {
+    setLabelItems((prev) => {
+      if (!prev) return prev;
+      const i = prev.findIndex((p) => p.id === id);
+      const j = i + dir;
+      if (i < 0 || j < 0 || j >= prev.length) return prev;
+      const next = prev.slice();
+      [next[i], next[j]] = [next[j], next[i]];
+      return next;
+    });
+  };
+  const toggleExclude = (id: string) => {
+    setLabelExcluded((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+  };
+  const closeLabelPreview = () => {
+    setLabelItems(null);
+    setLabelExcluded(new Set());
+    setLabelZoomId(null);
+  };
+  const downloadLabelsPdf = () => {
+    if (!labelItems) return;
+    const included = labelItems.filter((l) => !labelExcluded.has(l.id));
+    if (!included.length) return;
+    const blob = generateLabelsPdf(included);
+    downloadBlob(blob, `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`);
+  };
+
+
 
 
   const exportCsv = () => {
