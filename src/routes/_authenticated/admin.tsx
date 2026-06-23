@@ -473,6 +473,9 @@ function AdminPage() {
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
   const [labelPrinterWidthMm, setLabelPrinterWidthMm] = useState<number>(87);
   const [labelSafePadMm, setLabelSafePadMm] = useState<number>(2);
+  const [labelClipColor, setLabelClipColor] = useState<string>("#E74C3C");
+  const [labelSafeColor, setLabelSafeColor] = useState<string>("#2ECC8A");
+  const [labelCutColor, setLabelCutColor] = useState<string>("#E74C3C");
 
   const reorderLabel = (dragId: string, dropId: string) => {
     if (dragId === dropId) return;
