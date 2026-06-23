@@ -470,6 +470,7 @@ function AdminPage() {
   const [labelExcluded, setLabelExcluded] = useState<Set<string>>(new Set());
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [zoomDraft, setZoomDraft] = useState<Partial<LabelData> | null>(null);
+  const [zoomSaving, setZoomSaving] = useState<boolean>(false);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
