@@ -488,6 +488,17 @@ function AdminPage() {
       }
     | null
   >(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && (printReport || detailOrder)) {
+        setPrintReport(null);
+        setDetailOrder(null);
+      }
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [printReport, detailOrder]);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
   const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
