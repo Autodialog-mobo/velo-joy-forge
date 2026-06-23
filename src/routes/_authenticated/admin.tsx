@@ -666,6 +666,9 @@ function AdminPage() {
     const win = window.open(htmlUrl, "_blank");
     if (!win) {
       downloadBlob(blob, filename);
+      toast.message("Printvenster geblokkeerd — PDF is gedownload.", { id: toastId });
+    } else {
+      toast.loading("Printvenster geopend — status bijwerken…", { id: toastId });
     }
     setTimeout(() => {
       URL.revokeObjectURL(htmlUrl);
@@ -681,6 +684,7 @@ function AdminPage() {
       (data?.orders ?? []).map((o: any) => [o.id, o]),
     );
     const eligibleIds = ids.filter((id) => ordersById.get(id)?.status === "paid");
+    setPrintJobBusy("updating");
     try {
       await doPrint({ data: { orderIds: ids } });
       const successRows: PrintRow[] = ids.map((id) => {
