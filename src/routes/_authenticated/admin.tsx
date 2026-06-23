@@ -2033,7 +2033,8 @@ function AdminPage() {
                 const renderLabel = (l: LabelData, mm: number) => {
                   const W = 89 * mm;
                   const H = 28 * mm;
-                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y
+                  const PAD = 2 * mm; // matches PDF PAD_X / PAD_Y (left/top/bottom)
+                  const PAD_R = 4 * mm; // matches PDF PAD_R (right, accounts for 87 mm printer feed)
                   const lines = [
                     l.shipping_name?.trim(),
                     l.shipping_line1?.trim(),
@@ -2066,18 +2067,32 @@ function AdminPage() {
                         overflow: "hidden",
                       }}
                     >
-                      {/* Safe-area / margin indicator (2 mm dashed inset) */}
+                      {/* Safe-area / margin indicator (2 mm dashed inset, 4 mm right for printer clip) */}
                       <div
                         aria-hidden
                         style={{
                           position: "absolute",
                           left: PAD,
                           top: PAD,
-                          width: W - PAD * 2,
+                          width: W - PAD - PAD_R,
                           height: H - PAD * 2,
                           border: "1px dashed #2ECC8A",
                           pointerEvents: "none",
                           boxSizing: "border-box",
+                        }}
+                      />
+                      {/* Printer clip strip (right ~2 mm is physically cut by 87 mm feed) */}
+                      <div
+                        aria-hidden
+                        style={{
+                          position: "absolute",
+                          top: 0,
+                          right: 0,
+                          width: PAD_R - PAD,
+                          height: H,
+                          background:
+                            "repeating-linear-gradient(135deg, rgba(231,76,60,0.18) 0 4px, rgba(231,76,60,0) 4px 8px)",
+                          pointerEvents: "none",
                         }}
                       />
                       {/* Cut marks at each corner */}
@@ -2112,7 +2127,7 @@ function AdminPage() {
                           position: "absolute",
                           left: PAD,
                           top: PAD,
-                          right: PAD,
+                          right: PAD_R,
                           bottom: PAD,
                           textAlign: "left",
                         }}
@@ -2142,7 +2157,7 @@ function AdminPage() {
                         if (!parts.length) return null;
                         const caption = parts.join(" \u00B7 ");
                         const PT_TO_MM = 0.3528;
-                        const availMm = 89 - 2 * 2; // W - 2·PAD in mm
+                        const availMm = 89 - 2 - 4; // W - PAD - PAD_R (mm)
                         const ptToPx = (pt: number) => pt * PT_TO_MM * mm;
                         let captionPt = 5;
                         const minPt = 3;
@@ -2166,7 +2181,7 @@ function AdminPage() {
                           <div
                             style={{
                               position: "absolute",
-                              right: PAD,
+                              right: PAD_R,
                               // Match PDF: descender bottom sits at safe-area edge.
                               bottom: PAD - descPx,
                               maxWidth: availMm * mm,

@@ -17,7 +17,11 @@ export interface LabelData {
 // Physical label: 28 mm (height) × 89 mm (width), landscape
 const W = 89; // page width  (mm)
 const H = 28; // page height (mm)
-const PAD_X = 2; // 2 mm left/right padding (leading-edge safe area)
+const PAD_X = 2; // 2 mm left padding (leading-edge safe area)
+// The printer can only feed 87 mm-wide stock for our 89 mm labels, so the
+// rightmost ~2 mm is physically clipped. Reserve an extra 2 mm on the right
+// (4 mm total) so no glyphs are cut off in practice.
+const PAD_R = 4;
 const PAD_Y = 2; // 2 mm top/bottom padding
 
 const PT_TO_MM = 0.3528;
@@ -49,7 +53,7 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
     // collides with it. Caption is ~5pt ≈ 1.76 mm tall, plus a 0.6 mm gap.
     const CAPTION_SIZE = 5; // pt
     const CAPTION_H = CAPTION_SIZE * PT_TO_MM + 0.6; // ≈ 2.4 mm
-    const availW = W - PAD_X * 2;
+    const availW = W - PAD_X - PAD_R;
     const availH = H - PAD_Y * 2 - CAPTION_H;
 
     // Auto-fit: start at 11pt, shrink until everything fits both width and height.
@@ -109,7 +113,7 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       const capH = captionSize * PT_TO_MM * 0.72;
       const descH = captionSize * PT_TO_MM * 0.25;
       const cy = H - PAD_Y - descH;
-      doc.text(caption, W - PAD_X, cy, { align: "right", baseline: "alphabetic" });
+      doc.text(caption, W - PAD_R, cy, { align: "right", baseline: "alphabetic" });
       // Reset for any subsequent page.
       doc.setFontSize(fontSize);
       doc.setTextColor(0, 0, 0);
