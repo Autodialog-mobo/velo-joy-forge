@@ -470,6 +470,9 @@ function AdminPage() {
   const [labelZoomId, setLabelZoomId] = useState<string | null>(null);
   const [labelDragId, setLabelDragId] = useState<string | null>(null);
   const [labelDragOverId, setLabelDragOverId] = useState<string | null>(null);
+  const [labelShowOverlay, setLabelShowOverlay] = useState<boolean>(true);
+  const [labelPrinterWidthMm, setLabelPrinterWidthMm] = useState<number>(87);
+  const [labelSafePadMm, setLabelSafePadMm] = useState<number>(2);
 
   const reorderLabel = (dragId: string, dropId: string) => {
     if (dragId === dropId) return;
