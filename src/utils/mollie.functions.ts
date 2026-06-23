@@ -88,6 +88,10 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         throw new Error("Verzendadres is onvolledig");
       }
       if (!/^[A-Z]{2}$/.test(s.country)) throw new Error("Ongeldig land (ISO 2-letter vereist)");
+      const ALLOWED_REFERRAL = new Set(["shop","friend","social","search","ai","insurance","roadside","other"]);
+      if (data.referralSource != null && data.referralSource !== "" && !ALLOWED_REFERRAL.has(data.referralSource)) {
+        throw new Error("Ongeldige referral_source");
+      }
       return data;
     },
   )
