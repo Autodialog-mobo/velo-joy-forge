@@ -147,24 +147,52 @@ function AdminPage() {
 
 
 
-  const [filter, setFilter] = useState<StatusFilter>("paid");
-  const [statusFilter, setStatusFilter] = useState<string>("any");
-  const [langFilter, setLangFilter] = useState<string>("any");
-  const [countryFilter, setCountryFilter] = useState<string>("any");
-  const [stickerFilter, setStickerFilter] = useState<string>("any");
+  // Persisted list state (filters + sort + environment) — survives refresh.
+  const LIST_STATE_KEY = "vp-admin-list-state-v1";
+  const readPersistedState = () => {
+    if (typeof window === "undefined") return null;
+    try {
+      const raw = window.localStorage.getItem(LIST_STATE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  };
+  const persisted = readPersistedState() ?? {};
+
+  const [filter, setFilter] = useState<StatusFilter>(persisted.filter ?? "paid");
+  const [statusFilter, setStatusFilter] = useState<string>(persisted.statusFilter ?? "any");
+  const [langFilter, setLangFilter] = useState<string>(persisted.langFilter ?? "any");
+  const [countryFilter, setCountryFilter] = useState<string>(persisted.countryFilter ?? "any");
+  const [stickerFilter, setStickerFilter] = useState<string>(persisted.stickerFilter ?? "any");
   const [searchInput, setSearchInput] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
   useEffect(() => {
     const t = setTimeout(() => setSearchQuery(searchInput.trim().toLowerCase()), 250);
     return () => clearTimeout(t);
   }, [searchInput]);
-  const [environment, setEnvironment] = useState<"live" | "sandbox">("live");
+  const [environment, setEnvironment] = useState<"live" | "sandbox">(persisted.environment ?? "live");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false);
-  const [sort, setSort] = useState<{ column: "date" | "amount" | "stickers"; dir: "asc" | "desc" }>({
-    column: "date",
-    dir: "desc",
-  });
+  const [sort, setSort] = useState<{ column: "date" | "amount" | "stickers"; dir: "asc" | "desc" }>(
+    persisted.sort && ["date", "amount", "stickers"].includes(persisted.sort.column) &&
+    ["asc", "desc"].includes(persisted.sort.dir)
+      ? persisted.sort
+      : { column: "date", dir: "desc" }
+  );
+
+  // Write filters + sort to localStorage whenever they change.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(
+        LIST_STATE_KEY,
+        JSON.stringify({ filter, statusFilter, langFilter, countryFilter, stickerFilter, sort, environment }),
+      );
+    } catch {
+      /* quota / private mode — ignore */
+    }
+  }, [filter, statusFilter, langFilter, countryFilter, stickerFilter, sort, environment]);
   const [detailOrder, setDetailOrder] = useState<any>(null);
   useEffect(() => { setTestEmailMsg(null); }, [detailOrder?.id]);
   const [labelCopied, setLabelCopied] = useState(false);
