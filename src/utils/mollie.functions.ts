@@ -65,6 +65,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         city: string;
         country: string;
       };
+      referralSource?: string | null;
     }) => {
       if (!Array.isArray(data.items) || data.items.length === 0) {
         throw new Error("Minstens één bundel is vereist");
@@ -87,6 +88,10 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         throw new Error("Verzendadres is onvolledig");
       }
       if (!/^[A-Z]{2}$/.test(s.country)) throw new Error("Ongeldig land (ISO 2-letter vereist)");
+      const ALLOWED_REFERRAL = new Set(["shop","friend","social","search","ai","insurance","roadside","other"]);
+      if (data.referralSource != null && data.referralSource !== "" && !ALLOWED_REFERRAL.has(data.referralSource)) {
+        throw new Error("Ongeldige referral_source");
+      }
       return data;
     },
   )
@@ -180,6 +185,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           shipping_city: shippingAddress.city,
           shipping_country: shippingAddress.country,
           lang: data.lang,
+          referral_source: data.referralSource && data.referralSource !== "" ? data.referralSource : null,
           updated_at: new Date().toISOString(),
 
         },

@@ -98,6 +98,7 @@ function BestellenPage() {
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("BE");
+  const [referralSource, setReferralSource] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -160,6 +161,7 @@ function BestellenPage() {
             city: city.trim(),
             country,
           },
+          referralSource: referralSource || null,
         },
       });
       if ("error" in result) {
@@ -462,6 +464,28 @@ function BestellenPage() {
                     <option value="FR">{t("cart.country_fr")}</option>
                     <option value="LU">{t("cart.country_lu")}</option>
                     <option value="DE">{t("cart.country_de")}</option>
+                  </select>
+                </div>
+                <div style={{ display: "grid", gap: 6 }}>
+                  <label htmlFor="referral_source" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
+                    {t("cart.referral_label")}
+                  </label>
+                  <select
+                    id="referral_source"
+                    name="referral_source"
+                    value={referralSource}
+                    onChange={(e) => setReferralSource(e.target.value)}
+                    style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: referralSource ? "#0D1F3C" : "rgba(13,31,60,0.55)", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
+                  >
+                    <option value="">{t("cart.referral_placeholder")}</option>
+                    <option value="shop">{t("cart.referral_shop")}</option>
+                    <option value="friend">{t("cart.referral_friend")}</option>
+                    <option value="social">{t("cart.referral_social")}</option>
+                    <option value="search">{t("cart.referral_search")}</option>
+                    <option value="ai">{t("cart.referral_ai")}</option>
+                    <option value="insurance">{t("cart.referral_insurance")}</option>
+                    <option value="roadside">{t("cart.referral_roadside")}</option>
+                    <option value="other">{t("cart.referral_other")}</option>
                   </select>
                 </div>
               </div>
