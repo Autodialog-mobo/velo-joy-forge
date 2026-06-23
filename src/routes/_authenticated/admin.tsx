@@ -2181,7 +2181,7 @@ function AdminPage() {
                           <div
                             style={{
                               position: "absolute",
-                              right: PAD,
+                              right: PAD_R,
                               // Match PDF: descender bottom sits at safe-area edge.
                               bottom: PAD - descPx,
                               maxWidth: availMm * mm,
