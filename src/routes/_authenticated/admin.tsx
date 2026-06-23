@@ -611,6 +611,10 @@ function AdminPage() {
     if (!labelItems) return;
     const included = labelItems.filter((l) => !labelExcluded.has(l.id));
     if (!included.length) return;
+    const toastId = toast.loading(
+      `PDF genereren voor ${included.length} label${included.length === 1 ? "" : "s"}…`,
+    );
+    setPrintJobBusy("generating");
     // Close the preview modal as soon as printing starts.
     closeLabelPreview();
     const blob = generateLabelsPdf(included);
