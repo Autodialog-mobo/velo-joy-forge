@@ -1309,6 +1309,27 @@ function AdminPage() {
                         >
                           {items}
                         </td>
+                        <td
+                          className="px-6 py-4 text-right align-middle"
+                          style={{ color: TEXT_PRI, fontVariantNumeric: "tabular-nums" }}
+                        >
+                          {(() => {
+                            const n = stickerTotalById.get(o.id) ?? 0;
+                            return (
+                              <span
+                                className="inline-flex items-center justify-center h-[22px] min-w-[28px] px-2 rounded-full text-[12px] font-semibold"
+                                style={{
+                                  background: "rgba(255,255,255,0.05)",
+                                  border: `1px solid ${SURFACE_BORDER}`,
+                                  color: n > 0 ? TEXT_PRI : TEXT_MUTED,
+                                }}
+                                title={`${n} ${n === 1 ? "Frame-ID" : "Frame-IDs"} in deze bestelling`}
+                              >
+                                {n}
+                              </span>
+                            );
+                          })()}
+                        </td>
                         <td className="px-6 py-4 text-right align-middle">
                           <div
                             className="text-[15px] font-semibold"
