@@ -708,8 +708,9 @@ function AdminPage() {
         rows: successRows,
       });
       toast.success(
-        changedCount === 1 ? "Bestelling op 'geprint' gezet" : `${changedCount} bestellingen op 'geprint' gezet`,
+        changedCount === 1 ? "Klaar — 1 bestelling op 'geprint' gezet" : `Klaar — ${changedCount} bestellingen op 'geprint' gezet`,
         {
+          id: toastId,
           description: "Klik 'Details' voor de IDs en oude/nieuwe status.",
           action: { label: "Details", onClick: () => setPrintReport((r) => r) },
           duration: 8_000,
