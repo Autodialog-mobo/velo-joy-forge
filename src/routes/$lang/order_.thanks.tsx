@@ -124,11 +124,8 @@ function BedanktPage() {
     }
   };
 
-  const status = order?.status ?? null;
-  const isPaid = status === "paid" || status === "printed" || status === "shipped";
-  const isPending =
-    status === "open" || status === "pending" || status === "authorized" || status === null;
   // expired / failed / canceled → unpaid retry state
+
 
   return (
     <div
