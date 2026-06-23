@@ -1526,7 +1526,7 @@ function AdminPage() {
                             {(() => {
                               const payer = o.payment_consumer_name;
                               if (!payer) return null;
-                              if (normalizeNameForCompare(o.shipping_name) === normalizeNameForCompare(payer)) return null;
+                              if (namesLooselyEqual(o.shipping_name, payer)) return null;
                               return (
                                 <span
                                   className="inline-flex items-center"
