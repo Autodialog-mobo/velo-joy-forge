@@ -180,6 +180,7 @@ export type OrderRecoveryInput = {
   amountShippingCents: number;
   amountTotalCents: number;
   firstName?: string | null;
+  expiresAt?: string | null;
 };
 
 function renderHtml(input: OrderRecoveryInput, lang: Lang): string {
