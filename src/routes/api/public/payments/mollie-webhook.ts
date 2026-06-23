@@ -143,6 +143,11 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
               shipping_city: shipping?.city ?? "",
               shipping_country: shipping?.country ?? "",
               lang: metaLang,
+              payment_method: typeof p.method === "string" ? p.method : null,
+              payment_consumer_name:
+                (typeof p.details?.consumerName === "string" && p.details.consumerName) ||
+                (typeof p.details?.cardHolder === "string" && p.details.cardHolder) ||
+                null,
               updated_at: new Date().toISOString(),
             },
             { onConflict: "mollie_payment_id" },

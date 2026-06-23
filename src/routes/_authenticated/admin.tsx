@@ -396,6 +396,8 @@ function AdminPage() {
         o.shipping_city,
         o.shipping_postal_code,
         o.shipping_country,
+        o.mollie_payment_id,
+        o.payment_consumer_name,
       ]
         .filter(Boolean)
         .join(" ")
@@ -1317,7 +1319,7 @@ function AdminPage() {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Zoek op naam, e-mail of order…"
+                  placeholder="Zoek op naam, e-mail of Mollie ID…"
                   aria-label="Zoeken in bestellingen"
                   className="h-7 pl-7 pr-7 rounded-[8px] text-[12px] w-[240px] focus:outline-none"
                   style={{
@@ -2057,22 +2059,40 @@ function AdminPage() {
                           {formatEur(detailOrder.amount_total)}
                         </span>
                       </div>
-                      {detailOrder.mollie_payment_id && (
-                        <p className="text-[11px] mt-2 font-mono" style={{ color: TEXT_MUTED }}>
-                          Mollie:{" "}
-                          <a
-                            href={`https://my.mollie.com/dashboard/payments/${detailOrder.mollie_payment_id}${detailOrder.environment === "sandbox" ? "?testmode=true" : ""}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="vp-pro inline-flex items-center gap-1 underline decoration-dotted underline-offset-2 hover:opacity-80"
-                            style={{ color: TEXT_PRI }}
-                            title={detailOrder.environment === "sandbox" ? "Open in Mollie dashboard (testmode)" : "Open in Mollie dashboard"}
-                          >
-                            {detailOrder.mollie_payment_id}
-                            <ExternalLink size={10} />
-                          </a>
-                        </p>
-                      )}
+                      <div className="mt-3 pt-2" style={{ borderTop: `1px solid ${SURFACE_BORDER}` }}>
+                        <div className="flex justify-between text-[12px] mb-1">
+                          <span style={{ color: TEXT_MUTED }}>Mollie ID</span>
+                          {detailOrder.mollie_payment_id ? (
+                            <a
+                              href={`https://my.mollie.com/dashboard/payments/${detailOrder.mollie_payment_id}${detailOrder.environment === "sandbox" ? "?testmode=true" : ""}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="vp-pro inline-flex items-center gap-1 font-mono underline decoration-dotted underline-offset-2 hover:opacity-80"
+                              style={{ color: TEXT_PRI }}
+                              title={detailOrder.environment === "sandbox" ? "Open in Mollie dashboard (testmode)" : "Open in Mollie dashboard"}
+                            >
+                              {detailOrder.mollie_payment_id}
+                              <ExternalLink size={10} />
+                            </a>
+                          ) : (
+                            <span style={{ color: TEXT_MUTED }}>—</span>
+                          )}
+                        </div>
+                        <div className="flex justify-between text-[12px] mb-1">
+                          <span style={{ color: TEXT_MUTED }}>Methode</span>
+                          <span style={{ color: TEXT_PRI }}>
+                            {detailOrder.payment_method
+                              ? String(detailOrder.payment_method).replace(/^./, (c: string) => c.toUpperCase())
+                              : "—"}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-[12px]">
+                          <span style={{ color: TEXT_MUTED }}>Naam op betaling</span>
+                          <span style={{ color: TEXT_PRI, textAlign: "right" }}>
+                            {detailOrder.payment_consumer_name || "—"}
+                          </span>
+                        </div>
+                      </div>
                       {detailOrder.stripe_session_id && (
                         <p className="text-[11px] mt-1 font-mono" style={{ color: TEXT_MUTED }}>
                           Stripe: {detailOrder.stripe_session_id}

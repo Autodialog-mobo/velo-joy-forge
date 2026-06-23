@@ -230,6 +230,8 @@ export type Database = {
           id: string
           lang: string | null
           mollie_payment_id: string | null
+          payment_consumer_name: string | null
+          payment_method: string | null
           price_id: string
           product_name: string
           quantity: number
@@ -260,6 +262,8 @@ export type Database = {
           id?: string
           lang?: string | null
           mollie_payment_id?: string | null
+          payment_consumer_name?: string | null
+          payment_method?: string | null
           price_id: string
           product_name: string
           quantity?: number
@@ -290,6 +294,8 @@ export type Database = {
           id?: string
           lang?: string | null
           mollie_payment_id?: string | null
+          payment_consumer_name?: string | null
+          payment_method?: string | null
           price_id?: string
           product_name?: string
           quantity?: number
