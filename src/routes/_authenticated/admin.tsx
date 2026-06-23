@@ -2184,7 +2184,7 @@ function AdminPage() {
               )}
             </Dialog>
 
-            <Dialog open={!!printReport} onOpenChange={(open) => !open && setPrintReport(null)}>
+            <Dialog open={!!printReport} onOpenChange={(open) => { if (!open) { setPrintReport(null); closeDetail(); } }}>
               {printReport && (
                 <DialogContent className="max-w-2xl">
                   <DialogHeader>
