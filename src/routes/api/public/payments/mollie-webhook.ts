@@ -568,6 +568,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                         amountShippingCents: orderRow.amount_shipping ?? totals.shippingCents,
                         amountTotalCents: orderRow.amount_total ?? totals.totalCents,
                         firstName: givenName || null,
+                        expiresAt: actualExpiresAt.toISOString(),
                       });
 
                       if (!result.ok) {
