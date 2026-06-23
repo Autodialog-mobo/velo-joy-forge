@@ -53,6 +53,7 @@ type Strings = {
   shipping: string;
   total: string;
   orderRef: string;
+  validUntil: string;
   footer: string;
 };
 
@@ -71,6 +72,7 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Verzending",
     total: "Totaal",
     orderRef: "Bestelnummer",
+    validUntil: "Deze betaallink is geldig tot {{date}}.",
     footer: "Vragen? Antwoord gewoon op deze mail.",
   },
   fr: {
@@ -87,6 +89,7 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Livraison",
     total: "Total",
     orderRef: "Numéro de commande",
+    validUntil: "Ce lien de paiement est valable jusqu'au {{date}}.",
     footer: "Des questions ? Réponds simplement à ce message.",
   },
   de: {
@@ -103,6 +106,7 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Versand",
     total: "Gesamt",
     orderRef: "Bestellnummer",
+    validUntil: "Dieser Zahlungslink ist gültig bis zum {{date}}.",
     footer: "Fragen? Antworte einfach auf diese E-Mail.",
   },
   en: {
@@ -119,9 +123,32 @@ const COPY: Record<Lang, Strings> = {
     shipping: "Shipping",
     total: "Total",
     orderRef: "Order number",
+    validUntil: "This payment link is valid until {{date}}.",
     footer: "Questions? Just reply to this email.",
   },
 };
+
+const DATE_LOCALES: Record<Lang, string> = {
+  nl: "nl-NL",
+  fr: "fr-FR",
+  de: "de-DE",
+  en: "en-GB",
+};
+
+function formatExpiry(iso: string | null | undefined, lang: Lang): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  try {
+    return new Intl.DateTimeFormat(DATE_LOCALES[lang], {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).format(d);
+  } catch {
+    return d.toISOString().slice(0, 10);
+  }
+}
 
 function pickLang(raw: string | null | undefined): Lang {
   if (raw === "nl" || raw === "fr" || raw === "de" || raw === "en") return raw;
