@@ -478,8 +478,8 @@ function BestellenPage() {
                     style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: referralSource ? "#0D1F3C" : "rgba(13,31,60,0.55)", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
                   >
                     <option value="">{t("cart.referral_placeholder")}</option>
-                    <option value="shop">{t("cart.referral_shop")}</option>
-                    <option value="friend">{t("cart.referral_friend")}</option>
+                    <option value="bike_shop">{t("cart.referral_shop")}</option>
+                    <option value="friend_family">{t("cart.referral_friend")}</option>
                     <option value="social">{t("cart.referral_social")}</option>
                     <option value="search">{t("cart.referral_search")}</option>
                     <option value="ai">{t("cart.referral_ai")}</option>
