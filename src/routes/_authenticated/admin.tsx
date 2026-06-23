@@ -2095,7 +2095,7 @@ function AdminPage() {
                             top: PAD,
                             width: Math.max(0, W - PAD - PAD_R),
                             height: Math.max(0, H - PAD * 2),
-                            border: "1px dashed #2ECC8A",
+                            border: `1px dashed ${labelSafeColor}`,
                             pointerEvents: "none",
                             boxSizing: "border-box",
                           }}
@@ -2112,19 +2112,18 @@ function AdminPage() {
                             right: 0,
                             width: clipMm * mm,
                             height: H,
-                            background:
-                              "repeating-linear-gradient(135deg, rgba(231,76,60,0.22) 0 4px, rgba(231,76,60,0) 4px 8px)",
-                            borderLeft: "1px dashed rgba(231,76,60,0.7)",
+                            background: `repeating-linear-gradient(135deg, ${hexToRgba(labelClipColor, 0.22)} 0 4px, ${hexToRgba(labelClipColor, 0)} 4px 8px)`,
+                            borderLeft: `1px dashed ${hexToRgba(labelClipColor, 0.7)}`,
                             pointerEvents: "none",
                           }}
                         />
                       )}
                       {/* Cut marks at each corner */}
                       {labelShowOverlay && [
-                        { top: 0, left: 0, bt: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
-                        { top: 0, right: 0, bt: "2px solid #E74C3C", br: "2px solid #E74C3C" },
-                        { bottom: 0, left: 0, bb: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
-                        { bottom: 0, right: 0, bb: "2px solid #E74C3C", br: "2px solid #E74C3C" },
+                        { top: 0, left: 0, bt: `2px solid ${labelCutColor}`, bl: `2px solid ${labelCutColor}` },
+                        { top: 0, right: 0, bt: `2px solid ${labelCutColor}`, br: `2px solid ${labelCutColor}` },
+                        { bottom: 0, left: 0, bb: `2px solid ${labelCutColor}`, bl: `2px solid ${labelCutColor}` },
+                        { bottom: 0, right: 0, bb: `2px solid ${labelCutColor}`, br: `2px solid ${labelCutColor}` },
                       ].map((c, i) => (
                         <div
                           key={i}
