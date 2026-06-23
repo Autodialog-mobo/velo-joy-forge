@@ -2107,7 +2107,7 @@ function AdminPage() {
                         />
                       )}
                       {/* Cut marks at each corner */}
-                      {[
+                      {labelShowOverlay && [
                         { top: 0, left: 0, bt: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
                         { top: 0, right: 0, bt: "2px solid #E74C3C", br: "2px solid #E74C3C" },
                         { bottom: 0, left: 0, bb: "2px solid #E74C3C", bl: "2px solid #E74C3C" },
