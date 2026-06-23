@@ -2142,12 +2142,16 @@ function AdminPage() {
                             style={{
                               position: "absolute",
                               right: PAD,
-                              bottom: PAD * 0.25,
-                              fontSize: mm * 1.7,
+                              bottom: PAD,
+                              maxWidth: `calc(100% - ${PAD * 2}px)`,
+                              fontSize: mm * 1.4,
                               color: "#6e6e6e",
                               lineHeight: 1,
                               fontWeight: 400,
                               letterSpacing: 0.2,
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "clip",
                             }}
                           >
                             {parts.join(" · ")}

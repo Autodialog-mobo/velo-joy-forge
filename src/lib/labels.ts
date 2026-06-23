@@ -45,8 +45,12 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
     if (cityLine) rawLines.push({ text: cityLine, bold: false });
     if (country) rawLines.push({ text: country, bold: false });
 
+    // Reserve a small strip at the bottom for the caption so the address never
+    // collides with it. Caption is ~5pt ≈ 1.76 mm tall, plus a 0.6 mm gap.
+    const CAPTION_SIZE = 5; // pt
+    const CAPTION_H = CAPTION_SIZE * PT_TO_MM + 0.6; // ≈ 2.4 mm
     const availW = W - PAD_X * 2;
-    const availH = H - PAD_Y * 2;
+    const availH = H - PAD_Y * 2 - CAPTION_H;
 
     // Auto-fit: start at 11pt, shrink until everything fits both width and height.
     const LINE_GAP = 1.25;
@@ -81,7 +85,8 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
       y += lineH;
     }
 
-    // Caption (bottom-right): "<count> · <LANG>"
+    // Caption (bottom-right): "<count> · <LANG>". Measure first so we can
+    // shrink it if the rendered string would exceed the safe width.
     const stickerCount = Number(o.sticker_count ?? 0);
     const langCode = (o.lang || "").toString().trim().toUpperCase();
     if (stickerCount > 0 || langCode) {
@@ -90,13 +95,25 @@ export function generateLabelsPdf(orders: LabelData[]): Blob {
         langCode || null,
       ].filter(Boolean) as string[];
       const caption = captionParts.join(" \u00B7 ");
-      const captionSize = 6;
+      let captionSize = CAPTION_SIZE;
       doc.setFont("helvetica", "normal");
       doc.setFontSize(captionSize);
+      // Shrink caption if (unexpectedly) too wide for the safe area.
+      while (captionSize > 3 && doc.getTextWidth(caption) > availW) {
+        captionSize -= 0.5;
+        doc.setFontSize(captionSize);
+      }
       doc.setTextColor(110, 110, 110);
-      // Baseline near the bottom of the safe area, right-aligned.
-      const cy = H - PAD_Y;
-      doc.text(caption, W - PAD_X, cy, { align: "right" });
+      // Baseline placed so the cap height sits fully inside the safe area
+      // and descenders never clip the page edge.
+      const capH = captionSize * PT_TO_MM * 0.72;
+      const descH = captionSize * PT_TO_MM * 0.25;
+      const cy = H - PAD_Y - descH;
+      doc.text(caption, W - PAD_X, cy, { align: "right", baseline: "alphabetic" });
+      // Reset for any subsequent page.
+      doc.setFontSize(fontSize);
+      doc.setTextColor(0, 0, 0);
+      void capH;
     }
   });
 
