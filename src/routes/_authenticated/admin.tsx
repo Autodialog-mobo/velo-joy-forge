@@ -478,14 +478,44 @@ function AdminPage() {
     const included = labelItems.filter((l) => !labelExcluded.has(l.id));
     if (!included.length) return;
     const blob = generateLabelsPdf(included);
-    const url = URL.createObjectURL(blob);
-    const win = window.open(url, "_blank");
+    const pdfUrl = URL.createObjectURL(blob);
+    const filename = `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`;
+    const html = `<!doctype html><html lang="nl"><head><meta charset="utf-8"><title>${filename}</title>
+<style>
+  html,body{margin:0;height:100%;background:#0E1116;color:#E6EAF2;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;}
+  .bar{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#161B22;border-bottom:1px solid #222831;z-index:10;}
+  .bar h1{font-size:14px;margin:0;font-weight:600;}
+  .actions{display:flex;gap:8px;}
+  button,a.btn{background:#2ECC8A;color:#0E1116;border:0;padding:8px 14px;border-radius:6px;font-weight:600;cursor:pointer;font-size:13px;text-decoration:none;display:inline-block;}
+  a.btn.secondary{background:transparent;color:#E6EAF2;border:1px solid #2A313B;}
+  iframe{position:fixed;top:52px;left:0;right:0;bottom:0;width:100%;height:calc(100% - 52px);border:0;background:#fff;}
+</style></head><body>
+<div class="bar">
+  <h1>${filename} — ${included.length} label${included.length === 1 ? "" : "s"}</h1>
+  <div class="actions">
+    <a class="btn secondary" href="${pdfUrl}" download="${filename}">Download</a>
+    <button id="printBtn" type="button">Print →</button>
+  </div>
+</div>
+<iframe id="pdf" src="${pdfUrl}#toolbar=0&view=Fit"></iframe>
+<script>
+  const f = document.getElementById('pdf');
+  const btn = document.getElementById('printBtn');
+  function doPrint(){ try { f.contentWindow.focus(); f.contentWindow.print(); } catch(e){ window.print(); } }
+  btn.addEventListener('click', doPrint);
+  f.addEventListener('load', () => setTimeout(doPrint, 300));
+<\/script>
+</body></html>`;
+    const htmlBlob = new Blob([html], { type: "text/html" });
+    const htmlUrl = URL.createObjectURL(htmlBlob);
+    const win = window.open(htmlUrl, "_blank");
     if (!win) {
-      // popup blocked — fall back to download
-      downloadBlob(blob, `velopass-labels-${new Date().toISOString().slice(0, 10)}.pdf`);
+      downloadBlob(blob, filename);
     }
-    // Revoke later so the new tab has time to load the blob
-    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    setTimeout(() => {
+      URL.revokeObjectURL(htmlUrl);
+      URL.revokeObjectURL(pdfUrl);
+    }, 120_000);
   };
 
 
