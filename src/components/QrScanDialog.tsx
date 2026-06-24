@@ -215,6 +215,36 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => clearTimeout(t);
   }, [open, manual, scannerKey]);
 
+  // Lees het label van de actieve videotrack uit het door de Scanner
+  // gerenderde <video>-element. We pollen een paar keer omdat het stream-
+  // object pas na getUserMedia-resolve gekoppeld wordt.
+  useEffect(() => {
+    if (!open || manual) {
+      setActiveLabel(null);
+      return;
+    }
+    let attempts = 0;
+    let stopped = false;
+    const tick = () => {
+      if (stopped) return;
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      const track = stream?.getVideoTracks?.()[0];
+      if (track?.label) {
+        setActiveLabel(track.label);
+        return;
+      }
+      attempts += 1;
+      if (attempts < 12) setTimeout(tick, 250);
+    };
+    const t = setTimeout(tick, 300);
+    return () => {
+      stopped = true;
+      clearTimeout(t);
+    };
+  }, [open, manual, scannerKey]);
+
   const emitResult = (value: string) => {
     if (onResult) {
       onResult(value);
