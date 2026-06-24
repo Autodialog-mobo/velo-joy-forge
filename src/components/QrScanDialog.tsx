@@ -94,7 +94,7 @@ function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; s
       return {
         headline: "Zo zet je de camera weer aan in Chrome / Edge:",
         steps: [
-          "Klik op het slotje (🔒) links in de adresbalk.",
+          "Klik op het slotje links in de adresbalk.",
           "Zet 'Camera' op Toestaan.",
           "Herlaad deze pagina.",
         ],
