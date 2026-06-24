@@ -166,6 +166,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     })();
   };
 
+  const toggleFacingMode = () => {
+    // Wisselen tussen voor- en achtercamera: remount de scanner zodat de
+    // oude track netjes stopt voor de nieuwe getUserMedia-aanvraag.
+    setFacingMode((m) => (m === "environment" ? "user" : "environment"));
+    setCameraError(null);
+    setScannerKey((k) => k + 1);
+  };
+
   const reset = () => {
     setResult(null);
     setCameraError(null);
