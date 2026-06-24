@@ -207,10 +207,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     })();
   };
 
-  const toggleFacingMode = () => {
-    // Wisselen tussen voor- en achtercamera: remount de scanner zodat de
-    // oude track netjes stopt voor de nieuwe getUserMedia-aanvraag.
-    setFacingMode((m) => (m === "environment" ? "user" : "environment"));
+  const selectCamera = (nextDeviceId: string | null) => {
+    // Wissel naar een specifieke camera (deviceId) of terug naar
+    // facingMode-default ("" / null). Remount de scanner zodat de oude
+    // track netjes stopt voor de nieuwe getUserMedia-aanvraag.
+    setDeviceId(nextDeviceId);
     setCameraError(null);
     setScannerKey((k) => k + 1);
   };
