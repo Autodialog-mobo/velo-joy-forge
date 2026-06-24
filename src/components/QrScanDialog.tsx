@@ -487,19 +487,49 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   }, [open, manual, scannerKey]);
 
   const toggleTorch = async () => {
-    const track = torchTrackRef.current;
-    if (!track) return;
+    // Re-resolve the live track from the DOM every time. The <Scanner />
+    // may have restarted the stream (e.g. after a camera switch or a
+    // remount), which leaves `torchTrackRef.current` pointing at a stopped
+    // track whose applyConstraints() silently no-ops on Android Chrome.
+    const root = document.querySelector("[data-qr-scanner-root]");
+    const video = root?.querySelector("video") as HTMLVideoElement | null;
+    const stream = video?.srcObject as MediaStream | null;
+    const liveTrack = stream?.getVideoTracks?.()[0] ?? null;
+    const track =
+      liveTrack && liveTrack.readyState === "live" ? liveTrack : torchTrackRef.current;
+    if (!track || track.readyState !== "live") return;
+    torchTrackRef.current = track;
+
+    const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & {
+      torch?: boolean;
+    };
+    if (!caps.torch) {
+      setTorchSupported(false);
+      return;
+    }
+
     const next = !torchOn;
     try {
-      await track.applyConstraints({ advanced: [{ torch: next } as unknown as MediaTrackConstraintSet] });
-      setTorchOn(next);
+      await track.applyConstraints({
+        advanced: [{ torch: next } as unknown as MediaTrackConstraintSet],
+      });
+      // Verify the device actually accepted the change (some Androids
+      // accept the promise but leave the LED off until the next frame).
+      const settings = (track.getSettings?.() ?? {}) as MediaTrackSettings & {
+        torch?: boolean;
+      };
+      const applied = typeof settings.torch === "boolean" ? settings.torch : next;
+      setTorchOn(applied);
       // Korte retry: pauzeer decoder ~280ms zodat auto-exposure/witbalans
       // zich aanpast aan de nieuwe lichtomstandigheden, en hervat dan met
       // een verse leespoging.
       setScanPaused(true);
       window.setTimeout(() => setScanPaused(false), 280);
-    } catch {
-      // Sommige toestellen blokkeren torch bij bepaalde resoluties; stil falen.
+    } catch (err) {
+      // Sommige toestellen blokkeren torch bij bepaalde resoluties of
+      // wanneer de track al door een andere consumer geclaimd is.
+      // eslint-disable-next-line no-console
+      console.warn("[QrScanDialog] torch toggle failed", err);
       setTorchSupported(false);
     }
   };
