@@ -104,7 +104,7 @@ function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; s
         headline: "Zo zet je de camera weer aan in Firefox:",
         steps: [
           "Klik op het slotje links in de adresbalk.",
-          "Klik bij 'Camera' op het ❌ om de blokkade te verwijderen.",
+          "Klik bij 'Camera' op het kruisje om de blokkade te verwijderen.",
           "Herlaad deze pagina en kies 'Toestaan' bij de vraag.",
         ],
       };
