@@ -1137,7 +1137,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   role="status"
                   style={{
                     position: "absolute",
-                    top: `calc(${torchSupported ? 106 : 60}px + env(safe-area-inset-top, 0px))`,
+                    top: safeInset("top", torchSupported ? 106 : 60),
                     left: 0,
                     right: 0,
                     zIndex: 13,
