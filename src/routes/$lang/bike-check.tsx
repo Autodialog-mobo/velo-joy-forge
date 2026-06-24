@@ -484,11 +484,22 @@ function BikeSearchPage() {
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
 
+  // Spotlight: na een (scan- of form-)submit dimmen we de rest van de
+  // pagina en lichten het resultaatpaneel even op. Auto-dismiss na 3s of
+  // bij een tap op de dim-laag, zodat de gebruiker er nooit "in vast zit".
+  const [spotlight, setSpotlight] = useState(false);
   useEffect(() => {
     if (result || error) {
+      // Twee rAF's: één voor de DOM-paint van het resultaat, één voor de
+      // layout van de sticky nav, zodat `scroll-margin-top` zijn werk doet.
       requestAnimationFrame(() => {
-        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        requestAnimationFrame(() => {
+          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       });
+      setSpotlight(true);
+      const tid = setTimeout(() => setSpotlight(false), 3000);
+      return () => clearTimeout(tid);
     }
   }, [result, error]);
 
