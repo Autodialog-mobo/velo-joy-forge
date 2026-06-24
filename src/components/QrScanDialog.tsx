@@ -238,6 +238,33 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const [cameraError, setCameraError] = useState<{ kind: CameraErrorKind; message: string } | null>(null);
   const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
+  const [manualFocused, setManualFocused] = useState(false);
+  const [exampleCopied, setExampleCopied] = useState(false);
+  const manualInputRef = useRef<HTMLInputElement>(null);
+  const MANUAL_MAX = 10;
+  const sanitizeManual = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, MANUAL_MAX);
+  const copyExample = async () => {
+    const value = "UC9K4D3NCJ";
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = value;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      setManualCode(sanitizeManual(value));
+      setExampleCopied(true);
+      window.setTimeout(() => setExampleCopied(false), 1400);
+    } catch {
+      setManualCode(sanitizeManual(value));
+    }
+  };
   const [permission, setPermission] = useState<CameraPermission | "checking">("checking");
   // Bumping this key forces the <Scanner /> to unmount + remount, which
   // tears down any previous MediaStream/track and starts a clean
