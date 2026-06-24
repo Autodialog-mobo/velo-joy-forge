@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -94,7 +94,7 @@ function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; s
       return {
         headline: "Zo zet je de camera weer aan in Chrome / Edge:",
         steps: [
-          "Klik op het slotje (🔒) links in de adresbalk.",
+          "Klik op het slotje links in de adresbalk.",
           "Zet 'Camera' op Toestaan.",
           "Herlaad deze pagina.",
         ],
@@ -104,7 +104,7 @@ function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; s
         headline: "Zo zet je de camera weer aan in Firefox:",
         steps: [
           "Klik op het slotje links in de adresbalk.",
-          "Klik bij 'Camera' op het ❌ om de blokkade te verwijderen.",
+          "Klik bij 'Camera' op het kruisje om de blokkade te verwijderen.",
           "Herlaad deze pagina en kies 'Toestaan' bij de vraag.",
         ],
       };
@@ -157,7 +157,7 @@ function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; s
       return {
         headline: "Open deze pagina in je echte browser",
         steps: [
-          "Tik op het menu (⋯ of ⋮) rechtsboven.",
+          "Tik op het menu-icoon rechtsboven.",
           "Kies 'Openen in Safari' (iPhone) of 'Openen in Chrome' (Android).",
           "Sta de camera daar toe en scan opnieuw.",
         ],
@@ -717,16 +717,19 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     fontSize: 12,
                     lineHeight: 1.3,
                     backdropFilter: "blur(6px)",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
                     width: "fit-content",
                     maxWidth: "calc(100% - 24px)",
                     margin: "0 auto",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
                   }}
                   title={activeLabel}
                 >
-                  📷 {activeLabel}
+                  <Camera size={13} color="#fff" strokeWidth={2} style={{ flexShrink: 0 }} />
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{activeLabel}</span>
                 </div>
               )}
               {cameras.length > 1 && permission !== "checking" && (
