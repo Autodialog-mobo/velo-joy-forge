@@ -23,6 +23,15 @@ function renderStep(step: string): ReactNode {
   ));
 }
 
+/** Centrale safe-area helper. Geeft een CSS-waarde terug die de basis-offset
+ *  combineert met `env(safe-area-inset-*)` zodat overlay-knoppen (torch, boost,
+ *  cameralabel, sluitknop) consistent uit de buurt blijven van notches,
+ *  statusbalken en on-screen controls op mobiele toestellen. */
+type SafeSide = "top" | "right" | "bottom" | "left";
+function safeInset(side: SafeSide, basePx = 0): string {
+  return `calc(${basePx}px + env(safe-area-inset-${side}, 0px))`;
+}
+
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
