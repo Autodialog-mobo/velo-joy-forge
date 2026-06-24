@@ -748,7 +748,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               lineHeight: 1.2,
             }}
           >
-            {result ? "Frame-ID gescand" : manual ? "Voer de Velopass-code in" : "Scan de Velopass Frame-ID"}
+            {result
+              ? (isFrameMode ? (labels?.title ?? "Barcode gescand") : "Frame-ID gescand")
+              : manual
+                ? "Voer de Velopass-code in"
+                : (labels?.title ?? (isFrameMode ? "Scan de barcode op het frame" : "Scan de Velopass Frame-ID"))}
           </DialogTitle>
           <DialogDescription
             style={{
@@ -760,10 +764,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             }}
           >
             {result
-              ? "We hebben de QR-code herkend. Bevestig om de overdracht te starten."
+              ? (isFrameMode
+                  ? "We hebben het framenummer herkend. Controleer of het klopt voor je zoekt."
+                  : "We hebben de QR-code herkend. Bevestig om de overdracht te starten.")
               : manual
                 ? "De code staat rechts verticaal op de Frame-ID sticker op het frame van je fiets."
-                : "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID."}
+                : (labels?.description ?? (isFrameMode
+                    ? "Richt je camera op de barcode-sticker met het framenummer op het frame van je fiets."
+                    : "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID."))}
           </DialogDescription>
         </DialogHeader>
 
