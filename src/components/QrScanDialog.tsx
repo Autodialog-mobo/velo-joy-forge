@@ -33,6 +33,17 @@ type Props = {
    * Used by flows like the bike-check page that just want the raw code.
    */
   onResult?: (code: string) => void;
+  /**
+   * "velopass" (default): only QR, in-dialog manual fallback for 10-char Velopass codes.
+   * "frame": QR + common 1D barcodes (code_128/39, ean_13, …) for frame-number stickers.
+   *   No in-dialog manual fallback — the caller hosts the manual input on its own page.
+   */
+  scanMode?: "velopass" | "frame";
+  /** Optional header overrides — used by the bike-check frame-barcode flow. */
+  labels?: {
+    title?: string;
+    description?: string;
+  };
 };
 
 // The browser owns the "remember this decision" UX for camera permission.
@@ -233,7 +244,8 @@ function classifyCameraError(err: unknown): { kind: CameraErrorKind; message: st
 }
 
 
-export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult }: Props) {
+export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult, scanMode = "velopass", labels }: Props) {
+  const isFrameMode = scanMode === "frame";
   const [result, setResult] = useState<string | null>(null);
   const [cameraError, setCameraError] = useState<{ kind: CameraErrorKind; message: string } | null>(null);
   const [manual, setManual] = useState(initialManual);
@@ -736,7 +748,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               lineHeight: 1.2,
             }}
           >
-            {result ? "Frame-ID gescand" : manual ? "Voer de Velopass-code in" : "Scan de Velopass Frame-ID"}
+            {result
+              ? (isFrameMode ? (labels?.title ?? "Barcode gescand") : "Frame-ID gescand")
+              : manual
+                ? "Voer de Velopass-code in"
+                : (labels?.title ?? (isFrameMode ? "Scan de barcode op het frame" : "Scan de Velopass Frame-ID"))}
           </DialogTitle>
           <DialogDescription
             style={{
@@ -748,10 +764,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             }}
           >
             {result
-              ? "We hebben de QR-code herkend. Bevestig om de overdracht te starten."
+              ? (isFrameMode
+                  ? "We hebben het framenummer herkend. Controleer of het klopt voor je zoekt."
+                  : "We hebben de QR-code herkend. Bevestig om de overdracht te starten.")
               : manual
                 ? "De code staat rechts verticaal op de Frame-ID sticker op het frame van je fiets."
-                : "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID."}
+                : (labels?.description ?? (isFrameMode
+                    ? "Richt je camera op de barcode-sticker met het framenummer op het frame van je fiets."
+                    : "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID."))}
           </DialogDescription>
         </DialogHeader>
 
@@ -811,7 +831,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     </button>
                     <button
                       type="button"
-                      onClick={() => { setCameraError(null); setManual(true); }}
+                      onClick={() => {
+                        if (isFrameMode) { close(); return; }
+                        setCameraError(null); setManual(true);
+                      }}
                       style={{
                         background: "transparent",
                         border: "1px solid rgba(13,31,60,0.18)",
@@ -823,7 +846,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                         cursor: "pointer",
                       }}
                     >
-                      Voer de code handmatig in
+                      {isFrameMode ? "Sluit en voer handmatig in" : "Voer de code handmatig in"}
                     </button>
                   </div>
                 </div>
@@ -863,9 +886,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   onScan={handleScan}
                   onError={handleError}
                   paused={scanPaused}
-                  // Alleen QR — voorkomt dat de decoder tijd verspilt aan
-                  // andere barcodeformaten (EAN, Code128, …).
-                  formats={["qr_code"]}
+                  // QR always. In frame mode we ook 1D-barcodes (Code-128/39,
+                  // EAN, UPC, ITF, Codabar) zodat de framenummer-sticker direct
+                  // gelezen wordt. BarcodeDetector wordt gebruikt waar
+                  // ondersteund; anders valt de library terug op zxing-wasm.
+                  formats={isFrameMode
+                    ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
+                    : ["qr_code"]}
                   // Sneller pollen tussen frames (default ~500ms). 80ms geeft
                   // ~12 leespogingen per seconde zonder de CPU plat te leggen.
                   scanDelay={80}
@@ -1230,7 +1257,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   </button>
                   <button
                     type="button"
-                    onClick={() => { setCameraError(null); setManual(true); }}
+                    onClick={() => {
+                      if (isFrameMode) { close(); return; }
+                      setCameraError(null); setManual(true);
+                    }}
                     style={{
                       background: "transparent",
                       border: "1px solid rgba(13,31,60,0.18)",
@@ -1242,7 +1272,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                       cursor: "pointer",
                     }}
                   >
-                    Voer code handmatig in
+                    {isFrameMode ? "Sluit en voer handmatig in" : "Voer code handmatig in"}
                   </button>
                 </div>
               </div>
@@ -1328,7 +1358,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             </div>
           )}
 
-          {!result && !manual && (
+          {!result && !manual && !isFrameMode && (
             <p
               style={{
                 fontFamily: "'DM Sans', sans-serif",

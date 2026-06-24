@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, ArrowRight, XCircle, Copy, Check, User, Menu, X } from "lucide-react";
+import { QrCode, Hash, Barcode, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, ArrowRight, XCircle, Copy, Check, User, Menu, X } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
@@ -406,6 +406,8 @@ function BikeSearchPage() {
   const [frame, setFrame] = useState("");
   const turnstileRef = useRef<TurnstileHandle>(null);
   const [scanOpen, setScanOpen] = useState(false);
+  const [scanFrameOpen, setScanFrameOpen] = useState(false);
+  const frameInputRef = useRef<HTMLInputElement>(null);
   const [navOpen, setNavOpen] = useState(false);
   const [brandFocused, setBrandFocused] = useState(false);
   const [brandQuery, setBrandQuery] = useState("");
@@ -552,6 +554,25 @@ function BikeSearchPage() {
     setCodeA(clean);
     if (clean.length === 10) void runCheck(clean);
   };
+
+  const handleFrameScanResult = (raw: string) => {
+    // Frame-nummer barcodes bevatten doorgaans alfanumerieke tekens (vaak
+    // ook spaties of dashes). Strip alles dat geen [A-Z0-9] is. We zoeken
+    // NIET automatisch — de gebruiker controleert het resultaat eerst,
+    // want barcodes worden af en toe verkeerd gelezen.
+    const cleaned = sanitizeAlnum(raw);
+    if (!cleaned) return;
+    setFrame(cleaned);
+    // Focus + select zodat de gebruiker direct kan corrigeren als nodig.
+    setTimeout(() => {
+      const el = frameInputRef.current;
+      if (el) {
+        el.focus();
+        try { el.setSelectionRange(0, el.value.length); } catch { /* no-op */ }
+      }
+    }, 60);
+  };
+
 
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -994,8 +1015,56 @@ function BikeSearchPage() {
               )}
             </div>
 
-            <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
+            {/* PRIMARY ACTION: barcode scan voor het framenummer */}
+            <button
+              type="button"
+              onClick={() => setScanFrameOpen(true)}
+              style={{
+                marginTop: 14,
+                width: "100%",
+                background: "#0D1F3C",
+                color: "#fff",
+                border: "none",
+                borderRadius: 10,
+                padding: "14px 20px",
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 600,
+                fontSize: 15,
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                boxShadow: "0 6px 18px rgba(13,31,60,0.16)",
+              }}
+            >
+              <Barcode size={18} strokeWidth={2} />
+              {t("method_b.scan_cta", { defaultValue: "Scan de barcode" })}
+            </button>
+
+            {/* SECONDARY FALLBACK: handmatige invoer van het framenummer */}
+            <div
+              aria-hidden="true"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                margin: "18px 0 12px",
+                color: "#94A3B8",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 12,
+                textTransform: "uppercase",
+                letterSpacing: 0.6,
+              }}
+            >
+              <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
+              <span>{t("method_b.scan_or_manual", { defaultValue: "of voer het framenummer handmatig in" })}</span>
+              <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
+            </div>
+
+            <label style={labelStyle} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
+              ref={frameInputRef}
               id="bs-frame"
               type="text"
               autoCapitalize="characters"
@@ -1457,6 +1526,18 @@ function BikeSearchPage() {
       `}</style>
 
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} onResult={handleScanResult} />
+      <QrScanDialog
+        open={scanFrameOpen}
+        onOpenChange={setScanFrameOpen}
+        onResult={handleFrameScanResult}
+        scanMode="frame"
+        labels={{
+          title: t("method_b.scan_dialog_title", { defaultValue: "Scan de barcode op het frame" }),
+          description: t("method_b.scan_dialog_desc", {
+            defaultValue: "Richt je camera op de barcode-sticker met het framenummer op het frame van je fiets.",
+          }),
+        }}
+      />
     </div>
   );
 }
