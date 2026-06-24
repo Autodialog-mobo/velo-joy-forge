@@ -1352,7 +1352,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             </div>
           )}
 
-          {!result && !manual && (
+          {!result && !manual && !isFrameMode && (
             <p
               style={{
                 fontFamily: "'DM Sans', sans-serif",
