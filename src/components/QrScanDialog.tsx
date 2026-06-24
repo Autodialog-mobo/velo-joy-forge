@@ -6,7 +6,7 @@ import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight,
 /** Render een instructiestap waarin "→"-tekens vervangen worden door een
  *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
 function renderStep(step: string): ReactNode {
-  const parts = step.split("→");
+  const parts = step.split("→").map((p) => p.trim());
   if (parts.length === 1) return step;
   return parts.map((p, i) => (
     <Fragment key={i}>
@@ -15,12 +15,10 @@ function renderStep(step: string): ReactNode {
           size={13}
           strokeWidth={2}
           aria-hidden="true"
-          style={{ display: "inline", verticalAlign: "-2px", margin: "0 2px", opacity: 0.7 }}
+          style={{ display: "inline", verticalAlign: "-2px", margin: "0 4px", opacity: 0.7 }}
         />
       )}
-      {p.replace(/^\s+|\s+$/g, "")}
-      {i < parts.length - 1 ? " " : ""}
-      {i > 0 ? "" : " "}
+      {p}
     </Fragment>
   ));
 }
