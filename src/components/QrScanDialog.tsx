@@ -157,7 +157,7 @@ function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; s
       return {
         headline: "Open deze pagina in je echte browser",
         steps: [
-          "Tik op het menu (⋯ of ⋮) rechtsboven.",
+          "Tik op het menu-icoon rechtsboven.",
           "Kies 'Openen in Safari' (iPhone) of 'Openen in Chrome' (Android).",
           "Sta de camera daar toe en scan opnieuw.",
         ],
