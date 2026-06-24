@@ -555,6 +555,25 @@ function BikeSearchPage() {
     if (clean.length === 10) void runCheck(clean);
   };
 
+  const handleFrameScanResult = (raw: string) => {
+    // Frame-nummer barcodes bevatten doorgaans alfanumerieke tekens (vaak
+    // ook spaties of dashes). Strip alles dat geen [A-Z0-9] is. We zoeken
+    // NIET automatisch — de gebruiker controleert het resultaat eerst,
+    // want barcodes worden af en toe verkeerd gelezen.
+    const cleaned = sanitizeAlnum(raw);
+    if (!cleaned) return;
+    setFrame(cleaned);
+    // Focus + select zodat de gebruiker direct kan corrigeren als nodig.
+    setTimeout(() => {
+      const el = frameInputRef.current;
+      if (el) {
+        el.focus();
+        try { el.setSelectionRange(0, el.value.length); } catch { /* no-op */ }
+      }
+    }, 60);
+  };
+
+
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitLockRef.current) return;
