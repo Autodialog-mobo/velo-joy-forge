@@ -484,11 +484,22 @@ function BikeSearchPage() {
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
 
+  // Spotlight: na een (scan- of form-)submit dimmen we de rest van de
+  // pagina en lichten het resultaatpaneel even op. Auto-dismiss na 3s of
+  // bij een tap op de dim-laag, zodat de gebruiker er nooit "in vast zit".
+  const [spotlight, setSpotlight] = useState(false);
   useEffect(() => {
     if (result || error) {
+      // Twee rAF's: één voor de DOM-paint van het resultaat, één voor de
+      // layout van de sticky nav, zodat `scroll-margin-top` zijn werk doet.
       requestAnimationFrame(() => {
-        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        requestAnimationFrame(() => {
+          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       });
+      setSpotlight(true);
+      const tid = setTimeout(() => setSpotlight(false), 3000);
+      return () => clearTimeout(tid);
     }
   }, [result, error]);
 
@@ -997,8 +1008,24 @@ function BikeSearchPage() {
         <TurnstileWidget ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} />
 
 
-        {/* ERROR + RESULT scroll target */}
-        <div ref={resultRef}>
+        {/* ERROR + RESULT scroll target.
+            scrollMarginTop houdt de top vrij van de sticky nav (mobiel + desktop),
+            zodat scrollIntoView({block:"start"}) NOOIT het bovenste stuk van het
+            resultaat onder de nav verbergt. zIndex + transition geven het paneel
+            extra prominentie zodra `spotlight` aanstaat. */}
+        <div
+          ref={resultRef}
+          style={{
+            scrollMarginTop: "calc(env(safe-area-inset-top, 0px) + 96px)",
+            position: "relative",
+            zIndex: spotlight ? 60 : "auto",
+            transition: "transform 240ms ease, filter 240ms ease",
+            transform: spotlight && (result || error) ? "translateY(-2px)" : "none",
+            filter: spotlight && (result || error)
+              ? "drop-shadow(0 24px 48px rgba(13,31,60,0.28))"
+              : "none",
+          }}
+        >
           {/* ERROR */}
           {error && (
             <div
@@ -1027,6 +1054,25 @@ function BikeSearchPage() {
             </div>
           )}
         </div>
+
+        {/* Spotlight backdrop: dimt de rest van de pagina kort na een
+            scan/submit zodat het oog naar het resultaat getrokken wordt.
+            Tap of 3s timer dismisst het. pointer-events alleen tijdens dim. */}
+        {spotlight && (result || error) && (
+          <div
+            onClick={() => setSpotlight(false)}
+            aria-hidden="true"
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(13,31,60,0.45)",
+              zIndex: 50,
+              animation: "vp-bc-fade 240ms ease both",
+              cursor: "pointer",
+            }}
+          />
+        )}
+        <style>{`@keyframes vp-bc-fade{from{opacity:0}to{opacity:1}}`}</style>
       </section>
 
       {/* STATUS OVERVIEW */}
