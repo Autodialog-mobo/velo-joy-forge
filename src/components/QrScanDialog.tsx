@@ -276,6 +276,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const [torchSupported, setTorchSupported] = useState(false);
   const [torchOn, setTorchOn] = useState(false);
   const torchTrackRef = useRef<MediaStreamTrack | null>(null);
+  // Korte pauze van de decoder na een torch-toggle: dwingt een "verse"
+  // leespoging af zodra de belichting/witbalans zich heeft aangepast.
+  const [scanPaused, setScanPaused] = useState(false);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
