@@ -49,25 +49,39 @@ async function queryCameraPermission(): Promise<CameraPermission> {
 
 type CameraErrorKind = "denied" | "not-found" | "in-use" | "constraints" | "unknown";
 
+// `@yudiel/react-qr-scanner` levert errors aan als een eigen
+// `IScannerError` (een PLAIN object met `{ kind, message, cause }`), NIET
+// als DOMException. Daarom mappen we eerst op `err.kind` en pas daarna op
+// `err.name` (voor het geval een rauwe Error doorlekt).
 function classifyCameraError(err: unknown): { kind: CameraErrorKind; message: string } {
-  const name = err instanceof Error ? err.name : "";
-  const raw = err instanceof Error ? err.message : String(err ?? "");
-  switch (name) {
-    case "NotAllowedError":
-    case "SecurityError":
-      return { kind: "denied", message: "Cameratoegang geweigerd." };
-    case "NotFoundError":
-    case "DevicesNotFoundError":
-      return { kind: "not-found", message: "Geen camera gevonden op dit apparaat." };
-    case "NotReadableError":
-    case "TrackStartError":
-      return { kind: "in-use", message: "De camera wordt al gebruikt door een andere app of tab." };
-    case "OverconstrainedError":
-    case "ConstraintNotSatisfiedError":
-      return { kind: "constraints", message: "Geen geschikte camera gevonden voor deze instellingen." };
-    default:
-      return { kind: "unknown", message: raw || "Camera kon niet worden gestart." };
+  const e = err as { kind?: string; name?: string; message?: string } | null;
+  const kind = e?.kind ?? "";
+  const name = e?.name ?? "";
+  const raw = typeof e?.message === "string" && e.message ? e.message : "";
+
+  if (kind === "permission-denied" || kind === "security" || name === "NotAllowedError" || name === "SecurityError") {
+    return { kind: "denied", message: "Cameratoegang geweigerd." };
   }
+  if (kind === "no-camera" || name === "NotFoundError" || name === "DevicesNotFoundError") {
+    return { kind: "not-found", message: "Geen camera gevonden op dit apparaat." };
+  }
+  if (kind === "in-use" || name === "NotReadableError" || name === "TrackStartError") {
+    return { kind: "in-use", message: "De camera wordt al gebruikt door een andere app of tab." };
+  }
+  if (
+    kind === "overconstrained" ||
+    name === "OverconstrainedError" ||
+    name === "ConstraintNotSatisfiedError"
+  ) {
+    return { kind: "constraints", message: "Geen geschikte camera gevonden voor deze instellingen." };
+  }
+  if (kind === "insecure-context") {
+    return { kind: "unknown", message: "Camera vereist HTTPS." };
+  }
+  if (kind === "unsupported") {
+    return { kind: "unknown", message: "Deze browser ondersteunt geen camera-API." };
+  }
+  return { kind: "unknown", message: raw || "Camera kon niet worden gestart." };
 }
 
 
