@@ -428,34 +428,62 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   ))}
                 </div>
               </div>
-              {hasMultipleCameras && permission !== "checking" && (
-                <button
-                  type="button"
-                  onClick={toggleFacingMode}
-                  aria-label={facingMode === "environment" ? "Wissel naar front-camera" : "Wissel naar achter-camera"}
-                  title={facingMode === "environment" ? "Front-camera" : "Achter-camera"}
+              {cameras.length > 1 && permission !== "checking" && (
+                <div
                   style={{
                     position: "absolute",
                     bottom: 12,
+                    left: 12,
                     right: 12,
                     zIndex: 10,
-                    width: 44,
-                    height: 44,
-                    borderRadius: 999,
-                    background: "rgba(13,31,60,0.72)",
-                    border: "1px solid rgba(255,255,255,0.18)",
-                    display: "inline-flex",
+                    display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    backdropFilter: "blur(6px)",
+                    gap: 8,
                   }}
                 >
-                  <SwitchCamera size={20} color="#fff" strokeWidth={1.8} />
-                </button>
+                  <SwitchCamera size={18} color="#fff" strokeWidth={1.8} style={{ flexShrink: 0, opacity: 0.9 }} />
+                  <select
+                    aria-label="Kies camera"
+                    value={deviceId ?? `__facing:${facingMode}`}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      if (v.startsWith("__facing:")) {
+                        const fm = v.slice("__facing:".length) as "environment" | "user";
+                        setFacingMode(fm);
+                        selectCamera(null);
+                      } else {
+                        selectCamera(v);
+                      }
+                    }}
+                    style={{
+                      flex: 1,
+                      minWidth: 0,
+                      background: "rgba(13,31,60,0.72)",
+                      color: "#fff",
+                      border: "1px solid rgba(255,255,255,0.18)",
+                      borderRadius: 10,
+                      padding: "8px 10px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      cursor: "pointer",
+                      backdropFilter: "blur(6px)",
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                    }}
+                  >
+                    <option value="__facing:environment">Achtercamera (auto)</option>
+                    <option value="__facing:user">Frontcamera (auto)</option>
+                    {cameras.map((c) => (
+                      <option key={c.deviceId} value={c.deviceId}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               )}
             </div>
           )}
+
 
 
 
