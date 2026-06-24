@@ -235,7 +235,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         </DialogHeader>
 
         <div style={{ padding: "0 28px 28px" }}>
-          {!result && !error && !manual && permission === "denied" && (
+          {!result && !cameraError && !manual && permission === "denied" && (
             <div
               style={{
                 padding: 20,
