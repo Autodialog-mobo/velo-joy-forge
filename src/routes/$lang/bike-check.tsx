@@ -804,21 +804,11 @@ function BikeSearchPage() {
               sanitize={sanitizeCode}
             />
             <ExampleCopy
-              label={t("method_a.example_label", { defaultValue: "Voorbeeld" })}
+              label={t("method_a.example_inline", { defaultValue: "10 tekens · voorbeeld" })}
               value="UC9K4D3NCJ"
               onCopy={(v) => setCodeA(sanitizeCode(v))}
             />
-            <p
-              style={{
-                marginTop: 6,
-                fontFamily: "'DM Sans', sans-serif",
-                fontSize: 13,
-                color: "#94A3B8",
-                lineHeight: 1.4,
-              }}
-            >
-              {t("method_a.code_hint", { defaultValue: "10 tekens, bijv. UC9K4D3NCJ" })}
-            </p>
+
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
 
