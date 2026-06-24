@@ -276,6 +276,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const [torchSupported, setTorchSupported] = useState(false);
   const [torchOn, setTorchOn] = useState(false);
   const torchTrackRef = useRef<MediaStreamTrack | null>(null);
+  // Korte pauze van de decoder na een torch-toggle: dwingt een "verse"
+  // leespoging af zodra de belichting/witbalans zich heeft aangepast.
+  const [scanPaused, setScanPaused] = useState(false);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
@@ -490,11 +493,17 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     try {
       await track.applyConstraints({ advanced: [{ torch: next } as unknown as MediaTrackConstraintSet] });
       setTorchOn(next);
+      // Korte retry: pauzeer decoder ~280ms zodat auto-exposure/witbalans
+      // zich aanpast aan de nieuwe lichtomstandigheden, en hervat dan met
+      // een verse leespoging.
+      setScanPaused(true);
+      window.setTimeout(() => setScanPaused(false), 280);
     } catch {
       // Sommige toestellen blokkeren torch bij bepaalde resoluties; stil falen.
       setTorchSupported(false);
     }
   };
+
 
 
 
@@ -761,6 +770,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
+                  paused={scanPaused}
                   // Alleen QR — voorkomt dat de decoder tijd verspilt aan
                   // andere barcodeformaten (EAN, Code128, …).
                   formats={["qr_code"]}
