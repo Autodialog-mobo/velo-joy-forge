@@ -1021,10 +1021,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 <div
                   aria-live="polite"
                   style={{
-                    position: "absolute",
-                    top: 12,
-                    left: 12,
-                    right: 12,
+                     position: "absolute",
+                     top: "calc(12px + env(safe-area-inset-top, 0px))",
+                     left: "calc(12px + env(safe-area-inset-left, 0px))",
+                     right: "calc(12px + env(safe-area-inset-right, 0px))",
                     zIndex: 10,
                     padding: "6px 10px",
                     borderRadius: 999,
