@@ -280,6 +280,7 @@ function ExampleCopy({
   value: string;
   onCopy?: (v: string) => void;
 }) {
+  const { t } = useTranslation("bike-check");
   const [copied, setCopied] = useState(false);
   const handleCopy = async () => {
     try {
@@ -302,8 +303,12 @@ function ExampleCopy({
       onCopy?.(value);
     }
   };
+  const copyLabel = copied
+    ? t("method_a.example_copied", { defaultValue: "Voorbeeldcode gekopieerd" })
+    : t("method_a.example_copy_aria", { defaultValue: "Kopieer voorbeeldcode {{value}}", value });
   return (
     <p
+      role="note"
       style={{
         marginTop: 8,
         marginBottom: 0,
@@ -332,7 +337,8 @@ function ExampleCopy({
       <button
         type="button"
         onClick={handleCopy}
-        aria-label={`${label}: ${value}`}
+        aria-label={copyLabel}
+        title={copyLabel}
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -345,7 +351,10 @@ function ExampleCopy({
           lineHeight: 0,
         }}
       >
-        {copied ? <Check size={14} strokeWidth={2.2} /> : <Copy size={14} strokeWidth={2} />}
+        {copied ? <Check size={14} strokeWidth={2.2} aria-hidden="true" /> : <Copy size={14} strokeWidth={2} aria-hidden="true" />}
+        <span style={{ position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0 }}>
+          {copyLabel}
+        </span>
       </button>
     </p>
   );
