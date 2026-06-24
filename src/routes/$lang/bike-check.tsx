@@ -1507,7 +1507,7 @@ function BikeSearchPage() {
 
       <style>{`
         .bs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .bs-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .bs-grid { grid-template-columns: 1fr; gap: 16px; } }
         .bs-secured-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         @media (max-width: 768px) { .bs-secured-grid { grid-template-columns: 1fr; } }
         .bs-card {
@@ -1517,11 +1517,16 @@ function BikeSearchPage() {
           padding: 24px;
           display: flex;
           flex-direction: column;
+          min-width: 0;
+        }
+        @media (max-width: 480px) {
+          .bs-card { padding: 18px; border-radius: 12px; }
         }
         .bs-card-primary { border-top: 3px solid #2ECC8A; }
         .bs-spin { animation: bs-spin 0.8s linear infinite; }
         @keyframes bs-spin { to { transform: rotate(360deg); } }
       `}</style>
+
 
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} onResult={handleScanResult} />
       <QrScanDialog
@@ -1565,6 +1570,7 @@ const refImgFigure: React.CSSProperties = {
   background: "rgba(13,31,60,0.03)",
   border: "1px solid rgba(13,31,60,0.08)",
   borderRadius: 12,
+  flexWrap: "wrap",
 };
 const refImg: React.CSSProperties = {
   width: 96,
@@ -1579,7 +1585,10 @@ const refImgCaption: React.CSSProperties = {
   fontSize: 13,
   color: "#5A7090",
   lineHeight: 1.45,
+  flex: "1 1 140px",
+  minWidth: 0,
 };
+
 const labelStyle: React.CSSProperties = {
   display: "block",
   fontFamily: "'DM Sans', sans-serif",
