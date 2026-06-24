@@ -15,34 +15,21 @@ type Props = {
   onResult?: (code: string) => void;
 };
 
-// Module-level cached camera stream. Persisting the MediaStream across dialog
-// opens means the browser keeps the camera device active for our origin and
-// does not re-evaluate the permission gesture each time the dialog mounts.
+// The browser owns the "remember this decision" UX for camera permission.
+// We can't bypass that prompt — it is a security mechanism enforced by
+// Safari / Chrome / Firefox. What we CAN do is peek at
+// navigator.permissions.query({ name: 'camera' }) to decide whether to
+// show a "blocked" panel up-front when we *know* the user previously
+// denied us. When the Permissions API is unsupported (Safari, in-app
+// browsers) or the state is "prompt"/"granted", we just hand off to the
+// <Scanner /> component and let it own getUserMedia.
 //
-// NOTE: The browser owns the "remember this decision" UX. We cannot bypass
-// the permission prompt — that is a security mechanism enforced by Safari /
-// Chrome / Firefox. We can only avoid re-triggering it unnecessarily by:
-//   1. Checking navigator.permissions.query({ name: 'camera' }) first and
-//      only calling getUserMedia when we actually need a fresh grant.
-//   2. Reusing an already-granted stream rather than tearing it down and
-//      asking again on the next open.
-// In real browsers (Safari/Chrome) where the user picked "Allow", this works.
-// In in-app browsers (Instagram, Facebook, QR-scanner apps) the permission
-// is often NOT persisted across visits — there is nothing the site can do
-// about that.
-let cachedStream: MediaStream | null = null;
-
-async function getOrCreateCameraStream(): Promise<MediaStream> {
-  if (cachedStream && cachedStream.getVideoTracks().some((t) => t.readyState === "live")) {
-    return cachedStream;
-  }
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode: { ideal: "environment" } },
-    audio: false,
-  });
-  cachedStream = stream;
-  return stream;
-}
+// We deliberately do NOT pre-warm a separate MediaStream here: holding a
+// second stream that is never attached to a video element has been
+// observed to make the Scanner's own getUserMedia call fail with
+// NotReadableError on some setups ("camera already in use"). The Scanner
+// library manages track lifecycle; we unmount it on close/retry via a
+// changing `scannerKey` to force a clean teardown of any previous stream.
 
 type CameraPermission = "granted" | "prompt" | "denied" | "unsupported";
 
@@ -51,7 +38,6 @@ async function queryCameraPermission(): Promise<CameraPermission> {
     return "unsupported";
   }
   try {
-    // `camera` is not in every lib.dom — cast through a narrow shape.
     const status = await navigator.permissions.query({
       name: "camera" as PermissionName,
     });
@@ -60,6 +46,30 @@ async function queryCameraPermission(): Promise<CameraPermission> {
     return "unsupported";
   }
 }
+
+type CameraErrorKind = "denied" | "not-found" | "in-use" | "constraints" | "unknown";
+
+function classifyCameraError(err: unknown): { kind: CameraErrorKind; message: string } {
+  const name = err instanceof Error ? err.name : "";
+  const raw = err instanceof Error ? err.message : String(err ?? "");
+  switch (name) {
+    case "NotAllowedError":
+    case "SecurityError":
+      return { kind: "denied", message: "Cameratoegang geweigerd." };
+    case "NotFoundError":
+    case "DevicesNotFoundError":
+      return { kind: "not-found", message: "Geen camera gevonden op dit apparaat." };
+    case "NotReadableError":
+    case "TrackStartError":
+      return { kind: "in-use", message: "De camera wordt al gebruikt door een andere app of tab." };
+    case "OverconstrainedError":
+    case "ConstraintNotSatisfiedError":
+      return { kind: "constraints", message: "Geen geschikte camera gevonden voor deze instellingen." };
+    default:
+      return { kind: "unknown", message: raw || "Camera kon niet worden gestart." };
+  }
+}
+
 
 export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult }: Props) {
   const [result, setResult] = useState<string | null>(null);
