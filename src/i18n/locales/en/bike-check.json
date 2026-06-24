@@ -30,7 +30,8 @@
     "manual_cta": "Enter the code manually",
     "loading": "Checking…",
     "image_alt": "Velopass Frame-ID sticker with QR-code",
-    "image_caption": "The Velopass Frame-ID sticker"
+    "image_caption": "The Velopass Frame-ID sticker",
+    "manual_fallback": "or enter the code manually"
   },
   "method_b": {
     "title": "Via brand and frame number",

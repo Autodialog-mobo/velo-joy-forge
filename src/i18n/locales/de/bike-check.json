@@ -30,7 +30,8 @@
     "manual_cta": "Code manuell eingeben",
     "loading": "Wird geprüft…",
     "image_alt": "Velopass Frame-ID-Aufkleber mit QR-Code",
-    "image_caption": "Der Velopass Frame-ID-Aufkleber"
+    "image_caption": "Der Velopass Frame-ID-Aufkleber",
+    "manual_fallback": "oder Code manuell eingeben"
   },
   "method_b": {
     "title": "Über Marke und Rahmennummer",
