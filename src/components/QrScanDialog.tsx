@@ -509,6 +509,36 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   ))}
                 </div>
               </div>
+              {activeLabel && permission !== "checking" && (
+                <div
+                  aria-live="polite"
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    right: 12,
+                    zIndex: 10,
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                    background: "rgba(13,31,60,0.72)",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    color: "#fff",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 12,
+                    lineHeight: 1.3,
+                    backdropFilter: "blur(6px)",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    width: "fit-content",
+                    maxWidth: "calc(100% - 24px)",
+                    margin: "0 auto",
+                  }}
+                  title={activeLabel}
+                >
+                  📷 {activeLabel}
+                </div>
+              )}
               {cameras.length > 1 && permission !== "checking" && (
                 <div
                   style={{
