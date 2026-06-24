@@ -1086,7 +1086,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     : <FlashlightOff size={18} strokeWidth={2} />}
                 </button>
               )}
-              {permission !== "checking" && permission !== "denied" && (
+              {permission !== "checking" && (
                 <button
                   type="button"
                   onClick={toggleBoost}
