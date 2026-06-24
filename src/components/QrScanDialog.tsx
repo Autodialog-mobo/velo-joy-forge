@@ -905,8 +905,72 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     : <FlashlightOff size={18} strokeWidth={2} />}
                 </button>
               )}
+              {scanPaused && (
+                <div
+                  aria-live="polite"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    zIndex: 12,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "rgba(13,31,60,0.32)",
+                    backdropFilter: "blur(2px)",
+                    pointerEvents: "none",
+                    animation: "qr-fade-in 120ms ease-out",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "10px 16px 12px",
+                      borderRadius: 14,
+                      background: "rgba(13,31,60,0.78)",
+                      border: "1px solid rgba(255,255,255,0.18)",
+                      color: "#fff",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 12,
+                      backdropFilter: "blur(6px)",
+                    }}
+                  >
+                    <span>Scanner herstart…</span>
+                    <span
+                      style={{
+                        width: 120,
+                        height: 3,
+                        borderRadius: 999,
+                        background: "rgba(255,255,255,0.18)",
+                        overflow: "hidden",
+                        position: "relative",
+                      }}
+                    >
+                      <span
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: 0,
+                          bottom: 0,
+                          background: "#2ECC8A",
+                          width: "100%",
+                          transformOrigin: "left center",
+                          animation: "qr-progress 300ms linear forwards",
+                        }}
+                      />
+                    </span>
+                  </div>
+                  <style>{`
+                    @keyframes qr-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+                    @keyframes qr-fade-in { from { opacity: 0; } to { opacity: 1; } }
+                  `}</style>
+                </div>
+              )}
             </div>
           )}
+
 
 
           {!result && !cameraError && !manual && permission !== "denied" && cameras.length > 1 && permission !== "checking" && (
