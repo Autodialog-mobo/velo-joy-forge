@@ -482,7 +482,18 @@ function BikeSearchPage() {
   };
 
   const handleScanResult = (raw: string) => {
-    const clean = sanitizeCode(raw);
+    // Velopass stickers encode a URL (e.g. https://app.velopass.com/lost/ABC12345).
+    // Extract the last non-empty path segment so we feed the lookup the code,
+    // not the full URL.
+    let candidate = raw.trim();
+    try {
+      const url = new URL(candidate);
+      const segments = url.pathname.split("/").filter(Boolean);
+      if (segments.length > 0) candidate = segments[segments.length - 1];
+    } catch {
+      // Not a URL — use the raw value as-is.
+    }
+    const clean = sanitizeCode(candidate);
     setCodeA(clean);
     void runCheck(clean);
   };
