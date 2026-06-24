@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, Lock, MoreHorizontal } from "lucide-react";
 
 type Props = {
   open: boolean;
