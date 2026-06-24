@@ -337,7 +337,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
-                  constraints={{ facingMode: "environment" }}
+                  constraints={{ facingMode: { ideal: facingMode } }}
                   styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
                   components={{ finder: false }}
                 />
