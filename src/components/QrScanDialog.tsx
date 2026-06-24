@@ -84,7 +84,21 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
-  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+  // Voorkeur wordt onthouden in localStorage zodat een volgende scan
+  // dezelfde camera gebruikt.
+  const [facingMode, setFacingMode] = useState<"environment" | "user">(() => {
+    if (typeof window === "undefined") return "environment";
+    const stored = window.localStorage.getItem("velopass:qr-facing-mode");
+    return stored === "user" || stored === "environment" ? stored : "environment";
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem("velopass:qr-facing-mode", facingMode);
+    } catch {
+      /* localStorage kan geblokkeerd zijn in privé-modus — negeer stil */
+    }
+  }, [facingMode]);
   // Detect of er meerdere video-input devices zijn. Alleen dan tonen we
   // de wisselknop — op een laptop met één camera is hij overbodig.
   const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
