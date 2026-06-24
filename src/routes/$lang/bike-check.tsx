@@ -1526,6 +1526,18 @@ function BikeSearchPage() {
       `}</style>
 
       <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} onResult={handleScanResult} />
+      <QrScanDialog
+        open={scanFrameOpen}
+        onOpenChange={setScanFrameOpen}
+        onResult={handleFrameScanResult}
+        scanMode="frame"
+        labels={{
+          title: t("method_b.scan_dialog_title", { defaultValue: "Scan de barcode op het frame" }),
+          description: t("method_b.scan_dialog_desc", {
+            defaultValue: "Richt je camera op de barcode-sticker met het framenummer op het frame van je fiets.",
+          }),
+        }}
+      />
     </div>
   );
 }
