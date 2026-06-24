@@ -442,9 +442,8 @@ function BikeSearchPage() {
     if (!q) return [] as string[];
     return searchBrands(q, 10).map((s) => s.name);
   })();
-  // +1 extra slot for the "Merk niet in de lijst / onbekend" option.
-  const optionCount = brandSuggestions.length + 1;
-  const UNKNOWN_VALUE = "Onbekend";
+  // Free-text input: users can type any brand even if not in suggestions.
+  const optionCount = brandSuggestions.length;
 
   useEffect(() => {
     setActiveIdx(-1);
