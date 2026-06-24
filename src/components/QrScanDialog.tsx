@@ -1105,8 +1105,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   title={boostOn ? "Boost uit" : "Verhoog verlichting"}
                   style={{
                     position: "absolute",
-                    top: `calc(${torchSupported ? 58 : 12}px + env(safe-area-inset-top, 0px))`,
-                    right: "calc(12px + env(safe-area-inset-right, 0px))",
+                    top: safeInset("top", torchSupported ? 58 : 12),
+                    right: safeInset("right", 12),
                     zIndex: 11,
                     width: 38,
                     height: 38,
