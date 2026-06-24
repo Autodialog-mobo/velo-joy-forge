@@ -763,8 +763,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
           aria-label="Sluiten"
           style={{
             position: "absolute",
-            top: 16,
-            right: 16,
+            top: "calc(16px + env(safe-area-inset-top, 0px))",
+            right: "calc(16px + env(safe-area-inset-right, 0px))",
             zIndex: 20,
             width: 40,
             height: 40,
@@ -1021,10 +1021,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 <div
                   aria-live="polite"
                   style={{
-                    position: "absolute",
-                    top: 12,
-                    left: 12,
-                    right: 12,
+                     position: "absolute",
+                     top: "calc(12px + env(safe-area-inset-top, 0px))",
+                     left: "calc(12px + env(safe-area-inset-left, 0px))",
+                     right: "calc(12px + env(safe-area-inset-right, 0px))",
                     zIndex: 10,
                     padding: "6px 10px",
                     borderRadius: 999,
@@ -1061,8 +1061,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   title={scanPaused ? "Even geduld…" : torchOn ? "Zaklamp uit" : "Zaklamp aan"}
                   style={{
                     position: "absolute",
-                    top: 12,
-                    right: 12,
+                    top: "calc(12px + env(safe-area-inset-top, 0px))",
+                    right: "calc(12px + env(safe-area-inset-right, 0px))",
                     zIndex: 11,
                     width: 38,
                     height: 38,
@@ -1096,8 +1096,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   title={boostOn ? "Boost uit" : "Verhoog verlichting"}
                   style={{
                     position: "absolute",
-                    top: torchSupported ? 58 : 12,
-                    right: 12,
+                    top: `calc(${torchSupported ? 58 : 12}px + env(safe-area-inset-top, 0px))`,
+                    right: "calc(12px + env(safe-area-inset-right, 0px))",
                     zIndex: 11,
                     width: 38,
                     height: 38,
@@ -1128,7 +1128,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   role="status"
                   style={{
                     position: "absolute",
-                    top: torchSupported ? 106 : 60,
+                    top: `calc(${torchSupported ? 106 : 60}px + env(safe-area-inset-top, 0px))`,
                     left: 0,
                     right: 0,
                     zIndex: 13,
