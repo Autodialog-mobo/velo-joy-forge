@@ -1086,6 +1086,87 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     : <FlashlightOff size={18} strokeWidth={2} />}
                 </button>
               )}
+              {permission !== "checking" && permission !== "denied" && (
+                <button
+                  type="button"
+                  onClick={toggleBoost}
+                  disabled={scanPaused}
+                  aria-label={boostOn ? "Verlichting-boost uitschakelen" : "Verlichting-boost inschakelen"}
+                  aria-pressed={boostOn}
+                  title={boostOn ? "Boost uit" : "Verhoog verlichting"}
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: torchSupported ? 60 : 12,
+                    zIndex: 11,
+                    width: 38,
+                    height: 38,
+                    borderRadius: 999,
+                    border: "1px solid rgba(255,255,255,0.22)",
+                    background: boostOn ? "rgba(255,228,138,0.92)" : "rgba(13,31,60,0.72)",
+                    color: boostOn ? "#0D1F3C" : "#fff",
+                    backdropFilter: "blur(6px)",
+                    cursor: scanPaused ? "not-allowed" : "pointer",
+                    opacity: scanPaused ? 0.55 : 1,
+                    pointerEvents: scanPaused ? "none" : "auto",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: boostOn ? "0 0 18px rgba(255,228,138,0.5)" : "none",
+                    transition: "background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease",
+                  }}
+                >
+                  {boostOn ? <Sun size={18} strokeWidth={2} /> : <SunDim size={18} strokeWidth={2} />}
+                </button>
+              )}
+              {boostOn && (
+                <style>{`[data-qr-scanner-root] video { filter: brightness(1.35) contrast(1.18) saturate(1.05); transition: filter 200ms ease; }`}</style>
+              )}
+              {boostHint && (
+                <div
+                  aria-live="polite"
+                  role="status"
+                  style={{
+                    position: "absolute",
+                    top: 60,
+                    left: 0,
+                    right: 0,
+                    zIndex: 13,
+                    display: "flex",
+                    justifyContent: "center",
+                    pointerEvents: "none",
+                    padding: "0 12px",
+                    animation: "qr-torch-pop 220ms cubic-bezier(0.2,0.9,0.3,1.3)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "8px 14px",
+                      borderRadius: 999,
+                      background: boostOn ? "rgba(255,228,138,0.96)" : "rgba(13,31,60,0.86)",
+                      color: boostOn ? "#0D1F3C" : "#fff",
+                      border: "1px solid rgba(255,255,255,0.4)",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 6px 22px rgba(0,0,0,0.25)",
+                      backdropFilter: "blur(6px)",
+                      maxWidth: "calc(100% - 24px)",
+                      textAlign: "center",
+                    }}
+                  >
+                    {boostOn ? <Sun size={15} strokeWidth={2.2} /> : <SunDim size={15} strokeWidth={2.2} />}
+                    <span>
+                      {boostOn
+                        ? (torchSupported ? "Boost aan — combineer eventueel met de zaklamp" : "Boost aan — zoek extra licht voor beste resultaat")
+                        : "Boost uit"}
+                    </span>
+                  </div>
+                </div>
+              )}
               {scanPaused && (
                 <div
                   aria-live="polite"
