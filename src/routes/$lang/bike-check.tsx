@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle, Copy, Check, User, Menu, X } from "lucide-react";
+import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, ArrowRight, XCircle, Copy, Check, User, Menu, X } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
