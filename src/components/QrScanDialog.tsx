@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera } from "lucide-react";
 
 type Props = {
   open: boolean;
@@ -81,6 +81,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // tears down any previous MediaStream/track and starts a clean
   // getUserMedia attempt. Used on "Opnieuw proberen".
   const [scannerKey, setScannerKey] = useState(0);
+  // Which camera to use. "environment" = achterzijde (standaard, beste voor
+  // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
+  // Tablets met meerdere camera's krijgen een wisselknop in beeld.
+  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+  // Detect of er meerdere video-input devices zijn. Alleen dan tonen we
+  // de wisselknop — op een laptop met één camera is hij overbodig.
+  const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
@@ -99,6 +106,18 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     void (async () => {
       const state = await queryCameraPermission();
       if (!cancelled) setPermission(state);
+      // Tel video-input devices. enumerateDevices geeft pas labels terug
+      // nadat de gebruiker permissie heeft gegeven; voor de telling
+      // (deviceId-aanwezigheid) hebben we de labels niet nodig.
+      try {
+        const devices = await navigator.mediaDevices?.enumerateDevices?.();
+        if (!cancelled && devices) {
+          const cams = devices.filter((d) => d.kind === "videoinput");
+          setHasMultipleCameras(cams.length > 1);
+        }
+      } catch {
+        /* enumerateDevices is best-effort */
+      }
     })();
     return () => {
       cancelled = true;
@@ -145,6 +164,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       const state = await queryCameraPermission();
       setPermission(state);
     })();
+  };
+
+  const toggleFacingMode = () => {
+    // Wisselen tussen voor- en achtercamera: remount de scanner zodat de
+    // oude track netjes stopt voor de nieuwe getUserMedia-aanvraag.
+    setFacingMode((m) => (m === "environment" ? "user" : "environment"));
+    setCameraError(null);
+    setScannerKey((k) => k + 1);
   };
 
   const reset = () => {
@@ -310,7 +337,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
-                  constraints={{ facingMode: "environment" }}
+                  constraints={{ facingMode: { ideal: facingMode } }}
                   styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
                   components={{ finder: false }}
                 />
@@ -355,8 +382,36 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   ))}
                 </div>
               </div>
+              {hasMultipleCameras && permission !== "checking" && (
+                <button
+                  type="button"
+                  onClick={toggleFacingMode}
+                  aria-label={facingMode === "environment" ? "Wissel naar front-camera" : "Wissel naar achter-camera"}
+                  title={facingMode === "environment" ? "Front-camera" : "Achter-camera"}
+                  style={{
+                    position: "absolute",
+                    bottom: 12,
+                    right: 12,
+                    zIndex: 10,
+                    width: 44,
+                    height: 44,
+                    borderRadius: 999,
+                    background: "rgba(13,31,60,0.72)",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  <SwitchCamera size={20} color="#fff" strokeWidth={1.8} />
+                </button>
+              )}
             </div>
           )}
+
+
 
           {cameraError && (
             <div
