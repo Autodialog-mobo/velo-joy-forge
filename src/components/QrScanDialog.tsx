@@ -33,6 +33,17 @@ type Props = {
    * Used by flows like the bike-check page that just want the raw code.
    */
   onResult?: (code: string) => void;
+  /**
+   * "velopass" (default): only QR, in-dialog manual fallback for 10-char Velopass codes.
+   * "frame": QR + common 1D barcodes (code_128/39, ean_13, …) for frame-number stickers.
+   *   No in-dialog manual fallback — the caller hosts the manual input on its own page.
+   */
+  scanMode?: "velopass" | "frame";
+  /** Optional header overrides — used by the bike-check frame-barcode flow. */
+  labels?: {
+    title?: string;
+    description?: string;
+  };
 };
 
 // The browser owns the "remember this decision" UX for camera permission.
