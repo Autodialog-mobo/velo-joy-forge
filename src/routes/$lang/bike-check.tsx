@@ -805,47 +805,33 @@ function BikeSearchPage() {
 
 
 
-            <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
-              <button
-                type="button"
-                onClick={() => setScanOpen(true)}
-                style={{
-                  background: "transparent",
-                  color: "#0D1F3C",
-                  border: "1.5px solid rgba(13,31,60,0.2)",
-                  borderRadius: 10,
-                  padding: "14px 20px",
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontWeight: 500,
-                  fontSize: 14,
-                  cursor: "pointer",
-                  flex: "1 1 180px",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                }}
-              >
-                <QrCode size={16} strokeWidth={2} /> {t("method_a.scan_cta")}
-              </button>
-              <button
-                type="submit"
-                disabled={loadingA || loadingB || !codeA}
-                style={{ ...navyBtn(loadingA || loadingB || !codeA), marginTop: 0, width: "auto", flex: "1 1 180px" }}
-              >
-                {loadingA ? (
-                  <>
-                    <Loader2 size={16} className="bs-spin" /> {t("method_a.loading")}
-                  </>
-                ) : loadingB ? (
-                  <>
-                    <Loader2 size={16} className="bs-spin" />
-                  </>
-                ) : (
-                  t("method_b.check")
-                )}
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={loadingA || loadingB || !codeA}
+              style={{
+                ...navyBtn(loadingA || loadingB || !codeA),
+                marginTop: 14,
+                width: "100%",
+                background: loadingA || loadingB || !codeA ? "#94A3B8" : "transparent",
+                color: loadingA || loadingB || !codeA ? "#fff" : "#0D1F3C",
+                border: loadingA || loadingB || !codeA ? "none" : "1.5px solid rgba(13,31,60,0.2)",
+                fontWeight: 500,
+                fontSize: 14,
+              }}
+            >
+              {loadingA ? (
+                <>
+                  <Loader2 size={16} className="bs-spin" /> {t("method_a.loading")}
+                </>
+              ) : loadingB ? (
+                <>
+                  <Loader2 size={16} className="bs-spin" />
+                </>
+              ) : (
+                t("method_b.check")
+              )}
+            </button>
+
           </form>
 
           {/* METHOD B */}
