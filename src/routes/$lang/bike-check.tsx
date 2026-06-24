@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, XCircle, Copy, Check } from "lucide-react";
+import { QrCode, Hash, CheckCircle2, AlertTriangle, Search, Loader2, ArrowUpRight, ArrowRight, XCircle, Copy, Check, User, Menu, X } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { QrScanDialog } from "@/components/QrScanDialog";
 import { Footer } from "@/components/Footer";
@@ -600,10 +600,7 @@ function BikeSearchPage() {
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
           <LangSwitcher currentLang={lang} tone="light" />
           <a href="https://app.velopass.com" className="btn-login">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            <User size={14} strokeWidth={1.8} aria-hidden="true" />
             {t("nav.login")}
           </a>
           <button
@@ -632,15 +629,11 @@ function BikeSearchPage() {
               }
             }}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              {navOpen ? (
-                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              ) : (
-                <>
-                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </>
-              )}
-            </svg>
+            {navOpen ? (
+              <X size={22} strokeWidth={2} aria-hidden="true" />
+            ) : (
+              <Menu size={22} strokeWidth={2} aria-hidden="true" />
+            )}
           </button>
         </div>
       </nav>
@@ -1398,9 +1391,13 @@ function BikeSearchPage() {
               fontWeight: 600,
               color: "var(--green)",
               whiteSpace: "nowrap",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
             }}
           >
-            {tGuides("buying_second_hand.cta_primary")} →
+            {tGuides("buying_second_hand.cta_primary")}
+            <ArrowRight size={15} strokeWidth={2} />
           </span>
         </Link>
       </section>

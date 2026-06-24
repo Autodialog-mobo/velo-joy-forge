@@ -1,7 +1,27 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight } from "lucide-react";
+
+/** Render een instructiestap waarin "→"-tekens vervangen worden door een
+ *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
+function renderStep(step: string): ReactNode {
+  const parts = step.split("→").map((p) => p.trim());
+  if (parts.length === 1) return step;
+  return parts.map((p, i) => (
+    <Fragment key={i}>
+      {i > 0 && (
+        <ChevronRight
+          size={13}
+          strokeWidth={2}
+          aria-hidden="true"
+          style={{ display: "inline", verticalAlign: "-2px", margin: "0 4px", opacity: 0.7 }}
+        />
+      )}
+      {p}
+    </Fragment>
+  ));
+}
 
 type Props = {
   open: boolean;
@@ -572,7 +592,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   </div>
                   <ol style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 6, paddingLeft: 18, lineHeight: 1.55 }}>
                     {guide.steps.map((s, i) => (
-                      <li key={i} style={{ marginTop: i === 0 ? 0 : 2 }}>{s}</li>
+                      <li key={i} style={{ marginTop: i === 0 ? 0 : 2 }}>{renderStep(s)}</li>
                     ))}
                   </ol>
                   {guide.note && (
@@ -931,9 +951,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    gap: 8,
                   }}
                 >
-                  Overdracht starten →
+                  Overdracht starten <ArrowRight size={16} strokeWidth={2} />
                 </a>
               </div>
             </div>
