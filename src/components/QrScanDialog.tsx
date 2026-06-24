@@ -1,7 +1,7 @@
-import { Fragment, useEffect, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check } from "lucide-react";
 
 /** Render een instructiestap waarin "→"-tekens vervangen worden door een
  *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
@@ -238,6 +238,33 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const [cameraError, setCameraError] = useState<{ kind: CameraErrorKind; message: string } | null>(null);
   const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
+  const [manualFocused, setManualFocused] = useState(false);
+  const [exampleCopied, setExampleCopied] = useState(false);
+  const manualInputRef = useRef<HTMLInputElement>(null);
+  const MANUAL_MAX = 10;
+  const sanitizeManual = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, MANUAL_MAX);
+  const copyExample = async () => {
+    const value = "UC9K4D3NCJ";
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(value);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = value;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      setManualCode(sanitizeManual(value));
+      setExampleCopied(true);
+      window.setTimeout(() => setExampleCopied(false), 1400);
+    } catch {
+      setManualCode(sanitizeManual(value));
+    }
+  };
   const [permission, setPermission] = useState<CameraPermission | "checking">("checking");
   // Bumping this key forces the <Scanner /> to unmount + remount, which
   // tears down any previous MediaStream/track and starts a clean
@@ -1024,39 +1051,170 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               </div>
 
               <label
+                htmlFor="qr-manual-code"
                 style={{
                   display: "block",
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 13,
-                  color: "#0D1F3C",
                   fontWeight: 500,
-                  marginBottom: 8,
+                  fontSize: 12,
+                  color: "#0D1F3C",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.8,
+                  marginBottom: 6,
                 }}
               >
                 Velopass-code
               </label>
-              <input
-                type="text"
-                autoComplete="off"
-                maxLength={10}
-                value={manualCode}
-                onChange={(e) => setManualCode(e.target.value.slice(0, 10))}
-                placeholder="87CH9810171"
+              {(() => {
+                const showSlots = manualCode.length > 0 || manualFocused;
+                return (
+                  <div
+                    onClick={() => manualInputRef.current?.focus()}
+                    onPaste={(e) => {
+                      const text = e.clipboardData?.getData("text") ?? "";
+                      if (!text) return;
+                      e.preventDefault();
+                      manualInputRef.current?.focus();
+                      setManualCode(sanitizeManual(text));
+                    }}
+                    style={{
+                      width: "100%",
+                      background: "#fff",
+                      border: "1.5px solid rgba(13,31,60,0.12)",
+                      borderRadius: 10,
+                      padding: "12px 14px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 15,
+                      color: "#0D1F3C",
+                      outline: "none",
+                      boxSizing: "border-box",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4,
+                      cursor: "text",
+                      position: "relative",
+                      minHeight: 46,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <input
+                      ref={manualInputRef}
+                      id="qr-manual-code"
+                      type="text"
+                      inputMode="text"
+                      autoCapitalize="characters"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      autoComplete="off"
+                      value={manualCode}
+                      maxLength={MANUAL_MAX}
+                      onChange={(e) => setManualCode(sanitizeManual(e.target.value))}
+                      onPaste={(e) => {
+                        const text = e.clipboardData?.getData("text") ?? "";
+                        if (!text) return;
+                        e.preventDefault();
+                        setManualCode(sanitizeManual(text));
+                      }}
+                      onFocus={(e) => { setManualFocused(true); e.target.select(); }}
+                      onBlur={() => setManualFocused(false)}
+                      placeholder={showSlots ? undefined : "UC9K4D3NCJ"}
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        width: "100%",
+                        height: "100%",
+                        cursor: "text",
+                        color: "transparent",
+                        caretColor: "transparent",
+                        WebkitTextFillColor: "transparent",
+                        background: "transparent",
+                        border: "none",
+                        outline: "none",
+                        padding: 0,
+                        margin: 0,
+                        font: "inherit",
+                        zIndex: 2,
+                      }}
+                    />
+                    {showSlots ? (
+                      <div style={{ display: "flex", width: "100%", gap: 4, pointerEvents: "none" }}>
+                        {Array.from({ length: MANUAL_MAX }).map((_, i) => (
+                          <span
+                            key={i}
+                            style={{
+                              flex: 1,
+                              textAlign: "center",
+                              fontSize: 15,
+                              fontFamily: "'DM Sans', sans-serif",
+                              fontWeight: i < manualCode.length ? 500 : 400,
+                              color: i < manualCode.length ? "#0D1F3C" : "#CBD5E1",
+                              borderBottom: `2px solid ${i < manualCode.length ? "#0D1F3C" : "#E2E8F0"}`,
+                              paddingBottom: 2,
+                              minWidth: 0,
+                              transition: "all 0.15s ease",
+                            }}
+                          >
+                            {i < manualCode.length ? manualCode[i] : "_"}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <span style={{ color: "#9CA3AF", fontSize: 15, fontFamily: "'DM Sans', sans-serif", pointerEvents: "none" }}>
+                        UC9K4D3NCJ
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
+              <button
+                type="button"
+                onClick={copyExample}
+                aria-label="Voorbeeld: UC9K4D3NCJ"
                 style={{
-                  width: "100%",
-                  padding: "14px 16px",
+                  marginTop: 8,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  background: "transparent",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
                   fontFamily: "'DM Sans', sans-serif",
-                  fontSize: 18,
-                  letterSpacing: 2,
-                  textAlign: "center",
-                  color: "#0D1F3C",
-                  background: "#F5F7FA",
-                  border: "1px solid rgba(13,31,60,0.14)",
-                  borderRadius: 10,
-                  outline: "none",
-                  boxSizing: "border-box",
+                  fontSize: 13,
+                  color: "#5A7090",
                 }}
-              />
+              >
+                <span>Voorbeeld:</span>
+                <span
+                  style={{
+                    fontFamily: "'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+                    fontWeight: 500,
+                    color: "#0D1F3C",
+                    background: "#F1F5F9",
+                    padding: "2px 6px",
+                    borderRadius: 6,
+                    letterSpacing: 0.4,
+                  }}
+                >
+                  UC9K4D3NCJ
+                </span>
+                <span style={{ display: "inline-flex", alignItems: "center", color: exampleCopied ? "#16A34A" : "#5A7090" }}>
+                  {exampleCopied ? <Check size={14} strokeWidth={2.2} /> : <Copy size={14} strokeWidth={2} />}
+                </span>
+              </button>
+              <p
+                style={{
+                  marginTop: 6,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 13,
+                  color: "#94A3B8",
+                  lineHeight: 1.4,
+                }}
+              >
+                10 tekens, bijv. UC9K4D3NCJ
+              </p>
+
               <button
                 type="button"
                 disabled={manualCode.length === 0}
