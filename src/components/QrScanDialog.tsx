@@ -831,7 +831,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     </button>
                     <button
                       type="button"
-                      onClick={() => { setCameraError(null); setManual(true); }}
+                      onClick={() => {
+                        if (isFrameMode) { close(); return; }
+                        setCameraError(null); setManual(true);
+                      }}
                       style={{
                         background: "transparent",
                         border: "1px solid rgba(13,31,60,0.18)",
@@ -843,7 +846,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                         cursor: "pointer",
                       }}
                     >
-                      Voer de code handmatig in
+                      {isFrameMode ? "Sluit en voer handmatig in" : "Voer de code handmatig in"}
                     </button>
                   </div>
                 </div>
