@@ -99,9 +99,26 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       /* localStorage kan geblokkeerd zijn in privé-modus — negeer stil */
     }
   }, [facingMode]);
-  // Detect of er meerdere video-input devices zijn. Alleen dan tonen we
-  // de wisselknop — op een laptop met één camera is hij overbodig.
-  const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
+  // Lijst van beschikbare videoinput-devices. Labels zijn pas zichtbaar
+  // nadat de gebruiker camerapermissie heeft gegeven — daarvoor krijgen we
+  // alleen een leeg label terug.
+  const [cameras, setCameras] = useState<{ deviceId: string; label: string }[]>([]);
+  // Door de gebruiker gekozen specifieke camera (deviceId). Overschrijft
+  // facingMode als hij gezet is. Onthouden in localStorage zodat een
+  // volgende scan dezelfde fysieke camera gebruikt.
+  const [deviceId, setDeviceId] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem("velopass:qr-device-id");
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (deviceId) window.localStorage.setItem("velopass:qr-device-id", deviceId);
+      else window.localStorage.removeItem("velopass:qr-device-id");
+    } catch {
+      /* negeer */
+    }
+  }, [deviceId]);
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
