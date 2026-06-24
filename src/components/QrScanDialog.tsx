@@ -382,8 +382,36 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   ))}
                 </div>
               </div>
+              {hasMultipleCameras && permission !== "checking" && (
+                <button
+                  type="button"
+                  onClick={toggleFacingMode}
+                  aria-label={facingMode === "environment" ? "Wissel naar front-camera" : "Wissel naar achter-camera"}
+                  title={facingMode === "environment" ? "Front-camera" : "Achter-camera"}
+                  style={{
+                    position: "absolute",
+                    bottom: 12,
+                    right: 12,
+                    zIndex: 10,
+                    width: 44,
+                    height: 44,
+                    borderRadius: 999,
+                    background: "rgba(13,31,60,0.72)",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  <SwitchCamera size={20} color="#fff" strokeWidth={1.8} />
+                </button>
+              )}
             </div>
           )}
+
+
 
           {cameraError && (
             <div
