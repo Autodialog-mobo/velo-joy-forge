@@ -697,14 +697,33 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
-                  constraints={
-                    deviceId
+                  // Alleen QR — voorkomt dat de decoder tijd verspilt aan
+                  // andere barcodeformaten (EAN, Code128, …).
+                  formats={["qr_code"]}
+                  // Sneller pollen tussen frames (default ~500ms). 80ms geeft
+                  // ~12 leespogingen per seconde zonder de CPU plat te leggen.
+                  scanDelay={80}
+                  constraints={{
+                    ...(deviceId
                       ? { deviceId: { exact: deviceId } }
-                      : { facingMode: { ideal: facingMode } }
-                  }
+                      : { facingMode: { ideal: facingMode } }),
+                    // Hogere resolutie = scherpere kleine modules, dus
+                    // betrouwbaardere reads op een witte-op-zwart Frame-ID.
+                    width: { ideal: 1920 },
+                    height: { ideal: 1080 },
+                    frameRate: { ideal: 30 },
+                    // Continu scherpstellen / belichten / witbalans — door de
+                    // browser/camera ondersteund waar mogelijk, anders genegeerd.
+                    advanced: [
+                      { focusMode: "continuous" },
+                      { exposureMode: "continuous" },
+                      { whiteBalanceMode: "continuous" },
+                    ] as MediaTrackConstraintSet[],
+                  }}
                   styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
                   components={{ finder: false }}
                 />
+
               )}
               {/* Targeting overlay */}
               <div
