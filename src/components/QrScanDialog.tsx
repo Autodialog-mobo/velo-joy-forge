@@ -523,6 +523,15 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       };
       const applied = typeof settings.torch === "boolean" ? settings.torch : next;
       setTorchOn(applied);
+      // Bevestigingsbadge: toon ~1500ms "Zaklamp aan/uit" met fade+scale.
+      setTorchFlash(applied ? "on" : "off");
+      if (torchFlashTimerRef.current !== null) {
+        window.clearTimeout(torchFlashTimerRef.current);
+      }
+      torchFlashTimerRef.current = window.setTimeout(() => {
+        setTorchFlash(null);
+        torchFlashTimerRef.current = null;
+      }, 1500);
       // Korte retry: pauzeer decoder ~280ms zodat auto-exposure/witbalans
       // zich aanpast aan de nieuwe lichtomstandigheden, en hervat dan met
       // een verse leespoging.
