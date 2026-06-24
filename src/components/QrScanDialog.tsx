@@ -772,8 +772,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
           aria-label="Sluiten"
           style={{
             position: "absolute",
-            top: "calc(16px + env(safe-area-inset-top, 0px))",
-            right: "calc(16px + env(safe-area-inset-right, 0px))",
+            top: safeInset("top", 16),
+            right: safeInset("right", 16),
             zIndex: 20,
             width: 40,
             height: 40,
