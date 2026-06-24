@@ -23,6 +23,15 @@ function renderStep(step: string): ReactNode {
   ));
 }
 
+/** Centrale safe-area helper. Geeft een CSS-waarde terug die de basis-offset
+ *  combineert met `env(safe-area-inset-*)` zodat overlay-knoppen (torch, boost,
+ *  cameralabel, sluitknop) consistent uit de buurt blijven van notches,
+ *  statusbalken en on-screen controls op mobiele toestellen. */
+type SafeSide = "top" | "right" | "bottom" | "left";
+function safeInset(side: SafeSide, basePx = 0): string {
+  return `calc(${basePx}px + env(safe-area-inset-${side}, 0px))`;
+}
+
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -763,8 +772,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
           aria-label="Sluiten"
           style={{
             position: "absolute",
-            top: "calc(16px + env(safe-area-inset-top, 0px))",
-            right: "calc(16px + env(safe-area-inset-right, 0px))",
+            top: safeInset("top", 16),
+            right: safeInset("right", 16),
             zIndex: 20,
             width: 40,
             height: 40,
@@ -1022,9 +1031,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   aria-live="polite"
                   style={{
                      position: "absolute",
-                     top: "calc(12px + env(safe-area-inset-top, 0px))",
-                     left: "calc(12px + env(safe-area-inset-left, 0px))",
-                     right: "calc(12px + env(safe-area-inset-right, 0px))",
+                     top: safeInset("top", 12),
+                     left: safeInset("left", 12),
+                     right: safeInset("right", 12),
                     zIndex: 10,
                     padding: "6px 10px",
                     borderRadius: 999,
@@ -1061,8 +1070,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   title={scanPaused ? "Even geduld…" : torchOn ? "Zaklamp uit" : "Zaklamp aan"}
                   style={{
                     position: "absolute",
-                    top: "calc(12px + env(safe-area-inset-top, 0px))",
-                    right: "calc(12px + env(safe-area-inset-right, 0px))",
+                    top: safeInset("top", 12),
+                    right: safeInset("right", 12),
                     zIndex: 11,
                     width: 38,
                     height: 38,
@@ -1096,8 +1105,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   title={boostOn ? "Boost uit" : "Verhoog verlichting"}
                   style={{
                     position: "absolute",
-                    top: `calc(${torchSupported ? 58 : 12}px + env(safe-area-inset-top, 0px))`,
-                    right: "calc(12px + env(safe-area-inset-right, 0px))",
+                    top: safeInset("top", torchSupported ? 58 : 12),
+                    right: safeInset("right", 12),
                     zIndex: 11,
                     width: 38,
                     height: 38,
@@ -1128,7 +1137,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   role="status"
                   style={{
                     position: "absolute",
-                    top: `calc(${torchSupported ? 106 : 60}px + env(safe-area-inset-top, 0px))`,
+                    top: safeInset("top", torchSupported ? 106 : 60),
                     left: 0,
                     right: 0,
                     zIndex: 13,
