@@ -270,6 +270,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // tears down any previous MediaStream/track and starts a clean
   // getUserMedia attempt. Used on "Opnieuw proberen".
   const [scannerKey, setScannerKey] = useState(0);
+  // Torch / zaklamp: alleen ondersteund op telefoons met een back-camera
+  // die `MediaStreamTrack.getCapabilities().torch` rapporteert (vooral
+  // Chrome/Edge op Android). iOS Safari ondersteunt dit niet.
+  const [torchSupported, setTorchSupported] = useState(false);
+  const [torchOn, setTorchOn] = useState(false);
+  const torchTrackRef = useRef<MediaStreamTrack | null>(null);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
