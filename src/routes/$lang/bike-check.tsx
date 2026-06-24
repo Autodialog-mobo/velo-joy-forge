@@ -974,41 +974,6 @@ function BikeSearchPage() {
                       </button>
                     </li>
                   ))}
-                  <li
-                    id={`bs-brand-opt-${brandSuggestions.length}`}
-                    role="option"
-                    aria-selected={activeIdx === brandSuggestions.length}
-                    style={{
-                      borderTop: brandSuggestions.length > 0 ? "1px solid #e2e8f0" : undefined,
-                      marginTop: brandSuggestions.length > 0 ? 4 : 0,
-                      paddingTop: brandSuggestions.length > 0 ? 4 : 0,
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        setBrand(UNKNOWN_VALUE);
-                        setBrandFocused(false);
-                      }}
-                      onMouseEnter={() => setActiveIdx(brandSuggestions.length)}
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        textAlign: "left",
-                        padding: "8px 10px",
-                        border: "none",
-                        background: activeIdx === brandSuggestions.length ? "#f1f5f9" : "transparent",
-                        borderRadius: 6,
-                        cursor: "pointer",
-                        fontSize: 14,
-                        color: "#5A7090",
-                        fontStyle: "italic",
-                      }}
-                    >
-                      Merk niet in de lijst / onbekend
-                    </button>
-                  </li>
                 </ul>
               )}
             </div>
