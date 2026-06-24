@@ -883,9 +883,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   onScan={handleScan}
                   onError={handleError}
                   paused={scanPaused}
-                  // Alleen QR — voorkomt dat de decoder tijd verspilt aan
-                  // andere barcodeformaten (EAN, Code128, …).
-                  formats={["qr_code"]}
+                  // QR always. In frame mode we ook 1D-barcodes (Code-128/39,
+                  // EAN, UPC, ITF, Codabar) zodat de framenummer-sticker direct
+                  // gelezen wordt. BarcodeDetector wordt gebruikt waar
+                  // ondersteund; anders valt de library terug op zxing-wasm.
+                  formats={isFrameMode
+                    ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
+                    : ["qr_code"]}
                   // Sneller pollen tussen frames (default ~500ms). 80ms geeft
                   // ~12 leespogingen per seconde zonder de CPU plat te leggen.
                   scanDelay={80}
