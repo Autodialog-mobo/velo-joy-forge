@@ -434,6 +434,45 @@ function BikeSearchPage() {
   void BIKE_BRANDS;
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+  const findVelopassCode = (raw: string) => {
+    const value = raw.trim();
+    const codes: string[] = [];
+    const add = (candidate: string | null | undefined) => {
+      if (!candidate) return;
+      const variants = new Set([candidate]);
+      try { variants.add(decodeURIComponent(candidate)); } catch { /* keep original */ }
+      for (const variant of variants) {
+        const clean = variant.toUpperCase().replace(/[^A-Z0-9]/g, "");
+        if (clean.length === 10) codes.push(clean);
+        for (const part of variant.split(/[^A-Za-z0-9]+/)) {
+          const token = part.toUpperCase();
+          if (/^[A-Z0-9]{10}$/.test(token)) codes.push(token);
+        }
+      }
+    };
+
+    const parseUrl = (input: string) => {
+      try { return new URL(input); } catch { /* try without scheme below */ }
+      try { return new URL(`https://${input}`); } catch { return null; }
+    };
+
+    const url = parseUrl(value);
+    if (url) {
+      const preferredParams = ["stickercode", "sticker_code", "code", "velopasscode", "frameid", "frame_id", "id"];
+      for (const key of preferredParams) add(url.searchParams.get(key));
+      if (codes[0]) return codes[0];
+
+      url.searchParams.forEach((paramValue) => add(paramValue));
+      if (codes[0]) return codes[0];
+
+      const pathParts = [...url.pathname.split("/"), url.hash.replace(/^#/, "")].filter(Boolean).reverse();
+      for (const part of pathParts) add(part);
+      return codes[0] ?? "";
+    }
+
+    add(value);
+    return codes[0] ?? sanitizeCode(value);
+  };
   const sanitizeAlnum = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
 
   const [loadingA, setLoadingA] = useState(false);
@@ -482,20 +521,9 @@ function BikeSearchPage() {
   };
 
   const handleScanResult = (raw: string) => {
-    // Velopass stickers encode a URL (e.g. https://app.velopass.com/lost/ABC12345).
-    // Extract the last non-empty path segment so we feed the lookup the code,
-    // not the full URL.
-    let candidate = raw.trim();
-    try {
-      const url = new URL(candidate);
-      const segments = url.pathname.split("/").filter(Boolean);
-      if (segments.length > 0) candidate = segments[segments.length - 1];
-    } catch {
-      // Not a URL — use the raw value as-is.
-    }
-    const clean = sanitizeCode(candidate);
+    const clean = findVelopassCode(raw);
     setCodeA(clean);
-    void runCheck(clean);
+    if (clean.length === 10) void runCheck(clean);
   };
 
   const submitB = async (e: React.FormEvent) => {
