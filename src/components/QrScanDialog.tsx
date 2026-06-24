@@ -544,50 +544,80 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         </DialogHeader>
 
         <div style={{ padding: "0 28px 28px" }}>
-          {!result && !cameraError && !manual && permission === "denied" && (
-            <div
-              style={{
-                padding: 20,
-                borderRadius: 14,
-                background: "rgba(220,38,38,0.06)",
-                border: "1px solid rgba(220,38,38,0.18)",
-                display: "flex",
-                gap: 12,
-                alignItems: "flex-start",
-              }}
-            >
-              <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0, marginTop: 2 }} />
-              <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
-                  Cameratoegang geblokkeerd
+          {!result && !manual && (permission === "denied" || cameraError?.kind === "denied") && (() => {
+            const browser = detectBrowser();
+            const guide = getPermissionRecoverySteps(browser);
+            return (
+              <div
+                style={{
+                  padding: 20,
+                  borderRadius: 14,
+                  background: "rgba(220,38,38,0.06)",
+                  border: "1px solid rgba(220,38,38,0.18)",
+                  display: "flex",
+                  gap: 12,
+                  alignItems: "flex-start",
+                }}
+              >
+                <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0, marginTop: 2 }} />
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
+                    Cameratoegang geblokkeerd
+                  </div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
+                    Je hebt cameratoegang voor deze site geweigerd of geblokkeerd.
+                  </div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#0D1F3C", fontSize: 13, marginTop: 10, fontWeight: 500 }}>
+                    {guide.headline}
+                  </div>
+                  <ol style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 6, paddingLeft: 18, lineHeight: 1.55 }}>
+                    {guide.steps.map((s, i) => (
+                      <li key={i} style={{ marginTop: i === 0 ? 0 : 2 }}>{s}</li>
+                    ))}
+                  </ol>
+                  {guide.note && (
+                    <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 12, marginTop: 8, fontStyle: "italic", lineHeight: 1.5 }}>
+                      {guide.note}
+                    </div>
+                  )}
+                  <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
+                    <button
+                      type="button"
+                      onClick={retryCamera}
+                      style={{
+                        background: "transparent",
+                        border: "1px solid rgba(13,31,60,0.18)",
+                        borderRadius: 10,
+                        padding: "8px 14px",
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: 13,
+                        color: "#0D1F3C",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Ik heb het toegestaan — opnieuw proberen
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setCameraError(null); setManual(true); }}
+                      style={{
+                        background: "transparent",
+                        border: "1px solid rgba(13,31,60,0.18)",
+                        borderRadius: 10,
+                        padding: "8px 14px",
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: 13,
+                        color: "#0D1F3C",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Voer de code handmatig in
+                    </button>
+                  </div>
                 </div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
-                  Je hebt cameratoegang voor deze site geweigerd. Open de
-                  site-instellingen van je browser (slotje in de adresbalk →
-                  Camera → Toestaan) en herlaad de pagina. In een in-app
-                  browser (Instagram, Facebook…) kun je beter openen in
-                  Safari of Chrome.
-                </div>
-                <button
-                  type="button"
-                  onClick={() => { setManual(true); }}
-                  style={{
-                    marginTop: 12,
-                    background: "transparent",
-                    border: "1px solid rgba(13,31,60,0.18)",
-                    borderRadius: 10,
-                    padding: "8px 14px",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 13,
-                    color: "#0D1F3C",
-                    cursor: "pointer",
-                  }}
-                >
-                  Voer de code handmatig in
-                </button>
               </div>
-            </div>
-          )}
+            );
+          })()}
 
           {!result && !cameraError && !manual && permission !== "denied" && (
             <div
