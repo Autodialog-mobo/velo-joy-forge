@@ -485,22 +485,38 @@ function BikeSearchPage() {
   const submitLockRef = useRef(false);
 
   // Spotlight: na een (scan- of form-)submit dimmen we de rest van de
-  // pagina en lichten het resultaatpaneel even op. Auto-dismiss na 3s of
-  // bij een tap op de dim-laag, zodat de gebruiker er nooit "in vast zit".
+  // pagina en lichten het resultaatpaneel even op. Werkt identiek op
+  // mobiel én desktop: backdrop is position:fixed, het resultaat zit op
+  // z-index 60 (onder de nav op 250, boven de dim op 50). Dismiss zodra
+  // de gebruiker interageert (klik, scroll, toetsenbord) of na 6s — zo
+  // wordt het op desktop niet weggeflitst voordat het oog het opmerkt.
   const [spotlight, setSpotlight] = useState(false);
   useEffect(() => {
-    if (result || error) {
-      // Twee rAF's: één voor de DOM-paint van het resultaat, één voor de
-      // layout van de sticky nav, zodat `scroll-margin-top` zijn werk doet.
+    if (!(result || error)) return;
+    requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
+        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
-      setSpotlight(true);
-      const tid = setTimeout(() => setSpotlight(false), 3000);
-      return () => clearTimeout(tid);
-    }
+    });
+    setSpotlight(true);
+    const dismiss = () => setSpotlight(false);
+    const tid = setTimeout(dismiss, 6000);
+    // Pas listeners toe ná de scroll-animatie, anders dismisst onze eigen
+    // smooth-scroll het direct via het 'scroll' event.
+    const lid = setTimeout(() => {
+      window.addEventListener("pointerdown", dismiss, { once: true });
+      window.addEventListener("keydown", dismiss, { once: true });
+      window.addEventListener("wheel", dismiss, { once: true, passive: true });
+      window.addEventListener("touchmove", dismiss, { once: true, passive: true });
+    }, 800);
+    return () => {
+      clearTimeout(tid);
+      clearTimeout(lid);
+      window.removeEventListener("pointerdown", dismiss);
+      window.removeEventListener("keydown", dismiss);
+      window.removeEventListener("wheel", dismiss);
+      window.removeEventListener("touchmove", dismiss);
+    };
   }, [result, error]);
 
   const runCheck = async (code: string) => {
