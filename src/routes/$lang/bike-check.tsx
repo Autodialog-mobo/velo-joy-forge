@@ -406,6 +406,8 @@ function BikeSearchPage() {
   const [frame, setFrame] = useState("");
   const turnstileRef = useRef<TurnstileHandle>(null);
   const [scanOpen, setScanOpen] = useState(false);
+  const [scanFrameOpen, setScanFrameOpen] = useState(false);
+  const frameInputRef = useRef<HTMLInputElement>(null);
   const [navOpen, setNavOpen] = useState(false);
   const [brandFocused, setBrandFocused] = useState(false);
   const [brandQuery, setBrandQuery] = useState("");
