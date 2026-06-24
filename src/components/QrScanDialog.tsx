@@ -493,11 +493,17 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     try {
       await track.applyConstraints({ advanced: [{ torch: next } as unknown as MediaTrackConstraintSet] });
       setTorchOn(next);
+      // Korte retry: pauzeer decoder ~280ms zodat auto-exposure/witbalans
+      // zich aanpast aan de nieuwe lichtomstandigheden, en hervat dan met
+      // een verse leespoging.
+      setScanPaused(true);
+      window.setTimeout(() => setScanPaused(false), 280);
     } catch {
       // Sommige toestellen blokkeren torch bij bepaalde resoluties; stil falen.
       setTorchSupported(false);
     }
   };
+
 
 
 
