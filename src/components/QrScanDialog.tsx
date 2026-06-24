@@ -877,9 +877,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 <button
                   type="button"
                   onClick={toggleTorch}
+                  disabled={scanPaused}
                   aria-label={torchOn ? "Zaklamp uitschakelen" : "Zaklamp inschakelen"}
                   aria-pressed={torchOn}
-                  title={torchOn ? "Zaklamp uit" : "Zaklamp aan"}
+                  aria-disabled={scanPaused}
+                  title={scanPaused ? "Even geduld…" : torchOn ? "Zaklamp uit" : "Zaklamp aan"}
                   style={{
                     position: "absolute",
                     top: 12,
@@ -892,12 +894,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     background: torchOn ? "rgba(255,209,77,0.92)" : "rgba(13,31,60,0.72)",
                     color: torchOn ? "#0D1F3C" : "#fff",
                     backdropFilter: "blur(6px)",
-                    cursor: "pointer",
+                    cursor: scanPaused ? "not-allowed" : "pointer",
+                    opacity: scanPaused ? 0.55 : 1,
+                    pointerEvents: scanPaused ? "none" : "auto",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
                     boxShadow: torchOn ? "0 0 18px rgba(255,209,77,0.55)" : "none",
-                    transition: "background 0.15s ease, box-shadow 0.15s ease",
+                    transition: "background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease",
                   }}
                 >
                   {torchOn
