@@ -613,7 +613,60 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     }
   };
 
-
+  // Fallback wanneer er geen torch is: software-boost (CSS-filter op de
+  // video) + best-effort hardware-bump van exposure/brightness/contrast.
+  // Toont kort een hint als zelfs dat niet helpt op donkere scènes.
+  const toggleBoost = async () => {
+    const next = !boostOn;
+    setBoostOn(next);
+    setBoostHint(next);
+    window.setTimeout(() => setBoostHint(false), 2200);
+    try {
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      const track = stream?.getVideoTracks?.()[0];
+      if (!track || track.readyState !== "live") return;
+      const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & {
+        exposureCompensation?: { max?: number; min?: number };
+        brightness?: { max?: number; min?: number };
+        contrast?: { max?: number; min?: number };
+        iso?: { max?: number; min?: number };
+        exposureMode?: string[];
+      };
+      const advanced: MediaTrackConstraintSet[] = [];
+      if (next) {
+        if (caps.exposureMode?.includes("manual") || caps.exposureMode?.includes("continuous")) {
+          advanced.push({ exposureMode: "continuous" } as MediaTrackConstraintSet);
+        }
+        if (caps.exposureCompensation?.max !== undefined) {
+          advanced.push({ exposureCompensation: caps.exposureCompensation.max } as unknown as MediaTrackConstraintSet);
+        }
+        if (caps.brightness?.max !== undefined) {
+          advanced.push({ brightness: caps.brightness.max } as unknown as MediaTrackConstraintSet);
+        }
+        if (caps.contrast?.max !== undefined) {
+          advanced.push({ contrast: caps.contrast.max } as unknown as MediaTrackConstraintSet);
+        }
+        if (caps.iso?.max !== undefined) {
+          advanced.push({ iso: caps.iso.max } as unknown as MediaTrackConstraintSet);
+        }
+      } else {
+        if (caps.exposureCompensation?.min !== undefined) {
+          advanced.push({ exposureCompensation: 0 } as unknown as MediaTrackConstraintSet);
+        }
+      }
+      if (advanced.length > 0) {
+        await track.applyConstraints({ advanced }).catch(() => {});
+      }
+      // Korte decoder-pauze zodat de auto-exposure/witbalans zich kan
+      // aanpassen aan de nieuwe instellingen.
+      setScanPaused(true);
+      window.setTimeout(() => setScanPaused(false), 320);
+    } catch {
+      /* stille fallback — de CSS-filter doet het zware werk */
+    }
+  };
 
 
   const emitResult = (value: string) => {
