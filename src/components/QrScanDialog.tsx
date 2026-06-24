@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
 
 /** Render een instructiestap waarin "→"-tekens vervangen worden door een
  *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
@@ -294,6 +294,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // Korte bevestigingsbadge na een torch-toggle: "Zaklamp aan" / "Zaklamp uit".
   const [torchFlash, setTorchFlash] = useState<"on" | "off" | null>(null);
   const torchFlashTimerRef = useRef<number | null>(null);
+  // Software/hardware "boost" voor donkere omstandigheden zonder torch:
+  // verhoogt CSS brightness/contrast op de video én probeert
+  // exposureCompensation/brightness/contrast via track-constraints.
+  const [boostOn, setBoostOn] = useState(false);
+  const [boostHint, setBoostHint] = useState(false);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
