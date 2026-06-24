@@ -279,6 +279,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // Korte pauze van de decoder na een torch-toggle: dwingt een "verse"
   // leespoging af zodra de belichting/witbalans zich heeft aangepast.
   const [scanPaused, setScanPaused] = useState(false);
+  // Korte bevestigingsbadge na een torch-toggle: "Zaklamp aan" / "Zaklamp uit".
+  const [torchFlash, setTorchFlash] = useState<"on" | "off" | null>(null);
+  const torchFlashTimerRef = useRef<number | null>(null);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
@@ -520,6 +523,15 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       };
       const applied = typeof settings.torch === "boolean" ? settings.torch : next;
       setTorchOn(applied);
+      // Bevestigingsbadge: toon ~1500ms "Zaklamp aan/uit" met fade+scale.
+      setTorchFlash(applied ? "on" : "off");
+      if (torchFlashTimerRef.current !== null) {
+        window.clearTimeout(torchFlashTimerRef.current);
+      }
+      torchFlashTimerRef.current = window.setTimeout(() => {
+        setTorchFlash(null);
+        torchFlashTimerRef.current = null;
+      }, 1500);
       // Korte retry: pauzeer decoder ~280ms zodat auto-exposure/witbalans
       // zich aanpast aan de nieuwe lichtomstandigheden, en hervat dan met
       // een verse leespoging.
@@ -999,6 +1011,63 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   <style>{`
                     @keyframes qr-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
                     @keyframes qr-fade-in { from { opacity: 0; } to { opacity: 1; } }
+                  `}</style>
+                </div>
+              )}
+              {torchFlash && (
+                <div
+                  aria-live="polite"
+                  role="status"
+                  style={{
+                    position: "absolute",
+                    bottom: 14,
+                    left: 0,
+                    right: 0,
+                    zIndex: 13,
+                    display: "flex",
+                    justifyContent: "center",
+                    pointerEvents: "none",
+                    animation: "qr-torch-pop 220ms cubic-bezier(0.2,0.9,0.3,1.3)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "8px 14px",
+                      borderRadius: 999,
+                      background:
+                        torchFlash === "on" ? "rgba(255,209,77,0.96)" : "rgba(13,31,60,0.86)",
+                      color: torchFlash === "on" ? "#0D1F3C" : "#fff",
+                      border:
+                        torchFlash === "on"
+                          ? "1px solid rgba(255,255,255,0.55)"
+                          : "1px solid rgba(255,255,255,0.22)",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow:
+                        torchFlash === "on"
+                          ? "0 6px 22px rgba(255,209,77,0.45)"
+                          : "0 6px 22px rgba(0,0,0,0.35)",
+                      backdropFilter: "blur(6px)",
+                    }}
+                  >
+                    {torchFlash === "on" ? (
+                      <Flashlight size={15} strokeWidth={2.2} />
+                    ) : (
+                      <FlashlightOff size={15} strokeWidth={2.2} />
+                    )}
+                    <span>{torchFlash === "on" ? "Zaklamp aan" : "Zaklamp uit"}</span>
+                    <Check size={14} strokeWidth={2.6} />
+                  </div>
+                  <style>{`
+                    @keyframes qr-torch-pop {
+                      0% { opacity: 0; transform: translateY(8px) scale(0.92); }
+                      60% { opacity: 1; transform: translateY(0) scale(1.04); }
+                      100% { opacity: 1; transform: translateY(0) scale(1); }
+                    }
                   `}</style>
                 </div>
               )}
