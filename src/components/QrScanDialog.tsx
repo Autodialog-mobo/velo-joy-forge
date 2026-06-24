@@ -15,16 +15,89 @@ type Props = {
   onResult?: (code: string) => void;
 };
 
+// Module-level cached camera stream. Persisting the MediaStream across dialog
+// opens means the browser keeps the camera device active for our origin and
+// does not re-evaluate the permission gesture each time the dialog mounts.
+//
+// NOTE: The browser owns the "remember this decision" UX. We cannot bypass
+// the permission prompt — that is a security mechanism enforced by Safari /
+// Chrome / Firefox. We can only avoid re-triggering it unnecessarily by:
+//   1. Checking navigator.permissions.query({ name: 'camera' }) first and
+//      only calling getUserMedia when we actually need a fresh grant.
+//   2. Reusing an already-granted stream rather than tearing it down and
+//      asking again on the next open.
+// In real browsers (Safari/Chrome) where the user picked "Allow", this works.
+// In in-app browsers (Instagram, Facebook, QR-scanner apps) the permission
+// is often NOT persisted across visits — there is nothing the site can do
+// about that.
+let cachedStream: MediaStream | null = null;
+
+async function getOrCreateCameraStream(): Promise<MediaStream> {
+  if (cachedStream && cachedStream.getVideoTracks().some((t) => t.readyState === "live")) {
+    return cachedStream;
+  }
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: { facingMode: { ideal: "environment" } },
+    audio: false,
+  });
+  cachedStream = stream;
+  return stream;
+}
+
+type CameraPermission = "granted" | "prompt" | "denied" | "unsupported";
+
+async function queryCameraPermission(): Promise<CameraPermission> {
+  if (typeof navigator === "undefined" || !navigator.permissions?.query) {
+    return "unsupported";
+  }
+  try {
+    // `camera` is not in every lib.dom — cast through a narrow shape.
+    const status = await navigator.permissions.query({
+      name: "camera" as PermissionName,
+    });
+    return status.state as CameraPermission;
+  } catch {
+    return "unsupported";
+  }
+}
+
 export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult }: Props) {
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
+  const [permission, setPermission] = useState<CameraPermission | "checking">("checking");
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
     if (open) setManual(initialManual);
   }, [open, initialManual]);
+
+  // When the dialog opens for camera scanning, check the Permissions API
+  // first. Only fire getUserMedia when the state is "granted" (warm the
+  // cached stream) or "prompt" (the user must now decide). On "denied" we
+  // skip the camera entirely and show guidance — re-calling getUserMedia
+  // would just fail in a loop on most browsers.
+  useEffect(() => {
+    if (!open || manual) return;
+    let cancelled = false;
+    setPermission("checking");
+    void (async () => {
+      const state = await queryCameraPermission();
+      if (cancelled) return;
+      setPermission(state);
+      if (state === "granted") {
+        try {
+          await getOrCreateCameraStream();
+        } catch {
+          /* Scanner will surface a real error if device is gone */
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, manual]);
 
   const emitResult = (value: string) => {
     if (onResult) {
@@ -47,6 +120,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
   const handleError = (err: unknown) => {
     const message = err instanceof Error ? err.message : "Camera niet beschikbaar";
+    const name = err instanceof Error ? err.name : "";
+    if (name === "NotAllowedError" || /denied|permission/i.test(message)) {
+      setPermission("denied");
+      return;
+    }
     setError(message);
   };
 
