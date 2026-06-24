@@ -215,7 +215,52 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         </DialogHeader>
 
         <div style={{ padding: "0 28px 28px" }}>
-          {!result && !error && !manual && (
+          {!result && !error && !manual && permission === "denied" && (
+            <div
+              style={{
+                padding: 20,
+                borderRadius: 14,
+                background: "rgba(220,38,38,0.06)",
+                border: "1px solid rgba(220,38,38,0.18)",
+                display: "flex",
+                gap: 12,
+                alignItems: "flex-start",
+              }}
+            >
+              <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0, marginTop: 2 }} />
+              <div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
+                  Cameratoegang geblokkeerd
+                </div>
+                <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
+                  Je hebt cameratoegang voor deze site geweigerd. Open de
+                  site-instellingen van je browser (slotje in de adresbalk →
+                  Camera → Toestaan) en herlaad de pagina. In een in-app
+                  browser (Instagram, Facebook…) kun je beter openen in
+                  Safari of Chrome.
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { setManual(true); }}
+                  style={{
+                    marginTop: 12,
+                    background: "transparent",
+                    border: "1px solid rgba(13,31,60,0.18)",
+                    borderRadius: 10,
+                    padding: "8px 14px",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 13,
+                    color: "#0D1F3C",
+                    cursor: "pointer",
+                  }}
+                >
+                  Voer de code handmatig in
+                </button>
+              </div>
+            </div>
+          )}
+
+          {!result && !error && !manual && permission !== "denied" && (
             <div
               style={{
                 position: "relative",
@@ -225,13 +270,30 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 background: "#0D1F3C",
               }}
             >
-              <Scanner
-                onScan={handleScan}
-                onError={handleError}
-                constraints={{ facingMode: "environment" }}
-                styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
-                components={{ finder: false }}
-              />
+              {permission === "checking" ? (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "rgba(255,255,255,0.7)",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 13,
+                  }}
+                >
+                  Camera voorbereiden…
+                </div>
+              ) : (
+                <Scanner
+                  onScan={handleScan}
+                  onError={handleError}
+                  constraints={{ facingMode: "environment" }}
+                  styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
+                  components={{ finder: false }}
+                />
+              )}
               {/* Targeting overlay */}
               <div
                 style={{
