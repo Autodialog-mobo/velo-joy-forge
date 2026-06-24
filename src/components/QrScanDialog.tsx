@@ -1070,8 +1070,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   title={scanPaused ? "Even geduld…" : torchOn ? "Zaklamp uit" : "Zaklamp aan"}
                   style={{
                     position: "absolute",
-                    top: "calc(12px + env(safe-area-inset-top, 0px))",
-                    right: "calc(12px + env(safe-area-inset-right, 0px))",
+                    top: safeInset("top", 12),
+                    right: safeInset("right", 12),
                     zIndex: 11,
                     width: 38,
                     height: 38,
