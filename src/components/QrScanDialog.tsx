@@ -358,7 +358,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             </div>
           )}
 
-          {error && (
+          {cameraError && (
             <div
               style={{
                 padding: 20,
@@ -373,30 +373,62 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0, marginTop: 2 }} />
               <div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
-                  Camera niet beschikbaar
+                  {cameraError.kind === "not-found"
+                    ? "Geen camera gevonden"
+                    : cameraError.kind === "in-use"
+                      ? "Camera is bezet"
+                      : cameraError.kind === "constraints"
+                        ? "Camera niet geschikt"
+                        : "Camera kon niet starten"}
                 </div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
-                  Geef toestemming voor de camera in je browserinstellingen, of voer de Frame-ID code handmatig in.
+                  {cameraError.kind === "in-use"
+                    ? "Sluit andere apps of tabbladen die de camera gebruiken (bv. Zoom, Teams, Photo Booth) en probeer opnieuw."
+                    : cameraError.kind === "not-found"
+                      ? "We konden geen camera op dit apparaat vinden. Voer de Frame-ID code handmatig in."
+                      : cameraError.kind === "constraints"
+                        ? "Je camera ondersteunt de gevraagde instellingen niet. Voer de code handmatig in."
+                        : `${cameraError.message} Probeer opnieuw of voer de code handmatig in.`}
                 </div>
-                <button
-                  onClick={() => setError(null)}
-                  style={{
-                    marginTop: 12,
-                    background: "transparent",
-                    border: "1px solid rgba(13,31,60,0.18)",
-                    borderRadius: 10,
-                    padding: "8px 14px",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 13,
-                    color: "#0D1F3C",
-                    cursor: "pointer",
-                  }}
-                >
-                  Opnieuw proberen
-                </button>
+                <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
+                  <button
+                    type="button"
+                    onClick={retryCamera}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid rgba(13,31,60,0.18)",
+                      borderRadius: 10,
+                      padding: "8px 14px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      color: "#0D1F3C",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Opnieuw proberen
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setCameraError(null); setManual(true); }}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid rgba(13,31,60,0.18)",
+                      borderRadius: 10,
+                      padding: "8px 14px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      color: "#0D1F3C",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Voer code handmatig in
+                  </button>
+                </div>
               </div>
             </div>
           )}
+
+
 
           {result && (
             <div>
