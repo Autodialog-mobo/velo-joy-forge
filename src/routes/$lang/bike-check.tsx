@@ -1391,9 +1391,13 @@ function BikeSearchPage() {
               fontWeight: 600,
               color: "var(--green)",
               whiteSpace: "nowrap",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
             }}
           >
-            {tGuides("buying_second_hand.cta_primary")} →
+            {tGuides("buying_second_hand.cta_primary")}
+            <ArrowRight size={15} strokeWidth={2} />
           </span>
         </Link>
       </section>
