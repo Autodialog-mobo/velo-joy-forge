@@ -189,6 +189,26 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     };
   }, [open, manual]);
 
+  // Na elke (re)mount van de scanner: even wachten op de
+  // getUserMedia-grant en dan de labels opnieuw inlezen. Zonder grant
+  // geeft enumerateDevices lege labels terug.
+  useEffect(() => {
+    if (!open || manual) return;
+    const t = setTimeout(async () => {
+      try {
+        const devices = await navigator.mediaDevices?.enumerateDevices?.();
+        if (!devices) return;
+        const cams = devices
+          .filter((d) => d.kind === "videoinput")
+          .map((d, i) => ({ deviceId: d.deviceId, label: d.label || `Camera ${i + 1}` }));
+        setCameras(cams);
+      } catch {
+        /* negeer */
+      }
+    }, 800);
+    return () => clearTimeout(t);
+  }, [open, manual, scannerKey]);
+
   const emitResult = (value: string) => {
     if (onResult) {
       onResult(value);
