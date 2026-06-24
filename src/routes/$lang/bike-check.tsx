@@ -1015,8 +1015,10 @@ function BikeSearchPage() {
               )}
             </div>
 
+            <label style={{ ...labelStyle, marginTop: 18 }} htmlFor="bs-frame-scan">{t("method_b.frame_number")}</label>
             {/* PRIMARY ACTION: barcode scan voor het framenummer */}
             <button
+              id="bs-frame-scan"
               type="button"
               onClick={() => setScanFrameOpen(true)}
               style={{
@@ -1062,7 +1064,7 @@ function BikeSearchPage() {
               <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
             </div>
 
-            <label style={labelStyle} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
+            
             <input
               ref={frameInputRef}
               id="bs-frame"
