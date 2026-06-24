@@ -737,7 +737,10 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{t("method_a.title")}</h2>
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
+            <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
+
             <figure style={refImgFigure}>
+
               <img
                 src={velopassStickerAsset.url}
                 alt={t("method_a.image_alt")}
@@ -793,7 +796,7 @@ function BikeSearchPage() {
               <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
             </div>
 
-            <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
+            
 
             <SlotCodeInput
               id="bs-code"
@@ -853,15 +856,7 @@ function BikeSearchPage() {
             <h2 style={cardTitle}>{t("method_b.title")}</h2>
             <p style={cardDesc}>{t("method_b.desc")}</p>
 
-            <figure style={refImgFigure}>
-              <img
-                src={frameNumberAsset.url}
-                alt={t("method_b.image_alt")}
-                style={refImg}
-                loading="lazy"
-              />
-              <figcaption style={refImgCaption}>{t("method_b.image_caption")}</figcaption>
-            </figure>
+
 
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
             <div style={{ position: "relative" }}>
@@ -1006,6 +1001,17 @@ function BikeSearchPage() {
             </div>
 
             <label style={{ ...labelStyle, marginTop: 18 }} htmlFor="bs-frame-scan">{t("method_b.frame_number")}</label>
+
+            <figure style={refImgFigure}>
+              <img
+                src={frameNumberAsset.url}
+                alt={t("method_b.image_alt")}
+                style={refImg}
+                loading="lazy"
+              />
+              <figcaption style={refImgCaption}>{t("method_b.image_caption")}</figcaption>
+            </figure>
+
             {/* PRIMARY ACTION: barcode scan voor het framenummer */}
             <button
               id="bs-frame-scan"
