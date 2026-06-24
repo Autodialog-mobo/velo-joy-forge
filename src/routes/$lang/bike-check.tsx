@@ -1064,7 +1064,7 @@ function BikeSearchPage() {
               <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
             </div>
 
-            <label style={labelStyle} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
+            
             <input
               ref={frameInputRef}
               id="bs-frame"
