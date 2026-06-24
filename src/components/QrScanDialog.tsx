@@ -106,6 +106,18 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     void (async () => {
       const state = await queryCameraPermission();
       if (!cancelled) setPermission(state);
+      // Tel video-input devices. enumerateDevices geeft pas labels terug
+      // nadat de gebruiker permissie heeft gegeven; voor de telling
+      // (deviceId-aanwezigheid) hebben we de labels niet nodig.
+      try {
+        const devices = await navigator.mediaDevices?.enumerateDevices?.();
+        if (!cancelled && devices) {
+          const cams = devices.filter((d) => d.kind === "videoinput");
+          setHasMultipleCameras(cams.length > 1);
+        }
+      } catch {
+        /* enumerateDevices is best-effort */
+      }
     })();
     return () => {
       cancelled = true;
