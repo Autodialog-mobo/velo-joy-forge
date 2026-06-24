@@ -431,6 +431,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
           {!result && !cameraError && !manual && permission !== "denied" && (
             <div
+              data-qr-scanner-root
               style={{
                 position: "relative",
                 aspectRatio: "1 / 1",
