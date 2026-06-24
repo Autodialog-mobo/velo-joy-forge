@@ -99,9 +99,26 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       /* localStorage kan geblokkeerd zijn in privé-modus — negeer stil */
     }
   }, [facingMode]);
-  // Detect of er meerdere video-input devices zijn. Alleen dan tonen we
-  // de wisselknop — op een laptop met één camera is hij overbodig.
-  const [hasMultipleCameras, setHasMultipleCameras] = useState(false);
+  // Lijst van beschikbare videoinput-devices. Labels zijn pas zichtbaar
+  // nadat de gebruiker camerapermissie heeft gegeven — daarvoor krijgen we
+  // alleen een leeg label terug.
+  const [cameras, setCameras] = useState<{ deviceId: string; label: string }[]>([]);
+  // Door de gebruiker gekozen specifieke camera (deviceId). Overschrijft
+  // facingMode als hij gezet is. Onthouden in localStorage zodat een
+  // volgende scan dezelfde fysieke camera gebruikt.
+  const [deviceId, setDeviceId] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem("velopass:qr-device-id");
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (deviceId) window.localStorage.setItem("velopass:qr-device-id", deviceId);
+      else window.localStorage.removeItem("velopass:qr-device-id");
+    } catch {
+      /* negeer */
+    }
+  }, [deviceId]);
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
@@ -120,14 +137,24 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     void (async () => {
       const state = await queryCameraPermission();
       if (!cancelled) setPermission(state);
-      // Tel video-input devices. enumerateDevices geeft pas labels terug
-      // nadat de gebruiker permissie heeft gegeven; voor de telling
-      // (deviceId-aanwezigheid) hebben we de labels niet nodig.
+      // Lees video-input devices. Labels komen pas binnen nadat de
+      // gebruiker permissie heeft gegeven (browser-privacy); zonder labels
+      // tonen we een nette fallback ("Camera 1", "Camera 2", …).
       try {
         const devices = await navigator.mediaDevices?.enumerateDevices?.();
         if (!cancelled && devices) {
-          const cams = devices.filter((d) => d.kind === "videoinput");
-          setHasMultipleCameras(cams.length > 1);
+          const cams = devices
+            .filter((d) => d.kind === "videoinput")
+            .map((d, i) => ({
+              deviceId: d.deviceId,
+              label: d.label || `Camera ${i + 1}`,
+            }));
+          setCameras(cams);
+          // Als de opgeslagen deviceId niet meer bestaat (camera ontkoppeld,
+          // andere browserprofiel), val terug op facingMode.
+          if (deviceId && !cams.some((c) => c.deviceId === deviceId)) {
+            setDeviceId(null);
+          }
         }
       } catch {
         /* enumerateDevices is best-effort */
@@ -136,7 +163,51 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => {
       cancelled = true;
     };
+  }, [open, manual, deviceId]);
+
+  // Labels van enumerateDevices zijn pas zichtbaar nadat de scanner
+  // permissie heeft gekregen. Luister op `devicechange` (vuurt ook na de
+  // eerste grant) en her-enumerate, zodat het selectiemenu de echte
+  // cameranamen toont in plaats van "Camera 1/2".
+  useEffect(() => {
+    if (!open || manual) return;
+    if (typeof navigator === "undefined" || !navigator.mediaDevices?.addEventListener) return;
+    const onChange = async () => {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const cams = devices
+          .filter((d) => d.kind === "videoinput")
+          .map((d, i) => ({ deviceId: d.deviceId, label: d.label || `Camera ${i + 1}` }));
+        setCameras(cams);
+      } catch {
+        /* negeer */
+      }
+    };
+    navigator.mediaDevices.addEventListener("devicechange", onChange);
+    return () => {
+      navigator.mediaDevices.removeEventListener("devicechange", onChange);
+    };
   }, [open, manual]);
+
+  // Na elke (re)mount van de scanner: even wachten op de
+  // getUserMedia-grant en dan de labels opnieuw inlezen. Zonder grant
+  // geeft enumerateDevices lege labels terug.
+  useEffect(() => {
+    if (!open || manual) return;
+    const t = setTimeout(async () => {
+      try {
+        const devices = await navigator.mediaDevices?.enumerateDevices?.();
+        if (!devices) return;
+        const cams = devices
+          .filter((d) => d.kind === "videoinput")
+          .map((d, i) => ({ deviceId: d.deviceId, label: d.label || `Camera ${i + 1}` }));
+        setCameras(cams);
+      } catch {
+        /* negeer */
+      }
+    }, 800);
+    return () => clearTimeout(t);
+  }, [open, manual, scannerKey]);
 
   const emitResult = (value: string) => {
     if (onResult) {
@@ -180,10 +251,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     })();
   };
 
-  const toggleFacingMode = () => {
-    // Wisselen tussen voor- en achtercamera: remount de scanner zodat de
-    // oude track netjes stopt voor de nieuwe getUserMedia-aanvraag.
-    setFacingMode((m) => (m === "environment" ? "user" : "environment"));
+  const selectCamera = (nextDeviceId: string | null) => {
+    // Wissel naar een specifieke camera (deviceId) of terug naar
+    // facingMode-default ("" / null). Remount de scanner zodat de oude
+    // track netjes stopt voor de nieuwe getUserMedia-aanvraag.
+    setDeviceId(nextDeviceId);
     setCameraError(null);
     setScannerKey((k) => k + 1);
   };
@@ -351,7 +423,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
-                  constraints={{ facingMode: { ideal: facingMode } }}
+                  constraints={
+                    deviceId
+                      ? { deviceId: { exact: deviceId } }
+                      : { facingMode: { ideal: facingMode } }
+                  }
                   styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
                   components={{ finder: false }}
                 />
@@ -396,34 +472,62 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   ))}
                 </div>
               </div>
-              {hasMultipleCameras && permission !== "checking" && (
-                <button
-                  type="button"
-                  onClick={toggleFacingMode}
-                  aria-label={facingMode === "environment" ? "Wissel naar front-camera" : "Wissel naar achter-camera"}
-                  title={facingMode === "environment" ? "Front-camera" : "Achter-camera"}
+              {cameras.length > 1 && permission !== "checking" && (
+                <div
                   style={{
                     position: "absolute",
                     bottom: 12,
+                    left: 12,
                     right: 12,
                     zIndex: 10,
-                    width: 44,
-                    height: 44,
-                    borderRadius: 999,
-                    background: "rgba(13,31,60,0.72)",
-                    border: "1px solid rgba(255,255,255,0.18)",
-                    display: "inline-flex",
+                    display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    backdropFilter: "blur(6px)",
+                    gap: 8,
                   }}
                 >
-                  <SwitchCamera size={20} color="#fff" strokeWidth={1.8} />
-                </button>
+                  <SwitchCamera size={18} color="#fff" strokeWidth={1.8} style={{ flexShrink: 0, opacity: 0.9 }} />
+                  <select
+                    aria-label="Kies camera"
+                    value={deviceId ?? `__facing:${facingMode}`}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      if (v.startsWith("__facing:")) {
+                        const fm = v.slice("__facing:".length) as "environment" | "user";
+                        setFacingMode(fm);
+                        selectCamera(null);
+                      } else {
+                        selectCamera(v);
+                      }
+                    }}
+                    style={{
+                      flex: 1,
+                      minWidth: 0,
+                      background: "rgba(13,31,60,0.72)",
+                      color: "#fff",
+                      border: "1px solid rgba(255,255,255,0.18)",
+                      borderRadius: 10,
+                      padding: "8px 10px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      cursor: "pointer",
+                      backdropFilter: "blur(6px)",
+                      appearance: "none",
+                      WebkitAppearance: "none",
+                    }}
+                  >
+                    <option value="__facing:environment">Achtercamera (auto)</option>
+                    <option value="__facing:user">Frontcamera (auto)</option>
+                    {cameras.map((c) => (
+                      <option key={c.deviceId} value={c.deviceId}>
+                        {c.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               )}
             </div>
           )}
+
 
 
 
