@@ -119,6 +119,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       /* negeer */
     }
   }, [deviceId]);
+  // Label van de daadwerkelijk actieve videotrack. De Scanner kiest zelf
+  // welke camera bij `facingMode: { ideal: … }` past — we lezen de
+  // beschrijving uit het <video>-element zodat we het tonen aan de user.
+  const [activeLabel, setActiveLabel] = useState<string | null>(null);
+
+
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
@@ -207,6 +213,36 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       }
     }, 800);
     return () => clearTimeout(t);
+  }, [open, manual, scannerKey]);
+
+  // Lees het label van de actieve videotrack uit het door de Scanner
+  // gerenderde <video>-element. We pollen een paar keer omdat het stream-
+  // object pas na getUserMedia-resolve gekoppeld wordt.
+  useEffect(() => {
+    if (!open || manual) {
+      setActiveLabel(null);
+      return;
+    }
+    let attempts = 0;
+    let stopped = false;
+    const tick = () => {
+      if (stopped) return;
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      const track = stream?.getVideoTracks?.()[0];
+      if (track?.label) {
+        setActiveLabel(track.label);
+        return;
+      }
+      attempts += 1;
+      if (attempts < 12) setTimeout(tick, 250);
+    };
+    const t = setTimeout(tick, 300);
+    return () => {
+      stopped = true;
+      clearTimeout(t);
+    };
   }, [open, manual, scannerKey]);
 
   const emitResult = (value: string) => {
@@ -395,6 +431,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
           {!result && !cameraError && !manual && permission !== "denied" && (
             <div
+              data-qr-scanner-root
               style={{
                 position: "relative",
                 aspectRatio: "1 / 1",
@@ -472,6 +509,36 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   ))}
                 </div>
               </div>
+              {activeLabel && permission !== "checking" && (
+                <div
+                  aria-live="polite"
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    left: 12,
+                    right: 12,
+                    zIndex: 10,
+                    padding: "6px 10px",
+                    borderRadius: 999,
+                    background: "rgba(13,31,60,0.72)",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    color: "#fff",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 12,
+                    lineHeight: 1.3,
+                    backdropFilter: "blur(6px)",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    width: "fit-content",
+                    maxWidth: "calc(100% - 24px)",
+                    margin: "0 auto",
+                  }}
+                  title={activeLabel}
+                >
+                  📷 {activeLabel}
+                </div>
+              )}
               {cameras.length > 1 && permission !== "checking" && (
                 <div
                   style={{
