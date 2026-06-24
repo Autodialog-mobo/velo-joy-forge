@@ -600,10 +600,7 @@ function BikeSearchPage() {
         <div className="nav-actions" style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
           <LangSwitcher currentLang={lang} tone="light" />
           <a href="https://app.velopass.com" className="btn-login">
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M2 13c0-2.5 2.7-4 6-4s6 1.5 6 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            <User size={14} strokeWidth={1.8} aria-hidden="true" />
             {t("nav.login")}
           </a>
           <button
