@@ -914,13 +914,9 @@ function BikeSearchPage() {
                     e.preventDefault();
                     setActiveIdx((i) => (i <= 0 ? optionCount - 1 : i - 1));
                   } else if (e.key === "Enter") {
-                    if (activeIdx >= 0) {
+                    if (activeIdx >= 0 && activeIdx < brandSuggestions.length) {
                       e.preventDefault();
-                      if (activeIdx < brandSuggestions.length) {
-                        setBrand(brandSuggestions[activeIdx]);
-                      } else {
-                        setBrand(UNKNOWN_VALUE);
-                      }
+                      setBrand(brandSuggestions[activeIdx]);
                       setBrandFocused(false);
                     }
                   } else if (e.key === "Escape") {
