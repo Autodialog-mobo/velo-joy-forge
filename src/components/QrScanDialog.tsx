@@ -285,15 +285,33 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       setCameraError(null);
       return;
     }
+    // Als de gekozen camera (deviceId) niet werkt — losgekoppeld, in gebruik,
+    // of onverenigbaar met andere constraints — gooi de opgeslagen keuze
+    // weg en herstart met facingMode-default. Dit voorkomt dat een stale
+    // localStorage-waarde de scanner permanent blokkeert.
+    if (
+      deviceId &&
+      (classified.kind === "constraints" ||
+        classified.kind === "not-found" ||
+        classified.kind === "in-use" ||
+        classified.kind === "unknown")
+    ) {
+      setDeviceId(null);
+      setCameraError(null);
+      setScannerKey((k) => k + 1);
+      return;
+    }
     setCameraError(classified);
   };
 
   const retryCamera = () => {
-    // Full teardown + fresh attempt: clear error, re-check permission,
-    // and bump the scanner key so the <Scanner /> remounts with a brand
-    // new getUserMedia call (previous tracks are stopped on unmount).
+    // Full teardown + fresh attempt: clear error, re-check permission, and
+    // bump the scanner key so the <Scanner /> remounts with a brand-new
+    // getUserMedia call. We ALSO drop the persisted deviceId so a stale
+    // selection (camera unplugged, ander browserprofiel) niet blijft falen.
     setCameraError(null);
     setPermission("checking");
+    setDeviceId(null);
     setScannerKey((k) => k + 1);
     void (async () => {
       const state = await queryCameraPermission();
@@ -303,8 +321,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
   const selectCamera = (nextDeviceId: string | null) => {
     // Wissel naar een specifieke camera (deviceId) of terug naar
-    // facingMode-default ("" / null). Remount de scanner zodat de oude
-    // track netjes stopt voor de nieuwe getUserMedia-aanvraag.
+    // facingMode-default (null). Remount de scanner zodat de oude track
+    // netjes stopt voor de nieuwe getUserMedia-aanvraag.
     setDeviceId(nextDeviceId);
     setCameraError(null);
     setScannerKey((k) => k + 1);
