@@ -452,42 +452,92 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     if (!open || manual) {
       setTorchSupported(false);
       setTorchOn(false);
+      setTorchFlash(null);
+      if (torchFlashTimerRef.current !== null) {
+        window.clearTimeout(torchFlashTimerRef.current);
+        torchFlashTimerRef.current = null;
+      }
       torchTrackRef.current = null;
       return;
     }
+    // Reset state direct bij (re)mount/camera-wissel: de vorige track is
+    // dood, dus de badge mag de oude status niet langer tonen.
+    setTorchSupported(false);
+    setTorchOn(false);
+    setTorchFlash(null);
+    if (torchFlashTimerRef.current !== null) {
+      window.clearTimeout(torchFlashTimerRef.current);
+      torchFlashTimerRef.current = null;
+    }
+    torchTrackRef.current = null;
+
     let attempts = 0;
     let stopped = false;
+    let pollId: number | null = null;
+    let trackListenersTrack: MediaStreamTrack | null = null;
+    const onTrackEnded = () => {
+      // De stream is gestopt (bv. camera-wissel via <Scanner />): badge en
+      // status onmiddellijk resetten zodat de UI de werkelijkheid volgt.
+      setTorchSupported(false);
+      setTorchOn(false);
+      setTorchFlash(null);
+      torchTrackRef.current = null;
+    };
     const tick = () => {
       if (stopped) return;
       const root = document.querySelector("[data-qr-scanner-root]");
       const video = root?.querySelector("video") as HTMLVideoElement | null;
       const stream = video?.srcObject as MediaStream | null;
       const track = stream?.getVideoTracks?.()[0];
-      if (track) {
-        const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & { torch?: boolean };
+      if (track && track.readyState === "live") {
+        const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & {
+          torch?: boolean;
+        };
         if (caps.torch) {
           torchTrackRef.current = track;
           setTorchSupported(true);
+          // Sync werkelijke torch-status van de nieuwe track (kan op
+          // sommige Androids "true" zijn als de browser de constraint
+          // van een vorige sessie heeft hersteld).
+          const settings = (track.getSettings?.() ?? {}) as MediaTrackSettings & {
+            torch?: boolean;
+          };
+          if (typeof settings.torch === "boolean") setTorchOn(settings.torch);
+          else setTorchOn(false);
+          // Houd UI gesynchroniseerd als de track later stopt.
+          trackListenersTrack = track;
+          track.addEventListener("ended", onTrackEnded);
           return;
         }
       }
       attempts += 1;
-      if (attempts < 12) setTimeout(tick, 250);
+      if (attempts < 12) pollId = window.setTimeout(tick, 250);
     };
-    const t = setTimeout(tick, 350);
+    const t = window.setTimeout(tick, 350);
     return () => {
       stopped = true;
       clearTimeout(t);
+      if (pollId !== null) clearTimeout(pollId);
+      if (trackListenersTrack) {
+        trackListenersTrack.removeEventListener("ended", onTrackEnded);
+      }
       // Zet torch uit bij unmount/remount zodat hij niet "vergeten" blijft branden.
       const tr = torchTrackRef.current;
-      if (tr) {
-        tr.applyConstraints({ advanced: [{ torch: false } as unknown as MediaTrackConstraintSet] }).catch(() => {});
+      if (tr && tr.readyState === "live") {
+        tr.applyConstraints({
+          advanced: [{ torch: false } as unknown as MediaTrackConstraintSet],
+        }).catch(() => {});
       }
       torchTrackRef.current = null;
       setTorchSupported(false);
       setTorchOn(false);
+      setTorchFlash(null);
+      if (torchFlashTimerRef.current !== null) {
+        window.clearTimeout(torchFlashTimerRef.current);
+        torchFlashTimerRef.current = null;
+      }
     };
-  }, [open, manual, scannerKey]);
+  }, [open, manual, scannerKey, deviceId, facingMode]);
 
   const toggleTorch = async () => {
     // Re-resolve the live track from the DOM every time. The <Scanner />
