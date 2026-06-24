@@ -280,7 +280,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             </div>
           )}
 
-          {!result && !error && !manual && permission !== "denied" && (
+          {!result && !cameraError && !manual && permission !== "denied" && (
             <div
               style={{
                 position: "relative",
@@ -307,6 +307,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 </div>
               ) : (
                 <Scanner
+                  key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
                   constraints={{ facingMode: "environment" }}
