@@ -132,14 +132,18 @@ function maybeRedirect(request: Request): Response | null {
   return new Response(null, { status: 301, headers: { Location: location } });
 }
 
-// TEMPORARY: interim scan→register redirect while AWS-level fix is pending (Daniël).
-// Turn off TEMP_SCAN_REDIRECT_ENABLED once the CloudFront redirect is live and verified.
-// Added 2026-06-23. Scanned stickers hit https://www.velopass.com/scan?code={code}
-// (and the apex without www), which currently 404s. Forward to app.velopass.com/register.
-const TEMP_SCAN_REDIRECT_ENABLED = true;
+// Permanent scan→register redirect, intentionally handled in Lovable
+// (AWS/CloudFront-level redirect rejected as overkill for this small hop —
+// decision by Daniël & Damian, 2026-06-24). Do NOT remove: scanned stickers
+// hit https://www.velopass.com/scan?code={code} (and the apex without www),
+// which would otherwise 404. Forward to app.velopass.com/register.
+// The flag stays so we can kill-switch the redirect without a code change,
+// but the intended steady state is enabled = true.
+const SCAN_REDIRECT_ENABLED = true;
 
 function maybeScanRedirect(request: Request): Response | null {
-  if (!TEMP_SCAN_REDIRECT_ENABLED) return null;
+  if (!SCAN_REDIRECT_ENABLED) return null;
+
   const url = new URL(request.url);
   if (url.pathname !== "/scan") return null;
   const code = url.searchParams.get("code")?.trim();
