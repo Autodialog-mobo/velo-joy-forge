@@ -931,9 +931,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    gap: 8,
                   }}
                 >
-                  Overdracht starten →
+                  Overdracht starten <ArrowRight size={16} strokeWidth={2} />
                 </a>
               </div>
             </div>
