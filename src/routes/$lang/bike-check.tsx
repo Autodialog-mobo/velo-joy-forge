@@ -1081,7 +1081,8 @@ function BikeSearchPage() {
             style={{
               position: "fixed",
               inset: 0,
-              background: "rgba(13,31,60,0.45)",
+              background: "rgba(13,31,60,0.55)",
+              backdropFilter: "blur(2px)",
               zIndex: 50,
               animation: "vp-bc-fade 240ms ease both",
               cursor: "pointer",
