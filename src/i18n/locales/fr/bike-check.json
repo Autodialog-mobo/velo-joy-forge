@@ -30,7 +30,8 @@
     "manual_cta": "Saisir le code manuellement",
     "loading": "Vérification en cours…",
     "image_alt": "Autocollant Velopass Frame-ID avec QR-code",
-    "image_caption": "L'autocollant Velopass Frame-ID"
+    "image_caption": "L'autocollant Velopass Frame-ID",
+    "manual_fallback": "ou saisir le code manuellement"
   },
   "method_b": {
     "title": "Via la marque et le numéro de cadre",

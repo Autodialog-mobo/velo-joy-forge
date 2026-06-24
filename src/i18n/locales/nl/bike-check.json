@@ -30,7 +30,8 @@
     "manual_cta": "Code zelf invoeren",
     "loading": "Bezig met controleren…",
     "image_alt": "Velopass Frame-ID sticker met QR-code",
-    "image_caption": "De Velopass Frame-ID sticker"
+    "image_caption": "De Velopass Frame-ID sticker",
+    "manual_fallback": "of voer de code handmatig in"
   },
   "method_b": {
     "title": "Via merk en framenummer",
