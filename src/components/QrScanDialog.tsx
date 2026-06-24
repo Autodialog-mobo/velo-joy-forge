@@ -863,8 +863,41 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{activeLabel}</span>
                 </div>
               )}
+              {torchSupported && permission !== "checking" && (
+                <button
+                  type="button"
+                  onClick={toggleTorch}
+                  aria-label={torchOn ? "Zaklamp uitschakelen" : "Zaklamp inschakelen"}
+                  aria-pressed={torchOn}
+                  title={torchOn ? "Zaklamp uit" : "Zaklamp aan"}
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: 12,
+                    zIndex: 11,
+                    width: 38,
+                    height: 38,
+                    borderRadius: 999,
+                    border: "1px solid rgba(255,255,255,0.22)",
+                    background: torchOn ? "rgba(255,209,77,0.92)" : "rgba(13,31,60,0.72)",
+                    color: torchOn ? "#0D1F3C" : "#fff",
+                    backdropFilter: "blur(6px)",
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: torchOn ? "0 0 18px rgba(255,209,77,0.55)" : "none",
+                    transition: "background 0.15s ease, box-shadow 0.15s ease",
+                  }}
+                >
+                  {torchOn
+                    ? <Flashlight size={18} strokeWidth={2} />
+                    : <FlashlightOff size={18} strokeWidth={2} />}
+                </button>
+              )}
             </div>
           )}
+
 
           {!result && !cameraError && !manual && permission !== "denied" && cameras.length > 1 && permission !== "checking" && (
             <div
