@@ -714,11 +714,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     frameRate: { ideal: 30 },
                     // Continu scherpstellen / belichten / witbalans — door de
                     // browser/camera ondersteund waar mogelijk, anders genegeerd.
-                    advanced: [
+                    advanced: ([
                       { focusMode: "continuous" },
                       { exposureMode: "continuous" },
                       { whiteBalanceMode: "continuous" },
-                    ] as MediaTrackConstraintSet[],
+                    ] as unknown) as MediaTrackConstraintSet[],
+
                   }}
                   styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
                   components={{ finder: false }}
