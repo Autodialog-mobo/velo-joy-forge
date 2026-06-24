@@ -47,6 +47,134 @@ async function queryCameraPermission(): Promise<CameraPermission> {
   }
 }
 
+// Detecteer het platform + browser zodat we gerichte "zo herstel je de
+// permissie" stappen kunnen tonen. Volledig client-side, alleen op basis
+// van userAgent — goed genoeg om Chrome/Firefox/Safari/iOS/in-app uit
+// elkaar te halen, geen analytics.
+type BrowserKind =
+  | "ios-safari"
+  | "ios-chrome"
+  | "android-chrome"
+  | "android-firefox"
+  | "in-app"
+  | "desktop-safari"
+  | "desktop-firefox"
+  | "desktop-chrome"
+  | "unknown";
+
+function detectBrowser(): BrowserKind {
+  if (typeof navigator === "undefined") return "unknown";
+  const ua = navigator.userAgent || "";
+  // In-app browsers (Instagram, Facebook, TikTok, LinkedIn, Snapchat, Line,
+  // WeChat). Camera-permissie wordt hier vaak niet onthouden en soms
+  // helemaal geblokkeerd — we sturen ze door naar de "echte" browser.
+  if (/(FBAN|FBAV|Instagram|FB_IAB|LinkedInApp|Snapchat|Line\/|MicroMessenger|TikTok|Pinterest)/i.test(ua)) {
+    return "in-app";
+  }
+  const isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && (navigator as Navigator & { maxTouchPoints?: number }).maxTouchPoints && (navigator as Navigator & { maxTouchPoints?: number }).maxTouchPoints! > 1);
+  const isAndroid = /Android/i.test(ua);
+  if (isIOS) {
+    if (/CriOS|EdgiOS|FxiOS/i.test(ua)) return "ios-chrome";
+    return "ios-safari";
+  }
+  if (isAndroid) {
+    if (/Firefox/i.test(ua)) return "android-firefox";
+    return "android-chrome";
+  }
+  if (/Firefox/i.test(ua)) return "desktop-firefox";
+  // Safari moet vóór Chrome-check omdat Safari ook "Safari" in UA heeft maar Chrome ook
+  if (/Safari/i.test(ua) && !/Chrome|Chromium|Edg|OPR/i.test(ua)) return "desktop-safari";
+  if (/Chrome|Chromium|Edg|OPR/i.test(ua)) return "desktop-chrome";
+  return "unknown";
+}
+
+function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; steps: string[]; note?: string } {
+  switch (browser) {
+    case "desktop-chrome":
+      return {
+        headline: "Zo zet je de camera weer aan in Chrome / Edge:",
+        steps: [
+          "Klik op het slotje (🔒) links in de adresbalk.",
+          "Zet 'Camera' op Toestaan.",
+          "Herlaad deze pagina.",
+        ],
+      };
+    case "desktop-firefox":
+      return {
+        headline: "Zo zet je de camera weer aan in Firefox:",
+        steps: [
+          "Klik op het slotje links in de adresbalk.",
+          "Klik bij 'Camera' op het ❌ om de blokkade te verwijderen.",
+          "Herlaad deze pagina en kies 'Toestaan' bij de vraag.",
+        ],
+      };
+    case "desktop-safari":
+      return {
+        headline: "Zo zet je de camera weer aan in Safari:",
+        steps: [
+          "Safari (menubalk) → Instellingen → Websites → Camera.",
+          "Zet velopass.com op 'Toestaan'.",
+          "Herlaad deze pagina.",
+        ],
+      };
+    case "ios-safari":
+      return {
+        headline: "Zo zet je de camera weer aan op iPhone/iPad (Safari):",
+        steps: [
+          "Tik op 'aA' links in de adresbalk → Website-instellingen.",
+          "Zet Camera op 'Toestaan'. (Of: Instellingen-app → Safari → Camera → Vragen/Toestaan.)",
+          "Ververs deze pagina.",
+        ],
+      };
+    case "ios-chrome":
+      return {
+        headline: "Zo zet je de camera weer aan op iPhone/iPad:",
+        steps: [
+          "Open de Instellingen-app → kies je browser (Chrome / Edge / Firefox).",
+          "Zet Camera op Aan.",
+          "Ververs deze pagina.",
+        ],
+      };
+    case "android-chrome":
+      return {
+        headline: "Zo zet je de camera weer aan in Chrome op Android:",
+        steps: [
+          "Tik op het slotje links in de adresbalk → Machtigingen.",
+          "Zet Camera op Toestaan.",
+          "Ververs deze pagina.",
+        ],
+      };
+    case "android-firefox":
+      return {
+        headline: "Zo zet je de camera weer aan in Firefox op Android:",
+        steps: [
+          "Tik op het slotje links in de adresbalk → Bewerk site-instellingen.",
+          "Verwijder de Camera-blokkade.",
+          "Ververs deze pagina en kies 'Toestaan'.",
+        ],
+      };
+    case "in-app":
+      return {
+        headline: "Open deze pagina in je echte browser",
+        steps: [
+          "Tik op het menu (⋯ of ⋮) rechtsboven.",
+          "Kies 'Openen in Safari' (iPhone) of 'Openen in Chrome' (Android).",
+          "Sta de camera daar toe en scan opnieuw.",
+        ],
+        note: "In-app browsers van Instagram, Facebook, TikTok e.d. onthouden cameratoegang vaak niet of blokkeren die helemaal.",
+      };
+    default:
+      return {
+        headline: "Zet cameratoegang weer aan in je browser",
+        steps: [
+          "Open de site-instellingen (vaak via het slotje in de adresbalk).",
+          "Zet 'Camera' op Toestaan.",
+          "Herlaad deze pagina.",
+        ],
+      };
+  }
+}
+
 type CameraErrorKind = "denied" | "not-found" | "in-use" | "constraints" | "unknown";
 
 // `@yudiel/react-qr-scanner` levert errors aan als een eigen
