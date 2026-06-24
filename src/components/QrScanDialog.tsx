@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff } from "lucide-react";
 
 /** Render een instructiestap waarin "→"-tekens vervangen worden door een
  *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
@@ -270,6 +270,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // tears down any previous MediaStream/track and starts a clean
   // getUserMedia attempt. Used on "Opnieuw proberen".
   const [scannerKey, setScannerKey] = useState(0);
+  // Torch / zaklamp: alleen ondersteund op telefoons met een back-camera
+  // die `MediaStreamTrack.getCapabilities().torch` rapporteert (vooral
+  // Chrome/Edge op Android). iOS Safari ondersteunt dit niet.
+  const [torchSupported, setTorchSupported] = useState(false);
+  const [torchOn, setTorchOn] = useState(false);
+  const torchTrackRef = useRef<MediaStreamTrack | null>(null);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
@@ -433,6 +439,64 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       clearTimeout(t);
     };
   }, [open, manual, scannerKey]);
+
+  // Detecteer of de actieve videotrack een torch (zaklamp) ondersteunt.
+  // Pollen omdat het stream-object pas na getUserMedia-resolve beschikbaar is.
+  useEffect(() => {
+    if (!open || manual) {
+      setTorchSupported(false);
+      setTorchOn(false);
+      torchTrackRef.current = null;
+      return;
+    }
+    let attempts = 0;
+    let stopped = false;
+    const tick = () => {
+      if (stopped) return;
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      const track = stream?.getVideoTracks?.()[0];
+      if (track) {
+        const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & { torch?: boolean };
+        if (caps.torch) {
+          torchTrackRef.current = track;
+          setTorchSupported(true);
+          return;
+        }
+      }
+      attempts += 1;
+      if (attempts < 12) setTimeout(tick, 250);
+    };
+    const t = setTimeout(tick, 350);
+    return () => {
+      stopped = true;
+      clearTimeout(t);
+      // Zet torch uit bij unmount/remount zodat hij niet "vergeten" blijft branden.
+      const tr = torchTrackRef.current;
+      if (tr) {
+        tr.applyConstraints({ advanced: [{ torch: false } as unknown as MediaTrackConstraintSet] }).catch(() => {});
+      }
+      torchTrackRef.current = null;
+      setTorchSupported(false);
+      setTorchOn(false);
+    };
+  }, [open, manual, scannerKey]);
+
+  const toggleTorch = async () => {
+    const track = torchTrackRef.current;
+    if (!track) return;
+    const next = !torchOn;
+    try {
+      await track.applyConstraints({ advanced: [{ torch: next } as unknown as MediaTrackConstraintSet] });
+      setTorchOn(next);
+    } catch {
+      // Sommige toestellen blokkeren torch bij bepaalde resoluties; stil falen.
+      setTorchSupported(false);
+    }
+  };
+
+
 
   const emitResult = (value: string) => {
     if (onResult) {
@@ -799,8 +863,41 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{activeLabel}</span>
                 </div>
               )}
+              {torchSupported && permission !== "checking" && (
+                <button
+                  type="button"
+                  onClick={toggleTorch}
+                  aria-label={torchOn ? "Zaklamp uitschakelen" : "Zaklamp inschakelen"}
+                  aria-pressed={torchOn}
+                  title={torchOn ? "Zaklamp uit" : "Zaklamp aan"}
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: 12,
+                    zIndex: 11,
+                    width: 38,
+                    height: 38,
+                    borderRadius: 999,
+                    border: "1px solid rgba(255,255,255,0.22)",
+                    background: torchOn ? "rgba(255,209,77,0.92)" : "rgba(13,31,60,0.72)",
+                    color: torchOn ? "#0D1F3C" : "#fff",
+                    backdropFilter: "blur(6px)",
+                    cursor: "pointer",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: torchOn ? "0 0 18px rgba(255,209,77,0.55)" : "none",
+                    transition: "background 0.15s ease, box-shadow 0.15s ease",
+                  }}
+                >
+                  {torchOn
+                    ? <Flashlight size={18} strokeWidth={2} />
+                    : <FlashlightOff size={18} strokeWidth={2} />}
+                </button>
+              )}
             </div>
           )}
+
 
           {!result && !cameraError && !manual && permission !== "denied" && cameras.length > 1 && permission !== "checking" && (
             <div
