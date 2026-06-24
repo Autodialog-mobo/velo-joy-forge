@@ -15,34 +15,21 @@ type Props = {
   onResult?: (code: string) => void;
 };
 
-// Module-level cached camera stream. Persisting the MediaStream across dialog
-// opens means the browser keeps the camera device active for our origin and
-// does not re-evaluate the permission gesture each time the dialog mounts.
+// The browser owns the "remember this decision" UX for camera permission.
+// We can't bypass that prompt — it is a security mechanism enforced by
+// Safari / Chrome / Firefox. What we CAN do is peek at
+// navigator.permissions.query({ name: 'camera' }) to decide whether to
+// show a "blocked" panel up-front when we *know* the user previously
+// denied us. When the Permissions API is unsupported (Safari, in-app
+// browsers) or the state is "prompt"/"granted", we just hand off to the
+// <Scanner /> component and let it own getUserMedia.
 //
-// NOTE: The browser owns the "remember this decision" UX. We cannot bypass
-// the permission prompt — that is a security mechanism enforced by Safari /
-// Chrome / Firefox. We can only avoid re-triggering it unnecessarily by:
-//   1. Checking navigator.permissions.query({ name: 'camera' }) first and
-//      only calling getUserMedia when we actually need a fresh grant.
-//   2. Reusing an already-granted stream rather than tearing it down and
-//      asking again on the next open.
-// In real browsers (Safari/Chrome) where the user picked "Allow", this works.
-// In in-app browsers (Instagram, Facebook, QR-scanner apps) the permission
-// is often NOT persisted across visits — there is nothing the site can do
-// about that.
-let cachedStream: MediaStream | null = null;
-
-async function getOrCreateCameraStream(): Promise<MediaStream> {
-  if (cachedStream && cachedStream.getVideoTracks().some((t) => t.readyState === "live")) {
-    return cachedStream;
-  }
-  const stream = await navigator.mediaDevices.getUserMedia({
-    video: { facingMode: { ideal: "environment" } },
-    audio: false,
-  });
-  cachedStream = stream;
-  return stream;
-}
+// We deliberately do NOT pre-warm a separate MediaStream here: holding a
+// second stream that is never attached to a video element has been
+// observed to make the Scanner's own getUserMedia call fail with
+// NotReadableError on some setups ("camera already in use"). The Scanner
+// library manages track lifecycle; we unmount it on close/retry via a
+// changing `scannerKey` to force a clean teardown of any previous stream.
 
 type CameraPermission = "granted" | "prompt" | "denied" | "unsupported";
 
@@ -51,7 +38,6 @@ async function queryCameraPermission(): Promise<CameraPermission> {
     return "unsupported";
   }
   try {
-    // `camera` is not in every lib.dom — cast through a narrow shape.
     const status = await navigator.permissions.query({
       name: "camera" as PermissionName,
     });
@@ -61,38 +47,58 @@ async function queryCameraPermission(): Promise<CameraPermission> {
   }
 }
 
+type CameraErrorKind = "denied" | "not-found" | "in-use" | "constraints" | "unknown";
+
+function classifyCameraError(err: unknown): { kind: CameraErrorKind; message: string } {
+  const name = err instanceof Error ? err.name : "";
+  const raw = err instanceof Error ? err.message : String(err ?? "");
+  switch (name) {
+    case "NotAllowedError":
+    case "SecurityError":
+      return { kind: "denied", message: "Cameratoegang geweigerd." };
+    case "NotFoundError":
+    case "DevicesNotFoundError":
+      return { kind: "not-found", message: "Geen camera gevonden op dit apparaat." };
+    case "NotReadableError":
+    case "TrackStartError":
+      return { kind: "in-use", message: "De camera wordt al gebruikt door een andere app of tab." };
+    case "OverconstrainedError":
+    case "ConstraintNotSatisfiedError":
+      return { kind: "constraints", message: "Geen geschikte camera gevonden voor deze instellingen." };
+    default:
+      return { kind: "unknown", message: raw || "Camera kon niet worden gestart." };
+  }
+}
+
+
 export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult }: Props) {
   const [result, setResult] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [cameraError, setCameraError] = useState<{ kind: CameraErrorKind; message: string } | null>(null);
   const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
   const [permission, setPermission] = useState<CameraPermission | "checking">("checking");
+  // Bumping this key forces the <Scanner /> to unmount + remount, which
+  // tears down any previous MediaStream/track and starts a clean
+  // getUserMedia attempt. Used on "Opnieuw proberen".
+  const [scannerKey, setScannerKey] = useState(0);
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
     if (open) setManual(initialManual);
   }, [open, initialManual]);
 
-  // When the dialog opens for camera scanning, check the Permissions API
-  // first. Only fire getUserMedia when the state is "granted" (warm the
-  // cached stream) or "prompt" (the user must now decide). On "denied" we
-  // skip the camera entirely and show guidance — re-calling getUserMedia
-  // would just fail in a loop on most browsers.
+  // When the dialog opens for camera scanning, peek at the Permissions API
+  // so we can show a "blocked" panel up-front if we *know* the user denied
+  // us before. We do NOT pre-call getUserMedia here — the <Scanner />
+  // owns that lifecycle. Pre-warming a second stream caused
+  // NotReadableError ("camera in use") on some setups.
   useEffect(() => {
     if (!open || manual) return;
     let cancelled = false;
     setPermission("checking");
     void (async () => {
       const state = await queryCameraPermission();
-      if (cancelled) return;
-      setPermission(state);
-      if (state === "granted") {
-        try {
-          await getOrCreateCameraStream();
-        } catch {
-          /* Scanner will surface a real error if device is gone */
-        }
-      }
+      if (!cancelled) setPermission(state);
     })();
     return () => {
       cancelled = true;
@@ -103,7 +109,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     if (onResult) {
       onResult(value);
       setResult(null);
-      setError(null);
+      setCameraError(null);
       setManual(false);
       setManualCode("");
       onOpenChange(false);
@@ -119,20 +125,34 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
   const handleError = (err: unknown) => {
-    const message = err instanceof Error ? err.message : "Camera niet beschikbaar";
-    const name = err instanceof Error ? err.name : "";
-    if (name === "NotAllowedError" || /denied|permission/i.test(message)) {
+    const classified = classifyCameraError(err);
+    if (classified.kind === "denied") {
       setPermission("denied");
+      setCameraError(null);
       return;
     }
-    setError(message);
+    setCameraError(classified);
+  };
+
+  const retryCamera = () => {
+    // Full teardown + fresh attempt: clear error, re-check permission,
+    // and bump the scanner key so the <Scanner /> remounts with a brand
+    // new getUserMedia call (previous tracks are stopped on unmount).
+    setCameraError(null);
+    setPermission("checking");
+    setScannerKey((k) => k + 1);
+    void (async () => {
+      const state = await queryCameraPermission();
+      setPermission(state);
+    })();
   };
 
   const reset = () => {
     setResult(null);
-    setError(null);
+    setCameraError(null);
     setManual(false);
     setManualCode("");
+
   };
 
   const close = () => {
@@ -215,7 +235,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         </DialogHeader>
 
         <div style={{ padding: "0 28px 28px" }}>
-          {!result && !error && !manual && permission === "denied" && (
+          {!result && !cameraError && !manual && permission === "denied" && (
             <div
               style={{
                 padding: 20,
@@ -260,7 +280,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             </div>
           )}
 
-          {!result && !error && !manual && permission !== "denied" && (
+          {!result && !cameraError && !manual && permission !== "denied" && (
             <div
               style={{
                 position: "relative",
@@ -287,6 +307,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 </div>
               ) : (
                 <Scanner
+                  key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
                   constraints={{ facingMode: "environment" }}
@@ -337,7 +358,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             </div>
           )}
 
-          {error && (
+          {cameraError && (
             <div
               style={{
                 padding: 20,
@@ -352,30 +373,62 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0, marginTop: 2 }} />
               <div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
-                  Camera niet beschikbaar
+                  {cameraError.kind === "not-found"
+                    ? "Geen camera gevonden"
+                    : cameraError.kind === "in-use"
+                      ? "Camera is bezet"
+                      : cameraError.kind === "constraints"
+                        ? "Camera niet geschikt"
+                        : "Camera kon niet starten"}
                 </div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
-                  Geef toestemming voor de camera in je browserinstellingen, of voer de Frame-ID code handmatig in.
+                  {cameraError.kind === "in-use"
+                    ? "Sluit andere apps of tabbladen die de camera gebruiken (bv. Zoom, Teams, Photo Booth) en probeer opnieuw."
+                    : cameraError.kind === "not-found"
+                      ? "We konden geen camera op dit apparaat vinden. Voer de Frame-ID code handmatig in."
+                      : cameraError.kind === "constraints"
+                        ? "Je camera ondersteunt de gevraagde instellingen niet. Voer de code handmatig in."
+                        : `${cameraError.message} Probeer opnieuw of voer de code handmatig in.`}
                 </div>
-                <button
-                  onClick={() => setError(null)}
-                  style={{
-                    marginTop: 12,
-                    background: "transparent",
-                    border: "1px solid rgba(13,31,60,0.18)",
-                    borderRadius: 10,
-                    padding: "8px 14px",
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: 13,
-                    color: "#0D1F3C",
-                    cursor: "pointer",
-                  }}
-                >
-                  Opnieuw proberen
-                </button>
+                <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
+                  <button
+                    type="button"
+                    onClick={retryCamera}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid rgba(13,31,60,0.18)",
+                      borderRadius: 10,
+                      padding: "8px 14px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      color: "#0D1F3C",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Opnieuw proberen
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setCameraError(null); setManual(true); }}
+                    style={{
+                      background: "transparent",
+                      border: "1px solid rgba(13,31,60,0.18)",
+                      borderRadius: 10,
+                      padding: "8px 14px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      color: "#0D1F3C",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Voer code handmatig in
+                  </button>
+                </div>
               </div>
             </div>
           )}
+
+
 
           {result && (
             <div>
@@ -467,7 +520,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               Geen camera?{" "}
               <button
                 type="button"
-                onClick={() => { setManual(true); setError(null); }}
+                onClick={() => { setManual(true); setCameraError(null); }}
                 style={{
                   color: "#0D1F3C",
                   textDecoration: "underline",
@@ -586,7 +639,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 Camera bij de hand?{" "}
                 <button
                   type="button"
-                  onClick={() => { setManual(false); setManualCode(""); setError(null); }}
+                  onClick={() => { setManual(false); setManualCode(""); setCameraError(null); }}
                   style={{
                     color: "#0D1F3C",
                     textDecoration: "underline",
