@@ -1,7 +1,29 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight } from "lucide-react";
+
+/** Render een instructiestap waarin "→"-tekens vervangen worden door een
+ *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
+function renderStep(step: string): ReactNode {
+  const parts = step.split("→");
+  if (parts.length === 1) return step;
+  return parts.map((p, i) => (
+    <Fragment key={i}>
+      {i > 0 && (
+        <ChevronRight
+          size={13}
+          strokeWidth={2}
+          aria-hidden="true"
+          style={{ display: "inline", verticalAlign: "-2px", margin: "0 2px", opacity: 0.7 }}
+        />
+      )}
+      {p.replace(/^\s+|\s+$/g, "")}
+      {i < parts.length - 1 ? " " : ""}
+      {i > 0 ? "" : " "}
+    </Fragment>
+  ));
+}
 
 type Props = {
   open: boolean;
