@@ -303,23 +303,17 @@ function ExampleCopy({
     }
   };
   return (
-    <button
-      type="button"
-      onClick={handleCopy}
+    <p
       style={{
         marginTop: 8,
+        marginBottom: 0,
         display: "inline-flex",
         alignItems: "center",
         gap: 6,
-        background: "transparent",
-        border: "none",
-        padding: 0,
-        cursor: "pointer",
         fontFamily: "'DM Sans', sans-serif",
         fontSize: 13,
         color: "#5A7090",
       }}
-      aria-label={`${label}: ${value}`}
     >
       <span>{label}:</span>
       <span
@@ -335,10 +329,25 @@ function ExampleCopy({
       >
         {value}
       </span>
-      <span style={{ display: "inline-flex", alignItems: "center", color: copied ? "#16A34A" : "#5A7090" }}>
+      <button
+        type="button"
+        onClick={handleCopy}
+        aria-label={`${label}: ${value}`}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          background: "transparent",
+          border: "none",
+          padding: 2,
+          margin: 0,
+          cursor: "pointer",
+          color: copied ? "#16A34A" : "#5A7090",
+          lineHeight: 0,
+        }}
+      >
         {copied ? <Check size={14} strokeWidth={2.2} /> : <Copy size={14} strokeWidth={2} />}
-      </span>
-    </button>
+      </button>
+    </p>
   );
 }
 
