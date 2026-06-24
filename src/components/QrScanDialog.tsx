@@ -119,6 +119,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       /* negeer */
     }
   }, [deviceId]);
+  // Label van de daadwerkelijk actieve videotrack. De Scanner kiest zelf
+  // welke camera bij `facingMode: { ideal: … }` past — we lezen de
+  // beschrijving uit het <video>-element zodat we het tonen aan de user.
+  const [activeLabel, setActiveLabel] = useState<string | null>(null);
+
+
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
