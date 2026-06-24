@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff } from "lucide-react";
+import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
 
 /** Render een instructiestap waarin "→"-tekens vervangen worden door een
  *  Lucide ChevronRight-icoon (zodat we geen tekstsymbolen als icoon gebruiken). */
@@ -294,6 +294,11 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // Korte bevestigingsbadge na een torch-toggle: "Zaklamp aan" / "Zaklamp uit".
   const [torchFlash, setTorchFlash] = useState<"on" | "off" | null>(null);
   const torchFlashTimerRef = useRef<number | null>(null);
+  // Software/hardware "boost" voor donkere omstandigheden zonder torch:
+  // verhoogt CSS brightness/contrast op de video én probeert
+  // exposureCompensation/brightness/contrast via track-constraints.
+  const [boostOn, setBoostOn] = useState(false);
+  const [boostHint, setBoostHint] = useState(false);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
@@ -608,7 +613,60 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     }
   };
 
-
+  // Fallback wanneer er geen torch is: software-boost (CSS-filter op de
+  // video) + best-effort hardware-bump van exposure/brightness/contrast.
+  // Toont kort een hint als zelfs dat niet helpt op donkere scènes.
+  const toggleBoost = async () => {
+    const next = !boostOn;
+    setBoostOn(next);
+    setBoostHint(next);
+    window.setTimeout(() => setBoostHint(false), 2200);
+    try {
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      const track = stream?.getVideoTracks?.()[0];
+      if (!track || track.readyState !== "live") return;
+      const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & {
+        exposureCompensation?: { max?: number; min?: number };
+        brightness?: { max?: number; min?: number };
+        contrast?: { max?: number; min?: number };
+        iso?: { max?: number; min?: number };
+        exposureMode?: string[];
+      };
+      const advanced: MediaTrackConstraintSet[] = [];
+      if (next) {
+        if (caps.exposureMode?.includes("manual") || caps.exposureMode?.includes("continuous")) {
+          advanced.push({ exposureMode: "continuous" } as MediaTrackConstraintSet);
+        }
+        if (caps.exposureCompensation?.max !== undefined) {
+          advanced.push({ exposureCompensation: caps.exposureCompensation.max } as unknown as MediaTrackConstraintSet);
+        }
+        if (caps.brightness?.max !== undefined) {
+          advanced.push({ brightness: caps.brightness.max } as unknown as MediaTrackConstraintSet);
+        }
+        if (caps.contrast?.max !== undefined) {
+          advanced.push({ contrast: caps.contrast.max } as unknown as MediaTrackConstraintSet);
+        }
+        if (caps.iso?.max !== undefined) {
+          advanced.push({ iso: caps.iso.max } as unknown as MediaTrackConstraintSet);
+        }
+      } else {
+        if (caps.exposureCompensation?.min !== undefined) {
+          advanced.push({ exposureCompensation: 0 } as unknown as MediaTrackConstraintSet);
+        }
+      }
+      if (advanced.length > 0) {
+        await track.applyConstraints({ advanced }).catch(() => {});
+      }
+      // Korte decoder-pauze zodat de auto-exposure/witbalans zich kan
+      // aanpassen aan de nieuwe instellingen.
+      setScanPaused(true);
+      window.setTimeout(() => setScanPaused(false), 320);
+    } catch {
+      /* stille fallback — de CSS-filter doet het zware werk */
+    }
+  };
 
 
   const emitResult = (value: string) => {
@@ -1027,6 +1085,87 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     ? <Flashlight size={18} strokeWidth={2} />
                     : <FlashlightOff size={18} strokeWidth={2} />}
                 </button>
+              )}
+              {permission !== "checking" && (
+                <button
+                  type="button"
+                  onClick={toggleBoost}
+                  disabled={scanPaused}
+                  aria-label={boostOn ? "Verlichting-boost uitschakelen" : "Verlichting-boost inschakelen"}
+                  aria-pressed={boostOn}
+                  title={boostOn ? "Boost uit" : "Verhoog verlichting"}
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: torchSupported ? 60 : 12,
+                    zIndex: 11,
+                    width: 38,
+                    height: 38,
+                    borderRadius: 999,
+                    border: "1px solid rgba(255,255,255,0.22)",
+                    background: boostOn ? "rgba(255,228,138,0.92)" : "rgba(13,31,60,0.72)",
+                    color: boostOn ? "#0D1F3C" : "#fff",
+                    backdropFilter: "blur(6px)",
+                    cursor: scanPaused ? "not-allowed" : "pointer",
+                    opacity: scanPaused ? 0.55 : 1,
+                    pointerEvents: scanPaused ? "none" : "auto",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    boxShadow: boostOn ? "0 0 18px rgba(255,228,138,0.5)" : "none",
+                    transition: "background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease",
+                  }}
+                >
+                  {boostOn ? <Sun size={18} strokeWidth={2} /> : <SunDim size={18} strokeWidth={2} />}
+                </button>
+              )}
+              {boostOn && (
+                <style>{`[data-qr-scanner-root] video { filter: brightness(1.35) contrast(1.18) saturate(1.05); transition: filter 200ms ease; }`}</style>
+              )}
+              {boostHint && (
+                <div
+                  aria-live="polite"
+                  role="status"
+                  style={{
+                    position: "absolute",
+                    top: 60,
+                    left: 0,
+                    right: 0,
+                    zIndex: 13,
+                    display: "flex",
+                    justifyContent: "center",
+                    pointerEvents: "none",
+                    padding: "0 12px",
+                    animation: "qr-torch-pop 220ms cubic-bezier(0.2,0.9,0.3,1.3)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "8px 14px",
+                      borderRadius: 999,
+                      background: boostOn ? "rgba(255,228,138,0.96)" : "rgba(13,31,60,0.86)",
+                      color: boostOn ? "#0D1F3C" : "#fff",
+                      border: "1px solid rgba(255,255,255,0.4)",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      boxShadow: "0 6px 22px rgba(0,0,0,0.25)",
+                      backdropFilter: "blur(6px)",
+                      maxWidth: "calc(100% - 24px)",
+                      textAlign: "center",
+                    }}
+                  >
+                    {boostOn ? <Sun size={15} strokeWidth={2.2} /> : <SunDim size={15} strokeWidth={2.2} />}
+                    <span>
+                      {boostOn
+                        ? (torchSupported ? "Boost aan — combineer eventueel met de zaklamp" : "Boost aan — zoek extra licht voor beste resultaat")
+                        : "Boost uit"}
+                    </span>
+                  </div>
+                </div>
               )}
               {scanPaused && (
                 <div
