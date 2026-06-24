@@ -73,36 +73,32 @@ function classifyCameraError(err: unknown): { kind: CameraErrorKind; message: st
 
 export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult }: Props) {
   const [result, setResult] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [cameraError, setCameraError] = useState<{ kind: CameraErrorKind; message: string } | null>(null);
   const [manual, setManual] = useState(initialManual);
   const [manualCode, setManualCode] = useState("");
   const [permission, setPermission] = useState<CameraPermission | "checking">("checking");
+  // Bumping this key forces the <Scanner /> to unmount + remount, which
+  // tears down any previous MediaStream/track and starts a clean
+  // getUserMedia attempt. Used on "Opnieuw proberen".
+  const [scannerKey, setScannerKey] = useState(0);
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
     if (open) setManual(initialManual);
   }, [open, initialManual]);
 
-  // When the dialog opens for camera scanning, check the Permissions API
-  // first. Only fire getUserMedia when the state is "granted" (warm the
-  // cached stream) or "prompt" (the user must now decide). On "denied" we
-  // skip the camera entirely and show guidance — re-calling getUserMedia
-  // would just fail in a loop on most browsers.
+  // When the dialog opens for camera scanning, peek at the Permissions API
+  // so we can show a "blocked" panel up-front if we *know* the user denied
+  // us before. We do NOT pre-call getUserMedia here — the <Scanner />
+  // owns that lifecycle. Pre-warming a second stream caused
+  // NotReadableError ("camera in use") on some setups.
   useEffect(() => {
     if (!open || manual) return;
     let cancelled = false;
     setPermission("checking");
     void (async () => {
       const state = await queryCameraPermission();
-      if (cancelled) return;
-      setPermission(state);
-      if (state === "granted") {
-        try {
-          await getOrCreateCameraStream();
-        } catch {
-          /* Scanner will surface a real error if device is gone */
-        }
-      }
+      if (!cancelled) setPermission(state);
     })();
     return () => {
       cancelled = true;
@@ -113,7 +109,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     if (onResult) {
       onResult(value);
       setResult(null);
-      setError(null);
+      setCameraError(null);
       setManual(false);
       setManualCode("");
       onOpenChange(false);
@@ -129,20 +125,34 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
   const handleError = (err: unknown) => {
-    const message = err instanceof Error ? err.message : "Camera niet beschikbaar";
-    const name = err instanceof Error ? err.name : "";
-    if (name === "NotAllowedError" || /denied|permission/i.test(message)) {
+    const classified = classifyCameraError(err);
+    if (classified.kind === "denied") {
       setPermission("denied");
+      setCameraError(null);
       return;
     }
-    setError(message);
+    setCameraError(classified);
+  };
+
+  const retryCamera = () => {
+    // Full teardown + fresh attempt: clear error, re-check permission,
+    // and bump the scanner key so the <Scanner /> remounts with a brand
+    // new getUserMedia call (previous tracks are stopped on unmount).
+    setCameraError(null);
+    setPermission("checking");
+    setScannerKey((k) => k + 1);
+    void (async () => {
+      const state = await queryCameraPermission();
+      setPermission(state);
+    })();
   };
 
   const reset = () => {
     setResult(null);
-    setError(null);
+    setCameraError(null);
     setManual(false);
     setManualCode("");
+
   };
 
   const close = () => {
