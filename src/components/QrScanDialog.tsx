@@ -770,6 +770,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
+                  paused={scanPaused}
                   // Alleen QR — voorkomt dat de decoder tijd verspilt aan
                   // andere barcodeformaten (EAN, Code128, …).
                   formats={["qr_code"]}
