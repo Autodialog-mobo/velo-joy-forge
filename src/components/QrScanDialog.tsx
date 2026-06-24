@@ -520,7 +520,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               Geen camera?{" "}
               <button
                 type="button"
-                onClick={() => { setManual(true); setError(null); }}
+                onClick={() => { setManual(true); setCameraError(null); }}
                 style={{
                   color: "#0D1F3C",
                   textDecoration: "underline",
@@ -639,7 +639,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 Camera bij de hand?{" "}
                 <button
                   type="button"
-                  onClick={() => { setManual(false); setManualCode(""); setError(null); }}
+                  onClick={() => { setManual(false); setManualCode(""); setCameraError(null); }}
                   style={{
                     color: "#0D1F3C",
                     textDecoration: "underline",
