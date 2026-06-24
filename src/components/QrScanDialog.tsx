@@ -717,12 +717,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     fontSize: 12,
                     lineHeight: 1.3,
                     backdropFilter: "blur(6px)",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
                     width: "fit-content",
                     maxWidth: "calc(100% - 24px)",
                     margin: "0 auto",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
                   }}
                   title={activeLabel}
                 >
