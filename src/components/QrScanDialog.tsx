@@ -163,6 +163,30 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => {
       cancelled = true;
     };
+  }, [open, manual, deviceId]);
+
+  // Labels van enumerateDevices zijn pas zichtbaar nadat de scanner
+  // permissie heeft gekregen. Luister op `devicechange` (vuurt ook na de
+  // eerste grant) en her-enumerate, zodat het selectiemenu de echte
+  // cameranamen toont in plaats van "Camera 1/2".
+  useEffect(() => {
+    if (!open || manual) return;
+    if (typeof navigator === "undefined" || !navigator.mediaDevices?.addEventListener) return;
+    const onChange = async () => {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const cams = devices
+          .filter((d) => d.kind === "videoinput")
+          .map((d, i) => ({ deviceId: d.deviceId, label: d.label || `Camera ${i + 1}` }));
+        setCameras(cams);
+      } catch {
+        /* negeer */
+      }
+    };
+    navigator.mediaDevices.addEventListener("devicechange", onChange);
+    return () => {
+      navigator.mediaDevices.removeEventListener("devicechange", onChange);
+    };
   }, [open, manual]);
 
   const emitResult = (value: string) => {
