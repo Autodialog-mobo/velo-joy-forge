@@ -1167,21 +1167,42 @@ function BikeSearchPage() {
         {/* Spotlight backdrop: dimt de rest van de pagina kort na een
             scan/submit zodat het oog naar het resultaat getrokken wordt.
             Tap of 3s timer dismisst het. pointer-events alleen tijdens dim. */}
-        {spotlight && (result || error) && (
-          <div
-            onClick={() => setSpotlight(false)}
-            aria-hidden="true"
-            style={{
-              position: "fixed",
-              inset: 0,
-              background: "rgba(13,31,60,0.55)",
-              backdropFilter: "blur(2px)",
-              zIndex: 50,
-              animation: "vp-bc-fade 240ms ease both",
-              cursor: "pointer",
-            }}
-          />
-        )}
+        {spotlight && (result || error) && (() => {
+          const status = result?.found
+            ? result.status === "ALL_CLEAR"
+              ? "secured"
+              : result.status === "REPORTED"
+                ? "reported"
+                : "neutral"
+            : result
+              ? "not_registered"
+              : "neutral";
+          const tint =
+            status === "secured"
+              ? "rgba(46,204,138,0.55)"
+              : status === "reported"
+                ? "rgba(245,158,11,0.55)"
+                : status === "not_registered"
+                  ? "rgba(100,116,139,0.55)"
+                  : "rgba(13,31,60,0.55)";
+          return (
+            <div
+              onClick={() => setSpotlight(false)}
+              aria-hidden="true"
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: tint,
+                backdropFilter: "blur(2px)",
+                zIndex: 50,
+                animation: "vp-bc-fade 240ms ease both",
+                cursor: "pointer",
+                transition: "background 240ms ease",
+              }}
+            />
+          );
+        })()}
+
         <style>{`@keyframes vp-bc-fade{from{opacity:0}to{opacity:1}}`}</style>
       </section>
 
