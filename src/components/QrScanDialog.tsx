@@ -440,6 +440,64 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     };
   }, [open, manual, scannerKey]);
 
+  // Detecteer of de actieve videotrack een torch (zaklamp) ondersteunt.
+  // Pollen omdat het stream-object pas na getUserMedia-resolve beschikbaar is.
+  useEffect(() => {
+    if (!open || manual) {
+      setTorchSupported(false);
+      setTorchOn(false);
+      torchTrackRef.current = null;
+      return;
+    }
+    let attempts = 0;
+    let stopped = false;
+    const tick = () => {
+      if (stopped) return;
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      const track = stream?.getVideoTracks?.()[0];
+      if (track) {
+        const caps = (track.getCapabilities?.() ?? {}) as MediaTrackCapabilities & { torch?: boolean };
+        if (caps.torch) {
+          torchTrackRef.current = track;
+          setTorchSupported(true);
+          return;
+        }
+      }
+      attempts += 1;
+      if (attempts < 12) setTimeout(tick, 250);
+    };
+    const t = setTimeout(tick, 350);
+    return () => {
+      stopped = true;
+      clearTimeout(t);
+      // Zet torch uit bij unmount/remount zodat hij niet "vergeten" blijft branden.
+      const tr = torchTrackRef.current;
+      if (tr) {
+        tr.applyConstraints({ advanced: [{ torch: false } as unknown as MediaTrackConstraintSet] }).catch(() => {});
+      }
+      torchTrackRef.current = null;
+      setTorchSupported(false);
+      setTorchOn(false);
+    };
+  }, [open, manual, scannerKey]);
+
+  const toggleTorch = async () => {
+    const track = torchTrackRef.current;
+    if (!track) return;
+    const next = !torchOn;
+    try {
+      await track.applyConstraints({ advanced: [{ torch: next } as unknown as MediaTrackConstraintSet] });
+      setTorchOn(next);
+    } catch {
+      // Sommige toestellen blokkeren torch bij bepaalde resoluties; stil falen.
+      setTorchSupported(false);
+    }
+  };
+
+
+
   const emitResult = (value: string) => {
     if (onResult) {
       onResult(value);
