@@ -1015,8 +1015,56 @@ function BikeSearchPage() {
               )}
             </div>
 
-            <label style={{ ...labelStyle, marginTop: 12 }} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
+            {/* PRIMARY ACTION: barcode scan voor het framenummer */}
+            <button
+              type="button"
+              onClick={() => setScanFrameOpen(true)}
+              style={{
+                marginTop: 14,
+                width: "100%",
+                background: "#0D1F3C",
+                color: "#fff",
+                border: "none",
+                borderRadius: 10,
+                padding: "14px 20px",
+                fontFamily: "'DM Sans', sans-serif",
+                fontWeight: 600,
+                fontSize: 15,
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                boxShadow: "0 6px 18px rgba(13,31,60,0.16)",
+              }}
+            >
+              <Barcode size={18} strokeWidth={2} />
+              {t("method_b.scan_cta", { defaultValue: "Scan de barcode" })}
+            </button>
+
+            {/* SECONDARY FALLBACK: handmatige invoer van het framenummer */}
+            <div
+              aria-hidden="true"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                margin: "18px 0 12px",
+                color: "#94A3B8",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: 12,
+                textTransform: "uppercase",
+                letterSpacing: 0.6,
+              }}
+            >
+              <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
+              <span>{t("method_b.scan_or_manual", { defaultValue: "of voer het framenummer handmatig in" })}</span>
+              <span style={{ flex: 1, height: 1, background: "rgba(13,31,60,0.1)" }} />
+            </div>
+
+            <label style={labelStyle} htmlFor="bs-frame">{t("method_b.frame_number")}</label>
             <input
+              ref={frameInputRef}
               id="bs-frame"
               type="text"
               autoCapitalize="characters"
