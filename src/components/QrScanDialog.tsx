@@ -592,7 +592,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   </div>
                   <ol style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 6, paddingLeft: 18, lineHeight: 1.55 }}>
                     {guide.steps.map((s, i) => (
-                      <li key={i} style={{ marginTop: i === 0 ? 0 : 2 }}>{s}</li>
+                      <li key={i} style={{ marginTop: i === 0 ? 0 : 2 }}>{renderStep(s)}</li>
                     ))}
                   </ol>
                   {guide.note && (
