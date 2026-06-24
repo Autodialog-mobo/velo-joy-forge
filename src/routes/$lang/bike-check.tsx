@@ -442,9 +442,8 @@ function BikeSearchPage() {
     if (!q) return [] as string[];
     return searchBrands(q, 10).map((s) => s.name);
   })();
-  // +1 extra slot for the "Merk niet in de lijst / onbekend" option.
-  const optionCount = brandSuggestions.length + 1;
-  const UNKNOWN_VALUE = "Onbekend";
+  // Free-text input: users can type any brand even if not in suggestions.
+  const optionCount = brandSuggestions.length;
 
   useEffect(() => {
     setActiveIdx(-1);
@@ -915,13 +914,9 @@ function BikeSearchPage() {
                     e.preventDefault();
                     setActiveIdx((i) => (i <= 0 ? optionCount - 1 : i - 1));
                   } else if (e.key === "Enter") {
-                    if (activeIdx >= 0) {
+                    if (activeIdx >= 0 && activeIdx < brandSuggestions.length) {
                       e.preventDefault();
-                      if (activeIdx < brandSuggestions.length) {
-                        setBrand(brandSuggestions[activeIdx]);
-                      } else {
-                        setBrand(UNKNOWN_VALUE);
-                      }
+                      setBrand(brandSuggestions[activeIdx]);
                       setBrandFocused(false);
                     }
                   } else if (e.key === "Escape") {
@@ -979,41 +974,6 @@ function BikeSearchPage() {
                       </button>
                     </li>
                   ))}
-                  <li
-                    id={`bs-brand-opt-${brandSuggestions.length}`}
-                    role="option"
-                    aria-selected={activeIdx === brandSuggestions.length}
-                    style={{
-                      borderTop: brandSuggestions.length > 0 ? "1px solid #e2e8f0" : undefined,
-                      marginTop: brandSuggestions.length > 0 ? 4 : 0,
-                      paddingTop: brandSuggestions.length > 0 ? 4 : 0,
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        setBrand(UNKNOWN_VALUE);
-                        setBrandFocused(false);
-                      }}
-                      onMouseEnter={() => setActiveIdx(brandSuggestions.length)}
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        textAlign: "left",
-                        padding: "8px 10px",
-                        border: "none",
-                        background: activeIdx === brandSuggestions.length ? "#f1f5f9" : "transparent",
-                        borderRadius: 6,
-                        cursor: "pointer",
-                        fontSize: 14,
-                        color: "#5A7090",
-                        fontStyle: "italic",
-                      }}
-                    >
-                      Merk niet in de lijst / onbekend
-                    </button>
-                  </li>
                 </ul>
               )}
             </div>
