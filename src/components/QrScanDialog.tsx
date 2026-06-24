@@ -726,7 +726,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   }}
                   title={activeLabel}
                 >
-                  📷 {activeLabel}
+                  <Camera size={13} color="#fff" strokeWidth={2} style={{ flexShrink: 0 }} />
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{activeLabel}</span>
                 </div>
               )}
               {cameras.length > 1 && permission !== "checking" && (
