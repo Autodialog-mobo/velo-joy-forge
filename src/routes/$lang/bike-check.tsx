@@ -1157,12 +1157,12 @@ function BikeSearchPage() {
               : "neutral";
           const tint =
             status === "secured"
-              ? "rgba(46,204,138,0.55)"
+              ? "rgba(5,150,105,0.6)"
               : status === "reported"
                 ? "rgba(234,88,12,0.6)"
                 : status === "not_registered"
-                  ? "rgba(100,116,139,0.55)"
-                  : "rgba(13,31,60,0.55)";
+                  ? "rgba(71,85,105,0.6)"
+                  : "rgba(15,23,42,0.6)";
           return (
             <div
               onClick={() => setSpotlight(false)}
