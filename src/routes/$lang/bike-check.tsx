@@ -1159,7 +1159,7 @@ function BikeSearchPage() {
             status === "secured"
               ? "rgba(46,204,138,0.55)"
               : status === "reported"
-                ? "rgba(245,158,11,0.55)"
+                ? "rgba(234,88,12,0.6)"
                 : status === "not_registered"
                   ? "rgba(100,116,139,0.55)"
                   : "rgba(13,31,60,0.55)";
