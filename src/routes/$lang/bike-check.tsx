@@ -1155,14 +1155,18 @@ function BikeSearchPage() {
             : result
               ? "not_registered"
               : "neutral";
+          // Tints are decorative status indicators (no text rendered on them),
+          // but WCAG 1.4.11 still requires ≥3:1 vs the adjacent page/card
+          // surface so the color-coded meaning is perceivable. Effective
+          // colors over white reach ~3.3–4.3:1 at these values.
           const tint =
             status === "secured"
-              ? "rgba(5,150,105,0.6)"
+              ? "rgba(4,120,87,0.78)" // emerald-700
               : status === "reported"
-                ? "rgba(234,88,12,0.6)"
+                ? "rgba(194,65,12,0.78)" // orange-700
                 : status === "not_registered"
-                  ? "rgba(71,85,105,0.6)"
-                  : "rgba(15,23,42,0.6)";
+                  ? "rgba(51,65,85,0.78)" // slate-700
+                  : "rgba(15,23,42,0.7)"; // slate-900 fallback
           return (
             <div
               onClick={() => setSpotlight(false)}
