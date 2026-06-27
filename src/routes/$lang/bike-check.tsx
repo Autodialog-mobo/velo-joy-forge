@@ -741,6 +741,17 @@ function BikeSearchPage() {
         >
           {t("page.subtitle")}
         </p>
+        <p
+          style={{
+            margin: "12px auto 0",
+            maxWidth: 640,
+            fontSize: 14,
+            color: "rgba(15,23,42,0.7)",
+            lineHeight: 1.6,
+          }}
+        >
+          {t("page.no_email_hint", { defaultValue: "" })}
+        </p>
       </section>
 
       {/* METHODS */}
