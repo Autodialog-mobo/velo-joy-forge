@@ -556,6 +556,7 @@ function VelopassHome() {
               <Link
                 to="/$lang/bike-check"
                 params={{ lang: currentLang }}
+                onClick={() => trackCheckBikeClick("homepage_scan_section", currentLang)}
 
                 className="path-cta"
                 style={{ fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}
