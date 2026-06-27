@@ -887,7 +887,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     fontSize: 13,
                   }}
                 >
-                  Camera voorbereiden…
+                  {t("preparing_camera")}
                 </div>
               ) : (
                 <Scanner
@@ -1006,10 +1006,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   type="button"
                   onClick={toggleTorch}
                   disabled={scanPaused}
-                  aria-label={torchOn ? "Zaklamp uitschakelen" : "Zaklamp inschakelen"}
+                  aria-label={torchOn ? t("torch.on_aria") : t("torch.off_aria")}
                   aria-pressed={torchOn}
                   aria-disabled={scanPaused}
-                  title={scanPaused ? "Even geduld…" : torchOn ? "Zaklamp uit" : "Zaklamp aan"}
+                  title={scanPaused ? t("torch.wait") : torchOn ? t("torch.on_title") : t("torch.off_title")}
                   style={{
                     position: "absolute",
                     top: safeInset("top", 12),
@@ -1042,9 +1042,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   type="button"
                   onClick={toggleBoost}
                   disabled={scanPaused}
-                  aria-label={boostOn ? "Verlichting-boost uitschakelen" : "Verlichting-boost inschakelen"}
+                  aria-label={boostOn ? t("boost.on_aria") : t("boost.off_aria")}
                   aria-pressed={boostOn}
-                  title={boostOn ? "Boost uit" : "Verhoog verlichting"}
+                  title={boostOn ? t("boost.on_title") : t("boost.off_title")}
                   style={{
                     position: "absolute",
                     top: safeInset("top", torchSupported ? 58 : 12),
@@ -1112,8 +1112,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     {boostOn ? <Sun size={15} strokeWidth={2.2} /> : <SunDim size={15} strokeWidth={2.2} />}
                     <span>
                       {boostOn
-                        ? (torchSupported ? "Boost aan — combineer eventueel met de zaklamp" : "Boost aan — zoek extra licht voor beste resultaat")
-                        : "Boost uit"}
+                        ? (torchSupported ? t("boost.on_hint_torch") : t("boost.on_hint"))
+                        : t("boost.off_hint")}
                     </span>
                   </div>
                 </div>
@@ -1150,7 +1150,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                       backdropFilter: "blur(6px)",
                     }}
                   >
-                    <span>Scanner herstart…</span>
+                    <span>{t("scanner_restarting")}</span>
                     <span
                       style={{
                         width: 120,
@@ -1226,7 +1226,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     ) : (
                       <FlashlightOff size={15} strokeWidth={2.2} />
                     )}
-                    <span>{torchFlash === "on" ? "Zaklamp aan" : "Zaklamp uit"}</span>
+                    <span>{torchFlash === "on" ? t("torch.on_label") : t("torch.off_label")}</span>
                     <Check size={14} strokeWidth={2.6} />
                   </div>
                   <style>{`
@@ -1254,7 +1254,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             >
               <SwitchCamera size={18} color="#0D1F3C" strokeWidth={1.8} style={{ flexShrink: 0, opacity: 0.9 }} />
               <select
-                aria-label="Kies camera"
+                aria-label={t("camera_select.aria")}
                 value={deviceId ?? `__facing:${facingMode}`}
                 onChange={(e) => {
                   const v = e.target.value;
@@ -1281,8 +1281,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   WebkitAppearance: "none",
                 }}
               >
-                <option value="__facing:environment">Achtercamera (auto)</option>
-                <option value="__facing:user">Frontcamera (auto)</option>
+                <option value="__facing:environment">{t("camera_select.back_auto")}</option>
+                <option value="__facing:user">{t("camera_select.front_auto")}</option>
                 {cameras.map((c) => (
                   <option key={c.deviceId} value={c.deviceId}>
                     {c.label}
@@ -1312,21 +1312,21 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               <div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
                   {cameraError.kind === "not-found"
-                    ? "Geen camera gevonden"
+                    ? t("error.title_not_found")
                     : cameraError.kind === "in-use"
-                      ? "Camera is bezet"
+                      ? t("error.title_in_use")
                       : cameraError.kind === "constraints"
-                        ? "Camera niet geschikt"
-                        : "Camera kon niet starten"}
+                        ? t("error.title_constraints")
+                        : t("error.title_generic")}
                 </div>
                 <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
                   {cameraError.kind === "in-use"
-                    ? "Sluit andere apps of tabbladen die de camera gebruiken (bv. Zoom, Teams, Photo Booth) en probeer opnieuw."
+                    ? t("error.body_in_use")
                     : cameraError.kind === "not-found"
-                      ? "We konden geen camera op dit apparaat vinden. Voer de Frame-ID code handmatig in."
+                      ? t("error.body_not_found")
                       : cameraError.kind === "constraints"
-                        ? "Je camera ondersteunt de gevraagde instellingen niet. Voer de code handmatig in."
-                        : `${cameraError.message} Probeer opnieuw of voer de code handmatig in.`}
+                        ? t("error.body_constraints")
+                        : t("error.body_generic", { message: cameraError.message })}
                 </div>
                 <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
                   <button
@@ -1343,7 +1343,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                       cursor: "pointer",
                     }}
                   >
-                    Opnieuw proberen
+                    {t("error.retry")}
                   </button>
                   <button
                     type="button"
@@ -1362,7 +1362,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                       cursor: "pointer",
                     }}
                   >
-                    {isFrameMode ? "Sluit en voer handmatig in" : "Voer code handmatig in"}
+                    {isFrameMode ? t("error.manual_fallback_close") : t("error.manual_fallback")}
                   </button>
                 </div>
               </div>
@@ -1387,7 +1387,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 <CheckCircle2 size={22} color="#2ECC8A" style={{ flexShrink: 0, marginTop: 1 }} />
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
-                    Frame-ID herkend
+                    {t("result.label")}
                   </div>
                   <div
                     style={{
@@ -1420,7 +1420,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     cursor: "pointer",
                   }}
                 >
-                  Opnieuw scannen
+                  {t("result.rescan")}
                 </button>
                 <a
                   href={result.startsWith("http") ? result : "#tweedehands"}
@@ -1442,7 +1442,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     gap: 8,
                   }}
                 >
-                  Overdracht starten <ArrowRight size={16} strokeWidth={2} />
+                  {t("result.start_transfer")} <ArrowRight size={16} strokeWidth={2} />
                 </a>
               </div>
             </div>
@@ -1459,7 +1459,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 lineHeight: 1.5,
               }}
             >
-              Geen camera?{" "}
+              {t("manual.no_camera")}{" "}
               <button
                 type="button"
                 onClick={() => { setManual(true); setCameraError(null); }}
@@ -1473,7 +1473,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   cursor: "pointer",
                 }}
               >
-                Voer de code handmatig in
+                {t("manual.no_camera_cta")}
               </button>
             </p>
           )}
@@ -1527,7 +1527,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   marginBottom: 6,
                 }}
               >
-                Velopass-code
+                {t("manual.label")}
               </label>
               {(() => {
                 const showSlots = manualCode.length > 0 || manualFocused;
@@ -1634,7 +1634,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
               <button
                 type="button"
                 onClick={copyExample}
-                aria-label="Voorbeeld: UC9K4D3NCJ"
+                aria-label={t("manual.example_aria")}
                 style={{
                   marginTop: 8,
                   display: "inline-flex",
@@ -1649,7 +1649,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   color: "#5A7090",
                 }}
               >
-                <span>Voorbeeld:</span>
+                <span>{t("manual.example_label")}</span>
                 <span
                   style={{
                     fontFamily: "'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
@@ -1676,7 +1676,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   lineHeight: 1.4,
                 }}
               >
-                10 tekens, bijv. UC9K4D3NCJ
+                {t("manual.hint")}
               </p>
 
               <button
@@ -1697,7 +1697,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   cursor: manualCode.length > 0 ? "pointer" : "not-allowed",
                 }}
               >
-                Bevestigen
+                {t("manual.confirm")}
               </button>
               <p
                 style={{
@@ -1709,7 +1709,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   lineHeight: 1.5,
                 }}
               >
-                Camera bij de hand?{" "}
+                {t("manual.have_camera")}{" "}
                 <button
                   type="button"
                   onClick={() => { setManual(false); setManualCode(""); setCameraError(null); }}
@@ -1723,7 +1723,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     cursor: "pointer",
                   }}
                 >
-                  Scan de QR-code
+                  {t("manual.have_camera_cta")}
                 </button>
               </p>
             </div>
