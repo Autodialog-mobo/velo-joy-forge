@@ -130,6 +130,8 @@
     "subhead": "<0>{{count}}+ {{unit}}</0>, cyclistes et policiers font partie de la communauté Velopass. Quelqu'un scanne ton Frame-ID ? Tu reçois aussitôt une notification.",
     "unit": "vélocistes",
     "stolen_link": "Vélo volé ou disparu ? Suis notre plan d'action →",
+    "check_lead": "Vous voulez savoir si un vélo est enregistré ? Vérifiez n'importe quel vélo dans le registre Velopass.",
+    "check_cta": "Vérifier un vélo →",
     "search_placeholder": "Cherche par ville…",
     "geo_idle": "Utilise ma position",
     "geo_loading": "Localisation…",
