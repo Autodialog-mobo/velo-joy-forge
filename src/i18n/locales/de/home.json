@@ -21,10 +21,10 @@
       "tag": "HAST DU DIR GERADE EIN FAHRRAD GEKAUFT?",
       "eyebrow": "Einladung erhalten?",
       "title": "Dein Velopass ist fertig",
-      "desc": "Dein Fahrradhändler oder Hersteller hat bereits eine Frame-ID auf deinem Fahrrad angebracht. Hast du eine E-Mail von Velopass erhalten? Dann ist dein Velopass startklar — wähle ein Passwort und los geht's. Noch keine E-Mail? Dann bring deinen Velopass über dein Fahrrad in Ordnung.",
+      "desc": "Dein Fahrradhändler oder Hersteller hat bereits eine Frame-ID auf deinem Fahrrad angebracht. Hast du eine E-Mail von Velopass erhalten? Dann ist dein Velopass startklar — wähle ein Passwort und los geht's. Noch keine E-Mail? Dann scanne die Frame-ID auf deinem Fahrrad, um deinen Velopass in Ordnung zu bringen.",
       "body": "Dein Fahrradhändler hat die Frame-ID angebracht und dein Fahrrad bereits auf deinen Namen registriert. Du musst nur noch ein Passwort wählen.",
       "cta": "Öffne deinen Velopass →",
-      "cta_register": "Keine E-Mail? Finde dein Fahrrad →",
+      "cta_register": "Keine E-Mail? Scanne deine Frame-ID →",
       "steps": {
         "s1": { "title": "Prüfe deine E-Mail", "body": "Du hast einen Einladungslink von deinem Fahrradhändler erhalten. Öffne ihn, um zu starten." },
         "s2": { "title": "Wähle ein Passwort", "body": "Erstelle dein Velopass-Konto in wenigen Sekunden." },
