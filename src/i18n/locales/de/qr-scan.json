@@ -29,7 +29,7 @@
       "headline": "So aktivierst du die Kamera in Chrome / Edge:",
       "steps": [
         "Klicke auf das Schloss-Symbol links in der Adressleiste.",
-        "Setze „Kamera" auf Zulassen.",
+        "Setze \"Kamera\" auf Zulassen.\",
         "Lade diese Seite neu."
       ]
     },
@@ -37,23 +37,23 @@
       "headline": "So aktivierst du die Kamera in Firefox:",
       "steps": [
         "Klicke auf das Schloss-Symbol links in der Adressleiste.",
-        "Klicke neben „Kamera" auf das Kreuz, um die Blockade zu entfernen.",
-        "Lade die Seite neu und wähle „Zulassen"."
+        "Klicke neben \"Kamera\" auf das Kreuz, um die Blockade zu entfernen.\",
+        "Lade die Seite neu und wähle \"Zulassen\"."
       ]
     },
     "desktop_safari": {
       "headline": "So aktivierst du die Kamera in Safari:",
       "steps": [
         "Safari (Menüleiste) → Einstellungen → Websites → Kamera.",
-        "Setze velopass.com auf „Zulassen".",
+        "Setze velopass.com auf \"Zulassen\".",
         "Lade diese Seite neu."
       ]
     },
     "ios_safari": {
       "headline": "So aktivierst du die Kamera auf iPhone/iPad (Safari):",
       "steps": [
-        "Tippe links in der Adressleiste auf „aA" → Website-Einstellungen.",
-        "Setze Kamera auf „Erlauben". (Oder: Einstellungen-App → Safari → Kamera → Fragen/Erlauben.)",
+        "Tippe links in der Adressleiste auf \"aA\" → Website-Einstellungen.",
+        "Setze Kamera auf \"Erlauben\". (Oder: Einstellungen-App → Safari → Kamera → Fragen/Erlauben.)",
         "Lade diese Seite neu."
       ]
     },
@@ -78,14 +78,14 @@
       "steps": [
         "Tippe auf das Schloss links in der Adressleiste → Website-Einstellungen bearbeiten.",
         "Entferne die Kamera-Blockade.",
-        "Lade die Seite neu und wähle „Zulassen"."
+        "Lade die Seite neu und wähle \"Zulassen\"."
       ]
     },
     "in_app": {
       "headline": "Öffne diese Seite in deinem echten Browser",
       "steps": [
         "Tippe oben rechts auf das Menü-Symbol.",
-        "Wähle „In Safari öffnen" (iPhone) oder „In Chrome öffnen" (Android).",
+        "Wähle \"In Safari öffnen\" (iPhone) oder \"In Chrome öffnen\" (Android).",
         "Erlaube dort die Kamera und scanne erneut."
       ],
       "note": "In-App-Browser von Instagram, Facebook, TikTok usw. merken sich die Kamera-Berechtigung oft nicht oder blockieren sie."
@@ -94,7 +94,7 @@
       "headline": "Kamerazugriff im Browser wieder aktivieren",
       "steps": [
         "Öffne die Website-Einstellungen (meist über das Schloss in der Adressleiste).",
-        "Setze „Kamera" auf Zulassen.",
+        "Setze \"Kamera\" auf Zulassen.\",
         "Lade diese Seite neu."
       ]
     }
