@@ -195,6 +195,7 @@ function classifyCameraError(err: unknown, t: TFn): { kind: CameraErrorKind; mes
 
 
 export function QrScanDialog({ open, onOpenChange, initialManual = false, onResult, scanMode = "velopass", labels }: Props) {
+  const { t } = useTranslation("qr-scan");
   const isFrameMode = scanMode === "frame";
   const [result, setResult] = useState<string | null>(null);
   const [cameraError, setCameraError] = useState<{ kind: CameraErrorKind; message: string } | null>(null);
