@@ -32,7 +32,9 @@
     "loading": "Comprobando…",
     "image_alt": "Adhesivo Velopass Frame-ID con QR",
     "image_caption": "El adhesivo Velopass Frame-ID",
-    "manual_fallback": "o introduce el código manualmente"
+    "manual_fallback": "o introduce el código manualmente",
+    "example_inline": "10 caracteres · ejemplo",
+    "example_copy_aria": "Copiar código de ejemplo {{value}}"
   },
   "method_b": {
     "title": "Con marca y número de cuadro",

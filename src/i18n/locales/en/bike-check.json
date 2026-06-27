@@ -32,7 +32,9 @@
     "loading": "Checking…",
     "image_alt": "Velopass Frame-ID sticker with QR-code",
     "image_caption": "The Velopass Frame-ID sticker",
-    "manual_fallback": "or enter the code manually"
+    "manual_fallback": "or enter the code manually",
+    "example_inline": "10 characters · example",
+    "example_copy_aria": "Copy example code {{value}}"
   },
   "method_b": {
     "title": "Via brand and frame number",
