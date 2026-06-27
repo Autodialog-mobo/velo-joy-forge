@@ -99,14 +99,39 @@ const pathIconBox: React.CSSProperties = {
 export const Route = createFileRoute("/$lang/")({
   head: ({ params }) => {
     const lang = isLang(params.lang) ? params.lang : "en";
+    const HOME_META: Record<Lang, { title: string; description: string }> = {
+      en: {
+        title: "Velopass — Every bike. A customer for life.",
+        description:
+          "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop. The digital bike passport.",
+      },
+      nl: {
+        title: "Velopass — Altijd op de fiets. Alles geregeld.",
+        description:
+          "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort.",
+      },
+      fr: {
+        title: "Velopass — Toujours à vélo. Tout est réglé.",
+        description:
+          "Un Frame-ID sur ton vélo et tu as toujours accès à la protection antivol, l'assistance dépannage, l'assurance et ton magasin de vélo. Le passeport vélo numérique.",
+      },
+      de: {
+        title: "Velopass — Immer aufs Rad. Alles geregelt.",
+        description:
+          "Eine Frame-ID an deinem Rad und du hast immer Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und deinen Fahrradladen. Der digitale Fahrradpass.",
+      },
+      es: {
+        title: "Velopass — Siempre en bici. Todo resuelto.",
+        description:
+          "Un Frame-ID en tu bici y tendrás siempre acceso a protección antirrobo, asistencia en carretera, seguro y tu tienda de bicis. El pasaporte digital de la bici.",
+      },
+    };
+    const m = HOME_META[lang];
     const base = buildLocalizedHead({
       lang,
       path: "",
-      title: `Velopass — ${lang === "nl" ? "Altijd op de fiets. Alles geregeld." : "Every bike. A customer for life."}`,
-      description:
-        lang === "nl"
-          ? "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort."
-          : "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop. The digital bike passport.",
+      title: m.title,
+      description: m.description,
       ogTitle: "Velopass — Every bike. A customer for life.",
       ogDescription:
         "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop.",
