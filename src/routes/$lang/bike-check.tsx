@@ -1680,12 +1680,19 @@ const badgeBase: React.CSSProperties = {
   borderRadius: 100,
   padding: "3px 12px",
 };
-const resultCard = (color: string): React.CSSProperties => ({
+// Border style is a redundant (non-color) status cue: solid = secured,
+// dashed = reported/warning, dotted = not registered. Pairs with the
+// status icon so users with color-vision deficiencies can still
+// distinguish the three outcomes at a glance.
+const resultCard = (
+  color: string,
+  borderStyle: "solid" | "dashed" | "dotted" = "solid",
+): React.CSSProperties => ({
   background: "#fff",
   borderRadius: 14,
-  borderLeft: `4px solid ${color}`,
   border: "1px solid rgba(13,31,60,0.1)",
-  borderLeftWidth: 4,
+  borderLeftStyle: borderStyle,
+  borderLeftWidth: 6,
   borderLeftColor: color,
   padding: "28px 32px",
   boxShadow: "0 10px 30px rgba(13,31,60,0.06)",
