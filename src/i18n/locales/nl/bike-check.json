@@ -19,7 +19,8 @@
     "back": "← Terug",
     "eyebrow": "FIETS CONTROLEREN",
     "title": "Check de status van een fiets",
-    "subtitle": "Check in enkele seconden of een fiets geregistreerd is in de Velopass Community — geen account nodig."
+    "subtitle": "Check in enkele seconden of een fiets geregistreerd is in de Velopass Community — geen account nodig.",
+    "no_email_hint": "Geen mail ontvangen? Geen zorgen — scan de Frame-ID en je regelt het in één keer."
   },
   "method_a": {
     "title": "Via de Velopass-code",
