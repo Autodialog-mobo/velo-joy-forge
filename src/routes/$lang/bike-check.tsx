@@ -1167,6 +1167,17 @@ function BikeSearchPage() {
                 : status === "not_registered"
                   ? "rgba(51,65,85,0.78)" // slate-700
                   : "rgba(15,23,42,0.7)"; // slate-900 fallback
+          // Glyph mirrors the status as a non-color cue on the dim overlay,
+          // so users with color-vision deficiencies still recognize the
+          // outcome from the backdrop alone.
+          const Glyph =
+            status === "secured"
+              ? CheckCircle2
+              : status === "reported"
+                ? AlertTriangle
+                : status === "not_registered"
+                  ? Search
+                  : null;
           return (
             <div
               onClick={() => setSpotlight(false)}
@@ -1180,8 +1191,24 @@ function BikeSearchPage() {
                 animation: "vp-bc-fade 240ms ease both",
                 cursor: "pointer",
                 transition: "background 240ms ease",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                paddingTop: "12vh",
               }}
-            />
+            >
+              {Glyph && (
+                <Glyph
+                  size={96}
+                  color="#ffffff"
+                  strokeWidth={1.6}
+                  style={{
+                    opacity: 0.92,
+                    filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.25))",
+                  }}
+                />
+              )}
+            </div>
           );
         })()}
 
