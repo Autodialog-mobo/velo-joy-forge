@@ -14,6 +14,7 @@ import { QrScanDialog } from "@/components/QrScanDialog";
 import { FaqSection } from "@/components/FaqSection";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
+import { trackCheckBikeClick } from "@/lib/analytics";
 import shopsData from "@/data/shops.json";
 import { isLang, type Lang } from "@/i18n/config";
 import { buildLocalizedHead, SITE_URL } from "@/i18n/seo";
@@ -555,6 +556,7 @@ function VelopassHome() {
               <Link
                 to="/$lang/bike-check"
                 params={{ lang: currentLang }}
+                onClick={() => trackCheckBikeClick("homepage_scan_section", currentLang)}
 
                 className="path-cta"
                 style={{ fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}

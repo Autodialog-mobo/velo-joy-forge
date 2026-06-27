@@ -12,7 +12,7 @@ import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
 import { LeafletGestureSupport } from "./LeafletGestureSupport";
 import { ShopPanel } from "./ShopPanel";
-import { trackRegisterBikeClick } from "@/lib/analytics";
+import { trackRegisterBikeClick, trackCheckBikeClick } from "@/lib/analytics";
 
 type Shop = {
   name: string;
@@ -272,6 +272,7 @@ export default function ShopFinderMap() {
           <Link
             to="/$lang/bike-check"
             params={{ lang }}
+            onClick={() => trackCheckBikeClick("homepage_community_section", lang)}
             style={{
               display: "inline-flex",
               alignItems: "center",
