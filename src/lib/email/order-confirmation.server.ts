@@ -1,7 +1,7 @@
 // Server-only: sends the Velopass order confirmation email via Resend.
 // Domain velopass.com is verified — sender uses the branded address.
 
-type Lang = "nl" | "fr" | "de" | "en";
+type Lang = "nl" | "fr" | "de" | "en" | "es";
 
 const EMAIL_FROM = "Velopass <go@velopass.com>";
 
@@ -35,6 +35,11 @@ const BUNDLE_LABELS: Record<Lang, Record<string, string>> = {
     frameid_family_onetime: "Velopass Frame-ID Family",
   },
   en: {
+    frameid_solo_onetime: "Velopass Frame-ID Solo",
+    frameid_duo_onetime: "Velopass Frame-ID Duo",
+    frameid_family_onetime: "Velopass Frame-ID Family",
+  },
+  es: {
     frameid_solo_onetime: "Velopass Frame-ID Solo",
     frameid_duo_onetime: "Velopass Frame-ID Duo",
     frameid_family_onetime: "Velopass Frame-ID Family",
@@ -133,10 +138,28 @@ const COPY: Record<Lang, Strings> = {
     whatsNextBody: "Your Frame-IDs will ship within 2 business days. There's no separate shipping email — just watch your mailbox.",
     footer: "Questions? Just reply to this email.",
   },
+  es: {
+    subject: (ref) => `Gracias por tu pedido — Velopass #${ref}`,
+    preview: "Hemos recibido tu pedido.",
+    hi: "Hola",
+    thanks: "¡Gracias por tu pedido! Hemos recibido tu pago y estamos preparando tus Frame-ID.",
+    orderRef: "Número de pedido",
+    items: "Artículos",
+    qty: "Cant.",
+    amount: "Importe",
+    subtotal: "Subtotal",
+    shipping: "Envío",
+    total: "Total",
+    whereofVat: (vat) => `incl. ${vat} IVA`,
+    shipTo: "Dirección de envío",
+    whatsNext: "¿Y ahora?",
+    whatsNextBody: "Tus Frame-ID se enviarán en un plazo de 2 días laborables. No hay un correo de envío aparte — solo revisa tu buzón.",
+    footer: "¿Preguntas? Responde a este correo.",
+  },
 };
 
 function pickLang(raw: string | null | undefined): Lang {
-  if (raw === "nl" || raw === "fr" || raw === "de" || raw === "en") return raw;
+  if (raw === "nl" || raw === "fr" || raw === "de" || raw === "en" || raw === "es") return raw;
   return "nl";
 }
 
