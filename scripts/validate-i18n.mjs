@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const LOCALES_DIR = resolve(__dirname, "../src/i18n/locales");
 const REFERENCE = "nl";
-const LOCALES = ["nl", "en", "fr", "de"];
+const LOCALES = ["nl", "en", "fr", "de", "es"];
 
 // Matches strings that look like an i18n key path (e.g. "paths.shop.tag",
 // "hero.cta_primary"). Heuristic: lowercase dotted segment(s), no spaces,
