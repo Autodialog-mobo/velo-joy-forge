@@ -1,0 +1,75 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Política de privacidad — Velopass",
+    "description": "Lee cómo Velopass trata y protege tus datos personales."
+  },
+  "eyebrow": "Política de privacidad",
+  "title": "Cómo protegemos tus datos",
+  "last_updated": "Última actualización: 17 de mayo de 2026",
+  "sections": [
+    {
+      "title": "1. ¿Quiénes somos?",
+      "body": "Velopass BV, con domicilio en Stokerijstraat 29/bus a1, 2110 Wijnegem, IVA BE0777.359.681, es el responsable del tratamiento de tus datos personales a través de este sitio web y los servicios Velopass."
+    },
+    {
+      "title": "2. ¿Qué datos recogemos?",
+      "intro": "Solo recogemos los datos necesarios para nuestro servicio:",
+      "list": [
+        "Nombre y datos de contacto (correo, teléfono)",
+        "Datos de la bici (Frame-ID, marca, modelo, foto)",
+        "Información de cuenta e historial de inicio de sesión",
+        "Datos de uso e interacciones con nuestro servicio"
+      ]
+    },
+    {
+      "title": "3. ¿Para qué usamos tus datos?",
+      "intro": "Tus datos se usan para:",
+      "list": [
+        "Crear y gestionar tu cuenta Velopass",
+        "Registro de bicis y verificación de propiedad",
+        "Atención al cliente y comunicación",
+        "Análisis estadísticos para mejorar nuestro servicio"
+      ]
+    },
+    {
+      "title": "4. Cookies",
+      "intro": "Nuestro sitio usa cookies:",
+      "list_rich": [
+        { "label": "Cookies funcionales:", "body": "necesarias para el correcto funcionamiento del sitio (p. ej. gestión de sesión)." },
+        { "label": "Cookies analíticas:", "body": "nos ayudan a entender cómo se usa nuestro sitio. Solo se instalan tras tu consentimiento." }
+      ],
+      "outro": "Puedes cambiar tus preferencias de cookies en cualquier momento desde el banner al pie de la página."
+    },
+    {
+      "title": "5. ¿Cuánto tiempo conservamos tus datos?",
+      "body": "No conservamos tus datos personales más tiempo del necesario para la finalidad para la que se recogieron, salvo que una obligación legal exija un plazo mayor. Los datos de registro de bici se conservan mientras tu cuenta esté activa."
+    },
+    {
+      "title": "6. Tus derechos",
+      "intro": "Tienes derecho a:",
+      "list": [
+        "Acceder a tus datos",
+        "Que se corrijan o supriman",
+        "Limitar el tratamiento",
+        "Oponerte al tratamiento",
+        "Portar tus datos"
+      ],
+      "outro_prefix": "Contacta con nosotros en",
+      "outro_email": "privacy@velopass.com",
+      "outro_suffix": "para ejercer estos derechos."
+    },
+    {
+      "title": "7. Seguridad",
+      "body": "Adoptamos medidas técnicas y organizativas adecuadas para proteger tus datos contra el acceso no autorizado, la pérdida o el robo, incluyendo cifrado, control de acceso y auditorías de seguridad periódicas."
+    },
+    {
+      "title": "8. Contacto",
+      "intro_prefix": "¿Dudas sobre esta política? Escribe a",
+      "intro_email": "privacy@velopass.com",
+      "intro_mid": "o usa nuestro",
+      "intro_link": "formulario de contacto",
+      "intro_suffix": "."
+    }
+  ]
+}

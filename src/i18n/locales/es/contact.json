@@ -1,0 +1,106 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Contacto — Velopass",
+    "description": "¿Necesitas ayuda con la activación, tu Frame-ID o una bici encontrada? Escribe al equipo Velopass por WhatsApp.",
+    "og_description": "Elige un tema y chatea con el equipo Velopass por WhatsApp."
+  },
+  "back": "Volver",
+  "header": {
+    "title": "¿Cómo podemos ayudarte?",
+    "subtitle": "Elige a continuación quién eres — enviaremos tu pregunta directamente a la persona adecuada."
+  },
+  "tabs": {
+    "rider": "Soy ciclista",
+    "shop": "Soy una tienda de bicis"
+  },
+  "cards_eyebrow": "¿Sobre qué es tu pregunta?",
+  "rider": {
+    "suggestions": [
+      {
+        "title": "Ayuda con la activación",
+        "desc": "¿Has recibido la invitación pero no consigues entrar?",
+        "prefill": "Hola Velopass, necesito ayuda para activar mi cuenta. "
+      },
+      {
+        "title": "Pregunta sobre mi Frame-ID",
+        "desc": "¿No has recibido el envío, está dañado u otra duda?",
+        "prefill": "Hola Velopass, tengo una pregunta sobre mi Frame-ID: "
+      },
+      {
+        "title": "Informar de una bici encontrada",
+        "desc": "¿Has encontrado una bici con un Velopass Frame-ID?",
+        "prefill": "Hola Velopass, he encontrado una bici con un Velopass Frame-ID. "
+      }
+    ],
+    "pick_subject": "Elegir este tema →",
+    "form_title": "Envíanos un mensaje",
+    "form_subtitle": "Rellena tus datos y abre WhatsApp — solemos responder en menos de 2 horas en horario de oficina.",
+    "wa_message_intro": "Hola Velopass,",
+    "wa_message_name": "Nombre",
+    "wa_message_email": "Correo",
+    "wa_message_phone": "Teléfono",
+    "email_alt_prefix": "¿Prefieres enviar un correo?"
+  },
+  "shop": {
+    "shortcuts": [
+      {
+        "title": "Solicitar una demo",
+        "desc": "Descubre Velopass en directo y resuelve tus dudas con nuestro equipo.",
+        "prefill": "Hola Velopass, me gustaría una demo de Velopass para mi tienda."
+      },
+      {
+        "title": "Sistema de caja o integración",
+        "desc": "¿Dudas sobre la conexión con tu sistema de caja o la Pro App?",
+        "prefill": "Hola Velopass, tengo una pregunta sobre la integración con el sistema de caja o la Pro App: "
+      },
+      {
+        "title": "Pregunta técnica (ya soy partner)",
+        "desc": "¿Ya estás conectado y tienes una pregunta sobre tu cuenta o portal?",
+        "prefill": "Hola Velopass, ya soy partner y tengo una pregunta técnica: "
+      }
+    ],
+    "send_email": "Enviar un correo →",
+    "pick_subject": "Elegir este tema →",
+    "form_title": "Envíanos un mensaje",
+    "form_subtitle": "Rellena el formulario — respondemos en 1 día laborable.",
+    "success": "Tu mensaje se ha enviado. Respondemos en 1 día laborable.",
+    "subjects": [
+      "Solicitar una demo",
+      "Sistema de caja o integración",
+      "Precios o pack de bienvenida",
+      "Ya soy partner — pregunta técnica",
+      "Empresa de leasing o aseguradora",
+      "Otra cosa"
+    ],
+    "subject_placeholder": "Elige un tema…"
+  },
+  "form": {
+    "name": "Nombre",
+    "name_placeholder": "Juan Pérez",
+    "phone": "Teléfono",
+    "phone_placeholder": "+32 471 60 15 73",
+    "email": "Correo",
+    "email_placeholder_rider": "juan@ejemplo.es",
+    "email_placeholder_shop": "juan@bicisperez.es",
+    "company": "Tienda de bicis o empresa",
+    "company_placeholder": "Bicis Pérez",
+    "note": "Comentario",
+    "note_placeholder": "Cuéntanos brevemente sobre qué es tu pregunta…",
+    "subject": "Tema",
+    "message": "Mensaje",
+    "send_whatsapp": "Enviar por WhatsApp →"
+  },
+  "errors": {
+    "name_required": "Introduce tu nombre.",
+    "email_required": "Introduce tu correo.",
+    "email_invalid": "Introduce un correo válido.",
+    "company_required": "Introduce el nombre de tu tienda o empresa.",
+    "subject_required": "Elige un tema.",
+    "message_required": "Escribe un mensaje.",
+    "form_check": "Revisa el formulario."
+  },
+  "legal": {
+    "line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem, Bélgica · IVA: BE0777.359.681 · {{email}}"
+  }
+}

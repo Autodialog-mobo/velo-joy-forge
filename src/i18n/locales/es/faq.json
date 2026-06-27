@@ -1,0 +1,62 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Preguntas frecuentes — Velopass",
+    "description": "Respuestas a preguntas sobre Velopass Frame-ID, registro, transferencia de propiedad, bicis robadas y la comunidad Velopass."
+  },
+  "section": {
+    "eyebrow": "PREGUNTAS FRECUENTES",
+    "title": "Todo lo que quieres saber",
+    "support_prefix": "¿No está tu pregunta? Contacta con nosotros por",
+    "support_whatsapp": "WhatsApp",
+    "support_or_mail": "o escribe a"
+  },
+  "left": [
+    {
+      "q": "¿Y si alguien quita el Frame-ID de mi bici?",
+      "a": "Primero, no es fácil: el Frame-ID está diseñado para destruirse en cualquier intento de retirarlo — el material se desmenuza y deja marcas claras en la pintura del cuadro. Cualquier intento deja rastros visibles.\n\nPero aunque alguien lo consiguiera: al registrar la bici también guardamos la marca y el número de cuadro. Tu bici sigue siendo localizable a través de esa combinación — igual que un coche sin matrícula sigue siendo identificable por su número de chasis. El Frame-ID solo lo hace más rápido.\n\nAdemás, Velopass bloquea cualquier intento de volver a registrar una bici ya registrada con esa combinación marca + número de cuadro. Un ladrón no puede registrar tu bici a su nombre.\n\n¿Quieres comprobar si tu bici está registrada? Busca por marca + número de cuadro en [Comprobar una bici →](/bike-check)"
+    },
+    {
+      "q": "¿Puedo pedir un Frame-ID nuevo si el mío se ha retirado o estropeado?",
+      "a": "Sí. Pide un Frame-ID nuevo en nuestra tienda online o en una tienda Velopass cerca de ti. Al recibirlo, entra en tu Velopass, selecciona la bici y haz clic en 'Sustituir Frame-ID'. Se conservan el historial y todos los servicios activos."
+    },
+    {
+      "q": "¿Cómo transfiero mi bici a un nuevo propietario?",
+      "a": "Entra en tu Velopass, selecciona la bici y haz clic en 'Transferir propiedad'. Recibirás un código PIN por correo. Dale ese PIN al nuevo propietario — lo introduce y pasa la bici a su nombre. Todo el historial le acompaña — solo tus datos personales y fotos privadas se quedan contigo."
+    },
+    {
+      "q": "¿Cómo colabora Velopass con el Registro Nacional Belga de Bicis (MyBike)?",
+      "a": "Puedes usar tu código Velopass para registrar también tu bici en MyBike, el registro nacional belga. Así tienes doble protección — en la comunidad Velopass y en el registro oficial."
+    },
+    {
+      "q": "¿Cuál es la diferencia entre el código Velopass y el número de cuadro?",
+      "a": "Son dos números distintos. El número de cuadro es el número de serie que el fabricante ha grabado en el cuadro de tu bici. El código Velopass está en el Frame-ID pegado a tu bici y da acceso a tu pasaporte digital. En bikesearch.velopass.com puedes buscar con ambos."
+    }
+  ],
+  "right": [
+    {
+      "q": "¿Qué significan Segura, Denunciada y Aún no registrada?",
+      "a": "Son los tres estados en la comunidad Velopass:\n• **Segura**: la bici está registrada y no consta como desaparecida. Todo en orden.\n• **Denunciada**: el propietario la ha denunciado activamente como desaparecida. La comunidad ayuda a buscarla.\n• **Aún no registrada**: la bici no está en la base de datos Velopass y aún no está protegida."
+    },
+    {
+      "q": "¿Por qué ya no se graba y en qué se diferencia de Velopass?",
+      "a": "El grabado prácticamente ha desaparecido — y con razón. Las bicis modernas de carbono o aluminio se dañan con una máquina de grabar. En el carbono, grabar es incluso fatal para la estructura del cuadro. Y en las e-bikes hay cables internos por los tubos.\n\nAntes se grababa tu número de identidad — un riesgo para la privacidad. Tu identificación personal quedaba a la vista en la bici.\n\nEl Velopass Frame-ID lo sustituye por completo:\n• Sin daño al cuadro — el adhesivo pega, no raya\n• Sin datos personales en el adhesivo — quien escanea solo ve el estado (libre o denunciada), nunca tus datos\n• Antifraude — el material se desmenuza si alguien lo manipula\n• Transferible — al vender, traspasas el pasaporte digital al nuevo propietario sin volver a registrar\n• Pasaporte digital — factura, número de serie e historial de mantenimiento en un solo sitio"
+    },
+    {
+      "q": "Intento entrar pero no funciona.",
+      "a": "La app en la App Store y Google Play es la Velopass Pro App — solo para tiendas de bicis. Como ciclista, entras en velopass.com. Haz clic en 'Entrar' arriba a la derecha o ve a app.velopass.com/login."
+    },
+    {
+      "q": "Compro una bici de segunda mano con un Velopass Frame-ID. ¿Qué hago?",
+      "a": "Dos pasos. Antes de comprar: comprueba el estado de la bici en bikesearch.velopass.com — así te aseguras de que no está denunciada como robada o desaparecida. Después de comprar: pide al propietario anterior que te transfiera la propiedad desde su cuenta Velopass. Luego la bici queda oficialmente a tu nombre."
+    },
+    {
+      "q": "¿Cómo vinculo una tienda de bicis a mi Velopass?",
+      "a": "Si tu bici se registró en una tienda Velopass, esa tienda ya está vinculada automáticamente. ¿Quieres elegir otra tienda o añadir una? Hazlo en tu cuenta Velopass, en 'Mi tienda'. Puedes cambiarlo cuando quieras."
+    },
+    {
+      "q": "No puedo registrar mi bici.",
+      "a": "Hay dos situaciones en las que el registro funciona distinto:\n\n¿Tu código Velopass empieza por VP? Probablemente la compraste en Francia. En Francia el registro de bicis es obligatorio por ley y debe hacerlo el vendedor — la tienda. La tienda registra la bici en el momento de la venta; tú no puedes hacerlo en línea. Contacta con tu tienda si el registro aún no se ha hecho.\n\n¿Es una bici de leasing? Las bicis de leasing están registradas a nombre de la empresa de leasing (con Joule hay una excepción — allí sí tienes tu propia cuenta). En ese caso no tienes una cuenta propia Velopass, pero la tienda puede leer tu bici y añadir mantenimientos. ¿Tu bici se ha perdido o se la han llevado? Avisa a la empresa de leasing — ellos pueden marcarla como perdida."
+    }
+  ]
+}

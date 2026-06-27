@@ -1,0 +1,150 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Velopass — Siempre en bici. Todo resuelto.",
+    "description": "Un Frame-ID en tu bici y tendrás siempre acceso a protección antirrobo, asistencia en carretera, seguro y tu tienda de confianza. El pasaporte digital de la bici."
+  },
+  "hero": {
+    "eyebrow": "Protección antirrobo + pasaporte digital de la bici",
+    "title_line_1": "Siempre en bici.",
+    "title_line_2_em": "Todo",
+    "title_line_3_em": "resuelto.",
+    "sub": "Un Frame-ID en tu bici — y tendrás siempre acceso a protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital. Todo al alcance de la mano.",
+    "cta_primary": "Pide tu Frame-ID →",
+    "cta_sub": "Desde 12,95 €",
+    "stolen_link": "¿Bici robada o desaparecida? → Mira qué hacer ahora",
+    "trust_text_suffix": "tiendas de bicis",
+    "trust_text_cyclists": "+200.000 ciclistas"
+  },
+  "paths": {
+    "shop": {
+      "tag": "ACABAS DE COMPRAR UNA BICI",
+      "eyebrow": "¿Has recibido una invitación?",
+      "title": "Tu Velopass está listo",
+      "desc": "Tu tienda o fabricante ya ha colocado un Frame-ID en tu bici. ¿Has recibido un correo de Velopass? Entonces tu Velopass está listo — elige una contraseña y listo. ¿Aún sin correo? Escanea el Frame-ID de tu bici y lo arreglas todo de una vez.",
+      "body": "Tu tienda ha pegado el Frame-ID y ya ha puesto la bici a tu nombre. Solo tienes que elegir una contraseña.",
+      "cta": "Abre tu Velopass →",
+      "cta_register": "¿Sin correo? Escanea tu Frame-ID →",
+      "steps": {
+        "s1": { "title": "Revisa tu correo", "body": "Has recibido una invitación de tu tienda a través de Velopass. Haz clic en el enlace del correo para abrir tu Velopass." },
+        "s2": { "title": "Elige una contraseña", "body": "Tus datos ya están cargados. Solo elige una contraseña y tu Velopass se abrirá." },
+        "s3": { "title": "Tu Velopass está listo", "body": "Protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital — todo accesible con un escaneo del QR de tu Frame-ID." }
+      },
+      "cta_primary": "Abre tu Velopass",
+      "cta_secondary": "¿No has recibido correo? →",
+      "no_mail_trigger": "¿No has recibido correo?",
+      "no_mail_step1": "Mira primero en tu carpeta de spam o correo no deseado. La invitación suele estar ahí.",
+      "no_mail_step2": "¿Sin correo? Encuentra tu bici con el escaneo Velopass o por marca y número de cuadro.",
+      "no_mail_step2_cta": "Comprobar una bici →"
+    },
+    "order": {
+      "tag": "¿Aún sin Frame-ID?",
+      "eyebrow": "Aún sin Frame-ID",
+      "title": "Pide un Velopass Frame-ID",
+      "desc": "Desde 12,95 €. Protegida al instante con tu pasaporte digital.",
+      "body": "Un Frame-ID activa tu pasaporte digital para toda la vida útil de tu bici. Compra única: sin suscripción, sin costes ocultos.",
+      "cta": "Elige tu pack →",
+      "shop_path": {
+        "title": "En una tienda de bicis",
+        "body": "Pásate por una tienda Velopass cerca de ti. La tienda tiene Frame-ID en stock, lo coloca en tu bici al momento y la registra a tu nombre. Sales rodando.",
+        "cta": "Encuentra una tienda cerca de ti"
+      },
+      "web_path": {
+        "title": "En la tienda online de Velopass",
+        "body": "Pide un Frame-ID directamente a Velopass, entregado en tu casa. Pégalo tú mismo y regístralo en velopass.com. Ideal si no hay una tienda Velopass cerca o para pedidos internacionales.",
+        "cta": "Pedir en la tienda online de Velopass →"
+      },
+      "final": {
+        "title": "Siempre en bici. Todo resuelto.",
+        "body": "Tu Velopass está activo. Protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital — todo accesible con un escaneo del QR de tu Frame-ID."
+      }
+    },
+    "second_hand": {
+      "tag": "¿Bici de segunda mano con Frame-ID?",
+      "eyebrow": "Bici de segunda mano con Frame-ID",
+      "title": "El pasaporte te acompaña. A tu nombre.",
+      "title_lead": "El pasaporte te acompaña.",
+      "title_em": "A tu nombre.",
+      "desc": "¿Compraste una bici de segunda mano con un Frame-ID Velopass? Regístrala a tu nombre — el pasaporte simplemente te acompaña.",
+      "body": "¿Compraste una bici de segunda mano con un Frame-ID Velopass? Puedes pasar el pasaporte digital a tu nombre fácilmente. El historial neutro de la bici (mantenimientos, reparaciones y datos de garantía) viaja contigo. Los servicios personales como asistencia y seguro los activas tú. Las facturas, precios y fotos personales se quedan privados con el propietario anterior.",
+      "cta": "Ponla a tu nombre →",
+      "steps": {
+        "s1": { "title": "Escanea el QR del Frame-ID", "body": "Escanea el código QR del Frame-ID de tu bici de segunda mano." },
+        "s2": { "title": "Solicita la transferencia", "body": "El propietario anterior recibe automáticamente una solicitud. Tras su confirmación, la bici queda oficialmente a tu nombre." },
+        "s3": { "title": "Tu Velopass. Tu bici.", "body": "El pasaporte digital ya es tuyo. Recibes una línea de tiempo neutra con los eventos de la bici. Activa la asistencia, el seguro y los servicios en unos clics." }
+      },
+      "cta_scan": "Escanea el QR",
+      "cta_manual": "Introducir el código a mano →"
+    }
+  },
+  "sticker": {
+    "title_line_1": "La llave digital de tu bici.",
+    "title_line_2": "Un escaneo. Todo resuelto.",
+    "eyebrow": "El Velopass Frame-ID",
+    "intro": "Un Frame-ID en tu cuadro, un mundo de posibilidades en el bolsillo.",
+    "scan_badge": "Escanea → acceso a todo",
+    "check_lead": "¿Dudas con una bici de segunda mano? Escanea el Frame-ID o busca por número de cuadro y comprueba al instante si una bici está registrada en el registro Velopass.",
+    "check_cta": "Comprobar una bici →",
+    "img_alt": "Velopass Frame-ID en el cuadro de una bici",
+    "feats": {
+      "location": {
+        "title": "Siempre en el sitio correcto.",
+        "body": "Tanto si tu tienda coloca el Frame-ID al comprar la bici como si lo pegas tú tras un pedido online: está pensado para quedarse en tu cuadro toda la vida útil de la bici."
+      },
+      "access": {
+        "title": "Acceso directo a todo.",
+        "body": "Escanea el QR para acceder al instante a tu pasaporte digital. Llevas siempre contigo el seguro y la asistencia, y reservas un mantenimiento en tu tienda en unos clics."
+      },
+      "frame": {
+        "title": "Unido al cuadro.",
+        "body": "El Frame-ID pertenece a la bici, no a la persona. Al venderla, traspasas el historial y la protección con facilidad. El Frame-ID se queda en el cuadro, los datos viajan con el nuevo propietario."
+      }
+    }
+  },
+  "benefits": {
+    "title": "Un Frame-ID. Toda una vida en bici, resuelta.",
+    "section_label": "Todo en un solo sitio",
+    "optional_badge": "Opcional",
+    "secured_pill": "Tu bici. SECURED.",
+    "cards": {
+      "theft": "Protección antirrobo",
+      "service_book": "Tu libro de servicio digital",
+      "roadside": "Asistencia en carretera",
+      "insurance": "Seguro",
+      "ownership": "Propiedad sin preocupaciones",
+      "theft_body": "{{shopCount}}+ tiendas escanean automáticamente desde su sistema de caja. Los ciclistas y la policía que escanean el QR también ven al momento si tu bici está siendo buscada.",
+      "theft_mybike": "También enlazada con MyBike, el registro nacional belga de bicis.",
+      "theft_stolen_link": "¿Bici robada o desaparecida? Mira qué hacer →",
+      "service_book_body": "Cada mantenimiento y cada reparación: documentados y siempre a mano. ¿Vendes tu bici? Un historial de servicio completo aumenta su valor de reventa.",
+      "service_book_wallet_load": "Carga tu Velopass en Apple Wallet o Google Wallet. Así está siempre en tu móvil. Sin app, sin login en el mostrador.",
+      "service_book_wallet_alt": "Tarjeta digital Velopass en Apple Wallet con foto de la bici, marca, modelo, número de cuadro y QR",
+      "service_book_note": "Gestionado por tu tienda Velopass — el experto que conoce tu bici. Muestra tu Wallet en cada visita, incluso en otra tienda cuando viajas.",
+      "roadside_body": "¿Una avería en pleno trayecto? La ayuda está a un escaneo de distancia. Acceso directo a la asistencia, sin buscar ni esperar. ¿Ya tienes un servicio de asistencia? Añádelo a tu Velopass para tenerlo todo en un sitio.",
+      "insurance_body": "Contrata un seguro de bici directamente desde tu Velopass, en unos clics. ¿Ya tienes seguro? Añádelo a tu Velopass para tenerlo todo en un sitio.",
+      "ownership_body": "Todo sobre tu bici en un solo sitio: especificaciones, garantía, historial de mantenimiento completo y servicios activos. ¿Vendes tu bici? Traspasa el pasaporte al nuevo propietario en un clic. Tu inversión mantiene su valor de por vida."
+    }
+  },
+
+  "community": {
+    "eyebrow": "La comunidad Velopass",
+    "headline": "Tu bici nunca está sola.",
+    "subhead": "<0>{{count}}+ {{unit}}</0>, ciclistas y policía forman parte de la comunidad Velopass. ¿Alguien escanea tu Frame-ID? Te avisamos al instante.",
+    "unit": "tiendas",
+    "stolen_link": "¿Bici robada o desaparecida? Sigue nuestros pasos →",
+    "check_lead": "¿Quieres saber si una bici está registrada? Comprueba cualquier bici en el registro Velopass.",
+    "check_cta": "Comprobar una bici →",
+    "search_placeholder": "Busca por ciudad, tienda o marca de bici...",
+    "geo_idle": "Encuentra una tienda cerca de ti",
+    "geo_loading": "Buscando ubicación...",
+    "geo_denied": "Ubicación denegada",
+    "empty": "No se han encontrado tiendas.",
+    "outro_line": "Cuanto mayor sea la comunidad, más segura estará tu bici.",
+    "outro_em": "Y crece cada día.",
+    "outro_cta": "¿Aún sin Velopass? Registra tu bici →"
+  },
+  "contact_band": {
+    "title": "¿Más preguntas?",
+    "subtitle": "Nuestro equipo te ayuda encantado.",
+    "cta": "Contacta con nosotros →"
+  }
+}

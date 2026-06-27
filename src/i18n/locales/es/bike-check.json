@@ -1,0 +1,125 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Comprueba el estado de una bici — Velopass",
+    "description": "Comprueba en segundos si una bici está registrada en la comunidad Velopass — sin cuenta.",
+    "ogDescription": "Comprueba una bici con el código Velopass o la marca + número de cuadro."
+  },
+  "nav": {
+    "what_you_get": "Lo que recibes",
+    "already_have_one": "¿Ya tienes un Frame-ID?",
+    "order_sticker": "Pedir un Frame-ID",
+    "community": "Comunidad",
+    "bike_check": "Comprobar una bici",
+    "for_professionals": "Para profesionales",
+    "login": "Entrar",
+    "menu_label": "Menú"
+  },
+  "page": {
+    "back": "← Volver",
+    "eyebrow": "COMPROBAR UNA BICI",
+    "title": "Comprueba el estado de una bici",
+    "subtitle": "Comprueba en segundos si una bici está registrada en la comunidad Velopass — sin cuenta.",
+    "no_email_hint": "¿No has recibido correo? Tranquilo — escanea el Frame-ID y lo arreglas todo de una vez."
+  },
+  "method_a": {
+    "title": "Con el código Velopass",
+    "desc": "Escanea el QR del Frame-ID o escribe el código Velopass.",
+    "code_label": "Código Velopass",
+    "code_hint": "10 caracteres, por ejemplo UC9K4D3NCJ",
+    "scan_cta": "Escanea el QR",
+    "manual_cta": "Introducir el código a mano",
+    "loading": "Comprobando…",
+    "image_alt": "Adhesivo Velopass Frame-ID con QR",
+    "image_caption": "El adhesivo Velopass Frame-ID",
+    "manual_fallback": "o introduce el código manualmente"
+  },
+  "method_b": {
+    "title": "Con marca y número de cuadro",
+    "desc": "Busca por marca y número de cuadro de la bici.",
+    "brand": "Marca",
+    "brand_placeholder": "Trek, Specialized, Gazelle…",
+    "frame_number": "Número de cuadro",
+    "frame_hint": "Alfanumérico, por ejemplo WTU212C0774E",
+    "check": "Comprobar",
+    "scan_cta": "Escanea el código de barras",
+    "scan_or_manual": "o introduce el número de cuadro a mano",
+    "scan_dialog_title": "Escanea el código de barras del cuadro",
+    "scan_dialog_desc": "Apunta tu cámara al adhesivo con el código de barras y el número de cuadro en el cuadro de tu bici.",
+    "loading": "Comprobando…",
+    "captcha": "No soy un robot",
+    "captcha_meta_privacy": "Privacidad · Condiciones",
+    "image_alt": "Número de cuadro del fabricante en el cuadro",
+    "image_caption": "El número de cuadro del fabricante"
+  },
+  "errors": {
+    "generic": "Algo ha salido mal. Inténtalo de nuevo."
+  },
+  "status_overview": {
+    "eyebrow": "¿QUÉ SIGNIFICA EL ESTADO?",
+    "title": "Tres resultados posibles",
+    "subtitle": "Tras la búsqueda verás siempre uno de estos tres estados.",
+    "secured_group_label": "PROTEGIDA — Registrada en la comunidad Velopass",
+    "not_secured_group_label": "NO PROTEGIDA — No registrada en Velopass",
+    "divider_or": "o",
+    "is_this_your_bike": "¿Es esta tu bici?",
+    "order_frameid_cta": "Pide un Frame-ID →",
+    "order_frameid_hint": "Protege tu bici con un Velopass Frame-ID — en tu tienda o en nuestra tienda online.",
+    "register_bike_cta": "Registra tu bici →",
+    "register_bike_hint": "Ya tienes un Frame-ID en tu bici. Regístrala en unos pasos."
+  },
+  "status_cards": {
+    "all_clear": {
+      "badge": "SEGURA",
+      "title": "Libre y en regla",
+      "body": "Registrada en la comunidad Velopass y no denunciada como desaparecida."
+    },
+    "reported": {
+      "badge": "DENUNCIADA",
+      "title": "Denunciada como desaparecida",
+      "body": "Registrada y activamente denunciada como desaparecida por su propietario. La comunidad Velopass ayuda a buscarla."
+    },
+    "not_registered": {
+      "badge": "AÚN NO REGISTRADA",
+      "title": "Aún no registrada",
+      "body": "Esta bici aún no está en Velopass. Por tanto, no hay protección activa."
+    }
+  },
+  "result": {
+    "secured_title": "Esta bici está protegida",
+    "secured_body": "Está registrada en la comunidad Velopass y no consta como desaparecida.",
+    "secured_cta": "¿Es tu bici? Abre tu Velopass →",
+    "reported_title": "Esta bici está denunciada",
+    "reported_body": "Está registrada y activamente denunciada como desaparecida por su propietario. La comunidad Velopass ayuda a buscarla.",
+    "reported_cta_primary": "Informar de bici encontrada →",
+    "contact_owner": "Avisa al propietario de que la has encontrado →",
+    "contact_owner_note": "Envías un mensaje directo al propietario. También puedes hacerlo de forma anónima.",
+    "not_registered_title": "Aún no registrada",
+    "not_registered_body": "Esta bici aún no está en Velopass. Regístrala para protegerla.",
+    "not_registered_cta": "Registra tu bici →",
+    "reported_be_primary": "Denuncia con Police-on-web →",
+    "reported_be_secondary": "Encuentra tu zona policial local →",
+    "reported_nl_primary": "Denuncia o informa a la policía →",
+    "reported_nl_note": "¿No es urgente? Llama al 0900-8844.",
+    "reported_fr_primary": "Denuncia en línea →",
+    "reported_de_primary": "Denuncia con la Onlinewache →",
+    "switch_country": "¿No estás en este país? Elige otro",
+    "country_label": "País"
+  },
+  "bike_details": {
+    "heading": "Detalles de la bici",
+    "brand": "Marca",
+    "model": "Modelo",
+    "color": "Color",
+    "type": "Tipo",
+    "year": "Año",
+    "unknown": "Desconocido"
+  },
+  "police_note_be": "¿Has encontrado esta bici? Denuncia con Police-on-web o encuentra tu zona policial local.",
+  "police_note_nl": "¿Has encontrado esta bici? Denuncia o informa a la policía.",
+  "police_note_fr": "¿Has encontrado esta bici? Denuncia con la policía francesa (pré-plainte en ligne).",
+  "police_note_de": "¿Has encontrado esta bici? Denuncia con la Onlinewache alemana.",
+  "outcomes": {
+    "reported_cta": "¿Has encontrado esta bici? Avisa al propietario de que la has encontrado."
+  }
+}

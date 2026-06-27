@@ -1,0 +1,47 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Gracias por tu pedido — Velopass",
+    "description": "Tu pedido Velopass está confirmado."
+  },
+  "header": {
+    "back_home": "Volver al inicio"
+  },
+  "states": {
+    "loading": "Cargando pedido…",
+    "error_title": "Vaya, algo ha salido mal",
+    "error_unknown": "Error desconocido",
+    "no_order": "No se ha encontrado información del pedido."
+  },
+  "success": {
+    "eyebrow": "Pedido recibido",
+    "title": "Gracias por tu pedido",
+    "intro": "Hemos recibido tu pedido — abajo tienes todo lo que necesitas saber.",
+    "shipping_note_one": "Tu Frame-ID se enviará en 2 días laborables.",
+    "shipping_note_many": "Tus Frame-ID se enviarán en 2 días laborables.",
+    "card_confirmation": "Confirmación",
+    "card_shipping": "Envío",
+    "shipping_value": "1,95 € · 2 días laborables",
+    "amount_paid": "{{amount}} pagados",
+    "status_line": "Tienes una confirmación de pago en tu correo. Estado: {{status}}.",
+    "back_button": "Volver a Velopass"
+  },
+  "pending": {
+    "eyebrow": "Procesando el pago",
+    "title": "Tu pago aún se está procesando",
+    "body": "Esperamos la confirmación de tu pago. Puede tardar unos segundos — actualiza esta página en un momento.",
+    "refresh": "Actualizar estado"
+  },
+  "unpaid": {
+    "eyebrow": "Pago no finalizado",
+    "title": "Tu pago no se ha finalizado",
+    "body": "El intento anterior caducó o se canceló. Tranquilo — tu pedido está listo. Haz clic abajo para completar el pago.",
+    "retry_button": "Finalizar pago",
+    "retrying": "Un momento…"
+  },
+  "bundles": {
+    "frameid_solo_onetime": "Velopass Frame-ID Solo",
+    "frameid_duo_onetime": "Velopass Frame-ID Duo",
+    "frameid_family_onetime": "Velopass Frame-ID Family"
+  }
+}
