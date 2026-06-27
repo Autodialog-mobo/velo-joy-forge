@@ -22,11 +22,12 @@ import enBundle from "@/i18n/locales/en/shop.json";
 import nlBundle from "@/i18n/locales/nl/shop.json";
 import frBundle from "@/i18n/locales/fr/shop.json";
 import deBundle from "@/i18n/locales/de/shop.json";
+import esBundle from "@/i18n/locales/es/shop.json";
 
 const ProCommunityMap = lazy(() => import("@/components/ProCommunityMap"));
 
 type MetaBundle = { meta: { title: string; description: string; ogDescription: string } };
-const metaMap: Record<string, MetaBundle> = { en: enBundle, nl: nlBundle, fr: frBundle, de: deBundle };
+const metaMap: Record<string, MetaBundle> = { en: enBundle, nl: nlBundle, fr: frBundle, de: deBundle, es: esBundle };
 
 export const Route = createFileRoute("/$lang/shop")({
   head: ({ params }) => {
