@@ -1978,10 +1978,12 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
 function NotRegCard({ t }: { t: TFn }) {
   const lang = useCurrentLang();
   return (
-    <div style={resultCard("#CBD5E1")}>
+    <div style={resultCard("#CBD5E1", "dotted")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#F1F5F9", color: "#0D1F3C" }}>{t("status_cards.not_registered.badge")}</span>
-        <Search color="#5A7090" size={24} />
+        <span style={{ ...badgeBase, gap: 6, background: "#F1F5F9", color: "#0D1F3C" }}>
+          <Search size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.not_registered.badge")}
+        </span>
       </div>
       <h3 style={resultTitle}>{t("result.not_registered_title")}</h3>
       <p style={resultBody}>{t("result.not_registered_body")}</p>
