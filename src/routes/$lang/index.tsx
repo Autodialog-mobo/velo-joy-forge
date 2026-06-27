@@ -548,6 +548,21 @@ function VelopassHome() {
                 <div><strong>{t("home:sticker.feats.frame.title")}</strong><span>{t("home:sticker.feats.frame.body")}</span></div>
               </div>
             </div>
+            <div style={{ marginTop: 24, padding: "18px 20px", borderRadius: 14, background: "rgba(13,31,60,0.04)", border: "1px solid rgba(13,31,60,0.08)" }}>
+              <p style={{ margin: "0 0 12px", fontSize: 15, lineHeight: 1.5, color: "rgba(13,31,60,0.82)" }}>
+                {t("home:sticker.check_lead")}
+              </p>
+              <Link
+                to="/$lang/bike-check"
+                params={{ lang: currentLang }}
+                search={{ lng: "nl-nl" }}
+                className="path-cta"
+                style={{ fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}
+              >
+                {t("home:sticker.check_cta")}
+              </Link>
+            </div>
+
           </div>
         </div>
       </section>
