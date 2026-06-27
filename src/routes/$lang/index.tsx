@@ -410,7 +410,7 @@ function VelopassHome() {
 
 
         <div className="path-split">
-          <a href="#already-have-one" className="path-card primary">
+          <div className="path-card primary">
             <div className="path-tag">{t("home:paths.shop.tag")}</div>
             <div className="path-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0D1F3C" strokeWidth="1.8" strokeLinecap="round">
@@ -422,8 +422,20 @@ function VelopassHome() {
             </div>
             <div className="path-title">{t("home:paths.shop.title")}</div>
             <p className="path-desc">{t("home:paths.shop.desc")}</p>
-            <span className="path-cta">{t("home:paths.shop.cta")}</span>
-          </a>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-start" }}>
+              <a href="#already-have-one" className="path-cta" style={{ fontWeight: 600 }}>
+                {t("home:paths.shop.cta")}
+              </a>
+              <Link
+                to="/$lang/bike-check"
+                params={{ lang: currentLang }}
+                className="path-cta"
+                style={{ color: "rgba(13,31,60,0.75)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                {t("home:paths.shop.cta_register")}
+              </Link>
+            </div>
+          </div>
           <Link to="/$lang/order" params={{ lang: currentLang }} className="path-card secondary">
             <div className="path-tag">{t("home:paths.order.tag")}</div>
             <div className="path-icon">

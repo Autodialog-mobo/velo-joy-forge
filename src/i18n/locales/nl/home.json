@@ -21,9 +21,10 @@
       "tag": "NET EEN FIETS GEKOCHT",
       "eyebrow": "Uitnodiging ontvangen?",
       "title": "Jouw Velopass staat klaar",
-      "desc": "Grote kans dat je Velopass al klaarstaat via je fietswinkel. Je fiets is geregistreerd. Kies een wachtwoord en je bent vertrokken.",
+      "desc": "Je fietswinkel of fabrikant heeft al een Frame-ID op je fiets geplakt. Heb je een e-mail van Velopass ontvangen? Dan staat je Velopass klaar — kies een wachtwoord en je bent vertrokken. Nog geen e-mail? Breng je Velopass dan in orde via je fiets.",
       "body": "Je fietswinkel heeft de Frame-ID geplakt en je fiets al op jouw naam gezet. Jij hoeft enkel nog een wachtwoord te kiezen.",
       "cta": "Open je Velopass →",
+      "cta_register": "Geen e-mail? Vind je fiets →",
       "steps": {
         "s1": { "title": "Controleer je e-mail", "body": "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen." },
         "s2": { "title": "Kies een wachtwoord", "body": "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord en je Velopass gaat open." },
