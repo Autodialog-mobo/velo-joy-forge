@@ -711,7 +711,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         <button
           type="button"
           onClick={close}
-          aria-label="Sluiten"
+          aria-label={t("close")}
           style={{
             position: "absolute",
             top: safeInset("top", 16),
@@ -758,10 +758,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             }}
           >
             {result
-              ? (isFrameMode ? (labels?.title ?? "Barcode gescand") : "Frame-ID gescand")
+              ? (isFrameMode ? (labels?.title ?? t("title.result_frame")) : t("title.result_velopass"))
               : manual
-                ? "Voer de Velopass-code in"
-                : (labels?.title ?? (isFrameMode ? "Scan de barcode op het frame" : "Scan de Velopass Frame-ID"))}
+                ? t("title.manual")
+                : (labels?.title ?? (isFrameMode ? t("title.scan_frame") : t("title.scan_velopass")))}
           </DialogTitle>
           <DialogDescription
             style={{
@@ -774,13 +774,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
           >
             {result
               ? (isFrameMode
-                  ? "We hebben het framenummer herkend. Controleer of het klopt voor je zoekt."
-                  : "We hebben de QR-code herkend. Bevestig om de overdracht te starten.")
+                  ? t("description.result_frame")
+                  : t("description.result_velopass"))
               : manual
-                ? "De code staat rechts verticaal op de Frame-ID sticker op het frame van je fiets."
+                ? t("description.manual")
                 : (labels?.description ?? (isFrameMode
-                    ? "Richt je camera op de barcode-sticker met het framenummer op het frame van je fiets."
-                    : "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID."))}
+                    ? t("description.scan_frame")
+                    : t("description.scan_velopass")))}
           </DialogDescription>
         </DialogHeader>
 
@@ -803,10 +803,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 <AlertCircle size={20} color="#dc2626" style={{ flexShrink: 0, marginTop: 2 }} />
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: "#0D1F3C", fontSize: 14 }}>
-                    Cameratoegang geblokkeerd
+                    {t("permission.blocked_title")}
                   </div>
                   <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#5A7090", fontSize: 13, marginTop: 4, lineHeight: 1.5 }}>
-                    Je hebt cameratoegang voor deze site geweigerd of geblokkeerd.
+                    {t("permission.blocked_body")}
                   </div>
                   <div style={{ fontFamily: "'DM Sans', sans-serif", color: "#0D1F3C", fontSize: 13, marginTop: 10, fontWeight: 500 }}>
                     {guide.headline}
@@ -836,7 +836,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                         cursor: "pointer",
                       }}
                     >
-                      Ik heb het toegestaan — opnieuw proberen
+                      {t("permission.retry")}
                     </button>
                     <button
                       type="button"
@@ -855,7 +855,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                         cursor: "pointer",
                       }}
                     >
-                      {isFrameMode ? "Sluit en voer handmatig in" : "Voer de code handmatig in"}
+                      {isFrameMode ? t("permission.manual_fallback_close") : t("permission.manual_fallback")}
                     </button>
                   </div>
                 </div>
