@@ -162,35 +162,35 @@ type CameraErrorKind = "denied" | "not-found" | "in-use" | "constraints" | "unkn
 // `IScannerError` (een PLAIN object met `{ kind, message, cause }`), NIET
 // als DOMException. Daarom mappen we eerst op `err.kind` en pas daarna op
 // `err.name` (voor het geval een rauwe Error doorlekt).
-function classifyCameraError(err: unknown): { kind: CameraErrorKind; message: string } {
+function classifyCameraError(err: unknown, t: TFn): { kind: CameraErrorKind; message: string } {
   const e = err as { kind?: string; name?: string; message?: string } | null;
   const kind = e?.kind ?? "";
   const name = e?.name ?? "";
   const raw = typeof e?.message === "string" && e.message ? e.message : "";
 
   if (kind === "permission-denied" || kind === "security" || name === "NotAllowedError" || name === "SecurityError") {
-    return { kind: "denied", message: "Cameratoegang geweigerd." };
+    return { kind: "denied", message: t("error.denied") };
   }
   if (kind === "no-camera" || name === "NotFoundError" || name === "DevicesNotFoundError") {
-    return { kind: "not-found", message: "Geen camera gevonden op dit apparaat." };
+    return { kind: "not-found", message: t("error.not_found_msg") };
   }
   if (kind === "in-use" || name === "NotReadableError" || name === "TrackStartError") {
-    return { kind: "in-use", message: "De camera wordt al gebruikt door een andere app of tab." };
+    return { kind: "in-use", message: t("error.in_use_msg") };
   }
   if (
     kind === "overconstrained" ||
     name === "OverconstrainedError" ||
     name === "ConstraintNotSatisfiedError"
   ) {
-    return { kind: "constraints", message: "Geen geschikte camera gevonden voor deze instellingen." };
+    return { kind: "constraints", message: t("error.constraints_msg") };
   }
   if (kind === "insecure-context") {
-    return { kind: "unknown", message: "Camera vereist HTTPS." };
+    return { kind: "unknown", message: t("error.https") };
   }
   if (kind === "unsupported") {
-    return { kind: "unknown", message: "Deze browser ondersteunt geen camera-API." };
+    return { kind: "unknown", message: t("error.unsupported") };
   }
-  return { kind: "unknown", message: raw || "Camera kon niet worden gestart." };
+  return { kind: "unknown", message: raw || t("error.generic") };
 }
 
 
