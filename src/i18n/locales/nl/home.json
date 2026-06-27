@@ -83,6 +83,8 @@
     "eyebrow": "De Velopass Frame-ID",
     "intro": "Eén Frame-ID op je frame, een wereld aan mogelijkheden in je broekzak.",
     "scan_badge": "Scan → toegang tot alles",
+    "check_lead": "Twijfel je over een tweedehands fiets? Scan de Frame-ID of zoek op framenummer en zie meteen of een fiets geregistreerd is in het Velopass-register.",
+    "check_cta": "Controleer een fiets →",
     "img_alt": "Velopass Frame-ID op een fietsframe",
     "feats": {
       "location": {

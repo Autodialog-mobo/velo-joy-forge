@@ -83,6 +83,8 @@
     "eyebrow": "Le Velopass Frame-ID",
     "intro": "Un Frame-ID sur ton cadre, un monde de possibilités dans ta poche.",
     "scan_badge": "Scanne → accès à tout",
+    "check_lead": "Un doute sur un vélo d'occasion ? Scannez le Frame-ID ou recherchez par numéro de cadre et voyez immédiatement si un vélo est enregistré dans le registre Velopass.",
+    "check_cta": "Vérifier un vélo →",
     "img_alt": "Velopass Frame-ID sur un cadre de vélo",
     "feats": {
       "location": {
