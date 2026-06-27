@@ -131,91 +131,29 @@ function detectBrowser(): BrowserKind {
   return "unknown";
 }
 
-function getPermissionRecoverySteps(browser: BrowserKind): { headline: string; steps: string[]; note?: string } {
+function getRecoveryKey(browser: BrowserKind): string {
   switch (browser) {
-    case "desktop-chrome":
-      return {
-        headline: "Zo zet je de camera weer aan in Chrome / Edge:",
-        steps: [
-          "Klik op het slotje links in de adresbalk.",
-          "Zet 'Camera' op Toestaan.",
-          "Herlaad deze pagina.",
-        ],
-      };
-    case "desktop-firefox":
-      return {
-        headline: "Zo zet je de camera weer aan in Firefox:",
-        steps: [
-          "Klik op het slotje links in de adresbalk.",
-          "Klik bij 'Camera' op het kruisje om de blokkade te verwijderen.",
-          "Herlaad deze pagina en kies 'Toestaan' bij de vraag.",
-        ],
-      };
-    case "desktop-safari":
-      return {
-        headline: "Zo zet je de camera weer aan in Safari:",
-        steps: [
-          "Safari (menubalk) → Instellingen → Websites → Camera.",
-          "Zet velopass.com op 'Toestaan'.",
-          "Herlaad deze pagina.",
-        ],
-      };
-    case "ios-safari":
-      return {
-        headline: "Zo zet je de camera weer aan op iPhone/iPad (Safari):",
-        steps: [
-          "Tik op 'aA' links in de adresbalk → Website-instellingen.",
-          "Zet Camera op 'Toestaan'. (Of: Instellingen-app → Safari → Camera → Vragen/Toestaan.)",
-          "Ververs deze pagina.",
-        ],
-      };
-    case "ios-chrome":
-      return {
-        headline: "Zo zet je de camera weer aan op iPhone/iPad:",
-        steps: [
-          "Open de Instellingen-app → kies je browser (Chrome / Edge / Firefox).",
-          "Zet Camera op Aan.",
-          "Ververs deze pagina.",
-        ],
-      };
-    case "android-chrome":
-      return {
-        headline: "Zo zet je de camera weer aan in Chrome op Android:",
-        steps: [
-          "Tik op het slotje links in de adresbalk → Machtigingen.",
-          "Zet Camera op Toestaan.",
-          "Ververs deze pagina.",
-        ],
-      };
-    case "android-firefox":
-      return {
-        headline: "Zo zet je de camera weer aan in Firefox op Android:",
-        steps: [
-          "Tik op het slotje links in de adresbalk → Bewerk site-instellingen.",
-          "Verwijder de Camera-blokkade.",
-          "Ververs deze pagina en kies 'Toestaan'.",
-        ],
-      };
-    case "in-app":
-      return {
-        headline: "Open deze pagina in je echte browser",
-        steps: [
-          "Tik op het menu-icoon rechtsboven.",
-          "Kies 'Openen in Safari' (iPhone) of 'Openen in Chrome' (Android).",
-          "Sta de camera daar toe en scan opnieuw.",
-        ],
-        note: "In-app browsers van Instagram, Facebook, TikTok e.d. onthouden cameratoegang vaak niet of blokkeren die helemaal.",
-      };
-    default:
-      return {
-        headline: "Zet cameratoegang weer aan in je browser",
-        steps: [
-          "Open de site-instellingen (vaak via het slotje in de adresbalk).",
-          "Zet 'Camera' op Toestaan.",
-          "Herlaad deze pagina.",
-        ],
-      };
+    case "desktop-chrome": return "desktop_chrome";
+    case "desktop-firefox": return "desktop_firefox";
+    case "desktop-safari": return "desktop_safari";
+    case "ios-safari": return "ios_safari";
+    case "ios-chrome": return "ios_chrome";
+    case "android-chrome": return "android_chrome";
+    case "android-firefox": return "android_firefox";
+    case "in-app": return "in_app";
+    default: return "default";
   }
+}
+
+function getPermissionRecoverySteps(browser: BrowserKind, t: TFn): { headline: string; steps: string[]; note?: string } {
+  const key = getRecoveryKey(browser);
+  const steps = t(`recovery.${key}.steps`, { returnObjects: true }) as unknown;
+  const note = t(`recovery.${key}.note`, { defaultValue: "" });
+  return {
+    headline: t(`recovery.${key}.headline`),
+    steps: Array.isArray(steps) ? (steps as string[]) : [],
+    ...(note ? { note } : {}),
+  };
 }
 
 type CameraErrorKind = "denied" | "not-found" | "in-use" | "constraints" | "unknown";
