@@ -130,6 +130,8 @@
     "subhead": "<0>{{count}}+ {{unit}}</0>, cyclists and police are part of the Velopass Community. Someone scans your Frame-ID? You get notified right away.",
     "unit": "shops",
     "stolen_link": "Bike stolen or missing? Follow our step-by-step guide →",
+    "check_lead": "Want to know if a bike is registered? Check any bike in the Velopass register.",
+    "check_cta": "Check a bike →",
     "search_placeholder": "Search by city, shop or bike brand...",
     "geo_idle": "Find a shop near you",
     "geo_loading": "Locating...",
