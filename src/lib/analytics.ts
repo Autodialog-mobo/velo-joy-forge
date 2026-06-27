@@ -49,6 +49,22 @@ export function trackEvent(name: string, params: Record<string, unknown> = {}) {
  * @param page  Page slug where the CTA lives (e.g. "bikesearch", "shopfinder")
  * @param variant Variant identifier (e.g. "not-registered-info", "not-registered-result", "shopfinder-map")
  */
+/**
+ * Track a click on a "Controleer een fiets" (check a bike) CTA that leads to /[lang]/bike-check.
+ * @param location  Where the CTA was clicked: "homepage_scan_section" or "homepage_community_section"
+ * @param lang      Current UI language
+ */
+export function trackCheckBikeClick(
+  location: "homepage_scan_section" | "homepage_community_section",
+  lang: string,
+) {
+  trackEvent("check_bike_click", {
+    location,
+    lang,
+    destination: "/bike-check",
+  });
+}
+
 export function trackRegisterBikeClick(page: string, variant: string) {
   trackEvent("register_bike_click", { page, variant });
 }
