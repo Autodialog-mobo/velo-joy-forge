@@ -1,0 +1,67 @@
+{
+  "buying_second_hand": {
+    "meta": {
+      "title": "¿Es esta bici robada? Comprar una bici de segunda mano con seguridad — Velopass",
+      "description": "Comprueba si una bici de segunda mano es robada. Lista con número de cuadro, factura y verificación de registro con Velopass Bike Check."
+    },
+    "eyebrow": "Guía",
+    "title": "¿Cómo saber si una bici es robada?",
+    "intro": "Comprar una bici de segunda mano es inteligente — pero solo si estás seguro de que no es robada. Esta lista te ayuda a comprobar en cinco minutos si la bici está limpia y cómo organizar la transferencia con seguridad.",
+    "tldr_title": "En resumen",
+    "tldr": "Pide el número de cuadro y la factura original, comprueba la bici con Velopass Bike Check y pide al vendedor que transfiera la propiedad desde su cuenta Velopass. Un vendedor honesto comparte el registro y la factura sin dudar. ¿Faltan? Sigue mirando con tranquilidad.",
+    "cta_primary": "Comprueba una bici ahora",
+    "cta_secondary": "Informar de una bici robada",
+    "back": "Volver",
+    "sections": [
+      {
+        "title": "1. Pide siempre el número de cuadro",
+        "body": "El número de cuadro es el código de serie único que el fabricante ha grabado en el cuadro — normalmente debajo del eje de pedalier, en el tubo de dirección o cerca de la rueda trasera. Pide al vendedor una foto clara antes de ir. Un vendedor honesto te lo envía sin problemas. Si no lo consigues, ya sabes."
+      },
+      {
+        "title": "2. Comprueba la bici con Velopass Bike Check",
+        "body": "Introduce el número de cuadro o el código Velopass (en el adhesivo Frame-ID) en nuestro Bike Check. Verás al instante si la bici está denunciada como robada o desaparecida, y si tiene un propietario activo. Gratis, anónimo, unos 10 segundos."
+      },
+      {
+        "title": "3. Pide la factura de compra original",
+        "body": "Un vendedor honesto tiene la factura original (o un comprobante de transferencia anterior). Comprueba el nombre, la fecha y el número de cuadro de la factura — deben coincidir con la bici y con el vendedor. ¿Dudas? Pide una copia de su DNI y compara."
+      },
+      {
+        "title": "4. Atento a señales sospechosas",
+        "list": [
+          "Precio muy por debajo del valor de mercado del modelo",
+          "Vendedor con prisas, sin lugar fijo de encuentro, solo efectivo",
+          "Arañazos o daños alrededor del número de cuadro (posiblemente limado)",
+          "Sin llave del candado, sin manual, sin historial",
+          "Una historia que no cuadra: \"de un amigo\", \"herencia\", \"no tengo tiempo de explicar\""
+        ]
+      },
+      {
+        "title": "5. Haz la transferencia de propiedad al momento",
+        "body": "¿La bici tiene registro Velopass? Pide al vendedor que inicie la transferencia desde su cuenta Velopass allí mismo. Después la bici queda oficialmente a tu nombre — y podrás recuperarla si se la roban más tarde. ¿Sin Velopass? Regístrala tú mismo en cuanto la compres."
+      },
+      {
+        "title": "6. ¿Y si la bici resulta ser robada?",
+        "body": "No la compres. Una bici robada sigue siendo del propietario original, así que pierdes el dinero y la bici. Denuncia el anuncio en la plataforma (Wallapop, Facebook, Milanuncios) y, si puedes identificar al vendedor, a la policía."
+      }
+    ],
+    "faq_title": "Preguntas frecuentes",
+    "faq": [
+      {
+        "q": "¿Puedo saber por el aspecto si una bici es robada?",
+        "a": "No de forma fiable. Una bici cuidada puede ser robada; una bici descuidada puede venderse honestamente. Solo el número de cuadro + una comprobación de registro dan certeza."
+      },
+      {
+        "q": "¿Y si el vendedor no quiere darme el número de cuadro?",
+        "a": "Eso es una señal clara. Un vendedor honesto no tiene nada que esconder. Aléjate."
+      },
+      {
+        "q": "¿Velopass Bike Check es gratis?",
+        "a": "Sí. La comprobación es gratuita, anónima y funciona para cualquier bici — también las que no están registradas en Velopass se comprueban contra nuestra base de datos de robos."
+      },
+      {
+        "q": "¿Qué hago si he comprado una bici robada sin saberlo?",
+        "a": "Avisa a la policía y devuelve la bici al propietario legítimo. Puedes intentar recuperar tu dinero del vendedor, pero legalmente no estás protegido."
+      }
+    ]
+  }
+}

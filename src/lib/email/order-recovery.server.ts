@@ -1,7 +1,7 @@
 // Server-only: sends the Velopass "finish your order" recovery email via Resend.
 // Triggered when a Mollie payment expires without ever being paid.
 
-type Lang = "nl" | "fr" | "de" | "en";
+type Lang = "nl" | "fr" | "de" | "en" | "es";
 
 const EMAIL_FROM = "Velopass <go@velopass.com>";
 
@@ -33,6 +33,11 @@ const BUNDLE_LABELS: Record<Lang, Record<string, string>> = {
     frameid_family_onetime: "Velopass Frame-ID Family",
   },
   en: {
+    frameid_solo_onetime: "Velopass Frame-ID Solo",
+    frameid_duo_onetime: "Velopass Frame-ID Duo",
+    frameid_family_onetime: "Velopass Frame-ID Family",
+  },
+  es: {
     frameid_solo_onetime: "Velopass Frame-ID Solo",
     frameid_duo_onetime: "Velopass Frame-ID Duo",
     frameid_family_onetime: "Velopass Frame-ID Family",
@@ -126,6 +131,23 @@ const COPY: Record<Lang, Strings> = {
     validUntil: "This payment link is valid until {{date}}.",
     footer: "Questions? Just reply to this email.",
   },
+  es: {
+    subject: "Termina tu pedido de Velopass",
+    preview: "Estabas casi — termina tu pedido cuando te venga bien.",
+    hi: "Hola",
+    intro: "Empezaste un pedido en Velopass pero el pago no se completó.",
+    noWorries: "Sin problema — termínalo cuando te venga bien.",
+    cta: "Terminar mi pedido",
+    items: "Tu pedido",
+    qty: "Cant.",
+    amount: "Importe",
+    subtotal: "Subtotal",
+    shipping: "Envío",
+    total: "Total",
+    orderRef: "Número de pedido",
+    validUntil: "Este enlace de pago es válido hasta el {{date}}.",
+    footer: "¿Preguntas? Responde a este correo.",
+  },
 };
 
 const DATE_LOCALES: Record<Lang, string> = {
@@ -133,6 +155,7 @@ const DATE_LOCALES: Record<Lang, string> = {
   fr: "fr-FR",
   de: "de-DE",
   en: "en-GB",
+  es: "es-ES",
 };
 
 function formatExpiry(iso: string | null | undefined, lang: Lang): string | null {
@@ -151,7 +174,7 @@ function formatExpiry(iso: string | null | undefined, lang: Lang): string | null
 }
 
 function pickLang(raw: string | null | undefined): Lang {
-  if (raw === "nl" || raw === "fr" || raw === "de" || raw === "en") return raw;
+  if (raw === "nl" || raw === "fr" || raw === "de" || raw === "en" || raw === "es") return raw;
   return "nl";
 }
 

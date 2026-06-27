@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const LOCALES_DIR = resolve(__dirname, "../src/i18n/locales");
-const LOCALES = ["nl", "en", "fr", "de"];
+const LOCALES = ["nl", "en", "fr", "de", "es"];
 const FILE = "home.json";
 const MAX_EMDASHES = 8;
 const EMDASH = "—";

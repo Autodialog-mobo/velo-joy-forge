@@ -41,13 +41,14 @@ async function mollieFetch(path: string, init: RequestInit = {}) {
 
 export type MollieCheckoutResult = { checkoutUrl: string; paymentId: string } | { error: string };
 
-type SupportedLang = "nl" | "en" | "fr" | "de";
+type SupportedLang = "nl" | "en" | "fr" | "de" | "es";
 
 const LANG_TO_MOLLIE_LOCALE: Record<SupportedLang, string> = {
   nl: "nl_BE", // BE is our largest market — Bancontact defaults
   en: "en_US", // Mollie's standard English locale (en_GB not in supported list)
   fr: "fr_BE", // Wallonia is bigger for us than FR-FR
   de: "de_DE",
+  es: "es_ES",
 };
 
 export const createMolliePayment = createServerFn({ method: "POST" })

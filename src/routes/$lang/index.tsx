@@ -22,12 +22,14 @@ import faqEn from "@/i18n/locales/en/faq.json";
 import faqNl from "@/i18n/locales/nl/faq.json";
 import faqFr from "@/i18n/locales/fr/faq.json";
 import faqDe from "@/i18n/locales/de/faq.json";
+import faqEs from "@/i18n/locales/es/faq.json";
 
 const FAQ_BY_LANG: Record<Lang, { left: Array<{ q: string; a: string }>; right: Array<{ q: string; a: string }> }> = {
   en: faqEn as never,
   nl: faqNl as never,
   fr: faqFr as never,
   de: faqDe as never,
+  es: faqEs as never,
 };
 
 function stripFaqMarkdown(s: string): string {

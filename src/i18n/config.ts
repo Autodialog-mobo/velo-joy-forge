@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-export const SUPPORTED_LANGS = ["en", "nl", "fr", "de"] as const;
+export const SUPPORTED_LANGS = ["en", "nl", "fr", "de", "es"] as const;
 export type Lang = (typeof SUPPORTED_LANGS)[number];
 export const DEFAULT_LANG: Lang = "en";
 export const LANG_COOKIE = "vp_lang";
@@ -11,6 +11,7 @@ export const LANG_LABELS: Record<Lang, { label: string; flag: string }> = {
   nl: { label: "Nederlands", flag: "🇳🇱" },
   fr: { label: "Français", flag: "🇫🇷" },
   de: { label: "Deutsch", flag: "🇩🇪" },
+  es: { label: "Español", flag: "🇪🇸" },
 };
 
 export function isLang(value: unknown): value is Lang {

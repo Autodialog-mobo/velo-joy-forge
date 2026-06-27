@@ -1,0 +1,52 @@
+{
+  "_translated": false,
+  "nav": {
+    "what_you_get": "Lo que recibes",
+    "already_have_one": "¿Ya tienes un Frame-ID?",
+    "order_sticker": "Pedir un Frame-ID",
+    "community": "Comunidad",
+    "bike_check": "Comprobar una bici",
+    "contact": "Contacto",
+    "for_professionals": "Para profesionales",
+    "login": "Entrar",
+    "proLogin": "Acceso Pro",
+    "menu": "Menú"
+  },
+  "lang_switcher": {
+    "label": "Idioma",
+    "current": "Idioma actual"
+  },
+  "footer": {
+    "tagline": "Siempre en bici. Todo resuelto.",
+    "tagline_pro": "Every bike. A customer for life.",
+    "coverage": "Frame-ID disponible en toda Europa · Tiendas de bicis en BE, NL y FR",
+    "privacy": "Privacidad",
+    "terms": "Condiciones",
+    "contact": "Contacto",
+    "bike_check": "Comprobar una bici",
+    "stolen": "¿Bici robada?",
+    "faq": "Preguntas frecuentes",
+    "for_cyclists": "Para ciclistas",
+    "copy": "© 2026 Velopass",
+    "company_line": "Velopass BV · Stokerijstraat 29/bus a1, 2110 Wijnegem · IVA BE0777.359.681"
+  },
+  "placeholders": {
+    "soon": "Próximamente disponible",
+    "back_to_stakeholders": "← Todos los stakeholders",
+    "talk_to_us": "Habla con nosotros →"
+  },
+  "cookie_consent": {
+    "message": "Velopass usa cookies para mejorar tu experiencia y registrar estadísticas anónimas. Lee nuestra",
+    "privacy_link": "política de privacidad",
+    "message_suffix": "para más información.",
+    "decline": "Solo esenciales",
+    "accept": "Aceptar todas las cookies"
+  },
+  "buttons": {
+    "loading": "Cargando…",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "retry": "Reintentar"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "Pide un Velopass Frame-ID — desde 12,95 €",
+    "description": "Pide tu Velopass Frame-ID. Un Frame-ID, un libro de servicio digital de por vida para tu bici.",
+    "ogDescription": "Protege tu bici. Pago seguro con Mollie."
+  },
+  "header": {
+    "back": "Volver"
+  },
+  "hero": {
+    "eyebrow": "Pide un Frame-ID",
+    "title": "Protege tu bici. Desde 12,95 €.",
+    "subtitle": "Un Frame-ID en tu bici — y tendrás siempre acceso a protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital.",
+    "feature_shipping": "Envío dentro de la UE",
+    "feature_secure": "Pago seguro con Mollie"
+  },
+  "bundles": {
+    "single_label": "Frame-ID",
+    "plural_label": "Frame-ID",
+    "popular_badge": "EL MÁS POPULAR",
+    "per_unit_template": "{{price}} por unidad",
+    "discount_15": "15 % de descuento",
+    "discount_23": "23 % de descuento",
+    "qty_decrease_aria": "Menos",
+    "qty_increase_aria": "Más",
+    "add_one_more": "Añade otro",
+    "add": "Añadir"
+  },
+  "info": {
+    "combine_note": "Puedes combinar varios packs en un mismo pedido. El IVA y los impuestos locales se calculan automáticamente al pagar."
+  },
+  "pro_tip": {
+    "label": "Consejo pro",
+    "degrease_title": "Desengrasa primero",
+    "degrease_body": "Limpia primero el cuadro con un desengrasante para una adhesión perfecta.",
+    "visible_title": "Colócalo bien visible",
+    "visible_body": "Pega tu Frame-ID en un sitio visible — queda perfecto justo debajo del tijo. Así el QR se escanea fácil.",
+    "deterrent_title": "Disuade a los ladrones",
+    "deterrent_body": "Un Frame-ID visible deja claro al momento que tu bici está registrada y protegida."
+  },
+  "cart": {
+    "title": "Carrito",
+    "empty": "Añade al menos un pack para continuar.",
+    "shipping": "Envío",
+    "shipping_free": "1,95 €",
+    "total": "Total",
+    "email_label": "Correo electrónico",
+    "email_placeholder": "tu@ejemplo.com",
+    "first_name": "Nombre",
+    "first_name_placeholder": "Juan",
+    "last_name": "Apellidos",
+    "last_name_placeholder": "Pérez",
+    "address": "Calle y número",
+    "address_placeholder": "Calle Mayor 12",
+    "postal_code": "Código postal",
+    "postal_code_placeholder": "28001",
+    "city": "Población",
+    "city_placeholder": "Madrid",
+    "country": "País",
+    "country_be": "Bélgica",
+    "country_nl": "Países Bajos",
+    "country_fr": "Francia",
+    "country_lu": "Luxemburgo",
+    "country_de": "Alemania",
+    "referral_label": "¿Cómo nos has conocido? (opcional)",
+    "referral_placeholder": "Elige una opción (opcional)",
+    "referral_shop": "Por mi tienda de bicis",
+    "referral_friend": "Por un amigo o familiar",
+    "referral_social": "Redes sociales",
+    "referral_search": "Google / buscador",
+    "referral_ai": "Por IA (ChatGPT, …)",
+    "referral_insurance": "Por mi seguro",
+    "referral_roadside": "Por mi servicio de asistencia",
+    "referral_other": "Otro",
+    "pay": "Pagar",
+    "pay_with_total_template": "Pagar {{total}} →",
+    "pay_arrow": "Pagar →",
+    "secure_note": "Pago seguro con Mollie · Bancontact · iDEAL · Tarjeta"
+  },
+  "tooltips": {
+    "need_bundle": "Elige primero un pack para poder pagar.",
+    "need_email": "Introduce un correo válido para continuar.",
+    "need_shipping": "Introduce tu dirección de envío para continuar."
+  },
+  "checkout_stage": {
+    "label": "Pago",
+    "total_template": "Total {{total}}",
+    "edit_order": "Modificar pedido",
+    "error_prefix": "Algo ha fallado al iniciar el pago:",
+    "redirecting": "Te estamos redirigiendo a la página de pago segura de Mollie…",
+    "unknown_error": "Error desconocido"
+  }
+}

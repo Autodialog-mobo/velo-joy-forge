@@ -1,0 +1,382 @@
+{
+  "_translated": false,
+  "meta": {
+    "title": "¿Bici robada? Denuncia rápido — Velopass",
+    "description": "Pasos tras un robo: marca tu bici en tu Velopass, denuncia en línea con Police-on-web y activa la comunidad Velopass."
+  },
+  "back": "Volver",
+  "hero": {
+    "eyebrow": "¿Bici robada o desaparecida?",
+    "title": "Denuncia rápido. Velopass te ayuda.",
+    "lead": "Para denunciar necesitas datos exactos de la bici — datos que ya no tienes a mano cuando la bici no está. A menos que tengas Velopass."
+  },
+  "argument": {
+    "title": "Todo lo que la policía necesita está en tu Velopass",
+    "rows": [
+      [
+        "Marca, modelo y color",
+        "En tu pasaporte Velopass"
+      ],
+      [
+        "Número de cuadro",
+        "En tu pasaporte Velopass"
+      ],
+      [
+        "Fotos de la bici",
+        "Guardadas en tu Velopass"
+      ],
+      [
+        "Factura de compra",
+        "Vinculada a tu Velopass"
+      ],
+      [
+        "Ubicación exacta del robo",
+        "Ya indicada al denunciar en Velopass"
+      ],
+      [
+        "Prueba de propiedad",
+        "Tu Velopass ES la prueba"
+      ]
+    ],
+    "cta": "Abrir mi Velopass →"
+  },
+  "step1": {
+    "title": "Paso 1 — Marca tu bici como desaparecida",
+    "body": "Entra en tu cuenta Velopass y ve a **'Mi bici'**. Haz clic en **'Marcar como desaparecida'**. El estado de tu bici cambia a **Denunciada** — la comunidad Velopass se activa al instante.",
+    "badge_note": "Cualquiera que escanee tu Frame-ID verá que tu bici está siendo buscada y podrá avisarte de forma anónima.",
+    "cta": "Marcar mi bici →"
+  },
+  "step2": {
+    "title": "Paso 2 — Denuncia en línea a la policía",
+    "lead": "Elige tu país para ver los pasos.",
+    "countries": {
+      "BE": "🇧🇪 Bélgica",
+      "NL": "🇳🇱 Países Bajos",
+      "FR": "🇫🇷 Francia",
+      "DE": "🇩🇪 Alemania",
+      "UK": "🇬🇧 Reino Unido"
+    },
+    "coming_soon": "Próximamente disponible",
+    "checklist_title": "¿Qué necesitas antes?",
+    "after_title": "¿Qué pasa después de la denuncia?",
+    "BE": {
+      "intro": "En Bélgica puedes denunciar en línea con Police-on-web. Te ahorras el viaje a comisaría.",
+      "checklist": [
+        {
+          "text": "Tu DNI (eID) o la app itsme"
+        },
+        {
+          "text": "Marca, modelo, color y tipo de bici",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Número de cuadro",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Número de grabado o carnet de bici",
+          "velopass": "Tu código Velopass es suficiente"
+        },
+        {
+          "text": "Ubicación exacta, fecha y hora del robo",
+          "velopass": "Ya indicada al denunciar en Velopass"
+        },
+        {
+          "text": "Fotos de la bici",
+          "velopass": "Ya guardadas en tu Velopass"
+        },
+        {
+          "text": "Factura de compra (si la tienes)",
+          "velopass": "Vinculada a tu Velopass"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Entra en police-on-web.be",
+          "body": "[www.police-on-web.be](https://www.police-on-web.be)"
+        },
+        {
+          "title": "Inicia una nueva denuncia",
+          "body": "Haz clic en **'Nueva denuncia'** y elige **'Robo de bici'**."
+        },
+        {
+          "title": "Identifícate con CSAM",
+          "body": "Identifícate con el lector de tu eID o la app itsme."
+        },
+        {
+          "title": "Rellena el formulario",
+          "body": "• Datos personales como propietario/denunciante\n• Hechos: ¿dónde y cuándo te la robaron?\n• Objeto: todos los detalles de la bici (cuantos más detalles, más probabilidades de recuperarla)",
+          "tip": "Abre tu Velopass para tener todos los datos de la bici a la vista."
+        },
+        {
+          "title": "Revisa y envía",
+          "body": "Revisa los datos y haz clic en **Enviar**."
+        }
+      ],
+      "after_body": "Recibirás un número de expediente y un acuse de recibo. El atestado oficial lo redacta la zona policial local. ¿Tienes seguro de bici? Envía el número del atestado a tu aseguradora para iniciar el siniestro.",
+      "found_title": "Mira también gevondenfietsen.be",
+      "found_body": "Las bicis robadas se abandonan a menudo en algún sitio. Mira de vez en cuando en [www.gevondenfietsen.be](https://www.gevondenfietsen.be) — puede que aparezca tu bici."
+    },
+    "NL": {
+      "intro": "En los Países Bajos denuncias en línea con politie.nl. Necesitas un DigiD.",
+      "check_first_title": "Comprueba esto primero",
+      "check_first_body": "¿Es posible que el ayuntamiento haya retirado tu bici? Las bicis mal aparcadas a veces se llevan a un depósito. Compruébalo antes de denunciar.",
+      "checklist": [
+        {
+          "text": "Tu DigiD (entrada en digid.nl)"
+        },
+        {
+          "text": "Marca, modelo, color y tipo de bici",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Número de cuadro (suele estar bajo el eje de pedalier o en la parte delantera del cuadro)",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Ubicación exacta, fecha y hora del robo",
+          "velopass": "Ya indicada al denunciar en Velopass"
+        },
+        {
+          "text": "Fotos de la bici",
+          "velopass": "Ya guardadas en tu Velopass"
+        },
+        {
+          "text": "Factura de compra (si la tienes)",
+          "velopass": "Vinculada a tu Velopass"
+        }
+      ],
+      "conditions_title": "Condiciones para la denuncia en línea",
+      "conditions_intro": "La denuncia en línea en politie.nl es posible si:",
+      "conditions": [
+        "La bici no fue robada de una vivienda, trastero o garaje",
+        "El robo ocurrió hace menos de un año"
+      ],
+      "conditions_note": "¿No cumples? Llama al 0900-8844 o denuncia presencialmente en comisaría.",
+      "steps": [
+        {
+          "title": "Entra en politie.nl",
+          "body": "[www.politie.nl/aangifte](https://www.politie.nl/aangifte-of-melding-doen/aangifte-van-diefstal-fiets.html)"
+        },
+        {
+          "title": "Elige robo de bici",
+          "body": "Elige **'Denunciar robo de bici'**."
+        },
+        {
+          "title": "Entra con DigiD",
+          "body": "Entra con tu DigiD a través del portal CSAM."
+        },
+        {
+          "title": "Rellena el formulario",
+          "body": "• Datos personales como propietario/denunciante\n• Hechos: ¿dónde y cuándo? ¿Estaba con candado?\n• Objeto: todos los detalles de la bici — cuantos más detalles, más probabilidades de recuperarla",
+          "tip": "Abre tu Velopass para tener a mano todos los datos de la bici — incluida la ubicación que ya indicaste al denunciar. Cópiala directamente al formulario."
+        },
+        {
+          "title": "Revisa y envía",
+          "body": "Revisa los datos y envía la denuncia."
+        }
+      ],
+      "after_body": "Recibirás una confirmación con un número de caso. Guárdalo bien — lo necesitas para el seguro. Tu bici se añade automáticamente al registro de robos del RDW y a StopHeling, para que los comerciantes puedan comprobar si una bici es robada. ¿Tienes seguro de bici? Comunica el robo a tu aseguradora y envíale el número de caso.",
+      "tip1_title": "Mira gevondenfietsen.be",
+      "tip1_body": "Las bicis robadas se abandonan a menudo en algún sitio. Comprueba regularmente [www.gevondenfietsen.be](https://www.gevondenfietsen.be).",
+      "tip2_title": "Vigila Marktplaats",
+      "tip2_body": "Las bicis robadas a veces aparecen en pocos días en plataformas de segunda mano. ¿Reconoces tu bici? No te enfrentes nunca tú — llama a la policía al 0900-8844."
+    },
+    "FR": {
+      "fnuci_badge": "FNUCI · República Francesa",
+      "fnuci_title": "Velopass es un operador autorizado del registro nacional francés de bicis",
+      "fnuci_body_1": "Si eres francés, tu registro Velopass está automáticamente vinculado al **FNUCI** — el *Fichier National Unique des Cycles Identifiés*. Es el registro estatal oficial que la policía y la gendarmería usan al buscar bicis robadas.",
+      "fnuci_body_2": "En concreto: en cuanto marcas tu bici como robada en Velopass, el estado en el FNUCI se actualiza automáticamente. La policía lo ve al momento.",
+      "flow_step_label": "Paso {{n}}",
+      "flow_steps": [
+        {
+          "title": "Tú marcas en Velopass",
+          "body": "Cambias el estado de tu bici a **Denunciada** en tu cuenta Velopass."
+        },
+        {
+          "title": "Se actualiza el FNUCI",
+          "body": "Velopass envía el cambio de estado al FNUCI. La policía y la gendarmería tienen acceso a este registro."
+        },
+        {
+          "title": "La policía identifica tu bici",
+          "body": "¿Encuentran tu bici? El agente escanea el código Velopass y ve al momento que es robada — y quién es el propietario."
+        }
+      ],
+      "code_note": "**Tu código Velopass ES tu identifiant FNUCI.** Es el número de 10 caracteres que la policía necesita para la *plainte* oficial. Lo encuentras en tu cuenta Velopass.",
+      "ma_intro": "Denuncia en línea con Ma Sécurité. Tu código Velopass es el *identifiant unique* que pide el formulario — ya está disponible en tu Velopass.",
+      "home_already_title": "¿Ya en casa?",
+      "home_already_body": "Las aseguradoras belgas y neerlandesas exigen casi siempre un atestado francés. Inicia la denuncia con Ma Sécurité lo antes posible, aunque ya estés en casa.",
+      "checklist": [
+        {
+          "text": "Tu pasaporte o DNI"
+        },
+        {
+          "text": "Cuenta FranceConnect (opcional pero recomendado)",
+          "note": "Sin FranceConnect: cita presencial obligatoria en una comisaría o gendarmería francesa"
+        },
+        {
+          "text": "Tu código Velopass (= identifiant FNUCI)",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Marca, modelo, color y tipo de bici",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Número de cuadro",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Ubicación francesa exacta, fecha y hora",
+          "velopass": "Ya indicada al denunciar en Velopass — como turista, luego no recuerdas la dirección exacta"
+        },
+        {
+          "text": "Fotos de la bici",
+          "velopass": "Ya guardadas en tu Velopass"
+        }
+      ],
+      "method1_badge": "Totalmente digital",
+      "method1_title": "Con FranceConnect (recomendado)",
+      "method1_body": "¿Vives en Francia o tienes una cuenta administrativa francesa? Haces la denuncia completa en línea y recibes el *procès-verbal* oficial por correo.",
+      "method2_badge": "Cita presencial obligatoria",
+      "method2_title": "Sin FranceConnect (turistas)",
+      "method2_body": "Rellena el formulario en línea y luego programa una cita en una comisaría francesa (*commissariat de police*) o gendarmería. ¿Ya en casa? Pide opciones alternativas a través del chat 24/7 en Ma Sécurité.",
+      "steps": [
+        {
+          "title": "Entra en Ma Sécurité",
+          "body": "[plainte-en-ligne.masecurite.interieur.gouv.fr](https://plainte-en-ligne.masecurite.interieur.gouv.fr/)\nSelecciona el inglés arriba a la derecha."
+        },
+        {
+          "title": "Elige 'Vol' (Robo)",
+          "body": "Selecciona **'Vol'** como tipo de delito."
+        },
+        {
+          "title": "Entra con FranceConnect o como invitado",
+          "body": "Con FranceConnect todo es 100 % digital. Sin FranceConnect puedes continuar como invitado."
+        },
+        {
+          "title": "Rellena el formulario",
+          "body": "• Identifiant unique: tu código Velopass\n• Ubicación francesa exacta, fecha y hora\n• Todas las características de la bici",
+          "tip": "Abre tu Velopass — tu código Velopass es el identifiant unique que pide el formulario. El resto de datos y la ubicación también están ahí."
+        },
+        {
+          "title": "Recibe tu procès-verbal o programa una cita",
+          "body": "**Con FranceConnect:** recibes el procès-verbal oficial por correo. Reenvíalo a tu aseguradora.\n\n**Sin FranceConnect:** elige una comisaría o gendarmería cerca del lugar del robo y programa una cita."
+        }
+      ],
+      "chat_title": "Ma Sécurité tiene chat 24/7",
+      "chat_body": "¿Ya en casa y no puedes acabar la denuncia en línea? Usa el chat en [Ma Sécurité](https://www.masecurite.interieur.gouv.fr/)."
+    },
+    "DE": {
+      "intro": "En Alemania denuncias en línea con la Onlinewache de la policía. A diferencia de Bélgica o los Países Bajos, cada estado federado (Bundesland) tiene su propia Onlinewache — primero eliges tu Bundesland.",
+      "important_title": "Importante antes de empezar",
+      "important_body": "No todos los Bundesländer ofrecen denuncia en línea para cada tipo de delito, pero el robo de bici se puede denunciar en línea prácticamente en todos. Normalmente no hace falta login — introduces tus datos directamente.",
+      "checklist": [
+        {
+          "text": "Marca, modelo, color y tipo de bici",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Número de cuadro (Rahmennummer)",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Ubicación exacta, fecha y hora del robo",
+          "velopass": "Ya indicada al denunciar en Velopass"
+        },
+        {
+          "text": "Fotos de la bici",
+          "velopass": "Ya guardadas en tu Velopass"
+        },
+        {
+          "text": "Factura de compra (si la tienes)",
+          "velopass": "Vinculada a tu Velopass"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Ve a la Onlinewache central",
+          "body": "[www.polizei.de](https://www.polizei.de/Polizei/DE/Einrichtungen/Onlinewache/onlinewache_node.html) → elige **'Onlinewache'**."
+        },
+        {
+          "title": "Elige tu Bundesland",
+          "body": "Selecciona el Bundesland donde te robaron la bici. Te enviarán a la Onlinewache de ese Bundesland."
+        },
+        {
+          "title": "Inicia una denuncia (Anzeige erstatten)",
+          "body": "Elige **'Diebstahl'** (robo) y luego **'Fahrrad'** (bici) como objeto."
+        },
+        {
+          "title": "Rellena el formulario",
+          "body": "• Datos personales como denunciante\n• Tatort: ¿dónde y cuándo?\n• Objeto: todos los detalles de la bici (Marke, Modell, Farbe, Rahmennummer)",
+          "tip": "Abre tu Velopass para tener todos los datos y el Rahmennummer a la vista."
+        },
+        {
+          "title": "Revisa y envía",
+          "body": "Revisa los datos y envía. Recibes una confirmación (Aktenzeichen/número de expediente) de la policía del Bundesland correspondiente."
+        }
+      ]
+    },
+    "UK": {
+      "intro": "En Reino Unido denuncias en línea con police.uk. Como en Bélgica, cada región tiene su propio cuerpo policial — police.uk te envía al cuerpo correcto según tu código postal.",
+      "important_title": "Importante antes de empezar",
+      "important_body": "Para una emergencia o un robo en curso, llama al 999. Para una denuncia posterior usa la denuncia en línea o llama al 101. Recibirás un crime reference number — lo necesitas para el seguro.",
+      "checklist": [
+        {
+          "text": "Marca, modelo, color y tipo de bici",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Número de cuadro (frame number)",
+          "velopass": "Ya disponible en tu Velopass"
+        },
+        {
+          "text": "Ubicación exacta, fecha y hora del robo",
+          "velopass": "Ya indicada al denunciar en Velopass"
+        },
+        {
+          "text": "Fotos de la bici",
+          "velopass": "Ya guardadas en tu Velopass"
+        },
+        {
+          "text": "Factura de compra (si la tienes)",
+          "velopass": "Vinculada a tu Velopass"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Ve a police.uk",
+          "body": "[www.police.uk](https://www.police.uk/pu/contact-us/) → elige **'Contact us and report'**."
+        },
+        {
+          "title": "Encuentra tu cuerpo policial local",
+          "body": "Introduce tu código postal; te enviarán a la denuncia en línea del cuerpo correcto."
+        },
+        {
+          "title": "Inicia una denuncia (Report a crime)",
+          "body": "Elige **'theft'** y luego **'bicycle/cycle'** como objeto."
+        },
+        {
+          "title": "Rellena el formulario",
+          "body": "• Tus datos como propietario\n• Where and when: ubicación, fecha y hora\n• Item details: marca, modelo, color, frame number",
+          "tip": "Abre tu Velopass para tener todos los datos a la vista."
+        },
+        {
+          "title": "Anota tu crime reference number",
+          "body": "Tras enviar recibes un crime reference number. Guárdalo — tu aseguradora lo necesita para el siniestro."
+        }
+      ]
+    }
+  },
+  "step3": {
+    "title": "Paso 3 — ¿Bici recuperada? ¡Avisa!",
+    "badge_note": "estado tras la recuperación",
+    "body": "¡Enhorabuena! Entra en tu Velopass y marca tu bici como **'Recuperada'**. El estado vuelve automáticamente a **Segura**. Comprueba luego que tu Frame-ID sigue intacto — si no, pide uno nuevo en nuestra tienda online o en una tienda Velopass.",
+    "cta": "Mi bici está recuperada →"
+  },
+  "cta": {
+    "title": "¿Aún sin Velopass?",
+    "body": "Registra tu bici ya y ten siempre todos los datos disponibles — incluso si ya no la tienes a mano.",
+    "button": "Registra tu bici →"
+  }
+}

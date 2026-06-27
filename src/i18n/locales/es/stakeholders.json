@@ -1,0 +1,24 @@
+{
+  "_translated": false,
+  "assistance": {
+    "meta_title": "Velopass para servicios de asistencia — Próximamente",
+    "meta_description": "Un escaneo, visión completa de la bici. Intervenciones más rápidas para servicios de asistencia.",
+    "eyebrow": "Para servicios de asistencia",
+    "title": "Un escaneo. Visión completa.",
+    "intro": "Al intervenir, acceso inmediato a la bici, su propietario y los servicios activos — en toda Europa."
+  },
+  "insurance": {
+    "meta_title": "Velopass para aseguradoras — Próximamente",
+    "meta_description": "Datos de bici verificados, activación automática y menos fraude — para aseguradoras.",
+    "eyebrow": "Para aseguradoras",
+    "title": "Datos verificados. Menos fraude.",
+    "intro": "Activa pólizas automáticamente al vender. Verifica la propiedad mediante el registro internacional Velopass."
+  },
+  "manufacturer": {
+    "meta_title": "Velopass para fabricantes — Próximamente",
+    "meta_description": "Integra Velopass ya en fábrica. Da a tus distribuidores un punto de partida inmejorable.",
+    "eyebrow": "Para fabricantes",
+    "title": "Velopass integrado ya en fábrica.",
+    "intro": "Entrega bicis con un Frame-ID incorporado y los datos precargados. Simplifica la vida de tu red de distribución."
+  }
+}
