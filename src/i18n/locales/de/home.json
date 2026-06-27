@@ -83,6 +83,8 @@
     "eyebrow": "Die Velopass Frame-ID",
     "intro": "Eine Frame-ID an deinem Rahmen, eine Welt voller Möglichkeiten in deiner Tasche.",
     "scan_badge": "Scannen → Zugang zu allem",
+    "check_lead": "Unsicher bei einem gebrauchten Fahrrad? Scanne die Frame-ID oder suche per Rahmennummer und sieh sofort, ob ein Fahrrad im Velopass-Register eingetragen ist.",
+    "check_cta": "Ein Fahrrad prüfen →",
     "img_alt": "Velopass Frame-ID an einem Fahrradrahmen",
     "feats": {
       "location": {
