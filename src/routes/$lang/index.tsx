@@ -14,6 +14,7 @@ import { QrScanDialog } from "@/components/QrScanDialog";
 import { FaqSection } from "@/components/FaqSection";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
+import { trackCheckBikeClick } from "@/lib/analytics";
 import shopsData from "@/data/shops.json";
 import { isLang, type Lang } from "@/i18n/config";
 import { buildLocalizedHead, SITE_URL } from "@/i18n/seo";
