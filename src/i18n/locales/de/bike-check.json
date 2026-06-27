@@ -19,7 +19,8 @@
     "back": "← Zurück",
     "eyebrow": "FAHRRAD PRÜFEN",
     "title": "Status eines Fahrrads prüfen",
-    "subtitle": "Prüfe in wenigen Sekunden, ob ein Fahrrad in der Velopass Community registriert ist — ohne Konto."
+    "subtitle": "Prüfe in wenigen Sekunden, ob ein Fahrrad in der Velopass Community registriert ist — ohne Konto.",
+    "no_email_hint": "Keine E-Mail bekommen? Kein Stress — einfach die Frame-ID scannen und fertig."
   },
   "method_a": {
     "title": "Über den Velopass-Code",
