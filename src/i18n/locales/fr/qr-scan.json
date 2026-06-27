@@ -1,0 +1,161 @@
+{
+  "_translated": false,
+  "close": "Fermer",
+  "preparing_camera": "Préparation de la caméra…",
+  "scanner_restarting": "Redémarrage du scanner…",
+  "title": {
+    "scan_velopass": "Scannez le Frame-ID Velopass",
+    "scan_frame": "Scannez le code-barres sur le cadre",
+    "manual": "Saisissez le code Velopass",
+    "result_velopass": "Frame-ID scanné",
+    "result_frame": "Code-barres scanné"
+  },
+  "description": {
+    "scan_velopass": "Pointez votre caméra vers le QR code. Tenez-la à environ 15 cm du Frame-ID.",
+    "scan_frame": "Pointez votre caméra vers l'autocollant code-barres avec le numéro de cadre de votre vélo.",
+    "manual": "Le code se trouve verticalement à droite sur l'autocollant Frame-ID, sur le cadre de votre vélo.",
+    "result_velopass": "Nous avons reconnu le QR code. Confirmez pour démarrer le transfert.",
+    "result_frame": "Nous avons reconnu le numéro de cadre. Vérifiez-le avant de lancer la recherche."
+  },
+  "permission": {
+    "blocked_title": "Accès à la caméra bloqué",
+    "blocked_body": "Vous avez refusé ou bloqué l'accès à la caméra pour ce site.",
+    "retry": "C'est autorisé — réessayer",
+    "manual_fallback": "Saisir le code manuellement",
+    "manual_fallback_close": "Fermer et saisir manuellement"
+  },
+  "recovery": {
+    "desktop_chrome": {
+      "headline": "Réactiver la caméra dans Chrome / Edge :",
+      "steps": [
+        "Cliquez sur le cadenas à gauche de la barre d'adresse.",
+        "Mettez « Caméra » sur Autoriser.",
+        "Rechargez cette page."
+      ]
+    },
+    "desktop_firefox": {
+      "headline": "Réactiver la caméra dans Firefox :",
+      "steps": [
+        "Cliquez sur le cadenas à gauche de la barre d'adresse.",
+        "À côté de « Caméra », cliquez sur la croix pour retirer le blocage.",
+        "Rechargez la page et choisissez « Autoriser »."
+      ]
+    },
+    "desktop_safari": {
+      "headline": "Réactiver la caméra dans Safari :",
+      "steps": [
+        "Safari (barre de menus) → Réglages → Sites web → Caméra.",
+        "Mettez velopass.com sur « Autoriser ».",
+        "Rechargez cette page."
+      ]
+    },
+    "ios_safari": {
+      "headline": "Réactiver la caméra sur iPhone/iPad (Safari) :",
+      "steps": [
+        "Touchez « aA » à gauche de la barre d'adresse → Réglages du site.",
+        "Mettez Caméra sur « Autoriser ». (Ou : Réglages → Safari → Caméra → Demander/Autoriser.)",
+        "Actualisez cette page."
+      ]
+    },
+    "ios_chrome": {
+      "headline": "Réactiver la caméra sur iPhone/iPad :",
+      "steps": [
+        "Ouvrez les Réglages → choisissez votre navigateur (Chrome / Edge / Firefox).",
+        "Mettez Caméra sur Activé.",
+        "Actualisez cette page."
+      ]
+    },
+    "android_chrome": {
+      "headline": "Réactiver la caméra dans Chrome pour Android :",
+      "steps": [
+        "Touchez le cadenas à gauche de la barre d'adresse → Autorisations.",
+        "Mettez Caméra sur Autoriser.",
+        "Actualisez cette page."
+      ]
+    },
+    "android_firefox": {
+      "headline": "Réactiver la caméra dans Firefox pour Android :",
+      "steps": [
+        "Touchez le cadenas à gauche de la barre d'adresse → Modifier les réglages du site.",
+        "Supprimez le blocage de la caméra.",
+        "Actualisez la page et choisissez « Autoriser »."
+      ]
+    },
+    "in_app": {
+      "headline": "Ouvrez cette page dans votre vrai navigateur",
+      "steps": [
+        "Touchez l'icône menu en haut à droite.",
+        "Choisissez « Ouvrir dans Safari » (iPhone) ou « Ouvrir dans Chrome » (Android).",
+        "Autorisez la caméra et scannez à nouveau."
+      ],
+      "note": "Les navigateurs intégrés à Instagram, Facebook, TikTok, etc. n'enregistrent souvent pas l'autorisation caméra, voire la bloquent."
+    },
+    "default": {
+      "headline": "Réactivez l'accès à la caméra dans votre navigateur",
+      "steps": [
+        "Ouvrez les paramètres du site (souvent via le cadenas dans la barre d'adresse).",
+        "Mettez « Caméra » sur Autoriser.",
+        "Rechargez cette page."
+      ]
+    }
+  },
+  "error": {
+    "denied": "Accès à la caméra refusé.",
+    "not_found_msg": "Aucune caméra trouvée sur cet appareil.",
+    "in_use_msg": "La caméra est déjà utilisée par une autre application ou un autre onglet.",
+    "constraints_msg": "Aucune caméra ne correspond à ces paramètres.",
+    "https": "La caméra nécessite HTTPS.",
+    "unsupported": "Ce navigateur ne prend pas en charge l'API caméra.",
+    "generic": "La caméra n'a pas pu démarrer.",
+    "title_not_found": "Aucune caméra trouvée",
+    "title_in_use": "Caméra occupée",
+    "title_constraints": "Caméra non compatible",
+    "title_generic": "La caméra n'a pas pu démarrer",
+    "body_in_use": "Fermez les autres applications ou onglets utilisant la caméra (Zoom, Teams, Photo Booth…) et réessayez.",
+    "body_not_found": "Aucune caméra détectée sur cet appareil. Saisissez le code Frame-ID manuellement.",
+    "body_constraints": "Votre caméra ne prend pas en charge les paramètres demandés. Saisissez le code manuellement.",
+    "body_generic": "{{message}} Réessayez ou saisissez le code manuellement.",
+    "retry": "Réessayer",
+    "manual_fallback": "Saisir le code manuellement",
+    "manual_fallback_close": "Fermer et saisir manuellement"
+  },
+  "torch": {
+    "on_aria": "Éteindre la lampe",
+    "off_aria": "Allumer la lampe",
+    "on_title": "Lampe éteinte",
+    "off_title": "Lampe allumée",
+    "wait": "Un instant…",
+    "on_label": "Lampe allumée",
+    "off_label": "Lampe éteinte"
+  },
+  "boost": {
+    "on_aria": "Désactiver l'éclairage renforcé",
+    "off_aria": "Activer l'éclairage renforcé",
+    "on_title": "Éclairage désactivé",
+    "off_title": "Renforcer l'éclairage",
+    "on_hint": "Éclairage renforcé — cherchez plus de lumière pour un meilleur résultat",
+    "on_hint_torch": "Éclairage renforcé — combinez avec la lampe si nécessaire",
+    "off_hint": "Éclairage désactivé"
+  },
+  "camera_select": {
+    "aria": "Choisir la caméra",
+    "back_auto": "Caméra arrière (auto)",
+    "front_auto": "Caméra avant (auto)"
+  },
+  "result": {
+    "label": "Frame-ID reconnu",
+    "rescan": "Scanner à nouveau",
+    "start_transfer": "Démarrer le transfert"
+  },
+  "manual": {
+    "no_camera": "Pas de caméra ?",
+    "no_camera_cta": "Saisir le code manuellement",
+    "label": "Code Velopass",
+    "example_label": "Exemple :",
+    "example_aria": "Exemple : UC9K4D3NCJ",
+    "hint": "10 caractères, ex. UC9K4D3NCJ",
+    "confirm": "Confirmer",
+    "have_camera": "Une caméra à portée de main ?",
+    "have_camera_cta": "Scannez le QR code"
+  }
+}

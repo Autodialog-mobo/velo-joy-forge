@@ -1,0 +1,160 @@
+{
+  "close": "Close",
+  "preparing_camera": "Preparing camera…",
+  "scanner_restarting": "Scanner restarting…",
+  "title": {
+    "scan_velopass": "Scan the Velopass Frame-ID",
+    "scan_frame": "Scan the barcode on the frame",
+    "manual": "Enter the Velopass code",
+    "result_velopass": "Frame-ID scanned",
+    "result_frame": "Barcode scanned"
+  },
+  "description": {
+    "scan_velopass": "Point your camera at the QR code. Hold the camera about 15 cm from the Frame-ID.",
+    "scan_frame": "Point your camera at the barcode sticker with the frame number on your bike's frame.",
+    "manual": "The code is printed vertically on the right side of the Frame-ID sticker on your bike's frame.",
+    "result_velopass": "We recognised the QR code. Confirm to start the transfer.",
+    "result_frame": "We recognised the frame number. Double-check it before you search."
+  },
+  "permission": {
+    "blocked_title": "Camera access blocked",
+    "blocked_body": "You have denied or blocked camera access for this site.",
+    "retry": "I've allowed it — try again",
+    "manual_fallback": "Enter the code manually",
+    "manual_fallback_close": "Close and enter manually"
+  },
+  "recovery": {
+    "desktop_chrome": {
+      "headline": "Turn the camera back on in Chrome / Edge:",
+      "steps": [
+        "Click the lock icon on the left of the address bar.",
+        "Set 'Camera' to Allow.",
+        "Reload this page."
+      ]
+    },
+    "desktop_firefox": {
+      "headline": "Turn the camera back on in Firefox:",
+      "steps": [
+        "Click the lock icon on the left of the address bar.",
+        "Next to 'Camera', click the cross to remove the block.",
+        "Reload this page and choose 'Allow' when prompted."
+      ]
+    },
+    "desktop_safari": {
+      "headline": "Turn the camera back on in Safari:",
+      "steps": [
+        "Safari (menu bar) → Settings → Websites → Camera.",
+        "Set velopass.com to 'Allow'.",
+        "Reload this page."
+      ]
+    },
+    "ios_safari": {
+      "headline": "Turn the camera back on iPhone/iPad (Safari):",
+      "steps": [
+        "Tap 'aA' on the left of the address bar → Website Settings.",
+        "Set Camera to 'Allow'. (Or: Settings app → Safari → Camera → Ask/Allow.)",
+        "Refresh this page."
+      ]
+    },
+    "ios_chrome": {
+      "headline": "Turn the camera back on iPhone/iPad:",
+      "steps": [
+        "Open the Settings app → choose your browser (Chrome / Edge / Firefox).",
+        "Set Camera to On.",
+        "Refresh this page."
+      ]
+    },
+    "android_chrome": {
+      "headline": "Turn the camera back on in Chrome for Android:",
+      "steps": [
+        "Tap the lock icon on the left of the address bar → Permissions.",
+        "Set Camera to Allow.",
+        "Refresh this page."
+      ]
+    },
+    "android_firefox": {
+      "headline": "Turn the camera back on in Firefox for Android:",
+      "steps": [
+        "Tap the lock icon on the left of the address bar → Edit site settings.",
+        "Remove the Camera block.",
+        "Refresh this page and choose 'Allow'."
+      ]
+    },
+    "in_app": {
+      "headline": "Open this page in your real browser",
+      "steps": [
+        "Tap the menu icon in the top right.",
+        "Choose 'Open in Safari' (iPhone) or 'Open in Chrome' (Android).",
+        "Allow the camera there and scan again."
+      ],
+      "note": "In-app browsers from Instagram, Facebook, TikTok and similar often don't remember camera permission, or block it altogether."
+    },
+    "default": {
+      "headline": "Re-enable camera access in your browser",
+      "steps": [
+        "Open the site settings (usually via the lock icon in the address bar).",
+        "Set 'Camera' to Allow.",
+        "Reload this page."
+      ]
+    }
+  },
+  "error": {
+    "denied": "Camera access denied.",
+    "not_found_msg": "No camera found on this device.",
+    "in_use_msg": "The camera is already in use by another app or tab.",
+    "constraints_msg": "No camera matches these settings.",
+    "https": "Camera requires HTTPS.",
+    "unsupported": "This browser doesn't support the camera API.",
+    "generic": "Camera could not start.",
+    "title_not_found": "No camera found",
+    "title_in_use": "Camera is busy",
+    "title_constraints": "Camera not compatible",
+    "title_generic": "Camera could not start",
+    "body_in_use": "Close other apps or tabs using the camera (e.g. Zoom, Teams, Photo Booth) and try again.",
+    "body_not_found": "We couldn't find a camera on this device. Enter the Frame-ID code manually.",
+    "body_constraints": "Your camera doesn't support the requested settings. Enter the code manually.",
+    "body_generic": "{{message}} Try again or enter the code manually.",
+    "retry": "Try again",
+    "manual_fallback": "Enter code manually",
+    "manual_fallback_close": "Close and enter manually"
+  },
+  "torch": {
+    "on_aria": "Turn flashlight off",
+    "off_aria": "Turn flashlight on",
+    "on_title": "Flashlight off",
+    "off_title": "Flashlight on",
+    "wait": "One moment…",
+    "on_label": "Flashlight on",
+    "off_label": "Flashlight off"
+  },
+  "boost": {
+    "on_aria": "Turn light boost off",
+    "off_aria": "Turn light boost on",
+    "on_title": "Boost off",
+    "off_title": "Boost light",
+    "on_hint": "Boost on — find extra light for the best result",
+    "on_hint_torch": "Boost on — combine with the flashlight if needed",
+    "off_hint": "Boost off"
+  },
+  "camera_select": {
+    "aria": "Choose camera",
+    "back_auto": "Rear camera (auto)",
+    "front_auto": "Front camera (auto)"
+  },
+  "result": {
+    "label": "Frame-ID recognised",
+    "rescan": "Scan again",
+    "start_transfer": "Start transfer"
+  },
+  "manual": {
+    "no_camera": "No camera?",
+    "no_camera_cta": "Enter the code manually",
+    "label": "Velopass code",
+    "example_label": "Example:",
+    "example_aria": "Example: UC9K4D3NCJ",
+    "hint": "10 characters, e.g. UC9K4D3NCJ",
+    "confirm": "Confirm",
+    "have_camera": "Got a camera handy?",
+    "have_camera_cta": "Scan the QR code"
+  }
+}
