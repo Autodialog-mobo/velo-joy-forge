@@ -26,12 +26,14 @@ import nlStolen from "@/i18n/locales/nl/stolen.json";
 import enStolen from "@/i18n/locales/en/stolen.json";
 import frStolen from "@/i18n/locales/fr/stolen.json";
 import deStolen from "@/i18n/locales/de/stolen.json";
+import esStolen from "@/i18n/locales/es/stolen.json";
 
 const STOLEN_META = {
   nl: nlStolen.meta,
   en: enStolen.meta,
   fr: frStolen.meta,
   de: deStolen.meta,
+  es: esStolen.meta,
 } as const;
 
 export const Route = createFileRoute("/$lang/stolen")({

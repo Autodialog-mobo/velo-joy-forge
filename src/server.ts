@@ -77,7 +77,7 @@ const PERMANENT_REDIRECTS: Record<string, string> = {
   "/al-een-sticker": "/#already-have-one",
 };
 
-const SUPPORTED_DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
+const SUPPORTED_DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de", "es"]);
 const ROBOTS_TXT = "User-agent: *\nAllow: /\nSitemap: https://velopass.com/sitemap.xml\n";
 
 function langFromRequest(request: Request): string {

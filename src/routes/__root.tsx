@@ -18,7 +18,7 @@ const SITE_URL = "https://velopass.com";
 const OG_IMAGE_URL = `${SITE_URL}${ogShareImage}`;
 import { initAnalytics } from "../lib/analytics";
 
-const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de"]);
+const DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de", "es"]);
 
 function langFromPathname(pathname: string): string {
   const segment = pathname.match(/^\/([a-z]{2})(?:\/|$)/)?.[1];

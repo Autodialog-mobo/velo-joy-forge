@@ -58,12 +58,14 @@ import nlOrder from "@/i18n/locales/nl/order.json";
 import enOrder from "@/i18n/locales/en/order.json";
 import frOrder from "@/i18n/locales/fr/order.json";
 import deOrder from "@/i18n/locales/de/order.json";
+import esOrder from "@/i18n/locales/es/order.json";
 
 const ORDER_META = {
   nl: nlOrder.meta,
   en: enOrder.meta,
   fr: frOrder.meta,
   de: deOrder.meta,
+  es: esOrder.meta,
 } as const;
 
 export const Route = createFileRoute("/$lang/order")({

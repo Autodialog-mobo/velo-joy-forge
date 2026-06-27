@@ -360,11 +360,13 @@ function ExampleCopy({
   );
 }
 
+import esBikeCheck from "@/i18n/locales/es/bike-check.json";
 const BIKE_CHECK_META = {
   nl: nlBikeCheck.meta,
   en: enBikeCheck.meta,
   fr: frBikeCheck.meta,
   de: deBikeCheck.meta,
+  es: esBikeCheck.meta,
 } as const;
 
 export const Route = createFileRoute("/$lang/bike-check")({
