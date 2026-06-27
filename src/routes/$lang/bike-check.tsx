@@ -1761,10 +1761,12 @@ function BikeDetails({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
 
 function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
-    <div style={resultCard("#2ECC8A")}>
+    <div style={resultCard("#2ECC8A", "solid")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>{t("status_cards.all_clear.badge")}</span>
-        <CheckCircle2 color="#2ECC8A" size={24} />
+        <span style={{ ...badgeBase, gap: 6, background: "#2ECC8A", color: "#0D1F3C" }}>
+          <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.all_clear.badge")}
+        </span>
       </div>
       <h3 style={resultTitle}>{t("result.secured_title")}</h3>
       <p style={resultBody}>{t("result.secured_body")}</p>
