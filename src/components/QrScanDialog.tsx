@@ -640,7 +640,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
   const handleError = (err: unknown) => {
-    const classified = classifyCameraError(err);
+    const classified = classifyCameraError(err, t);
     if (classified.kind === "denied") {
       setPermission("denied");
       setCameraError(null);
