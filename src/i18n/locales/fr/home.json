@@ -21,7 +21,7 @@
       "tag": "VÉLO FRAÎCHEMENT ACHETÉ ?",
       "eyebrow": "Invitation reçue ?",
       "title": "Votre Velopass est prêt",
-      "desc": "Votre vélociste ou fabricant a déjà posé un Frame-ID sur votre vélo. Vous avez reçu un e-mail de Velopass ? Votre Velopass est prêt — choisissez un mot de passe et c'est parti. Pas encore d'e-mail ? Scannez le Frame-ID sur votre vélo pour mettre votre Velopass en règle.",
+      "desc": "Votre vélociste ou fabricant a déjà posé un Frame-ID sur votre vélo. Vous avez reçu un e-mail de Velopass ? Votre Velopass est prêt — choisissez un mot de passe et c'est parti. Pas encore d'e-mail ? Scannez le Frame-ID sur votre vélo et tout est réglé.",
       "body": "Votre vélociste a posé le Frame-ID et enregistré votre vélo à votre nom. Il ne vous reste qu'à choisir un mot de passe.",
       "cta": "Ouvrez votre Velopass →",
       "cta_register": "Pas d'e-mail ? Scannez votre Frame-ID →",
