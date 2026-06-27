@@ -130,6 +130,8 @@
     "subhead": "<0>{{count}}+ {{unit}}</0>, Radfahrer und Polizei sind Teil der Velopass Community. Jemand scannt deine Frame-ID? Du wirst sofort benachrichtigt.",
     "unit": "Fahrradhändler",
     "stolen_link": "Fahrrad gestohlen oder verschwunden? Folge unserem Ablaufplan →",
+    "check_lead": "Willst du wissen, ob ein Fahrrad registriert ist? Prüfe jedes Fahrrad im Velopass-Register.",
+    "check_cta": "Ein Fahrrad prüfen →",
     "search_placeholder": "Suche nach Stadt…",
     "geo_idle": "Meinen Standort verwenden",
     "geo_loading": "Standort wird ermittelt…",
