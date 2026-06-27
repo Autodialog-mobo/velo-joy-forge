@@ -93,6 +93,7 @@ const ALLOW_IDENTICAL_KEY_PATTERNS = [
   /(^|\.)how\.step1\.appLabel$/,
   /(^|\.)fab\.(feat1Title|badgeDecal)$/,
   /(^|\.)bike_details\.(model|type)$/,
+  /(^|\.)registerForm\.vat_placeholder$/,
 ];
 
 const PLACEHOLDER_RE = /^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+$/i;
