@@ -35,16 +35,65 @@ const STRICT =
 // proper nouns, technical tokens). Skip the fallback-equality heuristic for
 // these values.
 const ALLOW_IDENTICAL_VALUES = new Set([
-  "Velopass",
-  "Frame-ID",
-  "Mollie",
-  "Resend",
-  "QR",
-  "PDF",
-  "OK",
-  "—",
-  "·",
+  // Brand / technical / single-token
+  "Velopass", "Frame-ID", "Frame-ID's", "Mollie", "Resend", "QR", "PDF", "OK", "—", "·",
+  "Velopass Pro", "Pro App", "Decal", "Pro tip",
+  // Loanwords / English terms used as-is in NL (and often FR/DE/ES too)
+  "Community", "Menu", "Contact", "Privacy", "WhatsApp", "Model", "Type",
+  "Reminders", "Social media", "Open Velopass", "Via AI (ChatGPT, …)",
+  "E-mail", "Email",
+  // Country / city / region proper nouns
+  "Europa", "Luxemburg", "Gent", "Land",
+  // Shared short interjections / brand tagline fragments that match by design
+  "Alles", "Automatisch →", "AUTOMATISCH", "1 scan →", "Hallo Velopass,",
+  "Frame-ID bestellen",
+  // Brand product names (kept verbatim across locales)
+  "Velopass Frame-ID Solo", "Velopass Frame-ID Duo",
+  "Velopass Pro — Every bike. A customer for life.",
+  "Every bike. A customer for life.",
+  "Contact — Velopass", "© 2026 Velopass",
+  // Proper nouns / institutional badges
+  "FNUCI · République Française",
+  // Country-localised cross-section CTAs (already in the target country's language)
+  "Déposer plainte en ligne →",
+  "Anzeige über die Onlinewache →",
+  "Check gevondenfietsen.be",
+  // Brand-name placeholder list (proper nouns)
+  "Trek, Specialized, Gazelle…",
 ]);
+
+// Keys whose values are legitimately identical to the reference (e.g. shared
+// brand tagline slots, country-specific CTAs stored under cross-section keys).
+const ALLOW_IDENTICAL_KEY_PATTERNS = [
+  /(^|\.)footer\.copy$/,
+  /(^|\.)footer\.tagline_pro$/,
+  /(^|\.)meta\.title$/,
+  /(^|\.)bundles\.frameid_(solo|duo)_onetime$/,
+  /(^|\.)fab\.flow/,
+  /(^|\.)fnuci_badge$/,
+  /_(fr|de|nl|en|es)_primary$/,
+  /\.NL\.tip\d+_title$/,
+  /(^|\.)method_b\.brand_placeholder$/,
+  /(^|\.)country(_[a-z]+)?$/,
+  /(^|\.)country_label$/,
+  /(^|\.)city_placeholder$/,
+  /(^|\.)community\.stat\d+Num$/,
+  /(^|\.)hero\.dash\.subtitle$/,
+  /(^|\.)hero\.dash\.stat\d+Label$/,
+  /(^|\.)hero\.title_line_\d+_em$/,
+  /(^|\.)rider\.wa_message_intro$/,
+  /(^|\.)rider\.wa_message_email$/,
+  /(^|\.)form\.email$/,
+  /(^|\.)nav\.(community|menu|menu_label|menuLabel|contact|leasing|order_sticker)$/,
+  /(^|\.)footer\.(privacy|contact)$/,
+  /(^|\.)section\.support_whatsapp$/,
+  /(^|\.)cart\.referral_(social|ai)$/,
+  /(^|\.)bundles\.plural_label$/,
+  /(^|\.)pro_tip\.label$/,
+  /(^|\.)how\.step1\.appLabel$/,
+  /(^|\.)fab\.(feat1Title|badgeDecal)$/,
+  /(^|\.)bike_details\.(model|type)$/,
+];
 
 const PLACEHOLDER_RE = /^[a-z][a-z0-9_]*(\.[a-z0-9_]+)+$/i;
 
@@ -146,11 +195,14 @@ for (const locale of LOCALES) {
       // Fallback heuristic: identical to reference locale.
       if (locale !== REFERENCE) {
         const refVal = refFlat[key];
+        const fullKey = `${ns}.${key}`;
+        const keyAllowed = ALLOW_IDENTICAL_KEY_PATTERNS.some((re) => re.test(fullKey));
         if (
           typeof refVal === "string" &&
           refVal === val &&
           !ALLOW_IDENTICAL_VALUES.has(trimmed) &&
-          !isShortToken(trimmed)
+          !isShortToken(trimmed) &&
+          !keyAllowed
         ) {
           stats.fallback += 1;
           const msg = `[${locale}] ${ns}: "${key}" identical to ${REFERENCE} (likely untranslated fallback): "${val}"`;
