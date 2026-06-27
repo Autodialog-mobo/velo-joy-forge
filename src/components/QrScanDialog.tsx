@@ -787,7 +787,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         <div style={{ padding: "0 28px 28px" }}>
           {!result && !manual && (permission === "denied" || cameraError?.kind === "denied") && (() => {
             const browser = detectBrowser();
-            const guide = getPermissionRecoverySteps(browser);
+            const guide = getPermissionRecoverySteps(browser, t);
             return (
               <div
                 style={{
