@@ -1167,6 +1167,17 @@ function BikeSearchPage() {
                 : status === "not_registered"
                   ? "rgba(51,65,85,0.78)" // slate-700
                   : "rgba(15,23,42,0.7)"; // slate-900 fallback
+          // Glyph mirrors the status as a non-color cue on the dim overlay,
+          // so users with color-vision deficiencies still recognize the
+          // outcome from the backdrop alone.
+          const Glyph =
+            status === "secured"
+              ? CheckCircle2
+              : status === "reported"
+                ? AlertTriangle
+                : status === "not_registered"
+                  ? Search
+                  : null;
           return (
             <div
               onClick={() => setSpotlight(false)}
@@ -1180,8 +1191,24 @@ function BikeSearchPage() {
                 animation: "vp-bc-fade 240ms ease both",
                 cursor: "pointer",
                 transition: "background 240ms ease",
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                paddingTop: "12vh",
               }}
-            />
+            >
+              {Glyph && (
+                <Glyph
+                  size={96}
+                  color="#ffffff"
+                  strokeWidth={1.6}
+                  style={{
+                    opacity: 0.92,
+                    filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.25))",
+                  }}
+                />
+              )}
+            </div>
           );
         })()}
 
@@ -1680,12 +1707,19 @@ const badgeBase: React.CSSProperties = {
   borderRadius: 100,
   padding: "3px 12px",
 };
-const resultCard = (color: string): React.CSSProperties => ({
+// Border style is a redundant (non-color) status cue: solid = secured,
+// dashed = reported/warning, dotted = not registered. Pairs with the
+// status icon so users with color-vision deficiencies can still
+// distinguish the three outcomes at a glance.
+const resultCard = (
+  color: string,
+  borderStyle: "solid" | "dashed" | "dotted" = "solid",
+): React.CSSProperties => ({
   background: "#fff",
   borderRadius: 14,
-  borderLeft: `4px solid ${color}`,
   border: "1px solid rgba(13,31,60,0.1)",
-  borderLeftWidth: 4,
+  borderLeftStyle: borderStyle,
+  borderLeftWidth: 6,
   borderLeftColor: color,
   padding: "28px 32px",
   boxShadow: "0 10px 30px rgba(13,31,60,0.06)",
@@ -1754,10 +1788,12 @@ function BikeDetails({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
 
 function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
-    <div style={resultCard("#2ECC8A")}>
+    <div style={resultCard("#2ECC8A", "solid")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#2ECC8A", color: "#0D1F3C" }}>{t("status_cards.all_clear.badge")}</span>
-        <CheckCircle2 color="#2ECC8A" size={24} />
+        <span style={{ ...badgeBase, gap: 6, background: "#2ECC8A", color: "#0D1F3C" }}>
+          <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.all_clear.badge")}
+        </span>
       </div>
       <h3 style={resultTitle}>{t("result.secured_title")}</h3>
       <p style={resultBody}>{t("result.secured_body")}</p>
@@ -1834,10 +1870,12 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   } as const;
 
   return (
-    <div style={resultCard("#F59E0B")}>
+    <div style={resultCard("#F59E0B", "dashed")}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>{t("status_cards.reported.badge")}</span>
-        <AlertTriangle color="#F59E0B" size={24} style={{ marginLeft: 4 }} />
+        <span style={{ ...badgeBase, gap: 6, background: "#F59E0B", color: "#0D1F3C" }}>
+          <AlertTriangle size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.reported.badge")}
+        </span>
       </div>
       <h3 style={resultTitle}>{t("result.reported_title")}</h3>
       <p style={resultBody}>{t("result.reported_body")}</p>
@@ -1967,10 +2005,12 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
 function NotRegCard({ t }: { t: TFn }) {
   const lang = useCurrentLang();
   return (
-    <div style={resultCard("#CBD5E1")}>
+    <div style={resultCard("#CBD5E1", "dotted")}>
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <span style={{ ...badgeBase, background: "#F1F5F9", color: "#0D1F3C" }}>{t("status_cards.not_registered.badge")}</span>
-        <Search color="#5A7090" size={24} />
+        <span style={{ ...badgeBase, gap: 6, background: "#F1F5F9", color: "#0D1F3C" }}>
+          <Search size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.not_registered.badge")}
+        </span>
       </div>
       <h3 style={resultTitle}>{t("result.not_registered_title")}</h3>
       <p style={resultBody}>{t("result.not_registered_body")}</p>
