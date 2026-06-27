@@ -20,7 +20,7 @@
     "eyebrow": "BIKE CHECK",
     "title": "Check the status of a bike",
     "subtitle": "Check whether a bike is registered in the Velopass Community — no account needed, in seconds.",
-    "no_email_hint": ""
+    "no_email_hint": "No email yet? No worries — just scan the Frame-ID and set everything up in one go."
   },
   "method_a": {
     "title": "Via the Velopass code",
