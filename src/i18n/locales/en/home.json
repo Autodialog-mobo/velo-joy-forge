@@ -83,6 +83,8 @@
     "eyebrow": "The Velopass Frame-ID",
     "intro": "One Frame-ID on your frame, a world of possibilities in your pocket.",
     "scan_badge": "Scan → access to everything",
+    "check_lead": "Unsure about a second-hand bike? Scan the Frame-ID or search by frame number and instantly see whether a bike is registered in the Velopass register.",
+    "check_cta": "Check a bike →",
     "img_alt": "Velopass Frame-ID on a bike frame",
     "feats": {
       "location": {
