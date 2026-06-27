@@ -1,0 +1,160 @@
+{
+  "close": "Sluiten",
+  "preparing_camera": "Camera voorbereiden…",
+  "scanner_restarting": "Scanner herstart…",
+  "title": {
+    "scan_velopass": "Scan de Velopass Frame-ID",
+    "scan_frame": "Scan de barcode op het frame",
+    "manual": "Voer de Velopass-code in",
+    "result_velopass": "Frame-ID gescand",
+    "result_frame": "Barcode gescand"
+  },
+  "description": {
+    "scan_velopass": "Richt je camera op de QR-code. Houd de camera op ongeveer 15 cm van de Frame-ID.",
+    "scan_frame": "Richt je camera op de barcode-sticker met het framenummer op het frame van je fiets.",
+    "manual": "De code staat rechts verticaal op de Frame-ID sticker op het frame van je fiets.",
+    "result_velopass": "We hebben de QR-code herkend. Bevestig om de overdracht te starten.",
+    "result_frame": "We hebben het framenummer herkend. Controleer of het klopt voor je zoekt."
+  },
+  "permission": {
+    "blocked_title": "Cameratoegang geblokkeerd",
+    "blocked_body": "Je hebt cameratoegang voor deze site geweigerd of geblokkeerd.",
+    "retry": "Ik heb het toegestaan — opnieuw proberen",
+    "manual_fallback": "Voer de code handmatig in",
+    "manual_fallback_close": "Sluit en voer handmatig in"
+  },
+  "recovery": {
+    "desktop_chrome": {
+      "headline": "Zo zet je de camera weer aan in Chrome / Edge:",
+      "steps": [
+        "Klik op het slotje links in de adresbalk.",
+        "Zet 'Camera' op Toestaan.",
+        "Herlaad deze pagina."
+      ]
+    },
+    "desktop_firefox": {
+      "headline": "Zo zet je de camera weer aan in Firefox:",
+      "steps": [
+        "Klik op het slotje links in de adresbalk.",
+        "Klik bij 'Camera' op het kruisje om de blokkade te verwijderen.",
+        "Herlaad deze pagina en kies 'Toestaan' bij de vraag."
+      ]
+    },
+    "desktop_safari": {
+      "headline": "Zo zet je de camera weer aan in Safari:",
+      "steps": [
+        "Safari (menubalk) → Instellingen → Websites → Camera.",
+        "Zet velopass.com op 'Toestaan'.",
+        "Herlaad deze pagina."
+      ]
+    },
+    "ios_safari": {
+      "headline": "Zo zet je de camera weer aan op iPhone/iPad (Safari):",
+      "steps": [
+        "Tik op 'aA' links in de adresbalk → Website-instellingen.",
+        "Zet Camera op 'Toestaan'. (Of: Instellingen-app → Safari → Camera → Vragen/Toestaan.)",
+        "Ververs deze pagina."
+      ]
+    },
+    "ios_chrome": {
+      "headline": "Zo zet je de camera weer aan op iPhone/iPad:",
+      "steps": [
+        "Open de Instellingen-app → kies je browser (Chrome / Edge / Firefox).",
+        "Zet Camera op Aan.",
+        "Ververs deze pagina."
+      ]
+    },
+    "android_chrome": {
+      "headline": "Zo zet je de camera weer aan in Chrome op Android:",
+      "steps": [
+        "Tik op het slotje links in de adresbalk → Machtigingen.",
+        "Zet Camera op Toestaan.",
+        "Ververs deze pagina."
+      ]
+    },
+    "android_firefox": {
+      "headline": "Zo zet je de camera weer aan in Firefox op Android:",
+      "steps": [
+        "Tik op het slotje links in de adresbalk → Bewerk site-instellingen.",
+        "Verwijder de Camera-blokkade.",
+        "Ververs deze pagina en kies 'Toestaan'."
+      ]
+    },
+    "in_app": {
+      "headline": "Open deze pagina in je echte browser",
+      "steps": [
+        "Tik op het menu-icoon rechtsboven.",
+        "Kies 'Openen in Safari' (iPhone) of 'Openen in Chrome' (Android).",
+        "Sta de camera daar toe en scan opnieuw."
+      ],
+      "note": "In-app browsers van Instagram, Facebook, TikTok e.d. onthouden cameratoegang vaak niet of blokkeren die helemaal."
+    },
+    "default": {
+      "headline": "Zet cameratoegang weer aan in je browser",
+      "steps": [
+        "Open de site-instellingen (vaak via het slotje in de adresbalk).",
+        "Zet 'Camera' op Toestaan.",
+        "Herlaad deze pagina."
+      ]
+    }
+  },
+  "error": {
+    "denied": "Cameratoegang geweigerd.",
+    "not_found_msg": "Geen camera gevonden op dit apparaat.",
+    "in_use_msg": "De camera wordt al gebruikt door een andere app of tab.",
+    "constraints_msg": "Geen geschikte camera gevonden voor deze instellingen.",
+    "https": "Camera vereist HTTPS.",
+    "unsupported": "Deze browser ondersteunt geen camera-API.",
+    "generic": "Camera kon niet worden gestart.",
+    "title_not_found": "Geen camera gevonden",
+    "title_in_use": "Camera is bezet",
+    "title_constraints": "Camera niet geschikt",
+    "title_generic": "Camera kon niet starten",
+    "body_in_use": "Sluit andere apps of tabbladen die de camera gebruiken (bv. Zoom, Teams, Photo Booth) en probeer opnieuw.",
+    "body_not_found": "We konden geen camera op dit apparaat vinden. Voer de Frame-ID code handmatig in.",
+    "body_constraints": "Je camera ondersteunt de gevraagde instellingen niet. Voer de code handmatig in.",
+    "body_generic": "{{message}} Probeer opnieuw of voer de code handmatig in.",
+    "retry": "Opnieuw proberen",
+    "manual_fallback": "Voer code handmatig in",
+    "manual_fallback_close": "Sluit en voer handmatig in"
+  },
+  "torch": {
+    "on_aria": "Zaklamp uitschakelen",
+    "off_aria": "Zaklamp inschakelen",
+    "on_title": "Zaklamp uit",
+    "off_title": "Zaklamp aan",
+    "wait": "Even geduld…",
+    "on_label": "Zaklamp aan",
+    "off_label": "Zaklamp uit"
+  },
+  "boost": {
+    "on_aria": "Verlichting-boost uitschakelen",
+    "off_aria": "Verlichting-boost inschakelen",
+    "on_title": "Boost uit",
+    "off_title": "Verhoog verlichting",
+    "on_hint": "Boost aan — zoek extra licht voor beste resultaat",
+    "on_hint_torch": "Boost aan — combineer eventueel met de zaklamp",
+    "off_hint": "Boost uit"
+  },
+  "camera_select": {
+    "aria": "Kies camera",
+    "back_auto": "Achtercamera (auto)",
+    "front_auto": "Frontcamera (auto)"
+  },
+  "result": {
+    "label": "Frame-ID herkend",
+    "rescan": "Opnieuw scannen",
+    "start_transfer": "Overdracht starten"
+  },
+  "manual": {
+    "no_camera": "Geen camera?",
+    "no_camera_cta": "Voer de code handmatig in",
+    "label": "Velopass-code",
+    "example_label": "Voorbeeld:",
+    "example_aria": "Voorbeeld: UC9K4D3NCJ",
+    "hint": "10 tekens, bijv. UC9K4D3NCJ",
+    "confirm": "Bevestigen",
+    "have_camera": "Camera bij de hand?",
+    "have_camera_cta": "Scan de QR-code"
+  }
+}
