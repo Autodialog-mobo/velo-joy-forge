@@ -272,6 +272,7 @@ export default function ShopFinderMap() {
           <Link
             to="/$lang/bike-check"
             params={{ lang }}
+            onClick={() => trackCheckBikeClick("homepage_community_section", lang)}
             style={{
               display: "inline-flex",
               alignItems: "center",
