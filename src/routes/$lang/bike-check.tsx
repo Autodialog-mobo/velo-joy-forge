@@ -1843,10 +1843,12 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   } as const;
 
   return (
-    <div style={resultCard("#F59E0B")}>
+    <div style={resultCard("#F59E0B", "dashed")}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-        <span style={{ ...badgeBase, background: "#F59E0B", color: "#0D1F3C" }}>{t("status_cards.reported.badge")}</span>
-        <AlertTriangle color="#F59E0B" size={24} style={{ marginLeft: 4 }} />
+        <span style={{ ...badgeBase, gap: 6, background: "#F59E0B", color: "#0D1F3C" }}>
+          <AlertTriangle size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.reported.badge")}
+        </span>
       </div>
       <h3 style={resultTitle}>{t("result.reported_title")}</h3>
       <p style={resultBody}>{t("result.reported_body")}</p>
