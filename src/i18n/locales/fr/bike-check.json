@@ -19,7 +19,8 @@
     "back": "← Retour",
     "eyebrow": "VÉRIFIER UN VÉLO",
     "title": "Vérifie le statut d'un vélo",
-    "subtitle": "Vérifie en quelques secondes si un vélo est enregistré dans la Velopass Community — sans compte."
+    "subtitle": "Vérifie en quelques secondes si un vélo est enregistré dans la Velopass Community — sans compte.",
+    "no_email_hint": "Pas reçu d'e-mail ? Pas de souci — un scan du Frame-ID suffit et tout est réglé."
   },
   "method_a": {
     "title": "Via le code Velopass",
