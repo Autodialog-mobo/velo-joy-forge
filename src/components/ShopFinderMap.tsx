@@ -264,29 +264,55 @@ export default function ShopFinderMap() {
         </p>
       </div>
 
-      <div style={{ textAlign: "center", marginBottom: 24 }}>
-        <Link
-          to="/$lang/stolen"
-          params={{ lang }}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 500,
-            fontSize: 14,
-            color: "#F59E0B",
-            background: "rgba(245,158,11,0.1)",
-            border: "1px solid #F59E0B",
-            borderRadius: 8,
-            padding: "10px 20px",
-            textDecoration: "none",
-          }}
-        >
-          <AlertTriangle size={16} />
-          {t("community.stolen_link")}
-        </Link>
+      <div style={{ textAlign: "center", marginBottom: 24, display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+        <p style={{ margin: 0, fontSize: 15, lineHeight: 1.5, color: "rgba(13,31,60,0.78)", maxWidth: 560 }}>
+          {t("community.check_lead")}
+        </p>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10 }}>
+          <Link
+            to="/$lang/bike-check"
+            params={{ lang }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 600,
+              fontSize: 14,
+              color: "#0D1F3C",
+              background: "rgba(46,204,138,0.12)",
+              border: "1px solid #2ECC8A",
+              borderRadius: 8,
+              padding: "10px 20px",
+              textDecoration: "none",
+            }}
+          >
+            {t("community.check_cta")}
+          </Link>
+          <Link
+            to="/$lang/stolen"
+            params={{ lang }}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 500,
+              fontSize: 14,
+              color: "#F59E0B",
+              background: "rgba(245,158,11,0.1)",
+              border: "1px solid #F59E0B",
+              borderRadius: 8,
+              padding: "10px 20px",
+              textDecoration: "none",
+            }}
+          >
+            <AlertTriangle size={16} />
+            {t("community.stolen_link")}
+          </Link>
+        </div>
       </div>
+
 
       <div className="sf-split">
         <aside className="sf-list-wrap">
