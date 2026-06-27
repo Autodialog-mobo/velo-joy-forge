@@ -555,7 +555,7 @@ function VelopassHome() {
               <Link
                 to="/$lang/bike-check"
                 params={{ lang: currentLang }}
-                search={{ lng: "nl-nl" }}
+
                 className="path-cta"
                 style={{ fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}
               >
