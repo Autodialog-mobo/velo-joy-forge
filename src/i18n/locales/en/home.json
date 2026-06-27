@@ -21,10 +21,10 @@
       "tag": "JUST BOUGHT A BIKE?",
       "eyebrow": "Got an invitation?",
       "title": "Your Velopass is ready",
-      "desc": "Your bike shop or manufacturer has already applied a Frame-ID to your bike. Got an email from Velopass? Then your Velopass is ready — choose a password and you're set. No email yet? Get your Velopass sorted via your bike.",
+      "desc": "Your bike shop or manufacturer has already applied a Frame-ID to your bike. Got an email from Velopass? Then your Velopass is ready — choose a password and you're set. No email yet? Scan the Frame-ID on your bike to get your Velopass sorted.",
       "body": "Your bike shop has applied the Frame-ID and registered your bike in your name. All you need to do is choose a password.",
       "cta": "Open your Velopass →",
-      "cta_register": "No email? Find your bike →",
+      "cta_register": "No email? Scan your Frame-ID →",
       "steps": {
         "s1": { "title": "Check your email", "body": "You've received an invitation from your bike shop via Velopass. Click the link in that email to open your Velopass." },
         "s2": { "title": "Choose a password", "body": "Your details are already filled in. Just pick a password and your Velopass opens." },
