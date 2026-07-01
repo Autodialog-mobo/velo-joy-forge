@@ -256,10 +256,12 @@ function BundleCard(props: {
       {props.featured && <div style={styles.badge}>Meest gekozen</div>}
       <div style={styles.cardSize}>{props.title}</div>
       <div style={styles.cardQty}>{props.qty}</div>
-      <div style={styles.cardRow}>
-        <span>Verkoopprijs incl. btw</span>
-        <span data-testid="price-incl">{props.priceIncl}</span>
+
+      <div style={styles.cardPriceRow}>
+        <div style={styles.cardPriceLabel}>Verkoopprijs incl. btw</div>
+        <div style={styles.cardPriceValue} data-testid="price-incl">{props.priceIncl}</div>
       </div>
+
       <div style={styles.cardRow}>
         <span>Verkoopprijs excl. btw</span>
         <span data-testid="price-excl">{props.priceExcl}</span>
