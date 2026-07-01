@@ -10,29 +10,43 @@ type ViesResult =
   | { state: "invalid" }
   | { state: "error" };
 
+type SubmitState =
+  | { state: "idle" }
+  | { state: "submitting" }
+  | { state: "success" }
+  | { state: "error"; message: string };
+
 function normalize(raw: string): string {
   return raw.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
 }
 
 function looksValid(v: string): boolean {
-  // Loose EU VAT shape: 2 letters + 2-12 alphanumerics
   return /^[A-Z]{2}[A-Z0-9]{2,12}$/.test(v);
 }
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function RegisterForm() {
   const lang = useCurrentLang();
   const { t } = useTranslation("shop");
   const tf = (k: string) => t(`registerForm.${k}`);
+
   const [vat, setVat] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [pos, setPos] = useState("");
   const [posOther, setPosOther] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [autofilled, setAutofilled] = useState<{ shop: boolean; address: boolean }>({
     shop: false,
     address: false,
   });
   const [vies, setVies] = useState<ViesResult>({ state: "idle" });
+  const [submit, setSubmit] = useState<SubmitState>({ state: "idle" });
 
   const lookup = useCallback(async () => {
     const n = normalize(vat);
@@ -63,8 +77,78 @@ export function RegisterForm() {
     }
   }, [vat]);
 
+  const onSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (submit.state === "submitting") return;
+
+      if (!shop.trim()) {
+        setSubmit({ state: "error", message: tf("error_shop") });
+        return;
+      }
+      if (!EMAIL_RE.test(email.trim())) {
+        setSubmit({ state: "error", message: tf("error_email") });
+        return;
+      }
+
+      setSubmit({ state: "submitting" });
+      try {
+        const res = await fetch("/api/public/shop-signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            vat: vat.trim(),
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
+            shopName: shop.trim(),
+            address: address.trim(),
+            email: email.trim(),
+            phone: phone.trim(),
+            posSystem: pos,
+            posOther: pos === "other" ? posOther.trim() : "",
+            lang,
+            website,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data?.ok) {
+          setSubmit({ state: "error", message: tf("error_generic") });
+          return;
+        }
+        setSubmit({ state: "success" });
+      } catch {
+        setSubmit({ state: "error", message: tf("error_generic") });
+      }
+    },
+    [submit.state, shop, email, vat, firstName, lastName, address, phone, pos, posOther, website, lang, tf],
+  );
+
+  if (submit.state === "success") {
+    return (
+      <div className="signup-success" role="status" aria-live="polite">
+        <div className="signup-success-icon" aria-hidden="true">✓</div>
+        <h3 className="signup-success-title">{tf("success_title")}</h3>
+        <p className="signup-success-body">{tf("success_body")}</p>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
+    <form onSubmit={onSubmit} noValidate>
+      {/* Honeypot */}
+      <div style={{ position: "absolute", left: "-10000px", height: 0, width: 0, overflow: "hidden" }} aria-hidden="true">
+        <label>
+          Website
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </label>
+      </div>
+
       <div className="form-row">
         <label className="flabel" htmlFor="pvat">{tf("vat_label")}</label>
         <div className="vat-row">
@@ -124,11 +208,27 @@ export function RegisterForm() {
       <div className="fgrid">
         <div className="form-row">
           <label className="flabel" htmlFor="pf">{tf("first_name")}</label>
-          <input id="pf" className="finput" type="text" placeholder={tf("first_name_placeholder")} />
+          <input
+            id="pf"
+            className="finput"
+            type="text"
+            placeholder={tf("first_name_placeholder")}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            autoComplete="given-name"
+          />
         </div>
         <div className="form-row">
           <label className="flabel" htmlFor="pl">{tf("last_name")}</label>
-          <input id="pl" className="finput" type="text" placeholder={tf("last_name_placeholder")} />
+          <input
+            id="pl"
+            className="finput"
+            type="text"
+            placeholder={tf("last_name_placeholder")}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            autoComplete="family-name"
+          />
         </div>
       </div>
       <div className="form-row">
@@ -143,6 +243,7 @@ export function RegisterForm() {
             setShop(e.target.value);
             if (autofilled.shop) setAutofilled((s) => ({ ...s, shop: false }));
           }}
+          required
         />
       </div>
       <div className="form-row">
@@ -157,16 +258,34 @@ export function RegisterForm() {
             setAddress(e.target.value);
             if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
           }}
+          autoComplete="street-address"
         />
       </div>
       <div className="fgrid">
         <div className="form-row">
           <label className="flabel" htmlFor="pe">{tf("email")}</label>
-          <input id="pe" className="finput" type="email" placeholder={tf("email_placeholder")} />
+          <input
+            id="pe"
+            className="finput"
+            type="email"
+            placeholder={tf("email_placeholder")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
+            required
+          />
         </div>
         <div className="form-row">
           <label className="flabel" htmlFor="pt">{tf("phone")}</label>
-          <input id="pt" className="finput" type="tel" placeholder={tf("phone_placeholder")} />
+          <input
+            id="pt"
+            className="finput"
+            type="tel"
+            placeholder={tf("phone_placeholder")}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            autoComplete="tel"
+          />
         </div>
       </div>
       <div className="form-row">
@@ -203,7 +322,24 @@ export function RegisterForm() {
           />
         </div>
       )}
-      <button type="submit" className="btn-submit">{tf("submit")}</button>
+      {submit.state === "error" && (
+        <p className="vat-note err" role="alert" style={{ marginTop: 8 }}>{submit.message}</p>
+      )}
+      <button
+        type="submit"
+        className="btn-submit"
+        disabled={submit.state === "submitting"}
+        aria-busy={submit.state === "submitting"}
+      >
+        {submit.state === "submitting" ? (
+          <>
+            <span className="vat-spinner" aria-hidden="true" />
+            {tf("submitting")}
+          </>
+        ) : (
+          tf("submit")
+        )}
+      </button>
       <p style={{ textAlign: "center", marginTop: 14, marginBottom: 0 }}>
         <a
           href={`/${lang}/contact?type=shop`}

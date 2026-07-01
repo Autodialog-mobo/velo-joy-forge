@@ -42,6 +42,7 @@ import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
 import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
 import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
+import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -213,6 +214,11 @@ const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
   path: '/api/public/vies-lookup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicShopSignupRoute = ApiPublicShopSignupRouteImport.update({
+  id: '/api/public/shop-signup',
+  path: '/api/public/shop-signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
   id: '/order_/thanks',
   path: '/order/thanks',
@@ -265,6 +271,7 @@ export interface FileRoutesByFullPath {
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
+  '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -301,6 +308,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
+  '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -340,6 +348,7 @@ export interface FileRoutesById {
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
+  '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -379,6 +388,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
+    | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -415,6 +425,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
+    | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   id:
@@ -453,6 +464,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
+    | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
@@ -470,6 +482,7 @@ export interface RootRouteChildren {
   ProfessionalsRoute: typeof ProfessionalsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
 }
@@ -707,6 +720,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/shop-signup': {
+      id: '/api/public/shop-signup'
+      path: '/api/public/shop-signup'
+      fullPath: '/api/public/shop-signup'
+      preLoaderRoute: typeof ApiPublicShopSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/order_/thanks': {
       id: '/$lang/order_/thanks'
       path: '/order/thanks'
@@ -817,6 +837,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfessionalsRoute: ProfessionalsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
 }

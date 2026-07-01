@@ -320,6 +320,63 @@ export type Database = {
         }
         Relationships: []
       }
+      shop_signups: {
+        Row: {
+          address: string | null
+          confirmation_email_sent_at: string | null
+          created_at: string
+          email: string
+          first_name: string | null
+          id: string
+          ip: string | null
+          lang: string | null
+          last_name: string | null
+          phone: string | null
+          pos_other: string | null
+          pos_system: string | null
+          shop_name: string | null
+          updated_at: string
+          user_agent: string | null
+          vat: string | null
+        }
+        Insert: {
+          address?: string | null
+          confirmation_email_sent_at?: string | null
+          created_at?: string
+          email: string
+          first_name?: string | null
+          id?: string
+          ip?: string | null
+          lang?: string | null
+          last_name?: string | null
+          phone?: string | null
+          pos_other?: string | null
+          pos_system?: string | null
+          shop_name?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          vat?: string | null
+        }
+        Update: {
+          address?: string | null
+          confirmation_email_sent_at?: string | null
+          created_at?: string
+          email?: string
+          first_name?: string | null
+          id?: string
+          ip?: string | null
+          lang?: string | null
+          last_name?: string | null
+          phone?: string | null
+          pos_other?: string | null
+          pos_system?: string | null
+          shop_name?: string | null
+          updated_at?: string
+          user_agent?: string | null
+          vat?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

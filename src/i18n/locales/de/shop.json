@@ -257,6 +257,13 @@
     "pos_other_label": "Welches Kassensystem?",
     "pos_other_placeholder": "Marke oder Modell eingeben...",
     "submit": "Kostenlos registrieren →",
+    "submitting": "Wird gesendet...",
+    "success_title": "Danke für deine Anmeldung!",
+    "success_body": "Wir haben eine Bestätigung an deine E-Mail geschickt. Unser Team meldet sich innerhalb von 2 Werktagen.",
+    "error_generic": "Etwas ist schiefgelaufen. Versuche es erneut oder schreibe an info@velopass.com.",
+    "error_email": "Bitte gib eine gültige E-Mail-Adresse ein.",
+    "error_shop": "Bitte gib den Namen deines Ladens an.",
+    "try_again": "Erneut versuchen",
     "demo_link": "Lieber zuerst eine Demo? →",
     "free_note": "Kostenloser Start. Keine Kreditkarte erforderlich."
   }

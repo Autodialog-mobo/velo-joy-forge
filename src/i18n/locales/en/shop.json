@@ -257,6 +257,13 @@
     "pos_other_label": "Which POS system?",
     "pos_other_placeholder": "Type the brand or model...",
     "submit": "Register for free →",
+    "submitting": "Sending...",
+    "success_title": "Thanks for signing up!",
+    "success_body": "We've sent a confirmation to your inbox. Our team will reach out within 2 business days.",
+    "error_generic": "Something went wrong. Try again or email info@velopass.com.",
+    "error_email": "Enter a valid email address.",
+    "error_shop": "Enter your shop name.",
+    "try_again": "Try again",
     "demo_link": "Prefer a demo first? →",
     "free_note": "Free to start. No credit card required."
   }
