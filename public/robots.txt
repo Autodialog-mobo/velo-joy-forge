@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://velo-joy-forge.lovable.app/sitemap.xml
+Disallow: /m/
+Sitemap: https://www.velopass.com/sitemap.xml
