@@ -8,45 +8,8 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { createMolliePayment } from "@/utils/mollie.functions";
 import { SHIPPING_FEE_CENTS } from "@/lib/shipping";
+import { BUNDLES, type BundleKey } from "@/lib/bundles";
 
-type BundleKey = "frameid_solo_onetime" | "frameid_duo_onetime" | "frameid_family_onetime";
-
-type Bundle = {
-  key: BundleKey;
-  name: string;
-  stickers: number;
-  price: number; // cents
-  pricePerUnit: number;
-  discountKey?: "discount_15" | "discount_23";
-  featured?: boolean;
-};
-
-const BUNDLES: Bundle[] = [
-  {
-    key: "frameid_solo_onetime",
-    name: "1 Frame-ID",
-    stickers: 1,
-    price: 1295,
-    pricePerUnit: 1295,
-  },
-  {
-    key: "frameid_duo_onetime",
-    name: "2 Frame-ID's",
-    stickers: 2,
-    price: 2195,
-    pricePerUnit: 1098,
-    discountKey: "discount_15",
-    featured: true,
-  },
-  {
-    key: "frameid_family_onetime",
-    name: "5 Frame-ID's",
-    stickers: 5,
-    price: 4995,
-    pricePerUnit: 999,
-    discountKey: "discount_23",
-  },
-];
 
 
 const eur = (cents: number) =>
