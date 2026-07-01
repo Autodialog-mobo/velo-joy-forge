@@ -1,6 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { BUNDLES } from "@/lib/bundles";
-import { VAT_RATE } from "@/lib/shipping";
 
 // =============================================================
 // Margetoelichting — private, unlisted page for shops
