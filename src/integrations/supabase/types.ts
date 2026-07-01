@@ -116,6 +116,33 @@ export type Database = {
         }
         Relationships: []
       }
+      margin_poll_responses: {
+        Row: {
+          choice: string
+          created_at: string
+          id: string
+          reason: string | null
+          shop_name: string
+          updated_at: string
+        }
+        Insert: {
+          choice: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+          shop_name?: string
+          updated_at?: string
+        }
+        Update: {
+          choice?: string
+          created_at?: string
+          id?: string
+          reason?: string | null
+          shop_name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       order_events: {
         Row: {
           actor: string | null
