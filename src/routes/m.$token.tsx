@@ -1,7 +1,9 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { BUNDLES } from "@/lib/bundles";
 import { LangSwitcher } from "@/components/LangSwitcher";
+import { submitMarginPoll } from "@/lib/margin-poll.functions";
 
 
 // =============================================================
@@ -41,7 +43,7 @@ const T = {
     metaTitle: "Margetoelichting — Velopass",
     createdOn: "Opgemaakt op", validUntil: "Geldig tot",
     h1: "Margetoelichting Frame-ID",
-    lede: (vat: string, price: string) => <>Een transparant overzicht van de Frame-ID bundels zoals ze op de Velopass-webshop staan, en de marge die je als vakhandel per bundel realiseert. Alle marges zijn berekend excl. btw ({vat}), op basis van een inkoopprijs van <strong>{price}</strong> per Frame-ID.</>,
+    lede: (vat: string, price: string) => <>Een transparant overzicht van de Velopass Frame-ID — de sticker die je klant op zijn fiets kent — in de bundels zoals ze op de Velopass-webshop staan, en de marge die je als vakhandel per bundel realiseert. Alle marges zijn berekend excl. btw ({vat}), op basis van een inkoopprijs van <strong>{price}</strong> per Frame-ID.</>,
     notice: <><strong>Belangrijk:</strong> de marges hieronder gelden voor de Frame-ID <em>zonder plaatsing door de winkel</em>. De prijs voor het aanbrengen van de Frame-ID op de fiets bepaal je zelf en komt bovenop de hier getoonde productmarge.</>,
     whyTitle: "Waarom het werkt",
     why1: <><strong>Je klant blijft je klant.</strong> De Frame-ID bindt je klant aan jouw winkel: hij komt terug voor onderhoud, herstelling en zijn volgende fiets. Je verdient niet in de eerste plaats aan de Frame-ID zelf — je verdient aan de klant die blijft. Elke Frame-ID die je meegeeft, is een klant die je vasthoudt.</>,
@@ -62,12 +64,25 @@ const T = {
     ofPriceExcl: "van verkoopprijs excl. btw",
     perUnit: (v: string) => `${v} marge / Frame-ID`,
     mostChosen: "Meest gekozen",
+    pollTitle: "Wil je de voorverpakte bundels in je winkel?",
+    pollIntro: "Kort antwoord, één klik. Je helpt ons de uitrol op maat van de vakhandel te plannen.",
+    pollChoiceJa: "Ja, dit wil ik graag",
+    pollChoiceMisschien: "Misschien — ik heb meer info nodig",
+    pollChoiceNee: "Nee, voor mij niet",
+    pollReasonLabel: "Waarom? (optioneel)",
+    pollReasonPh: "Vertel ons in één zin waarom…",
+    pollSubmit: "Verstuur antwoord",
+    pollSubmitting: "Versturen…",
+    pollThanks: "Bedankt, we nemen je antwoord mee.",
+    pollShopLabel: "Winkel",
+    pollShopUnknown: "(onbekend)",
+    pollError: "Er ging iets mis. Probeer het opnieuw.",
   },
   fr: {
     metaTitle: "Explication de la marge — Velopass",
     createdOn: "Établi le", validUntil: "Valable jusqu'au",
     h1: "Marge Frame-ID",
-    lede: (vat: string, price: string) => <>Un aperçu transparent des packs Frame-ID tels qu'ils figurent sur la boutique Velopass, et de la marge que vous réalisez par pack en tant que revendeur. Toutes les marges sont calculées HTVA ({vat}), sur base d'un prix d'achat de <strong>{price}</strong> par Frame-ID.</>,
+    lede: (vat: string, price: string) => <>Un aperçu transparent du Velopass Frame-ID — l'autocollant que votre client connaît déjà sur son vélo — en packs tels qu'ils figurent sur la boutique Velopass, et de la marge que vous réalisez par pack en tant que revendeur. Toutes les marges sont calculées HTVA ({vat}), sur base d'un prix d'achat de <strong>{price}</strong> par Frame-ID.</>,
     notice: <><strong>Important :</strong> les marges ci-dessous s'appliquent au Frame-ID <em>sans pose par le magasin</em>. Le tarif pour l'apposition du Frame-ID sur le vélo est fixé par vos soins et s'ajoute à la marge produit indiquée ici.</>,
     whyTitle: "Pourquoi ça marche",
     why1: <><strong>Votre client reste votre client.</strong> Le Frame-ID lie votre client à votre magasin : il revient pour l'entretien, les réparations et son prochain vélo. Vous ne gagnez pas d'abord sur le Frame-ID lui-même — vous gagnez sur le client qui reste. Chaque Frame-ID remis est un client fidélisé.</>,
@@ -88,12 +103,25 @@ const T = {
     ofPriceExcl: "du prix de vente HTVA",
     perUnit: (v: string) => `${v} marge / Frame-ID`,
     mostChosen: "Le plus choisi",
+    pollTitle: "Voulez-vous les packs préconditionnés dans votre magasin ?",
+    pollIntro: "Réponse courte, un clic. Vous nous aidez à planifier le déploiement adapté aux revendeurs.",
+    pollChoiceJa: "Oui, ça m'intéresse",
+    pollChoiceMisschien: "Peut-être — j'ai besoin de plus d'infos",
+    pollChoiceNee: "Non, pas pour moi",
+    pollReasonLabel: "Pourquoi ? (facultatif)",
+    pollReasonPh: "Dites-nous en une phrase pourquoi…",
+    pollSubmit: "Envoyer la réponse",
+    pollSubmitting: "Envoi…",
+    pollThanks: "Merci, nous prenons votre réponse en compte.",
+    pollShopLabel: "Magasin",
+    pollShopUnknown: "(inconnu)",
+    pollError: "Une erreur s'est produite. Réessayez.",
   },
   de: {
     metaTitle: "Margen-Erläuterung — Velopass",
     createdOn: "Erstellt am", validUntil: "Gültig bis",
     h1: "Frame-ID Marge",
-    lede: (vat: string, price: string) => <>Eine transparente Übersicht der Frame-ID-Bundles wie sie im Velopass-Shop stehen, und der Marge, die Sie als Fachhändler pro Bundle erzielen. Alle Margen sind netto ({vat}) berechnet, basierend auf einem Einkaufspreis von <strong>{price}</strong> pro Frame-ID.</>,
+    lede: (vat: string, price: string) => <>Eine transparente Übersicht der Velopass Frame-ID — der Aufkleber, den Ihr Kunde am Fahrrad kennt — in Bundles wie sie im Velopass-Shop stehen, und der Marge, die Sie als Fachhändler pro Bundle erzielen. Alle Margen sind netto ({vat}) berechnet, basierend auf einem Einkaufspreis von <strong>{price}</strong> pro Frame-ID.</>,
     notice: <><strong>Wichtig:</strong> die Margen unten gelten für die Frame-ID <em>ohne Montage durch den Händler</em>. Den Preis für das Anbringen der Frame-ID am Fahrrad bestimmen Sie selbst, er kommt zur hier gezeigten Produktmarge hinzu.</>,
     whyTitle: "Warum es funktioniert",
     why1: <><strong>Ihr Kunde bleibt Ihr Kunde.</strong> Die Frame-ID bindet den Kunden an Ihr Geschäft: er kommt zurück für Wartung, Reparatur und sein nächstes Fahrrad. Sie verdienen nicht in erster Linie an der Frame-ID selbst — Sie verdienen am Kunden, der bleibt. Jede Frame-ID, die Sie mitgeben, ist ein Kunde, den Sie halten.</>,
@@ -114,12 +142,25 @@ const T = {
     ofPriceExcl: "vom Nettoverkaufspreis",
     perUnit: (v: string) => `${v} Marge / Frame-ID`,
     mostChosen: "Am häufigsten gewählt",
+    pollTitle: "Möchten Sie die vorverpackten Bundles in Ihrem Geschäft?",
+    pollIntro: "Kurze Antwort, ein Klick. Sie helfen uns, den Rollout auf den Fachhandel abzustimmen.",
+    pollChoiceJa: "Ja, gerne",
+    pollChoiceMisschien: "Vielleicht — ich brauche mehr Infos",
+    pollChoiceNee: "Nein, nichts für mich",
+    pollReasonLabel: "Warum? (optional)",
+    pollReasonPh: "Sagen Sie uns in einem Satz, warum…",
+    pollSubmit: "Antwort senden",
+    pollSubmitting: "Senden…",
+    pollThanks: "Danke, wir nehmen Ihre Antwort mit.",
+    pollShopLabel: "Geschäft",
+    pollShopUnknown: "(unbekannt)",
+    pollError: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
   },
   en: {
     metaTitle: "Margin explainer — Velopass",
     createdOn: "Issued on", validUntil: "Valid until",
     h1: "Frame-ID margin",
-    lede: (vat: string, price: string) => <>A transparent overview of the Frame-ID bundles as listed on the Velopass shop, and the margin you realise per bundle as a specialist retailer. All margins are calculated excl. VAT ({vat}), based on a purchase price of <strong>{price}</strong> per Frame-ID.</>,
+    lede: (vat: string, price: string) => <>A transparent overview of the Velopass Frame-ID — the sticker your customer already knows on their bike — in bundles as listed on the Velopass shop, and the margin you realise per bundle as a specialist retailer. All margins are calculated excl. VAT ({vat}), based on a purchase price of <strong>{price}</strong> per Frame-ID.</>,
     notice: <><strong>Important:</strong> the margins below apply to the Frame-ID <em>without installation by the shop</em>. The price for applying the Frame-ID to the bike is set by you and comes on top of the product margin shown here.</>,
     whyTitle: "Why it works",
     why1: <><strong>Your customer stays your customer.</strong> The Frame-ID ties your customer to your shop: they come back for maintenance, repairs and their next bike. You don't primarily earn on the Frame-ID itself — you earn on the customer who stays. Every Frame-ID you hand out is a customer you retain.</>,
@@ -140,12 +181,25 @@ const T = {
     ofPriceExcl: "of sale price excl. VAT",
     perUnit: (v: string) => `${v} margin / Frame-ID`,
     mostChosen: "Most chosen",
+    pollTitle: "Do you want the pre-packaged bundles in your shop?",
+    pollIntro: "Short answer, one click. You help us plan the rollout tailored to specialist retailers.",
+    pollChoiceJa: "Yes, I'd like this",
+    pollChoiceMisschien: "Maybe — I need more info",
+    pollChoiceNee: "No, not for me",
+    pollReasonLabel: "Why? (optional)",
+    pollReasonPh: "Tell us in one sentence why…",
+    pollSubmit: "Send answer",
+    pollSubmitting: "Sending…",
+    pollThanks: "Thanks — we'll take your answer into account.",
+    pollShopLabel: "Shop",
+    pollShopUnknown: "(unknown)",
+    pollError: "Something went wrong. Please try again.",
   },
   es: {
     metaTitle: "Explicación del margen — Velopass",
     createdOn: "Emitido el", validUntil: "Válido hasta",
     h1: "Margen Frame-ID",
-    lede: (vat: string, price: string) => <>Un resumen transparente de los packs Frame-ID tal como aparecen en la tienda Velopass, y del margen que obtienes por pack como distribuidor especializado. Todos los márgenes se calculan sin IVA ({vat}), con un precio de compra de <strong>{price}</strong> por Frame-ID.</>,
+    lede: (vat: string, price: string) => <>Un resumen transparente del Velopass Frame-ID — la pegatina que tu cliente ya conoce en su bici — en packs tal como aparecen en la tienda Velopass, y del margen que obtienes por pack como distribuidor especializado. Todos los márgenes se calculan sin IVA ({vat}), con un precio de compra de <strong>{price}</strong> por Frame-ID.</>,
     notice: <><strong>Importante:</strong> los márgenes siguientes se aplican al Frame-ID <em>sin colocación por la tienda</em>. El precio de la colocación del Frame-ID en la bicicleta lo fijas tú y se suma al margen de producto mostrado aquí.</>,
     whyTitle: "Por qué funciona",
     why1: <><strong>Tu cliente sigue siendo tu cliente.</strong> El Frame-ID vincula al cliente con tu tienda: vuelve para el mantenimiento, las reparaciones y su próxima bicicleta. No ganas principalmente con el Frame-ID en sí — ganas con el cliente que se queda. Cada Frame-ID que entregas es un cliente que fidelizas.</>,
@@ -166,6 +220,19 @@ const T = {
     ofPriceExcl: "del precio de venta sin IVA",
     perUnit: (v: string) => `${v} margen / Frame-ID`,
     mostChosen: "Más elegido",
+    pollTitle: "¿Quieres los packs preempaquetados en tu tienda?",
+    pollIntro: "Respuesta corta, un clic. Nos ayudas a planificar el despliegue a medida del distribuidor especializado.",
+    pollChoiceJa: "Sí, me interesa",
+    pollChoiceMisschien: "Quizás — necesito más información",
+    pollChoiceNee: "No, no es para mí",
+    pollReasonLabel: "¿Por qué? (opcional)",
+    pollReasonPh: "Cuéntanoslo en una frase…",
+    pollSubmit: "Enviar respuesta",
+    pollSubmitting: "Enviando…",
+    pollThanks: "Gracias, tendremos en cuenta tu respuesta.",
+    pollShopLabel: "Tienda",
+    pollShopUnknown: "(desconocida)",
+    pollError: "Algo ha fallado. Vuelve a intentarlo.",
   },
 } as const;
 
@@ -309,6 +376,8 @@ function MargePage() {
           <p style={styles.p}>{t.rollout3}</p>
         </section>
 
+        <PollSection t={t} />
+
         <footer style={styles.footer}>
           <div>
             {t.footerQ}
@@ -320,6 +389,112 @@ function MargePage() {
         </footer>
       </div>
     </div>
+  );
+}
+
+function PollSection({ t }: { t: (typeof T)[Lang] }) {
+  const submit = useServerFn(submitMarginPoll);
+  const [shop, setShop] = useState<string>("");
+  const [choice, setChoice] = useState<"ja" | "misschien" | "nee" | null>(null);
+  const [reason, setReason] = useState("");
+  const [sending, setSending] = useState(false);
+  const [done, setDone] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const p = new URLSearchParams(window.location.search);
+      const s = (p.get("shop") || "").trim();
+      if (s) setShop(s);
+    } catch {}
+  }, []);
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!choice) return;
+    setSending(true);
+    setErr(null);
+    try {
+      await submit({ data: { shop_name: shop, choice, reason: reason || null } });
+      setDone(true);
+    } catch {
+      setErr(t.pollError);
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const showReason = choice === "misschien" || choice === "nee";
+
+  return (
+    <section style={{ ...styles.section, ...styles.pollWrap }}>
+      <h2 style={styles.h2}>{t.pollTitle}</h2>
+      <p style={{ ...styles.p, color: MUTED, marginBottom: 20 }}>{t.pollIntro}</p>
+
+      <div style={styles.pollShopLine}>
+        {t.pollShopLabel}: <strong>{shop || t.pollShopUnknown}</strong>
+      </div>
+
+      {done ? (
+        <div style={styles.pollThanks} role="status">✓ {t.pollThanks}</div>
+      ) : (
+        <form onSubmit={onSubmit}>
+          <div style={styles.pollChoices}>
+            {(["ja", "misschien", "nee"] as const).map((c) => {
+              const active = choice === c;
+              const label =
+                c === "ja" ? t.pollChoiceJa : c === "misschien" ? t.pollChoiceMisschien : t.pollChoiceNee;
+              return (
+                <button
+                  type="button"
+                  key={c}
+                  onClick={() => setChoice(c)}
+                  style={{
+                    ...styles.pollChoiceBtn,
+                    ...(active ? styles.pollChoiceBtnActive : null),
+                  }}
+                  aria-pressed={active}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          {showReason && (
+            <label style={styles.pollReasonLabel}>
+              <span style={{ fontSize: 13, color: MUTED, marginBottom: 6, display: "block" }}>
+                {t.pollReasonLabel}
+              </span>
+              <textarea
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder={t.pollReasonPh}
+                rows={3}
+                maxLength={1000}
+                style={styles.pollTextarea}
+              />
+            </label>
+          )}
+
+          {err && <div style={{ color: "#E05252", fontSize: 14, marginTop: 12 }}>{err}</div>}
+
+          <div style={{ marginTop: 16 }}>
+            <button
+              type="submit"
+              disabled={!choice || sending}
+              style={{
+                ...styles.pollSubmit,
+                opacity: !choice || sending ? 0.55 : 1,
+                cursor: !choice || sending ? "not-allowed" : "pointer",
+              }}
+            >
+              {sending ? t.pollSubmitting : t.pollSubmit}
+            </button>
+          </div>
+        </form>
+      )}
+    </section>
   );
 }
 
@@ -412,4 +587,13 @@ const styles: Record<string, React.CSSProperties> = {
   footerDates: { color: MUTED },
   notice: { background: "#fff", border: `1px solid ${BORDER}`, borderLeft: `4px solid ${GROEN}`, borderRadius: 10, padding: "14px 18px", fontSize: 14, lineHeight: 1.55, color: INK, marginBottom: 40 },
   link: { color: NACHT, textDecoration: "underline" },
+  pollWrap: { background: "#fff", border: `1px solid ${BORDER}`, borderRadius: 14, padding: 28, marginTop: 8 },
+  pollShopLine: { fontSize: 13, color: MUTED, marginBottom: 16 },
+  pollChoices: { display: "flex", flexWrap: "wrap", gap: 10 },
+  pollChoiceBtn: { background: "#fff", border: `1.5px solid ${BORDER}`, borderRadius: 999, padding: "10px 18px", fontSize: 14, fontWeight: 600, color: INK, cursor: "pointer", fontFamily: "'DM Sans', system-ui, sans-serif" },
+  pollChoiceBtnActive: { background: GROEN, borderColor: GROEN, color: NACHT },
+  pollReasonLabel: { display: "block", marginTop: 18 },
+  pollTextarea: { width: "100%", boxSizing: "border-box", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "10px 12px", fontFamily: "'DM Sans', system-ui, sans-serif", fontSize: 14, lineHeight: 1.5, color: INK, background: "#fff", resize: "vertical" },
+  pollSubmit: { background: NACHT, color: "#fff", border: 0, borderRadius: 999, padding: "12px 22px", fontSize: 15, fontWeight: 700, fontFamily: "'DM Sans', system-ui, sans-serif" },
+  pollThanks: { background: `${GROEN}15`, border: `1px solid ${GROEN}55`, borderRadius: 10, padding: "14px 18px", color: NACHT, fontWeight: 600 },
 };
