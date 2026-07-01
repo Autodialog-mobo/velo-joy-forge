@@ -126,10 +126,17 @@ function MargePage() {
         <p style={styles.lede}>
           Een transparant overzicht van de Frame-ID bundels zoals ze op de
           Velopass-webshop staan, en de marge die je als vakhandel per bundel
-          realiseert. Alle marges zijn berekend excl. btw, op basis van een
-          inkoopprijs van <strong>{eur(PURCHASE_PRICE_EXCL_VAT_CENTS)}</strong>{" "}
-          per Frame-ID.
+          realiseert. Alle marges zijn berekend excl. btw ({Math.round(VAT_RATE * 100)}%),
+          op basis van een inkoopprijs van{" "}
+          <strong>{eur(PURCHASE_PRICE_EXCL_VAT_CENTS)}</strong> per Frame-ID.
         </p>
+
+        <div style={styles.notice}>
+          <strong>Belangrijk:</strong> de marges hieronder gelden voor de
+          Frame-ID <em>zonder plaatsing door de winkel</em>. De prijs voor het
+          aanbrengen van de Frame-ID op de fiets bepaal je zelf en komt bovenop
+          de hier getoonde productmarge.
+        </div>
 
         <section style={styles.section}>
           <h2 style={styles.h2}>De bundels in één oogopslag</h2>
@@ -149,9 +156,12 @@ function MargePage() {
             ))}
           </div>
           <p style={styles.small}>
-            Verkoopprijs = vaste adviesprijs aan de eindklant (incl. 21% btw).
-            Marge berekend als (verkoopprijs excl. btw −{" "}
+            Verkoopprijs = vaste adviesprijs aan de eindklant (incl.{" "}
+            {Math.round(VAT_RATE * 100)}% btw). Marge berekend als
+            (verkoopprijs ÷ {(1 + VAT_RATE).toFixed(2)} −{" "}
             {eur(PURCHASE_PRICE_EXCL_VAT_CENTS)} inkoop) × aantal Frame-ID's.
+            Dit is de <strong>productmarge zonder plaatsing</strong>; een
+            eventueel plaatsingstarief reken je apart aan.
           </p>
         </section>
 
