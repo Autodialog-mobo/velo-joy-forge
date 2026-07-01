@@ -76,6 +76,8 @@ const T = {
     pollThanks: "Bedankt, we nemen je antwoord mee.",
     pollShopLabel: "Winkel",
     pollShopUnknown: "(onbekend)",
+    pollShopFallbackLabel: "Naam van je winkel (optioneel)",
+    pollShopFallbackPh: "Bijv. Fietsen Janssens",
     pollError: "Er ging iets mis. Probeer het opnieuw.",
   },
   fr: {
@@ -115,6 +117,8 @@ const T = {
     pollThanks: "Merci, nous prenons votre réponse en compte.",
     pollShopLabel: "Magasin",
     pollShopUnknown: "(inconnu)",
+    pollShopFallbackLabel: "Nom de votre magasin (optionnel)",
+    pollShopFallbackPh: "Ex. Vélos Dupont",
     pollError: "Une erreur s'est produite. Réessayez.",
   },
   de: {
@@ -154,6 +158,8 @@ const T = {
     pollThanks: "Danke, wir nehmen Ihre Antwort mit.",
     pollShopLabel: "Geschäft",
     pollShopUnknown: "(unbekannt)",
+    pollShopFallbackLabel: "Name deines Geschäfts (optional)",
+    pollShopFallbackPh: "z. B. Fahrrad Müller",
     pollError: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
   },
   en: {
@@ -193,6 +199,8 @@ const T = {
     pollThanks: "Thanks — we'll take your answer into account.",
     pollShopLabel: "Shop",
     pollShopUnknown: "(unknown)",
+    pollShopFallbackLabel: "Your shop name (optional)",
+    pollShopFallbackPh: "e.g. Smith Bikes",
     pollError: "Something went wrong. Please try again.",
   },
   es: {
@@ -232,6 +240,8 @@ const T = {
     pollThanks: "Gracias, tendremos en cuenta tu respuesta.",
     pollShopLabel: "Tienda",
     pollShopUnknown: "(desconocida)",
+    pollShopFallbackLabel: "Nombre de tu tienda (opcional)",
+    pollShopFallbackPh: "Ej. Bicis García",
     pollError: "Algo ha fallado. Vuelve a intentarlo.",
   },
 } as const;
@@ -395,6 +405,8 @@ function MargePage() {
 function PollSection({ t }: { t: (typeof T)[Lang] }) {
   const submit = useServerFn(submitMarginPoll);
   const [shop, setShop] = useState<string>("");
+  const [shopFromUrl, setShopFromUrl] = useState(false);
+  const [fallbackShop, setFallbackShop] = useState("");
   const [choice, setChoice] = useState<"ja" | "misschien" | "nee" | null>(null);
   const [reason, setReason] = useState("");
   const [sending, setSending] = useState(false);
@@ -404,8 +416,12 @@ function PollSection({ t }: { t: (typeof T)[Lang] }) {
   useEffect(() => {
     try {
       const p = new URLSearchParams(window.location.search);
+      // URLSearchParams.get() already URL-decodes the value.
       const s = (p.get("shop") || "").trim();
-      if (s) setShop(s);
+      if (s) {
+        setShop(s);
+        setShopFromUrl(true);
+      }
     } catch {}
   }, []);
 
@@ -415,7 +431,8 @@ function PollSection({ t }: { t: (typeof T)[Lang] }) {
     setSending(true);
     setErr(null);
     try {
-      await submit({ data: { shop_name: shop, choice, reason: reason || null } });
+      const finalShop = shopFromUrl ? shop : (fallbackShop.trim() || "onbekend");
+      await submit({ data: { shop_name: finalShop, choice, reason: reason || null } });
       setDone(true);
     } catch {
       setErr(t.pollError);
@@ -431,9 +448,26 @@ function PollSection({ t }: { t: (typeof T)[Lang] }) {
       <h2 style={styles.h2}>{t.pollTitle}</h2>
       <p style={{ ...styles.p, color: MUTED, marginBottom: 20 }}>{t.pollIntro}</p>
 
-      <div style={styles.pollShopLine}>
-        {t.pollShopLabel}: <strong>{shop || t.pollShopUnknown}</strong>
-      </div>
+      {shopFromUrl ? (
+        <div style={styles.pollShopLine}>
+          {t.pollShopLabel}: <strong>{shop}</strong>
+        </div>
+      ) : !done ? (
+        <label style={{ display: "block", marginBottom: 16 }}>
+          <span style={{ fontSize: 13, color: MUTED, marginBottom: 6, display: "block" }}>
+            {t.pollShopFallbackLabel}
+          </span>
+          <input
+            type="text"
+            value={fallbackShop}
+            onChange={(e) => setFallbackShop(e.target.value)}
+            placeholder={t.pollShopFallbackPh}
+            maxLength={200}
+            style={styles.pollTextarea}
+          />
+        </label>
+      ) : null}
+
 
       {done ? (
         <div style={styles.pollThanks} role="status">✓ {t.pollThanks}</div>
