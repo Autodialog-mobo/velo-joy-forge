@@ -212,27 +212,6 @@ function VelopassLogo() {
   );
 }
 
-function LangSelector({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
-  return (
-    <div style={styles.langSelector} role="group" aria-label="Language">
-      {LANGS.map((l, i) => (
-        <button
-          key={l.code}
-          type="button"
-          onClick={() => onChange(l.code)}
-          aria-pressed={lang === l.code}
-          style={{
-            ...styles.langBtn,
-            ...(lang === l.code ? styles.langBtnActive : null),
-            ...(i > 0 ? { borderLeft: "1px solid rgba(255,255,255,0.12)" } : null),
-          }}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 function MargePage() {
   const [lang, setLang] = useState<Lang>("nl");
