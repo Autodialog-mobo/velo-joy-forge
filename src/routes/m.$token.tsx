@@ -1,6 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { BUNDLES } from "@/lib/bundles";
+import { LangSwitcher } from "@/components/LangSwitcher";
+
 
 // =============================================================
 // Margetoelichting — private, unlisted page for shops
