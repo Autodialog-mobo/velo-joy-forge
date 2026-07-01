@@ -377,9 +377,9 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: 4,
   },
   cardMarginValue: {
-    fontFamily: "'Syne', sans-serif",
+    fontFamily: "'DM Sans', system-ui, sans-serif",
     fontSize: 28,
-    fontWeight: 800,
+    fontWeight: 600,
     color: GROEN,
     lineHeight: 1,
   },
