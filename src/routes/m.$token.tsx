@@ -66,8 +66,8 @@ function VelopassLogo() {
   return (
     <div style={styles.logo}>
       <svg
-        width="28"
-        height="28"
+        width="32"
+        height="32"
         viewBox="0 0 100 100"
         aria-hidden="true"
         style={{ display: "block" }}
@@ -82,7 +82,9 @@ function VelopassLogo() {
           strokeLinejoin="round"
         />
       </svg>
-      <span style={styles.logoWord}>velopass</span>
+      <span style={styles.logoWord}>
+        velopass<span style={styles.logoPro}>pro</span>
+      </span>
     </div>
   );
 }
