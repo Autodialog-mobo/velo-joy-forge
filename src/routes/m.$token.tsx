@@ -139,6 +139,25 @@ function MargePage() {
         </div>
 
         <section style={styles.section}>
+          <h2 style={styles.h2}>Waarom het werkt</h2>
+          <ul style={styles.list}>
+            <li>
+              <strong>Je klant blijft je klant.</strong> De Frame-ID bindt je
+              klant aan jouw winkel: hij komt terug voor onderhoud, herstelling
+              en zijn volgende fiets. Je verdient niet in de eerste plaats aan
+              de Frame-ID zelf — je verdient aan de klant die blijft. Elke
+              Frame-ID die je meegeeft, is een klant die je vasthoudt.
+            </li>
+            <li>
+              <strong>Snelle omloop.</strong> Aan de kassa neemt de klant de
+              Frame-ID zelf uit het display. Geen verkoopgesprek nodig, geen
+              moeite — het is een impulsartikel dat vlot meegaat met elke
+              fiets.
+            </li>
+          </ul>
+        </section>
+
+        <section style={styles.section}>
           <h2 style={styles.h2}>De bundels in één oogopslag</h2>
           <div style={styles.grid}>
             {rows.map((r) => (
@@ -155,6 +174,10 @@ function MargePage() {
               />
             ))}
           </div>
+          <p style={styles.framing}>
+            De marge op de Frame-ID is mooi meegenomen. Maar de echte winst
+            zit in de klant die terugkomt — voor alles wat daarna volgt.
+          </p>
           <p style={styles.small}>
             Verkoopprijs = vaste adviesprijs aan de eindklant (incl.{" "}
             {Math.round(VAT_RATE * 100)}% btw). Marge berekend als
@@ -163,30 +186,6 @@ function MargePage() {
             Dit is de <strong>productmarge zonder plaatsing</strong>; een
             eventueel plaatsingstarief reken je apart aan.
           </p>
-        </section>
-
-        <section style={styles.section}>
-          <h2 style={styles.h2}>Waarom deze marge werkt</h2>
-          <ul style={styles.list}>
-            <li>
-              <strong>Vaste verkoopprijs.</strong> Elke Frame-ID heeft één
-              publieksprijs — geen prijsverwarring, geen onderbieding tussen
-              vakhandels.
-            </li>
-            <li>
-              <strong>Snelle omloop.</strong> De Frame-ID wordt aan de kassa
-              of bij aflevering geplaatst in minder dan twee minuten.
-            </li>
-            <li>
-              <strong>Herhaalaankoop.</strong> Elke nieuwe fiets, elke
-              tweedehandsdoorverkoop is een nieuwe Frame-ID — terugkerende
-              omzet op je bestaande klanten.
-            </li>
-            <li>
-              <strong>Geen voorraadrisico.</strong> Bundels zijn onbeperkt
-              houdbaar en nemen amper plaats in.
-            </li>
-          </ul>
         </section>
 
         <section style={styles.section}>
@@ -308,6 +307,17 @@ const styles: Record<string, React.CSSProperties> = {
   },
   p: { fontSize: 16, lineHeight: 1.65, margin: "0 0 12px" },
   small: { fontSize: 13, color: MUTED, marginTop: 16 },
+  framing: {
+    marginTop: 20,
+    padding: "16px 20px",
+    background: "#fff",
+    borderLeft: `4px solid ${GROEN}`,
+    borderRadius: 10,
+    fontSize: 15,
+    lineHeight: 1.55,
+    color: INK,
+    fontStyle: "italic",
+  },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
