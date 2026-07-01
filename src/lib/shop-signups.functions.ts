@@ -9,8 +9,14 @@ async function assertAdmin(supabase: any, userId: string) {
     .eq("user_id", userId)
     .eq("role", "admin")
     .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: admin role required");
+  if (error) {
+    console.error("[shop-signups] assertAdmin query failed", { userId, error });
+    throw new Error(error.message);
+  }
+  if (!data) {
+    console.warn("[shop-signups] non-admin access denied", { userId });
+    throw new Error("Forbidden: admin role required");
+  }
 }
 
 export const listShopSignups = createServerFn({ method: "POST" })
