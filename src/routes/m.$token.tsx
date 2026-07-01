@@ -50,7 +50,7 @@ const T = {
     framing: "De marge op de Frame-ID is mooi meegenomen. Maar de echte winst zit in de klant die terugkomt — voor alles wat daarna volgt.",
     footnote: (vat: string, mult: string, price: string) => <>Verkoopprijs = vaste adviesprijs aan de eindklant (incl. {vat} btw). Marge berekend als (verkoopprijs ÷ {mult} − {price} inkoop) × aantal Frame-ID's. Dit is de <strong>productmarge zonder plaatsing</strong>; een eventueel plaatsingstarief reken je apart aan.</>,
     rolloutTitle: "Nu los, straks in bundels",
-    rollout1: (price: string) => <>Vandaag geef je losse Frame-ID's mee uit je bulkvoorraad (minimum afname 50 stuks, oorspronkelijk voor leasefietsen) — aan exact dezelfde inkoopprijs van <strong>{price} excl. btw</strong> per Frame-ID.</>,
+    rollout1: (price: string) => <>Vandaag geef je losse Frame-ID's mee uit je bulkvoorraad aan exact dezelfde inkoopprijs van <strong>{price} excl. btw</strong> per Frame-ID.</>,
     rollout2: "De voorverpakte bundels (1 / 2 / 5, klaar als schapartikel) rollen we stap voor stap uit, te beginnen bij een eerste groep winkels. Zodra de proefperiode succesvol is afgerond, wordt bestellen en leveren van de bundels breder beschikbaar.",
     rollout3: "De margelogica is in beide vormen identiek — alleen de verpakking verschilt. Of je nu een losse Frame-ID meegeeft of straks een voorverpakte bundel verkoopt: dezelfde inkoop, dezelfde marge per Frame-ID.",
     footerQ: "Vragen over deze toelichting? Neem contact op via ",
