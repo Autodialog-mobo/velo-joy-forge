@@ -22,13 +22,7 @@ const VAT_RATE = 0.21;
 const TOKEN = "AJZkAqItiw4HN9Gq1ahkLJOaB9dc3WjOmmsCsKh6hds";
 
 type Lang = "nl" | "fr" | "de" | "en" | "es";
-const LANGS: { code: Lang; label: string }[] = [
-  { code: "nl", label: "NL" },
-  { code: "fr", label: "FR" },
-  { code: "de", label: "DE" },
-  { code: "en", label: "EN" },
-  { code: "es", label: "ES" },
-];
+
 
 const MONTHS: Record<Lang, string[]> = {
   nl: ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"],
