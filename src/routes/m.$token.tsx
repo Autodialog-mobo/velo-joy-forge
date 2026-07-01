@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { BUNDLES } from "@/routes/$lang/order";
+import { BUNDLES } from "@/lib/bundles";
 import { VAT_RATE } from "@/lib/shipping";
 
 // =============================================================
