@@ -22,6 +22,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
+import { Route as MTokenRouteImport } from './routes/m.$token'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin-webhooks'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin-users'
@@ -111,6 +112,11 @@ const LangIndexRoute = LangIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LangRouteRoute,
+} as any)
+const MTokenRoute = MTokenRouteImport.update({
+  id: '/m/$token',
+  path: '/m/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   id: '/bedankt',
@@ -276,6 +282,7 @@ export interface FileRoutesByFullPath {
   '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/m/$token': typeof MTokenRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
@@ -314,6 +321,7 @@ export interface FileRoutesByTo {
   '/admin-users': typeof AuthenticatedAdminUsersRoute
   '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/m/$token': typeof MTokenRoute
   '/$lang': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
@@ -355,6 +363,7 @@ export interface FileRoutesById {
   '/_authenticated/admin-users': typeof AuthenticatedAdminUsersRoute
   '/_authenticated/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
+  '/m/$token': typeof MTokenRoute
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
@@ -396,6 +405,7 @@ export interface FileRouteTypes {
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
+    | '/m/$token'
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
@@ -434,6 +444,7 @@ export interface FileRouteTypes {
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
+    | '/m/$token'
     | '/$lang'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
@@ -474,6 +485,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin-users'
     | '/_authenticated/admin-webhooks'
     | '/bestellen/bedankt'
+    | '/m/$token'
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
@@ -495,6 +507,7 @@ export interface RootRouteChildren {
   ProfessionalsRoute: typeof ProfessionalsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  MTokenRoute: typeof MTokenRoute
   ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
@@ -592,6 +605,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/'
       preLoaderRoute: typeof LangIndexRouteImport
       parentRoute: typeof LangRouteRoute
+    }
+    '/m/$token': {
+      id: '/m/$token'
+      path: '/m/$token'
+      fullPath: '/m/$token'
+      preLoaderRoute: typeof MTokenRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/bestellen/bedankt': {
       id: '/bestellen/bedankt'
@@ -859,6 +879,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfessionalsRoute: ProfessionalsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  MTokenRoute: MTokenRoute,
   ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
