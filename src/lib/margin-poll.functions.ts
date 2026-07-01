@@ -52,13 +52,12 @@ export const listMarginPoll = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => d ?? {})
   .handler(async ({ context }) => {
-    const { data: role } = await context.supabase
+    const { data: roles } = await context.supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", context.userId)
-      .eq("role", "admin")
-      .maybeSingle();
-    if (!role) throw new Error("Forbidden: admin role required");
+      .in("role", ["admin", "staff"]);
+    if (!roles || roles.length === 0) throw new Error("Forbidden: admin or staff role required");
 
     const { data, error } = await context.supabase
       .from("margin_poll_responses")
