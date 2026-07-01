@@ -26,8 +26,8 @@ const SignupSchema = z.object({
   posSystem: z.string().trim().max(40).optional().or(z.literal("")),
   posOther: z.string().trim().max(120).optional().or(z.literal("")),
   lang: z.enum(["nl", "fr", "de", "en", "es"]).optional(),
-  // simple honeypot; must be empty
-  website: z.string().max(0).optional().or(z.literal("")),
+  // simple honeypot; any value silently accepted as success
+  website: z.string().max(2000).optional(),
 });
 
 export const Route = createFileRoute("/api/public/shop-signup")({
