@@ -17,6 +17,10 @@ const VALID_UNTIL: [number, number, number] = [30, 9, 2026];
 // Purchase price the shop pays per Frame-ID (excl. VAT), in cents.
 // Update this single value if the wholesale price changes.
 const PURCHASE_PRICE_EXCL_VAT_CENTS = 350; // €3,50 excl. btw
+
+// BE-btw-tarief gebruikt om verkoopprijzen (incl. btw) op de order-pagina
+// om te rekenen naar excl. btw voor een eerlijke margeberekening.
+const VAT_RATE = 0.21;
 // -------------------------------------------------------------
 
 const TOKEN = "AJZkAqItiw4HN9Gq1ahkLJOaB9dc3WjOmmsCsKh6hds";
