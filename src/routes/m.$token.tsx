@@ -199,6 +199,8 @@ const T = {
     pollThanks: "Thanks — we'll take your answer into account.",
     pollShopLabel: "Shop",
     pollShopUnknown: "(unknown)",
+    pollShopFallbackLabel: "Your shop name (optional)",
+    pollShopFallbackPh: "e.g. Smith Bikes",
     pollError: "Something went wrong. Please try again.",
   },
   es: {
