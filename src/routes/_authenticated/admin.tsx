@@ -1054,6 +1054,10 @@ function AdminPage() {
                   >
                     Verzendlog
                   </a>
+                </>
+              )}
+              {canSeeShopLinks && (
+                <>
                   {" · "}
                   <a
                     href="/admin-shop-signups"
