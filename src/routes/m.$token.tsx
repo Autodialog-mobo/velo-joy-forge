@@ -388,5 +388,16 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 12,
   },
   footerDates: { color: MUTED },
+  notice: {
+    background: "#fff",
+    border: `1px solid ${BORDER}`,
+    borderLeft: `4px solid ${GROEN}`,
+    borderRadius: 10,
+    padding: "14px 18px",
+    fontSize: 14,
+    lineHeight: 1.55,
+    color: INK,
+    marginBottom: 40,
+  },
   link: { color: NACHT, textDecoration: "underline" },
 };
