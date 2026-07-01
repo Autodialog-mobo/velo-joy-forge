@@ -408,6 +408,27 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: 1,
   },
   cardMarginSub: { fontSize: 12, color: MUTED, marginTop: 4 },
+  cardPriceRow: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+    marginBottom: 8,
+  },
+  cardPriceLabel: {
+    fontSize: 12,
+    color: MUTED,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    fontWeight: 600,
+  },
+  cardPriceValue: {
+    fontFamily: "'DM Sans', system-ui, sans-serif",
+    fontSize: 32,
+    fontWeight: 700,
+    color: NACHT,
+    lineHeight: 1.1,
+    letterSpacing: -0.5,
+  },
   cardPerUnit: { fontSize: 12, color: MUTED, marginTop: 8 },
   list: { margin: 0, paddingLeft: 20, lineHeight: 1.7, fontSize: 16 },
   footer: {
