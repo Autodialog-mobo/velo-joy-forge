@@ -115,14 +115,16 @@ function MargePage() {
 
   return (
     <div style={styles.page}>
-      <div style={styles.container}>
-        <header style={styles.header}>
+      <header style={styles.topBar}>
+        <div style={styles.topBarInner}>
           <VelopassLogo />
           <div style={styles.dateLine}>
             Opgemaakt op <strong>{createdOn}</strong> · Geldig tot{" "}
             <strong>{validUntil}</strong>
           </div>
-        </header>
+        </div>
+      </header>
+      <div style={styles.container}>
 
         <h1 style={styles.h1}>Marge­toelichting Frame-ID</h1>
         <p style={styles.lede}>
