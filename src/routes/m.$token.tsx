@@ -1,4 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
+import { BUNDLES } from "@/routes/$lang/order";
+import { VAT_RATE } from "@/lib/shipping";
 
 // =============================================================
 // Margetoelichting — private, unlisted page for shops
@@ -8,10 +10,14 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 // not in nav, noindex/nofollow, disallowed in robots.txt.
 // =============================================================
 
-// --- Edit these two dates in one place -----------------------
+// --- Editable config -----------------------------------------
 // Format: [dag, maand (1-12), jaar]
 const CREATED_ON: [number, number, number] = [1, 7, 2026];
 const VALID_UNTIL: [number, number, number] = [30, 9, 2026];
+
+// Purchase price the shop pays per Frame-ID (excl. VAT), in cents.
+// Update this single value if the wholesale price changes.
+const PURCHASE_PRICE_EXCL_VAT_CENTS = 350; // €3,50 excl. btw
 // -------------------------------------------------------------
 
 const TOKEN = "AJZkAqItiw4HN9Gq1ahkLJOaB9dc3WjOmmsCsKh6hds";
@@ -23,6 +29,19 @@ const MONTHS_NL = [
 
 function formatDate([d, m, y]: [number, number, number]) {
   return `${d} ${MONTHS_NL[m - 1]} ${y}`;
+}
+
+const eur = (cents: number) =>
+  new Intl.NumberFormat("nl-BE", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(cents / 100);
+
+/** Strip VAT from a VAT-inclusive amount (cents), rounded to cents. */
+function exclVat(inclCents: number): number {
+  return Math.round(inclCents / (1 + VAT_RATE));
 }
 
 export const Route = createFileRoute("/m/$token")({
@@ -40,15 +59,60 @@ export const Route = createFileRoute("/m/$token")({
   component: MargePage,
 });
 
+function VelopassLogo() {
+  return (
+    <div style={styles.logo}>
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 100 100"
+        aria-hidden="true"
+        style={{ display: "block" }}
+      >
+        <rect width="100" height="100" rx="22" fill="#2ECC8A" />
+        <path
+          d="M24 54 L42 72 L76 30"
+          fill="none"
+          stroke="#0D1F3C"
+          strokeWidth="11"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span style={styles.logoWord}>velopass</span>
+    </div>
+  );
+}
+
 function MargePage() {
   const createdOn = formatDate(CREATED_ON);
   const validUntil = formatDate(VALID_UNTIL);
+
+  const rows = BUNDLES.map((b) => {
+    const totalExcl = exclVat(b.price);
+    const perUnitExcl = totalExcl / b.stickers;
+    const purchaseTotal = PURCHASE_PRICE_EXCL_VAT_CENTS * b.stickers;
+    const marginTotal = totalExcl - purchaseTotal;
+    const marginPerUnit = marginTotal / b.stickers;
+    const pct = Math.round((marginTotal / totalExcl) * 100);
+    return {
+      key: b.key,
+      stickers: b.stickers,
+      priceIncl: b.price,
+      priceExcl: totalExcl,
+      perUnitExcl,
+      marginTotal,
+      marginPerUnit,
+      pct,
+      featured: !!b.featured,
+    };
+  });
 
   return (
     <div style={styles.page}>
       <div style={styles.container}>
         <header style={styles.header}>
-          <div style={styles.brand}>VELOPASS</div>
+          <VelopassLogo />
           <div style={styles.dateLine}>
             Opgemaakt op <strong>{createdOn}</strong> · Geldig tot{" "}
             <strong>{validUntil}</strong>
@@ -57,45 +121,34 @@ function MargePage() {
 
         <h1 style={styles.h1}>Marge­toelichting Frame-ID</h1>
         <p style={styles.lede}>
-          Een duidelijk overzicht van de Frame-ID bundels, de vaste
-          verkoopprijs en de marge die je als vakhandel realiseert per bundel.
+          Een transparant overzicht van de Frame-ID bundels zoals ze op de
+          Velopass-webshop staan, en de marge die je als vakhandel per bundel
+          realiseert. Alle marges zijn berekend excl. btw, op basis van een
+          inkoopprijs van <strong>{eur(PURCHASE_PRICE_EXCL_VAT_CENTS)}</strong>{" "}
+          per Frame-ID.
         </p>
 
         <section style={styles.section}>
           <h2 style={styles.h2}>De bundels in één oogopslag</h2>
           <div style={styles.grid}>
-            <BundleCard
-              size="Starter"
-              qty="10 Frame-ID's"
-              cost="€ 79"
-              price="€ 149"
-              margin="€ 70"
-              perUnit="€ 7,00 marge / Frame-ID"
-              pct="47%"
-            />
-            <BundleCard
-              size="Standaard"
-              qty="25 Frame-ID's"
-              cost="€ 175"
-              price="€ 349"
-              margin="€ 174"
-              perUnit="€ 6,96 marge / Frame-ID"
-              pct="50%"
-              featured
-            />
-            <BundleCard
-              size="Pro"
-              qty="50 Frame-ID's"
-              cost="€ 325"
-              price="€ 675"
-              margin="€ 350"
-              perUnit="€ 7,00 marge / Frame-ID"
-              pct="52%"
-            />
+            {rows.map((r) => (
+              <BundleCard
+                key={r.key}
+                title={`${r.stickers}-pack`}
+                qty={`${r.stickers} Frame-ID${r.stickers > 1 ? "'s" : ""}`}
+                priceIncl={eur(r.priceIncl)}
+                priceExcl={eur(r.priceExcl)}
+                margin={eur(r.marginTotal)}
+                perUnit={`${eur(r.marginPerUnit)} marge / Frame-ID`}
+                pct={`${r.pct}%`}
+                featured={r.featured}
+              />
+            ))}
           </div>
           <p style={styles.small}>
-            Alle bedragen exclusief btw. Verkoopprijs = adviesprijs aan de
-            eindklant, vast per bundel.
+            Verkoopprijs = vaste adviesprijs aan de eindklant (incl. 21% btw).
+            Marge berekend als (verkoopprijs excl. btw −{" "}
+            {eur(PURCHASE_PRICE_EXCL_VAT_CENTS)} inkoop) × aantal Frame-ID's.
           </p>
         </section>
 
@@ -117,25 +170,10 @@ function MargePage() {
               omzet op je bestaande klanten.
             </li>
             <li>
-              <strong>Geen voorraadrisico.</strong> Bundels zijn
-              onbeperkt houdbaar en nemen amper plaats in.
+              <strong>Geen voorraadrisico.</strong> Bundels zijn onbeperkt
+              houdbaar en nemen amper plaats in.
             </li>
           </ul>
-        </section>
-
-        <section style={styles.section}>
-          <h2 style={styles.h2}>Rekenvoorbeeld</h2>
-          <div style={styles.example}>
-            <p style={styles.exampleLine}>
-              Een vakhandel die <strong>1 Standaard-bundel per maand</strong>{" "}
-              verkoopt, realiseert:
-            </p>
-            <div style={styles.exampleFigures}>
-              <Figure label="Marge / maand" value="€ 174" />
-              <Figure label="Marge / jaar" value="€ 2.088" />
-              <Figure label="Frame-ID's / jaar" value="300" />
-            </div>
-          </div>
         </section>
 
         <section style={styles.section}>
@@ -165,10 +203,10 @@ function MargePage() {
 }
 
 function BundleCard(props: {
-  size: string;
+  title: string;
   qty: string;
-  cost: string;
-  price: string;
+  priceIncl: string;
+  priceExcl: string;
   margin: string;
   perUnit: string;
   pct: string;
@@ -182,30 +220,22 @@ function BundleCard(props: {
       }}
     >
       {props.featured && <div style={styles.badge}>Meest gekozen</div>}
-      <div style={styles.cardSize}>{props.size}</div>
+      <div style={styles.cardSize}>{props.title}</div>
       <div style={styles.cardQty}>{props.qty}</div>
       <div style={styles.cardRow}>
-        <span>Inkoop</span>
-        <span>{props.cost}</span>
+        <span>Verkoopprijs incl. btw</span>
+        <span>{props.priceIncl}</span>
       </div>
       <div style={styles.cardRow}>
-        <span>Verkoopprijs</span>
-        <span>{props.price}</span>
+        <span>Verkoopprijs excl. btw</span>
+        <span>{props.priceExcl}</span>
       </div>
       <div style={styles.cardMarginBlock}>
+        <div style={styles.cardMarginLabel}>Jouw marge</div>
         <div style={styles.cardMarginValue}>{props.margin}</div>
-        <div style={styles.cardMarginLabel}>marge per bundel · {props.pct}</div>
+        <div style={styles.cardMarginSub}>{props.pct} van verkoopprijs excl. btw</div>
       </div>
       <div style={styles.cardPerUnit}>{props.perUnit}</div>
-    </div>
-  );
-}
-
-function Figure({ label, value }: { label: string; value: string }) {
-  return (
-    <div style={styles.figure}>
-      <div style={styles.figureValue}>{value}</div>
-      <div style={styles.figureLabel}>{label}</div>
     </div>
   );
 }
@@ -236,11 +266,12 @@ const styles: Record<string, React.CSSProperties> = {
     flexWrap: "wrap",
     gap: 12,
   },
-  brand: {
+  logo: { display: "flex", alignItems: "center", gap: 10 },
+  logoWord: {
     fontFamily: "'Syne', 'DM Sans', sans-serif",
     fontWeight: 800,
-    letterSpacing: 2,
-    fontSize: 18,
+    fontSize: 22,
+    letterSpacing: -0.5,
     color: NACHT,
   },
   dateLine: { fontSize: 13, color: MUTED },
@@ -315,6 +346,13 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "14px 0 8px",
     borderTop: `1px dashed ${BORDER}`,
   },
+  cardMarginLabel: {
+    fontSize: 12,
+    color: MUTED,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  },
   cardMarginValue: {
     fontFamily: "'Syne', sans-serif",
     fontSize: 28,
@@ -322,32 +360,9 @@ const styles: Record<string, React.CSSProperties> = {
     color: GROEN,
     lineHeight: 1,
   },
-  cardMarginLabel: { fontSize: 12, color: MUTED, marginTop: 4 },
+  cardMarginSub: { fontSize: 12, color: MUTED, marginTop: 4 },
   cardPerUnit: { fontSize: 12, color: MUTED, marginTop: 8 },
   list: { margin: 0, paddingLeft: 20, lineHeight: 1.7, fontSize: 16 },
-  example: {
-    background: "#fff",
-    border: `1px solid ${BORDER}`,
-    borderRadius: 14,
-    padding: 24,
-  },
-  exampleLine: { margin: "0 0 20px", fontSize: 16 },
-  exampleFigures: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-    gap: 16,
-  },
-  figure: {
-    borderLeft: `3px solid ${GROEN}`,
-    paddingLeft: 12,
-  },
-  figureValue: {
-    fontFamily: "'Syne', sans-serif",
-    fontWeight: 800,
-    fontSize: 24,
-    color: NACHT,
-  },
-  figureLabel: { fontSize: 12, color: MUTED, marginTop: 2 },
   footer: {
     marginTop: 64,
     paddingTop: 20,
