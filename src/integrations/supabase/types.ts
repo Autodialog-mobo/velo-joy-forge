@@ -323,6 +323,7 @@ export type Database = {
       shop_signups: {
         Row: {
           address: string | null
+          admin_notes: string | null
           confirmation_email_sent_at: string | null
           created_at: string
           email: string
@@ -335,12 +336,16 @@ export type Database = {
           pos_other: string | null
           pos_system: string | null
           shop_name: string | null
+          status: string
+          status_updated_at: string | null
+          status_updated_by: string | null
           updated_at: string
           user_agent: string | null
           vat: string | null
         }
         Insert: {
           address?: string | null
+          admin_notes?: string | null
           confirmation_email_sent_at?: string | null
           created_at?: string
           email: string
@@ -353,12 +358,16 @@ export type Database = {
           pos_other?: string | null
           pos_system?: string | null
           shop_name?: string | null
+          status?: string
+          status_updated_at?: string | null
+          status_updated_by?: string | null
           updated_at?: string
           user_agent?: string | null
           vat?: string | null
         }
         Update: {
           address?: string | null
+          admin_notes?: string | null
           confirmation_email_sent_at?: string | null
           created_at?: string
           email?: string
@@ -371,6 +380,9 @@ export type Database = {
           pos_other?: string | null
           pos_system?: string | null
           shop_name?: string | null
+          status?: string
+          status_updated_at?: string | null
+          status_updated_by?: string | null
           updated_at?: string
           user_agent?: string | null
           vat?: string | null
