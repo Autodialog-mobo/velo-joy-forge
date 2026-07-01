@@ -10,13 +10,12 @@ export const Route = createFileRoute("/_authenticated/admin-margin-poll")({
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();
     if (!u.user) throw redirect({ to: "/auth" });
-    const { data: role } = await supabase
+    const { data: roles } = await supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", u.user.id)
-      .eq("role", "admin")
-      .maybeSingle();
-    if (!role) throw redirect({ to: "/admin" });
+      .in("role", ["admin", "staff"]);
+    if (!roles || roles.length === 0) throw redirect({ to: "/admin" });
   },
   component: MarginPollAdmin,
 });

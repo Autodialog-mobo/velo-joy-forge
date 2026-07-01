@@ -7,15 +7,14 @@ async function assertAdmin(supabase: any, userId: string) {
     .from("user_roles")
     .select("role")
     .eq("user_id", userId)
-    .eq("role", "admin")
-    .maybeSingle();
+    .in("role", ["admin", "staff"]);
   if (error) {
     console.error("[shop-signups] assertAdmin query failed", { userId, error });
     throw new Error(error.message);
   }
-  if (!data) {
-    console.warn("[shop-signups] non-admin access denied", { userId });
-    throw new Error("Forbidden: admin role required");
+  if (!data || data.length === 0) {
+    console.warn("[shop-signups] non-admin/staff access denied", { userId });
+    throw new Error("Forbidden: admin or staff role required");
   }
 }
 
