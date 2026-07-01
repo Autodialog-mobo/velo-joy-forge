@@ -222,6 +222,13 @@ function MargePage() {
 }
 
 function BundleCard(props: {
+  bundleKey: string;
+  stickers: number;
+  marginCents: number;
+  marginPerUnitCents: number;
+  priceInclCents: number;
+  priceExclCents: number;
+  pctNum: number;
   title: string;
   qty: string;
   priceIncl: string;
@@ -233,6 +240,14 @@ function BundleCard(props: {
 }) {
   return (
     <div
+      data-testid="bundle-card"
+      data-bundle-key={props.bundleKey}
+      data-stickers={props.stickers}
+      data-margin-cents={props.marginCents}
+      data-margin-per-unit-cents={props.marginPerUnitCents}
+      data-price-incl-cents={props.priceInclCents}
+      data-price-excl-cents={props.priceExclCents}
+      data-pct={props.pctNum}
       style={{
         ...styles.card,
         ...(props.featured ? styles.cardFeatured : null),
@@ -243,18 +258,18 @@ function BundleCard(props: {
       <div style={styles.cardQty}>{props.qty}</div>
       <div style={styles.cardRow}>
         <span>Verkoopprijs incl. btw</span>
-        <span>{props.priceIncl}</span>
+        <span data-testid="price-incl">{props.priceIncl}</span>
       </div>
       <div style={styles.cardRow}>
         <span>Verkoopprijs excl. btw</span>
-        <span>{props.priceExcl}</span>
+        <span data-testid="price-excl">{props.priceExcl}</span>
       </div>
       <div style={styles.cardMarginBlock}>
         <div style={styles.cardMarginLabel}>Jouw marge</div>
-        <div style={styles.cardMarginValue}>{props.margin}</div>
-        <div style={styles.cardMarginSub}>{props.pct} van verkoopprijs excl. btw</div>
+        <div style={styles.cardMarginValue} data-testid="margin-value">{props.margin}</div>
+        <div style={styles.cardMarginSub} data-testid="margin-pct">{props.pct} van verkoopprijs excl. btw</div>
       </div>
-      <div style={styles.cardPerUnit}>{props.perUnit}</div>
+      <div style={styles.cardPerUnit} data-testid="margin-per-unit">{props.perUnit}</div>
     </div>
   );
 }
