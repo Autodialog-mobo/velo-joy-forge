@@ -38,14 +38,14 @@ export const updateShopSignup = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => updateSchema.parse(d))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
-    const patch: Record<string, any> = { updated_at: new Date().toISOString() };
+    const patch: any = { updated_at: new Date().toISOString() };
     if (data.status !== undefined) {
       patch.status = data.status;
       patch.status_updated_at = new Date().toISOString();
       patch.status_updated_by = context.userId;
     }
     if (data.admin_notes !== undefined) patch.admin_notes = data.admin_notes;
-    const { error } = await context.supabase
+    const { error } = await (context.supabase as any)
       .from("shop_signups")
       .update(patch)
       .eq("id", data.id);
