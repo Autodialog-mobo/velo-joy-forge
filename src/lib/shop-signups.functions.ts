@@ -29,7 +29,10 @@ export const listShopSignups = createServerFn({ method: "POST" })
       .select("*")
       .order("created_at", { ascending: false })
       .limit(500);
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("[shop-signups] list failed", { userId: context.userId, error });
+      throw new Error(error.message);
+    }
     return { rows: data ?? [] };
   });
 
