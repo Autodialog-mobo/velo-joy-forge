@@ -76,6 +76,8 @@ const T = {
     pollThanks: "Bedankt, we nemen je antwoord mee.",
     pollShopLabel: "Winkel",
     pollShopUnknown: "(onbekend)",
+    pollShopFallbackLabel: "Naam van je winkel (optioneel)",
+    pollShopFallbackPh: "Bijv. Fietsen Janssens",
     pollError: "Er ging iets mis. Probeer het opnieuw.",
   },
   fr: {
