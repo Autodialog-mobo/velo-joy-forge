@@ -257,6 +257,13 @@
     "pos_other_label": "Quel système de caisse ?",
     "pos_other_placeholder": "Tape la marque ou le modèle...",
     "submit": "Inscris-toi gratuitement →",
+    "submitting": "Envoi en cours...",
+    "success_title": "Merci pour ton inscription !",
+    "success_body": "Nous avons envoyé une confirmation dans ta boîte mail. Notre équipe te recontacte sous 2 jours ouvrables.",
+    "error_generic": "Une erreur est survenue. Réessaie ou écris-nous à info@velopass.com.",
+    "error_email": "Entre une adresse e-mail valide.",
+    "error_shop": "Indique le nom de ton magasin.",
+    "try_again": "Réessayer",
     "demo_link": "Tu préfères une démo d'abord ? →",
     "free_note": "Gratuit au démarrage. Pas de carte de crédit requise."
   }
