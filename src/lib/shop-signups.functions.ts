@@ -58,6 +58,13 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       .from("shop_signups")
       .update(patch)
       .eq("id", data.id);
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("[shop-signups] update failed", {
+        id: data.id,
+        userId: context.userId,
+        error,
+      });
+      throw new Error(error.message);
+    }
     return { ok: true };
   });
