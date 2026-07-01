@@ -153,10 +153,7 @@ function MargePage() {
               Frame-ID die je meegeeft, is een klant die je vasthoudt.
             </li>
             <li>
-              <strong>Snelle omloop.</strong> Aan de kassa neemt de klant de
-              Frame-ID zelf uit het display. Geen verkoopgesprek nodig, geen
-              moeite — het is een impulsartikel dat vlot meegaat met elke
-              fiets.
+              <strong>Snelle omloop.</strong> Aan de kassa neemt de klant de Frame-ID zelf uit het display — voor een van zijn eigen fietsen, of als geschenk: geen verkoopgesprek nodig, geen moeite: een impulsartikel dat meegaat met elke klant die langskomt.
             </li>
           </ul>
         </section>
