@@ -66,8 +66,8 @@ function VelopassLogo() {
   return (
     <div style={styles.logo}>
       <svg
-        width="28"
-        height="28"
+        width="32"
+        height="32"
         viewBox="0 0 100 100"
         aria-hidden="true"
         style={{ display: "block" }}
@@ -82,7 +82,9 @@ function VelopassLogo() {
           strokeLinejoin="round"
         />
       </svg>
-      <span style={styles.logoWord}>velopass</span>
+      <span style={styles.logoWord}>
+        velopass<span style={styles.logoPro}>pro</span>
+      </span>
     </div>
   );
 }
@@ -113,14 +115,16 @@ function MargePage() {
 
   return (
     <div style={styles.page}>
-      <div style={styles.container}>
-        <header style={styles.header}>
+      <header style={styles.topBar}>
+        <div style={styles.topBarInner}>
           <VelopassLogo />
           <div style={styles.dateLine}>
             Opgemaakt op <strong>{createdOn}</strong> · Geldig tot{" "}
             <strong>{validUntil}</strong>
           </div>
-        </header>
+        </div>
+      </header>
+      <div style={styles.container}>
 
         <h1 style={styles.h1}>Marge­toelichting Frame-ID</h1>
         <p style={styles.lede}>
@@ -289,28 +293,42 @@ const styles: Record<string, React.CSSProperties> = {
     background: OFFWHITE,
     color: INK,
     fontFamily: "'DM Sans', system-ui, sans-serif",
-    padding: "48px 20px 80px",
+    padding: "0 0 80px",
   },
-  container: { maxWidth: 880, margin: "0 auto" },
-  header: {
+  container: { maxWidth: 880, margin: "0 auto", padding: "0 20px" },
+  topBar: {
+    background: "rgba(13,31,60,0.97)",
+    borderBottom: "1px solid rgba(46,204,138,0.15)",
+    marginBottom: 48,
+  },
+  topBarInner: {
+    maxWidth: 880,
+    margin: "0 auto",
+    padding: "16px 20px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 48,
-    paddingBottom: 20,
-    borderBottom: `1px solid ${BORDER}`,
     flexWrap: "wrap",
     gap: 12,
   },
   logo: { display: "flex", alignItems: "center", gap: 10 },
   logoWord: {
     fontFamily: "'Syne', 'DM Sans', sans-serif",
-    fontWeight: 800,
-    fontSize: 22,
-    letterSpacing: -0.5,
-    color: NACHT,
+    fontWeight: 700,
+    fontSize: 17,
+    letterSpacing: -0.3,
+    color: "#fff",
   },
-  dateLine: { fontSize: 13, color: MUTED },
+  logoPro: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: GROEN,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    marginLeft: 2,
+    verticalAlign: "super",
+  },
+  dateLine: { fontSize: 13, color: "rgba(255,255,255,0.55)" },
   h1: {
     fontFamily: "'Syne', 'DM Sans', sans-serif",
     fontWeight: 800,
