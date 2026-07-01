@@ -163,6 +163,13 @@ function MargePage() {
             {rows.map((r) => (
               <BundleCard
                 key={r.key}
+                bundleKey={r.key}
+                stickers={r.stickers}
+                marginCents={r.marginTotal}
+                marginPerUnitCents={Math.round(r.marginPerUnit)}
+                priceInclCents={r.priceIncl}
+                priceExclCents={r.priceExcl}
+                pctNum={r.pct}
                 title={`${r.stickers}-pack`}
                 qty={`${r.stickers} Frame-ID${r.stickers > 1 ? "'s" : ""}`}
                 priceIncl={eur(r.priceIncl)}
@@ -174,7 +181,7 @@ function MargePage() {
               />
             ))}
           </div>
-          <p style={styles.framing}>
+          <p style={styles.framing} data-testid="framing">
             De marge op de Frame-ID is mooi meegenomen. Maar de echte winst
             zit in de klant die terugkomt — voor alles wat daarna volgt.
           </p>
