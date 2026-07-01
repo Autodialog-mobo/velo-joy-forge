@@ -1052,6 +1052,13 @@ function AdminPage() {
                   >
                     Verzendlog
                   </a>
+                  {" · "}
+                  <a
+                    href="/admin-shop-signups"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Shop-aanmeldingen
+                  </a>
                 </>
               )}
             </p>
