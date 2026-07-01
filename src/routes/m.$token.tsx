@@ -307,6 +307,17 @@ const styles: Record<string, React.CSSProperties> = {
   },
   p: { fontSize: 16, lineHeight: 1.65, margin: "0 0 12px" },
   small: { fontSize: 13, color: MUTED, marginTop: 16 },
+  framing: {
+    marginTop: 20,
+    padding: "16px 20px",
+    background: "#fff",
+    borderLeft: `4px solid ${GROEN}`,
+    borderRadius: 10,
+    fontSize: 15,
+    lineHeight: 1.55,
+    color: INK,
+    fontStyle: "italic",
+  },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
