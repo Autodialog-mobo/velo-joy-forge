@@ -9,8 +9,14 @@ async function assertAdmin(supabase: any, userId: string) {
     .eq("user_id", userId)
     .eq("role", "admin")
     .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: admin role required");
+  if (error) {
+    console.error("[shop-signups] assertAdmin query failed", { userId, error });
+    throw new Error(error.message);
+  }
+  if (!data) {
+    console.warn("[shop-signups] non-admin access denied", { userId });
+    throw new Error("Forbidden: admin role required");
+  }
 }
 
 export const listShopSignups = createServerFn({ method: "POST" })
@@ -23,7 +29,10 @@ export const listShopSignups = createServerFn({ method: "POST" })
       .select("*")
       .order("created_at", { ascending: false })
       .limit(500);
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("[shop-signups] list failed", { userId: context.userId, error });
+      throw new Error(error.message);
+    }
     return { rows: data ?? [] };
   });
 
@@ -49,6 +58,13 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       .from("shop_signups")
       .update(patch)
       .eq("id", data.id);
-    if (error) throw new Error(error.message);
+    if (error) {
+      console.error("[shop-signups] update failed", {
+        id: data.id,
+        userId: context.userId,
+        error,
+      });
+      throw new Error(error.message);
+    }
     return { ok: true };
   });

@@ -112,11 +112,22 @@ export function RegisterForm() {
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data?.ok) {
-          setSubmit({ state: "error", message: tf("error_generic") });
+          console.error("[shop-signup] submit failed", {
+            status: res.status,
+            error: data?.error,
+            reqId: data?.reqId,
+            details: data?.details,
+            debug: data?.debug,
+          });
+          const msg = data?.reqId
+            ? `${tf("error_generic")} (ref: ${data.reqId})`
+            : tf("error_generic");
+          setSubmit({ state: "error", message: msg });
           return;
         }
         setSubmit({ state: "success" });
-      } catch {
+      } catch (err) {
+        console.error("[shop-signup] network error", err);
         setSubmit({ state: "error", message: tf("error_generic") });
       }
     },

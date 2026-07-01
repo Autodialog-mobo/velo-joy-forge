@@ -35,23 +35,38 @@ export const Route = createFileRoute("/api/public/shop-signup")({
     handlers: {
       OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),
       POST: async ({ request }) => {
+        const reqId = `ss_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+        const ip = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for") ?? null;
+        const ua = request.headers.get("user-agent") ?? null;
+        console.log(`[shop-signup ${reqId}] incoming`, { ip, ua });
+
         let raw: unknown;
         try {
           raw = await request.json();
-        } catch {
-          return json({ ok: false, error: "invalid_json" }, 400);
+        } catch (err) {
+          console.warn(`[shop-signup ${reqId}] invalid_json`, err);
+          return json({ ok: false, error: "invalid_json", reqId }, 400);
         }
         const parsed = SignupSchema.safeParse(raw);
         if (!parsed.success) {
-          return json({ ok: false, error: "invalid_input", details: parsed.error.flatten() }, 400);
+          const details = parsed.error.flatten();
+          console.warn(`[shop-signup ${reqId}] invalid_input`, JSON.stringify(details));
+          return json({ ok: false, error: "invalid_input", details, reqId }, 400);
         }
         const data = parsed.data;
         // Honeypot: silently accept
-        if (data.website) return json({ ok: true });
+        if (data.website) {
+          console.warn(`[shop-signup ${reqId}] honeypot_triggered`, { ip, ua, email: data.email });
+          return json({ ok: true });
+        }
 
-        const ip = request.headers.get("cf-connecting-ip") ?? request.headers.get("x-forwarded-for") ?? null;
-        const ua = request.headers.get("user-agent") ?? null;
         const lang = data.lang ?? "nl";
+        console.log(`[shop-signup ${reqId}] validated`, {
+          email: data.email,
+          shopName: data.shopName,
+          vat: data.vat || null,
+          lang,
+        });
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const insertRes = await (supabaseAdmin.from("shop_signups") as any)
@@ -73,34 +88,66 @@ export const Route = createFileRoute("/api/public/shop-signup")({
           .single();
 
         if (insertRes.error || !insertRes.data) {
-          console.error("[shop-signup] insert failed", insertRes.error);
-          return json({ ok: false, error: "db_error" }, 500);
+          const e = insertRes.error;
+          console.error(`[shop-signup ${reqId}] insert_failed`, {
+            code: e?.code,
+            message: e?.message,
+            details: e?.details,
+            hint: e?.hint,
+          });
+          const isRls =
+            e?.code === "42501" ||
+            /row-level security|permission denied/i.test(e?.message ?? "");
+          return json(
+            {
+              ok: false,
+              error: isRls ? "rls_denied" : "db_error",
+              reqId,
+              ...(process.env.NODE_ENV !== "production"
+                ? { debug: { code: e?.code, message: e?.message, hint: e?.hint } }
+                : {}),
+            },
+            500,
+          );
         }
 
         const signupId = insertRes.data.id as string;
+        console.log(`[shop-signup ${reqId}] inserted`, { signupId });
 
-        const emailRes = await sendShopSignupEmails({
-          id: signupId,
-          lang,
-          to: data.email,
-          firstName: data.firstName || undefined,
-          lastName: data.lastName || undefined,
-          shopName: data.shopName,
-          vat: data.vat || undefined,
-          address: data.address || undefined,
-          phone: data.phone || undefined,
-          posSystem: data.posSystem || undefined,
-          posOther: data.posOther || undefined,
-        });
+        let emailRes: { ok: boolean; error?: unknown } = { ok: false };
+        try {
+          emailRes = await sendShopSignupEmails({
+            id: signupId,
+            lang,
+            to: data.email,
+            firstName: data.firstName || undefined,
+            lastName: data.lastName || undefined,
+            shopName: data.shopName,
+            vat: data.vat || undefined,
+            address: data.address || undefined,
+            phone: data.phone || undefined,
+            posSystem: data.posSystem || undefined,
+            posOther: data.posOther || undefined,
+          });
+        } catch (err) {
+          console.error(`[shop-signup ${reqId}] email_threw`, err);
+          emailRes = { ok: false, error: err };
+        }
 
         if (emailRes.ok) {
-          await (supabaseAdmin.from("shop_signups") as any)
+          console.log(`[shop-signup ${reqId}] email_sent`);
+          const updRes = await (supabaseAdmin.from("shop_signups") as any)
             .update({ confirmation_email_sent_at: new Date().toISOString() })
             .eq("id", signupId);
+          if (updRes.error) {
+            console.error(`[shop-signup ${reqId}] email_flag_update_failed`, updRes.error);
+          }
+        } else {
+          console.error(`[shop-signup ${reqId}] email_failed`, emailRes.error ?? "(no error object)");
         }
 
         // Return ok even if the confirmation email failed — the signup is stored.
-        return json({ ok: true, id: signupId, emailSent: emailRes.ok });
+        return json({ ok: true, id: signupId, emailSent: emailRes.ok, reqId });
       },
     },
   },
