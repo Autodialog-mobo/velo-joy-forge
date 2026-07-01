@@ -147,6 +147,8 @@ function AdminPage() {
     queryFn: () => fetchRoles({ data: {} as any }),
   });
   const isAdmin = !!roleData?.roles?.includes("admin");
+  const isStaff = !!roleData?.roles?.includes("staff");
+  const canSeeShopLinks = isAdmin || isStaff;
 
 
 
