@@ -1,6 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { BUNDLES } from "@/lib/bundles";
-import { VAT_RATE } from "@/lib/shipping";
 
 // =============================================================
 // Margetoelichting — private, unlisted page for shops
@@ -18,6 +17,10 @@ const VALID_UNTIL: [number, number, number] = [30, 9, 2026];
 // Purchase price the shop pays per Frame-ID (excl. VAT), in cents.
 // Update this single value if the wholesale price changes.
 const PURCHASE_PRICE_EXCL_VAT_CENTS = 350; // €3,50 excl. btw
+
+// BE-btw-tarief gebruikt om verkoopprijzen (incl. btw) op de order-pagina
+// om te rekenen naar excl. btw voor een eerlijke margeberekening.
+const VAT_RATE = 0.21;
 // -------------------------------------------------------------
 
 const TOKEN = "AJZkAqItiw4HN9Gq1ahkLJOaB9dc3WjOmmsCsKh6hds";
@@ -123,10 +126,17 @@ function MargePage() {
         <p style={styles.lede}>
           Een transparant overzicht van de Frame-ID bundels zoals ze op de
           Velopass-webshop staan, en de marge die je als vakhandel per bundel
-          realiseert. Alle marges zijn berekend excl. btw, op basis van een
-          inkoopprijs van <strong>{eur(PURCHASE_PRICE_EXCL_VAT_CENTS)}</strong>{" "}
-          per Frame-ID.
+          realiseert. Alle marges zijn berekend excl. btw ({Math.round(VAT_RATE * 100)}%),
+          op basis van een inkoopprijs van{" "}
+          <strong>{eur(PURCHASE_PRICE_EXCL_VAT_CENTS)}</strong> per Frame-ID.
         </p>
+
+        <div style={styles.notice}>
+          <strong>Belangrijk:</strong> de marges hieronder gelden voor de
+          Frame-ID <em>zonder plaatsing door de winkel</em>. De prijs voor het
+          aanbrengen van de Frame-ID op de fiets bepaal je zelf en komt bovenop
+          de hier getoonde productmarge.
+        </div>
 
         <section style={styles.section}>
           <h2 style={styles.h2}>De bundels in één oogopslag</h2>
@@ -146,9 +156,12 @@ function MargePage() {
             ))}
           </div>
           <p style={styles.small}>
-            Verkoopprijs = vaste adviesprijs aan de eindklant (incl. 21% btw).
-            Marge berekend als (verkoopprijs excl. btw −{" "}
+            Verkoopprijs = vaste adviesprijs aan de eindklant (incl.{" "}
+            {Math.round(VAT_RATE * 100)}% btw). Marge berekend als
+            (verkoopprijs ÷ {(1 + VAT_RATE).toFixed(2)} −{" "}
             {eur(PURCHASE_PRICE_EXCL_VAT_CENTS)} inkoop) × aantal Frame-ID's.
+            Dit is de <strong>productmarge zonder plaatsing</strong>; een
+            eventueel plaatsingstarief reken je apart aan.
           </p>
         </section>
 
@@ -375,5 +388,16 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 12,
   },
   footerDates: { color: MUTED },
+  notice: {
+    background: "#fff",
+    border: `1px solid ${BORDER}`,
+    borderLeft: `4px solid ${GROEN}`,
+    borderRadius: 10,
+    padding: "14px 18px",
+    fontSize: 14,
+    lineHeight: 1.55,
+    color: INK,
+    marginBottom: 40,
+  },
   link: { color: NACHT, textDecoration: "underline" },
 };
