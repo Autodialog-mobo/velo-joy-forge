@@ -257,6 +257,13 @@
     "pos_other_label": "¿Qué sistema de caja?",
     "pos_other_placeholder": "Escribe la marca o tipo...",
     "submit": "Registrar gratis →",
+    "submitting": "Enviando...",
+    "success_title": "¡Gracias por registrarte!",
+    "success_body": "Hemos enviado una confirmación a tu correo. Nuestro equipo te contactará en 2 días laborables.",
+    "error_generic": "Algo salió mal. Inténtalo de nuevo o escríbenos a info@velopass.com.",
+    "error_email": "Introduce un correo válido.",
+    "error_shop": "Introduce el nombre de tu tienda.",
+    "try_again": "Reintentar",
     "demo_link": "¿Prefieres una demo primero? →",
     "free_note": "Empieza gratis. No se requiere tarjeta."
   }
