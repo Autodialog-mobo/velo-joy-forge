@@ -405,6 +405,8 @@ function MargePage() {
 function PollSection({ t }: { t: (typeof T)[Lang] }) {
   const submit = useServerFn(submitMarginPoll);
   const [shop, setShop] = useState<string>("");
+  const [shopFromUrl, setShopFromUrl] = useState(false);
+  const [fallbackShop, setFallbackShop] = useState("");
   const [choice, setChoice] = useState<"ja" | "misschien" | "nee" | null>(null);
   const [reason, setReason] = useState("");
   const [sending, setSending] = useState(false);
@@ -414,8 +416,12 @@ function PollSection({ t }: { t: (typeof T)[Lang] }) {
   useEffect(() => {
     try {
       const p = new URLSearchParams(window.location.search);
+      // URLSearchParams.get() already URL-decodes the value.
       const s = (p.get("shop") || "").trim();
-      if (s) setShop(s);
+      if (s) {
+        setShop(s);
+        setShopFromUrl(true);
+      }
     } catch {}
   }, []);
 
@@ -425,7 +431,8 @@ function PollSection({ t }: { t: (typeof T)[Lang] }) {
     setSending(true);
     setErr(null);
     try {
-      await submit({ data: { shop_name: shop, choice, reason: reason || null } });
+      const finalShop = shopFromUrl ? shop : (fallbackShop.trim() || "onbekend");
+      await submit({ data: { shop_name: finalShop, choice, reason: reason || null } });
       setDone(true);
     } catch {
       setErr(t.pollError);
@@ -441,9 +448,26 @@ function PollSection({ t }: { t: (typeof T)[Lang] }) {
       <h2 style={styles.h2}>{t.pollTitle}</h2>
       <p style={{ ...styles.p, color: MUTED, marginBottom: 20 }}>{t.pollIntro}</p>
 
-      <div style={styles.pollShopLine}>
-        {t.pollShopLabel}: <strong>{shop || t.pollShopUnknown}</strong>
-      </div>
+      {shopFromUrl ? (
+        <div style={styles.pollShopLine}>
+          {t.pollShopLabel}: <strong>{shop}</strong>
+        </div>
+      ) : !done ? (
+        <label style={{ display: "block", marginBottom: 16 }}>
+          <span style={{ fontSize: 13, color: MUTED, marginBottom: 6, display: "block" }}>
+            {t.pollShopFallbackLabel}
+          </span>
+          <input
+            type="text"
+            value={fallbackShop}
+            onChange={(e) => setFallbackShop(e.target.value)}
+            placeholder={t.pollShopFallbackPh}
+            maxLength={200}
+            style={styles.pollTextarea}
+          />
+        </label>
+      ) : null}
+
 
       {done ? (
         <div style={styles.pollThanks} role="status">✓ {t.pollThanks}</div>
