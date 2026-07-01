@@ -1,6 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { BUNDLES } from "@/lib/bundles";
+import { LangSwitcher } from "@/components/LangSwitcher";
+
 
 // =============================================================
 // Margetoelichting — private, unlisted page for shops
@@ -20,13 +22,7 @@ const VAT_RATE = 0.21;
 const TOKEN = "AJZkAqItiw4HN9Gq1ahkLJOaB9dc3WjOmmsCsKh6hds";
 
 type Lang = "nl" | "fr" | "de" | "en" | "es";
-const LANGS: { code: Lang; label: string }[] = [
-  { code: "nl", label: "NL" },
-  { code: "fr", label: "FR" },
-  { code: "de", label: "DE" },
-  { code: "en", label: "EN" },
-  { code: "es", label: "ES" },
-];
+
 
 const MONTHS: Record<Lang, string[]> = {
   nl: ["januari","februari","maart","april","mei","juni","juli","augustus","september","oktober","november","december"],
@@ -216,27 +212,6 @@ function VelopassLogo() {
   );
 }
 
-function LangSelector({ lang, onChange }: { lang: Lang; onChange: (l: Lang) => void }) {
-  return (
-    <div style={styles.langSelector} role="group" aria-label="Language">
-      {LANGS.map((l, i) => (
-        <button
-          key={l.code}
-          type="button"
-          onClick={() => onChange(l.code)}
-          aria-pressed={lang === l.code}
-          style={{
-            ...styles.langBtn,
-            ...(lang === l.code ? styles.langBtnActive : null),
-            ...(i > 0 ? { borderLeft: "1px solid rgba(255,255,255,0.12)" } : null),
-          }}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 function MargePage() {
   const [lang, setLang] = useState<Lang>("nl");
@@ -274,7 +249,7 @@ function MargePage() {
             <div style={styles.dateLine}>
               {t.createdOn} <strong>{createdOn}</strong> · {t.validUntil} <strong>{validUntil}</strong>
             </div>
-            <LangSelector lang={lang} onChange={setLang} />
+            <LangSwitcher currentLang={lang} tone="dark" onSelect={setLang} />
           </div>
         </div>
       </header>
