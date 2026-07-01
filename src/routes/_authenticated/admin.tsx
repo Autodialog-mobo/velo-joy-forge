@@ -1059,6 +1059,13 @@ function AdminPage() {
                   >
                     Shop-aanmeldingen
                   </a>
+                  {" · "}
+                  <a
+                    href="/admin-margin-poll"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Marge-poll
+                  </a>
                 </>
               )}
             </p>
