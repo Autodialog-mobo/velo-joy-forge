@@ -117,6 +117,8 @@ const T = {
     pollThanks: "Merci, nous prenons votre réponse en compte.",
     pollShopLabel: "Magasin",
     pollShopUnknown: "(inconnu)",
+    pollShopFallbackLabel: "Nom de votre magasin (optionnel)",
+    pollShopFallbackPh: "Ex. Vélos Dupont",
     pollError: "Une erreur s'est produite. Réessayez.",
   },
   de: {
