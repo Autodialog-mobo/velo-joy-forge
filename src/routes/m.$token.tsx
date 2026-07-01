@@ -256,10 +256,12 @@ function BundleCard(props: {
       {props.featured && <div style={styles.badge}>Meest gekozen</div>}
       <div style={styles.cardSize}>{props.title}</div>
       <div style={styles.cardQty}>{props.qty}</div>
-      <div style={styles.cardRow}>
-        <span>Verkoopprijs incl. btw</span>
-        <span data-testid="price-incl">{props.priceIncl}</span>
+
+      <div style={styles.cardPriceRow}>
+        <div style={styles.cardPriceLabel}>Verkoopprijs incl. btw</div>
+        <div style={styles.cardPriceValue} data-testid="price-incl">{props.priceIncl}</div>
       </div>
+
       <div style={styles.cardRow}>
         <span>Verkoopprijs excl. btw</span>
         <span data-testid="price-excl">{props.priceExcl}</span>
@@ -406,6 +408,27 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: 1,
   },
   cardMarginSub: { fontSize: 12, color: MUTED, marginTop: 4 },
+  cardPriceRow: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+    marginBottom: 8,
+  },
+  cardPriceLabel: {
+    fontSize: 12,
+    color: MUTED,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    fontWeight: 600,
+  },
+  cardPriceValue: {
+    fontFamily: "'DM Sans', system-ui, sans-serif",
+    fontSize: 32,
+    fontWeight: 700,
+    color: NACHT,
+    lineHeight: 1.1,
+    letterSpacing: -0.5,
+  },
   cardPerUnit: { fontSize: 12, color: MUTED, marginTop: 8 },
   list: { margin: 0, paddingLeft: 20, lineHeight: 1.7, fontSize: 16 },
   footer: {
