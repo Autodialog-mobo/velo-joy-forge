@@ -257,6 +257,13 @@
     "pos_other_label": "Welk kassasysteem?",
     "pos_other_placeholder": "Typ het merk of type...",
     "submit": "Registreer gratis →",
+    "submitting": "Bezig met verzenden...",
+    "success_title": "Bedankt voor je aanmelding!",
+    "success_body": "We hebben een bevestiging naar je mailbox gestuurd. Ons team neemt binnen 2 werkdagen contact met je op.",
+    "error_generic": "Er ging iets mis. Probeer het opnieuw of mail ons via info@velopass.com.",
+    "error_email": "Voer een geldig e-mailadres in.",
+    "error_shop": "Vul de naam van je winkel in.",
+    "try_again": "Opnieuw proberen",
     "demo_link": "Liever eerst een demo? →",
     "free_note": "Gratis te starten. Geen creditcard vereist."
   }
