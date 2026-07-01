@@ -293,7 +293,7 @@ const styles: Record<string, React.CSSProperties> = {
     background: OFFWHITE,
     color: INK,
     fontFamily: "'DM Sans', system-ui, sans-serif",
-    padding: "48px 20px 80px",
+    padding: "0 0 80px",
   },
   container: { maxWidth: 880, margin: "0 auto", padding: "0 20px" },
   topBar: {
