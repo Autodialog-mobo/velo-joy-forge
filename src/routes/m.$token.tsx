@@ -200,13 +200,28 @@ function MargePage() {
         </section>
 
         <section style={styles.section}>
-          <h2 style={styles.h2}>Bestellen &amp; leveren</h2>
+          <h2 style={styles.h2}>Nu los, straks in bundels</h2>
           <p style={styles.p}>
-            Bestellingen worden binnen <strong>2 werkdagen</strong> geleverd op
-            het adres van de vakhandel. Facturatie verloopt via Velopass, met
-            de standaard betaaltermijn van 30 dagen.
+            Vandaag geef je losse Frame-ID's mee uit je bulkvoorraad (minimum
+            afname 50 stuks, oorspronkelijk voor leasefietsen) — aan exact
+            dezelfde inkoopprijs van{" "}
+            <strong>{eur(PURCHASE_PRICE_EXCL_VAT_CENTS)} excl. btw</strong> per
+            Frame-ID.
+          </p>
+          <p style={styles.p}>
+            De voorverpakte bundels (1 / 2 / 5, klaar als schapartikel) rollen
+            we stap voor stap uit, te beginnen bij een eerste groep winkels.
+            Zodra de proefperiode succesvol is afgerond, wordt bestellen en
+            leveren van de bundels breder beschikbaar.
+          </p>
+          <p style={styles.p}>
+            De margelogica is in beide vormen identiek — alleen de verpakking
+            verschilt. Of je nu een losse Frame-ID meegeeft of straks een
+            voorverpakte bundel verkoopt: dezelfde inkoop, dezelfde marge per
+            Frame-ID.
           </p>
         </section>
+
 
         <footer style={styles.footer}>
           <div>
