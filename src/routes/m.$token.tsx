@@ -240,6 +240,8 @@ const T = {
     pollThanks: "Gracias, tendremos en cuenta tu respuesta.",
     pollShopLabel: "Tienda",
     pollShopUnknown: "(desconocida)",
+    pollShopFallbackLabel: "Nombre de tu tienda (opcional)",
+    pollShopFallbackPh: "Ej. Bicis García",
     pollError: "Algo ha fallado. Vuelve a intentarlo.",
   },
 } as const;
