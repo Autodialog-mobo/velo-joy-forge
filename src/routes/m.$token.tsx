@@ -158,6 +158,8 @@ const T = {
     pollThanks: "Danke, wir nehmen Ihre Antwort mit.",
     pollShopLabel: "Geschäft",
     pollShopUnknown: "(unbekannt)",
+    pollShopFallbackLabel: "Name deines Geschäfts (optional)",
+    pollShopFallbackPh: "z. B. Fahrrad Müller",
     pollError: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
   },
   en: {
