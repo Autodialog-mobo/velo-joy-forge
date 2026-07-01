@@ -47,6 +47,10 @@ export function LangSwitcher({
       const maxAge = 60 * 60 * 24 * 30;
       document.cookie = `${LANG_COOKIE}=${next}; Path=/; Max-Age=${maxAge}; SameSite=Lax`;
     } catch {}
+    if (onSelect) {
+      onSelect(next);
+      return;
+    }
     // Replace the /<lang>/ prefix in the current pathname.
     const segs = pathname.split("/").filter(Boolean);
     if (segs.length > 0 && isLang(segs[0])) segs[0] = next;
@@ -55,6 +59,7 @@ export function LangSwitcher({
   }
 
   const current = LANG_LABELS[currentLang];
+
 
   return (
     <div ref={ref} style={{ position: "relative", display: "inline-block" }}>
