@@ -3,7 +3,7 @@
 type Lang = "nl" | "fr" | "de" | "en" | "es";
 
 const EMAIL_FROM = "Velopass <go@velopass.com>";
-const INTERNAL_TO = "info@velopass.com";
+const INTERNAL_TO = "support@velopass.com";
 const LOGO_URL = "https://www.velopass.com/email/velopass-logo.png";
 
 const BRAND = {
