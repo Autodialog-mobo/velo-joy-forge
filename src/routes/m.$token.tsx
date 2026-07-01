@@ -249,7 +249,7 @@ function MargePage() {
             <div style={styles.dateLine}>
               {t.createdOn} <strong>{createdOn}</strong> · {t.validUntil} <strong>{validUntil}</strong>
             </div>
-            <LangSelector lang={lang} onChange={setLang} />
+            <LangSwitcher currentLang={lang} tone="dark" onSelect={setLang} />
           </div>
         </div>
       </header>
