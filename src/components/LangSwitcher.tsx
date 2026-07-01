@@ -9,12 +9,16 @@ export function LangSwitcher({
   tone = "dark",
   isOpen,
   onOpenChange,
+  onSelect,
 }: {
   currentLang: Lang;
   tone?: "light" | "dark";
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** If provided, called instead of navigating (used for pages not under /$lang). */
+  onSelect?: (next: Lang) => void;
 }) {
+
   const isLight = tone === "light";
   const { t } = useTranslation("common");
   const navigate = useNavigate();
