@@ -8,6 +8,8 @@
     "validate:i18n": "node scripts/validate-i18n.mjs",
     "check:emdash": "node scripts/check-emdash.mjs",
     "test:bundles": "node scripts/test-bundle-parity.mjs",
+    "test:mollie-recovery": "node scripts/test-mollie-recovery.mjs",
+
     "prebuild": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs && node scripts/test-bundle-parity.mjs",
     "prebuild:dev": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs && node scripts/test-bundle-parity.mjs",
     "build": "vite build",

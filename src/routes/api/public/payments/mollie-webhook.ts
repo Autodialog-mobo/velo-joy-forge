@@ -491,7 +491,34 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                       // payment — we read that back and surface it in the email so
                       // the date shown always matches reality.
                       const desiredExpiryDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-                      const desiredExpiryYmd = desiredExpiryDate.toISOString().slice(0, 10);
+
+                      const molliePayload = {
+                        amount: { currency: "EUR", value: (totals.totalCents / 100).toFixed(2) },
+                        description: `Velopass — afronden bestelling #${orderId.replace(/-/g, "").slice(0, 8)}`,
+                        redirectUrl: `${redirectBase}?payment_id=pending`,
+                        webhookUrl: `${webhookBase}/api/public/payments/mollie-webhook`,
+                        billingEmail: orderRow.customer_email,
+                        billingAddress: shippingAddress,
+                        shippingAddress,
+                        locale: LOCALE_MAP[lang],
+                        metadata: {
+                          items,
+                          email: orderRow.customer_email,
+                          shipping: shippingAddress,
+                          lang,
+                          recovery_for_order_id: orderId,
+                        },
+                      };
+
+                      wlog("info", "recovery: creating Mollie payment", {
+                        amount: molliePayload.amount,
+                        locale: molliePayload.locale,
+                        webhookUrl: molliePayload.webhookUrl,
+                        redirectUrl: molliePayload.redirectUrl,
+                        payloadKeys: Object.keys(molliePayload),
+                        countryCode: shippingAddress.country,
+                        itemsCount: items.length,
+                      });
 
                       const createRes = await fetch("https://api.mollie.com/v2/payments", {
                         method: "POST",
@@ -500,28 +527,29 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                           "Content-Type": "application/json",
                           Accept: "application/json",
                         },
-                        body: JSON.stringify({
-                          amount: { currency: "EUR", value: (totals.totalCents / 100).toFixed(2) },
-                          description: `Velopass — afronden bestelling #${orderId.replace(/-/g, "").slice(0, 8)}`,
-                          redirectUrl: `${redirectBase}?payment_id=pending`,
-                          webhookUrl: `${webhookBase}/api/public/payments/mollie-webhook`,
-                          billingEmail: orderRow.customer_email,
-                          billingAddress: shippingAddress,
-                          shippingAddress,
-                          locale: LOCALE_MAP[lang],
-                          metadata: {
-                            items,
-                            email: orderRow.customer_email,
-                            shipping: shippingAddress,
-                            lang,
-                            recovery_for_order_id: orderId,
-                          },
-                        }),
+                        body: JSON.stringify(molliePayload),
                       });
                       const newPayment: any = await createRes.json().catch(() => ({}));
                       if (!createRes.ok || !newPayment?.id || !newPayment?._links?.checkout?.href) {
+                        // Extract Mollie 422 field-level details when present so we
+                        // know which field triggered the rejection (e.g. expiresAt,
+                        // locale, shippingAddress.country) instead of a generic 422.
+                        const mollieField =
+                          newPayment?.field ??
+                          newPayment?.extra?.field ??
+                          (Array.isArray(newPayment?.violations)
+                            ? newPayment.violations.map((v: any) => v.field).join(",")
+                            : null);
+                        const detail =
+                          newPayment?.detail ?? newPayment?.title ?? newPayment?.message ?? "unknown";
+                        wlog("error", "recovery: Mollie rejected create-payment", {
+                          httpStatus: createRes.status,
+                          field: mollieField,
+                          detail,
+                          body: newPayment,
+                        });
                         throw new Error(
-                          `Mollie create HTTP ${createRes.status}: ${JSON.stringify(newPayment).slice(0, 300)}`,
+                          `Mollie create HTTP ${createRes.status}${mollieField ? ` field=${mollieField}` : ""}: ${detail}`,
                         );
                       }
                       // Mollie returns expiresAt as an ISO 8601 timestamp; fall back
@@ -531,6 +559,12 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                         : desiredExpiryDate;
                       const newCheckoutUrl: string = newPayment._links.checkout.href;
                       const newPaymentId: string = newPayment.id;
+
+                      wlog("info", "recovery: Mollie accepted create-payment", {
+                        newPaymentId,
+                        checkoutHost: (() => { try { return new URL(newCheckoutUrl).host; } catch { return null; } })(),
+                        expiresAt: actualExpiresAt.toISOString(),
+                      });
 
                       // Patch redirect with real new payment id (mirrors createMolliePayment).
                       await fetch(`https://api.mollie.com/v2/payments/${newPaymentId}`, {
@@ -550,6 +584,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                         .eq("id", orderId);
 
                       wlog("info", "recovery: new Mollie payment created", { newPaymentId });
+
 
                       const { sendOrderRecoveryEmail } = await import(
                         "@/lib/email/order-recovery.server"
