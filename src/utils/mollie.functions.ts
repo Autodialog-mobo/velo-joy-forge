@@ -16,6 +16,7 @@ const MOLLIE_API = "https://api.mollie.com/v2";
 async function mollieFetch(path: string, init: RequestInit = {}) {
   const apiKey = process.env.MOLLIE_API_KEY;
   if (!apiKey) throw new Error("MOLLIE_API_KEY is not configured");
+  const method = (init.method ?? "GET").toUpperCase();
   const res = await fetch(`${MOLLIE_API}${path}`, {
     ...init,
     headers: {
@@ -33,11 +34,25 @@ async function mollieFetch(path: string, init: RequestInit = {}) {
     // ignore
   }
   if (!res.ok) {
-    const msg = json?.detail || json?.title || `Mollie HTTP ${res.status}`;
-    throw new Error(msg);
+    // Mollie 422 responses include `field` (or `extra.field`) that pinpoint
+    // exactly which body key was rejected. Bubble that up in both the log
+    // and the thrown Error so recovery/retry failures are debuggable.
+    const field =
+      json?.field ??
+      json?.extra?.field ??
+      (Array.isArray(json?.violations)
+        ? json.violations.map((v: any) => v.field).join(",")
+        : null);
+    const detail = json?.detail || json?.title || `Mollie HTTP ${res.status}`;
+    console.error(
+      `[mollieFetch] ${method} ${path} failed: status=${res.status}${field ? ` field=${field}` : ""} detail=${detail}`,
+      json ?? text?.slice(0, 500),
+    );
+    throw new Error(`${detail}${field ? ` (field=${field})` : ""}`);
   }
   return json;
 }
+
 
 export type MollieCheckoutResult = { checkoutUrl: string; paymentId: string } | { error: string };
 
