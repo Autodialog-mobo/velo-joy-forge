@@ -73,6 +73,49 @@ const payload = {
 
 console.log("[test-mollie-recovery] POST /v2/payments with payload keys:", Object.keys(payload));
 
+// Payload-shape assertions catch regressions (e.g. re-introducing `expiresAt`
+// at the top level, which Mollie rejects with 422) even when we run DRY_RUN.
+const REQUIRED_KEYS = [
+  "amount",
+  "description",
+  "redirectUrl",
+  "webhookUrl",
+  "billingEmail",
+  "billingAddress",
+  "shippingAddress",
+  "locale",
+  "metadata",
+];
+const FORBIDDEN_TOP_LEVEL_KEYS = ["expiresAt", "dueDate"];
+const missing = REQUIRED_KEYS.filter((k) => !(k in payload));
+const forbidden = FORBIDDEN_TOP_LEVEL_KEYS.filter((k) => k in payload);
+if (missing.length) {
+  console.error(`[test-mollie-recovery] FAIL — missing required keys: ${missing.join(",")}`);
+  process.exit(1);
+}
+if (forbidden.length) {
+  console.error(
+    `[test-mollie-recovery] FAIL — payload includes keys Mollie rejects with 422: ${forbidden.join(",")}`,
+  );
+  process.exit(1);
+}
+if (!/^[A-Z]{2}$/.test(payload.shippingAddress.country)) {
+  console.error("[test-mollie-recovery] FAIL — shippingAddress.country must be ISO 3166-1 alpha-2");
+  process.exit(1);
+}
+if (!/^\d+\.\d{2}$/.test(payload.amount.value)) {
+  console.error("[test-mollie-recovery] FAIL — amount.value must have exactly 2 decimals");
+  process.exit(1);
+}
+console.log("[test-mollie-recovery] payload shape OK");
+
+if (DRY_RUN) {
+  console.log("[test-mollie-recovery] DRY_RUN=1 — skipping live Mollie call, exiting OK");
+  process.exit(0);
+}
+
+
+
 const res = await fetch("https://api.mollie.com/v2/payments", {
   method: "POST",
   headers: {
