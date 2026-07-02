@@ -22,17 +22,21 @@
 
 const MOLLIE_API_KEY = process.env.MOLLIE_API_KEY;
 const ALLOW_LIVE = process.env.ALLOW_LIVE === "1";
+const DRY_RUN = process.env.DRY_RUN === "1";
 
-if (!MOLLIE_API_KEY) {
-  console.error("[test-mollie-recovery] MOLLIE_API_KEY is not set — skipping.");
-  process.exit(2);
+if (!DRY_RUN) {
+  if (!MOLLIE_API_KEY) {
+    console.error("[test-mollie-recovery] MOLLIE_API_KEY is not set — skipping. Use DRY_RUN=1 to only validate the payload shape.");
+    process.exit(2);
+  }
+  if (MOLLIE_API_KEY.startsWith("live_") && !ALLOW_LIVE) {
+    console.error(
+      "[test-mollie-recovery] Refusing to run against a LIVE Mollie key. Set ALLOW_LIVE=1 to override (not recommended), or DRY_RUN=1 to validate payload shape only.",
+    );
+    process.exit(2);
+  }
 }
-if (MOLLIE_API_KEY.startsWith("live_") && !ALLOW_LIVE) {
-  console.error(
-    "[test-mollie-recovery] Refusing to run against a LIVE Mollie key. Set ALLOW_LIVE=1 to override (not recommended).",
-  );
-  process.exit(2);
-}
+
 
 // Mirrors the payload built inside the webhook's recovery block.
 // Keep this in sync with src/routes/api/public/payments/mollie-webhook.ts.
