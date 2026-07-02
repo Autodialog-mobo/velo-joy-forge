@@ -81,7 +81,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         throw new Error("Ongeldig e-mailadres");
       }
       if (!/^https?:\/\//.test(data.origin)) throw new Error("Ongeldige origin");
-      if (!/^(nl|en|fr|de)$/.test(data.lang)) throw new Error("Ongeldige taal");
+      if (!/^(nl|en|fr|de|es)$/.test(data.lang)) throw new Error("Invalid language");
 
       const s = data.shipping;
       if (!s || !s.firstName?.trim() || !s.lastName?.trim() || !s.address?.trim()
@@ -294,7 +294,7 @@ export const retryOrderPayment = createServerFn({ method: "POST" })
         ? meta.items
         : [];
       const lang: SupportedLang =
-        meta.lang && /^(nl|en|fr|de)$/.test(meta.lang)
+        meta.lang && /^(nl|en|fr|de|es)$/.test(meta.lang)
           ? meta.lang
           : ((order.lang as SupportedLang) ?? "nl");
       const nameParts = (order.shipping_name ?? "").trim().split(/\s+/);
@@ -328,10 +328,6 @@ export const retryOrderPayment = createServerFn({ method: "POST" })
         // fall through
       }
 
-      const expiresAt = new Date(Date.now() + 7 * 24 * 3600 * 1000)
-        .toISOString()
-        .slice(0, 10);
-
       const payment = await mollieFetch("/payments", {
         method: "POST",
         body: JSON.stringify({
@@ -343,7 +339,6 @@ export const retryOrderPayment = createServerFn({ method: "POST" })
           billingAddress: shippingAddress,
           shippingAddress,
           locale: LANG_TO_MOLLIE_LOCALE[lang],
-          expiresAt,
           metadata: {
             items,
             email: order.customer_email,
