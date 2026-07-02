@@ -477,6 +477,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                       en: "en_US",
                       fr: "fr_BE",
                       de: "de_DE",
+                      es: "es_ES",
                     };
 
                     try {
