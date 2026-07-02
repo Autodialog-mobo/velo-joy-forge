@@ -201,7 +201,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             ? p.metadata.items
             : [];
 
-          const metaLang = typeof p.metadata?.lang === "string" && /^(nl|en|fr|de)$/.test(p.metadata.lang)
+          const metaLang = typeof p.metadata?.lang === "string" && /^(nl|en|fr|de|es)$/.test(p.metadata.lang)
             ? p.metadata.lang
             : null;
 
@@ -477,6 +477,7 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                       en: "en_US",
                       fr: "fr_BE",
                       de: "de_DE",
+                      es: "es_ES",
                     };
 
                     try {
@@ -508,7 +509,6 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                           billingAddress: shippingAddress,
                           shippingAddress,
                           locale: LOCALE_MAP[lang],
-                          expiresAt: desiredExpiryYmd,
                           metadata: {
                             items,
                             email: orderRow.customer_email,
