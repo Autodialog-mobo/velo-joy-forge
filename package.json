@@ -9,7 +9,7 @@
     "check:emdash": "node scripts/check-emdash.mjs",
     "test:bundles": "node scripts/test-bundle-parity.mjs",
     "test:mollie-recovery": "node scripts/test-mollie-recovery.mjs",
-    "test:dedupe-shops": "node scripts/test-dedupe-shops.mjs",
+    "test:dedupe-shops": "node --experimental-strip-types --no-warnings scripts/test-dedupe-shops.mjs",
 
     "prebuild": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs && node scripts/test-bundle-parity.mjs && node scripts/test-dedupe-shops.mjs",
     "prebuild:dev": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs && node scripts/test-bundle-parity.mjs && node scripts/test-dedupe-shops.mjs",
