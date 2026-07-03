@@ -291,7 +291,11 @@ function VelopassLogo() {
 
 
 function MargePage() {
-  const [lang, setLang] = useState<Lang>("nl");
+  const [lang, setLang] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "nl";
+    const raw = (new URLSearchParams(window.location.search).get("lang") || "").toLowerCase().trim();
+    return raw === "fr" || raw === "de" || raw === "en" || raw === "es" || raw === "nl" ? raw : "nl";
+  });
   const t = T[lang];
   const createdOn = formatDate(CREATED_ON, lang);
   const validUntil = formatDate(VALID_UNTIL, lang);
