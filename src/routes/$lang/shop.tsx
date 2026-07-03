@@ -63,7 +63,7 @@ function VelopassPro() {
   const { t } = useTranslation("shop");
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(
-    () => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length,
+    () => dedupeShopsByAddress(shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>).length,
     []
   );
   const [currentMonthYear, setCurrentMonthYear] = useState("");
