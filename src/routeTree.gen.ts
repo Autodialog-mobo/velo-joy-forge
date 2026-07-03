@@ -14,6 +14,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
 import { Route as GestolenRouteImport } from './routes/gestolen'
 import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
+import { Route as DedupAuditRouteImport } from './routes/dedup-audit'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -73,6 +74,11 @@ const GestolenRoute = GestolenRouteImport.update({
 const FietsControlerenRoute = FietsControlerenRouteImport.update({
   id: '/fiets-controleren',
   path: '/fiets-controleren',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DedupAuditRoute = DedupAuditRouteImport.update({
+  id: '/dedup-audit',
+  path: '/dedup-audit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BikesearchRoute = BikesearchRouteImport.update({
@@ -264,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
   '/bikesearch': typeof BikesearchRoute
+  '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
@@ -304,6 +311,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
   '/bikesearch': typeof BikesearchRoute
+  '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
@@ -347,6 +355,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
   '/bikesearch': typeof BikesearchRoute
+  '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
   '/professionals': typeof ProfessionalsRoute
@@ -390,6 +399,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bestellen'
     | '/bikesearch'
+    | '/dedup-audit'
     | '/fiets-controleren'
     | '/gestolen'
     | '/professionals'
@@ -430,6 +440,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bestellen'
     | '/bikesearch'
+    | '/dedup-audit'
     | '/fiets-controleren'
     | '/gestolen'
     | '/professionals'
@@ -472,6 +483,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/bestellen'
     | '/bikesearch'
+    | '/dedup-audit'
     | '/fiets-controleren'
     | '/gestolen'
     | '/professionals'
@@ -515,6 +527,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BestellenRoute: typeof BestellenRouteWithChildren
   BikesearchRoute: typeof BikesearchRoute
+  DedupAuditRoute: typeof DedupAuditRoute
   FietsControlerenRoute: typeof FietsControlerenRoute
   GestolenRoute: typeof GestolenRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
@@ -561,6 +574,13 @@ declare module '@tanstack/react-router' {
       path: '/fiets-controleren'
       fullPath: '/fiets-controleren'
       preLoaderRoute: typeof FietsControlerenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dedup-audit': {
+      id: '/dedup-audit'
+      path: '/dedup-audit'
+      fullPath: '/dedup-audit'
+      preLoaderRoute: typeof DedupAuditRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bikesearch': {
@@ -896,6 +916,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BestellenRoute: BestellenRouteWithChildren,
   BikesearchRoute: BikesearchRoute,
+  DedupAuditRoute: DedupAuditRoute,
   FietsControlerenRoute: FietsControlerenRoute,
   GestolenRoute: GestolenRoute,
   ProfessionalsRoute: ProfessionalsRoute,
