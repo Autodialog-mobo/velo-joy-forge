@@ -26,9 +26,18 @@
       "cta": "Abre tu Velopass →",
       "cta_register": "¿Sin correo? Escanea tu Frame-ID →",
       "steps": {
-        "s1": { "title": "Revisa tu correo", "body": "Has recibido una invitación de tu tienda a través de Velopass. Haz clic en el enlace del correo para abrir tu Velopass." },
-        "s2": { "title": "Elige una contraseña", "body": "Tus datos ya están cargados. Solo elige una contraseña y tu Velopass se abrirá." },
-        "s3": { "title": "Tu Velopass está listo", "body": "Protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital — todo accesible con un escaneo del QR de tu Frame-ID." }
+        "s1": {
+          "title": "Revisa tu correo",
+          "body": "Has recibido una invitación de tu tienda a través de Velopass. Haz clic en el enlace del correo para abrir tu Velopass."
+        },
+        "s2": {
+          "title": "Elige una contraseña",
+          "body": "Tus datos ya están cargados. Solo elige una contraseña y tu Velopass se abrirá."
+        },
+        "s3": {
+          "title": "Tu Velopass está listo",
+          "body": "Protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital — todo accesible con un escaneo del QR de tu Frame-ID."
+        }
       },
       "cta_primary": "Abre tu Velopass",
       "cta_secondary": "¿No has recibido correo? →",
@@ -69,9 +78,18 @@
       "body": "¿Compraste una bici de segunda mano con un Frame-ID Velopass? Puedes pasar el pasaporte digital a tu nombre fácilmente. El historial neutro de la bici (mantenimientos, reparaciones y datos de garantía) viaja contigo. Los servicios personales como asistencia y seguro los activas tú. Las facturas, precios y fotos personales se quedan privados con el propietario anterior.",
       "cta": "Ponla a tu nombre →",
       "steps": {
-        "s1": { "title": "Escanea el QR del Frame-ID", "body": "Escanea el código QR del Frame-ID de tu bici de segunda mano." },
-        "s2": { "title": "Solicita la transferencia", "body": "El propietario anterior recibe automáticamente una solicitud. Tras su confirmación, la bici queda oficialmente a tu nombre." },
-        "s3": { "title": "Tu Velopass. Tu bici.", "body": "El pasaporte digital ya es tuyo. Recibes una línea de tiempo neutra con los eventos de la bici. Activa la asistencia, el seguro y los servicios en unos clics." }
+        "s1": {
+          "title": "Escanea el QR del Frame-ID",
+          "body": "Escanea el código QR del Frame-ID de tu bici de segunda mano."
+        },
+        "s2": {
+          "title": "Solicita la transferencia",
+          "body": "El propietario anterior recibe automáticamente una solicitud. Tras su confirmación, la bici queda oficialmente a tu nombre."
+        },
+        "s3": {
+          "title": "Tu Velopass. Tu bici.",
+          "body": "El pasaporte digital ya es tuyo. Recibes una línea de tiempo neutra con los eventos de la bici. Activa la asistencia, el seguro y los servicios en unos clics."
+        }
       },
       "cta_scan": "Escanea el QR",
       "cta_manual": "Introducir el código a mano →"
@@ -124,7 +142,6 @@
       "ownership_body": "Todo sobre tu bici en un solo sitio: especificaciones, garantía, historial de mantenimiento completo y servicios activos. ¿Vendes tu bici? Traspasa el pasaporte al nuevo propietario en un clic. Tu inversión mantiene su valor de por vida."
     }
   },
-
   "community": {
     "eyebrow": "La comunidad Velopass",
     "headline": "Tu bici nunca está sola.",
@@ -140,7 +157,13 @@
     "empty": "No se han encontrado tiendas.",
     "outro_line": "Cuanto mayor sea la comunidad, más segura estará tu bici.",
     "outro_em": "Y crece cada día.",
-    "outro_cta": "¿Aún sin Velopass? Registra tu bici →"
+    "outro_cta": "¿Aún sin Velopass? Registra tu bici →",
+    "map_loading": "Cargando mapa…",
+    "auto_scan_tag": "Escaneo automático",
+    "panel_message": "Esta tienda forma parte de la comunidad Velopass y escanea automáticamente.",
+    "panel_brands": "Marcas",
+    "panel_directions": "Cómo llegar →",
+    "panel_close_aria": "Cerrar panel"
   },
   "contact_band": {
     "title": "¿Más preguntas?",

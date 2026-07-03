@@ -26,9 +26,18 @@
       "cta": "Öffne deinen Velopass →",
       "cta_register": "Keine E-Mail? Scanne deine Frame-ID →",
       "steps": {
-        "s1": { "title": "Prüfe deine E-Mail", "body": "Du hast einen Einladungslink von deinem Fahrradhändler erhalten. Öffne ihn, um zu starten." },
-        "s2": { "title": "Wähle ein Passwort", "body": "Erstelle dein Velopass-Konto in wenigen Sekunden." },
-        "s3": { "title": "Dein Velopass ist bereit", "body": "Dein Fahrrad und dein digitaler Pass sind mit deinem Namen verknüpft." }
+        "s1": {
+          "title": "Prüfe deine E-Mail",
+          "body": "Du hast einen Einladungslink von deinem Fahrradhändler erhalten. Öffne ihn, um zu starten."
+        },
+        "s2": {
+          "title": "Wähle ein Passwort",
+          "body": "Erstelle dein Velopass-Konto in wenigen Sekunden."
+        },
+        "s3": {
+          "title": "Dein Velopass ist bereit",
+          "body": "Dein Fahrrad und dein digitaler Pass sind mit deinem Namen verknüpft."
+        }
       },
       "cta_primary": "Öffne deinen Velopass",
       "cta_secondary": "Keine E-Mail erhalten? →",
@@ -69,9 +78,18 @@
       "body": "Du hast ein gebrauchtes Fahrrad mit einer bestehenden Velopass Frame-ID gekauft? Du kannst den digitalen Pass ganz einfach auf deinen Namen übertragen. Die neutrale Fahrradhistorie (Wartungen, Reparaturen und Garantiedaten) wandert mit. Persönliche Services wie Pannenhilfe und Versicherung aktivierst du selbst. Rechnungen, Preise und persönliche Fotos bleiben beim Vorbesitzer privat.",
       "cta": "Übertragung starten →",
       "steps": {
-        "s1": { "title": "Scanne den QR-Code auf der Frame-ID", "body": "Scanne den QR-Code auf der Frame-ID deines gebrauchten Fahrrads." },
-        "s2": { "title": "Beantrage die Übertragung", "body": "Der Vorbesitzer erhält automatisch eine Anfrage. Nach seiner Bestätigung läuft das Fahrrad offiziell auf deinen Namen." },
-        "s3": { "title": "Dein Velopass. Dein Fahrrad.", "body": "Der digitale Pass gehört jetzt dir. Du erhältst eine neutrale Zeitleiste der Ereignisse des Fahrrads. Pannenhilfe, Versicherung und aktive Services aktivierst du selbst mit wenigen Klicks." }
+        "s1": {
+          "title": "Scanne den QR-Code auf der Frame-ID",
+          "body": "Scanne den QR-Code auf der Frame-ID deines gebrauchten Fahrrads."
+        },
+        "s2": {
+          "title": "Beantrage die Übertragung",
+          "body": "Der Vorbesitzer erhält automatisch eine Anfrage. Nach seiner Bestätigung läuft das Fahrrad offiziell auf deinen Namen."
+        },
+        "s3": {
+          "title": "Dein Velopass. Dein Fahrrad.",
+          "body": "Der digitale Pass gehört jetzt dir. Du erhältst eine neutrale Zeitleiste der Ereignisse des Fahrrads. Pannenhilfe, Versicherung und aktive Services aktivierst du selbst mit wenigen Klicks."
+        }
       },
       "cta_scan": "QR-Code scannen",
       "cta_manual": "Code manuell eingeben →"
@@ -139,7 +157,13 @@
     "empty": "Keine Händler gefunden.",
     "outro_line": "Je größer die Community, desto sicherer dein Fahrrad.",
     "outro_em": "Und sie wächst jeden Tag.",
-    "outro_cta": "Noch kein Velopass? Registriere dein Fahrrad →"
+    "outro_cta": "Noch kein Velopass? Registriere dein Fahrrad →",
+    "map_loading": "Karte wird geladen…",
+    "auto_scan_tag": "Scannt automatisch",
+    "panel_message": "Dieser Händler ist Teil der Velopass Community und scannt automatisch.",
+    "panel_brands": "Marken",
+    "panel_directions": "Route →",
+    "panel_close_aria": "Panel schließen"
   },
   "contact_band": {
     "title": "Noch Fragen?",

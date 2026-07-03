@@ -26,9 +26,18 @@
       "cta": "Open je Velopass →",
       "cta_register": "Geen e-mail? Scan je Frame-ID →",
       "steps": {
-        "s1": { "title": "Controleer je e-mail", "body": "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen." },
-        "s2": { "title": "Kies een wachtwoord", "body": "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord en je Velopass gaat open." },
-        "s3": { "title": "Je Velopass is klaar", "body": "Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID." }
+        "s1": {
+          "title": "Controleer je e-mail",
+          "body": "Je hebt een uitnodiging ontvangen van je fietswinkel via Velopass. Klik op de link in die mail om je Velopass te openen."
+        },
+        "s2": {
+          "title": "Kies een wachtwoord",
+          "body": "Je gegevens staan al ingevuld. Kies enkel nog een wachtwoord en je Velopass gaat open."
+        },
+        "s3": {
+          "title": "Je Velopass is klaar",
+          "body": "Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID."
+        }
       },
       "cta_primary": "Open je Velopass",
       "cta_secondary": "Geen mail ontvangen? →",
@@ -69,9 +78,18 @@
       "body": "Heb je een tweedehands fiets gekocht met een bestaande Velopass Frame-ID? Je kunt het digitale paspoort eenvoudig op jouw naam zetten. De neutrale fietsgeschiedenis (onderhoudsbeurten, herstellingen en garantiegegevens) gaat mee. Persoonlijke services zoals pechhulp en verzekering activeer je zelf. Facturen, prijzen en persoonlijke foto's blijven privé bij de vorige eigenaar.",
       "cta": "Zet 'm op jouw naam →",
       "steps": {
-        "s1": { "title": "Scan de QR-code op de Frame-ID", "body": "Scan de QR-code op de Frame-ID van je tweedehands fiets." },
-        "s2": { "title": "Vraag de overdracht aan", "body": "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam." },
-        "s3": { "title": "Jouw Velopass. Jouw fiets.", "body": "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken." }
+        "s1": {
+          "title": "Scan de QR-code op de Frame-ID",
+          "body": "Scan de QR-code op de Frame-ID van je tweedehands fiets."
+        },
+        "s2": {
+          "title": "Vraag de overdracht aan",
+          "body": "De vorige eigenaar ontvangt automatisch een verzoek. Na zijn bevestiging staat de fiets officieel op jouw naam."
+        },
+        "s3": {
+          "title": "Jouw Velopass. Jouw fiets.",
+          "body": "Het digitale paspoort is nu van jou. Je krijgt een neutrale tijdlijn met de gebeurtenissen van de fiets. Pechhulp, verzekering en actieve services activeer je zelf in enkele klikken."
+        }
       },
       "cta_scan": "Scan de QR-code",
       "cta_manual": "Code handmatig invoeren →"
@@ -124,7 +142,6 @@
       "ownership_body": "Alles over je fiets op één plek: specificaties, garantie, volledige onderhoudshistorie en actieve services. Verkoop je je fiets? Draag het paspoort in één klik over aan de nieuwe eigenaar. Je investering behoudt zijn waarde, levenslang."
     }
   },
-
   "community": {
     "eyebrow": "De Velopass Community",
     "headline": "Jouw fiets is nooit alleen.",
@@ -140,7 +157,13 @@
     "empty": "Geen winkels gevonden.",
     "outro_line": "Hoe groter de community, hoe veiliger jouw fiets.",
     "outro_em": "En hij groeit elke dag.",
-    "outro_cta": "Nog geen Velopass? Registreer je fiets →"
+    "outro_cta": "Nog geen Velopass? Registreer je fiets →",
+    "map_loading": "Kaart laden…",
+    "auto_scan_tag": "Scant automatisch",
+    "panel_message": "Deze winkel maakt deel uit van de Velopass Community en scant automatisch.",
+    "panel_brands": "Merken",
+    "panel_directions": "Routebeschrijving →",
+    "panel_close_aria": "Sluit paneel"
   },
   "contact_band": {
     "title": "Nog vragen?",
@@ -148,4 +171,3 @@
     "cta": "Neem contact op →"
   }
 }
-

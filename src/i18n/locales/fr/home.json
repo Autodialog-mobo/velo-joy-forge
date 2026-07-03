@@ -26,9 +26,18 @@
       "cta": "Ouvrez votre Velopass →",
       "cta_register": "Pas d'e-mail ? Scannez votre Frame-ID →",
       "steps": {
-        "s1": { "title": "Vérifie ton e-mail", "body": "Tu as reçu un lien d'invitation de ton vélociste. Ouvre-le pour commencer." },
-        "s2": { "title": "Choisis un mot de passe", "body": "Crée ton compte Velopass en quelques secondes." },
-        "s3": { "title": "Ton Velopass est prêt", "body": "Ton vélo et ton passeport numérique sont liés à ton nom." }
+        "s1": {
+          "title": "Vérifie ton e-mail",
+          "body": "Tu as reçu un lien d'invitation de ton vélociste. Ouvre-le pour commencer."
+        },
+        "s2": {
+          "title": "Choisis un mot de passe",
+          "body": "Crée ton compte Velopass en quelques secondes."
+        },
+        "s3": {
+          "title": "Ton Velopass est prêt",
+          "body": "Ton vélo et ton passeport numérique sont liés à ton nom."
+        }
       },
       "cta_primary": "Ouvre ton Velopass",
       "cta_secondary": "Pas reçu d'e-mail ? →",
@@ -69,9 +78,18 @@
       "body": "Vous avez acheté un vélo d'occasion avec un Velopass Frame-ID existant ? Vous pouvez facilement transférer le passeport numérique à votre nom. L'historique neutre du vélo (entretiens, réparations et données de garantie) vous suit. Les services personnels comme l'assistance dépannage et l'assurance, vous les activez vous-même. Factures, prix et photos personnelles restent privés chez l'ancien propriétaire.",
       "cta": "Démarrer le transfert →",
       "steps": {
-        "s1": { "title": "Scanne le QR-code sur le Frame-ID", "body": "Scanne le QR-code sur le Frame-ID de ton vélo d'occasion." },
-        "s2": { "title": "Demande le transfert", "body": "L'ancien propriétaire reçoit automatiquement une demande. Après sa confirmation, le vélo est officiellement à ton nom." },
-        "s3": { "title": "Ton Velopass. Ton vélo.", "body": "Le passeport numérique est maintenant à toi. Tu obtiens un historique neutre des événements du vélo. L'assistance dépannage, l'assurance et les services actifs, tu les actives toi-même en quelques clics." }
+        "s1": {
+          "title": "Scanne le QR-code sur le Frame-ID",
+          "body": "Scanne le QR-code sur le Frame-ID de ton vélo d'occasion."
+        },
+        "s2": {
+          "title": "Demande le transfert",
+          "body": "L'ancien propriétaire reçoit automatiquement une demande. Après sa confirmation, le vélo est officiellement à ton nom."
+        },
+        "s3": {
+          "title": "Ton Velopass. Ton vélo.",
+          "body": "Le passeport numérique est maintenant à toi. Tu obtiens un historique neutre des événements du vélo. L'assistance dépannage, l'assurance et les services actifs, tu les actives toi-même en quelques clics."
+        }
       },
       "cta_scan": "Scanner le QR-code",
       "cta_manual": "Saisir le code manuellement →"
@@ -139,7 +157,13 @@
     "empty": "Aucun magasin trouvé.",
     "outro_line": "Plus la communauté est grande, plus ton vélo est en sécurité.",
     "outro_em": "Et elle grandit chaque jour.",
-    "outro_cta": "Pas encore de Velopass ? Enregistre ton vélo →"
+    "outro_cta": "Pas encore de Velopass ? Enregistre ton vélo →",
+    "map_loading": "Chargement de la carte…",
+    "auto_scan_tag": "Scan automatique",
+    "panel_message": "Ce magasin fait partie de la communauté Velopass et scanne automatiquement.",
+    "panel_brands": "Marques",
+    "panel_directions": "Itinéraire →",
+    "panel_close_aria": "Fermer le panneau"
   },
   "contact_band": {
     "title": "D'autres questions ?",
