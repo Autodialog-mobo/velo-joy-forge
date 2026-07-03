@@ -17,7 +17,12 @@ export type DedupeShop = {
 };
 
 export function normalizeAddress(a: string): string {
-  return a.trim().toLowerCase().replace(/\s+/g, " ").replace(/,+/g, ",");
+  return a
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .replace(/\s*,\s*/g, ",")
+    .replace(/,+/g, ",");
 }
 
 export function dedupeShopsByAddress<T extends DedupeShop>(shops: readonly T[]): T[] {
