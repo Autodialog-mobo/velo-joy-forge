@@ -441,8 +441,8 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
                       .eq("id", orderId);
                   } else {
                     const totals = computeB2CTotals(items);
-                    const lang: "nl" | "fr" | "de" | "en" =
-                      orderRow.lang === "fr" || orderRow.lang === "de" || orderRow.lang === "en"
+                    const lang: "nl" | "fr" | "de" | "en" | "es" =
+                      orderRow.lang === "fr" || orderRow.lang === "de" || orderRow.lang === "en" || orderRow.lang === "es"
                         ? orderRow.lang
                         : "nl";
 
