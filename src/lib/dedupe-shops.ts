@@ -26,11 +26,11 @@ export function normalizeAddress(a: string): string {
 }
 
 export function dedupeShopsByAddress<T extends DedupeShop>(shops: readonly T[]): T[] {
-  const pick = (existing: T, next: T): T => {
+  function pick(existing: T, next: T) {
     const a = existing.brands?.length ?? 0;
     const b = next.brands?.length ?? 0;
     return b > a ? next : existing;
-  };
+  }
 
   // Pass 1: dedupe by normalized address (fallback to lat,lng when empty).
   const byAddr = new Map<string, T>();
