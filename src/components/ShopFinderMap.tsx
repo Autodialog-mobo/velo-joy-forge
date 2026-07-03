@@ -174,12 +174,31 @@ export default function ShopFinderMap() {
   const markerRefs = useRef<Record<number, L.Marker | null>>({});
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
-  const shops = shopsData as Shop[];
+  const rawShops = shopsData as Shop[];
+
+  // Deduplicate by normalized address: prefer the entry with the most brands.
+  const shops = useMemo(() => {
+    const normalize = (a: string) => a.trim().toLowerCase().replace(/\s+/g, " ").replace(/,+/g, ",");
+    const byAddr = new Map<string, Shop>();
+    for (const s of rawShops) {
+      if (s.status !== "active") continue;
+      const key = normalize(s.address || `${s.lat},${s.lng}`);
+      const existing = byAddr.get(key);
+      if (!existing) {
+        byAddr.set(key, s);
+        continue;
+      }
+      const a = existing.brands?.length ?? 0;
+      const b = s.brands?.length ?? 0;
+      if (b > a) byAddr.set(key, s);
+    }
+    return Array.from(byAddr.values());
+  }, [rawShops]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return shops
       .map((s, i) => ({ s, i }))
-      .filter(({ s }) => s.status === "active")
       .filter(({ s }) =>
         !q ||
         s.name.toLowerCase().includes(q) ||
@@ -188,10 +207,8 @@ export default function ShopFinderMap() {
       );
   }, [shops, query]);
 
-  const totalActive = useMemo(
-    () => shops.filter((s) => s.status === "active").length,
-    [shops],
-  );
+  const totalActive = shops.length;
+
 
   useEffect(() => {
     const el = sectionRef.current;
