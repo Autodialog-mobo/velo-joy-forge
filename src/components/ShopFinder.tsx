@@ -65,8 +65,8 @@ export function ShopFinder() {
     <Suspense
       fallback={
         <section className="shop-finder scroll-target" id="community">
-          <p className="eyebrow">De Velopass Community</p>
-          <p className="sec-sub">Kaart laden...</p>
+          <p className="eyebrow">{t("community.eyebrow")}</p>
+          <p className="sec-sub">{t("community.map_loading")}</p>
         </section>
       }
     >
