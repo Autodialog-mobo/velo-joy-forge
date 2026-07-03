@@ -29,7 +29,8 @@ const jsSource = tsSource
   .replace(/<T extends DedupeShop>/g, "")
   .replace(/\)\s*:\s*T\[\]/g, ")")
   .replace(/\(a:\s*string\)\s*:\s*string/g, "(a)")
-  .replace(/new Map<string,\s*T>\(\)/g, "new Map()");
+  .replace(/new Map<string,\s*T>\(\)/g, "new Map()")
+  .replace(/\(existing:\s*T,\s*next:\s*T\)/g, "(existing, next)");
 
 const dataUrl = "data:text/javascript;base64," + Buffer.from(jsSource).toString("base64");
 const { dedupeShopsByAddress, normalizeAddress } = await import(dataUrl);
