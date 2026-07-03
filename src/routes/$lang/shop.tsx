@@ -7,6 +7,7 @@ import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import shopsData from "@/data/shops.json";
+import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 import { RegisterForm } from "@/components/ProRegisterForm";
 import leasingAppMockup from "@/assets/leasing-app-mockup-v2.webp";
 import fabOxford from "@/assets/fab-oxford.webp";
@@ -62,7 +63,7 @@ function VelopassPro() {
   const { t } = useTranslation("shop");
   const [navOpen, setNavOpen] = useState(false);
   const activeShopsCount = useMemo(
-    () => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length,
+    () => dedupeShopsByAddress(shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>).length,
     []
   );
   const [currentMonthYear, setCurrentMonthYear] = useState("");
