@@ -370,6 +370,7 @@ export default function ShopFinderMap() {
               activeIdx={activeIdx}
               onSelect={handleSelect}
               markerRefs={markerRefs}
+              autoScanLabel={t("community.auto_scan_tag")}
             />
           </MapContainer>
 
