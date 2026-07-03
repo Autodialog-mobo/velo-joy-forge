@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type Shop = {
   name: string;
@@ -8,6 +9,7 @@ type Shop = {
 };
 
 export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }) {
+  const { t } = useTranslation("home");
   const [isMobile, setIsMobile] = useState(false);
   const [dragY, setDragY] = useState(0);
   const [dragging, setDragging] = useState(false);
