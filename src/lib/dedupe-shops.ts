@@ -26,19 +26,33 @@ export function normalizeAddress(a: string): string {
 }
 
 export function dedupeShopsByAddress<T extends DedupeShop>(shops: readonly T[]): T[] {
+  const pick = (existing: T, next: T): T => {
+    const a = existing.brands?.length ?? 0;
+    const b = next.brands?.length ?? 0;
+    return b > a ? next : existing;
+  };
+
+  // Pass 1: dedupe by normalized address (fallback to lat,lng when empty).
   const byAddr = new Map<string, T>();
   for (const s of shops) {
     if (s.status !== "active") continue;
     const raw = (s.address ?? "").trim();
     const key = raw ? normalizeAddress(raw) : `${s.lat ?? ""},${s.lng ?? ""}`;
     const existing = byAddr.get(key);
-    if (!existing) {
-      byAddr.set(key, s);
+    byAddr.set(key, existing ? pick(existing, s) : s);
+  }
+
+  // Pass 2: collapse remaining entries that share identical coordinates
+  // (e.g. same shop with slightly different address strings).
+  const byCoord = new Map<string, T>();
+  for (const s of byAddr.values()) {
+    const key = `${s.lat ?? ""},${s.lng ?? ""}`;
+    if (!s.lat || !s.lng) {
+      byCoord.set(`${key}-${Math.random()}`, s);
       continue;
     }
-    const a = existing.brands?.length ?? 0;
-    const b = s.brands?.length ?? 0;
-    if (b > a) byAddr.set(key, s);
+    const existing = byCoord.get(key);
+    byCoord.set(key, existing ? pick(existing, s) : s);
   }
-  return Array.from(byAddr.values());
+  return Array.from(byCoord.values());
 }
