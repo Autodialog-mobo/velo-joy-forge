@@ -69,7 +69,7 @@ function Clusters({ shops }: { shops: Shop[] }) {
 }
 
 export default function ProCommunityMap() {
-  const shops = shopsData as Shop[];
+  const shops = dedupeShopsByAddress(shopsData as Shop[]) as Shop[];
   return (
     <MapContainer center={[50.85, 4.35]} zoom={6} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false} touchZoom={true}>
       <TileLayer
