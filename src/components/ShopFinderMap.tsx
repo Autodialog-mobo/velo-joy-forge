@@ -178,23 +178,7 @@ export default function ShopFinderMap() {
   const rawShops = shopsData as Shop[];
 
   // Deduplicate by normalized address: prefer the entry with the most brands.
-  const shops = useMemo(() => {
-    const normalize = (a: string) => a.trim().toLowerCase().replace(/\s+/g, " ").replace(/,+/g, ",");
-    const byAddr = new Map<string, Shop>();
-    for (const s of rawShops) {
-      if (s.status !== "active") continue;
-      const key = normalize(s.address || `${s.lat},${s.lng}`);
-      const existing = byAddr.get(key);
-      if (!existing) {
-        byAddr.set(key, s);
-        continue;
-      }
-      const a = existing.brands?.length ?? 0;
-      const b = s.brands?.length ?? 0;
-      if (b > a) byAddr.set(key, s);
-    }
-    return Array.from(byAddr.values());
-  }, [rawShops]);
+  const shops = useMemo(() => dedupeShopsByAddress(rawShops), [rawShops]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
