@@ -13,6 +13,7 @@ import shopsData from "@/data/shops.json";
 import { LeafletGestureSupport } from "./LeafletGestureSupport";
 import { ShopPanel } from "./ShopPanel";
 import { trackRegisterBikeClick, trackCheckBikeClick } from "@/lib/analytics";
+import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 
 type Shop = {
   name: string;
