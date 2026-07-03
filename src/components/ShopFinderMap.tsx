@@ -56,11 +56,13 @@ function ClusterLayer({
   activeIdx,
   onSelect,
   markerRefs,
+  autoScanLabel,
 }: {
   shops: Shop[];
   activeIdx: number | null;
   onSelect: (i: number) => void;
   markerRefs: React.MutableRefObject<Record<number, L.Marker | null>>;
+  autoScanLabel: string;
 }) {
   const map = useMap();
 
@@ -90,7 +92,7 @@ function ClusterLayer({
       const m = L.marker([s.lat, s.lng], { icon: makeIcon(activeIdx === i) });
       m.on("click", () => onSelect(i));
       m.bindTooltip(
-        `<div class="vp-tip"><div class="vp-tip-name">${s.name}</div><div class="vp-tip-city">${s.city}</div><div class="vp-tip-tag">● Scant automatisch</div></div>`,
+        `<div class="vp-tip"><div class="vp-tip-name">${s.name}</div><div class="vp-tip-city">${s.city}</div><div class="vp-tip-tag">● ${autoScanLabel}</div></div>`,
         { direction: "top", offset: [0, -8], opacity: 1, className: "vp-tooltip" },
       );
       markerRefs.current[i] = m;
@@ -368,6 +370,7 @@ export default function ShopFinderMap() {
               activeIdx={activeIdx}
               onSelect={handleSelect}
               markerRefs={markerRefs}
+              autoScanLabel={t("community.auto_scan_tag")}
             />
           </MapContainer>
 
