@@ -56,7 +56,7 @@ export function ShopFinder() {
             {t("community.stolen_link")}
           </Link>
         </div>
-        <p className="sec-sub" style={{ marginTop: 32 }}>Kaart laden...</p>
+        <p className="sec-sub" style={{ marginTop: 32 }}>{t("community.map_loading")}</p>
       </section>
     );
   }
