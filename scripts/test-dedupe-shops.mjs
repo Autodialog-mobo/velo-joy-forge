@@ -11,29 +11,16 @@
 //   8. Real dataset dedupes without errors and is <= raw active count
 
 import { readFileSync } from "node:fs";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { register } from "node:module";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 
-// Load the TS source directly by stripping types manually — the helper is
-// small and only uses TS syntax we can transform with a simple regex.
-const tsSource = readFileSync(join(root, "src/lib/dedupe-shops.ts"), "utf8");
-const jsSource = tsSource
-  // strip `export type ... { ... }` blocks
-  .replace(/export type [\s\S]*?\n\};\n/g, "")
-  // strip inline TS annotations on parameters and return types
-  .replace(/:\s*readonly\s+T\[\]/g, "")
-  .replace(/<T extends DedupeShop>/g, "")
-  .replace(/\)\s*:\s*T\[\]/g, ")")
-  .replace(/\(a:\s*string\)\s*:\s*string/g, "(a)")
-  .replace(/new Map<string,\s*T>\(\)/g, "new Map()")
-  .replace(/\(existing:\s*T,\s*next:\s*T\)/g, "(existing, next)");
-
-const dataUrl = "data:text/javascript;base64," + Buffer.from(jsSource).toString("base64");
-const { dedupeShopsByAddress, normalizeAddress } = await import(dataUrl);
+// Node 22+ strips TS types natively with --experimental-strip-types.
+const { dedupeShopsByAddress, normalizeAddress } = await import(
+  "../src/lib/dedupe-shops.ts"
+);
 
 let passed = 0;
 let failed = 0;
