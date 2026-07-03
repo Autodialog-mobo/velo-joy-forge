@@ -4,22 +4,13 @@ import { Trans, useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { AlertTriangle } from "lucide-react";
 import shopsData from "@/data/shops.json";
+import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 
-const totalActive = (() => {
-  const normalize = (a: string) => a.trim().toLowerCase().replace(/\s+/g, " ").replace(/,+/g, ",");
-  const seen = new Map<string, { brands?: string[] }>();
-  for (const s of shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>) {
-    if (s.status !== "active") continue;
-    const key = normalize(s.address || `${s.lat},${s.lng}`);
-    const existing = seen.get(key);
-    if (!existing || (s.brands?.length ?? 0) > (existing.brands?.length ?? 0)) {
-      seen.set(key, s);
-    }
-  }
-  return seen.size;
-})();
+const totalActive = dedupeShopsByAddress(
+  shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>,
+).length;
 
 export function ShopFinder() {
   const lang = useCurrentLang();
