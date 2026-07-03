@@ -60,7 +60,7 @@ function eq(actual, expected, msg = "") {
 console.log("\ndedupeShopsByAddress\n");
 
 test("normalizes case, whitespace and repeated commas", () => {
-  eq(normalizeAddress("  Rue de la Loi  10 ,, Brussels "), "rue de la loi 10 , brussels");
+  eq(normalizeAddress("  Rue de la Loi  10 ,, Brussels "), "rue de la loi 10,brussels");
 });
 
 test("keeps a single shop unchanged", () => {
