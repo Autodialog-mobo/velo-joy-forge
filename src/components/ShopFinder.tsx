@@ -7,7 +7,19 @@ import shopsData from "@/data/shops.json";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 
-const totalActive = (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length;
+const totalActive = (() => {
+  const normalize = (a: string) => a.trim().toLowerCase().replace(/\s+/g, " ").replace(/,+/g, ",");
+  const seen = new Map<string, { brands?: string[] }>();
+  for (const s of shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>) {
+    if (s.status !== "active") continue;
+    const key = normalize(s.address || `${s.lat},${s.lng}`);
+    const existing = seen.get(key);
+    if (!existing || (s.brands?.length ?? 0) > (existing.brands?.length ?? 0)) {
+      seen.set(key, s);
+    }
+  }
+  return seen.size;
+})();
 
 export function ShopFinder() {
   const lang = useCurrentLang();
