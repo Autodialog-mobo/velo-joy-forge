@@ -108,21 +108,21 @@ export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }
           type="button"
           className="sf-panel-close"
           onClick={onClose}
-          aria-label="Sluit paneel"
+          aria-label={t("community.panel_close_aria")}
         >
           ×
         </button>
         <div className="sf-panel-body">
-          <div className="sf-panel-tag">● Scant automatisch</div>
+          <div className="sf-panel-tag">● {t("community.auto_scan_tag")}</div>
           <h3 className="sf-panel-name">{shop.name}</h3>
           <p className="sf-panel-addr">{shop.address}</p>
           <p className="sf-panel-msg">
-            Deze winkel maakt deel uit van de Velopass Community en scant automatisch.
+            {t("community.panel_message")}
           </p>
           {shop.brands && shop.brands.length > 0 && (
             <div style={{ marginTop: 14 }}>
               <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#5A7090", marginBottom: 8 }}>
-                Merken
+                {t("community.panel_brands")}
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {shop.brands.map((b) => (
@@ -140,7 +140,7 @@ export function ShopPanel({ shop, onClose }: { shop: Shop; onClose: () => void }
               rel="noreferrer"
               href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(shop.address)}`}
             >
-              Routebeschrijving →
+              {t("community.panel_directions")}
             </a>
           </div>
         </div>
