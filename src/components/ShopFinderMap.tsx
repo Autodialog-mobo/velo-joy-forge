@@ -56,11 +56,13 @@ function ClusterLayer({
   activeIdx,
   onSelect,
   markerRefs,
+  autoScanLabel,
 }: {
   shops: Shop[];
   activeIdx: number | null;
   onSelect: (i: number) => void;
   markerRefs: React.MutableRefObject<Record<number, L.Marker | null>>;
+  autoScanLabel: string;
 }) {
   const map = useMap();
 
