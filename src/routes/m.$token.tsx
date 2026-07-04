@@ -169,7 +169,7 @@ const T = {
     lede: (vat: string, price: string) => <>A transparent overview of the Velopass Frame-ID, the sticker your customer already knows on their bike, in bundles as listed on the Velopass shop, and the margin you realise per bundle as a specialist retailer. All margins are calculated excl. VAT ({vat}), based on a purchase price of <strong>{price}</strong> per Frame-ID.</>,
     notice: <><strong>Important:</strong> the margins below apply to the Frame-ID <em>without installation by the shop</em>. The price for applying the Frame-ID to the bike is set by you and comes on top of the product margin shown here.</>,
     whyTitle: "Why it works",
-    why1: <><strong>Your customer stays your customer.</strong> The Frame-ID ties your customer to your shop: they come back for maintenance, repairs and their next bike. You don't primarily earn on the Frame-ID itself. You earn on the customer who stays. Every Frame-ID you hand out is a customer you retain.</>,
+    why1: <><strong>Your customer stays your customer.</strong> The Frame-ID ties your customer to your shop: they come back for maintenance, repairs and their next bike. You don't just earn on the Frame-ID itself. You earn on the customer who stays. Every Frame-ID you hand out is a customer you retain.</>,
     why2: <><strong>Fast turnover.</strong> At the till the customer picks the Frame-ID from the display themselves. For one of their own bikes, or as a gift: no sales pitch needed, no effort: an impulse item that walks out with every customer who drops by.</>,
     bundlesTitle: "The bundles at a glance",
     framing: "The margin on the Frame-ID is a nice bonus. But the real win sits with the customer who comes back. For everything that follows.",
