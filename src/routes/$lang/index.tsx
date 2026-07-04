@@ -16,6 +16,7 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { trackCheckBikeClick } from "@/lib/analytics";
 import shopsData from "@/data/shops.json";
+import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 import { isLang, type Lang } from "@/i18n/config";
 import { buildLocalizedHead, SITE_URL } from "@/i18n/seo";
 import faqEn from "@/i18n/locales/en/faq.json";
