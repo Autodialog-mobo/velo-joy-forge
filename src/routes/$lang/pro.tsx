@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { VelopassMark } from "@/components/VelopassMark";
 import { buildLocalizedHead } from "@/i18n/seo";
