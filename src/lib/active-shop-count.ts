@@ -56,6 +56,7 @@ const subscribe = (l: Listener) => {
 
 if (import.meta.hot) {
   import.meta.hot.accept("@/data/shops.json", () => {
+    cachedShops = null;
     version += 1;
     listeners.forEach((l) => l());
   });
