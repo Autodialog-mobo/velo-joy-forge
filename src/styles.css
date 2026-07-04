@@ -1121,3 +1121,34 @@ html { overflow-x: clip; }
   color: #2ECC8A;
   border-color: rgba(46,204,138,0.5);
 }
+
+/* Wallet lightbox — softer, calmer animation */
+@keyframes wallet-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes wallet-overlay-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes wallet-content-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes wallet-content-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.92); }
+}
+
+.wallet-dialog-overlay[data-state="open"] {
+  animation: wallet-overlay-in  400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.wallet-dialog-overlay[data-state="closed"] {
+  animation: wallet-overlay-out 300ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.wallet-dialog-content[data-state="open"] {
+  animation: wallet-content-in  500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.wallet-dialog-content[data-state="closed"] {
+  animation: wallet-content-out 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
