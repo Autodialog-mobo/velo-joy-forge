@@ -643,7 +643,18 @@ function VelopassHome() {
                 src={walletPassImg.url}
                 alt={t("home:benefits.cards.service_book_wallet_alt")}
                 loading="lazy"
+                style={{ cursor: "pointer" }}
+                onClick={() => setWalletOpen(true)}
               />
+              <Dialog open={walletOpen} onOpenChange={setWalletOpen}>
+                <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
+                  <img
+                    src={walletPassImg.url}
+                    alt={t("home:benefits.cards.service_book_wallet_alt")}
+                    className="w-full rounded-xl"
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
           <div className="vc">
