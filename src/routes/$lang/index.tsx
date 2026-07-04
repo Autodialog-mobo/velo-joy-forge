@@ -16,6 +16,7 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { trackCheckBikeClick } from "@/lib/analytics";
 import shopsData from "@/data/shops.json";
+import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 import { isLang, type Lang } from "@/i18n/config";
 import { buildLocalizedHead, SITE_URL } from "@/i18n/seo";
 import faqEn from "@/i18n/locales/en/faq.json";
@@ -167,7 +168,13 @@ function VelopassHome() {
   const [scanManual, setScanManual] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const activeShopsCount = useMemo(() => (shopsData as Array<{ status: string }>).filter((s) => s.status === "active").length, []);
+  const activeShopsCount = useMemo(
+    () =>
+      dedupeShopsByAddress(
+        shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>,
+      ).length,
+    [],
+  );
   const QR_STORAGE_KEY = "velopass:qr-overlay:v2";
   const [qrX, setQrX] = useState(50);
   const [qrY, setQrY] = useState(49);
