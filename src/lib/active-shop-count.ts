@@ -17,14 +17,29 @@ export type RawShop = DedupeShop & {
   brands?: string[];
 };
 
+// Module-level cache: `shopsData` is a static JSON import, so dedupe once
+// per module instance and reuse the result for every getActiveShops() /
+// getActiveShopCount() call (MCP tool requests, React renders, ...). The
+// cache is invalidated by the HMR handler below when shops.json is hot-
+// replaced in dev, and naturally reset in prod on every process boot.
+let cachedShops: RawShop[] | null = null;
+
+function computeActiveShops(): RawShop[] {
+  if (cachedShops === null) {
+    // Equivalent to: dedupeShopsByAddress(shopsData as RawShop[]).length
+    cachedShops = dedupeShopsByAddress(shopsData as RawShop[]) as RawShop[];
+  }
+  return cachedShops;
+}
+
 /** Returns the deduped active shop list — single source of truth. */
 export function getActiveShops<T extends RawShop = RawShop>(): T[] {
-  return dedupeShopsByAddress(shopsData as RawShop[]) as unknown as T[];
+  return computeActiveShops() as unknown as T[];
 }
 
 /** Recomputes from the currently loaded shops.json module. */
 export function getActiveShopCount(): number {
-  return dedupeShopsByAddress(shopsData as RawShop[]).length;
+  return computeActiveShops().length;
 }
 
 // --- HMR: notify subscribers when shops.json is hot-replaced in dev ---
