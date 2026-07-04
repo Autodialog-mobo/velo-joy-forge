@@ -7,13 +7,20 @@ import { useMemo, useSyncExternalStore } from "react";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, type DedupeShop } from "@/lib/dedupe-shops";
 
-type RawShop = DedupeShop & {
+export type RawShop = DedupeShop & {
   status: string;
   address: string;
+  country: string;
+  city: string;
   lat: number;
   lng: number;
   brands?: string[];
 };
+
+/** Returns the deduped active shop list — single source of truth. */
+export function getActiveShops<T extends RawShop = RawShop>(): T[] {
+  return dedupeShopsByAddress(shopsData as RawShop[]) as unknown as T[];
+}
 
 /** Recomputes from the currently loaded shops.json module. */
 export function getActiveShopCount(): number {

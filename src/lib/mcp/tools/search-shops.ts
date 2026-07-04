@@ -1,21 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import shopsData from "@/data/shops.json";
-import { dedupeShopsByAddress, type DedupeShop } from "@/lib/dedupe-shops";
-
-type RawShop = DedupeShop & {
-  status: string;
-  address: string;
-  country: string;
-  city: string;
-  lat: number;
-  lng: number;
-  brands?: string[];
-};
-
-function activeShops(): RawShop[] {
-  return dedupeShopsByAddress(shopsData as RawShop[]) as RawShop[];
-}
+import { getActiveShops } from "@/lib/active-shop-count";
 
 export default defineTool({
   name: "search_shops",
@@ -35,7 +20,7 @@ export default defineTool({
     const b = brand?.toLowerCase();
     const max = limit ?? 20;
 
-    const all = activeShops();
+    const all = getActiveShops();
     const matches = all.filter((s) => {
       if (c && s.country?.toUpperCase() !== c) return false;
       if (b && !(s.brands ?? []).some((x) => x.toLowerCase() === b)) return false;

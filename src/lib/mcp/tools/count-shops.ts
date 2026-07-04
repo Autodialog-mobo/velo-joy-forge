@@ -1,9 +1,6 @@
 import { defineTool } from "@lovable.dev/mcp-js";
 import { z } from "zod";
-import shopsData from "@/data/shops.json";
-import { dedupeShopsByAddress, type DedupeShop } from "@/lib/dedupe-shops";
-
-type RawShop = DedupeShop & { status: string; country: string };
+import { getActiveShops } from "@/lib/active-shop-count";
 
 export default defineTool({
   name: "count_shops",
@@ -15,7 +12,7 @@ export default defineTool({
   },
   annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
   handler: ({ byCountry }) => {
-    const shops = dedupeShopsByAddress(shopsData as RawShop[]) as RawShop[];
+    const shops = getActiveShops();
     const total = shops.length;
     const perCountry: Record<string, number> = {};
     if (byCountry) {
