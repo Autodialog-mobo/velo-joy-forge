@@ -175,6 +175,7 @@ function VelopassHome() {
   const [qrSize, setQrSize] = useState(26);
   const [tunerOpen, setTunerOpen] = useState(false);
   const [noMailOpen, setNoMailOpen] = useState(false);
+  const [walletOpen, setWalletOpen] = useState(false);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(QR_STORAGE_KEY);
