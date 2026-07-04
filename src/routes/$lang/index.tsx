@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { WalletDialog, WalletDialogContent } from "@/components/ui/wallet-dialog";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
@@ -646,15 +646,15 @@ function VelopassHome() {
                 style={{ cursor: "pointer" }}
                 onClick={() => setWalletOpen(true)}
               />
-              <Dialog open={walletOpen} onOpenChange={setWalletOpen}>
-                <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
+              <WalletDialog open={walletOpen} onOpenChange={setWalletOpen}>
+                <WalletDialogContent className="p-0 border-none bg-transparent shadow-none">
                   <img
                     src={walletPassImg.url}
                     alt={t("home:benefits.cards.service_book_wallet_alt")}
-                    className="w-full rounded-xl"
+                    className="w-full max-h-[80vh] rounded-xl object-contain"
                   />
-                </DialogContent>
-              </Dialog>
+                </WalletDialogContent>
+              </WalletDialog>
             </div>
           </div>
           <div className="vc">
