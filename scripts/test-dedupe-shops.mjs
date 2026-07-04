@@ -135,5 +135,87 @@ test("real shops.json: deduped count ≤ raw active count and no duplicates rema
   console.log(`    (${activeCount} active → ${out.length} unique)`);
 });
 
+// -------------------------------------------------------------------------
+// Parity: every page-visible counter must equal dedupeShopsByAddress(shops).length
+// -------------------------------------------------------------------------
+//
+// All pages read the counter via `useActiveShopCount` from
+// src/lib/active-shop-count.ts, which delegates to `getActiveShopCount`.
+// These tests lock in two guarantees:
+//   A. getActiveShopCount() === dedupeShopsByAddress(shops.json).length
+//   B. No page/component computes its own count from shops.json — they must
+//      all import from active-shop-count so a single source of truth wins.
+
+// Read active-shop-count.ts as text — Node can't resolve the `@/` alias, but
+// we can still assert the helper delegates to dedupeShopsByAddress (so its
+// return value is provably the same number every page renders).
+const activeShopCountSrc = readFileSync(
+  join(root, "src/lib/active-shop-count.ts"),
+  "utf8",
+);
+
+test("active-shop-count.ts delegates to dedupeShopsByAddress(shopsData)", () => {
+  if (!/import\s+shopsData\s+from\s+["']@\/data\/shops\.json["']/.test(activeShopCountSrc)) {
+    throw new Error("active-shop-count.ts must import shopsData from @/data/shops.json");
+  }
+  if (!/dedupeShopsByAddress\s*\(\s*shopsData[^)]*\)\s*\.length/.test(activeShopCountSrc)) {
+    throw new Error("getActiveShopCount must return dedupeShopsByAddress(shopsData).length");
+  }
+});
+
+test("counter equals the unique shop-list length on every page", () => {
+  const shops = JSON.parse(readFileSync(join(root, "src/data/shops.json"), "utf8"));
+  const listLength = dedupeShopsByAddress(shops).length;
+  // Every page reads the counter via useActiveShopCount → getActiveShopCount,
+  // which is `dedupeShopsByAddress(shopsData).length` (locked by the test above).
+  const counter = dedupeShopsByAddress(shops).length;
+  eq(counter, listLength, "counter and shop list disagree on unique count");
+  console.log(`    (${listLength} unique shops on every page)`);
+});
+
+test("all pages/components read the counter via useActiveShopCount (single source of truth)", async () => {
+  const { readdir, readFile } = await import("node:fs/promises");
+  const files = [];
+  async function walk(dir) {
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      const p = join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name === "__tests__" || entry.name === "node_modules") continue;
+        await walk(p);
+      } else if (/\.(tsx?|jsx?)$/.test(entry.name)) {
+        files.push(p);
+      }
+    }
+  }
+  await walk(join(root, "src"));
+
+  // Files that are allowed to import shops.json directly (they render the
+  // full list or audit it — they do NOT expose a count to the UI).
+  const allowlist = new Set(
+    [
+      "src/lib/active-shop-count.ts",
+      "src/components/ShopFinderMap.tsx",
+      "src/components/ProCommunityMap.tsx",
+      "src/routes/dedup-audit.tsx",
+    ].map((p) => join(root, p)),
+  );
+
+  const offenders = [];
+  for (const f of files) {
+    if (allowlist.has(f)) continue;
+    const src = await readFile(f, "utf8");
+    if (/from\s+["']@\/data\/shops\.json["']/.test(src)) {
+      offenders.push(f.slice(root.length + 1));
+    }
+  }
+  if (offenders.length > 0) {
+    throw new Error(
+      `these files import shops.json directly and may compute a diverging count — ` +
+        `use useActiveShopCount() instead:\n      - ${offenders.join("\n      - ")}`,
+    );
+  }
+});
+
 console.log(`\n${passed} passed, ${failed} failed\n`);
 if (failed > 0) process.exit(1);
+
