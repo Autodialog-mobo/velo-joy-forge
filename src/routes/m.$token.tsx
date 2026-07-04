@@ -210,7 +210,7 @@ const T = {
     lede: (vat: string, price: string) => <>Un resumen transparente del Velopass Frame-ID, la pegatina que tu cliente ya conoce en su bici, en packs tal como aparecen en la tienda Velopass, y del margen que obtienes por pack como distribuidor especializado. Todos los márgenes se calculan sin IVA ({vat}), con un precio de compra de <strong>{price}</strong> por Frame-ID.</>,
     notice: <><strong>Importante:</strong> los márgenes siguientes se aplican al Frame-ID <em>sin colocación por la tienda</em>. El precio de la colocación del Frame-ID en la bicicleta lo fijas tú y se suma al margen de producto mostrado aquí.</>,
     whyTitle: "Por qué funciona",
-    why1: <><strong>Tu cliente sigue siendo tu cliente.</strong> El Frame-ID vincula al cliente con tu tienda: vuelve para el mantenimiento, las reparaciones y su próxima bicicleta. No ganas principalmente con el Frame-ID en sí. Ganas con el cliente que se queda. Cada Frame-ID que entregas es un cliente que fidelizas.</>,
+    why1: <><strong>Tu cliente sigue siendo tu cliente.</strong> El Frame-ID vincula al cliente con tu tienda: vuelve para el mantenimiento, las reparaciones y su próxima bicicleta. No solo ganas con el Frame-ID en sí. Ganas con el cliente que se queda. Cada Frame-ID que entregas es un cliente que fidelizas.</>,
     why2: <><strong>Rotación rápida.</strong> En caja el cliente coge el Frame-ID del expositor por sí mismo. Para una de sus bicicletas o como regalo: sin argumentario de venta, sin esfuerzo: un artículo de impulso que sale con cada cliente que pasa.</>,
     bundlesTitle: "Los packs de un vistazo",
     framing: "El margen del Frame-ID es un bonito extra. Pero la verdadera ganancia está en el cliente que vuelve. Por todo lo que viene después.",
