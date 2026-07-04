@@ -624,10 +624,10 @@ function BikeSearchPage() {
     <div style={{ minHeight: "100vh", background: "#F5F3EE", display: "flex", flexDirection: "column" }}>
       <div className={`nav-backdrop${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)} aria-hidden="true" />
       <nav className="vp-nav">
-        <a href={`/${lang}`} className="nav-logo">
+        <Link to="/$lang" params={{ lang }} className="nav-logo">
           <div className="logo-mark"><VelopassMark /></div>
           <span className="logo-text">velopass</span>
-        </a>
+        </Link>
         <ul id="primary-navigation" className={`nav-links${navOpen ? " open" : ""}`} onClick={() => setNavOpen(false)}>
           <li><a href={`/${lang}#wat-je-krijgt`}>{t("nav.what_you_get")}</a></li>
           <li><a href={`/${lang}#already-have-one`}>{t("nav.already_have_one")}</a></li>
