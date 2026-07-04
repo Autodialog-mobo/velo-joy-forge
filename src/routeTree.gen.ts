@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as GestolenRouteImport } from './routes/gestolen'
 import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
 import { Route as DedupAuditRouteImport } from './routes/dedup-audit'
@@ -33,6 +34,8 @@ import { Route as AuthenticatedAdminEmailLogRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminEmailEventsRouteImport } from './routes/_authenticated/admin-email-events'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin-audit'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
 import { Route as LangShopRouteImport } from './routes/$lang/shop'
 import { Route as LangProRouteImport } from './routes/$lang/pro'
@@ -47,6 +50,7 @@ import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
 import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -64,6 +68,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ProfessionalsRoute = ProfessionalsRouteImport.update({
   id: '/professionals',
   path: '/professionals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GestolenRoute = GestolenRouteImport.update({
@@ -175,6 +184,18 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LangStolenRoute = LangStolenRouteImport.update({
   id: '/stolen',
   path: '/stolen',
@@ -245,6 +266,12 @@ const ApiPublicShopSignupRoute = ApiPublicShopSignupRouteImport.update({
   path: '/api/public/shop-signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
   id: '/order_/thanks',
   path: '/order/thanks',
@@ -273,6 +300,7 @@ export interface FileRoutesByFullPath {
   '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
+  '/mcp': typeof McpRoute
   '/professionals': typeof ProfessionalsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -288,6 +316,8 @@ export interface FileRoutesByFullPath {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
@@ -301,6 +331,7 @@ export interface FileRoutesByFullPath {
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -314,6 +345,7 @@ export interface FileRoutesByTo {
   '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
+  '/mcp': typeof McpRoute
   '/professionals': typeof ProfessionalsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -329,6 +361,8 @@ export interface FileRoutesByTo {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
@@ -342,6 +376,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -358,6 +393,7 @@ export interface FileRoutesById {
   '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
   '/gestolen': typeof GestolenRoute
+  '/mcp': typeof McpRoute
   '/professionals': typeof ProfessionalsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -373,6 +409,8 @@ export interface FileRoutesById {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/admin-audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
@@ -386,6 +424,7 @@ export interface FileRoutesById {
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -402,6 +441,7 @@ export interface FileRouteTypes {
     | '/dedup-audit'
     | '/fiets-controleren'
     | '/gestolen'
+    | '/mcp'
     | '/professionals'
     | '/reset-password'
     | '/sitemap.xml'
@@ -417,6 +457,8 @@ export interface FileRouteTypes {
     | '/$lang/pro'
     | '/$lang/shop'
     | '/$lang/stolen'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin'
     | '/admin-audit'
     | '/admin-email-events'
@@ -430,6 +472,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
+    | '/.mcp/invoke-tool/$tool'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -443,6 +486,7 @@ export interface FileRouteTypes {
     | '/dedup-audit'
     | '/fiets-controleren'
     | '/gestolen'
+    | '/mcp'
     | '/professionals'
     | '/reset-password'
     | '/sitemap.xml'
@@ -458,6 +502,8 @@ export interface FileRouteTypes {
     | '/$lang/pro'
     | '/$lang/shop'
     | '/$lang/stolen'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin'
     | '/admin-audit'
     | '/admin-email-events'
@@ -471,6 +517,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
+    | '/.mcp/invoke-tool/$tool'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -486,6 +533,7 @@ export interface FileRouteTypes {
     | '/dedup-audit'
     | '/fiets-controleren'
     | '/gestolen'
+    | '/mcp'
     | '/professionals'
     | '/reset-password'
     | '/sitemap.xml'
@@ -501,6 +549,8 @@ export interface FileRouteTypes {
     | '/$lang/pro'
     | '/$lang/shop'
     | '/$lang/stolen'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/_authenticated/admin'
     | '/_authenticated/admin-audit'
     | '/_authenticated/admin-email-events'
@@ -514,6 +564,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
+    | '/.mcp/invoke-tool/$tool'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -530,10 +581,14 @@ export interface RootRouteChildren {
   DedupAuditRoute: typeof DedupAuditRoute
   FietsControlerenRoute: typeof FietsControlerenRoute
   GestolenRoute: typeof GestolenRoute
+  McpRoute: typeof McpRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   MTokenRoute: typeof MTokenRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
@@ -560,6 +615,13 @@ declare module '@tanstack/react-router' {
       path: '/professionals'
       fullPath: '/professionals'
       preLoaderRoute: typeof ProfessionalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gestolen': {
@@ -709,6 +771,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/stolen': {
       id: '/$lang/stolen'
       path: '/stolen'
@@ -805,6 +881,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/shop-signup'
       fullPath: '/api/public/shop-signup'
       preLoaderRoute: typeof ApiPublicShopSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$lang/order_/thanks': {
@@ -919,10 +1002,15 @@ const rootRouteChildren: RootRouteChildren = {
   DedupAuditRoute: DedupAuditRoute,
   FietsControlerenRoute: FietsControlerenRoute,
   GestolenRoute: GestolenRoute,
+  McpRoute: McpRoute,
   ProfessionalsRoute: ProfessionalsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   MTokenRoute: MTokenRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
