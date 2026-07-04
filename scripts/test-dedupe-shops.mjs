@@ -216,6 +216,35 @@ test("all pages/components read the counter via useActiveShopCount (single sourc
   }
 });
 
+// -------------------------------------------------------------------------
+// MCP tools must go through active-shop-count.ts (single source of truth)
+// -------------------------------------------------------------------------
+for (const rel of [
+  "src/lib/mcp/tools/count-shops.ts",
+  "src/lib/mcp/tools/search-shops.ts",
+]) {
+  test(`${rel} does not import shops.json directly`, () => {
+    const src = readFileSync(join(root, rel), "utf8");
+    if (/from\s+["']@\/data\/shops\.json["']/.test(src)) {
+      throw new Error(`${rel} imports @/data/shops.json directly — must use active-shop-count`);
+    }
+    if (/from\s+["'][^"']*data\/shops\.json["']/.test(src)) {
+      throw new Error(`${rel} imports shops.json via a relative path — must use active-shop-count`);
+    }
+  });
+
+  test(`${rel} imports shop data from active-shop-count`, () => {
+    const src = readFileSync(join(root, rel), "utf8");
+    if (!/from\s+["']@\/lib\/active-shop-count["']/.test(src)) {
+      throw new Error(`${rel} must import from @/lib/active-shop-count`);
+    }
+    if (!/\bgetActiveShops\b/.test(src)) {
+      throw new Error(`${rel} must use getActiveShops() from active-shop-count`);
+    }
+  });
+}
+
 console.log(`\n${passed} passed, ${failed} failed\n`);
 if (failed > 0) process.exit(1);
+
 
