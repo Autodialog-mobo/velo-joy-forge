@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
@@ -174,6 +175,7 @@ function VelopassHome() {
   const [qrSize, setQrSize] = useState(26);
   const [tunerOpen, setTunerOpen] = useState(false);
   const [noMailOpen, setNoMailOpen] = useState(false);
+  const [walletOpen, setWalletOpen] = useState(false);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(QR_STORAGE_KEY);
@@ -641,7 +643,18 @@ function VelopassHome() {
                 src={walletPassImg.url}
                 alt={t("home:benefits.cards.service_book_wallet_alt")}
                 loading="lazy"
+                style={{ cursor: "pointer" }}
+                onClick={() => setWalletOpen(true)}
               />
+              <Dialog open={walletOpen} onOpenChange={setWalletOpen}>
+                <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
+                  <img
+                    src={walletPassImg.url}
+                    alt={t("home:benefits.cards.service_book_wallet_alt")}
+                    className="w-full rounded-xl"
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
           <div className="vc">
