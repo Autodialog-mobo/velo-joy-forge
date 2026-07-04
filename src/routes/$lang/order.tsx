@@ -437,12 +437,12 @@ function BestellenPage() {
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
                       {lang === "fr" ? (
                         <>
-                          En France, l'enregistrement des vélos vendus par un professionnel est obligatoire par la loi — et c'est le vendeur qui en est responsable. Si vous venez d'acheter votre vélo chez un revendeur agréé, contactez-le : il posera l'autocollant et enregistrera votre vélo.<br /><br />
+                          En France, la loi oblige les vendeurs professionnels à enregistrer chaque vélo vendu via le registre national FNUCI, avec un autocollant APIC certifié. C'est la responsabilité du revendeur, pas la vôtre. Si vous venez d'acheter votre vélo chez un revendeur agréé, contactez-le : il posera l'autocollant APIC et enregistrera votre vélo dans FNUCI.<br /><br />
                           Vous souhaitez protéger un vélo existant de votre propre initiative ? Vous pouvez commander un Velopass Frame-ID européen ci-dessous.
                         </>
                       ) : (
                         <>
-                          In France, bike registration at point of sale is required by law — the seller is responsible. If you recently bought your bike from a registered dealer, contact them: they will apply the sticker and register your bike.<br /><br />
+                          In France, professional sellers are legally required to register every bike sold via the national FNUCI registry, using a certified APIC sticker. This is the seller's responsibility. If you recently bought your bike from a registered dealer, contact them — they will handle the APIC registration.<br /><br />
                           Protecting an existing bike on your own initiative? You can order a European Velopass Frame-ID below.
                         </>
                       )}
