@@ -3,14 +3,9 @@ import { Link } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { AlertTriangle } from "lucide-react";
-import shopsData from "@/data/shops.json";
-import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
+import { useActiveShopCount } from "@/lib/active-shop-count";
 
 const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
-
-const totalActive = dedupeShopsByAddress(
-  shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>,
-).length;
 
 export function ShopFinder() {
   const lang = useCurrentLang();
