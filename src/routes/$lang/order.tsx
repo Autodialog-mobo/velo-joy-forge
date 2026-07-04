@@ -435,17 +435,15 @@ function BestellenPage() {
                   <div style={{ background: "#F9F8F5", borderLeft: "3px solid #2ECC8A", borderRadius: "0 10px 10px 0", padding: "14px 16px", display: "flex", gap: 12, alignItems: "flex-start" }}>
                     <Info size={18} color="#2ECC8A" style={{ flexShrink: 0, marginTop: 2 }} />
                     <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
-                    {lang === "fr" ? (
-                        <>
-                          En France, la loi oblige les vendeurs professionnels à enregistrer chaque vélo vendu via le registre national <a href="https://www.ecologie.gouv.fr/politiques-publiques/identification-cycles" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>FNUCI</a>, avec un autocollant <a href="https://apic-asso.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>APIC</a> certifié. C'est la responsabilité du revendeur, pas la vôtre. Si vous venez d'acheter votre vélo chez un revendeur agréé, contactez-le : il posera l'autocollant APIC et enregistrera votre vélo dans FNUCI.<br /><br />
-                          Vous souhaitez protéger un vélo existant de votre propre initiative ? Vous pouvez commander un Velopass Frame-ID européen ci-dessous.
-                        </>
-                      ) : (
-                        <>
-                          In France, professional sellers are legally required to register every bike sold via the national <a href="https://www.ecologie.gouv.fr/politiques-publiques/identification-cycles" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>FNUCI</a> registry, using a certified <a href="https://apic-asso.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>APIC</a> sticker. This is the seller's responsibility. If you recently bought your bike from a registered dealer, contact them — they will handle the APIC registration.<br /><br />
-                          Protecting an existing bike on your own initiative? You can order a European Velopass Frame-ID below.
-                        </>
-                      )}
+                    <>
+                      {t("cart.france_notice_p1_before_fnuci")}
+                      <a href="https://www.ecologie.gouv.fr/politiques-publiques/identification-cycles" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>FNUCI</a>
+                      {t("cart.france_notice_p1_after_fnuci_before_apic")}
+                      <a href="https://apic-asso.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>APIC</a>
+                      {t("cart.france_notice_p1_after_apic")}
+                      <br /><br />
+                      {t("cart.france_notice_p2")}
+                    </>
                     </p>
                   </div>
                 )}
