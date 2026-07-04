@@ -17,7 +17,6 @@ export type RawShop = DedupeShop & {
   brands?: string[];
 };
 
-/** Recomputes from the currently loaded shops.json module. */
 /** Returns the deduped active shop list — single source of truth. */
 export function getActiveShops<T extends RawShop = RawShop>(): T[] {
   return dedupeShopsByAddress(shopsData as RawShop[]) as unknown as T[];
@@ -25,7 +24,7 @@ export function getActiveShops<T extends RawShop = RawShop>(): T[] {
 
 /** Recomputes from the currently loaded shops.json module. */
 export function getActiveShopCount(): number {
-  return getActiveShops().length;
+  return dedupeShopsByAddress(shopsData as RawShop[]).length;
 }
 
 // --- HMR: notify subscribers when shops.json is hot-replaced in dev ---
