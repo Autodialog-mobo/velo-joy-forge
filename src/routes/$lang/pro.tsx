@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { VelopassMark } from "@/components/VelopassMark";
 import { buildLocalizedHead } from "@/i18n/seo";
@@ -20,10 +20,10 @@ function PartnerLogin() {
   return (
     <div className="partner-login">
       <div className="pl-card">
-        <a href={`/${lang}`} className="pl-logo" aria-label="Velopass Pro">
+        <Link to="/$lang" params={{ lang }} className="pl-logo" aria-label="Velopass Pro">
           <div className="pl-logo-mark"><VelopassMark /></div>
           <span className="pl-logo-text">velopass<span className="pl-logo-pro">pro</span></span>
-        </a>
+        </Link>
         <h1 className="pl-title">Partnerportaal</h1>
         <p className="pl-sub">Log in om toegang te krijgen tot jouw Velopass-werkomgeving.</p>
         <a href="https://app.velopass.pro" className="pl-btn">Inloggen →</a>
