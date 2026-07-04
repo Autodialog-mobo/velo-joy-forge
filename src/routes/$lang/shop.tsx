@@ -1,4 +1,4 @@
-import { useState, useMemo, lazy, Suspense, useEffect } from "react";
+import { useState, lazy, Suspense, useEffect } from "react";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation, Trans } from "react-i18next";
@@ -6,8 +6,7 @@ import { ArrowUpRight, Shield, ShieldCheck, FileText, Package, Truck, ScanLine, 
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
-import shopsData from "@/data/shops.json";
-import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
+import { useActiveShopCount } from "@/lib/active-shop-count";
 import { RegisterForm } from "@/components/ProRegisterForm";
 import leasingAppMockup from "@/assets/leasing-app-mockup-v2.webp";
 import fabOxford from "@/assets/fab-oxford.webp";
@@ -62,10 +61,7 @@ function VelopassPro() {
   const lang = useCurrentLang();
   const { t } = useTranslation("shop");
   const [navOpen, setNavOpen] = useState(false);
-  const activeShopsCount = useMemo(
-    () => dedupeShopsByAddress(shopsData as Array<{ status: string; address: string; lat: number; lng: number; brands?: string[] }>).length,
-    []
-  );
+  const activeShopsCount = useActiveShopCount();
   const [currentMonthYear, setCurrentMonthYear] = useState("");
   useEffect(() => {
     const locale = lang === "fr" ? "fr-BE" : lang === "de" ? "de-DE" : lang === "en" ? "en-GB" : "nl-BE";
