@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight } from "lucide-react";
+import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight, Info } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
@@ -431,6 +431,24 @@ function BestellenPage() {
                     <option value="DE">{t("cart.country_de")}</option>
                   </select>
                 </div>
+                {country === "FR" && (
+                  <div style={{ background: "#F9F8F5", borderLeft: "3px solid #2ECC8A", borderRadius: "0 10px 10px 0", padding: "14px 16px", display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <Info size={18} color="#2ECC8A" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
+                      {lang === "fr" ? (
+                        <>
+                          En France, l'enregistrement des vélos vendus par un professionnel est obligatoire par la loi — et c'est le vendeur qui en est responsable. Si vous venez d'acheter votre vélo chez un revendeur agréé, contactez-le : il posera l'autocollant et enregistrera votre vélo.<br /><br />
+                          Vous souhaitez protéger un vélo existant de votre propre initiative ? Vous pouvez commander un Velopass Frame-ID européen ci-dessous.
+                        </>
+                      ) : (
+                        <>
+                          In France, bike registration at point of sale is required by law — the seller is responsible. If you recently bought your bike from a registered dealer, contact them: they will apply the sticker and register your bike.<br /><br />
+                          Protecting an existing bike on your own initiative? You can order a European Velopass Frame-ID below.
+                        </>
+                      )}
+                    </p>
+                  </div>
+                )}
                 <div style={{ display: "grid", gap: 6 }}>
                   <label htmlFor="referral_source" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
                     {t("cart.referral_label")}
