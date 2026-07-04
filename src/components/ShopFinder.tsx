@@ -10,6 +10,7 @@ const ShopFinderMap = lazy(() => import("./ShopFinderMap"));
 export function ShopFinder() {
   const lang = useCurrentLang();
   const { t } = useTranslation("home");
+  const totalActive = useActiveShopCount();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
