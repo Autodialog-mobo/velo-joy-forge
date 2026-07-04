@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "velopass-mcp",
+      "version": "0.1.0",
+      "title": "Velopass MCP"
+    },
+    "tools": [
+      {
+        "name": "search_shops",
+        "title": "Search Velopass shops",
+        "description": "Search the public Velopass partner shop list. Filter by free-text query (matches name, address, city), country code (BE, FR, NL, LU, DE, ...), or brand. Returns up to `limit` shops (default 20, max 100) and the total match count.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "description": "Free-text match against shop name, address or city.",
+              "type": "string"
+            },
+            "country": {
+              "description": "ISO country code, e.g. FR, BE, NL.",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "brand": {
+              "description": "Brand name the shop sells (case-insensitive).",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Max shops to return (default 20).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "count_shops",
+        "title": "Count Velopass partner shops",
+        "description": "Returns the current number of active Velopass partner bike shops. Optionally break the count down per country.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "byCountry": {
+              "description": "If true, also return a per-country breakdown.",
+              "type": "boolean"
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
