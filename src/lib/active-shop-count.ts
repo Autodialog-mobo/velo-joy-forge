@@ -7,9 +7,11 @@ import { useMemo, useSyncExternalStore } from "react";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, type DedupeShop } from "@/lib/dedupe-shops";
 
-type RawShop = DedupeShop & {
+export type RawShop = DedupeShop & {
   status: string;
   address: string;
+  country: string;
+  city: string;
   lat: number;
   lng: number;
   brands?: string[];
