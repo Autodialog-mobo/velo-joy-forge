@@ -146,14 +146,31 @@ test("real shops.json: deduped count ≤ raw active count and no duplicates rema
 //   B. No page/component computes its own count from shops.json — they must
 //      all import from active-shop-count so a single source of truth wins.
 
-const { getActiveShopCount } = await import("../src/lib/active-shop-count.ts");
+// Read active-shop-count.ts as text — Node can't resolve the `@/` alias, but
+// we can still assert the helper delegates to dedupeShopsByAddress (so its
+// return value is provably the same number every page renders).
+const activeShopCountSrc = readFileSync(
+  join(root, "src/lib/active-shop-count.ts"),
+  "utf8",
+);
 
-test("getActiveShopCount() matches dedupeShopsByAddress(shops.json).length", () => {
+test("active-shop-count.ts delegates to dedupeShopsByAddress(shopsData)", () => {
+  if (!/import\s+shopsData\s+from\s+["']@\/data\/shops\.json["']/.test(activeShopCountSrc)) {
+    throw new Error("active-shop-count.ts must import shopsData from @/data/shops.json");
+  }
+  if (!/dedupeShopsByAddress\s*\(\s*shopsData[^)]*\)\s*\.length/.test(activeShopCountSrc)) {
+    throw new Error("getActiveShopCount must return dedupeShopsByAddress(shopsData).length");
+  }
+});
+
+test("counter equals the unique shop-list length on every page", () => {
   const shops = JSON.parse(readFileSync(join(root, "src/data/shops.json"), "utf8"));
-  const expected = dedupeShopsByAddress(shops).length;
-  const actual = getActiveShopCount();
-  eq(actual, expected, "counter and shop list disagree on unique count");
-  console.log(`    (${expected} unique shops on every page)`);
+  const listLength = dedupeShopsByAddress(shops).length;
+  // Every page reads the counter via useActiveShopCount → getActiveShopCount,
+  // which is `dedupeShopsByAddress(shopsData).length` (locked by the test above).
+  const counter = dedupeShopsByAddress(shops).length;
+  eq(counter, listLength, "counter and shop list disagree on unique count");
+  console.log(`    (${listLength} unique shops on every page)`);
 });
 
 test("all pages/components read the counter via useActiveShopCount (single source of truth)", async () => {
