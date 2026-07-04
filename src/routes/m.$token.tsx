@@ -46,7 +46,7 @@ const T = {
     lede: (vat: string, price: string) => <>Een transparant overzicht van de Velopass Frame-ID, de sticker die je klant op zijn fiets kent, in de bundels zoals ze op de Velopass-webshop staan, en de marge die je als vakhandel per bundel realiseert. Alle marges zijn berekend excl. btw ({vat}), op basis van een inkoopprijs van <strong>{price}</strong> per Frame-ID.</>,
     notice: <><strong>Belangrijk:</strong> de marges hieronder gelden voor de Frame-ID <em>zonder plaatsing door de winkel</em>. De prijs voor het aanbrengen van de Frame-ID op de fiets bepaal je zelf en komt bovenop de hier getoonde productmarge.</>,
     whyTitle: "Waarom het werkt",
-    why1: <><strong>Je klant blijft je klant.</strong> De Frame-ID bindt je klant aan jouw winkel: hij komt terug voor onderhoud, herstelling en zijn volgende fiets. Je verdient niet in de eerste plaats aan de Frame-ID zelf. Je verdient aan de klant die blijft. Elke Frame-ID die je meegeeft, is een klant die je vasthoudt.</>,
+    why1: <><strong>Je klant blijft je klant.</strong> De Frame-ID bindt je klant aan jouw winkel: hij komt terug voor onderhoud, herstelling en zijn volgende fiets. Je verdient niet enkel aan de Frame-ID zelf. Je verdient aan de klant die blijft. Elke Frame-ID die je meegeeft, is een klant die je vasthoudt.</>,
     why2: <><strong>Snelle omloop.</strong> Aan de kassa neemt de klant de Frame-ID zelf uit het display. Voor een van zijn eigen fietsen, of als geschenk: geen verkoopgesprek nodig, geen moeite: een impulsartikel dat meegaat met elke klant die langskomt.</>,
     bundlesTitle: "De bundels in één oogopslag",
     framing: "De marge op de Frame-ID is mooi meegenomen. Maar de echte winst zit in de klant die terugkomt. Voor alles wat daarna volgt.",
