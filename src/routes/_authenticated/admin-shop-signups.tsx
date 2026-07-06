@@ -73,7 +73,7 @@ function ShopSignupsPage() {
       if (langFilter !== "all" && (r.lang || "").toLowerCase() !== langFilter) return false;
       if (needle) {
         const hay = [
-          r.email, r.shop_name, r.first_name, r.last_name, r.vat, r.phone, r.address,
+          r.email, r.shop_name, r.first_name, r.last_name, r.vat, r.phone, r.address, r.country,
         ].filter(Boolean).join(" ").toLowerCase();
         if (!hay.includes(needle)) return false;
       }
@@ -104,7 +104,7 @@ function ShopSignupsPage() {
     setSavingId(id);
     try {
       const payload: any = { id };
-      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","lang","pos_system","pos_other","admin_notes"]) {
+      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
         payload[k] = draft[k] ?? "";
       }
       const res = await update({ data: payload });
@@ -128,6 +128,7 @@ function ShopSignupsPage() {
       phone: r.phone ?? "",
       vat: r.vat ?? "",
       address: r.address ?? "",
+      country: r.country ?? "",
       lang: (r.lang ?? "").toLowerCase(),
       pos_system: r.pos_system ?? "",
       pos_other: r.pos_other ?? "",
@@ -243,8 +244,10 @@ function ShopSignupsPage() {
                       <td className="px-4 py-3">
                         <div className="font-semibold">{r.shop_name || "—"}</div>
                         <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{r.vat || "geen BTW"}</div>
-                        {r.address && (
-                          <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>{r.address}</div>
+                        {(r.address || r.country) && (
+                          <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>
+                            {[r.address, r.country].filter(Boolean).join(", ")}
+                          </div>
                         )}
                       </td>
                       <td className="px-4 py-3">
@@ -493,6 +496,9 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
       </div>
       <div className="sm:col-span-2">
         <Row k="address" label="Adres" />
+      </div>
+      <div className="sm:col-span-2">
+        <Row k="country" label="Land" />
       </div>
       <div className="sm:col-span-2">
         <label className={labelCls} style={labelStyle}>Aangemeld</label>

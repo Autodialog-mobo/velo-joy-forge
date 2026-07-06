@@ -352,6 +352,7 @@ export type Database = {
           address: string | null
           admin_notes: string | null
           confirmation_email_sent_at: string | null
+          country: string | null
           created_at: string
           email: string
           first_name: string | null
@@ -374,6 +375,7 @@ export type Database = {
           address?: string | null
           admin_notes?: string | null
           confirmation_email_sent_at?: string | null
+          country?: string | null
           created_at?: string
           email: string
           first_name?: string | null
@@ -396,6 +398,7 @@ export type Database = {
           address?: string | null
           admin_notes?: string | null
           confirmation_email_sent_at?: string | null
+          country?: string | null
           created_at?: string
           email?: string
           first_name?: string | null
