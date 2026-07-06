@@ -128,6 +128,7 @@ function ShopSignupsPage() {
       phone: r.phone ?? "",
       vat: r.vat ?? "",
       address: r.address ?? "",
+      country: r.country ?? "",
       lang: (r.lang ?? "").toLowerCase(),
       pos_system: r.pos_system ?? "",
       pos_other: r.pos_other ?? "",
