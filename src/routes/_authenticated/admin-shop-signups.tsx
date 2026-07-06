@@ -456,15 +456,12 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
       <Row k="contact" label="Contact" />
       <div>
         <label className={labelCls} style={labelStyle}>Taal</label>
-        <div className="flex items-center gap-2">
-          <select value={(draft.lang ?? "").toLowerCase()} onChange={set("lang")} className={inputCls} style={inputStyle}>
-            <option value="">—</option>
-            {["nl","fr","de","en","es"].map((l) => (
-              <option key={l} value={l}>{l.toUpperCase()}</option>
-            ))}
-          </select>
-          <CopyBtn k="lang" v={(draft.lang ?? "").toUpperCase()} />
-        </div>
+        <select value={(draft.lang ?? "").toLowerCase()} onChange={set("lang")} className={inputCls} style={inputStyle}>
+          <option value="">—</option>
+          {["nl","fr","de","en","es"].map((l) => (
+            <option key={l} value={l}>{l.toUpperCase()}</option>
+          ))}
+        </select>
       </div>
       <Row k="email" label="E-mail" type="email" />
       <Row k="phone" label="Telefoon" type="tel" />
