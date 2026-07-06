@@ -133,7 +133,7 @@ export function RegisterForm() {
         setSubmit({ state: "error", message: tf("error_generic") });
       }
     },
-    [submit.state, shop, email, vat, firstName, lastName, address, phone, pos, posOther, website, lang, tf],
+    [submit.state, shop, email, vat, firstName, lastName, address, country, phone, pos, posOther, website, lang, tf],
   );
 
   if (submit.state === "success") {
