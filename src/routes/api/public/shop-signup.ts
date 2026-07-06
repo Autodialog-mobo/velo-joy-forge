@@ -77,6 +77,7 @@ export const Route = createFileRoute("/api/public/shop-signup")({
             last_name: data.lastName || null,
             shop_name: data.shopName,
             address: data.address || null,
+            country: data.country || null,
             email: data.email,
             phone: data.phone || null,
             pos_system: data.posSystem || null,
