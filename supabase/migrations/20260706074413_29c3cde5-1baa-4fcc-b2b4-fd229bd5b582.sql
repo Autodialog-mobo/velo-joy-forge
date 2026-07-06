@@ -1,0 +1,2 @@
+DROP POLICY "Admins can read margin poll responses" ON public.margin_poll_responses;
+CREATE POLICY "Admins and staff can read margin poll responses" ON public.margin_poll_responses FOR SELECT TO authenticated USING (has_role(auth.uid(),'admin'::app_role) OR has_role(auth.uid(),'staff'::app_role));
