@@ -60,8 +60,9 @@ function ShopSignupsPage() {
   const [langFilter, setLangFilter] = useState<string>("all");
   const [q, setQ] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
-  const [noteDraft, setNoteDraft] = useState("");
+  const [draft, setDraft] = useState<Record<string, string>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const rows: any[] = data?.rows ?? [];
 
