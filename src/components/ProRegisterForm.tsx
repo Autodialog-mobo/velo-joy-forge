@@ -103,6 +103,7 @@ export function RegisterForm() {
             lastName: lastName.trim(),
             shopName: shop.trim(),
             address: address.trim(),
+            country: country.trim(),
             email: email.trim(),
             phone: phone.trim(),
             posSystem: pos,
