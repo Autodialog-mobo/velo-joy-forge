@@ -244,8 +244,10 @@ function ShopSignupsPage() {
                       <td className="px-4 py-3">
                         <div className="font-semibold">{r.shop_name || "—"}</div>
                         <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{r.vat || "geen BTW"}</div>
-                        {r.address && (
-                          <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>{r.address}</div>
+                        {(r.address || r.country) && (
+                          <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>
+                            {[r.address, r.country].filter(Boolean).join(", ")}
+                          </div>
                         )}
                       </td>
                       <td className="px-4 py-3">
