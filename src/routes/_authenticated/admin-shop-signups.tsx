@@ -330,24 +330,21 @@ function ShopSignupsPage() {
                 {STATUS_LABEL[open.status as Status] ?? open.status}
               </span>
             </div>
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
-              <div><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>Contact</dt><dd>{[open.first_name, open.last_name].filter(Boolean).join(" ") || "—"}</dd></div>
-              <div><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>Taal</dt><dd>{(open.lang || "—").toUpperCase()}</dd></div>
-              <div><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>E-mail</dt><dd><a href={`mailto:${open.email}`} style={{ color: "#7AB0FF" }}>{open.email}</a></dd></div>
-              <div><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>Telefoon</dt><dd>{open.phone || "—"}</dd></div>
-              <div><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>BTW</dt><dd>{open.vat || "—"}</dd></div>
-              <div><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>POS</dt><dd>{open.pos_system || "—"}{open.pos_other ? ` (${open.pos_other})` : ""}</dd></div>
-              <div className="sm:col-span-2"><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>Adres</dt><dd>{open.address || "—"}</dd></div>
-              <div className="sm:col-span-2"><dt className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>Aangemeld</dt><dd>{new Date(open.created_at).toLocaleString("nl-BE")}</dd></div>
-            </dl>
+            <EditableGrid
+              draft={draft}
+              setDraft={setDraft}
+              copy={copy}
+              copiedKey={copiedKey}
+              created_at={open.created_at}
+            />
 
             <div className="mb-4">
               <label className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>
                 Interne notitie
               </label>
               <textarea
-                value={noteDraft}
-                onChange={(e) => setNoteDraft(e.target.value)}
+                value={draft.admin_notes ?? ""}
+                onChange={(e) => setDraft((d) => ({ ...d, admin_notes: e.target.value }))}
                 rows={4}
                 className="w-full mt-1 px-3 py-2 rounded-lg text-sm"
                 style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
@@ -364,12 +361,12 @@ function ShopSignupsPage() {
                 Sluiten
               </button>
               <button
-                onClick={() => onSaveNote(open.id)}
+                onClick={() => onSaveDetails(open.id)}
                 disabled={savingId === open.id}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
                 style={{ background: "#2ECC8A", color: "#0E0F12" }}
               >
-                <Save size={14} /> {savingId === open.id ? "Opslaan…" : "Notitie opslaan"}
+                <Save size={14} /> {savingId === open.id ? "Opslaan…" : "Wijzigingen opslaan"}
               </button>
             </div>
           </div>
