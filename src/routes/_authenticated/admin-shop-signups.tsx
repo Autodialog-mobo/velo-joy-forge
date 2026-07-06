@@ -104,7 +104,7 @@ function ShopSignupsPage() {
     setSavingId(id);
     try {
       const payload: any = { id };
-      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","lang","pos_system","pos_other","admin_notes"]) {
+      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
         payload[k] = draft[k] ?? "";
       }
       const res = await update({ data: payload });
