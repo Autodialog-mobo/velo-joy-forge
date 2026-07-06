@@ -130,7 +130,7 @@ function renderCustomerHtml(input: ShopSignupInput, t: Copy): string {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;">
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;">
-        <tr><td style="padding:0 0 24px 0;"><img src="${LOGO_URL}" alt="Velopass" width="120" height="32" style="display:block;border:0;"></td></tr>
+        <tr><td style="padding:0 0 24px 0;"><img src="${LOGO_URL}" alt="Velopass" width="40" height="40" style="display:block;border:0;"></td></tr>
         <tr><td style="padding:0 0 8px 0;color:${BRAND.ink};font:600 22px/1.3 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">${esc(t.hi)}${greetName ? " " + esc(greetName) : ""},</td></tr>
         <tr><td style="padding:0 0 20px 0;color:${BRAND.ink};font:400 15px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">${esc(t.intro)}</td></tr>
         <tr><td style="padding:16px 20px;background:${BRAND.soft};border:1px solid ${BRAND.border};border-radius:10px;">
