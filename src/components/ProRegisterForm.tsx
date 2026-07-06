@@ -274,6 +274,37 @@ export function RegisterForm() {
           autoComplete="street-address"
         />
       </div>
+      <div className="form-row">
+        <label className="flabel" htmlFor="pcountry">{tf("country")}</label>
+        <select
+          id="pcountry"
+          className="finput"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          autoComplete="country-name"
+        >
+          <option value="" disabled>{tf("country_select")}</option>
+          <option value="BE">België / Belgique</option>
+          <option value="NL">Nederland</option>
+          <option value="LU">Luxembourg</option>
+          <option value="FR">France</option>
+          <option value="DE">Deutschland</option>
+          <option value="AT">Österreich</option>
+          <option value="CH">Schweiz / Suisse</option>
+          <option value="ES">España</option>
+          <option value="PT">Portugal</option>
+          <option value="IT">Italia</option>
+          <option value="GB">United Kingdom</option>
+          <option value="IE">Ireland</option>
+          <option value="DK">Danmark</option>
+          <option value="SE">Sverige</option>
+          <option value="NO">Norge</option>
+          <option value="FI">Suomi</option>
+          <option value="PL">Polska</option>
+          <option value="CZ">Česko</option>
+          <option value="OTHER">Other / Autre / Andere</option>
+        </select>
+      </div>
       <div className="fgrid">
         <div className="form-row">
           <label className="flabel" htmlFor="pe">{tf("email")}</label>
