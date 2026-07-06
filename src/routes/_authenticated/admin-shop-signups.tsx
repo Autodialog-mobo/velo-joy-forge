@@ -375,3 +375,134 @@ function ShopSignupsPage() {
     </div>
   );
 }
+
+type EGProps = {
+  draft: Record<string, string>;
+  setDraft: React.Dispatch<React.SetStateAction<Record<string, string>>>;
+  copy: (key: string, value: string) => void;
+  copiedKey: string | null;
+  created_at: string;
+};
+
+function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps) {
+  const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setDraft((d) => ({ ...d, [k]: e.target.value }));
+
+  const inputCls = "flex-1 px-2 py-1.5 rounded-md text-sm min-w-0";
+  const inputStyle: React.CSSProperties = {
+    background: "#0E0F12",
+    border: "1px solid rgba(255,255,255,0.12)",
+    color: "#fff",
+  };
+  const labelCls = "text-xs uppercase tracking-wider block mb-1";
+  const labelStyle: React.CSSProperties = { color: "rgba(255,255,255,0.5)" };
+
+  const CopyBtn = ({ k, v }: { k: string; v: string }) => (
+    <button
+      type="button"
+      onClick={() => copy(k, v)}
+      disabled={!v}
+      title={v ? "Kopieer" : "Leeg"}
+      className="shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-md disabled:opacity-40"
+      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
+    >
+      {copiedKey === k ? <Check size={13} /> : <Copy size={13} />}
+    </button>
+  );
+
+  const Row = ({ k, label, type = "text" }: { k: string; label: string; type?: string }) => {
+    const contactValue =
+      k === "contact" ? `${draft.first_name ?? ""} ${draft.last_name ?? ""}`.trim() : draft[k] ?? "";
+    return (
+      <div>
+        <label className={labelCls} style={labelStyle}>{label}</label>
+        <div className="flex items-center gap-2">
+          {k === "contact" ? (
+            <div className="flex-1 flex gap-2 min-w-0">
+              <input
+                type="text"
+                value={draft.first_name ?? ""}
+                onChange={set("first_name")}
+                placeholder="Voornaam"
+                className={inputCls}
+                style={inputStyle}
+              />
+              <input
+                type="text"
+                value={draft.last_name ?? ""}
+                onChange={set("last_name")}
+                placeholder="Achternaam"
+                className={inputCls}
+                style={inputStyle}
+              />
+            </div>
+          ) : (
+            <input
+              type={type}
+              value={draft[k] ?? ""}
+              onChange={set(k)}
+              className={inputCls}
+              style={inputStyle}
+            />
+          )}
+          <CopyBtn k={k} v={contactValue} />
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+      <Row k="contact" label="Contact" />
+      <div>
+        <label className={labelCls} style={labelStyle}>Taal</label>
+        <div className="flex items-center gap-2">
+          <select value={(draft.lang ?? "").toLowerCase()} onChange={set("lang")} className={inputCls} style={inputStyle}>
+            <option value="">—</option>
+            {["nl","fr","de","en","es"].map((l) => (
+              <option key={l} value={l}>{l.toUpperCase()}</option>
+            ))}
+          </select>
+          <CopyBtn k="lang" v={(draft.lang ?? "").toUpperCase()} />
+        </div>
+      </div>
+      <Row k="email" label="E-mail" type="email" />
+      <Row k="phone" label="Telefoon" type="tel" />
+      <Row k="vat" label="BTW" />
+      <div>
+        <label className={labelCls} style={labelStyle}>POS</label>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={draft.pos_system ?? ""}
+            onChange={set("pos_system")}
+            placeholder="Systeem"
+            className={inputCls}
+            style={inputStyle}
+          />
+          <input
+            type="text"
+            value={draft.pos_other ?? ""}
+            onChange={set("pos_other")}
+            placeholder="Ander"
+            className={inputCls}
+            style={inputStyle}
+          />
+          <CopyBtn k="pos" v={[draft.pos_system, draft.pos_other].filter(Boolean).join(" / ")} />
+        </div>
+      </div>
+      <div className="sm:col-span-2">
+        <Row k="shop_name" label="Winkel" />
+      </div>
+      <div className="sm:col-span-2">
+        <Row k="address" label="Adres" />
+      </div>
+      <div className="sm:col-span-2">
+        <label className={labelCls} style={labelStyle}>Aangemeld</label>
+        <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 14 }}>
+          {new Date(created_at).toLocaleString("nl-BE")}
+        </div>
+      </div>
+    </div>
+  );
+}
