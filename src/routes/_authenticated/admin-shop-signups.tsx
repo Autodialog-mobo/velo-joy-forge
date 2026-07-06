@@ -498,6 +498,9 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
         <Row k="address" label="Adres" />
       </div>
       <div className="sm:col-span-2">
+        <Row k="country" label="Land" />
+      </div>
+      <div className="sm:col-span-2">
         <label className={labelCls} style={labelStyle}>Aangemeld</label>
         <div style={{ color: "rgba(255,255,255,0.7)", fontSize: 14 }}>
           {new Date(created_at).toLocaleString("nl-BE")}
