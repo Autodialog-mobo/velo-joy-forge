@@ -100,17 +100,50 @@ function ShopSignupsPage() {
     }
   };
 
-  const onSaveNote = async (id: string) => {
+  const onSaveDetails = async (id: string) => {
     setSavingId(id);
     try {
-      await update({ data: { id, admin_notes: noteDraft } });
-      toast.success("Notitie opgeslagen");
+      const payload: any = { id };
+      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","lang","pos_system","pos_other","admin_notes"]) {
+        payload[k] = draft[k] ?? "";
+      }
+      const res = await update({ data: payload });
+      toast.success(res?.changed ? "Aanmelding bijgewerkt" : "Geen wijzigingen");
       refetch();
       setOpenId(null);
     } catch (err: any) {
       toast.error(err.message ?? "Opslaan mislukt");
     } finally {
       setSavingId(null);
+    }
+  };
+
+  const openRow = (r: any) => {
+    setOpenId(r.id);
+    setDraft({
+      first_name: r.first_name ?? "",
+      last_name: r.last_name ?? "",
+      shop_name: r.shop_name ?? "",
+      email: r.email ?? "",
+      phone: r.phone ?? "",
+      vat: r.vat ?? "",
+      address: r.address ?? "",
+      lang: (r.lang ?? "").toLowerCase(),
+      pos_system: r.pos_system ?? "",
+      pos_other: r.pos_other ?? "",
+      admin_notes: r.admin_notes ?? "",
+    });
+  };
+
+  const copy = async (key: string, value: string) => {
+    if (!value) return;
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedKey(key);
+      toast.success("Gekopieerd");
+      setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1200);
+    } catch {
+      toast.error("Kopiëren mislukt");
     }
   };
 
