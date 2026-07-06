@@ -35,24 +35,70 @@ export const listShopSignups = createServerFn({ method: "POST" })
     return { rows: data ?? [] };
   });
 
+const nullableStr = (max: number) =>
+  z.string().trim().max(max).nullable().optional().transform((v) => (v === "" ? null : v));
+
 const updateSchema = z.object({
   id: z.string().uuid(),
   status: z.enum(["new", "contacted", "converted", "rejected"]).optional(),
   admin_notes: z.string().max(4000).nullable().optional(),
+  first_name: nullableStr(120),
+  last_name: nullableStr(120),
+  shop_name: nullableStr(200),
+  email: z.string().trim().email().max(255).nullable().optional().transform((v) => (v === "" ? null : v)),
+  phone: nullableStr(60),
+  vat: nullableStr(60),
+  address: nullableStr(500),
+  lang: z.enum(["nl", "fr", "de", "en", "es"]).nullable().optional(),
+  pos_system: nullableStr(120),
+  pos_other: nullableStr(200),
 });
+
+const EDITABLE_FIELDS = [
+  "first_name","last_name","shop_name","email","phone","vat","address",
+  "lang","pos_system","pos_other","admin_notes",
+] as const;
 
 export const updateShopSignup = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((d: unknown) => updateSchema.parse(d))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
+
+    // Fetch previous values for diff logging.
+    const { data: before, error: fetchErr } = await (context.supabase as any)
+      .from("shop_signups")
+      .select("*")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (fetchErr) {
+      console.error("[shop-signups] fetch before update failed", fetchErr);
+      throw new Error(fetchErr.message);
+    }
+    if (!before) throw new Error("Aanmelding niet gevonden");
+
     const patch: any = { updated_at: new Date().toISOString() };
-    if (data.status !== undefined) {
+    const changes: Record<string, { from: unknown; to: unknown }> = {};
+
+    if (data.status !== undefined && data.status !== before.status) {
       patch.status = data.status;
       patch.status_updated_at = new Date().toISOString();
       patch.status_updated_by = context.userId;
+      changes.status = { from: before.status, to: data.status };
     }
-    if (data.admin_notes !== undefined) patch.admin_notes = data.admin_notes;
+    for (const f of EDITABLE_FIELDS) {
+      const val = (data as any)[f];
+      if (val === undefined) continue;
+      if ((before as any)[f] !== val) {
+        patch[f] = val;
+        changes[f] = { from: (before as any)[f] ?? null, to: val ?? null };
+      }
+    }
+
+    if (Object.keys(changes).length === 0) {
+      return { ok: true, changed: false };
+    }
+
     const { error } = await (context.supabase as any)
       .from("shop_signups")
       .update(patch)
@@ -65,5 +111,14 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       });
       throw new Error(error.message);
     }
-    return { ok: true };
+
+    const { writeAudit } = await import("@/lib/audit.server");
+    await writeAudit(context, {
+      action: "shop_signup.update",
+      target_type: "shop_signup",
+      target_id: data.id,
+      metadata: { changes, shop_name: before.shop_name ?? null, email: before.email ?? null },
+    });
+
+    return { ok: true, changed: true };
   });
