@@ -73,7 +73,7 @@ function ShopSignupsPage() {
       if (langFilter !== "all" && (r.lang || "").toLowerCase() !== langFilter) return false;
       if (needle) {
         const hay = [
-          r.email, r.shop_name, r.first_name, r.last_name, r.vat, r.phone, r.address,
+          r.email, r.shop_name, r.first_name, r.last_name, r.vat, r.phone, r.address, r.country,
         ].filter(Boolean).join(" ").toLowerCase();
         if (!hay.includes(needle)) return false;
       }
