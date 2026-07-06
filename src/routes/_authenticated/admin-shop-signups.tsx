@@ -287,7 +287,7 @@ function ShopSignupsPage() {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <button
-                          onClick={() => { setOpenId(r.id); setNoteDraft(r.admin_notes ?? ""); }}
+                          onClick={() => openRow(r)}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs"
                           style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
                         >
