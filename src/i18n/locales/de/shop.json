@@ -245,7 +245,7 @@
     "shop_name": "Name des Fahrradgeschäfts",
     "shop_name_placeholder": "Müller Fahrrad",
     "address": "Adresse",
-    "address_placeholder": "Hauptstraße 42, 10115 Berlin",
+    "address_placeholder": "Hauptstraße 42, 10115 Berlin", "country": "Land", "country_select": "Land auswählen",
     "email": "E-Mail-Adresse",
     "email_placeholder": "lukas@muellerfahrrad.de",
     "phone": "Telefonnummer",
