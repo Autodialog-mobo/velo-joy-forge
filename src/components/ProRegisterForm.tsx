@@ -36,6 +36,7 @@ export function RegisterForm() {
   const [lastName, setLastName] = useState("");
   const [shop, setShop] = useState("");
   const [address, setAddress] = useState("");
+  const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [pos, setPos] = useState("");
