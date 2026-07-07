@@ -404,7 +404,7 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
   const labelCls = "text-xs uppercase tracking-wider block mb-1";
   const labelStyle: React.CSSProperties = { color: "rgba(255,255,255,0.5)" };
 
-  const CopyBtn = ({ k, v }: { k: string; v: string }) => (
+  const renderCopyBtn = (k: string, v: string) => (
     <button
       type="button"
       onClick={() => copy(k, v)}
@@ -417,7 +417,7 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
     </button>
   );
 
-  const Row = ({ k, label, type = "text" }: { k: string; label: string; type?: string }) => {
+  const renderRow = (k: string, label: string, type: string = "text") => {
     const contactValue =
       k === "contact" ? `${draft.first_name ?? ""} ${draft.last_name ?? ""}`.trim() : draft[k] ?? "";
     return (
@@ -452,11 +452,12 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
               style={inputStyle}
             />
           )}
-          <CopyBtn k={k} v={contactValue} />
+          {renderCopyBtn(k, contactValue)}
         </div>
       </div>
     );
   };
+
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
