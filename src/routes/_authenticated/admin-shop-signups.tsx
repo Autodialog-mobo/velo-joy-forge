@@ -58,6 +58,8 @@ function ShopSignupsPage() {
 
   const [statusFilter, setStatusFilter] = useState<Status | "all">("all");
   const [langFilter, setLangFilter] = useState<string>("all");
+  const [countryFilter, setCountryFilter] = useState<string>("all");
+  const [countrySort, setCountrySort] = useState<"asc" | "desc" | null>(null);
   const [q, setQ] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -66,11 +68,21 @@ function ShopSignupsPage() {
 
   const rows: any[] = data?.rows ?? [];
 
+  const countries = useMemo(() => {
+    const set = new Set<string>();
+    rows.forEach((r) => {
+      const c = (r.country || "").trim();
+      if (c) set.add(c);
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "nl"));
+  }, [rows]);
+
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return rows.filter((r) => {
+    let list = rows.filter((r) => {
       if (statusFilter !== "all" && r.status !== statusFilter) return false;
       if (langFilter !== "all" && (r.lang || "").toLowerCase() !== langFilter) return false;
+      if (countryFilter !== "all" && (r.country || "").trim() !== countryFilter) return false;
       if (needle) {
         const hay = [
           r.email, r.shop_name, r.first_name, r.last_name, r.vat, r.phone, r.address, r.country,
@@ -79,7 +91,16 @@ function ShopSignupsPage() {
       }
       return true;
     });
-  }, [rows, statusFilter, langFilter, q]);
+    if (countrySort) {
+      list = list.slice().sort((a, b) => {
+        const ca = (a.country || "").toLowerCase();
+        const cb = (b.country || "").toLowerCase();
+        if (ca === cb) return 0;
+        return countrySort === "asc" ? ca.localeCompare(cb, "nl") : cb.localeCompare(ca, "nl");
+      });
+    }
+    return list;
+  }, [rows, statusFilter, langFilter, countryFilter, countrySort, q]);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: rows.length, new: 0, contacted: 0, converted: 0, rejected: 0 };
