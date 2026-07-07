@@ -251,6 +251,9 @@ function ShopSignupsPage() {
                           </div>
                         )}
                       </td>
+                      <td className="px-4 py-3 whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        {r.country || "—"}
+                      </td>
                       <td className="px-4 py-3">
                         <div>{[r.first_name, r.last_name].filter(Boolean).join(" ") || "—"}</div>
                         <a href={`mailto:${r.email}`} className="inline-flex items-center gap-1 text-xs mt-0.5" style={{ color: "#7AB0FF" }}>
