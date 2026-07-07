@@ -512,7 +512,6 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
         </div>
       </div>
     </div>
-
-    </div>
   );
+
 }
