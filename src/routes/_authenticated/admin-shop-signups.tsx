@@ -225,6 +225,7 @@ function ShopSignupsPage() {
                   <tr style={{ color: "rgba(255,255,255,0.5)" }}>
                     <th className="text-left px-4 py-3 font-medium">Datum</th>
                     <th className="text-left px-4 py-3 font-medium">Winkel</th>
+                    <th className="text-left px-4 py-3 font-medium">Land</th>
                     <th className="text-left px-4 py-3 font-medium">Contact</th>
                     <th className="text-left px-4 py-3 font-medium">Taal</th>
                     <th className="text-left px-4 py-3 font-medium">POS</th>
