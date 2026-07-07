@@ -461,7 +461,7 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-      <Row k="contact" label="Contact" />
+      {renderRow("contact", "Contact")}
       <div>
         <label className={labelCls} style={labelStyle}>Taal</label>
         <select value={(draft.lang ?? "").toLowerCase()} onChange={set("lang")} className={inputCls} style={inputStyle}>
@@ -471,9 +471,9 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
           ))}
         </select>
       </div>
-      <Row k="email" label="E-mail" type="email" />
-      <Row k="phone" label="Telefoon" type="tel" />
-      <Row k="vat" label="BTW" />
+      {renderRow("email", "E-mail", "email")}
+      {renderRow("phone", "Telefoon", "tel")}
+      {renderRow("vat", "BTW")}
       <div>
         <label className={labelCls} style={labelStyle}>POS</label>
         <div className="flex items-center gap-2">
@@ -493,17 +493,17 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
             className={inputCls}
             style={inputStyle}
           />
-          <CopyBtn k="pos" v={[draft.pos_system, draft.pos_other].filter(Boolean).join(" / ")} />
+          {renderCopyBtn("pos", [draft.pos_system, draft.pos_other].filter(Boolean).join(" / "))}
         </div>
       </div>
       <div className="sm:col-span-2">
-        <Row k="shop_name" label="Winkel" />
+        {renderRow("shop_name", "Winkel")}
       </div>
       <div className="sm:col-span-2">
-        <Row k="address" label="Adres" />
+        {renderRow("address", "Adres")}
       </div>
       <div className="sm:col-span-2">
-        <Row k="country" label="Land" />
+        {renderRow("country", "Land")}
       </div>
       <div className="sm:col-span-2">
         <label className={labelCls} style={labelStyle}>Aangemeld</label>
@@ -511,6 +511,8 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
           {new Date(created_at).toLocaleString("nl-BE")}
         </div>
       </div>
+    </div>
+
     </div>
   );
 }
