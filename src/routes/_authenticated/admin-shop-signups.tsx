@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check } from "lucide-react";
+import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { listShopSignups, updateShopSignup } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
@@ -58,6 +58,8 @@ function ShopSignupsPage() {
 
   const [statusFilter, setStatusFilter] = useState<Status | "all">("all");
   const [langFilter, setLangFilter] = useState<string>("all");
+  const [countryFilter, setCountryFilter] = useState<string>("all");
+  const [countrySort, setCountrySort] = useState<"asc" | "desc" | null>(null);
   const [q, setQ] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -66,11 +68,21 @@ function ShopSignupsPage() {
 
   const rows: any[] = data?.rows ?? [];
 
+  const countries = useMemo(() => {
+    const set = new Set<string>();
+    rows.forEach((r) => {
+      const c = (r.country || "").trim();
+      if (c) set.add(c);
+    });
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "nl"));
+  }, [rows]);
+
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return rows.filter((r) => {
+    let list = rows.filter((r) => {
       if (statusFilter !== "all" && r.status !== statusFilter) return false;
       if (langFilter !== "all" && (r.lang || "").toLowerCase() !== langFilter) return false;
+      if (countryFilter !== "all" && (r.country || "").trim() !== countryFilter) return false;
       if (needle) {
         const hay = [
           r.email, r.shop_name, r.first_name, r.last_name, r.vat, r.phone, r.address, r.country,
@@ -79,7 +91,16 @@ function ShopSignupsPage() {
       }
       return true;
     });
-  }, [rows, statusFilter, langFilter, q]);
+    if (countrySort) {
+      list = list.slice().sort((a, b) => {
+        const ca = (a.country || "").toLowerCase();
+        const cb = (b.country || "").toLowerCase();
+        if (ca === cb) return 0;
+        return countrySort === "asc" ? ca.localeCompare(cb, "nl") : cb.localeCompare(ca, "nl");
+      });
+    }
+    return list;
+  }, [rows, statusFilter, langFilter, countryFilter, countrySort, q]);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: rows.length, new: 0, contacted: 0, converted: 0, rejected: 0 };
@@ -185,6 +206,20 @@ function ShopSignupsPage() {
           </div>
           <div className="flex flex-wrap gap-3 items-center">
             <div className="flex items-center gap-2">
+              <span className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>Land</span>
+              <select
+                value={countryFilter}
+                onChange={(e) => setCountryFilter(e.target.value)}
+                className="px-3 py-2 rounded-lg text-sm"
+                style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
+              >
+                <option value="all">Alle</option>
+                {countries.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
               <span className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>Taal</span>
               <select
                 value={langFilter}
@@ -225,7 +260,23 @@ function ShopSignupsPage() {
                   <tr style={{ color: "rgba(255,255,255,0.5)" }}>
                     <th className="text-left px-4 py-3 font-medium">Datum</th>
                     <th className="text-left px-4 py-3 font-medium">Winkel</th>
-                    <th className="text-left px-4 py-3 font-medium">Land</th>
+                    <th
+                      className="text-left px-4 py-3 font-medium cursor-pointer select-none"
+                      onClick={() =>
+                        setCountrySort((prev) => (prev === "asc" ? "desc" : "asc"))
+                      }
+                    >
+                      <span className="inline-flex items-center gap-1">
+                        Land
+                        {countrySort === "asc" ? (
+                          <ArrowUp size={12} />
+                        ) : countrySort === "desc" ? (
+                          <ArrowDown size={12} />
+                        ) : (
+                          <ArrowUpDown size={12} style={{ opacity: 0.5 }} />
+                        )}
+                      </span>
+                    </th>
                     <th className="text-left px-4 py-3 font-medium">Contact</th>
                     <th className="text-left px-4 py-3 font-medium">Taal</th>
                     <th className="text-left px-4 py-3 font-medium">POS</th>
