@@ -206,6 +206,20 @@ function ShopSignupsPage() {
           </div>
           <div className="flex flex-wrap gap-3 items-center">
             <div className="flex items-center gap-2">
+              <span className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>Land</span>
+              <select
+                value={countryFilter}
+                onChange={(e) => setCountryFilter(e.target.value)}
+                className="px-3 py-2 rounded-lg text-sm"
+                style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
+              >
+                <option value="all">Alle</option>
+                {countries.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center gap-2">
               <span className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>Taal</span>
               <select
                 value={langFilter}
