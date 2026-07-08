@@ -1,24 +1,12 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { listAdmins, inviteAdmin, removeAdmin, updateMemberRole, type AppRole } from "@/lib/users.functions";
-import { supabase } from "@/integrations/supabase/client";
 import { UserPlus, Trash2, Mail, ShieldCheck } from "lucide-react";
 
 export const Route = createFileRoute("/_admin/admin-users")({
   ssr: false,
-  beforeLoad: async () => {
-    const { data: u } = await supabase.auth.getUser();
-    if (!u.user) throw redirect({ to: "/auth" });
-    const { data: roles } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", u.user.id)
-      .eq("role", "admin")
-      .maybeSingle();
-    if (!roles) throw redirect({ to: "/admin" });
-  },
   component: AdminUsersPage,
 });
 

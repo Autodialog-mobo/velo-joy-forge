@@ -1,22 +1,11 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { listMarginPoll } from "@/lib/margin-poll.functions";
 
 export const Route = createFileRoute("/_admin/admin-margin-poll")({
   ssr: false,
-  beforeLoad: async () => {
-    const { data: u } = await supabase.auth.getUser();
-    if (!u.user) throw redirect({ to: "/auth" });
-    const { data: roles } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", u.user.id)
-      .in("role", ["admin", "staff"]);
-    if (!roles || roles.length === 0) throw redirect({ to: "/admin" });
-  },
   component: MarginPollAdmin,
 });
 
