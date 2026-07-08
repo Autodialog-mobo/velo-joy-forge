@@ -1,28 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { requireAuth0Admin } from "@/integrations/auth0/middleware";
 
-async function assertAdmin(supabase: any, userId: string) {
-  const { data, error } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", userId)
-    .in("role", ["admin", "staff"])
-    .limit(1)
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: admin or staff role required");
-}
+// legacy Supabase role-assertion helper removed — Auth0 middleware now verifies b2b_admin.
 
-async function assertAdminStrict(supabase: any, userId: string) {
-  const { data, error } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", userId)
-    .eq("role", "admin")
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: admin role required");
-}
+// legacy Supabase role-assertion helper removed — Auth0 middleware now verifies b2b_admin.
 
 function actorEmail(context: any): string {
   return (
@@ -53,13 +34,12 @@ async function logEvent(
 }
 
 export const listOrders = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator(
     (d: { environment?: "live" | "sandbox"; includeDeleted?: boolean } = {}) => d ?? {},
   )
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const env = data?.environment ?? "live";
     const { data: orders, error } = await supabaseAdmin
@@ -83,11 +63,10 @@ export const listOrders = createServerFn({ method: "POST" })
   });
 
 export const listOrderEvents = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderId: string }) => d)
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: events, error } = await (supabaseAdmin as any)
       .from("order_events")
@@ -99,7 +78,7 @@ export const listOrderEvents = createServerFn({ method: "POST" })
   });
 
 export const listEmailEvents = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator(
     (d: {
       eventType?: "confirmation_email_resent" | "confirmation_email_test_sent" | "all";
@@ -109,8 +88,7 @@ export const listEmailEvents = createServerFn({ method: "POST" })
     } = {}) => d ?? {},
   )
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const limit = Math.min(Math.max(data?.limit ?? 200, 1), 1000);
 
@@ -143,8 +121,7 @@ async function bulkStatusUpdate(
   toStatus: string,
   eventType: "printed" | "shipped" | "reverted",
 ) {
-  const { supabase, userId } = context as any;
-  await assertAdmin(supabase, userId);
+  const { userId, claims } = context as any;
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const { writeAudit } = await import("./audit.server");
   const { data: updated, error } = await (supabaseAdmin as any)
@@ -178,39 +155,38 @@ async function bulkStatusUpdate(
 }
 
 export const markPrinted = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderIds: string[] }) => d)
   .handler(async ({ data, context }) =>
     bulkStatusUpdate(context, data.orderIds, "paid", "printed", "printed"),
   );
 
 export const markShipped = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderIds: string[] }) => d)
   .handler(async ({ data, context }) =>
     bulkStatusUpdate(context, data.orderIds, "printed", "shipped", "shipped"),
   );
 
 export const revertToPaid = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderId: string }) => d)
   .handler(async ({ data, context }) =>
     bulkStatusUpdate(context, [data.orderId], "printed", "paid", "reverted"),
   );
 
 export const revertToPrinted = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderId: string }) => d)
   .handler(async ({ data, context }) =>
     bulkStatusUpdate(context, [data.orderId], "shipped", "printed", "reverted"),
   );
 
 export const softDeleteOrder = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderId: string }) => d)
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await (supabaseAdmin as any)
       .from("orders")
@@ -233,11 +209,10 @@ export const softDeleteOrder = createServerFn({ method: "POST" })
   });
 
 export const restoreOrder = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderId: string }) => d)
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await (supabaseAdmin as any)
       .from("orders")
@@ -260,11 +235,10 @@ export const restoreOrder = createServerFn({ method: "POST" })
   });
 
 export const sendTestOrderConfirmation = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { orderId: string; to?: string }) => d)
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: order, error } = await (supabaseAdmin as any)
@@ -333,11 +307,10 @@ export const sendTestOrderConfirmation = createServerFn({ method: "POST" })
 
 
 export const listWebhookEvents = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { limit?: number } = {}) => d ?? {})
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdminStrict(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const limit = Math.min(Math.max(data?.limit ?? 100, 1), 500);
 
@@ -386,11 +359,10 @@ export const listWebhookEvents = createServerFn({ method: "POST" })
   });
 
 export const listAuditLog = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { limit?: number; action?: string | null } = {}) => d ?? {})
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdminStrict(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const limit = Math.min(Math.max(data?.limit ?? 200, 1), 1000);
     let q = (supabaseAdmin as any)
@@ -405,7 +377,7 @@ export const listAuditLog = createServerFn({ method: "POST" })
   });
 
 export const logPrintAudit = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator(
     (d: {
       kind: "success" | "error" | "partial";
@@ -422,8 +394,7 @@ export const logPrintAudit = createServerFn({ method: "POST" })
     }) => d,
   )
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { writeAudit } = await import("./audit.server");
     const changed = data.rows.filter((r) => r.oldStatus !== r.newStatus).length;
     const rolledBack = data.rows.filter((r) => r.rollback === "reverted").length;
@@ -447,7 +418,7 @@ export const logPrintAudit = createServerFn({ method: "POST" })
   });
 
 export const listEmailSendLog = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator(
     (d: {
       status?: string | null;
@@ -459,8 +430,7 @@ export const listEmailSendLog = createServerFn({ method: "POST" })
     } = {}) => d ?? {},
   )
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdmin(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const limit = Math.min(Math.max(data?.limit ?? 500, 1), 2000);
 

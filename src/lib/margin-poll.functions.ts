@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { requireAuth0Admin } from "@/integrations/auth0/middleware";
 import { z } from "zod";
 
 const submitSchema = z.object({
@@ -49,7 +49,7 @@ export const submitMarginPoll = createServerFn({ method: "POST" })
   });
 
 export const listMarginPoll = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => d ?? {})
   .handler(async ({ context }) => {
     const { data: roles } = await context.supabase
