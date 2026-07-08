@@ -278,19 +278,51 @@ export function RegisterForm() {
         />
       </div>
       <div className="form-row">
-        <label className="flabel" htmlFor="paddr">{tf("address")}</label>
+        <label className="flabel" htmlFor="pstreet">{tf("street")}</label>
         <input
-          id="paddr"
+          id="pstreet"
           className={`finput${autofilled.address ? " from-vies" : ""}`}
           type="text"
-          placeholder={tf("address_placeholder")}
-          value={address}
+          placeholder={tf("street_placeholder")}
+          value={street}
           onChange={(e) => {
-            setAddress(e.target.value);
+            setStreet(e.target.value);
             if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
           }}
           autoComplete="street-address"
         />
+      </div>
+      <div className="fgrid">
+        <div className="form-row">
+          <label className="flabel" htmlFor="ppostal">{tf("postal_code")}</label>
+          <input
+            id="ppostal"
+            className={`finput${autofilled.address ? " from-vies" : ""}`}
+            type="text"
+            placeholder={tf("postal_code_placeholder")}
+            value={postalCode}
+            onChange={(e) => {
+              setPostalCode(e.target.value);
+              if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
+            }}
+            autoComplete="postal-code"
+          />
+        </div>
+        <div className="form-row">
+          <label className="flabel" htmlFor="pcity">{tf("city")}</label>
+          <input
+            id="pcity"
+            className={`finput${autofilled.address ? " from-vies" : ""}`}
+            type="text"
+            placeholder={tf("city_placeholder")}
+            value={city}
+            onChange={(e) => {
+              setCity(e.target.value);
+              if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
+            }}
+            autoComplete="address-level2"
+          />
+        </div>
       </div>
       <div className="form-row">
         <label className="flabel" htmlFor="pcountry">{tf("country")}</label>
