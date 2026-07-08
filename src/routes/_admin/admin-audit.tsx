@@ -5,7 +5,7 @@ import { ArrowLeft, RefreshCw } from "lucide-react";
 import { listAuditLog } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/admin-audit")({
+export const Route = createFileRoute("/_admin/admin-audit")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();

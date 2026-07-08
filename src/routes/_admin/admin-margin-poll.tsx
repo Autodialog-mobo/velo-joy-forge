@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { listMarginPoll } from "@/lib/margin-poll.functions";
 
-export const Route = createFileRoute("/_authenticated/admin-margin-poll")({
+export const Route = createFileRoute("/_admin/admin-margin-poll")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();

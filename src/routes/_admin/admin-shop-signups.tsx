@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { listShopSignups, updateShopSignup } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/admin-shop-signups")({
+export const Route = createFileRoute("/_admin/admin-shop-signups")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();

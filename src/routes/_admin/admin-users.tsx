@@ -6,7 +6,7 @@ import { listAdmins, inviteAdmin, removeAdmin, updateMemberRole, type AppRole } 
 import { supabase } from "@/integrations/supabase/client";
 import { UserPlus, Trash2, Mail, ShieldCheck } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/admin-users")({
+export const Route = createFileRoute("/_admin/admin-users")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();

@@ -17,7 +17,7 @@ const adminSearchSchema = z.object({
   order: z.string().optional(),
 });
 
-export const Route = createFileRoute("/_authenticated/admin")({
+export const Route = createFileRoute("/_admin/admin")({
   validateSearch: zodValidator(adminSearchSchema),
   component: AdminPage,
 });

@@ -6,7 +6,7 @@ import { ArrowLeft, RefreshCw, Mail, Send, Search, X } from "lucide-react";
 import { listEmailEvents } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/admin-email-events")({
+export const Route = createFileRoute("/_admin/admin-email-events")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();

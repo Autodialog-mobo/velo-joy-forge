@@ -6,7 +6,7 @@ import { ArrowLeft, RefreshCw, Search, X, Mail, AlertTriangle, CheckCircle2 } fr
 import { listEmailSendLog } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/admin-email-log")({
+export const Route = createFileRoute("/_admin/admin-email-log")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();

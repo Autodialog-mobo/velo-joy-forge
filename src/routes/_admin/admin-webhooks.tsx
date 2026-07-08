@@ -5,7 +5,7 @@ import { ArrowLeft, RefreshCw, CheckCircle2, AlertCircle, Clock } from "lucide-r
 import { listWebhookEvents } from "@/lib/admin.functions";
 import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/admin-webhooks")({
+export const Route = createFileRoute("/_admin/admin-webhooks")({
   ssr: false,
   beforeLoad: async () => {
     const { data: u } = await supabase.auth.getUser();
