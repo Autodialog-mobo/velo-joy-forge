@@ -894,8 +894,7 @@ function AdminPage() {
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    navigate({ to: "/auth" });
+    logout({ logoutParams: { returnTo: window.location.origin } });
   };
 
   const hasSelection = selectedOrders.length > 0;
