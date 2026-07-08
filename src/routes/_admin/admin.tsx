@@ -8,9 +8,8 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation, logPrintAudit } from "@/lib/admin.functions";
-import { getMyRoles } from "@/lib/users.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth";
 import { toast } from "sonner";
 
 const adminSearchSchema = z.object({
@@ -18,6 +17,7 @@ const adminSearchSchema = z.object({
 });
 
 export const Route = createFileRoute("/_admin/admin")({
+  ssr: false,
   validateSearch: zodValidator(adminSearchSchema),
   component: AdminPage,
 });
@@ -141,13 +141,11 @@ function AdminPage() {
   const [testEmailBusy, setTestEmailBusy] = useState(false);
   const [testEmailMsg, setTestEmailMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
   // reset further below once detailOrder is declared
-  const fetchRoles = useServerFn(getMyRoles);
-  const { data: roleData } = useQuery({
-    queryKey: ["my-roles"],
-    queryFn: () => fetchRoles({ data: {} as any }),
-  });
-  const isAdmin = !!roleData?.roles?.includes("admin");
-  const isStaff = !!roleData?.roles?.includes("staff");
+  // Auth0 gate (RequireAuth in _admin/route.tsx) already guarantees b2b_admin.
+  // Legacy Supabase role split (admin vs staff) is unused with Auth0-only auth.
+  const { logout } = useAuth();
+  const isAdmin = true;
+  const isStaff = true;
   const canSeeShopLinks = isAdmin || isStaff;
 
 
