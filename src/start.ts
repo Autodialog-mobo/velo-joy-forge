@@ -2,6 +2,7 @@ import { createStart, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
 import { attachAuth0Token } from "@/integrations/auth0/attach-token";
+import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -23,6 +24,6 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
 // supabase.auth.getSession() would attach a stale/absent Supabase JWT
 // that requireAuth0Admin would reject.
 export const startInstance = createStart(() => ({
-  functionMiddleware: [attachAuth0Token],
+  functionMiddleware: [attachSupabaseAuth, attachAuth0Token],
   requestMiddleware: [errorMiddleware],
 }));
