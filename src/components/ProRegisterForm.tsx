@@ -26,18 +26,6 @@ function looksValid(v: string): boolean {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function parseViesAddress(raw: string): { street: string; postal: string; city: string } {
-  const cleaned = raw.replace(/\r/g, "").replace(/\n+/g, ", ").replace(/\s{2,}/g, " ").trim();
-  const m = cleaned.match(/^(.*?)[,\s]+(\d{4,5})\s+([A-Za-zÀ-ÿ'()\/. -]+?)\s*$/);
-  if (m) return { street: m[1].replace(/,\s*$/, "").trim(), postal: m[2], city: m[3].trim() };
-  return { street: cleaned, postal: "", city: "" };
-}
-
-function joinAddress(street: string, postal: string, city: string): string {
-  const s = street.trim();
-  const tail = [postal.trim(), city.trim()].filter(Boolean).join(" ");
-  return [s, tail].filter(Boolean).join(", ");
-}
 
 export function RegisterForm() {
   const lang = useCurrentLang();
@@ -48,9 +36,7 @@ export function RegisterForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [shop, setShop] = useState("");
-  const [street, setStreet] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -80,10 +66,7 @@ export function RegisterForm() {
       const data = await res.json();
       if (data.valid && data.name) {
         setShop(data.name);
-        const parsed = parseViesAddress(data.address || "");
-        setStreet(parsed.street);
-        setPostalCode(parsed.postal);
-        setCity(parsed.city);
+        setAddress(data.address || "");
         setAutofilled({ shop: true, address: !!data.address });
         setVies({ state: "ok", name: data.name, address: data.address || "" });
       } else if (data.error === "VIES unavailable") {
@@ -120,7 +103,7 @@ export function RegisterForm() {
             firstName: firstName.trim(),
             lastName: lastName.trim(),
             shopName: shop.trim(),
-            address: joinAddress(street, postalCode, city),
+            address: address.trim(),
             country: country.trim(),
             email: email.trim(),
             phone: phone.trim(),
@@ -151,7 +134,7 @@ export function RegisterForm() {
         setSubmit({ state: "error", message: tf("error_generic") });
       }
     },
-    [submit.state, shop, email, vat, firstName, lastName, street, postalCode, city, country, phone, pos, posOther, website, lang, tf],
+    [submit.state, shop, email, vat, firstName, lastName, address, country, phone, pos, posOther, website, lang, tf],
   );
 
   if (submit.state === "success") {
