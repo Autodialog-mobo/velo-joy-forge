@@ -1,36 +1,23 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { requireAuth0Admin } from "@/integrations/auth0/middleware";
 
 export type AppRole = "admin" | "staff";
 
-async function assertAdminStrict(supabase: any, userId: string) {
-  const { data, error } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", userId)
-    .eq("role", "admin")
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  if (!data) throw new Error("Forbidden: admin role required");
-}
+// legacy Supabase role-assertion helper removed — Auth0 middleware now verifies b2b_admin.
 
 export const getMyRoles = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .handler(async ({ context }) => {
-    const { supabase, userId } = context as any;
-    const { data, error } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId);
-    if (error) throw new Error(error.message);
-    return { roles: (data ?? []).map((r: any) => r.role as string) };
+    // Auth0 middleware guarantees b2b_admin. Mirror the legacy shape so any
+    // remaining UI code that expects an "admin" role in the array keeps working.
+    const claims = (context as any).claims ?? {};
+    return { roles: ["admin"] as string[], email: claims.email ?? null, sub: (context as any).userId as string };
   });
 
 export const listAdmins = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .handler(async ({ context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdminStrict(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: allow, error: ae } = await (supabaseAdmin as any)
@@ -77,7 +64,7 @@ export const listAdmins = createServerFn({ method: "POST" })
   });
 
 export const inviteAdmin = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { email: string; role: AppRole }) => {
     const email = (d.email || "").trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("Ongeldig e-mailadres");
@@ -85,8 +72,7 @@ export const inviteAdmin = createServerFn({ method: "POST" })
     return { email, role: role as AppRole };
   })
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdminStrict(supabase, userId);
+    const { userId, claims } = context as any;
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // 1. Upsert allowlist with role
@@ -145,11 +131,10 @@ export const inviteAdmin = createServerFn({ method: "POST" })
   });
 
 export const updateMemberRole = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { userId: string; email: string; role: AppRole }) => d)
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdminStrict(supabase, userId);
+    const { userId, claims } = context as any;
     if (data.userId === userId && data.role !== "admin") {
       throw new Error("Je kan je eigen adminrol niet downgraden.");
     }
@@ -180,11 +165,10 @@ export const updateMemberRole = createServerFn({ method: "POST" })
   });
 
 export const removeAdmin = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: { email: string; userId?: string | null }) => d)
   .handler(async ({ data, context }) => {
-    const { supabase, userId } = context as any;
-    await assertAdminStrict(supabase, userId);
+    const { userId, claims } = context as any;
     if (data.userId && data.userId === userId) {
       throw new Error("Je kan jezelf niet verwijderen.");
     }

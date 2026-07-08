@@ -1,24 +1,13 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { listShopSignups, updateShopSignup } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/admin-shop-signups")({
+export const Route = createFileRoute("/_admin/admin-shop-signups")({
   ssr: false,
-  beforeLoad: async () => {
-    const { data: u } = await supabase.auth.getUser();
-    if (!u.user) throw redirect({ to: "/auth" });
-    const { data: roles } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", u.user.id)
-      .in("role", ["admin", "staff"]);
-    if (!roles || roles.length === 0) throw redirect({ to: "/admin" });
-  },
   component: ShopSignupsPage,
 });
 

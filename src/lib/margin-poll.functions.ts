@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { requireAuth0Admin } from "@/integrations/auth0/middleware";
 import { z } from "zod";
 
 const submitSchema = z.object({
@@ -49,17 +49,11 @@ export const submitMarginPoll = createServerFn({ method: "POST" })
   });
 
 export const listMarginPoll = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => d ?? {})
-  .handler(async ({ context }) => {
-    const { data: roles } = await context.supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", context.userId)
-      .in("role", ["admin", "staff"]);
-    if (!roles || roles.length === 0) throw new Error("Forbidden: admin or staff role required");
-
-    const { data, error } = await context.supabase
+  .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await (supabaseAdmin as any)
       .from("margin_poll_responses")
       .select("*")
       .order("updated_at", { ascending: false })

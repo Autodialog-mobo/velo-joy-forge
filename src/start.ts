@@ -1,7 +1,7 @@
 import { createStart, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
-import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+import { attachAuth0Token } from "@/integrations/auth0/attach-token";
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
@@ -18,7 +18,11 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
+// Auth0 is the sole session source for /admin. We intentionally do NOT
+// re-add the generated attachSupabaseAuth middleware — its call to
+// supabase.auth.getSession() would attach a stale/absent Supabase JWT
+// that requireAuth0Admin would reject.
 export const startInstance = createStart(() => ({
-  functionMiddleware: [attachSupabaseAuth],
+  functionMiddleware: [attachAuth0Token],
   requestMiddleware: [errorMiddleware],
 }));

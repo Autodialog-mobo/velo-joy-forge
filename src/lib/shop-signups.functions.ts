@@ -1,29 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { requireAuth0Admin } from "@/integrations/auth0/middleware";
 import { z } from "zod";
 
-async function assertAdmin(supabase: any, userId: string) {
-  const { data, error } = await supabase
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", userId)
-    .in("role", ["admin", "staff"]);
-  if (error) {
-    console.error("[shop-signups] assertAdmin query failed", { userId, error });
-    throw new Error(error.message);
-  }
-  if (!data || data.length === 0) {
-    console.warn("[shop-signups] non-admin/staff access denied", { userId });
-    throw new Error("Forbidden: admin or staff role required");
-  }
-}
+// legacy Supabase role-assertion helper removed — Auth0 middleware now verifies b2b_admin.
 
 export const listShopSignups = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => d ?? {})
   .handler(async ({ context }) => {
-    await assertAdmin(context.supabase, context.userId);
-    const { data, error } = await context.supabase
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await (supabaseAdmin as any)
       .from("shop_signups")
       .select("*")
       .order("created_at", { ascending: false })
@@ -61,13 +47,13 @@ const EDITABLE_FIELDS = [
 ] as const;
 
 export const updateShopSignup = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => updateSchema.parse(d))
   .handler(async ({ data, context }) => {
-    await assertAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Fetch previous values for diff logging.
-    const { data: before, error: fetchErr } = await (context.supabase as any)
+    const { data: before, error: fetchErr } = await (supabaseAdmin as any)
       .from("shop_signups")
       .select("*")
       .eq("id", data.id)
@@ -100,7 +86,7 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       return { ok: true, changed: false };
     }
 
-    const { error } = await (context.supabase as any)
+    const { error } = await (supabaseAdmin as any)
       .from("shop_signups")
       .update(patch)
       .eq("id", data.id);

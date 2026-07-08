@@ -20,20 +20,20 @@ import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
 import { Route as MTokenRouteImport } from './routes/m.$token'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
-import { Route as AuthenticatedAdminWebhooksRouteImport } from './routes/_authenticated/admin-webhooks'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin-users'
-import { Route as AuthenticatedAdminShopSignupsRouteImport } from './routes/_authenticated/admin-shop-signups'
-import { Route as AuthenticatedAdminMarginPollRouteImport } from './routes/_authenticated/admin-margin-poll'
-import { Route as AuthenticatedAdminEmailLogRouteImport } from './routes/_authenticated/admin-email-log'
-import { Route as AuthenticatedAdminEmailEventsRouteImport } from './routes/_authenticated/admin-email-events'
-import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin-audit'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AdminAdminWebhooksRouteImport } from './routes/_admin/admin-webhooks'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin-users'
+import { Route as AdminAdminShopSignupsRouteImport } from './routes/_admin/admin-shop-signups'
+import { Route as AdminAdminMarginPollRouteImport } from './routes/_admin/admin-margin-poll'
+import { Route as AdminAdminEmailLogRouteImport } from './routes/_admin/admin-email-log'
+import { Route as AdminAdminEmailEventsRouteImport } from './routes/_admin/admin-email-events'
+import { Route as AdminAdminAuditRouteImport } from './routes/_admin/admin-audit'
+import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
@@ -110,8 +110,8 @@ const AlEenStickerRoute = AlEenStickerRouteImport.update({
   path: '/al-een-sticker',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LangRouteRoute = LangRouteRouteImport.update({
@@ -139,50 +139,45 @@ const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
   path: '/bedankt',
   getParentRoute: () => BestellenRoute,
 } as any)
-const AuthenticatedAdminWebhooksRoute =
-  AuthenticatedAdminWebhooksRouteImport.update({
-    id: '/admin-webhooks',
-    path: '/admin-webhooks',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+const AdminAdminWebhooksRoute = AdminAdminWebhooksRouteImport.update({
+  id: '/admin-webhooks',
+  path: '/admin-webhooks',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
   id: '/admin-users',
   path: '/admin-users',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AuthenticatedAdminShopSignupsRoute =
-  AuthenticatedAdminShopSignupsRouteImport.update({
-    id: '/admin-shop-signups',
-    path: '/admin-shop-signups',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminMarginPollRoute =
-  AuthenticatedAdminMarginPollRouteImport.update({
-    id: '/admin-margin-poll',
-    path: '/admin-margin-poll',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminEmailLogRoute =
-  AuthenticatedAdminEmailLogRouteImport.update({
-    id: '/admin-email-log',
-    path: '/admin-email-log',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminEmailEventsRoute =
-  AuthenticatedAdminEmailEventsRouteImport.update({
-    id: '/admin-email-events',
-    path: '/admin-email-events',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+const AdminAdminShopSignupsRoute = AdminAdminShopSignupsRouteImport.update({
+  id: '/admin-shop-signups',
+  path: '/admin-shop-signups',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminMarginPollRoute = AdminAdminMarginPollRouteImport.update({
+  id: '/admin-margin-poll',
+  path: '/admin-margin-poll',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminEmailLogRoute = AdminAdminEmailLogRouteImport.update({
+  id: '/admin-email-log',
+  path: '/admin-email-log',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminEmailEventsRoute = AdminAdminEmailEventsRouteImport.update({
+  id: '/admin-email-events',
+  path: '/admin-email-events',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminAuditRoute = AdminAdminAuditRouteImport.update({
   id: '/admin-audit',
   path: '/admin-audit',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => AdminRouteRoute,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+const AdminAdminRoute = AdminAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
   Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
@@ -318,14 +313,14 @@ export interface FileRoutesByFullPath {
   '/$lang/stolen': typeof LangStolenRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
-  '/admin': typeof AuthenticatedAdminRoute
-  '/admin-audit': typeof AuthenticatedAdminAuditRoute
-  '/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
-  '/admin-email-log': typeof AuthenticatedAdminEmailLogRoute
-  '/admin-margin-poll': typeof AuthenticatedAdminMarginPollRoute
-  '/admin-shop-signups': typeof AuthenticatedAdminShopSignupsRoute
-  '/admin-users': typeof AuthenticatedAdminUsersRoute
-  '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
+  '/admin': typeof AdminAdminRoute
+  '/admin-audit': typeof AdminAdminAuditRoute
+  '/admin-email-events': typeof AdminAdminEmailEventsRoute
+  '/admin-email-log': typeof AdminAdminEmailLogRoute
+  '/admin-margin-poll': typeof AdminAdminMarginPollRoute
+  '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
+  '/admin-users': typeof AdminAdminUsersRoute
+  '/admin-webhooks': typeof AdminAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/m/$token': typeof MTokenRoute
   '/$lang/': typeof LangIndexRoute
@@ -363,14 +358,14 @@ export interface FileRoutesByTo {
   '/$lang/stolen': typeof LangStolenRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
-  '/admin': typeof AuthenticatedAdminRoute
-  '/admin-audit': typeof AuthenticatedAdminAuditRoute
-  '/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
-  '/admin-email-log': typeof AuthenticatedAdminEmailLogRoute
-  '/admin-margin-poll': typeof AuthenticatedAdminMarginPollRoute
-  '/admin-shop-signups': typeof AuthenticatedAdminShopSignupsRoute
-  '/admin-users': typeof AuthenticatedAdminUsersRoute
-  '/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
+  '/admin': typeof AdminAdminRoute
+  '/admin-audit': typeof AdminAdminAuditRoute
+  '/admin-email-events': typeof AdminAdminEmailEventsRoute
+  '/admin-email-log': typeof AdminAdminEmailLogRoute
+  '/admin-margin-poll': typeof AdminAdminMarginPollRoute
+  '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
+  '/admin-users': typeof AdminAdminUsersRoute
+  '/admin-webhooks': typeof AdminAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/m/$token': typeof MTokenRoute
   '/$lang': typeof LangIndexRoute
@@ -385,7 +380,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteRouteWithChildren
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_admin': typeof AdminRouteRouteWithChildren
   '/al-een-sticker': typeof AlEenStickerRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
@@ -411,14 +406,14 @@ export interface FileRoutesById {
   '/$lang/stolen': typeof LangStolenRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
-  '/_authenticated/admin-audit': typeof AuthenticatedAdminAuditRoute
-  '/_authenticated/admin-email-events': typeof AuthenticatedAdminEmailEventsRoute
-  '/_authenticated/admin-email-log': typeof AuthenticatedAdminEmailLogRoute
-  '/_authenticated/admin-margin-poll': typeof AuthenticatedAdminMarginPollRoute
-  '/_authenticated/admin-shop-signups': typeof AuthenticatedAdminShopSignupsRoute
-  '/_authenticated/admin-users': typeof AuthenticatedAdminUsersRoute
-  '/_authenticated/admin-webhooks': typeof AuthenticatedAdminWebhooksRoute
+  '/_admin/admin': typeof AdminAdminRoute
+  '/_admin/admin-audit': typeof AdminAdminAuditRoute
+  '/_admin/admin-email-events': typeof AdminAdminEmailEventsRoute
+  '/_admin/admin-email-log': typeof AdminAdminEmailLogRoute
+  '/_admin/admin-margin-poll': typeof AdminAdminMarginPollRoute
+  '/_admin/admin-shop-signups': typeof AdminAdminShopSignupsRoute
+  '/_admin/admin-users': typeof AdminAdminUsersRoute
+  '/_admin/admin-webhooks': typeof AdminAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
   '/m/$token': typeof MTokenRoute
   '/$lang/': typeof LangIndexRoute
@@ -525,7 +520,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$lang'
-    | '/_authenticated'
+    | '/_admin'
     | '/al-een-sticker'
     | '/auth'
     | '/bestellen'
@@ -551,14 +546,14 @@ export interface FileRouteTypes {
     | '/$lang/stolen'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
-    | '/_authenticated/admin'
-    | '/_authenticated/admin-audit'
-    | '/_authenticated/admin-email-events'
-    | '/_authenticated/admin-email-log'
-    | '/_authenticated/admin-margin-poll'
-    | '/_authenticated/admin-shop-signups'
-    | '/_authenticated/admin-users'
-    | '/_authenticated/admin-webhooks'
+    | '/_admin/admin'
+    | '/_admin/admin-audit'
+    | '/_admin/admin-email-events'
+    | '/_admin/admin-email-log'
+    | '/_admin/admin-margin-poll'
+    | '/_admin/admin-shop-signups'
+    | '/_admin/admin-users'
+    | '/_admin/admin-webhooks'
     | '/bestellen/bedankt'
     | '/m/$token'
     | '/$lang/'
@@ -573,7 +568,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LangRouteRoute: typeof LangRouteRouteWithChildren
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   AlEenStickerRoute: typeof AlEenStickerRoute
   AuthRoute: typeof AuthRoute
   BestellenRoute: typeof BestellenRouteWithChildren
@@ -673,11 +668,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlEenStickerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/_admin': {
+      id: '/_admin'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      preLoaderRoute: typeof AdminRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$lang': {
@@ -715,61 +710,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BestellenBedanktRouteImport
       parentRoute: typeof BestellenRoute
     }
-    '/_authenticated/admin-webhooks': {
-      id: '/_authenticated/admin-webhooks'
+    '/_admin/admin-webhooks': {
+      id: '/_admin/admin-webhooks'
       path: '/admin-webhooks'
       fullPath: '/admin-webhooks'
-      preLoaderRoute: typeof AuthenticatedAdminWebhooksRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminWebhooksRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin-users': {
-      id: '/_authenticated/admin-users'
+    '/_admin/admin-users': {
+      id: '/_admin/admin-users'
       path: '/admin-users'
       fullPath: '/admin-users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin-shop-signups': {
-      id: '/_authenticated/admin-shop-signups'
+    '/_admin/admin-shop-signups': {
+      id: '/_admin/admin-shop-signups'
       path: '/admin-shop-signups'
       fullPath: '/admin-shop-signups'
-      preLoaderRoute: typeof AuthenticatedAdminShopSignupsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminShopSignupsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin-margin-poll': {
-      id: '/_authenticated/admin-margin-poll'
+    '/_admin/admin-margin-poll': {
+      id: '/_admin/admin-margin-poll'
       path: '/admin-margin-poll'
       fullPath: '/admin-margin-poll'
-      preLoaderRoute: typeof AuthenticatedAdminMarginPollRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminMarginPollRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin-email-log': {
-      id: '/_authenticated/admin-email-log'
+    '/_admin/admin-email-log': {
+      id: '/_admin/admin-email-log'
       path: '/admin-email-log'
       fullPath: '/admin-email-log'
-      preLoaderRoute: typeof AuthenticatedAdminEmailLogRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminEmailLogRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin-email-events': {
-      id: '/_authenticated/admin-email-events'
+    '/_admin/admin-email-events': {
+      id: '/_admin/admin-email-events'
       path: '/admin-email-events'
       fullPath: '/admin-email-events'
-      preLoaderRoute: typeof AuthenticatedAdminEmailEventsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminEmailEventsRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin-audit': {
-      id: '/_authenticated/admin-audit'
+    '/_admin/admin-audit': {
+      id: '/_admin/admin-audit'
       path: '/admin-audit'
       fullPath: '/admin-audit'
-      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminAuditRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
+    '/_admin/admin': {
+      id: '/_admin/admin'
       path: '/admin'
       fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof AdminAdminRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/.well-known/oauth-protected-resource': {
       id: '/.well-known/oauth-protected-resource'
@@ -954,30 +949,31 @@ const LangRouteRouteWithChildren = LangRouteRoute._addFileChildren(
   LangRouteRouteChildren,
 )
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
-  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
-  AuthenticatedAdminEmailEventsRoute: typeof AuthenticatedAdminEmailEventsRoute
-  AuthenticatedAdminEmailLogRoute: typeof AuthenticatedAdminEmailLogRoute
-  AuthenticatedAdminMarginPollRoute: typeof AuthenticatedAdminMarginPollRoute
-  AuthenticatedAdminShopSignupsRoute: typeof AuthenticatedAdminShopSignupsRoute
-  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
-  AuthenticatedAdminWebhooksRoute: typeof AuthenticatedAdminWebhooksRoute
+interface AdminRouteRouteChildren {
+  AdminAdminRoute: typeof AdminAdminRoute
+  AdminAdminAuditRoute: typeof AdminAdminAuditRoute
+  AdminAdminEmailEventsRoute: typeof AdminAdminEmailEventsRoute
+  AdminAdminEmailLogRoute: typeof AdminAdminEmailLogRoute
+  AdminAdminMarginPollRoute: typeof AdminAdminMarginPollRoute
+  AdminAdminShopSignupsRoute: typeof AdminAdminShopSignupsRoute
+  AdminAdminUsersRoute: typeof AdminAdminUsersRoute
+  AdminAdminWebhooksRoute: typeof AdminAdminWebhooksRoute
 }
 
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
-  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
-  AuthenticatedAdminEmailEventsRoute: AuthenticatedAdminEmailEventsRoute,
-  AuthenticatedAdminEmailLogRoute: AuthenticatedAdminEmailLogRoute,
-  AuthenticatedAdminMarginPollRoute: AuthenticatedAdminMarginPollRoute,
-  AuthenticatedAdminShopSignupsRoute: AuthenticatedAdminShopSignupsRoute,
-  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
-  AuthenticatedAdminWebhooksRoute: AuthenticatedAdminWebhooksRoute,
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAdminRoute: AdminAdminRoute,
+  AdminAdminAuditRoute: AdminAdminAuditRoute,
+  AdminAdminEmailEventsRoute: AdminAdminEmailEventsRoute,
+  AdminAdminEmailLogRoute: AdminAdminEmailLogRoute,
+  AdminAdminMarginPollRoute: AdminAdminMarginPollRoute,
+  AdminAdminShopSignupsRoute: AdminAdminShopSignupsRoute,
+  AdminAdminUsersRoute: AdminAdminUsersRoute,
+  AdminAdminWebhooksRoute: AdminAdminWebhooksRoute,
 }
 
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
 
 interface BestellenRouteChildren {
   BestellenBedanktRoute: typeof BestellenBedanktRoute
@@ -994,7 +990,7 @@ const BestellenRouteWithChildren = BestellenRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LangRouteRoute: LangRouteRouteWithChildren,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   AlEenStickerRoute: AlEenStickerRoute,
   AuthRoute: AuthRoute,
   BestellenRoute: BestellenRouteWithChildren,

@@ -1,24 +1,12 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState, useEffect } from "react";
 import { ArrowLeft, RefreshCw, Search, X, Mail, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { listEmailSendLog } from "@/lib/admin.functions";
-import { supabase } from "@/integrations/supabase/client";
 
-export const Route = createFileRoute("/_authenticated/admin-email-log")({
+export const Route = createFileRoute("/_admin/admin-email-log")({
   ssr: false,
-  beforeLoad: async () => {
-    const { data: u } = await supabase.auth.getUser();
-    if (!u.user) throw redirect({ to: "/auth" });
-    const { data: roles } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", u.user.id)
-      .in("role", ["admin", "staff"])
-      .maybeSingle();
-    if (!roles) throw redirect({ to: "/admin" });
-  },
   component: EmailLogPage,
   head: () => ({ meta: [{ title: "E-mail verzendlog — Velopass admin" }] }),
 });
