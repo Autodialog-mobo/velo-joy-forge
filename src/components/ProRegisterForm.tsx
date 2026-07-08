@@ -26,6 +26,19 @@ function looksValid(v: string): boolean {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+function parseViesAddress(raw: string): { street: string; postal: string; city: string } {
+  const cleaned = raw.replace(/\r/g, "").replace(/\n+/g, ", ").replace(/\s{2,}/g, " ").trim();
+  const m = cleaned.match(/^(.*?)[,\s]+(\d{4,5})\s+([A-Za-zÀ-ÿ'()\/. -]+?)\s*$/);
+  if (m) return { street: m[1].replace(/,\s*$/, "").trim(), postal: m[2], city: m[3].trim() };
+  return { street: cleaned, postal: "", city: "" };
+}
+
+function joinAddress(street: string, postal: string, city: string): string {
+  const s = street.trim();
+  const tail = [postal.trim(), city.trim()].filter(Boolean).join(" ");
+  return [s, tail].filter(Boolean).join(", ");
+}
+
 export function RegisterForm() {
   const lang = useCurrentLang();
   const { t } = useTranslation("shop");
@@ -35,7 +48,9 @@ export function RegisterForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [shop, setShop] = useState("");
-  const [address, setAddress] = useState("");
+  const [street, setStreet] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -65,7 +80,10 @@ export function RegisterForm() {
       const data = await res.json();
       if (data.valid && data.name) {
         setShop(data.name);
-        setAddress(data.address || "");
+        const parsed = parseViesAddress(data.address || "");
+        setStreet(parsed.street);
+        setPostalCode(parsed.postal);
+        setCity(parsed.city);
         setAutofilled({ shop: true, address: !!data.address });
         setVies({ state: "ok", name: data.name, address: data.address || "" });
       } else if (data.error === "VIES unavailable") {
@@ -102,7 +120,7 @@ export function RegisterForm() {
             firstName: firstName.trim(),
             lastName: lastName.trim(),
             shopName: shop.trim(),
-            address: address.trim(),
+            address: joinAddress(street, postalCode, city),
             country: country.trim(),
             email: email.trim(),
             phone: phone.trim(),
@@ -133,7 +151,7 @@ export function RegisterForm() {
         setSubmit({ state: "error", message: tf("error_generic") });
       }
     },
-    [submit.state, shop, email, vat, firstName, lastName, address, country, phone, pos, posOther, website, lang, tf],
+    [submit.state, shop, email, vat, firstName, lastName, street, postalCode, city, country, phone, pos, posOther, website, lang, tf],
   );
 
   if (submit.state === "success") {
@@ -260,19 +278,51 @@ export function RegisterForm() {
         />
       </div>
       <div className="form-row">
-        <label className="flabel" htmlFor="paddr">{tf("address")}</label>
+        <label className="flabel" htmlFor="pstreet">{tf("street")}</label>
         <input
-          id="paddr"
+          id="pstreet"
           className={`finput${autofilled.address ? " from-vies" : ""}`}
           type="text"
-          placeholder={tf("address_placeholder")}
-          value={address}
+          placeholder={tf("street_placeholder")}
+          value={street}
           onChange={(e) => {
-            setAddress(e.target.value);
+            setStreet(e.target.value);
             if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
           }}
           autoComplete="street-address"
         />
+      </div>
+      <div className="fgrid">
+        <div className="form-row">
+          <label className="flabel" htmlFor="ppostal">{tf("postal_code")}</label>
+          <input
+            id="ppostal"
+            className={`finput${autofilled.address ? " from-vies" : ""}`}
+            type="text"
+            placeholder={tf("postal_code_placeholder")}
+            value={postalCode}
+            onChange={(e) => {
+              setPostalCode(e.target.value);
+              if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
+            }}
+            autoComplete="postal-code"
+          />
+        </div>
+        <div className="form-row">
+          <label className="flabel" htmlFor="pcity">{tf("city")}</label>
+          <input
+            id="pcity"
+            className={`finput${autofilled.address ? " from-vies" : ""}`}
+            type="text"
+            placeholder={tf("city_placeholder")}
+            value={city}
+            onChange={(e) => {
+              setCity(e.target.value);
+              if (autofilled.address) setAutofilled((s) => ({ ...s, address: false }));
+            }}
+            autoComplete="address-level2"
+          />
+        </div>
       </div>
       <div className="form-row">
         <label className="flabel" htmlFor="pcountry">{tf("country")}</label>
