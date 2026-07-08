@@ -8,13 +8,10 @@ export type AppRole = "admin" | "staff";
 export const getMyRoles = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .handler(async ({ context }) => {
-    const { userId, claims } = context as any;
-    const { data, error } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", userId);
-    if (error) throw new Error(error.message);
-    return { roles: (data ?? []).map((r: any) => r.role as string) };
+    // Auth0 middleware guarantees b2b_admin. Mirror the legacy shape so any
+    // remaining UI code that expects an "admin" role in the array keeps working.
+    const claims = (context as any).claims ?? {};
+    return { roles: ["admin"] as string[], email: claims.email ?? null, sub: (context as any).userId as string };
   });
 
 export const listAdmins = createServerFn({ method: "POST" })

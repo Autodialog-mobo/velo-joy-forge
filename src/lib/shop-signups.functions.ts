@@ -8,8 +8,8 @@ export const listShopSignups = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => d ?? {})
   .handler(async ({ context }) => {
-    await assertAdmin(context.supabase, context.userId);
-    const { data, error } = await context.supabase
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await (supabaseAdmin as any)
       .from("shop_signups")
       .select("*")
       .order("created_at", { ascending: false })
@@ -50,10 +50,10 @@ export const updateShopSignup = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => updateSchema.parse(d))
   .handler(async ({ data, context }) => {
-    await assertAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     // Fetch previous values for diff logging.
-    const { data: before, error: fetchErr } = await (context.supabase as any)
+    const { data: before, error: fetchErr } = await (supabaseAdmin as any)
       .from("shop_signups")
       .select("*")
       .eq("id", data.id)
@@ -86,7 +86,7 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       return { ok: true, changed: false };
     }
 
-    const { error } = await (context.supabase as any)
+    const { error } = await (supabaseAdmin as any)
       .from("shop_signups")
       .update(patch)
       .eq("id", data.id);
