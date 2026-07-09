@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CheckCircle2, XCircle, AlertCircle, Copy } from "lucide-react";
 import { Auth0ProviderWithConfig, ROLE_CLAIM, ADMIN_ROLE, useAuth } from "@/lib/auth";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const Route = createFileRoute("/admin-auth-check")({
   ssr: false,
