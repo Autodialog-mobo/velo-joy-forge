@@ -113,6 +113,7 @@ function ShopSignupsPage() {
       });
       await refetch();
       toast.success(`Status opgeslagen: ${STATUS_LABEL[status]}`);
+      setOpenId(null);
     } catch (err: any) {
       toast.error(err.message ?? "Wijzigen mislukt");
     } finally {
