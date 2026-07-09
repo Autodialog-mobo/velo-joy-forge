@@ -856,3 +856,27 @@ function PushedInfoBanner({
     </div>
   );
 }
+
+function NotPushedInfoBanner() {
+  return (
+    <div
+      className="mb-4 rounded-xl p-3"
+      style={{ background: "rgba(224,163,62,0.08)", border: "1px solid rgba(224,163,62,0.30)" }}
+    >
+      <div className="flex items-start gap-3">
+        <AlertCircle size={18} style={{ color: "#E0A33E", marginTop: 2 }} />
+        <div>
+          <div className="text-xs uppercase tracking-wider" style={{ color: "#E0A33E" }}>
+            Nog niet doorgestuurd
+          </div>
+          <div className="text-sm mt-1" style={{ color: "#fff" }}>
+            Deze aanmelding is nog niet doorgezet naar velopass.pro.
+          </div>
+          <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Klik op <strong>Doorsturen naar velopass.pro</strong> om een Organisation aan te maken.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
