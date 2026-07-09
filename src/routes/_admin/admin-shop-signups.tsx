@@ -58,6 +58,7 @@ function ShopSignupsPage() {
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
   const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
+  const isPushingRef = useRef(false);
 
   const rows: any[] = data?.rows ?? [];
 
