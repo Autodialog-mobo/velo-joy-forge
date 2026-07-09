@@ -421,7 +421,7 @@ function ShopSignupsPage() {
               />
             </div>
 
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 flex-wrap">
               <button
                 onClick={() => setOpenId(null)}
                 className="px-4 py-2 rounded-lg text-sm"
@@ -430,8 +430,17 @@ function ShopSignupsPage() {
                 Sluiten
               </button>
               <button
+                onClick={() => onPushToPro(open.id)}
+                disabled={pushingId === open.id || savingId === open.id}
+                title="Maak een Organisation aan op managementapi.prod.velopass.com"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
+                style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
+              >
+                <Send size={14} /> {pushingId === open.id ? "Doorsturen…" : "Doorsturen naar velopass.pro"}
+              </button>
+              <button
                 onClick={() => onSaveDetails(open.id)}
-                disabled={savingId === open.id}
+                disabled={savingId === open.id || pushingId === open.id}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
                 style={{ background: "#2ECC8A", color: "#0E0F12" }}
               >
