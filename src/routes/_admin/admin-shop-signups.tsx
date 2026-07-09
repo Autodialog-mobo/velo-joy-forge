@@ -426,17 +426,22 @@ function ShopSignupsPage() {
                 </div>
                 <h2 className="text-xl font-semibold mt-1">{open.shop_name || "—"}</h2>
               </div>
-              <select
-                value={open.status}
-                disabled={savingId === open.id}
-                onChange={(e) => onChangeStatus(open.id, e.target.value as Status)}
-                className="px-2 py-1 rounded-md text-xs font-semibold shrink-0"
-                style={statusStyle(open.status)}
-              >
-                {STATUSES.map((s) => (
-                  <option key={s} value={s} style={{ color: "#000" }}>{STATUS_LABEL[s]}</option>
-                ))}
-              </select>
+              <div className="flex items-center gap-2 shrink-0">
+                {savingId === open.id && (
+                  <Loader2 size={16} className="animate-spin" style={{ color: "#E0A33E" }} />
+                )}
+                <select
+                  value={open.status}
+                  disabled={savingId === open.id}
+                  onChange={(e) => onChangeStatus(open.id, e.target.value as Status)}
+                  className="px-2 py-1 rounded-md text-xs font-semibold shrink-0"
+                  style={statusStyle(open.status)}
+                >
+                  {STATUSES.map((s) => (
+                    <option key={s} value={s} style={{ color: "#000" }}>{STATUS_LABEL[s]}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {open.pushed_to_pro_at ? (
