@@ -312,14 +312,18 @@ function ShopSignupsPage() {
                     </th>
                     <th className="text-left px-4 py-3 font-medium">Contact</th>
                     <th className="text-left px-4 py-3 font-medium">Taal</th>
-                    <th className="text-left px-4 py-3 font-medium">POS</th>
-                    <th className="text-left px-4 py-3 font-medium">Status</th>
-                    <th className="text-right px-4 py-3 font-medium">Actie</th>
-                  </tr>
+                  <th className="text-left px-4 py-3 font-medium">POS</th>
+                  <th className="text-left px-4 py-3 font-medium">Status</th>
+                  <th className="text-right px-4 py-3 font-medium">Doorst.</th>
+                </tr>
                 </thead>
                 <tbody>
                   {filtered.map((r) => (
-                    <tr key={r.id} className="border-t border-white/5 align-top">
+                    <tr
+                      key={r.id}
+                      onClick={() => openRow(r)}
+                      className="border-t border-white/5 align-top cursor-pointer hover:bg-white/5 transition-colors"
+                    >
                       <td className="px-4 py-3 whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}>
                         {new Date(r.created_at).toLocaleDateString("nl-BE")}
                         <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
@@ -338,7 +342,7 @@ function ShopSignupsPage() {
                       <td className="px-4 py-3 whitespace-nowrap" style={{ color: "rgba(255,255,255,0.7)" }}>
                         {r.country || "—"}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <div>{[r.first_name, r.last_name].filter(Boolean).join(" ") || "—"}</div>
                         <a href={`mailto:${r.email}`} className="inline-flex items-center gap-1 text-xs mt-0.5" style={{ color: "#7AB0FF" }}>
                           <Mail size={11} /> {r.email}
@@ -358,7 +362,7 @@ function ShopSignupsPage() {
                         {r.pos_system || "—"}
                         {r.pos_other && <div style={{ color: "rgba(255,255,255,0.5)" }}>{r.pos_other}</div>}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <select
                           value={r.status}
                           disabled={savingId === r.id}
@@ -377,13 +381,13 @@ function ShopSignupsPage() {
                         )}
                       </td>
                       <td className="px-4 py-3 text-right">
-                        <button
-                          onClick={() => openRow(r)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs"
-                          style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
-                        >
-                          <ExternalLink size={12} /> Details
-                        </button>
+                        {r.pushed_to_pro_at ? (
+                          <span className="inline-flex items-center justify-end gap-1 text-xs font-semibold" style={{ color: "#2ECC8A" }}>
+                            <Check size={14} /> Doorgestuurd
+                          </span>
+                        ) : (
+                          <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
+                        )}
                       </td>
                     </tr>
                   ))}
