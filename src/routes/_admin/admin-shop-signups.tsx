@@ -55,6 +55,7 @@ function ShopSignupsPage() {
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [pushingId, setPushingId] = useState<string | null>(null);
 
   const rows: any[] = data?.rows ?? [];
 
