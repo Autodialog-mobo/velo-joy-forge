@@ -206,6 +206,9 @@ function AuthCheckPage() {
 
         <TokenClaimsSection expectedAudience={audience} expectedIssuer={domain ? `https://${domain}/` : ""} />
 
+        <AudienceProbeSection currentAudience={audience} />
+
+
 
         <section
           className="rounded-2xl p-6 mb-6"
