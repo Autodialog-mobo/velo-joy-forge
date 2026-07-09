@@ -5,8 +5,16 @@ import { Auth0ProviderWithConfig, ROLE_CLAIM, ADMIN_ROLE, useAuth } from "@/lib/
 
 export const Route = createFileRoute("/admin-auth-check")({
   ssr: false,
-  component: AuthCheckPage,
+  component: AuthCheckPageWrapper,
 });
+
+function AuthCheckPageWrapper() {
+  return (
+    <Auth0ProviderWithConfig>
+      <AuthCheckPage />
+    </Auth0ProviderWithConfig>
+  );
+}
 
 type CheckState = "pending" | "ok" | "fail" | "warn";
 
