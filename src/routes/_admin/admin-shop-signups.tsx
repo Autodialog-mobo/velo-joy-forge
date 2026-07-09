@@ -107,6 +107,10 @@ function ShopSignupsPage() {
     setSavingId(id);
     try {
       await update({ data: { id, status } });
+      queryClient.setQueryData(["shop-signups"], (old: any) => {
+        if (!old?.rows) return old;
+        return { ...old, rows: old.rows.map((r: any) => (r.id === id ? { ...r, status } : r)) };
+      });
       toast.success(`Status bijgewerkt naar ${STATUS_LABEL[status]}`);
       refetch();
     } catch (err: any) {
