@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
-import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2 } from "lucide-react";
+import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
@@ -422,12 +422,14 @@ function ShopSignupsPage() {
               </span>
             </div>
 
-            {open.pushed_to_pro_at && (
+            {open.pushed_to_pro_at ? (
               <PushedInfoBanner
                 pushedAt={open.pushed_to_pro_at}
                 pushedByEmail={open.pushed_to_pro_by_email}
                 managementId={open.pushed_to_pro_management_id}
               />
+            ) : (
+              <NotPushedInfoBanner />
             )}
 
             <EditableGrid
@@ -850,6 +852,30 @@ function PushedInfoBanner({
         >
           <ExternalLink size={12} /> Bekijken
         </a>
+      </div>
+    </div>
+  );
+}
+
+function NotPushedInfoBanner() {
+  return (
+    <div
+      className="mb-4 rounded-xl p-3"
+      style={{ background: "rgba(224,163,62,0.08)", border: "1px solid rgba(224,163,62,0.30)" }}
+    >
+      <div className="flex items-start gap-3">
+        <AlertCircle size={18} style={{ color: "#E0A33E", marginTop: 2 }} />
+        <div>
+          <div className="text-xs uppercase tracking-wider" style={{ color: "#E0A33E" }}>
+            Nog niet doorgestuurd
+          </div>
+          <div className="text-sm mt-1" style={{ color: "#fff" }}>
+            Deze aanmelding is nog niet doorgezet naar velopass.pro.
+          </div>
+          <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Klik op <strong>Doorsturen naar velopass.pro</strong> om een Organisation aan te maken.
+          </div>
+        </div>
       </div>
     </div>
   );
