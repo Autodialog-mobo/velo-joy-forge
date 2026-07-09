@@ -933,3 +933,56 @@ function NotPushedInfoBanner({
     </div>
   );
 }
+
+function StatusErrorPanel({
+  status,
+  message,
+  onRetry,
+  onDismiss,
+  disabled,
+}: {
+  status: Status;
+  message: string;
+  onRetry: () => void;
+  onDismiss: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div
+      className="mb-4 rounded-xl p-4"
+      style={{ background: "rgba(224,82,82,0.08)", border: "1px solid rgba(224,82,82,0.35)" }}
+    >
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <div>
+          <div className="text-xs uppercase tracking-wider" style={{ color: "#E05252" }}>
+            Status opslaan mislukt
+          </div>
+          <div className="text-sm mt-1" style={{ color: "#fff" }}>
+            {message}
+          </div>
+          <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+            Status die niet werd opgeslagen: <strong>{STATUS_LABEL[status]}</strong>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="shrink-0 text-xs px-2 py-1 rounded-md"
+          style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+        >
+          Sluiten
+        </button>
+      </div>
+      <button
+        type="button"
+        onClick={onRetry}
+        disabled={disabled}
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+        style={{ background: "rgba(224,82,82,0.14)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+      >
+        {disabled ? <Loader2 size={14} className="animate-spin" /> : <RefreshCcw size={14} />}
+        {disabled ? "Opnieuw proberen…" : "Opnieuw proberen"}
+      </button>
+    </div>
+  );
+}
