@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send } from "lucide-react";
+import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2 } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
@@ -436,7 +436,8 @@ function ShopSignupsPage() {
             <div className="flex justify-end gap-2 flex-wrap">
               <button
                 onClick={() => setOpenId(null)}
-                className="px-4 py-2 rounded-lg text-sm"
+                disabled={pushingId === open.id}
+                className="px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
               >
                 Sluiten
@@ -444,11 +445,20 @@ function ShopSignupsPage() {
               <button
                 onClick={() => onPushToPro(open.id)}
                 disabled={pushingId === open.id || savingId === open.id}
+                aria-busy={pushingId === open.id}
                 title="Maak een Organisation aan op managementapi.prod.velopass.com"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
               >
-                <Send size={14} /> {pushingId === open.id ? "Doorsturen…" : "Doorsturen naar velopass.pro"}
+                {pushingId === open.id ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" /> Doorsturen…
+                  </>
+                ) : (
+                  <>
+                    <Send size={14} /> Doorsturen naar velopass.pro
+                  </>
+                )}
               </button>
               <button
                 onClick={() => onSaveDetails(open.id)}
