@@ -116,6 +116,7 @@ function ShopSignupsPage() {
   };
 
   const onSaveDetails = async (id: string) => {
+    if (savingId || pushingId) return;
     setSavingId(id);
     try {
       const payload: any = { id };
