@@ -150,7 +150,11 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const request = getRequest();
     const bearer = request?.headers?.get("authorization") ?? "";
     if (!bearer.startsWith("Bearer ")) {
-      throw new Error("Geen geldige Auth0-token beschikbaar om door te sturen.");
+      return {
+        ok: false as const,
+        stage: "auth" as const,
+        message: "Geen geldige Auth0-token beschikbaar om door te sturen. Log opnieuw in en probeer het nog eens.",
+      };
     }
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -163,17 +167,22 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     if (!row) throw new Error("Aanmelding niet gevonden");
 
     const { street, postal, city } = parseSignupAddress(row.address);
-    const missing: string[] = [];
-    if (!row.shop_name) missing.push("winkelnaam");
-    if (!row.phone) missing.push("telefoon");
-    if (!row.vat) missing.push("BTW/ondernemingsnummer");
-    if (!row.email) missing.push("e-mail");
-    if (!street) missing.push("straat");
-    if (!postal) missing.push("postcode");
-    if (!city) missing.push("stad");
-    if (!row.country) missing.push("land");
+    const missing: Array<{ field: string; label: string; hint?: string }> = [];
+    if (!row.shop_name) missing.push({ field: "shop_name", label: "Winkelnaam" });
+    if (!row.phone) missing.push({ field: "phone", label: "Telefoon" });
+    if (!row.vat) missing.push({ field: "vat", label: "BTW / ondernemingsnummer" });
+    if (!row.email) missing.push({ field: "email", label: "E-mail" });
+    if (!street) missing.push({ field: "address", label: "Straat", hint: "Vul aan in het adresveld — formaat: 'Straat 12, 1000 Brussel'." });
+    if (!postal) missing.push({ field: "address", label: "Postcode", hint: "Voeg een postcode toe aan het adresveld." });
+    if (!city) missing.push({ field: "address", label: "Stad", hint: "Voeg de stad toe aan het adresveld, na de postcode." });
+    if (!row.country) missing.push({ field: "country", label: "Land" });
     if (missing.length) {
-      throw new Error(`Ontbrekende velden: ${missing.join(", ")}. Vul aan en sla op vóór doorsturen.`);
+      return {
+        ok: false as const,
+        stage: "validation" as const,
+        message: "Deze aanmelding kan nog niet doorgestuurd worden — enkele verplichte velden ontbreken.",
+        missing,
+      };
     }
 
     const body = {
@@ -204,18 +213,39 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       apiStatus = res.status;
       const text = await res.text();
       try { apiResponse = text ? JSON.parse(text) : null; } catch { apiResponse = text; }
-      if (!res.ok) {
-        const msg =
-          (apiResponse && typeof apiResponse === "object" && (apiResponse.title || apiResponse.detail || apiResponse.message))
-          || (typeof apiResponse === "string" ? apiResponse : "")
-          || `Velopass.pro API gaf ${res.status}`;
-        console.error("[shop-signups] push failed", { id: data.id, status: res.status, apiResponse });
-        throw new Error(String(msg).slice(0, 500));
-      }
     } catch (e: any) {
-      if (e?.message?.startsWith("Velopass.pro")) throw e;
-      if (apiStatus === 0) throw new Error(`Verbindingsfout met velopass.pro: ${e?.message ?? "unknown"}`);
-      throw e;
+      console.error("[shop-signups] push network error", { id: data.id, error: e?.message });
+      return {
+        ok: false as const,
+        stage: "network" as const,
+        message: `Kon velopass.pro niet bereiken: ${e?.message ?? "onbekende fout"}.`,
+        sentBody: body,
+      };
+    }
+
+    if (apiStatus < 200 || apiStatus >= 300) {
+      console.error("[shop-signups] push failed", { id: data.id, status: apiStatus, apiResponse });
+      // ASP.NET ProblemDetails style: { title, detail, errors: { field: [msgs] } }
+      const problem = apiResponse && typeof apiResponse === "object" ? apiResponse : null;
+      const fieldErrors: Array<{ field: string; messages: string[] }> = [];
+      if (problem && problem.errors && typeof problem.errors === "object") {
+        for (const [f, msgs] of Object.entries(problem.errors as Record<string, unknown>)) {
+          const list = Array.isArray(msgs) ? (msgs as unknown[]).map(String) : [String(msgs)];
+          fieldErrors.push({ field: f, messages: list });
+        }
+      }
+      const title = (problem && (problem.title || problem.message)) || `Velopass.pro API gaf ${apiStatus}`;
+      const detail = problem && problem.detail ? String(problem.detail) : "";
+      return {
+        ok: false as const,
+        stage: "api" as const,
+        message: String(title).slice(0, 500),
+        detail: detail.slice(0, 1000) || undefined,
+        apiStatus,
+        fieldErrors,
+        raw: typeof apiResponse === "string" ? apiResponse.slice(0, 1000) : undefined,
+        sentBody: body,
+      };
     }
 
     const returnedId: string | null =
@@ -248,5 +278,5 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       },
     });
 
-    return { ok: true, managementId: returnedId, response: apiResponse };
+    return { ok: true as const, managementId: returnedId, response: apiResponse };
   });
