@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2 } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
@@ -58,6 +58,7 @@ function ShopSignupsPage() {
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
   const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
+  const isPushingRef = useRef(false);
 
   const rows: any[] = data?.rows ?? [];
 
@@ -115,6 +116,7 @@ function ShopSignupsPage() {
   };
 
   const onSaveDetails = async (id: string) => {
+    if (savingId || pushingId) return;
     setSavingId(id);
     try {
       const payload: any = { id };
@@ -133,7 +135,12 @@ function ShopSignupsPage() {
   };
 
   const onPushToPro = async (id: string) => {
-    if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) return;
+    if (isPushingRef.current || pushingId || savingId) return;
+    isPushingRef.current = true;
+    if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) {
+      isPushingRef.current = false;
+      return;
+    }
     setPushingId(id);
     setPushError(null);
     setPushSuccess(null);
@@ -157,6 +164,7 @@ function ShopSignupsPage() {
       toast.error(err?.message ?? "Doorsturen mislukt");
     } finally {
       setPushingId(null);
+      isPushingRef.current = false;
     }
   };
 
@@ -440,6 +448,7 @@ function ShopSignupsPage() {
 
             <div className="flex justify-end gap-2 flex-wrap">
               <button
+                type="button"
                 onClick={() => setOpenId(null)}
                 disabled={pushingId === open.id}
                 className="px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed"
@@ -448,6 +457,7 @@ function ShopSignupsPage() {
                 Sluiten
               </button>
               <button
+                type="button"
                 onClick={() => onPushToPro(open.id)}
                 disabled={pushingId === open.id || savingId === open.id}
                 aria-busy={pushingId === open.id}
@@ -466,9 +476,10 @@ function ShopSignupsPage() {
                 )}
               </button>
               <button
+                type="button"
                 onClick={() => onSaveDetails(open.id)}
                 disabled={savingId === open.id || pushingId === open.id}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ background: "#2ECC8A", color: "#0E0F12" }}
               >
                 <Save size={14} /> {savingId === open.id ? "Opslaan…" : "Wijzigingen opslaan"}
