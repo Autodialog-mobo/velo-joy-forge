@@ -407,20 +407,29 @@ function ShopSignupsPage() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6"
+            className="rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6"
             style={{ background: "#15171C", border: "1px solid rgba(255,255,255,0.1)" }}
           >
-            <div className="flex items-start justify-between mb-4">
+            <div className="flex items-start justify-between mb-4 gap-3">
               <div>
                 <div className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>
                   Shop-aanmelding
                 </div>
                 <h2 className="text-xl font-semibold mt-1">{open.shop_name || "—"}</h2>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={statusStyle(open.status)}>
+              <span className="px-2 py-0.5 rounded-full text-xs font-semibold shrink-0" style={statusStyle(open.status)}>
                 {STATUS_LABEL[open.status as Status] ?? open.status}
               </span>
             </div>
+
+            {open.pushed_to_pro_at && (
+              <PushedInfoBanner
+                pushedAt={open.pushed_to_pro_at}
+                pushedByEmail={open.pushed_to_pro_by_email}
+                managementId={open.pushed_to_pro_management_id}
+              />
+            )}
+
             <EditableGrid
               draft={draft}
               setDraft={setDraft}
