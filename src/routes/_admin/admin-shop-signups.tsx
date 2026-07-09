@@ -436,6 +436,7 @@ function ShopSignupsPage() {
             </div>
 
             {pushError && <PushErrorPanel err={pushError} onDismiss={() => setPushError(null)} />}
+            {pushSuccess && <PushSuccessPanel success={pushSuccess} onDismiss={() => setPushSuccess(null)} />}
 
             <div className="flex justify-end gap-2 flex-wrap">
               <button
