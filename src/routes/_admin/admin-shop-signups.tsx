@@ -112,7 +112,7 @@ function ShopSignupsPage() {
         return { ...old, rows: old.rows.map((r: any) => (r.id === id ? { ...r, status } : r)) };
       });
       await refetch();
-      toast.success(`Status bijgewerkt naar ${STATUS_LABEL[status]}`);
+      toast.success(`Status opgeslagen: ${STATUS_LABEL[status]}`);
     } catch (err: any) {
       toast.error(err.message ?? "Wijzigen mislukt");
     } finally {
