@@ -184,6 +184,10 @@ export function RequireAuth({ children }: { children: ReactNode }) {
     if (!isAuthenticated && !redirecting.current) {
       redirecting.current = true;
       loginWithRedirect({
+        fragment: "page=pro/login",
+        authorizationParams: {
+          redirect_uri: `${window.location.origin}/admin`,
+        },
         appState: { returnTo: window.location.pathname + window.location.search },
       });
     }
