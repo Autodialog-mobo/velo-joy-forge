@@ -436,7 +436,8 @@ function ShopSignupsPage() {
             <div className="flex justify-end gap-2 flex-wrap">
               <button
                 onClick={() => setOpenId(null)}
-                className="px-4 py-2 rounded-lg text-sm"
+                disabled={pushingId === open.id}
+                className="px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
               >
                 Sluiten
