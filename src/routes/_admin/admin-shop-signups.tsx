@@ -56,6 +56,7 @@ function ShopSignupsPage() {
   const [savingId, setSavingId] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [pushingId, setPushingId] = useState<string | null>(null);
+  const [pushError, setPushError] = useState<any | null>(null);
 
   const rows: any[] = data?.rows ?? [];
 
