@@ -1,50 +1,48 @@
-## Doel
 
-Een mobile-first herziening van de hele Velopass-site. Niet alleen "kleiner stapelen": echte mobiele patronen (sticky CTA's, bottom sheets, touch-vriendelijke targets, leesbare typografie, snellere visuele hiërarchie).
+## Probleem (bevestigd)
 
-## Aanpak in fases
+`src/_admin/route.tsx` en alle admin server functions gebruiken Auth0's `b2b_admin` role claim voor toegang. Maar `src/lib/users.functions.ts` muteert enkel Supabase (`admin_email_allowlist`, `user_roles`, `supabaseAdmin.auth.admin.inviteUserByEmail`). Gevolg:
 
-Ik werk in volgorde, één fase per beurt zodat je tussendoor kan bijsturen.
+- **inviteAdmin**: maakt een Supabase-user aan, kent geen Auth0-role toe → uitgenodigde krijgt "Access restricted".
+- **updateMemberRole / removeAdmin**: muteren alleen Supabase-tabellen die niets meer doen → geen effect op echte toegang.
+- **listAdmins**: toont Supabase-users, dus UI lijkt correct maar reflecteert niet wie écht admin is.
+- **Self-lockout guard** (`data.userId === context.userId`): vergelijkt Supabase UUID met Auth0 `sub` (`auth0|…`) → treedt nooit in werking.
 
-### Fase 1 — Fundamenten (eenmalig, raakt elke pagina)
-- `src/styles.css`: mobiele typografische schaal (clamp), fluid spacing, container paddings, focus-states, `safe-area-inset` voor iOS notch/home indicator.
-- Globale regels: minimum tap-target 44×44, `font-size: 16px` op inputs (voorkomt iOS zoom), `text-wrap: balance` op headings, betere line-height < 480px.
-- Utility-klassen voor sticky bottom CTA-bar, bottom-sheet, mobiel-only/desktop-only.
-- Snelle audit van overflow-bugs (horizontal scroll) en fix `min-w-0` / `overflow-x: clip` waar nodig.
+## Vereiste nieuwe secrets (jij zet ze)
 
-### Fase 2 — Navigatie & header
-- Sticky header verkleinen op scroll (mobiel), hamburger → full-screen panel met grote tap targets, taalswitcher als bottom-sheet, login als secundaire actie.
-- Footer: accordion-secties op mobiel i.p.v. lange lijsten.
+Auth0 Management API M2M-app aanmaken in Auth0 dashboard (Applications → Machine to Machine → autoriseer voor Auth0 Management API met scopes `read:users`, `create:users`, `read:roles`, `create:role_members`, `delete:role_members`, `create:user_tickets`), dan:
 
-### Fase 3 — Homepage + hero (`shop.tsx`, `index.tsx`)
-- Hero: dashboard-mockup onder de titel op mobiel (niet ernaast), CTA full-width, eyebrow + sub kleiner, achtergrondoverlay aangepast voor portrait.
-- Paths-cards: horizontale snap-scroll i.p.v. stapel van 3 grote blokken.
-- Benefits: 2-koloms grid → 1-kolom met emoji/icon-bullet ritme.
-- Community: kaart krijgt sticky filter-bar + bottom-sheet voor shop details (bestaande `ShopPanel` is al sheet — fine-tune drag-thresholds).
-- Sticker-sectie: foto boven, tekst onder, badges in scrollbare rij.
+- `AUTH0_MGMT_CLIENT_ID`
+- `AUTH0_MGMT_CLIENT_SECRET`
+- `AUTH0_B2B_ADMIN_ROLE_ID` (role-id van de bestaande `b2b_admin` role in Auth0)
+- `AUTH0_B2B_STAFF_ROLE_ID` (optioneel, alleen als "staff" ook via Auth0 role gaat)
 
-### Fase 4 — Order/checkout (`order.tsx`)
-- Bundels: horizontale snap-carousel op mobiel met "POPULAIRST" badge.
-- Winkelmandje: collapseert naar **sticky bottom bar** met totaal + "Betalen →"; tik opent volledig sheet met formulier.
-- Formulier: inputs 16px, `inputmode`/`autocomplete` correct, postcode/stad op één rij ook op mobiel maar met juiste flex.
-- Betaalstadium: full-screen op mobiel met grote terug-knop.
+## Implementatie
 
-### Fase 5 — Overige pagina's
-Pass over: `bike-check`, `contact`, `stolen`, `pro`, `privacy`, `faq`, `guides.buying-second-hand`, `order_.thanks`. Geen redesign per sectie, maar:
-- Headings clamp-schaal, secties krijgen mobiel spacing-ritme.
-- Tabellen/grids → cards op mobiel.
-- Forms krijgen dezelfde inputregels als fase 4.
+1. **Nieuw bestand `src/integrations/auth0/management.server.ts`**
+   - `getManagementToken()`: cachet een client-credentials token per domain (in-memory, tot `exp - 60s`).
+   - Helpers: `mgmtFetch(path, init)`, `getUserByEmail(email)`, `createUser(email)`, `getUserRoles(sub)`, `assignRole(sub, roleId)`, `removeRole(sub, roleId)`, `createPasswordChangeTicket(sub, resultUrl)`, `listUsersWithRole(roleId)`.
 
-## Verificatie per fase
-- `browser--view_preview` op 390×844 (iPhone) en 360×800 (Android) na elke fase.
-- Console + network check.
-- Spot-check op 768 tablet om geen regressies te krijgen.
+2. **Herwerk `src/lib/users.functions.ts`** (elke functie blijft achter `requireAuth0Admin`):
+   - `listAdmins`: haal via `listUsersWithRole(AUTH0_B2B_ADMIN_ROLE_ID)` (+staff role indien gebruikt), retourneer `{ members: [{ sub, email, roles, last_login, created_at }] }`. Drop het `allowlist` veld (of return leeg voor compat).
+   - `inviteAdmin`: `getUserByEmail` → indien niet bestaat `createUser` met random password + `email_verified: false` + connection `Username-Password-Authentication` → `assignRole(sub, roleId)` → `createPasswordChangeTicket` en return de ticket URL (UI kan mailen of tonen). Verwijder alle Supabase-mutaties.
+   - `updateMemberRole`: `assignRole` / `removeRole` op basis van nieuw vs huidig; **self-lockout guard** vergelijkt `data.sub === context.userId`.
+   - `removeAdmin`: `removeRole(sub, adminRoleId)` (+ staff). Self-lockout op `sub`.
+   - `getMyRoles`: ongewijzigd (leest al uit Auth0 claims).
 
-## Wat ik NU ga doen na akkoord
-Fase 1 + 2 in één beurt (fundamenten + navigatie), daarna toon ik je het resultaat en wacht ik op je go voor fase 3.
+3. **UI aanpassen `src/routes/_admin/admin-users.tsx`**:
+   - Verstuur `sub` in plaats van Supabase `userId` naar `updateMemberRole` / `removeAdmin`.
+   - Toon de `createPasswordChangeTicket` link (of duidelijke "invite mail verstuurd" bevestiging).
+   - Verwijder allowlist-tabel uit de UI (Auth0 is nu de bron van waarheid).
 
-## Technische details
-- Geen nieuwe dependencies.
-- Tailwind v4 tokens in `src/styles.css` (geen JS-config).
-- Bestaande `useIsMobile` hook hergebruiken; nieuwe utility-classes via `@utility`.
-- Geen wijzigingen aan i18n keys, backend, server functions, of routes-structuur.
+4. **Opruimen**: `admin_email_allowlist` tabel en `handle_new_admin_user` trigger/function zijn dood — laat ik voor nu staan (aparte cleanup-migratie later), zodat deze fix puur code is en geen DB-migratie nodig heeft.
+
+## Risico's
+
+- Zonder de 4 secrets crasht `/admin-users`. Ik voeg dezelfde soort `admin_auth_unavailable`-melding toe als `require-admin.ts` doet, zodat de UI het vriendelijk toont.
+- Auth0 rate limits op Management API — voor `listUsersWithRole` volstaat 1 call per rol, dus geen probleem.
+- Passwordless / social-only users kunnen geen "password change ticket" krijgen — daar tonen we een instructie in plaats van een ticket.
+
+## Volgende stap
+
+Bevestig het plan en zet de 4 Auth0 secrets klaar. Daarna implementeer ik in één beurt.
