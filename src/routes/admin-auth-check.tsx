@@ -305,3 +305,194 @@ function Block({ title, value, hint, onCopy }: { title: string; value: string; h
     </div>
   );
 }
+
+function decodeJwt(token: string): Record<string, unknown> | null {
+  try {
+    let p = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    p += "=".repeat((4 - (p.length % 4)) % 4);
+    return JSON.parse(atob(p)) as Record<string, unknown>;
+  } catch {
+    return null;
+  }
+}
+
+function TokenClaimsSection({
+  expectedAudience,
+  expectedIssuer,
+}: {
+  expectedAudience: string | undefined;
+  expectedIssuer: string;
+}) {
+  const { isAuthenticated, isLoading, getAccessToken, loginWithRedirect, logout } = useAuth();
+  const [token, setToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loadingToken, setLoadingToken] = useState(false);
+
+  const fetchToken = async () => {
+    setLoadingToken(true);
+    setError(null);
+    try {
+      const t = await getAccessToken();
+      if (!t) setError("getAccessTokenSilently gaf null terug — kijk in de console.");
+      setToken(t);
+    } catch (e) {
+      setError((e as Error).message);
+      setToken(null);
+    } finally {
+      setLoadingToken(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) void fetchToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
+
+  const claims = token ? decodeJwt(token) : null;
+  const aud = claims?.["aud"];
+  const iss = claims?.["iss"] as string | undefined;
+  const role = claims?.[ROLE_CLAIM] as string | undefined;
+  const exp = claims?.["exp"] as number | undefined;
+  const sub = claims?.["sub"] as string | undefined;
+  const email = claims?.["email"] as string | undefined;
+
+  const audienceMatch = (() => {
+    if (!expectedAudience || aud == null) return null;
+    if (Array.isArray(aud)) return aud.includes(expectedAudience);
+    return aud === expectedAudience;
+  })();
+  const issuerMatch = iss && expectedIssuer ? iss === expectedIssuer : null;
+  const roleMatch = role === ADMIN_ROLE;
+  const expired = typeof exp === "number" ? exp * 1000 < Date.now() : null;
+
+  return (
+    <section
+      className="rounded-2xl p-6 mb-6"
+      style={{ background: "#15171C", border: "1px solid rgba(255,255,255,0.08)" }}
+    >
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.6)" }}>
+          Access token claims
+        </h2>
+        {isAuthenticated ? (
+          <div className="flex gap-2">
+            <button
+              onClick={fetchToken}
+              disabled={loadingToken}
+              className="text-xs px-3 py-1.5 rounded-md"
+              style={{ background: "#2ECC8A", color: "#0E0F12", fontWeight: 600, opacity: loadingToken ? 0.6 : 1 }}
+            >
+              {loadingToken ? "Ophalen…" : "Token verversen"}
+            </button>
+            <button
+              onClick={() => logout({ logoutParams: { returnTo: window.location.origin + "/admin-auth-check" } })}
+              className="text-xs px-3 py-1.5 rounded-md"
+              style={{ background: "rgba(255,255,255,0.08)", color: "#fff" }}
+            >
+              Log uit
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() =>
+              loginWithRedirect({
+                appState: { returnTo: "/admin-auth-check" },
+              })
+            }
+            disabled={isLoading}
+            className="text-xs px-3 py-1.5 rounded-md"
+            style={{ background: "#2ECC8A", color: "#0E0F12", fontWeight: 600, opacity: isLoading ? 0.6 : 1 }}
+          >
+            Inloggen om token te controleren
+          </button>
+        )}
+      </div>
+
+      {!isAuthenticated && (
+        <p className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>
+          {isLoading ? "Auth0 laadt…" : "Nog niet ingelogd. Log in om je access token te decoderen en te controleren."}
+        </p>
+      )}
+
+      {isAuthenticated && error && (
+        <p className="text-xs mb-3" style={{ color: "#FF6B6B" }}>
+          Fout bij ophalen token: {error}
+        </p>
+      )}
+
+      {isAuthenticated && !token && !error && loadingToken && (
+        <p className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>Token wordt opgehaald…</p>
+      )}
+
+      {claims && (
+        <>
+          <ul className="space-y-3 mb-4">
+            <ClaimRow
+              label={`aud = ${expectedAudience ?? "(geen VITE_AUTH0_AUDIENCE)"}`}
+              state={audienceMatch == null ? "warn" : audienceMatch ? "ok" : "fail"}
+              detail={
+                aud == null
+                  ? "Claim ontbreekt — token is waarschijnlijk een OIDC id-token zonder API audience."
+                  : `token aud = ${Array.isArray(aud) ? aud.join(", ") : String(aud)}`
+              }
+            />
+            <ClaimRow
+              label={`iss = ${expectedIssuer || "(geen VITE_AUTH0_DOMAIN)"}`}
+              state={issuerMatch == null ? "warn" : issuerMatch ? "ok" : "fail"}
+              detail={iss ? `token iss = ${iss}` : "Claim ontbreekt."}
+            />
+            <ClaimRow
+              label={`${ROLE_CLAIM} = ${ADMIN_ROLE}`}
+              state={role == null ? "fail" : roleMatch ? "ok" : "fail"}
+              detail={
+                role == null
+                  ? "Role claim ontbreekt — controleer of de Post-Login Action de b2b_admin claim toevoegt voor dit e-mailadres."
+                  : `token role = ${role}`
+              }
+            />
+            <ClaimRow
+              label="Token niet verlopen"
+              state={expired == null ? "warn" : expired ? "fail" : "ok"}
+              detail={
+                exp
+                  ? `exp = ${new Date(exp * 1000).toISOString()}`
+                  : "Geen exp-claim gevonden."
+              }
+            />
+          </ul>
+          <div className="text-xs mb-2" style={{ color: "rgba(255,255,255,0.55)" }}>
+            sub: <span className="font-mono">{sub ?? "—"}</span>
+            {email ? <> · email: <span className="font-mono">{email}</span></> : null}
+          </div>
+          <details>
+            <summary className="text-xs cursor-pointer" style={{ color: "rgba(255,255,255,0.6)" }}>
+              Volledige payload tonen
+            </summary>
+            <pre
+              className="text-xs mt-2 p-3 rounded-md overflow-x-auto whitespace-pre-wrap break-all"
+              style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.85)" }}
+            >
+              {JSON.stringify(claims, null, 2)}
+            </pre>
+          </details>
+        </>
+      )}
+    </section>
+  );
+}
+
+function ClaimRow({ label, state, detail }: { label: string; state: CheckState; detail?: string }) {
+  return (
+    <li className="flex items-start gap-3">
+      <StateIcon state={state} />
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-mono break-all">{label}</div>
+        {detail && (
+          <div className="text-xs mt-0.5 break-all" style={{ color: "rgba(255,255,255,0.55)" }}>
+            {detail}
+          </div>
+        )}
+      </div>
+    </li>
+  );
+}
