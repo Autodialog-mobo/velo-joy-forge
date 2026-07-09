@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import { requireAuth0Admin } from "@/integrations/auth0/middleware";
 import { z } from "zod";
 
