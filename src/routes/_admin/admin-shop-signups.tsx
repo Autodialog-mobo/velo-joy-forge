@@ -373,17 +373,22 @@ function ShopSignupsPage() {
                         {r.pos_other && <div style={{ color: "rgba(255,255,255,0.5)" }}>{r.pos_other}</div>}
                       </td>
                       <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
-                        <select
-                          value={r.status}
-                          disabled={savingId === r.id}
-                          onChange={(e) => onChangeStatus(r.id, e.target.value as Status)}
-                          className="px-2 py-1 rounded-md text-xs font-semibold"
-                          style={statusStyle(r.status)}
-                        >
-                          {STATUSES.map((s) => (
-                            <option key={s} value={s} style={{ color: "#000" }}>{STATUS_LABEL[s]}</option>
-                          ))}
-                        </select>
+                        <div className="flex items-center gap-2">
+                          {savingId === r.id && (
+                            <Loader2 size={14} className="animate-spin" style={{ color: "#E0A33E" }} />
+                          )}
+                          <select
+                            value={r.status}
+                            disabled={savingId === r.id}
+                            onChange={(e) => onChangeStatus(r.id, e.target.value as Status)}
+                            className="px-2 py-1 rounded-md text-xs font-semibold"
+                            style={statusStyle(r.status)}
+                          >
+                            {STATUSES.map((s) => (
+                              <option key={s} value={s} style={{ color: "#000" }}>{STATUS_LABEL[s]}</option>
+                            ))}
+                          </select>
+                        </div>
                         {r.admin_notes && (
                           <div className="text-xs mt-1 line-clamp-2 max-w-[220px]" style={{ color: "rgba(255,255,255,0.5)" }}>
                             {r.admin_notes}
