@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
-import { listShopSignups, updateShopSignup } from "@/lib/shop-signups.functions";
+import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send } from "lucide-react";
+import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_admin/admin-shop-signups")({
@@ -40,6 +40,7 @@ function statusStyle(s: string): React.CSSProperties {
 function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
+  const pushToPro = useServerFn(pushShopSignupToVelopassPro);
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shop-signups"],
     queryFn: () => list({ data: {} as any }),
@@ -54,6 +55,7 @@ function ShopSignupsPage() {
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [pushingId, setPushingId] = useState<string | null>(null);
 
   const rows: any[] = data?.rows ?? [];
 
@@ -127,6 +129,26 @@ function ShopSignupsPage() {
       setSavingId(null);
     }
   };
+
+  const onPushToPro = async (id: string) => {
+    if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) return;
+    setPushingId(id);
+    try {
+      const res = await pushToPro({ data: { id } });
+      toast.success(
+        res?.managementId
+          ? `Aangemaakt in velopass.pro (id: ${res.managementId})`
+          : "Doorgestuurd naar velopass.pro",
+      );
+      refetch();
+      setOpenId(null);
+    } catch (err: any) {
+      toast.error(err?.message ?? "Doorsturen mislukt");
+    } finally {
+      setPushingId(null);
+    }
+  };
+
 
   const openRow = (r: any) => {
     setOpenId(r.id);
@@ -399,7 +421,7 @@ function ShopSignupsPage() {
               />
             </div>
 
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-2 flex-wrap">
               <button
                 onClick={() => setOpenId(null)}
                 className="px-4 py-2 rounded-lg text-sm"
@@ -408,8 +430,17 @@ function ShopSignupsPage() {
                 Sluiten
               </button>
               <button
+                onClick={() => onPushToPro(open.id)}
+                disabled={pushingId === open.id || savingId === open.id}
+                title="Maak een Organisation aan op managementapi.prod.velopass.com"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
+                style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
+              >
+                <Send size={14} /> {pushingId === open.id ? "Doorsturen…" : "Doorsturen naar velopass.pro"}
+              </button>
+              <button
                 onClick={() => onSaveDetails(open.id)}
-                disabled={savingId === open.id}
+                disabled={savingId === open.id || pushingId === open.id}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
                 style={{ background: "#2ECC8A", color: "#0E0F12" }}
               >
