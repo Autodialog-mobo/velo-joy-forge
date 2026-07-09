@@ -704,3 +704,87 @@ function PushErrorPanel({ err, onDismiss }: { err: any; onDismiss: () => void })
   );
 }
 
+function PushSuccessPanel({
+  success,
+  onDismiss,
+}: {
+  success: { id: string; managementId: string };
+  onDismiss: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const copyId = async () => {
+    if (!success.managementId) return;
+    try {
+      await navigator.clipboard.writeText(success.managementId);
+      setCopied(true);
+      toast.success("Organisation-id gekopieerd");
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      toast.error("Kopiëren mislukt");
+    }
+  };
+  const viewUrl = success.managementId
+    ? `https://app.velopass.pro/organisations/${success.managementId}`
+    : "https://app.velopass.pro";
+
+  return (
+    <div
+      className="mb-4 rounded-xl p-4"
+      style={{ background: "rgba(46,204,138,0.08)", border: "1px solid rgba(46,204,138,0.35)" }}
+    >
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <div>
+          <div className="text-xs uppercase tracking-wider" style={{ color: "#2ECC8A" }}>
+            Succesvol doorgestuurd naar velopass.pro
+          </div>
+          <div className="text-sm mt-1" style={{ color: "#fff" }}>
+            De Organisation is aangemaakt in het management panel.
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="shrink-0 text-xs px-2 py-1 rounded-md"
+          style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+        >
+          Sluiten
+        </button>
+      </div>
+
+      {success.managementId && (
+        <div className="mt-3 rounded-lg p-3" style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+            Organisation-id
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <code className="text-sm" style={{ color: "#2ECC8A" }}>{success.managementId}</code>
+            <button
+              type="button"
+              onClick={copyId}
+              className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md"
+              style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+            >
+              {copied ? <Check size={12} /> : <Copy size={12} />} {copied ? "Gekopieerd" : "Kopieer"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="mt-3 flex items-center gap-2 flex-wrap">
+        <a
+          href={viewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
+          style={{ background: "#2ECC8A", color: "#0E0F12" }}
+        >
+          <ExternalLink size={12} /> Bekijk in velopass.pro
+        </a>
+        <span className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+          Link opent in een nieuw tabblad.
+        </span>
+      </div>
+    </div>
+  );
+}
+
