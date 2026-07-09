@@ -61,7 +61,10 @@ export function Auth0ProviderWithConfig({ children }: { children: ReactNode }) {
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: typeof window !== "undefined" ? window.location.origin : undefined,
+        // Must land on a route where Auth0Provider is mounted (the /admin subtree),
+        // otherwise the ?code&state callback is stripped by the root lang redirect
+        // and the session is never established.
+        redirect_uri: typeof window !== "undefined" ? `${window.location.origin}/admin` : undefined,
         scope: "openid profile email",
         audience: AUTH0_AUDIENCE,
       }}
