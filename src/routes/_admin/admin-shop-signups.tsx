@@ -444,11 +444,20 @@ function ShopSignupsPage() {
               <button
                 onClick={() => onPushToPro(open.id)}
                 disabled={pushingId === open.id || savingId === open.id}
+                aria-busy={pushingId === open.id}
                 title="Maak een Organisation aan op managementapi.prod.velopass.com"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
               >
-                <Send size={14} /> {pushingId === open.id ? "Doorsturen…" : "Doorsturen naar velopass.pro"}
+                {pushingId === open.id ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" /> Doorsturen…
+                  </>
+                ) : (
+                  <>
+                    <Send size={14} /> Doorsturen naar velopass.pro
+                  </>
+                )}
               </button>
               <button
                 onClick={() => onSaveDetails(open.id)}
