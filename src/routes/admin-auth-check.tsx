@@ -206,10 +206,6 @@ function AuthCheckPage() {
 
         <TokenClaimsSection expectedAudience={audience} expectedIssuer={domain ? `https://${domain}/` : ""} />
 
-        <section
-          className="rounded-2xl p-6 mb-6"
-          style={{ background: "#15171C", border: "1px solid rgba(255,255,255,0.08)" }}
-        >
 
         <section
           className="rounded-2xl p-6 mb-6"
