@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
-import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle } from "lucide-react";
+import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
@@ -59,6 +59,7 @@ function ShopSignupsPage() {
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
   const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
+  const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
 
   const rows: any[] = data?.rows ?? [];
@@ -112,9 +113,11 @@ function ShopSignupsPage() {
         return { ...old, rows: old.rows.map((r: any) => (r.id === id ? { ...r, status } : r)) };
       });
       await refetch();
+      setStatusError(null);
       toast.success(`Status opgeslagen: ${STATUS_LABEL[status]}`);
       setOpenId(null);
     } catch (err: any) {
+      setStatusError({ id, status, message: err.message ?? "Onbekende fout" });
       toast.error(`Status niet opgeslagen: ${err.message ?? "Onbekende fout"}`);
     } finally {
       setSavingId(null);
@@ -180,6 +183,7 @@ function ShopSignupsPage() {
     setOpenId(r.id);
     setPushError(null);
     setPushSuccess(null);
+    setStatusError(null);
     setDraft({
       first_name: r.first_name ?? "",
       last_name: r.last_name ?? "",
@@ -444,6 +448,16 @@ function ShopSignupsPage() {
                 </select>
               </div>
             </div>
+
+            {statusError?.id === open.id && (
+              <StatusErrorPanel
+                status={statusError.status}
+                message={statusError.message}
+                onRetry={() => onChangeStatus(statusError.id, statusError.status)}
+                onDismiss={() => setStatusError(null)}
+                disabled={savingId === open.id}
+              />
+            )}
 
             {open.pushed_to_pro_at ? (
               <PushedInfoBanner
