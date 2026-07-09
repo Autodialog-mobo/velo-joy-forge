@@ -20,6 +20,7 @@ import { Route as BikesearchRouteImport } from './routes/bikesearch'
 import { Route as BestellenRouteImport } from './routes/bestellen'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
+import { Route as AdminAuthCheckRouteImport } from './routes/admin-auth-check'
 import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -108,6 +109,11 @@ const AuthRoute = AuthRouteImport.update({
 const AlEenStickerRoute = AlEenStickerRouteImport.update({
   id: '/al-een-sticker',
   path: '/al-een-sticker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuthCheckRoute = AdminAuthCheckRouteImport.update({
+  id: '/admin-auth-check',
+  path: '/admin-auth-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -288,6 +294,7 @@ const ApiPublicPaymentsMollieWebhookRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteRouteWithChildren
+  '/admin-auth-check': typeof AdminAuthCheckRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
@@ -333,6 +340,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin-auth-check': typeof AdminAuthCheckRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
@@ -381,6 +389,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteRouteWithChildren
   '/_admin': typeof AdminRouteRouteWithChildren
+  '/admin-auth-check': typeof AdminAuthCheckRoute
   '/al-een-sticker': typeof AlEenStickerRoute
   '/auth': typeof AuthRoute
   '/bestellen': typeof BestellenRouteWithChildren
@@ -429,6 +438,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$lang'
+    | '/admin-auth-check'
     | '/al-een-sticker'
     | '/auth'
     | '/bestellen'
@@ -474,6 +484,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin-auth-check'
     | '/al-een-sticker'
     | '/auth'
     | '/bestellen'
@@ -521,6 +532,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$lang'
     | '/_admin'
+    | '/admin-auth-check'
     | '/al-een-sticker'
     | '/auth'
     | '/bestellen'
@@ -569,6 +581,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LangRouteRoute: typeof LangRouteRouteWithChildren
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  AdminAuthCheckRoute: typeof AdminAuthCheckRoute
   AlEenStickerRoute: typeof AlEenStickerRoute
   AuthRoute: typeof AuthRoute
   BestellenRoute: typeof BestellenRouteWithChildren
@@ -666,6 +679,13 @@ declare module '@tanstack/react-router' {
       path: '/al-een-sticker'
       fullPath: '/al-een-sticker'
       preLoaderRoute: typeof AlEenStickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-auth-check': {
+      id: '/admin-auth-check'
+      path: '/admin-auth-check'
+      fullPath: '/admin-auth-check'
+      preLoaderRoute: typeof AdminAuthCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_admin': {
@@ -991,6 +1011,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LangRouteRoute: LangRouteRouteWithChildren,
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  AdminAuthCheckRoute: AdminAuthCheckRoute,
   AlEenStickerRoute: AlEenStickerRoute,
   AuthRoute: AuthRoute,
   BestellenRoute: BestellenRouteWithChildren,
