@@ -115,7 +115,7 @@ function ShopSignupsPage() {
       toast.success(`Status opgeslagen: ${STATUS_LABEL[status]}`);
       setOpenId(null);
     } catch (err: any) {
-      toast.error(err.message ?? "Wijzigen mislukt");
+      toast.error(`Status niet opgeslagen: ${err.message ?? "Onbekende fout"}`);
     } finally {
       setSavingId(null);
     }
