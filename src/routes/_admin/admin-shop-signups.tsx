@@ -522,15 +522,6 @@ function ShopSignupsPage() {
               >
                 <Save size={14} /> {savingId === open.id ? "Opslaan…" : "Wijzigingen opslaan"}
               </button>
-              <button
-                type="button"
-                onClick={() => onSaveDetails(open.id)}
-                disabled={savingId === open.id || pushingId === open.id}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
-                style={{ background: "#2ECC8A", color: "#0E0F12" }}
-              >
-                <Save size={14} /> {savingId === open.id ? "Opslaan…" : "Wijzigingen opslaan"}
-              </button>
             </div>
           </div>
         </div>
