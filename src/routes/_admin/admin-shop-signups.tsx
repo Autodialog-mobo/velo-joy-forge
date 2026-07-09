@@ -449,7 +449,7 @@ function ShopSignupsPage() {
               </div>
             </div>
 
-            {statusError?.id === open.id && (
+            {!!statusError && statusError.id === open.id && (
               <StatusErrorPanel
                 status={statusError.status}
                 message={statusError.message}
