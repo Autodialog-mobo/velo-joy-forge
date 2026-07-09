@@ -251,17 +251,26 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const returnedId: string | null =
       (apiResponse && typeof apiResponse === "object" && (apiResponse.id || apiResponse.organisationId)) || null;
 
-    // Mark as converted + append note.
-    const note = `[${new Date().toISOString().slice(0, 10)}] Doorgestuurd naar velopass.pro${returnedId ? ` (id: ${returnedId})` : ""}.`;
+    // Mark as converted + append note + record push metadata.
+    const nowIso = new Date().toISOString();
+    const actorEmail: string | null =
+      (context.claims as any)?.email ||
+      (context.claims as any)?.["https://velopass.com/email"] ||
+      null;
+    const note = `[${nowIso.slice(0, 10)}] Doorgestuurd naar velopass.pro${returnedId ? ` (id: ${returnedId})` : ""}${actorEmail ? ` door ${actorEmail}` : ""}.`;
     const admin_notes = row.admin_notes ? `${row.admin_notes}\n${note}` : note;
     await (supabaseAdmin as any)
       .from("shop_signups")
       .update({
         status: "converted",
-        status_updated_at: new Date().toISOString(),
+        status_updated_at: nowIso,
         status_updated_by: context.userId,
         admin_notes,
-        updated_at: new Date().toISOString(),
+        pushed_to_pro_at: nowIso,
+        pushed_to_pro_by: context.userId,
+        pushed_to_pro_by_email: actorEmail,
+        pushed_to_pro_management_id: returnedId,
+        updated_at: nowIso,
       })
       .eq("id", data.id);
 
