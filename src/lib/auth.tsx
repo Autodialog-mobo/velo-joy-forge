@@ -63,9 +63,8 @@ export function Auth0ProviderWithConfig({ children }: { children: ReactNode }) {
       authorizationParams={{
         // Must land on a route where Auth0Provider is mounted (the /admin subtree),
         // otherwise the ?code&state callback is stripped by the root lang redirect
-        // and the session is never established. Include the pro/login fragment so
-        // Auth0 routes the login request through the Velopass "pro/login" page.
-        redirect_uri: typeof window !== "undefined" ? `${window.location.origin}/admin#page=pro/login` : undefined,
+        // and the session is never established.
+        redirect_uri: typeof window !== "undefined" ? `${window.location.origin}/admin` : undefined,
         scope: "openid profile email",
         audience: AUTH0_AUDIENCE,
       }}
