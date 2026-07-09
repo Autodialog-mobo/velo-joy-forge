@@ -163,6 +163,7 @@ function ShopSignupsPage() {
   const openRow = (r: any) => {
     setOpenId(r.id);
     setPushError(null);
+    setPushSuccess(null);
     setDraft({
       first_name: r.first_name ?? "",
       last_name: r.last_name ?? "",
