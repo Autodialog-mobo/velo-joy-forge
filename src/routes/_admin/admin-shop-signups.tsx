@@ -433,7 +433,11 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
               />
             ) : (
-              <NotPushedInfoBanner />
+              <NotPushedInfoBanner
+                onPush={() => onPushToPro(open.id)}
+                disabled={pushingId === open.id || savingId === open.id}
+                loading={pushingId === open.id}
+              />
             )}
 
             <EditableGrid
