@@ -136,6 +136,7 @@ function ShopSignupsPage() {
     if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) return;
     setPushingId(id);
     setPushError(null);
+    setPushSuccess(null);
     try {
       const res: any = await pushToPro({ data: { id } });
       if (res?.ok === false) {
@@ -143,13 +144,14 @@ function ShopSignupsPage() {
         toast.error(res.message ?? "Doorsturen mislukt");
         return;
       }
+      const managementId = res?.managementId;
+      setPushSuccess({ id, managementId: managementId ?? "" });
       toast.success(
-        res?.managementId
-          ? `Aangemaakt in velopass.pro (id: ${res.managementId})`
+        managementId
+          ? `Aangemaakt in velopass.pro (id: ${managementId})`
           : "Doorgestuurd naar velopass.pro",
       );
       refetch();
-      setOpenId(null);
     } catch (err: any) {
       setPushError({ stage: "unexpected", message: err?.message ?? "Onverwachte fout" });
       toast.error(err?.message ?? "Doorsturen mislukt");
