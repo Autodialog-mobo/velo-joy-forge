@@ -67,7 +67,6 @@ export function Auth0ProviderWithConfig({ children }: { children: ReactNode }) {
       }}
       onRedirectCallback={onRedirectCallback}
       cacheLocation="localstorage"
-      useRefreshTokens={true}
     >
       <TokenBridge>{children}</TokenBridge>
     </Auth0Provider>
