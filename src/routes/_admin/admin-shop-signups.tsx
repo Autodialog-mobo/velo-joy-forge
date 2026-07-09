@@ -808,3 +808,49 @@ function PushSuccessPanel({
   );
 }
 
+
+function PushedInfoBanner({
+  pushedAt,
+  pushedByEmail,
+  managementId,
+}: {
+  pushedAt: string;
+  pushedByEmail?: string | null;
+  managementId?: string | null;
+}) {
+  const viewUrl = managementId
+    ? `https://app.velopass.pro/organisations/${managementId}`
+    : "https://app.velopass.pro";
+  return (
+    <div
+      className="mb-4 rounded-xl p-3"
+      style={{ background: "rgba(122,176,255,0.08)", border: "1px solid rgba(122,176,255,0.30)" }}
+    >
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div className="min-w-0">
+          <div className="text-xs uppercase tracking-wider" style={{ color: "#7AB0FF" }}>
+            Doorgestuurd naar velopass.pro
+          </div>
+          <div className="text-sm mt-1" style={{ color: "#fff" }}>
+            {new Date(pushedAt).toLocaleString("nl-BE")}
+            {pushedByEmail ? <> · door <span style={{ color: "rgba(255,255,255,0.8)" }}>{pushedByEmail}</span></> : null}
+          </div>
+          {managementId && (
+            <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+              Organisation-id: <code style={{ color: "#7AB0FF" }}>{managementId}</code>
+            </div>
+          )}
+        </div>
+        <a
+          href={viewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
+          style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
+        >
+          <ExternalLink size={12} /> Bekijken
+        </a>
+      </div>
+    </div>
+  );
+}
