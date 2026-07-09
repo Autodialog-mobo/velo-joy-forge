@@ -130,6 +130,26 @@ function ShopSignupsPage() {
     }
   };
 
+  const onPushToPro = async (id: string) => {
+    if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) return;
+    setPushingId(id);
+    try {
+      const res = await pushToPro({ data: { id } });
+      toast.success(
+        res?.managementId
+          ? `Aangemaakt in velopass.pro (id: ${res.managementId})`
+          : "Doorgestuurd naar velopass.pro",
+      );
+      refetch();
+      setOpenId(null);
+    } catch (err: any) {
+      toast.error(err?.message ?? "Doorsturen mislukt");
+    } finally {
+      setPushingId(null);
+    }
+  };
+
+
   const openRow = (r: any) => {
     setOpenId(r.id);
     setDraft({
