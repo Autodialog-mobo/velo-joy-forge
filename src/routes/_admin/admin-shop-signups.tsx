@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
@@ -41,6 +41,7 @@ function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
+  const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shop-signups"],
     queryFn: () => list({ data: {} as any }),
@@ -106,6 +107,10 @@ function ShopSignupsPage() {
     setSavingId(id);
     try {
       await update({ data: { id, status } });
+      queryClient.setQueryData(["shop-signups"], (old: any) => {
+        if (!old?.rows) return old;
+        return { ...old, rows: old.rows.map((r: any) => (r.id === id ? { ...r, status } : r)) };
+      });
       toast.success(`Status bijgewerkt naar ${STATUS_LABEL[status]}`);
       refetch();
     } catch (err: any) {
