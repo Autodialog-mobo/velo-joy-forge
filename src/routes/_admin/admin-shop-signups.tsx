@@ -865,25 +865,47 @@ function PushedInfoBanner({
   );
 }
 
-function NotPushedInfoBanner() {
+function NotPushedInfoBanner({
+  onPush,
+  disabled,
+  loading,
+}: {
+  onPush: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+}) {
   return (
     <div
       className="mb-4 rounded-xl p-3"
       style={{ background: "rgba(224,163,62,0.08)", border: "1px solid rgba(224,163,62,0.30)" }}
     >
-      <div className="flex items-start gap-3">
-        <AlertCircle size={18} style={{ color: "#E0A33E", marginTop: 2 }} />
-        <div>
-          <div className="text-xs uppercase tracking-wider" style={{ color: "#E0A33E" }}>
-            Nog niet doorgestuurd
-          </div>
-          <div className="text-sm mt-1" style={{ color: "#fff" }}>
-            Deze aanmelding is nog niet doorgezet naar velopass.pro.
-          </div>
-          <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
-            Klik op <strong>Doorsturen naar velopass.pro</strong> om een Organisation aan te maken.
+      <div className="flex items-start justify-between gap-3 flex-wrap">
+        <div className="flex items-start gap-3 min-w-0">
+          <AlertCircle size={18} style={{ color: "#E0A33E", marginTop: 2 }} />
+          <div>
+            <div className="text-xs uppercase tracking-wider" style={{ color: "#E0A33E" }}>
+              Nog niet doorgestuurd
+            </div>
+            <div className="text-sm mt-1" style={{ color: "#fff" }}>
+              Deze aanmelding is nog niet doorgezet naar velopass.pro.
+            </div>
+            <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
+              Klik op de knop om een Organisation aan te maken.
+            </div>
           </div>
         </div>
+        <button
+          type="button"
+          onClick={onPush}
+          disabled={disabled || loading}
+          aria-busy={loading}
+          title="Maak een Organisation aan op managementapi.prod.velopass.com"
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+          style={{ background: "rgba(224,163,62,0.14)", color: "#E0A33E", border: "1px solid rgba(224,163,62,0.35)" }}
+        >
+          {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
+          {loading ? "Doorsturen…" : "Nu doorsturen naar velopass.pro"}
+        </button>
       </div>
     </div>
   );
