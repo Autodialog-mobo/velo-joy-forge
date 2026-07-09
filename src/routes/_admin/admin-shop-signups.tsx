@@ -598,3 +598,94 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
   );
 
 }
+
+function PushErrorPanel({ err, onDismiss }: { err: any; onDismiss: () => void }) {
+  const stage: string = err?.stage ?? "unknown";
+  const stageLabel: Record<string, string> = {
+    validation: "Ontbrekende velden",
+    api: `API-fout${err?.apiStatus ? ` (HTTP ${err.apiStatus})` : ""}`,
+    network: "Verbindingsfout",
+    auth: "Authenticatiefout",
+    unexpected: "Onverwachte fout",
+    unknown: "Fout",
+  };
+  return (
+    <div
+      className="mb-4 rounded-xl p-4"
+      style={{ background: "rgba(224,82,82,0.08)", border: "1px solid rgba(224,82,82,0.35)" }}
+    >
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <div>
+          <div className="text-xs uppercase tracking-wider" style={{ color: "#E05252" }}>
+            Doorsturen naar velopass.pro — {stageLabel[stage] ?? stageLabel.unknown}
+          </div>
+          <div className="text-sm mt-1" style={{ color: "#fff" }}>
+            {err?.message ?? "Er ging iets mis."}
+          </div>
+          {err?.detail && (
+            <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.7)" }}>{err.detail}</div>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={onDismiss}
+          className="shrink-0 text-xs px-2 py-1 rounded-md"
+          style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+        >
+          Sluiten
+        </button>
+      </div>
+
+      {Array.isArray(err?.missing) && err.missing.length > 0 && (
+        <ul className="mt-2 text-sm space-y-1" style={{ color: "rgba(255,255,255,0.85)" }}>
+          {err.missing.map((m: any, i: number) => (
+            <li key={i} className="flex flex-col">
+              <span>
+                <span style={{ color: "#E05252" }}>•</span>{" "}
+                <strong>{m.label}</strong>
+                <span style={{ color: "rgba(255,255,255,0.5)" }}> — veld: {m.field}</span>
+              </span>
+              {m.hint && (
+                <span className="text-xs pl-3" style={{ color: "rgba(255,255,255,0.6)" }}>{m.hint}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {Array.isArray(err?.fieldErrors) && err.fieldErrors.length > 0 && (
+        <div className="mt-2">
+          <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+            Velden geweigerd door velopass.pro
+          </div>
+          <ul className="text-sm space-y-1" style={{ color: "rgba(255,255,255,0.85)" }}>
+            {err.fieldErrors.map((f: any, i: number) => (
+              <li key={i}>
+                <strong>{f.field}</strong>
+                <ul className="pl-4 text-xs" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  {f.messages.map((msg: string, j: number) => (
+                    <li key={j}>• {msg}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {err?.raw && !err?.detail && (
+        <pre
+          className="mt-2 text-xs p-2 rounded-md overflow-x-auto"
+          style={{ background: "#0E0F12", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.08)" }}
+        >
+          {err.raw}
+        </pre>
+      )}
+
+      <div className="mt-3 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+        Tip: pas de velden hierboven aan, klik <em>Wijzigingen opslaan</em> en probeer <em>Doorsturen</em> opnieuw.
+      </div>
+    </div>
+  );
+}
+
