@@ -134,7 +134,12 @@ function ShopSignupsPage() {
   };
 
   const onPushToPro = async (id: string) => {
-    if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) return;
+    if (isPushingRef.current || pushingId || savingId) return;
+    isPushingRef.current = true;
+    if (!confirm("Deze aanmelding doorsturen naar velopass.pro?\n\nEr wordt een nieuwe Organisation aangemaakt in het management panel.")) {
+      isPushingRef.current = false;
+      return;
+    }
     setPushingId(id);
     setPushError(null);
     setPushSuccess(null);
@@ -158,6 +163,7 @@ function ShopSignupsPage() {
       toast.error(err?.message ?? "Doorsturen mislukt");
     } finally {
       setPushingId(null);
+      isPushingRef.current = false;
     }
   };
 
