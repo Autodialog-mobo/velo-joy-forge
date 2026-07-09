@@ -312,10 +312,10 @@ function ShopSignupsPage() {
                     </th>
                     <th className="text-left px-4 py-3 font-medium">Contact</th>
                     <th className="text-left px-4 py-3 font-medium">Taal</th>
-                    <th className="text-left px-4 py-3 font-medium">POS</th>
-                    <th className="text-left px-4 py-3 font-medium">Status</th>
-                    <th className="text-right px-4 py-3 font-medium">Actie</th>
-                  </tr>
+                  <th className="text-left px-4 py-3 font-medium">POS</th>
+                  <th className="text-left px-4 py-3 font-medium">Status</th>
+                  <th className="text-right px-4 py-3 font-medium">Doorst.</th>
+                </tr>
                 </thead>
                 <tbody>
                   {filtered.map((r) => (
