@@ -421,9 +421,17 @@ function ShopSignupsPage() {
                 </div>
                 <h2 className="text-xl font-semibold mt-1">{open.shop_name || "—"}</h2>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-xs font-semibold shrink-0" style={statusStyle(open.status)}>
-                {STATUS_LABEL[open.status as Status] ?? open.status}
-              </span>
+              <select
+                value={open.status}
+                disabled={savingId === open.id}
+                onChange={(e) => onChangeStatus(open.id, e.target.value as Status)}
+                className="px-2 py-1 rounded-md text-xs font-semibold shrink-0"
+                style={statusStyle(open.status)}
+              >
+                {STATUSES.map((s) => (
+                  <option key={s} value={s} style={{ color: "#000" }}>{STATUS_LABEL[s]}</option>
+                ))}
+              </select>
             </div>
 
             {open.pushed_to_pro_at ? (
