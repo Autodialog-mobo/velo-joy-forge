@@ -539,7 +539,16 @@ function ShopSignupsPage() {
                         {labelCopied ? "Gekopieerd" : "Kopieer adreslabel"}
                       </button>
                     </div>
+                    {(draft.lang || "").trim() && (
+                      <div
+                        className="mt-2 text-right text-[10px] uppercase tracking-wide"
+                        style={{ color: "rgba(255,255,255,0.4)" }}
+                      >
+                        {(draft.lang || "").trim().toUpperCase()}
+                      </div>
+                    )}
                   </div>
+
                 </div>
               );
             })()}
