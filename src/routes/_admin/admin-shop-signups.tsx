@@ -56,6 +56,8 @@ function ShopSignupsPage() {
   const [draft, setDraft] = useState<Record<string, string>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [labelCopied, setLabelCopied] = useState(false);
+
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
   const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
@@ -184,7 +186,9 @@ function ShopSignupsPage() {
     setPushError(null);
     setPushSuccess(null);
     setStatusError(null);
+    setLabelCopied(false);
     setDraft({
+
       first_name: r.first_name ?? "",
       last_name: r.last_name ?? "",
       shop_name: r.shop_name ?? "",
@@ -485,6 +489,61 @@ function ShopSignupsPage() {
               copiedKey={copiedKey}
               created_at={open.created_at}
             />
+
+            {(() => {
+              const labelLines = [
+                `${draft.first_name ?? ""} ${draft.last_name ?? ""}`.trim(),
+                draft.shop_name,
+                draft.address,
+                draft.country ? String(draft.country).toUpperCase() : null,
+              ].filter((l) => l && String(l).trim().length > 0) as string[];
+              const labelText = labelLines.join("\n");
+              if (!labelText) return null;
+              return (
+                <div className="mb-4">
+                  <label className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    Adreslabel
+                  </label>
+                  <div
+                    className="mt-1 rounded-lg p-3"
+                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.12)" }}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <pre
+                        className="text-[13px] leading-[1.45] m-0 whitespace-pre-wrap"
+                        style={{
+                          color: "#fff",
+                          fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+                        }}
+                      >
+                        {labelText}
+                      </pre>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(labelText);
+                            setLabelCopied(true);
+                            setTimeout(() => setLabelCopied(false), 1600);
+                          } catch {}
+                        }}
+                        className="inline-flex items-center gap-1.5 h-[28px] px-2.5 rounded-lg text-[11px] font-medium shrink-0 transition-colors focus:outline-none focus-visible:ring-2"
+                        style={{
+                          background: "transparent",
+                          border: "1px solid rgba(255,255,255,0.12)",
+                          color: labelCopied ? "#2ECC8A" : "rgba(255,255,255,0.6)",
+                        }}
+                        aria-label="Kopieer adreslabel"
+                      >
+                        {labelCopied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        {labelCopied ? "Gekopieerd" : "Kopieer adreslabel"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
 
             <div className="mb-4">
               <label className="text-xs uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>
