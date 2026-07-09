@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CheckCircle2, XCircle, AlertCircle, Copy } from "lucide-react";
 import { Auth0ProviderWithConfig, ROLE_CLAIM, ADMIN_ROLE, useAuth } from "@/lib/auth";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const Route = createFileRoute("/admin-auth-check")({
   ssr: false,
@@ -205,6 +206,9 @@ function AuthCheckPage() {
         </section>
 
         <TokenClaimsSection expectedAudience={audience} expectedIssuer={domain ? `https://${domain}/` : ""} />
+
+        <AudienceProbeSection currentAudience={audience} />
+
 
 
         <section
@@ -496,3 +500,134 @@ function ClaimRow({ label, state, detail }: { label: string; state: CheckState; 
     </li>
   );
 }
+
+type ProbeResult = {
+  audience: string;
+  state: "pending" | "ok" | "fail";
+  tokenAud?: unknown;
+  error?: string;
+};
+
+function AudienceProbeSection({ currentAudience }: { currentAudience: string | undefined }) {
+  const { isAuthenticated, isLoading, getAccessTokenSilently, loginWithRedirect } = useAuth0();
+  const [results, setResults] = useState<ProbeResult[]>([]);
+  const [running, setRunning] = useState(false);
+
+  const base = (currentAudience ?? "").replace(/\/+$/, "");
+  const withoutSlash = base;
+  const withSlash = base ? `${base}/` : "";
+  const variants = base ? [withoutSlash, withSlash] : [];
+
+  const probe = async () => {
+    if (!variants.length) return;
+    setRunning(true);
+    setResults(variants.map((a) => ({ audience: a, state: "pending" })));
+
+    const next: ProbeResult[] = [];
+    for (const aud of variants) {
+      try {
+        // cacheMode:'off' forces a fresh /authorize round trip per variant so
+        // Auth0 actually evaluates the audience (a cached token would mask it).
+        const token = await getAccessTokenSilently({
+          authorizationParams: { audience: aud },
+          cacheMode: "off",
+        });
+        const claims = decodeJwt(token);
+        next.push({ audience: aud, state: "ok", tokenAud: claims?.["aud"] });
+      } catch (e) {
+        const err = e as { error?: string; error_description?: string; message?: string };
+        next.push({
+          audience: aud,
+          state: "fail",
+          error: err.error_description || err.message || err.error || "unknown_error",
+        });
+      }
+      setResults([...next, ...variants.slice(next.length).map((a) => ({ audience: a, state: "pending" as const }))]);
+    }
+    setRunning(false);
+  };
+
+  return (
+    <section
+      className="rounded-2xl p-6 mb-6"
+      style={{ background: "#15171C", border: "1px solid rgba(255,255,255,0.08)" }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.6)" }}>
+          Audience probe (met / zonder trailing slash)
+        </h2>
+        {isAuthenticated ? (
+          <button
+            onClick={probe}
+            disabled={running || !variants.length}
+            className="text-xs px-3 py-1.5 rounded-md"
+            style={{ background: "#2ECC8A", color: "#0E0F12", fontWeight: 600, opacity: running || !variants.length ? 0.6 : 1 }}
+          >
+            {running ? "Testen…" : "Beide varianten testen"}
+          </button>
+        ) : (
+          <button
+            onClick={() =>
+              loginWithRedirect({ appState: { returnTo: "/admin-auth-check" } })
+            }
+            disabled={isLoading}
+            className="text-xs px-3 py-1.5 rounded-md"
+            style={{ background: "#2ECC8A", color: "#0E0F12", fontWeight: 600, opacity: isLoading ? 0.6 : 1 }}
+          >
+            Inloggen om te testen
+          </button>
+        )}
+      </div>
+
+      <p className="text-xs mb-3" style={{ color: "rgba(255,255,255,0.55)" }}>
+        Probeert <code>getAccessTokenSilently</code> met beide varianten van je audience
+        en laat zien welke door Auth0 wordt geaccepteerd. Auth0 matcht identifiers letterlijk —
+        <code>foo.com</code> en <code>foo.com/</code> zijn twee verschillende API's.
+      </p>
+
+      {!variants.length && (
+        <p className="text-xs" style={{ color: "#FFB84D" }}>
+          Geen <code>VITE_AUTH0_AUDIENCE</code> geconfigureerd — niets om te testen.
+        </p>
+      )}
+
+      {results.length > 0 && (
+        <ul className="space-y-3">
+          {results.map((r) => (
+            <li key={r.audience} className="flex items-start gap-3">
+              <StateIcon state={r.state === "pending" ? "pending" : r.state === "ok" ? "ok" : "fail"} />
+              <div className="flex-1 min-w-0">
+                <div className="text-sm font-mono break-all">{r.audience}</div>
+                {r.state === "ok" && (
+                  <div className="text-xs mt-0.5 break-all" style={{ color: "rgba(46,204,138,0.9)" }}>
+                    Geaccepteerd. token.aud = {Array.isArray(r.tokenAud) ? r.tokenAud.join(", ") : String(r.tokenAud)}
+                  </div>
+                )}
+                {r.state === "fail" && (
+                  <div className="text-xs mt-0.5 break-all" style={{ color: "#FF6B6B" }}>
+                    Geweigerd: {r.error}
+                  </div>
+                )}
+                {r.state === "pending" && (
+                  <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    Bezig…
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {results.some((r) => r.state === "ok") && (
+        <div
+          className="mt-4 rounded-md p-3 text-xs"
+          style={{ background: "rgba(46,204,138,0.08)", border: "1px solid rgba(46,204,138,0.25)", color: "rgba(255,255,255,0.85)" }}
+        >
+          Zet <code>VITE_AUTH0_AUDIENCE</code> en <code>AUTH0_AUDIENCE</code> op de variant die "Geaccepteerd" is, en herstart de preview.
+        </div>
+      )}
+    </section>
+  );
+}
+
