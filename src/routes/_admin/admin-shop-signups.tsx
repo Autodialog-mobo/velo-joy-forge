@@ -447,6 +447,7 @@ function ShopSignupsPage() {
 
             <div className="flex justify-end gap-2 flex-wrap">
               <button
+                type="button"
                 onClick={() => setOpenId(null)}
                 disabled={pushingId === open.id}
                 className="px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed"
@@ -455,6 +456,7 @@ function ShopSignupsPage() {
                 Sluiten
               </button>
               <button
+                type="button"
                 onClick={() => onPushToPro(open.id)}
                 disabled={pushingId === open.id || savingId === open.id}
                 aria-busy={pushingId === open.id}
