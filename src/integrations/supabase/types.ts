@@ -363,6 +363,9 @@ export type Database = {
           phone: string | null
           pos_other: string | null
           pos_system: string | null
+          pushed_to_pro_at: string | null
+          pushed_to_pro_by: string | null
+          pushed_to_pro_management_id: string | null
           shop_name: string | null
           status: string
           status_updated_at: string | null
@@ -386,6 +389,9 @@ export type Database = {
           phone?: string | null
           pos_other?: string | null
           pos_system?: string | null
+          pushed_to_pro_at?: string | null
+          pushed_to_pro_by?: string | null
+          pushed_to_pro_management_id?: string | null
           shop_name?: string | null
           status?: string
           status_updated_at?: string | null
@@ -409,6 +415,9 @@ export type Database = {
           phone?: string | null
           pos_other?: string | null
           pos_system?: string | null
+          pushed_to_pro_at?: string | null
+          pushed_to_pro_by?: string | null
+          pushed_to_pro_management_id?: string | null
           shop_name?: string | null
           status?: string
           status_updated_at?: string | null
