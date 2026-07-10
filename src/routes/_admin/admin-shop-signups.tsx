@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type * as React from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
@@ -870,14 +871,14 @@ function AddressFields({
   labelStyle: React.CSSProperties;
   renderCopyBtn: (k: string, v: string) => React.ReactNode;
 }) {
-  const parsed = React.useMemo(() => parseAddress(address), [address]);
-  const [street, setStreet] = React.useState(parsed.street);
-  const [postal, setPostal] = React.useState(parsed.postal);
-  const [city, setCity] = React.useState(parsed.city);
-  const lastJoinedRef = React.useRef(address);
+  const parsed = useMemo(() => parseAddress(address), [address]);
+  const [street, setStreet] = useState(parsed.street);
+  const [postal, setPostal] = useState(parsed.postal);
+  const [city, setCity] = useState(parsed.city);
+  const lastJoinedRef = useRef(address);
 
   // Sync from external address changes (e.g. switching rows) without wiping local edits.
-  React.useEffect(() => {
+  useEffect(() => {
     if (address === lastJoinedRef.current) return;
     const p = parseAddress(address);
     setStreet(p.street);
