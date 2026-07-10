@@ -110,7 +110,7 @@ const CSS = `
 .vlp .nav-cta{background:var(--navy);color:#fff;font-weight:500;font-size:14px;padding:9px 18px;border-radius:10px}
 .vlp .hero{min-height:100vh;color:#fff;position:relative;overflow:hidden;display:flex;align-items:center}
 .vlp .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
-.vlp .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,rgba(6,14,28,0.92) 0%,rgba(10,24,48,0.82) 40%,rgba(13,31,60,0.45) 70%,rgba(13,31,60,0.20) 100%)}
+.vlp .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 100% at 25% 50%,rgba(6,14,28,0.86) 0%,rgba(6,14,28,0.40) 45%,rgba(6,14,28,0.12) 70%,rgba(6,14,28,0) 100%)}
 .vlp .hero-in{position:relative;z-index:2;padding:120px 0 100px;max-width:760px}
 .vlp .hero-text{position:relative;z-index:2;text-align:left}
 .vlp .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.1);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:26px}
