@@ -519,7 +519,8 @@ function ShopSignupsPage() {
               const labelLines = [
                 `${draft.first_name ?? ""} ${draft.last_name ?? ""}`.trim(),
                 draft.shop_name,
-                draft.address,
+                draft.street,
+                `${draft.postal ?? ""} ${draft.city ?? ""}`.trim(),
                 draft.country ? String(draft.country).toUpperCase() : null,
               ].filter((l) => l && String(l).trim().length > 0) as string[];
               const labelText = labelLines.join("\n");
