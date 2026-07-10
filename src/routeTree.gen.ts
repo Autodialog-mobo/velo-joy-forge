@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VelocistesRouteImport } from './routes/velocistes'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
@@ -56,6 +57,11 @@ import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thank
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
 
+const VelocistesRoute = VelocistesRouteImport.update({
+  id: '/velocistes',
+  path: '/velocistes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -306,6 +312,7 @@ export interface FileRoutesByFullPath {
   '/professionals': typeof ProfessionalsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/velocistes': typeof VelocistesRoute
   '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
@@ -352,6 +359,7 @@ export interface FileRoutesByTo {
   '/professionals': typeof ProfessionalsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/velocistes': typeof VelocistesRoute
   '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
@@ -401,6 +409,7 @@ export interface FileRoutesById {
   '/professionals': typeof ProfessionalsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/velocistes': typeof VelocistesRoute
   '/$lang/already-have-one': typeof LangAlreadyHaveOneRoute
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
@@ -450,6 +459,7 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/velocistes'
     | '/$lang/already-have-one'
     | '/$lang/assistance'
     | '/$lang/bike-check'
@@ -496,6 +506,7 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/velocistes'
     | '/$lang/already-have-one'
     | '/$lang/assistance'
     | '/$lang/bike-check'
@@ -544,6 +555,7 @@ export interface FileRouteTypes {
     | '/professionals'
     | '/reset-password'
     | '/sitemap.xml'
+    | '/velocistes'
     | '/$lang/already-have-one'
     | '/$lang/assistance'
     | '/$lang/bike-check'
@@ -593,6 +605,7 @@ export interface RootRouteChildren {
   ProfessionalsRoute: typeof ProfessionalsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VelocistesRoute: typeof VelocistesRoute
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   MTokenRoute: typeof MTokenRoute
@@ -604,6 +617,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/velocistes': {
+      id: '/velocistes'
+      path: '/velocistes'
+      fullPath: '/velocistes'
+      preLoaderRoute: typeof VelocistesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -1023,6 +1043,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfessionalsRoute: ProfessionalsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VelocistesRoute: VelocistesRoute,
   Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
