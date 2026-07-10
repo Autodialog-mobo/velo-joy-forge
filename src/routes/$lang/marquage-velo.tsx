@@ -407,7 +407,11 @@ function VelocistesLanding() {
               Inscription gratuite, mise en route immédiate. Rejoignez les vélocistes qui
               transforment chaque vente en relation durable.
             </p>
-            <a className="btn-d" href="https://velopass.com/fr/shop#registreer">
+            <a
+              className="btn-d"
+              href="https://velopass.com/fr/shop#registreer"
+              onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}
+            >
               Créer mon compte vélociste
             </a>
             <p className="fine">
