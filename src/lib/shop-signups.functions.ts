@@ -649,20 +649,46 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     // Mark as converted + append note + record push metadata.
     const nowIso = new Date().toISOString();
     const claims: any = context.claims ?? {};
-    const actorEmail: string | null =
+    let actorEmail: string | null =
       claims?.email ||
       claims?.["https://velopass.com/email"] ||
       null;
     const givenName = claims?.given_name || claims?.["https://velopass.com/given_name"] || "";
     const familyName = claims?.family_name || claims?.["https://velopass.com/family_name"] || "";
     const combined = `${givenName} ${familyName}`.trim();
-    const actorName: string | null =
+    let actorName: string | null =
       claims?.name ||
       claims?.["https://velopass.com/name"] ||
       claims?.nickname ||
       claims?.["https://velopass.com/nickname"] ||
       (combined.length > 0 ? combined : null) ||
       null;
+
+    // Access tokens rarely carry email/name — fetch /userinfo from Auth0 when
+    // we only have the sub, so the note shows a human-readable actor.
+    if (!actorName || !actorEmail) {
+      try {
+        const domain = process.env.AUTH0_DOMAIN;
+        if (domain) {
+          const uiRes = await fetch(`https://${domain}/userinfo`, {
+            headers: { Authorization: bearer, Accept: "application/json" },
+          });
+          if (uiRes.ok) {
+            const ui: any = await uiRes.json();
+            actorEmail = actorEmail || ui?.email || null;
+            const uiCombined = `${ui?.given_name ?? ""} ${ui?.family_name ?? ""}`.trim();
+            actorName = actorName
+              || ui?.name
+              || ui?.nickname
+              || (uiCombined.length > 0 ? uiCombined : null)
+              || null;
+          }
+        }
+      } catch (e: any) {
+        console.warn("[shop-signups] userinfo lookup failed", e?.message);
+      }
+    }
+
     const actorLabel = actorName || actorEmail || context.userId;
     const noteAction = alreadyExists
       ? "Reeds aanwezig in velopass.pro (gemarkeerd als doorgestuurd)"
@@ -676,7 +702,12 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
             ? ` — gebruiker aangemaakt (${row.email})`
             : ""
       : "";
-    const note = `[${nowIso.slice(0, 10)}] ${noteAction}${returnedId ? ` (id: ${returnedId})` : ""}${employeeNoteFragment}${actorLabel ? ` door ${actorLabel}` : ""}.`;
+    const stamp = new Date(nowIso).toLocaleString("nl-BE", {
+      timeZone: "Europe/Brussels",
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit",
+    });
+    const note = `[${stamp}] ${noteAction}${returnedId ? ` (id: ${returnedId})` : ""}${employeeNoteFragment}${actorLabel ? ` door ${actorLabel}` : ""}.`;
     const admin_notes = row.admin_notes ? `${row.admin_notes}\n${note}` : note;
     await (supabaseAdmin as any)
       .from("shop_signups")
