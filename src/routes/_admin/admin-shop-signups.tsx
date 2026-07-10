@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_admin/admin-shop-signups")({
 const STATUSES = ["new", "contacted", "converted", "rejected"] as const;
 type Status = (typeof STATUSES)[number];
 const LANGS = ["nl", "fr", "de", "en", "es"] as const;
-const VELOPASS_PRO_ORGANISATION_URL = "https://app.velopass.pro/organisation";
+const VELOPASS_PRO_ORGANISATION_URL = "https://management.velopass.com/organisations";
 
 const STATUS_LABEL: Record<Status, string> = {
   new: "Nieuw",
