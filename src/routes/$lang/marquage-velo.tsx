@@ -78,6 +78,9 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
       { property: "og:title", content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
       { property: "og:description", content: "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable." },
       { property: "og:url", content: "https://www.velopass.com/fr/marquage-velo" },
+      { property: "og:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
+      { property: "twitter:card", content: "summary_large_image" },
+      { property: "twitter:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
     ],
     links: [
       { rel: "canonical", href: "https://www.velopass.com/fr/marquage-velo" },
