@@ -209,6 +209,20 @@ function ShopSignupsPage() {
     }
   };
 
+  const onSaveManagementId = async (id: string, managementId: string): Promise<boolean> => {
+    try {
+      await setManagementId({ data: { id, managementId } });
+      toast.success("Organisation-id gekoppeld");
+      refetch();
+      return true;
+    } catch (err: any) {
+      toast.error(err?.message ?? "Koppelen mislukt");
+      return false;
+    }
+  };
+
+
+
 
 
   const openRow = (r: any) => {
