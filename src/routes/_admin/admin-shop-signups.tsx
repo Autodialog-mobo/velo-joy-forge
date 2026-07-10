@@ -262,6 +262,27 @@ function ShopSignupsPage() {
 
   const open = openId ? rows.find((r) => r.id === openId) : null;
 
+  const hasUnsavedChanges = useMemo(() => {
+    if (!open) return false;
+    const fields = [
+      "first_name", "last_name", "shop_name", "email", "phone",
+      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes",
+    ] as const;
+    return fields.some((k) => (draft[k] ?? "") !== (open[k] ?? ""));
+  }, [draft, open]);
+
+  const closeModal = useCallback(() => {
+    if (hasUnsavedChanges) {
+      const confirmed = window.confirm(
+        "Je hebt onopgeslagen wijzigingen in deze shop-aanmelding. Wil je het venster sluiten zonder op te slaan?"
+      );
+      if (!confirmed) return;
+    }
+    setOpenId(null);
+    setPushError(null);
+    setPushSuccess(null);
+  }, [hasUnsavedChanges]);
+
   return (
     <div style={{ background: "#0E0F12", minHeight: "100vh", color: "#fff" }}>
       <div className="max-w-[1200px] mx-auto px-5 py-8 md:px-10 md:py-12">
