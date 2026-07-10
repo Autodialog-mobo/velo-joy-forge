@@ -563,7 +563,11 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
                 onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
+                onRepush={() => onPushToPro(open.id)}
+                repushLoading={pushingId === open.id}
+                repushDisabled={pushingId === open.id || savingId === open.id}
               />
+
 
             ) : (
               <NotPushedInfoBanner
@@ -1116,6 +1120,9 @@ function PushedInfoBanner({
   pushedByName,
   managementId,
   onSaveManagementId,
+  onRepush,
+  repushLoading,
+  repushDisabled,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
@@ -1123,7 +1130,11 @@ function PushedInfoBanner({
   managementId?: string | null;
   shopId?: string;
   onSaveManagementId?: (managementId: string) => Promise<boolean>;
+  onRepush?: () => void | Promise<void>;
+  repushLoading?: boolean;
+  repushDisabled?: boolean;
 }) {
+
   const viewUrl = managementId
     ? `${VELOPASS_PRO_ORGANISATION_URL}/${managementId}/`
     : VELOPASS_PRO_ORGANISATION_URL;
@@ -1227,15 +1238,31 @@ function PushedInfoBanner({
             </div>
           )}
         </div>
-        <a
-          href={viewUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
-          style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
-        >
-          <ExternalLink size={12} /> Bekijken
-        </a>
+        <div className="shrink-0 flex items-center gap-2">
+          {onRepush && (
+            <button
+              type="button"
+              onClick={() => onRepush()}
+              disabled={repushDisabled || repushLoading}
+              title="Voert de organisation- en employee-push opnieuw uit (duplicaten worden herkend)"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.15)" }}
+            >
+              {repushLoading ? <Loader2 size={12} className="animate-spin" /> : <RefreshCcw size={12} />}
+              {repushLoading ? "Doorsturen…" : "Opnieuw doorsturen"}
+            </button>
+          )}
+          <a
+            href={viewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
+            style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
+          >
+            <ExternalLink size={12} /> Bekijken
+          </a>
+        </div>
+
       </div>
     </div>
   );
