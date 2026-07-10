@@ -185,9 +185,22 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       };
     }
 
-    const body = {
+    // Normalise phone to E.164-ish format expected by velopass.pro:
+    // must start with '+' followed by digits, max 14 chars total.
+    const digits = String(row.phone || "").replace(/[^\d]/g, "");
+    // 00-prefixed international → replace leading 00 with +.
+    // Bare digits starting with a country code (e.g. 32...) → prefix +.
+    // Local numbers starting with 0 (e.g. 0499...) → assume Belgium, strip leading 0, prefix +32.
+    let normalizedPhone = "";
+    if (digits.startsWith("00")) normalizedPhone = "+" + digits.slice(2);
+    else if (digits.startsWith("0")) normalizedPhone = "+32" + digits.slice(1);
+    else if (digits.length > 0) normalizedPhone = "+" + digits;
+    if (normalizedPhone.length > 14) normalizedPhone = normalizedPhone.slice(0, 14);
+
+    const body: Record<string, unknown> = {
       name: row.shop_name,
-      phone: row.phone,
+      phone: normalizedPhone,
+      type: 1, // 0 is rejected by velopass.pro; 1 = standard organisation
       companyNumber: row.vat,
       vatNumber: row.vat,
       transferOfOwnershipEmail: row.email,
