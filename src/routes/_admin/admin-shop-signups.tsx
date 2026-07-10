@@ -469,22 +469,6 @@ function ShopSignupsPage() {
                                 door {r.pushed_to_pro_by_name || r.pushed_to_pro_by_email}
                               </div>
                             )}
-                            {r.pushed_to_pro_management_id && (
-                              <div className="flex items-center gap-1.5 text-xs mt-0.5">
-                                <span style={{ color: "rgba(255,255,255,0.5)" }}>ID</span>
-                                <code style={{ color: "#7AB0FF" }}>{r.pushed_to_pro_management_id}</code>
-                                <button
-                                  type="button"
-                                  onClick={() => copy(`push-id-${r.id}`, r.pushed_to_pro_management_id)}
-                                  className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded"
-                                  style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
-                                  title="Organisation-id kopiëren"
-                                >
-                                  {copiedKey === `push-id-${r.id}` ? <Check size={10} /> : <Copy size={10} />}
-                                  {copiedKey === `push-id-${r.id}` ? "Gekopieerd" : "Kopieer"}
-                                </button>
-                              </div>
-                            )}
                           </div>
                         ) : (
                           <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
