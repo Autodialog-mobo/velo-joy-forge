@@ -979,15 +979,15 @@ function PushedInfoBanner({
   pushedByEmail,
   pushedByName,
   managementId,
+  shopId,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
   pushedByName?: string | null;
   managementId?: string | null;
+  shopId: string;
 }) {
-  const viewUrl = managementId
-    ? `${VELOPASS_PRO_ORGANISATION_URL}/${managementId}`
-    : VELOPASS_PRO_ORGANISATION_URL;
+  const viewUrl = `${VELOPASS_PRO_ORGANISATION_URL}/${shopId}`;
   const actor = pushedByName || pushedByEmail;
   const [copied, setCopied] = useState(false);
   const copyId = async () => {
