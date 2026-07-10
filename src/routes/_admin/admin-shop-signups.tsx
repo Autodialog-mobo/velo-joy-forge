@@ -1248,7 +1248,7 @@ function PushedInfoBanner({
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.15)" }}
             >
-              {repushLoading ? <Loader2 size={12} className="animate-spin" /> : <RefreshCw size={12} />}
+              {repushLoading ? <Loader2 size={12} className="animate-spin" /> : <RefreshCcw size={12} />}
               {repushLoading ? "Doorsturen…" : "Opnieuw doorsturen"}
             </button>
           )}
