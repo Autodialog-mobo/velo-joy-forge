@@ -219,6 +219,8 @@ function VelocistesLanding() {
       </nav>
 
       <header className="hero">
+        <div className="hero-bg" style={{ backgroundImage: `url(${heroMarquageImg.url})` }} aria-hidden="true" />
+        <div className="hero-overlay" aria-hidden="true" />
         <div className="wrap hero-in">
           <div className="hero-text">
             <span className="eyebrow"><span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI</span>
@@ -236,9 +238,6 @@ function VelocistesLanding() {
               <div><strong>0 €</strong>Inscription vélociste</div>
               <div><strong>À vie</strong>Carnet d'entretien numérique</div>
             </div>
-          </div>
-          <div className="hero-img">
-            <img src={heroMarquageImg} alt="Vélociste appliquant une étiquette Frame-ID Velopass sur un vélo en magasin" width={1344} height={896} />
           </div>
         </div>
       </header>
