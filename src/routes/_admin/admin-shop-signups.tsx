@@ -190,6 +190,7 @@ function ShopSignupsPage() {
       }
       const managementId = res?.managementId;
       setPushSuccess({ id, managementId: managementId ?? "" });
+      setPushedIds((prev) => new Set(prev).add(id));
       toast.success(
         res?.alreadyExists
           ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
