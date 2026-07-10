@@ -435,7 +435,7 @@ function ShopSignupsPage() {
                         {r.pushed_to_pro_at ? (
                           <div className="inline-flex flex-col items-end gap-1">
                             <a
-                              href={r.pushed_to_pro_management_id ? `${VELOPASS_PRO_ORGANISATION_URL}/${r.pushed_to_pro_management_id}` : VELOPASS_PRO_ORGANISATION_URL}
+                              href={`${VELOPASS_PRO_ORGANISATION_URL}/${r.id}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center justify-end gap-1 text-xs font-semibold"
@@ -539,6 +539,7 @@ function ShopSignupsPage() {
                 pushedByEmail={open.pushed_to_pro_by_email}
                 pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
+                shopId={open.id}
               />
 
             ) : (
@@ -907,8 +908,8 @@ function PushSuccessPanel({
       toast.error("Kopiëren mislukt");
     }
   };
-  const viewUrl = success.managementId
-    ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.managementId}`
+  const viewUrl = success.id
+    ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.id}`
     : VELOPASS_PRO_ORGANISATION_URL;
 
   return (
@@ -978,15 +979,15 @@ function PushedInfoBanner({
   pushedByEmail,
   pushedByName,
   managementId,
+  shopId,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
   pushedByName?: string | null;
   managementId?: string | null;
+  shopId: string;
 }) {
-  const viewUrl = managementId
-    ? `${VELOPASS_PRO_ORGANISATION_URL}/${managementId}`
-    : VELOPASS_PRO_ORGANISATION_URL;
+  const viewUrl = `${VELOPASS_PRO_ORGANISATION_URL}/${shopId}`;
   const actor = pushedByName || pushedByEmail;
   const [copied, setCopied] = useState(false);
   const copyId = async () => {
