@@ -179,14 +179,16 @@ const CSS = `
 .vlp .feat li{display:flex;gap:12px;font-size:14.5px;color:var(--text-mid);line-height:1.55}
 .vlp .feat li b{color:var(--navy)}
 .vlp .feat .fx{color:var(--green-dark);font-weight:700;flex-shrink:0}
-.vlp .pos-band{background:var(--navy);border-radius:24px;padding:38px 42px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;position:relative;overflow:hidden}
+.vlp .pos-band{background:var(--navy);border-radius:24px;padding:48px 54px;position:relative;overflow:hidden}
 .vlp .pos-band::before{content:'';position:absolute;top:-120px;right:-80px;width:340px;height:340px;border-radius:50%;background:rgba(46,204,138,0.06)}
-.vlp .pos-text{max-width:560px;position:relative;z-index:1}
-.vlp .pos-text .sec-label{color:var(--green);margin-bottom:8px}
-.vlp .pos-h{font-family:'Syne',sans-serif;color:#fff;font-size:23px;font-weight:700;margin-bottom:8px;letter-spacing:-0.02em}
-.vlp .pos-text p{color:rgba(255,255,255,0.62);font-size:14.5px;line-height:1.6}
-.vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
-.vlp .pos-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:#fff;padding:12px 20px;border-radius:12px}
+.vlp .pos-text{position:relative;z-index:1;max-width:760px}
+.vlp .pos-text .sec-label{color:var(--green);margin-bottom:10px}
+.vlp .pos-h{font-family:'Syne',sans-serif;color:#fff;font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:16px;letter-spacing:-0.02em;line-height:1.15}
+.vlp .pos-text p{color:rgba(255,255,255,0.62);font-size:clamp(15px,1.6vw,17px);line-height:1.65}
+.vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1;margin-top:34px}
+.vlp .pos-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:#fff;padding:16px 24px;border-radius:16px}
+.vlp .pos-app-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:var(--green);padding:16px 24px;border-radius:16px;text-decoration:none;transition:filter .2s}
+.vlp .pos-app-chip:hover{filter:brightness(1.05)}
 @media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 100% at 50% 22%,rgba(6,14,28,0.90) 0%,rgba(6,14,28,0.58) 45%,rgba(6,14,28,0.22) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
@@ -278,14 +280,15 @@ function VelocistesLanding() {
         <div className="wrap">
           <div className="pos-band">
             <div className="pos-text">
-              <p className="sec-label">Intégration caisse</p>
-              <h3 className="pos-h">Le marquage se fait tout seul, à la vente</h3>
-              <p>Velopass se connecte à votre système de caisse : chaque vélo est identifié et enregistré au FNUCI au moment du passage en caisse, sans double saisie ni manipulation supplémentaire.</p>
+              <p className="sec-label">Caisse & application</p>
+              <h3 className="pos-h">Marquez comme vous voulez, sans paperasse</h3>
+              <p>Connectez Velopass à votre système de caisse — Shifter, G8 ou CycleSoftware — pour un marquage automatique à la vente. Pas de caisse compatible ? L'application Velopass Shop, gratuite, permet de marquer et d'enregistrer chaque vélo en quelques secondes. Dans les deux cas, l'enregistrement au FNUCI est automatique.</p>
             </div>
             <div className="pos-logos">
               <span className="pos-chip">Shifter</span>
               <span className="pos-chip">G8</span>
               <span className="pos-chip">CycleSoftware</span>
+              <a href="https://app.velopass.pro" className="pos-app-chip">App Velopass Shop · gratuite</a>
             </div>
           </div>
         </div>
