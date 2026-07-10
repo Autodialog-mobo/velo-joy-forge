@@ -108,12 +108,11 @@ const CSS = `
 .vlp .mark svg{width:18px;height:18px}
 .vlp .brand>span:last-child{font-family:'Syne',sans-serif;font-weight:700;font-size:19px}
 .vlp .nav-cta{background:var(--navy);color:#fff;font-weight:500;font-size:14px;padding:9px 18px;border-radius:10px}
-.vlp .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
-.vlp .hero::before{content:'';position:absolute;top:-260px;right:-160px;width:640px;height:640px;border-radius:50%;background:rgba(46,204,138,0.06)}
-.vlp .hero-in{position:relative;z-index:1;padding:72px 0 76px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center}
-.vlp .hero-text{text-align:left;position:relative;z-index:1}
-.vlp .hero-img{position:relative;z-index:1;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.28);aspect-ratio:3/2}
-.vlp .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+.vlp .hero{min-height:100vh;color:#fff;position:relative;overflow:hidden;display:flex;align-items:center}
+.vlp .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
+.vlp .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,rgba(6,14,28,0.92) 0%,rgba(10,24,48,0.82) 40%,rgba(13,31,60,0.45) 70%,rgba(13,31,60,0.20) 100%)}
+.vlp .hero-in{position:relative;z-index:2;padding:120px 0 100px;max-width:760px}
+.vlp .hero-text{position:relative;z-index:2;text-align:left}
 .vlp .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.1);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:26px}
 .vlp .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 .vlp .hero h1{font-weight:800;font-size:clamp(34px,5vw,58px);max-width:840px;margin-bottom:22px}
