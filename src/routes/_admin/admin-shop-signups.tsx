@@ -43,6 +43,7 @@ function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
+  const setManagementId = useServerFn(setShopSignupManagementId);
   const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shop-signups"],
