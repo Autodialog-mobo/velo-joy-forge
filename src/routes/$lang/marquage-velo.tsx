@@ -35,11 +35,13 @@ const ORG_JSONLD = {
 const FAQ_JSONLD = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: FAQS.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
+  mainEntity: [
+    { q: "Velopass est-il un opérateur d'identification de cycles agréé ?", a: "Oui. Velopass est un opérateur d'identification agréé référencé par l'APIC. Les vélos marqués sont enregistrés dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la réglementation française." },
+    { q: "Comment devenir point de marquage vélo Velopass ?", a: "L'inscription des vélocistes est gratuite et se fait en ligne sur velopass.com/fr/shop. Vous recevez les étiquettes Frame-ID et marquez les vélos directement en magasin ; l'enregistrement dans le FNUCI est immédiat." },
+    { q: "Le marquage des vélos est-il obligatoire en France ?", a: "Oui. Depuis la loi d'orientation des mobilités (loi LOM), tout vélo neuf vendu par un professionnel doit être identifié. Le marquage doit être réalisé par un opérateur agréé et enregistré dans le FNUCI." },
+    { q: "Quel procédé d'identification Velopass utilise-t-il ?", a: "Velopass utilise une étiquette adhésive inviolable (Frame-ID) dotée d'un code QR et d'un identifiant unique. Toute tentative de retrait détruit l'étiquette et laisse des traces visibles." },
+    { q: "Qu'est-ce que Velopass apporte de plus qu'un simple marquage ?", a: "Au-delà de la conformité, chaque vélo marqué devient une relation client durable : rappels d'entretien automatiques, carnet numérique à vie, et intégrations avec les fabricants, sociétés de leasing et assureurs. Le vélociste reste en contact avec ses clients après la vente." },
+  ].map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 
 const STICKER_SVG = `<svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Étiquette Frame-ID Velopass avec code QR">
