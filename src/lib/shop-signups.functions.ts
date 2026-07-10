@@ -197,7 +197,12 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     else if (digits.length > 0) normalizedPhone = "+" + digits;
     if (normalizedPhone.length > 14) normalizedPhone = normalizedPhone.slice(0, 14);
 
-    const body: Record<string, unknown> = {
+    const body: {
+      name: string; phone: string; type: number;
+      companyNumber: string; vatNumber: string;
+      transferOfOwnershipEmail: string; email: string;
+      street: string; postalCode: string; city: string; country: string;
+    } = {
       name: row.shop_name,
       phone: normalizedPhone,
       type: 1, // 0 is rejected by velopass.pro; 1 = standard organisation
