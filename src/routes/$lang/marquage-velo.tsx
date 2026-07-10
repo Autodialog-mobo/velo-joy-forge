@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { trackShopSignupCtaClick } from "@/lib/analytics";
-import heroMarquageImg from "@/assets/hero-marquage-velo.webp.asset.json";
+import heroMarquageImg from "@/assets/hero-marquage-velo.webp";
 
 
 const FAQS = [
@@ -78,9 +78,9 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
       { property: "og:title", content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
       { property: "og:description", content: "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable." },
       { property: "og:url", content: "https://www.velopass.com/fr/marquage-velo" },
-      { property: "og:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
+      { property: "og:image", content: `https://www.velopass.com${heroMarquageImg}` },
       { property: "twitter:card", content: "summary_large_image" },
-      { property: "twitter:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
+      { property: "twitter:image", content: `https://www.velopass.com${heroMarquageImg}` },
     ],
     links: [
       { rel: "canonical", href: "https://www.velopass.com/fr/marquage-velo" },
@@ -238,7 +238,7 @@ function VelocistesLanding() {
             </div>
           </div>
           <div className="hero-img">
-            <img src={heroMarquageImg.url} alt="Vélociste appliquant une étiquette Frame-ID Velopass sur un vélo en magasin" width={1792} height={768} />
+            <img src={heroMarquageImg} alt="Vélociste appliquant une étiquette Frame-ID Velopass sur un vélo en magasin" width={1344} height={896} />
           </div>
         </div>
       </header>
