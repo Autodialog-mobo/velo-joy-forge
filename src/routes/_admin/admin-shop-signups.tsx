@@ -422,11 +422,18 @@ function ShopSignupsPage() {
                           </div>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-right">
+                      <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                         {r.pushed_to_pro_at ? (
-                          <span className="inline-flex items-center justify-end gap-1 text-xs font-semibold" style={{ color: "#2ECC8A" }}>
-                            <Check size={14} /> Doorgestuurd
-                          </span>
+                          <a
+                            href={VELOPASS_PRO_ORGANISATION_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-end gap-1 text-xs font-semibold"
+                            style={{ color: "#2ECC8A" }}
+                            title="Bekijk in velopass.pro"
+                          >
+                            <Check size={14} /> Doorgestuurd <ExternalLink size={12} />
+                          </a>
                         ) : (
                           <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
                         )}
