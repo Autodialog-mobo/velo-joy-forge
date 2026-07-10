@@ -65,7 +65,23 @@ function ShopSignupsPage() {
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
 
+  // Sluit de detailmodal met de Escape-toets.
+  useEffect(() => {
+    if (!openId) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpenId(null);
+        setPushError(null);
+        setPushSuccess(null);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openId]);
+
   const rows: any[] = data?.rows ?? [];
+
 
   const countries = useMemo(() => {
     const set = new Set<string>();
