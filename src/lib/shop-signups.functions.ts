@@ -499,8 +499,77 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       };
     }
 
-    const returnedId: string | null =
+    let returnedId: string | null =
       (apiResponse && typeof apiResponse === "object" && (apiResponse.id || apiResponse.organisationId)) || null;
+
+    // Fallback: when velopass.pro replies "already exists" (or a successful
+    // response without an id), look the organisation up so we can still store
+    // the management-id and produce a deep link to the shop.
+    if (!returnedId) {
+      const norm = (v: unknown) => String(v ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const matches = (o: any): boolean => {
+        if (!o || typeof o !== "object") return false;
+        const cn = norm(o.companyNumber);
+        const vn = norm(o.vatNumber);
+        const em = norm(o.email);
+        const nm = norm(o.name);
+        const targetVat = norm(row.vat);
+        const targetEmail = norm(row.email);
+        const targetName = norm(row.shop_name);
+        if (targetVat && (cn === targetVat || vn === targetVat)) return true;
+        if (targetEmail && em === targetEmail) return true;
+        if (targetName && nm === targetName) return true;
+        return false;
+      };
+      const extractId = (o: any): string | null =>
+        (o && typeof o === "object" && (o.id || o.organisationId || o.value)) || null;
+
+      const tryLookup = async (path: string): Promise<string | null> => {
+        try {
+          const res = await fetch(managementEndpoint(path), {
+            method: "GET",
+            headers: { Authorization: bearer, Accept: "application/json" },
+          });
+          if (!res.ok) return null;
+          const text = await res.text();
+          const parsed = text ? JSON.parse(text) : null;
+          const list: any[] = Array.isArray(parsed)
+            ? parsed
+            : Array.isArray(parsed?.items)
+              ? parsed.items
+              : Array.isArray(parsed?.results)
+                ? parsed.results
+                : Array.isArray(parsed?.data)
+                  ? parsed.data
+                  : [];
+          const hit = list.find(matches);
+          return extractId(hit);
+        } catch {
+          return null;
+        }
+      };
+
+      const q = encodeURIComponent(String(row.vat || row.email || row.shop_name || ""));
+      const candidates = [
+        "Organisations",
+        `Organisations?search=${q}`,
+        `Organisations?query=${q}`,
+        `Organisations?companyNumber=${encodeURIComponent(String(row.vat || ""))}`,
+        `Organisations?vatNumber=${encodeURIComponent(String(row.vat || ""))}`,
+        `Organisations?email=${encodeURIComponent(String(row.email || ""))}`,
+        "Organisations/select",
+      ];
+      for (const path of candidates) {
+        const id = await tryLookup(path);
+        if (id) { returnedId = id; break; }
+      }
+      if (!returnedId) {
+        console.warn("[shop-signups] lookup could not resolve organisation id", {
+          id: data.id, shop_name: row.shop_name, vat: row.vat,
+        });
+      }
+    }
+
 
     // Mark as converted + append note + record push metadata.
     const nowIso = new Date().toISOString();
