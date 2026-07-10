@@ -192,7 +192,7 @@ const CSS = `
 .vlp .pos-app-chip:hover{filter:brightness(1.05)}
 @media(max-width:640px){.vlp .pos-chip,.vlp .pos-app-chip{flex:1 1 auto;min-width:120px}.vlp .pos-app-chip{flex:1 1 100%}}
 
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 100% at 50% 22%,rgba(6,14,28,0.90) 0%,rgba(6,14,28,0.58) 45%,rgba(6,14,28,0.22) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 120% at 50% 22%,rgba(6,14,28,0.95) 0%,rgba(6,14,28,0.68) 40%,rgba(6,14,28,0.28) 70%,rgba(6,14,28,0) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
 function LogoMark() {
