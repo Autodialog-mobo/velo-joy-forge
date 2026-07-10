@@ -108,9 +108,9 @@ const CSS = `
 .vlp .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
 .vlp .hero::before{content:'';position:absolute;top:-260px;right:-160px;width:640px;height:640px;border-radius:50%;background:rgba(46,204,138,0.06)}
 .vlp .hero-in{position:relative;z-index:1;padding:72px 0 76px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center}
-.vlp .hero-text{position:relative;z-index:1}
-.vlp .hero-img{position:relative;z-index:1;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.28)}
-.vlp .hero-img img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block}
+.vlp .hero-text{text-align:left;position:relative;z-index:1}
+.vlp .hero-img{position:relative;z-index:1;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.28);aspect-ratio:3/2}
+.vlp .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
 .vlp .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.1);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:26px}
 .vlp .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 .vlp .hero h1{font-weight:800;font-size:clamp(34px,5vw,58px);max-width:840px;margin-bottom:22px}
