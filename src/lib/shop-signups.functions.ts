@@ -499,5 +499,5 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       },
     });
 
-    return { ok: true as const, managementId: returnedId, response: apiResponse };
+    return { ok: true as const, managementId: returnedId, alreadyExists, response: apiResponse };
   });
