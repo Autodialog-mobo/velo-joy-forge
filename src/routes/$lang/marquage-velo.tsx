@@ -187,7 +187,7 @@ const CSS = `
 .vlp .pos-text p{color:rgba(255,255,255,0.62);font-size:14.5px;line-height:1.6}
 .vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
 .vlp .pos-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:#fff;padding:12px 20px;border-radius:12px}
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 100% at 50% 22%,rgba(6,14,28,0.90) 0%,rgba(6,14,28,0.58) 45%,rgba(6,14,28,0.22) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
 function LogoMark() {
