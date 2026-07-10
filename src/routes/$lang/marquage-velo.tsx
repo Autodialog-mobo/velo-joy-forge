@@ -56,7 +56,7 @@ const FAQ_JSONLD = {
   })),
 };
 
-export const Route = createFileRoute("/velocistes")({
+export const Route = createFileRoute("/$lang/marquage-velo")({
   head: () => ({
     meta: [
       { title: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
