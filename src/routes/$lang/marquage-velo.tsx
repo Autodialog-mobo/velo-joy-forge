@@ -88,8 +88,6 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
     links: [
       { rel: "canonical", href: "https://www.velopass.com/fr/marquage-velo" },
       { rel: "alternate", hrefLang: "fr", href: "https://www.velopass.com/fr/marquage-velo" },
-      { rel: "alternate", hrefLang: "nl", href: "https://www.velopass.com/nl/marquage-velo" },
-      { rel: "alternate", hrefLang: "de", href: "https://www.velopass.com/de/marquage-velo" },
       { rel: "alternate", hrefLang: "x-default", href: "https://www.velopass.com/fr/marquage-velo" },
     ],
     scripts: [
