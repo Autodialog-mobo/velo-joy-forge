@@ -182,13 +182,16 @@ const CSS = `
 .vlp .pos-band{background:var(--navy);border-radius:24px;padding:48px 54px;position:relative;overflow:hidden}
 .vlp .pos-band::before{content:'';position:absolute;top:-120px;right:-80px;width:340px;height:340px;border-radius:50%;background:rgba(46,204,138,0.06)}
 .vlp .pos-text{position:relative;z-index:1;max-width:760px}
-.vlp .pos-text .sec-label{color:var(--green);margin-bottom:10px}
+.vlp .pos-text .sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.12);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:16px}
 .vlp .pos-h{font-family:'Syne',sans-serif;color:#fff;font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:16px;letter-spacing:-0.02em;line-height:1.15}
 .vlp .pos-text p{color:rgba(255,255,255,0.62);font-size:clamp(15px,1.6vw,17px);line-height:1.65}
-.vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1;margin-top:34px}
-.vlp .pos-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:#fff;padding:16px 24px;border-radius:16px}
-.vlp .pos-app-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:var(--green);padding:16px 24px;border-radius:16px;text-decoration:none;transition:filter .2s}
+.vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;align-items:center;position:relative;z-index:1;margin-top:34px}
+.vlp .pos-chip,.vlp .pos-app-chip{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;padding:16px 24px;border-radius:16px;line-height:1}
+.vlp .pos-chip{color:var(--navy);background:#fff}
+.vlp .pos-app-chip{color:var(--navy);background:var(--green);text-decoration:none;transition:filter .2s}
 .vlp .pos-app-chip:hover{filter:brightness(1.05)}
+@media(max-width:640px){.vlp .pos-chip,.vlp .pos-app-chip{flex:1 1 auto;min-width:120px}.vlp .pos-app-chip{flex:1 1 100%}}
+
 @media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 100% at 50% 22%,rgba(6,14,28,0.90) 0%,rgba(6,14,28,0.58) 45%,rgba(6,14,28,0.22) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
