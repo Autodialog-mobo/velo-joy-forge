@@ -68,6 +68,31 @@ function ShopSignupsPage() {
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
 
+  const rows: any[] = data?.rows ?? [];
+
+  const open = openId ? rows.find((r) => r.id === openId) : null;
+
+  const hasUnsavedChanges = useMemo(() => {
+    if (!open) return false;
+    const fields = [
+      "first_name", "last_name", "shop_name", "email", "phone",
+      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes",
+    ] as const;
+    return fields.some((k) => (draft[k] ?? "") !== (open[k] ?? ""));
+  }, [draft, open]);
+
+  const closeModal = useCallback(() => {
+    if (hasUnsavedChanges) {
+      const confirmed = window.confirm(
+        "Je hebt onopgeslagen wijzigingen in deze shop-aanmelding. Wil je het venster sluiten zonder op te slaan?"
+      );
+      if (!confirmed) return;
+    }
+    setOpenId(null);
+    setPushError(null);
+    setPushSuccess(null);
+  }, [hasUnsavedChanges]);
+
   // Sluit de detailmodal met de Escape-toets, met waarschuwing bij onopgeslagen wijzigingen.
   useEffect(() => {
     if (!openId) return;
@@ -80,8 +105,6 @@ function ShopSignupsPage() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [openId, closeModal]);
-
-  const rows: any[] = data?.rows ?? [];
 
 
   const countries = useMemo(() => {
