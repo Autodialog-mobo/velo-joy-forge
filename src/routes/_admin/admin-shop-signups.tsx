@@ -37,29 +37,6 @@ function statusStyle(s: string): React.CSSProperties {
   }
 }
 
-function parseSignupAddress(raw: string | null | undefined): { street: string; postal: string; city: string } {
-  const cleaned = (raw || "").replace(/\s+/g, " ").trim();
-  if (!cleaned) return { street: "", postal: "", city: "" };
-  const parts = cleaned.split(",").map((s) => s.trim()).filter(Boolean);
-  let street = "";
-  let tail = "";
-  if (parts.length >= 2) {
-    street = parts.slice(0, -1).join(", ");
-    tail = parts[parts.length - 1];
-  } else {
-    const m = cleaned.match(/^(.*?)\s+((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)\s+(.+)$/);
-    if (m) return { street: m[1].trim(), postal: m[2].trim(), city: m[3].trim() };
-    return { street: cleaned, postal: "", city: "" };
-  }
-  const pm = tail.match(/((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)/);
-  if (pm) {
-    const postal = pm[1].trim();
-    const city = tail.replace(pm[1], "").trim();
-    return { street, postal, city };
-  }
-  return { street, postal: "", city: tail };
-}
-
 function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
@@ -154,7 +131,7 @@ function ShopSignupsPage() {
     setSavingId(id);
     try {
       const payload: any = { id };
-      for (const k of ["first_name","last_name","shop_name","email","phone","vat","street","postal","city","country","lang","pos_system","pos_other","admin_notes"]) {
+      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
         payload[k] = draft[k] ?? "";
       }
       const res = await update({ data: payload });
@@ -210,17 +187,15 @@ function ShopSignupsPage() {
     setPushSuccess(null);
     setStatusError(null);
     setLabelCopied(false);
-    const { street, postal, city } = parseSignupAddress(r.address);
     setDraft({
+
       first_name: r.first_name ?? "",
       last_name: r.last_name ?? "",
       shop_name: r.shop_name ?? "",
       email: r.email ?? "",
       phone: r.phone ?? "",
       vat: r.vat ?? "",
-      street: street ?? "",
-      postal: postal ?? "",
-      city: city ?? "",
+      address: r.address ?? "",
       country: r.country ?? "",
       lang: (r.lang ?? "").toLowerCase(),
       pos_system: r.pos_system ?? "",
@@ -519,8 +494,7 @@ function ShopSignupsPage() {
               const labelLines = [
                 `${draft.first_name ?? ""} ${draft.last_name ?? ""}`.trim(),
                 draft.shop_name,
-                draft.street,
-                `${draft.postal ?? ""} ${draft.city ?? ""}`.trim(),
+                draft.address,
                 draft.country ? String(draft.country).toUpperCase() : null,
               ].filter((l) => l && String(l).trim().length > 0) as string[];
               const labelText = labelLines.join("\n");
@@ -741,44 +715,7 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
         {renderRow("shop_name", "Winkel")}
       </div>
       <div className="sm:col-span-2">
-        <label className={labelCls} style={labelStyle}>Adres</label>
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={draft.street ?? ""}
-              onChange={set("street")}
-              placeholder="Straat + nummer"
-              className={inputCls}
-              style={inputStyle}
-            />
-            {renderCopyBtn("street", draft.street ?? "")}
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={draft.postal ?? ""}
-                onChange={set("postal")}
-                placeholder="Postcode"
-                className={inputCls}
-                style={inputStyle}
-              />
-              {renderCopyBtn("postal", draft.postal ?? "")}
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                type="text"
-                value={draft.city ?? ""}
-                onChange={set("city")}
-                placeholder="Plaats"
-                className={inputCls}
-                style={inputStyle}
-              />
-              {renderCopyBtn("city", draft.city ?? "")}
-            </div>
-          </div>
-        </div>
+        {renderRow("address", "Adres")}
       </div>
       <div className="sm:col-span-2">
         {renderRow("country", "Land")}
