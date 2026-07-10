@@ -68,20 +68,18 @@ function ShopSignupsPage() {
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
 
-  // Sluit de detailmodal met de Escape-toets.
+  // Sluit de detailmodal met de Escape-toets, met waarschuwing bij onopgeslagen wijzigingen.
   useEffect(() => {
     if (!openId) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        setOpenId(null);
-        setPushError(null);
-        setPushSuccess(null);
+        closeModal();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [openId]);
+  }, [openId, closeModal]);
 
   const rows: any[] = data?.rows ?? [];
 
