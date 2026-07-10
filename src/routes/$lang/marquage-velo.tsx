@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { trackShopSignupCtaClick } from "@/lib/analytics";
 
 const ORG_JSONLD = {
   "@context": "https://schema.org",
@@ -204,7 +205,11 @@ function VelocistesLanding() {
             <LogoMark />
             <span>velopass</span>
           </a>
-          <a className="nav-cta" href="https://velopass.com/fr/shop#registreer">
+          <a
+            className="nav-cta"
+            href="https://velopass.com/fr/shop#registreer"
+            onClick={() => trackShopSignupCtaClick("marquage_velo_nav", "fr")}
+          >
             Devenir point de marquage
           </a>
         </div>
@@ -224,7 +229,11 @@ function VelocistesLanding() {
             durable pour votre magasin.
           </p>
           <div className="btns">
-            <a className="btn-p" href="https://velopass.com/fr/shop#registreer">
+            <a
+              className="btn-p"
+              href="https://velopass.com/fr/shop#registreer"
+              onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}
+            >
               Inscription vélociste — gratuite
             </a>
             <a className="btn-s" href="https://velopass.com/fr/contact">
@@ -398,7 +407,11 @@ function VelocistesLanding() {
               Inscription gratuite, mise en route immédiate. Rejoignez les vélocistes qui
               transforment chaque vente en relation durable.
             </p>
-            <a className="btn-d" href="https://velopass.com/fr/shop#registreer">
+            <a
+              className="btn-d"
+              href="https://velopass.com/fr/shop#registreer"
+              onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}
+            >
               Créer mon compte vélociste
             </a>
             <p className="fine">
