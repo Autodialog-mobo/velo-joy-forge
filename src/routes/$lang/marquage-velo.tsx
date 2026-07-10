@@ -110,14 +110,14 @@ const CSS = `
 .vlp .nav-cta{background:var(--navy);color:#fff;font-weight:500;font-size:14px;padding:9px 18px;border-radius:10px}
 .vlp .hero{min-height:100vh;color:#fff;position:relative;overflow:hidden;display:flex;align-items:center}
 .vlp .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0}
-.vlp .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 70% 100% at 25% 50%,rgba(6,14,28,0.86) 0%,rgba(6,14,28,0.40) 45%,rgba(6,14,28,0.12) 70%,rgba(6,14,28,0) 100%)}
+.vlp .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 75% 110% at 28% 50%,rgba(6,14,28,0.92) 0%,rgba(6,14,28,0.55) 40%,rgba(6,14,28,0.20) 65%,rgba(6,14,28,0) 100%)}
 .vlp .hero-in{position:relative;z-index:2;padding:120px 0 100px;max-width:760px}
-.vlp .hero-text{position:relative;z-index:2;text-align:left}
-.vlp .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.1);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:26px}
+.vlp .hero-text{position:relative;z-index:2;text-align:left;text-shadow:0 2px 20px rgba(0,0,0,0.35)}
+.vlp .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.1);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:26px;text-shadow:none}
 .vlp .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 .vlp .hero h1{font-weight:800;font-size:clamp(34px,5vw,58px);max-width:840px;margin-bottom:22px}
 .vlp .hero h1 em{font-style:normal;color:var(--green)}
-.vlp .hero .lead{font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,0.7);max-width:620px;margin-bottom:34px}
+.vlp .hero .lead{font-size:clamp(16px,2vw,19px);color:rgba(255,255,255,0.85);max-width:620px;margin-bottom:34px}
 .vlp .btns{display:flex;flex-wrap:wrap;gap:14px}
 .vlp .btn-p{background:var(--green);color:var(--navy);font-weight:700;font-size:15px;padding:15px 28px;border-radius:12px}
 .vlp .btn-s{border:1.5px solid rgba(255,255,255,0.25);color:#fff;font-weight:500;font-size:15px;padding:15px 26px;border-radius:12px}
@@ -192,7 +192,7 @@ const CSS = `
 .vlp .pos-app-chip:hover{filter:brightness(1.05)}
 @media(max-width:640px){.vlp .pos-chip,.vlp .pos-app-chip{flex:1 1 auto;min-width:120px}.vlp .pos-app-chip{flex:1 1 100%}}
 
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 100% at 50% 22%,rgba(6,14,28,0.90) 0%,rgba(6,14,28,0.58) 45%,rgba(6,14,28,0.22) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .hero-in{padding:110px 0 80px}.vlp .hero-overlay{background:radial-gradient(ellipse 140% 120% at 50% 22%,rgba(6,14,28,0.95) 0%,rgba(6,14,28,0.68) 40%,rgba(6,14,28,0.28) 70%,rgba(6,14,28,0) 100%)}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
 function LogoMark() {
