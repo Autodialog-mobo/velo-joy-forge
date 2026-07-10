@@ -20,7 +20,60 @@ export const listShopSignups = createServerFn({ method: "POST" })
       throw new Error(error.message);
     }
     return { rows: data ?? [] };
+
+
+export const setShopSignupManagementId = createServerFn({ method: "POST" })
+  .middleware([requireAuth0Admin])
+  .inputValidator((d: unknown) =>
+    z.object({
+      id: z.string().uuid(),
+      managementId: z.string().trim().uuid("Ongeldig organisation-id (moet een UUID zijn)"),
+    }).parse(d)
+  )
+  .handler(async ({ data, context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: before, error: fetchErr } = await (supabaseAdmin as any)
+      .from("shop_signups")
+      .select("id, pushed_to_pro_management_id, pushed_to_pro_at, shop_name, email")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (fetchErr) throw new Error(fetchErr.message);
+    if (!before) throw new Error("Aanmelding niet gevonden");
+
+    const nowIso = new Date().toISOString();
+    const patch: any = {
+      pushed_to_pro_management_id: data.managementId,
+      updated_at: nowIso,
+    };
+    // If we're linking a management-id but the signup was never marked as pushed,
+    // also stamp pushed_to_pro_at so the UI treats it as doorgestuurd.
+    if (!before.pushed_to_pro_at) {
+      patch.pushed_to_pro_at = nowIso;
+      patch.pushed_to_pro_by = context.userId;
+    }
+
+    const { error } = await (supabaseAdmin as any)
+      .from("shop_signups")
+      .update(patch)
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+
+    const { writeAudit } = await import("@/lib/audit.server");
+    await writeAudit(context, {
+      action: "shop_signup.set_management_id",
+      target_type: "shop_signup",
+      target_id: data.id,
+      metadata: {
+        shop_name: before.shop_name ?? null,
+        email: before.email ?? null,
+        from: before.pushed_to_pro_management_id ?? null,
+        to: data.managementId,
+      },
+    });
+
+    return { ok: true as const, managementId: data.managementId };
   });
+
 
 const nullableStr = (max: number) =>
   z.string().trim().max(max).nullable().optional().transform((v) => (v === "" ? null : v));
