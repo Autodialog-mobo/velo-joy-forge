@@ -60,6 +60,7 @@ function parseSignupAddress(raw: string | null | undefined): { street: string; p
   return { street, postal: "", city: tail };
 }
 
+function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
