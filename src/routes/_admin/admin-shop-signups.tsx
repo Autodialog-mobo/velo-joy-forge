@@ -210,15 +210,17 @@ function ShopSignupsPage() {
     setPushSuccess(null);
     setStatusError(null);
     setLabelCopied(false);
+    const { street, postal, city } = parseSignupAddress(r.address);
     setDraft({
-
       first_name: r.first_name ?? "",
       last_name: r.last_name ?? "",
       shop_name: r.shop_name ?? "",
       email: r.email ?? "",
       phone: r.phone ?? "",
       vat: r.vat ?? "",
-      address: r.address ?? "",
+      street: street ?? "",
+      postal: postal ?? "",
+      city: city ?? "",
       country: r.country ?? "",
       lang: (r.lang ?? "").toLowerCase(),
       pos_system: r.pos_system ?? "",
