@@ -117,58 +117,6 @@ export const updateShopSignup = createServerFn({ method: "POST" })
 // admin's Auth0 bearer token (same audience as the management API).
 // ---------------------------------------------------------------------------
 
-function parseSignupAddress(raw: string | null | undefined): { street: string; postal: string; city: string } {
-  const cleaned = (raw || "").replace(/\s+/g, " ").trim();
-  if (!cleaned) return { street: "", postal: "", city: "" };
-  const parts = cleaned.split(",").map((s) => s.trim()).filter(Boolean);
-  let street = "";
-  let tail = "";
-  if (parts.length >= 2) {
-    street = parts.slice(0, -1).join(", ");
-    tail = parts[parts.length - 1];
-  } else {
-    const m = cleaned.match(/^(.*?)\s+((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)\s+(.+)$/);
-    if (m) return { street: m[1].trim(), postal: m[2].trim(), city: m[3].trim() };
-    return { street: cleaned, postal: "", city: "" };
-  }
-  const pm = tail.match(/((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)/);
-  if (pm) {
-    const postal = pm[1].trim();
-    const city = tail.replace(pm[1], "").trim();
-    return { street, postal, city };
-  }
-  return { street, postal: "", city: tail };
-}
-
-const MANAGEMENT_API_URL =
-  (process.env.VELOPASS_MANAGEMENT_API_URL || "https://managementapi.prod.velopass.com").replace(/\/+$/, "");
-
-async function readDefaultBikeShopPackageId(bearer: string): Promise<string | null> {
-  const res = await fetch(`${MANAGEMENT_API_URL}/api/bike-shop-packages/select`, {
-    method: "GET",
-    headers: {
-      Authorization: bearer,
-      Accept: "application/json",
-    },
-  });
-  const text = await res.text();
-  if (!res.ok) {
-    console.error("[shop-signups] package lookup failed", { status: res.status, body: text.slice(0, 1000) });
-    throw new Error(`Pakketlijst ophalen mislukte (${res.status}): ${text.slice(0, 500) || "geen details"}`);
-  }
-
-  let packages: Array<{ value?: string | null; isDefault?: boolean }> = [];
-  try {
-    const parsed = text ? JSON.parse(text) : [];
-    packages = Array.isArray(parsed) ? parsed : [];
-  } catch {
-    throw new Error("Pakketlijst ophalen mislukte: ongeldig antwoord van velopass.pro.");
-  }
-
-  const selected = packages.find((p) => p?.isDefault && p.value) ?? packages.find((p) => p?.value);
-  return selected?.value ?? null;
-}
-
 export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
@@ -182,6 +130,58 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         message: "Geen geldige Auth0-token beschikbaar om door te sturen. Log opnieuw in en probeer het nog eens.",
       };
     }
+
+    const managementApiUrl =
+      (process.env.VELOPASS_MANAGEMENT_API_URL || "https://managementapi.prod.velopass.com").replace(/\/+$/, "");
+
+    const parseSignupAddress = (raw: string | null | undefined): { street: string; postal: string; city: string } => {
+      const cleaned = (raw || "").replace(/\s+/g, " ").trim();
+      if (!cleaned) return { street: "", postal: "", city: "" };
+      const parts = cleaned.split(",").map((s) => s.trim()).filter(Boolean);
+      let street = "";
+      let tail = "";
+      if (parts.length >= 2) {
+        street = parts.slice(0, -1).join(", ");
+        tail = parts[parts.length - 1];
+      } else {
+        const m = cleaned.match(/^(.*?)\s+((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)\s+(.+)$/);
+        if (m) return { street: m[1].trim(), postal: m[2].trim(), city: m[3].trim() };
+        return { street: cleaned, postal: "", city: "" };
+      }
+      const pm = tail.match(/((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)/);
+      if (pm) {
+        const postal = pm[1].trim();
+        const city = tail.replace(pm[1], "").trim();
+        return { street, postal, city };
+      }
+      return { street, postal: "", city: tail };
+    };
+
+    const readDefaultBikeShopPackageId = async (): Promise<string | null> => {
+      const res = await fetch(`${managementApiUrl}/api/bike-shop-packages/select`, {
+        method: "GET",
+        headers: {
+          Authorization: bearer,
+          Accept: "application/json",
+        },
+      });
+      const text = await res.text();
+      if (!res.ok) {
+        console.error("[shop-signups] package lookup failed", { status: res.status, body: text.slice(0, 1000) });
+        throw new Error(`Pakketlijst ophalen mislukte (${res.status}): ${text.slice(0, 500) || "geen details"}`);
+      }
+
+      let packages: Array<{ value?: string | null; isDefault?: boolean }> = [];
+      try {
+        const parsed = text ? JSON.parse(text) : [];
+        packages = Array.isArray(parsed) ? parsed : [];
+      } catch {
+        throw new Error("Pakketlijst ophalen mislukte: ongeldig antwoord van velopass.pro.");
+      }
+
+      const selected = packages.find((p) => p?.isDefault && p.value) ?? packages.find((p) => p?.value);
+      return selected?.value ?? null;
+    };
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: row, error: fetchErr } = await (supabaseAdmin as any)
@@ -225,7 +225,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
 
     let packageId: string | null = null;
     try {
-      packageId = await readDefaultBikeShopPackageId(bearer);
+      packageId = await readDefaultBikeShopPackageId();
     } catch (e: any) {
       return {
         ok: false as const,
@@ -265,7 +265,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     let apiResponse: any = null;
     let apiStatus = 0;
     try {
-      const res = await fetch(`${MANAGEMENT_API_URL}/api/Organisations`, {
+      const res = await fetch(`${managementApiUrl}/api/Organisations`, {
         method: "POST",
         headers: {
           Authorization: bearer,
