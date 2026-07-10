@@ -175,7 +175,24 @@ const CSS = `
 .vlp .foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .vlp .foot-brand>span:last-child{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;color:#fff}
 .vlp .foot-bottom{border-top:1px solid rgba(255,255,255,0.12);padding-top:22px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid{grid-template-columns:1fr}.vlp .diff,.vlp .cta{padding:36px}}
+.vlp .sticker-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.vlp .sticker-frame{position:relative;border-radius:20px;overflow:visible;box-shadow:0 32px 64px rgba(13,31,60,0.15);aspect-ratio:1/1;container-type:inline-size;--qr-x:50%;--qr-y:49%;--qr-size:26%;max-width:460px;margin:0 auto;width:100%}
+.vlp .sticker-frame img{display:block;border-radius:16px;width:100%;height:100%;object-fit:cover}
+.vlp .scan-overlay{position:absolute;left:var(--qr-x);top:var(--qr-y);width:var(--qr-size);height:var(--qr-size);transform:translate(-50%,-50%);pointer-events:none}
+.vlp .scan-corner{position:absolute;width:clamp(14px,4.5cqi,26px);height:clamp(14px,4.5cqi,26px);border:clamp(2px,0.5cqi,3px) solid var(--green);filter:drop-shadow(0 0 6px rgba(46,204,138,0.6))}
+.vlp .scan-corner.tl{top:-1.2cqi;left:-1.2cqi;border-right:none;border-bottom:none;border-top-left-radius:4px}
+.vlp .scan-corner.tr{top:-1.2cqi;right:-1.2cqi;border-left:none;border-bottom:none;border-top-right-radius:4px}
+.vlp .scan-corner.bl{bottom:-1.2cqi;left:-1.2cqi;border-right:none;border-top:none;border-bottom-left-radius:4px}
+.vlp .scan-corner.br{bottom:-1.2cqi;right:-1.2cqi;border-left:none;border-top:none;border-bottom-right-radius:4px}
+.vlp .scan-line{position:absolute;left:0;right:0;height:clamp(1.5px,0.4cqi,2.5px);background:linear-gradient(90deg,transparent,var(--green) 20%,var(--green) 80%,transparent);box-shadow:0 0 12px var(--green),0 0 24px rgba(46,204,138,0.5);animation:vlp-scan-sweep 2.2s ease-in-out infinite}
+@keyframes vlp-scan-sweep{0%{top:0;opacity:0}10%{opacity:1}50%{top:calc(100% - 2px);opacity:1}60%{opacity:0}100%{top:0;opacity:0}}
+.vlp .scan-badge{position:absolute;left:50%;bottom:clamp(-28px,-3cqi,-16px);transform:translateX(-50%);background:var(--navy);color:#fff;font-size:clamp(10px,1.4cqi,12px);font-weight:500;padding:6px 14px;border-radius:100px;white-space:nowrap;letter-spacing:0.3px;box-shadow:0 6px 16px rgba(0,0,0,0.25)}
+.vlp .sticker-feats{margin-top:28px;display:flex;flex-direction:column;gap:18px}
+.vlp .sticker-feat{display:flex;gap:14px;align-items:flex-start}
+.vlp .sticker-feat .ic{width:34px;height:34px;background:var(--green-pale);color:var(--green-dark);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700}
+.vlp .sticker-feat strong{display:block;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:2px;color:var(--navy)}
+.vlp .sticker-feat span{font-size:14px;color:var(--muted);line-height:1.6}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .sticker-wrap{grid-template-columns:1fr}.vlp .diff,.vlp .cta{padding:36px}.vlp .sticker-wrap{gap:48px}}
 `;
 
 function LogoMark() {
