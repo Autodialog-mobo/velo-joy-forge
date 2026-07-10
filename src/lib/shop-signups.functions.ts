@@ -464,7 +464,10 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       (combined.length > 0 ? combined : null) ||
       null;
     const actorLabel = actorName || actorEmail || context.userId;
-    const note = `[${nowIso.slice(0, 10)}] Doorgestuurd naar velopass.pro${returnedId ? ` (id: ${returnedId})` : ""}${actorLabel ? ` door ${actorLabel}` : ""}.`;
+    const noteAction = alreadyExists
+      ? "Reeds aanwezig in velopass.pro (gemarkeerd als doorgestuurd)"
+      : "Doorgestuurd naar velopass.pro";
+    const note = `[${nowIso.slice(0, 10)}] ${noteAction}${returnedId ? ` (id: ${returnedId})` : ""}${actorLabel ? ` door ${actorLabel}` : ""}.`;
     const admin_notes = row.admin_notes ? `${row.admin_notes}\n${note}` : note;
     await (supabaseAdmin as any)
       .from("shop_signups")
