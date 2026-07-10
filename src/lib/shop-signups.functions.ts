@@ -431,11 +431,23 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
 
     // Mark as converted + append note + record push metadata.
     const nowIso = new Date().toISOString();
+    const claims: any = context.claims ?? {};
     const actorEmail: string | null =
-      (context.claims as any)?.email ||
-      (context.claims as any)?.["https://velopass.com/email"] ||
+      claims?.email ||
+      claims?.["https://velopass.com/email"] ||
       null;
-    const note = `[${nowIso.slice(0, 10)}] Doorgestuurd naar velopass.pro${returnedId ? ` (id: ${returnedId})` : ""}${actorEmail ? ` door ${actorEmail}` : ""}.`;
+    const givenName = claims?.given_name || claims?.["https://velopass.com/given_name"] || "";
+    const familyName = claims?.family_name || claims?.["https://velopass.com/family_name"] || "";
+    const combined = `${givenName} ${familyName}`.trim();
+    const actorName: string | null =
+      claims?.name ||
+      claims?.["https://velopass.com/name"] ||
+      claims?.nickname ||
+      claims?.["https://velopass.com/nickname"] ||
+      (combined.length > 0 ? combined : null) ||
+      null;
+    const actorLabel = actorName || actorEmail || context.userId;
+    const note = `[${nowIso.slice(0, 10)}] Doorgestuurd naar velopass.pro${returnedId ? ` (id: ${returnedId})` : ""}${actorLabel ? ` door ${actorLabel}` : ""}.`;
     const admin_notes = row.admin_notes ? `${row.admin_notes}\n${note}` : note;
     await (supabaseAdmin as any)
       .from("shop_signups")
@@ -447,10 +459,12 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         pushed_to_pro_at: nowIso,
         pushed_to_pro_by: context.userId,
         pushed_to_pro_by_email: actorEmail,
+        pushed_to_pro_by_name: actorName,
         pushed_to_pro_management_id: returnedId,
         updated_at: nowIso,
       })
       .eq("id", data.id);
+
 
     const { writeAudit } = await import("@/lib/audit.server");
     await writeAudit(context, {
