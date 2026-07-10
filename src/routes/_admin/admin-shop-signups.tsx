@@ -908,8 +908,8 @@ function PushSuccessPanel({
       toast.error("Kopiëren mislukt");
     }
   };
-  const viewUrl = success.managementId
-    ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.managementId}`
+  const viewUrl = success.id
+    ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.id}`
     : VELOPASS_PRO_ORGANISATION_URL;
 
   return (
