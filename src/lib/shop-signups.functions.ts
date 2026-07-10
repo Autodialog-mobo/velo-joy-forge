@@ -571,6 +571,81 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     }
 
 
+    // ---- Create employee/user under the organisation ------------------------
+    // POST /api/users/pro { languageCode, email, organisationId,
+    //                       firstName?, lastName? }
+    // Only attempted when we have a returnedId (either fresh insert or lookup).
+    // A 400 "User with given email already exists" is treated as success so
+    // repeated pushes don't fail.
+    let employeeStatus: number | null = null;
+    let employeeResponse: any = null;
+    let employeeAlreadyExists = false;
+    let employeeError: string | null = null;
+
+    if (returnedId) {
+      // Language code format used by velopass.pro is `<lang>-<country>`,
+      // e.g. `nl-be`, `fr-fr`. Fall back to `nl-be`.
+      const langBase = (row.lang || "nl").toLowerCase().slice(0, 2);
+      const countryIso = (() => {
+        const raw = String(row.country || "").trim().toUpperCase();
+        if (/^[A-Z]{2}$/.test(raw)) return raw.toLowerCase();
+        const map: Record<string, string> = {
+          BELGIE: "be", BELGIUM: "be", BELGIQUE: "be", BELGIEN: "be",
+          NEDERLAND: "nl", NETHERLANDS: "nl", HOLLAND: "nl",
+          FRANCE: "fr", FRANKRIJK: "fr",
+          LUXEMBOURG: "lu", LUXEMBURG: "lu",
+          GERMANY: "de", DUITSLAND: "de", DEUTSCHLAND: "de",
+        };
+        return map[raw.replace(/[^A-Z]/g, "")] || "be";
+      })();
+      const languageCode = `${langBase}-${countryIso}`;
+
+      const employeeBody: Record<string, unknown> = {
+        languageCode,
+        email: row.email,
+        organisationId: returnedId,
+      };
+      if (row.first_name) employeeBody.firstName = row.first_name;
+      if (row.last_name) employeeBody.lastName = row.last_name;
+
+      try {
+        const res = await fetch(managementEndpoint("users/pro"), {
+          method: "POST",
+          headers: {
+            Authorization: bearer,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(employeeBody),
+        });
+        employeeStatus = res.status;
+        const text = await res.text();
+        try { employeeResponse = text ? JSON.parse(text) : null; } catch { employeeResponse = text; }
+
+        const msgs = collectErrorMessages(employeeResponse);
+        // ProblemDetails wraps the FluentResults error string inside `detail`.
+        if (employeeResponse && typeof (employeeResponse as any).detail === "string") {
+          try {
+            const inner = JSON.parse((employeeResponse as any).detail);
+            if (Array.isArray(inner?.Errors)) {
+              for (const e of inner.Errors) if (e?.Message) msgs.push(String(e.Message));
+            }
+          } catch { /* ignore */ }
+        }
+        employeeAlreadyExists = msgs.some((m) => /already\s+exists/i.test(m));
+
+        if ((employeeStatus < 200 || employeeStatus >= 300) && !employeeAlreadyExists) {
+          employeeError = msgs[0] || `velopass.pro gaf ${employeeStatus} bij het aanmaken van de gebruiker.`;
+          console.error("[shop-signups] employee push failed", {
+            id: data.id, status: employeeStatus, employeeResponse,
+          });
+        }
+      } catch (e: any) {
+        employeeError = `Kon gebruiker niet aanmaken: ${e?.message ?? "onbekende netwerkfout"}.`;
+        console.error("[shop-signups] employee push network error", { id: data.id, error: e?.message });
+      }
+    }
+
     // Mark as converted + append note + record push metadata.
     const nowIso = new Date().toISOString();
     const claims: any = context.claims ?? {};
@@ -592,7 +667,16 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const noteAction = alreadyExists
       ? "Reeds aanwezig in velopass.pro (gemarkeerd als doorgestuurd)"
       : "Doorgestuurd naar velopass.pro";
-    const note = `[${nowIso.slice(0, 10)}] ${noteAction}${returnedId ? ` (id: ${returnedId})` : ""}${actorLabel ? ` door ${actorLabel}` : ""}.`;
+    const employeeNoteFragment = returnedId
+      ? employeeError
+        ? ` — gebruiker aanmaken mislukt: ${employeeError}`
+        : employeeAlreadyExists
+          ? " — gebruiker reeds aanwezig"
+          : employeeStatus && employeeStatus >= 200 && employeeStatus < 300
+            ? ` — gebruiker aangemaakt (${row.email})`
+            : ""
+      : "";
+    const note = `[${nowIso.slice(0, 10)}] ${noteAction}${returnedId ? ` (id: ${returnedId})` : ""}${employeeNoteFragment}${actorLabel ? ` door ${actorLabel}` : ""}.`;
     const admin_notes = row.admin_notes ? `${row.admin_notes}\n${note}` : note;
     await (supabaseAdmin as any)
       .from("shop_signups")
@@ -621,8 +705,21 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         email: row.email ?? null,
         management_id: returnedId,
         status: apiStatus,
+        employee_status: employeeStatus,
+        employee_already_exists: employeeAlreadyExists,
+        employee_error: employeeError,
       },
     });
 
-    return { ok: true as const, managementId: returnedId, alreadyExists, response: apiResponse };
+    return {
+      ok: true as const,
+      managementId: returnedId,
+      alreadyExists,
+      response: apiResponse,
+      employee: {
+        status: employeeStatus,
+        alreadyExists: employeeAlreadyExists,
+        error: employeeError,
+      },
+    };
   });
