@@ -535,9 +535,9 @@ function ShopSignupsPage() {
               />
             )}
 
-            {open.pushed_to_pro_at ? (
+            {open.pushed_to_pro_at || pushedIds.has(open.id) ? (
               <PushedInfoBanner
-                pushedAt={open.pushed_to_pro_at}
+                pushedAt={open.pushed_to_pro_at ?? new Date().toISOString()}
                 pushedByEmail={open.pushed_to_pro_by_email}
                 pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
@@ -547,7 +547,7 @@ function ShopSignupsPage() {
             ) : (
               <NotPushedInfoBanner
                 onPush={() => onPushToPro(open.id)}
-                disabled={pushingId === open.id || savingId === open.id}
+                disabled={pushingId === open.id || savingId === open.id || pushedIds.has(open.id)}
                 loading={pushingId === open.id}
               />
             )}
