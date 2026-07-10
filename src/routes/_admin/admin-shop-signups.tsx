@@ -495,8 +495,10 @@ function ShopSignupsPage() {
               <PushedInfoBanner
                 pushedAt={open.pushed_to_pro_at}
                 pushedByEmail={open.pushed_to_pro_by_email}
+                pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
               />
+
             ) : (
               <NotPushedInfoBanner
                 onPush={() => onPushToPro(open.id)}
