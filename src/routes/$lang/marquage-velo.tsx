@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { trackShopSignupCtaClick } from "@/lib/analytics";
+import stickerImg from "@/assets/velopass-sticker.webp";
 
 const ORG_JSONLD = {
   "@context": "https://schema.org",
