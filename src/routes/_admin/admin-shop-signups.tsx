@@ -482,6 +482,9 @@ function ShopSignupsPage() {
                             >
                               <Check size={14} /> Doorgestuurd <ExternalLink size={12} />
                             </a>
+                            <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                              {new Date(r.pushed_to_pro_at).toLocaleString("nl-BE")}
+                            </div>
                           </div>
                         ) : (
                           <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
