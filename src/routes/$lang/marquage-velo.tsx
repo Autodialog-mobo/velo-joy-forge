@@ -371,7 +371,7 @@ function VelocistesLanding() {
             <div>
               <h4>Vélocistes</h4>
               <a href="https://velopass.com/fr/shop#registreer">Inscription</a>
-              <a href="https://velopass.com/fr/contact">Nous contacter</a>
+              <a href="https://velopass.com/fr/contact?type=shop">Nous contacter</a>
               <a href="https://velopass.com/fr/bike-check">Vérifier un vélo</a>
             </div>
             <div>
