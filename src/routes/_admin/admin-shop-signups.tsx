@@ -827,6 +827,113 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
 
 }
 
+function parseAddress(raw: string): { street: string; postal: string; city: string } {
+  const cleaned = (raw || "").trim();
+  if (!cleaned) return { street: "", postal: "", city: "" };
+  const parts = cleaned.split(",").map((s) => s.trim()).filter(Boolean);
+  const tail = parts.length > 1 ? parts[parts.length - 1] : cleaned;
+  const street = parts.length > 1 ? parts.slice(0, -1).join(", ") : "";
+  if (parts.length === 1) {
+    const m = cleaned.match(/^(.+?)\s+(\d{4,5})\s+(.+)$/);
+    if (m) return { street: m[1].trim(), postal: m[2].trim(), city: m[3].trim() };
+    return { street: cleaned, postal: "", city: "" };
+  }
+  const pm = tail.match(/(\d{4,5})/);
+  if (pm) {
+    const postal = pm[1].trim();
+    const city = tail.replace(pm[1], "").trim();
+    return { street, postal, city };
+  }
+  return { street, postal: "", city: tail };
+}
+
+function joinAddress(street: string, postal: string, city: string): string {
+  const s = street.trim();
+  const pc = [postal.trim(), city.trim()].filter(Boolean).join(" ");
+  return [s, pc].filter(Boolean).join(", ");
+}
+
+function AddressFields({
+  address,
+  onChange,
+  inputCls,
+  inputStyle,
+  labelCls,
+  labelStyle,
+  renderCopyBtn,
+}: {
+  address: string;
+  onChange: (v: string) => void;
+  inputCls: string;
+  inputStyle: React.CSSProperties;
+  labelCls: string;
+  labelStyle: React.CSSProperties;
+  renderCopyBtn: (k: string, v: string) => React.ReactNode;
+}) {
+  const parsed = React.useMemo(() => parseAddress(address), [address]);
+  const [street, setStreet] = React.useState(parsed.street);
+  const [postal, setPostal] = React.useState(parsed.postal);
+  const [city, setCity] = React.useState(parsed.city);
+  const lastJoinedRef = React.useRef(address);
+
+  // Sync from external address changes (e.g. switching rows) without wiping local edits.
+  React.useEffect(() => {
+    if (address === lastJoinedRef.current) return;
+    const p = parseAddress(address);
+    setStreet(p.street);
+    setPostal(p.postal);
+    setCity(p.city);
+    lastJoinedRef.current = address;
+  }, [address]);
+
+  const emit = (s: string, p: string, c: string) => {
+    const joined = joinAddress(s, p, c);
+    lastJoinedRef.current = joined;
+    onChange(joined);
+  };
+
+  return (
+    <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-[1fr_140px_1fr] gap-3">
+      <div>
+        <label className={labelCls} style={labelStyle}>Straat + nr</label>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={street}
+            onChange={(e) => { setStreet(e.target.value); emit(e.target.value, postal, city); }}
+            className={inputCls}
+            style={inputStyle}
+          />
+          {renderCopyBtn("address_street", street)}
+        </div>
+      </div>
+      <div>
+        <label className={labelCls} style={labelStyle}>Postcode</label>
+        <input
+          type="text"
+          value={postal}
+          onChange={(e) => { setPostal(e.target.value); emit(street, e.target.value, city); }}
+          className={inputCls}
+          style={inputStyle}
+        />
+      </div>
+      <div>
+        <label className={labelCls} style={labelStyle}>Plaats</label>
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => { setCity(e.target.value); emit(street, postal, e.target.value); }}
+            className={inputCls}
+            style={inputStyle}
+          />
+          {renderCopyBtn("address_city", city)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PushErrorPanel({ err, onDismiss }: { err: any; onDismiss: () => void }) {
   const stage: string = err?.stage ?? "unknown";
   const stageLabel: Record<string, string> = {
