@@ -104,3 +104,24 @@ export function trackProLoginClick(location: ProLoginLocation, lang: string) {
   return click_id;
 }
 
+/**
+ * Track a click on a "become a marking point" CTA that sends
+ * bike shops to the shop signup flow. Fires a GA4 event with a
+ * unique click_id + stable location, so conversions on
+ * /fr/marquage-velo are attributable per surface.
+ */
+export function trackShopSignupCtaClick(
+  location: "marquage_velo_hero" | "marquage_velo_final" | "marquage_velo_nav",
+  lang: string,
+) {
+  const click_id = makeClickId();
+  trackEvent("shop_signup_cta_click", {
+    click_id,
+    location,
+    lang,
+    page: "/fr/marquage-velo",
+    destination: "https://velopass.com/fr/shop#registreer",
+  });
+  return click_id;
+}
+
