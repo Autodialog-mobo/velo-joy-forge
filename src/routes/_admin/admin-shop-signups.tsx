@@ -127,15 +127,22 @@ function ShopSignupsPage() {
   const onChangeStatus = async (id: string, status: Status) => {
     setSavingId(id);
     try {
-      await update({ data: { id, status } });
+      // Include any unsaved draft edits from the modal so switching status
+      // does not silently discard the admin's other changes.
+      const payload: any = { id, status };
+      if (openId === id) {
+        for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
+          if (draft[k] !== undefined) payload[k] = draft[k] ?? "";
+        }
+      }
+      await update({ data: payload });
       queryClient.setQueryData(["shop-signups"], (old: any) => {
         if (!old?.rows) return old;
-        return { ...old, rows: old.rows.map((r: any) => (r.id === id ? { ...r, status } : r)) };
+        return { ...old, rows: old.rows.map((r: any) => (r.id === id ? { ...r, ...payload, status } : r)) };
       });
       await refetch();
       setStatusError(null);
       toast.success(`Status opgeslagen: ${STATUS_LABEL[status]}`);
-      setOpenId(null);
     } catch (err: any) {
       setStatusError({ id, status, message: err.message ?? "Onbekende fout" });
       toast.error(`Status niet opgeslagen: ${err.message ?? "Onbekende fout"}`);
