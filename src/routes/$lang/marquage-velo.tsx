@@ -1,6 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { trackShopSignupCtaClick } from "@/lib/analytics";
-import stickerImg from "@/assets/velopass-sticker.webp";
+
+const FAQS = [
+  { q: "Velopass est-il un opérateur d'identification de cycles agréé ?", a: "Oui. Velopass est un opérateur d'identification agréé référencé par l'APIC. Les vélos marqués sont enregistrés dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la réglementation française." },
+  { q: "Comment devenir point de marquage vélo Velopass ?", a: "L'inscription des vélocistes est gratuite et se fait en ligne sur velopass.com/fr/shop. Vous recevez les étiquettes Frame-ID et marquez les vélos directement en magasin ; l'enregistrement dans le FNUCI est immédiat." },
+  { q: "Le marquage des vélos est-il obligatoire en France ?", a: "Oui. Depuis la loi d'orientation des mobilités (loi LOM), tout vélo neuf vendu par un professionnel doit être identifié. Le marquage doit être réalisé par un opérateur agréé et enregistré dans le FNUCI." },
+  { q: "Quel procédé d'identification Velopass utilise-t-il ?", a: "Velopass utilise une étiquette adhésive inviolable (Frame-ID) dotée d'un code QR et d'un identifiant unique. Toute tentative de retrait détruit l'étiquette et laisse des traces visibles." },
+  { q: "Qu'est-ce que Velopass apporte de plus qu'un simple marquage ?", a: "Au-delà de la conformité, chaque vélo marqué devient une relation client durable : rappels d'entretien automatiques, carnet numérique à vie, et intégrations avec les fabricants, sociétés de leasing et assureurs. Le vélociste reste en contact avec ses clients après la vente." }
+];
 
 const ORG_JSONLD = {
   "@context": "https://schema.org",
@@ -25,29 +32,6 @@ const ORG_JSONLD = {
   },
 };
 
-const FAQS = [
-  {
-    q: "Velopass est-il un opérateur d'identification de cycles agréé ?",
-    a: "Oui. Velopass est un opérateur d'identification agréé référencé par l'APIC. Les vélos marqués sont enregistrés dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la réglementation française.",
-  },
-  {
-    q: "Comment devenir point de marquage vélo Velopass ?",
-    a: "L'inscription des vélocistes est gratuite et se fait en ligne sur velopass.com/fr/shop. Vous recevez les étiquettes Frame-ID et marquez les vélos directement en magasin ; l'enregistrement dans le FNUCI est immédiat.",
-  },
-  {
-    q: "Le marquage des vélos est-il obligatoire en France ?",
-    a: "Oui. Depuis la loi d'orientation des mobilités (loi LOM), tout vélo neuf vendu par un professionnel doit être identifié. Le marquage doit être réalisé par un opérateur agréé et enregistré dans le FNUCI.",
-  },
-  {
-    q: "Quel procédé d'identification Velopass utilise-t-il ?",
-    a: "Velopass utilise une étiquette adhésive inviolable (Frame-ID) dotée d'un code QR et d'un identifiant unique. Toute tentative de retrait détruit l'étiquette et laisse des traces visibles.",
-  },
-  {
-    q: "Qu'est-ce que Velopass apporte de plus qu'un simple marquage ?",
-    a: "Au-delà de la conformité, chaque vélo marqué devient une relation client durable : rappels d'entretien automatiques, carnet numérique à vie, et intégrations avec les fabricants, sociétés de leasing et assureurs. Le vélociste reste en contact avec ses clients après la vente.",
-  },
-];
-
 const FAQ_JSONLD = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -57,6 +41,15 @@ const FAQ_JSONLD = {
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 };
+
+const STICKER_SVG = `<svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Étiquette Frame-ID Velopass avec code QR">
+  <rect width="260" height="260" rx="24" fill="#0B1526"/>
+  <text x="130" y="33" text-anchor="middle" font-family="Syne,Arial,sans-serif" font-weight="700" font-size="17" letter-spacing="3" fill="#2ECC8A">SECURED</text>
+  <text x="19" y="128" text-anchor="middle" font-family="DM Sans,Arial,sans-serif" font-weight="500" font-size="8.5" letter-spacing="1.4" fill="rgba(255,255,255,0.5)" transform="rotate(-90 19 128)">WWW.APIC-ASSO.COM</text>
+  <text x="241" y="128" text-anchor="middle" font-family="DM Sans,Arial,sans-serif" font-weight="500" font-size="8.5" letter-spacing="1.4" fill="rgba(255,255,255,0.5)" transform="rotate(90 241 128)">WWW.VELOPASS.COM</text>
+  <g fill="#ffffff" transform="translate(55 48)"><rect x="0" y="0" width="6" height="6"/><rect x="6" y="0" width="6" height="6"/><rect x="12" y="0" width="6" height="6"/><rect x="18" y="0" width="6" height="6"/><rect x="24" y="0" width="6" height="6"/><rect x="30" y="0" width="6" height="6"/><rect x="36" y="0" width="6" height="6"/><rect x="48" y="0" width="6" height="6"/><rect x="54" y="0" width="6" height="6"/><rect x="66" y="0" width="6" height="6"/><rect x="72" y="0" width="6" height="6"/><rect x="78" y="0" width="6" height="6"/><rect x="84" y="0" width="6" height="6"/><rect x="108" y="0" width="6" height="6"/><rect x="114" y="0" width="6" height="6"/><rect x="120" y="0" width="6" height="6"/><rect x="126" y="0" width="6" height="6"/><rect x="132" y="0" width="6" height="6"/><rect x="138" y="0" width="6" height="6"/><rect x="144" y="0" width="6" height="6"/><rect x="0" y="6" width="6" height="6"/><rect x="36" y="6" width="6" height="6"/><rect x="48" y="6" width="6" height="6"/><rect x="54" y="6" width="6" height="6"/><rect x="60" y="6" width="6" height="6"/><rect x="84" y="6" width="6" height="6"/><rect x="108" y="6" width="6" height="6"/><rect x="144" y="6" width="6" height="6"/><rect x="0" y="12" width="6" height="6"/><rect x="12" y="12" width="6" height="6"/><rect x="18" y="12" width="6" height="6"/><rect x="24" y="12" width="6" height="6"/><rect x="36" y="12" width="6" height="6"/><rect x="48" y="12" width="6" height="6"/><rect x="54" y="12" width="6" height="6"/><rect x="72" y="12" width="6" height="6"/><rect x="78" y="12" width="6" height="6"/><rect x="84" y="12" width="6" height="6"/><rect x="108" y="12" width="6" height="6"/><rect x="120" y="12" width="6" height="6"/><rect x="126" y="12" width="6" height="6"/><rect x="132" y="12" width="6" height="6"/><rect x="144" y="12" width="6" height="6"/><rect x="0" y="18" width="6" height="6"/><rect x="12" y="18" width="6" height="6"/><rect x="18" y="18" width="6" height="6"/><rect x="24" y="18" width="6" height="6"/><rect x="36" y="18" width="6" height="6"/><rect x="54" y="18" width="6" height="6"/><rect x="60" y="18" width="6" height="6"/><rect x="66" y="18" width="6" height="6"/><rect x="72" y="18" width="6" height="6"/><rect x="78" y="18" width="6" height="6"/><rect x="90" y="18" width="6" height="6"/><rect x="96" y="18" width="6" height="6"/><rect x="108" y="18" width="6" height="6"/><rect x="120" y="18" width="6" height="6"/><rect x="126" y="18" width="6" height="6"/><rect x="132" y="18" width="6" height="6"/><rect x="144" y="18" width="6" height="6"/><rect x="0" y="24" width="6" height="6"/><rect x="12" y="24" width="6" height="6"/><rect x="18" y="24" width="6" height="6"/><rect x="24" y="24" width="6" height="6"/><rect x="36" y="24" width="6" height="6"/><rect x="48" y="24" width="6" height="6"/><rect x="54" y="24" width="6" height="6"/><rect x="66" y="24" width="6" height="6"/><rect x="78" y="24" width="6" height="6"/><rect x="84" y="24" width="6" height="6"/><rect x="108" y="24" width="6" height="6"/><rect x="120" y="24" width="6" height="6"/><rect x="126" y="24" width="6" height="6"/><rect x="132" y="24" width="6" height="6"/><rect x="144" y="24" width="6" height="6"/><rect x="0" y="30" width="6" height="6"/><rect x="36" y="30" width="6" height="6"/><rect x="54" y="30" width="6" height="6"/><rect x="60" y="30" width="6" height="6"/><rect x="66" y="30" width="6" height="6"/><rect x="72" y="30" width="6" height="6"/><rect x="78" y="30" width="6" height="6"/><rect x="84" y="30" width="6" height="6"/><rect x="108" y="30" width="6" height="6"/><rect x="144" y="30" width="6" height="6"/><rect x="0" y="36" width="6" height="6"/><rect x="6" y="36" width="6" height="6"/><rect x="12" y="36" width="6" height="6"/><rect x="18" y="36" width="6" height="6"/><rect x="24" y="36" width="6" height="6"/><rect x="30" y="36" width="6" height="6"/><rect x="36" y="36" width="6" height="6"/><rect x="48" y="36" width="6" height="6"/><rect x="60" y="36" width="6" height="6"/><rect x="72" y="36" width="6" height="6"/><rect x="84" y="36" width="6" height="6"/><rect x="96" y="36" width="6" height="6"/><rect x="108" y="36" width="6" height="6"/><rect x="114" y="36" width="6" height="6"/><rect x="120" y="36" width="6" height="6"/><rect x="126" y="36" width="6" height="6"/><rect x="132" y="36" width="6" height="6"/><rect x="138" y="36" width="6" height="6"/><rect x="144" y="36" width="6" height="6"/><rect x="54" y="42" width="6" height="6"/><rect x="66" y="42" width="6" height="6"/><rect x="78" y="42" width="6" height="6"/><rect x="90" y="42" width="6" height="6"/><rect x="0" y="48" width="6" height="6"/><rect x="18" y="48" width="6" height="6"/><rect x="24" y="48" width="6" height="6"/><rect x="30" y="48" width="6" height="6"/><rect x="36" y="48" width="6" height="6"/><rect x="42" y="48" width="6" height="6"/><rect x="48" y="48" width="6" height="6"/><rect x="60" y="48" width="6" height="6"/><rect x="84" y="48" width="6" height="6"/><rect x="90" y="48" width="6" height="6"/><rect x="102" y="48" width="6" height="6"/><rect x="120" y="48" width="6" height="6"/><rect x="132" y="48" width="6" height="6"/><rect x="138" y="48" width="6" height="6"/><rect x="144" y="48" width="6" height="6"/><rect x="0" y="54" width="6" height="6"/><rect x="12" y="54" width="6" height="6"/><rect x="30" y="54" width="6" height="6"/><rect x="42" y="54" width="6" height="6"/><rect x="48" y="54" width="6" height="6"/><rect x="72" y="54" width="6" height="6"/><rect x="78" y="54" width="6" height="6"/><rect x="84" y="54" width="6" height="6"/><rect x="90" y="54" width="6" height="6"/><rect x="114" y="54" width="6" height="6"/><rect x="120" y="54" width="6" height="6"/><rect x="126" y="54" width="6" height="6"/><rect x="132" y="54" width="6" height="6"/><rect x="138" y="54" width="6" height="6"/><rect x="6" y="60" width="6" height="6"/><rect x="12" y="60" width="6" height="6"/><rect x="18" y="60" width="6" height="6"/><rect x="24" y="60" width="6" height="6"/><rect x="30" y="60" width="6" height="6"/><rect x="36" y="60" width="6" height="6"/><rect x="42" y="60" width="6" height="6"/><rect x="60" y="60" width="6" height="6"/><rect x="90" y="60" width="6" height="6"/><rect x="96" y="60" width="6" height="6"/><rect x="108" y="60" width="6" height="6"/><rect x="126" y="60" width="6" height="6"/><rect x="144" y="60" width="6" height="6"/><rect x="6" y="66" width="6" height="6"/><rect x="24" y="66" width="6" height="6"/><rect x="30" y="66" width="6" height="6"/><rect x="42" y="66" width="6" height="6"/><rect x="48" y="66" width="6" height="6"/><rect x="54" y="66" width="6" height="6"/><rect x="60" y="66" width="6" height="6"/><rect x="72" y="66" width="6" height="6"/><rect x="84" y="66" width="6" height="6"/><rect x="90" y="66" width="6" height="6"/><rect x="96" y="66" width="6" height="6"/><rect x="108" y="66" width="6" height="6"/><rect x="114" y="66" width="6" height="6"/><rect x="126" y="66" width="6" height="6"/><rect x="132" y="66" width="6" height="6"/><rect x="138" y="66" width="6" height="6"/><rect x="144" y="66" width="6" height="6"/><rect x="18" y="72" width="6" height="6"/><rect x="24" y="72" width="6" height="6"/><rect x="36" y="72" width="6" height="6"/><rect x="48" y="72" width="6" height="6"/><rect x="54" y="72" width="6" height="6"/><rect x="60" y="72" width="6" height="6"/><rect x="66" y="72" width="6" height="6"/><rect x="78" y="72" width="6" height="6"/><rect x="84" y="72" width="6" height="6"/><rect x="90" y="72" width="6" height="6"/><rect x="108" y="72" width="6" height="6"/><rect x="144" y="72" width="6" height="6"/><rect x="0" y="78" width="6" height="6"/><rect x="18" y="78" width="6" height="6"/><rect x="24" y="78" width="6" height="6"/><rect x="30" y="78" width="6" height="6"/><rect x="42" y="78" width="6" height="6"/><rect x="48" y="78" width="6" height="6"/><rect x="72" y="78" width="6" height="6"/><rect x="84" y="78" width="6" height="6"/><rect x="90" y="78" width="6" height="6"/><rect x="96" y="78" width="6" height="6"/><rect x="120" y="78" width="6" height="6"/><rect x="138" y="78" width="6" height="6"/><rect x="0" y="84" width="6" height="6"/><rect x="6" y="84" width="6" height="6"/><rect x="12" y="84" width="6" height="6"/><rect x="18" y="84" width="6" height="6"/><rect x="24" y="84" width="6" height="6"/><rect x="36" y="84" width="6" height="6"/><rect x="48" y="84" width="6" height="6"/><rect x="54" y="84" width="6" height="6"/><rect x="84" y="84" width="6" height="6"/><rect x="90" y="84" width="6" height="6"/><rect x="102" y="84" width="6" height="6"/><rect x="120" y="84" width="6" height="6"/><rect x="126" y="84" width="6" height="6"/><rect x="132" y="84" width="6" height="6"/><rect x="138" y="84" width="6" height="6"/><rect x="144" y="84" width="6" height="6"/><rect x="0" y="90" width="6" height="6"/><rect x="12" y="90" width="6" height="6"/><rect x="24" y="90" width="6" height="6"/><rect x="30" y="90" width="6" height="6"/><rect x="48" y="90" width="6" height="6"/><rect x="60" y="90" width="6" height="6"/><rect x="72" y="90" width="6" height="6"/><rect x="78" y="90" width="6" height="6"/><rect x="84" y="90" width="6" height="6"/><rect x="96" y="90" width="6" height="6"/><rect x="108" y="90" width="6" height="6"/><rect x="114" y="90" width="6" height="6"/><rect x="126" y="90" width="6" height="6"/><rect x="132" y="90" width="6" height="6"/><rect x="144" y="90" width="6" height="6"/><rect x="0" y="96" width="6" height="6"/><rect x="12" y="96" width="6" height="6"/><rect x="18" y="96" width="6" height="6"/><rect x="24" y="96" width="6" height="6"/><rect x="36" y="96" width="6" height="6"/><rect x="42" y="96" width="6" height="6"/><rect x="60" y="96" width="6" height="6"/><rect x="66" y="96" width="6" height="6"/><rect x="72" y="96" width="6" height="6"/><rect x="90" y="96" width="6" height="6"/><rect x="96" y="96" width="6" height="6"/><rect x="102" y="96" width="6" height="6"/><rect x="108" y="96" width="6" height="6"/><rect x="114" y="96" width="6" height="6"/><rect x="120" y="96" width="6" height="6"/><rect x="132" y="96" width="6" height="6"/><rect x="138" y="96" width="6" height="6"/><rect x="48" y="102" width="6" height="6"/><rect x="54" y="102" width="6" height="6"/><rect x="66" y="102" width="6" height="6"/><rect x="96" y="102" width="6" height="6"/><rect x="120" y="102" width="6" height="6"/><rect x="132" y="102" width="6" height="6"/><rect x="138" y="102" width="6" height="6"/><rect x="0" y="108" width="6" height="6"/><rect x="6" y="108" width="6" height="6"/><rect x="12" y="108" width="6" height="6"/><rect x="18" y="108" width="6" height="6"/><rect x="24" y="108" width="6" height="6"/><rect x="30" y="108" width="6" height="6"/><rect x="36" y="108" width="6" height="6"/><rect x="48" y="108" width="6" height="6"/><rect x="60" y="108" width="6" height="6"/><rect x="72" y="108" width="6" height="6"/><rect x="78" y="108" width="6" height="6"/><rect x="84" y="108" width="6" height="6"/><rect x="96" y="108" width="6" height="6"/><rect x="108" y="108" width="6" height="6"/><rect x="120" y="108" width="6" height="6"/><rect x="144" y="108" width="6" height="6"/><rect x="0" y="114" width="6" height="6"/><rect x="36" y="114" width="6" height="6"/><rect x="48" y="114" width="6" height="6"/><rect x="54" y="114" width="6" height="6"/><rect x="66" y="114" width="6" height="6"/><rect x="78" y="114" width="6" height="6"/><rect x="90" y="114" width="6" height="6"/><rect x="96" y="114" width="6" height="6"/><rect x="120" y="114" width="6" height="6"/><rect x="144" y="114" width="6" height="6"/><rect x="0" y="120" width="6" height="6"/><rect x="12" y="120" width="6" height="6"/><rect x="18" y="120" width="6" height="6"/><rect x="24" y="120" width="6" height="6"/><rect x="36" y="120" width="6" height="6"/><rect x="48" y="120" width="6" height="6"/><rect x="60" y="120" width="6" height="6"/><rect x="66" y="120" width="6" height="6"/><rect x="78" y="120" width="6" height="6"/><rect x="90" y="120" width="6" height="6"/><rect x="96" y="120" width="6" height="6"/><rect x="102" y="120" width="6" height="6"/><rect x="108" y="120" width="6" height="6"/><rect x="114" y="120" width="6" height="6"/><rect x="120" y="120" width="6" height="6"/><rect x="138" y="120" width="6" height="6"/><rect x="144" y="120" width="6" height="6"/><rect x="0" y="126" width="6" height="6"/><rect x="12" y="126" width="6" height="6"/><rect x="18" y="126" width="6" height="6"/><rect x="24" y="126" width="6" height="6"/><rect x="36" y="126" width="6" height="6"/><rect x="48" y="126" width="6" height="6"/><rect x="54" y="126" width="6" height="6"/><rect x="72" y="126" width="6" height="6"/><rect x="78" y="126" width="6" height="6"/><rect x="96" y="126" width="6" height="6"/><rect x="102" y="126" width="6" height="6"/><rect x="108" y="126" width="6" height="6"/><rect x="138" y="126" width="6" height="6"/><rect x="144" y="126" width="6" height="6"/><rect x="0" y="132" width="6" height="6"/><rect x="12" y="132" width="6" height="6"/><rect x="18" y="132" width="6" height="6"/><rect x="24" y="132" width="6" height="6"/><rect x="36" y="132" width="6" height="6"/><rect x="66" y="132" width="6" height="6"/><rect x="78" y="132" width="6" height="6"/><rect x="90" y="132" width="6" height="6"/><rect x="102" y="132" width="6" height="6"/><rect x="120" y="132" width="6" height="6"/><rect x="126" y="132" width="6" height="6"/><rect x="132" y="132" width="6" height="6"/><rect x="138" y="132" width="6" height="6"/><rect x="144" y="132" width="6" height="6"/><rect x="0" y="138" width="6" height="6"/><rect x="36" y="138" width="6" height="6"/><rect x="54" y="138" width="6" height="6"/><rect x="66" y="138" width="6" height="6"/><rect x="72" y="138" width="6" height="6"/><rect x="78" y="138" width="6" height="6"/><rect x="90" y="138" width="6" height="6"/><rect x="114" y="138" width="6" height="6"/><rect x="120" y="138" width="6" height="6"/><rect x="132" y="138" width="6" height="6"/><rect x="138" y="138" width="6" height="6"/><rect x="144" y="138" width="6" height="6"/><rect x="0" y="144" width="6" height="6"/><rect x="6" y="144" width="6" height="6"/><rect x="12" y="144" width="6" height="6"/><rect x="18" y="144" width="6" height="6"/><rect x="24" y="144" width="6" height="6"/><rect x="30" y="144" width="6" height="6"/><rect x="36" y="144" width="6" height="6"/><rect x="48" y="144" width="6" height="6"/><rect x="54" y="144" width="6" height="6"/><rect x="66" y="144" width="6" height="6"/><rect x="72" y="144" width="6" height="6"/><rect x="78" y="144" width="6" height="6"/><rect x="96" y="144" width="6" height="6"/><rect x="126" y="144" width="6" height="6"/><rect x="144" y="144" width="6" height="6"/></g>
+  <text x="130" y="239" text-anchor="middle" font-family="DM Sans,Arial,sans-serif" font-weight="700" font-size="15" letter-spacing="2.5" fill="#ffffff">VPH98IO171</text>
+</svg>`;
 
 export const Route = createFileRoute("/$lang/marquage-velo")({
   head: () => ({
@@ -76,15 +69,8 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "fr_FR" },
       { property: "og:site_name", content: "Velopass" },
-      {
-        property: "og:title",
-        content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes",
-      },
-      {
-        property: "og:description",
-        content:
-          "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable.",
-      },
+      { property: "og:title", content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
+      { property: "og:description", content: "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable." },
       { property: "og:url", content: "https://www.velopass.com/fr/marquage-velo" },
     ],
     links: [
@@ -175,38 +161,21 @@ const CSS = `
 .vlp .foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .vlp .foot-brand>span:last-child{font-family:'Syne',sans-serif;font-weight:700;font-size:20px;color:#fff}
 .vlp .foot-bottom{border-top:1px solid rgba(255,255,255,0.12);padding-top:22px;font-size:12px;color:rgba(255,255,255,0.4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.vlp .sticker-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
-.vlp .sticker-frame{position:relative;border-radius:20px;overflow:visible;box-shadow:0 32px 64px rgba(13,31,60,0.15);aspect-ratio:1/1;container-type:inline-size;--qr-x:50%;--qr-y:49%;--qr-size:26%;max-width:460px;margin:0 auto;width:100%}
-.vlp .sticker-frame img{display:block;border-radius:16px;width:100%;height:100%;object-fit:cover}
-.vlp .scan-overlay{position:absolute;left:var(--qr-x);top:var(--qr-y);width:var(--qr-size);height:var(--qr-size);transform:translate(-50%,-50%);pointer-events:none}
-.vlp .scan-corner{position:absolute;width:clamp(14px,4.5cqi,26px);height:clamp(14px,4.5cqi,26px);border:clamp(2px,0.5cqi,3px) solid var(--green);filter:drop-shadow(0 0 6px rgba(46,204,138,0.6))}
-.vlp .scan-corner.tl{top:-1.2cqi;left:-1.2cqi;border-right:none;border-bottom:none;border-top-left-radius:4px}
-.vlp .scan-corner.tr{top:-1.2cqi;right:-1.2cqi;border-left:none;border-bottom:none;border-top-right-radius:4px}
-.vlp .scan-corner.bl{bottom:-1.2cqi;left:-1.2cqi;border-right:none;border-top:none;border-bottom-left-radius:4px}
-.vlp .scan-corner.br{bottom:-1.2cqi;right:-1.2cqi;border-left:none;border-top:none;border-bottom-right-radius:4px}
-.vlp .scan-line{position:absolute;left:0;right:0;height:clamp(1.5px,0.4cqi,2.5px);background:linear-gradient(90deg,transparent,var(--green) 20%,var(--green) 80%,transparent);box-shadow:0 0 12px var(--green),0 0 24px rgba(46,204,138,0.5);animation:vlp-scan-sweep 2.2s ease-in-out infinite}
-@keyframes vlp-scan-sweep{0%{top:0;opacity:0}10%{opacity:1}50%{top:calc(100% - 2px);opacity:1}60%{opacity:0}100%{top:0;opacity:0}}
-.vlp .scan-badge{position:absolute;left:50%;bottom:clamp(-28px,-3cqi,-16px);transform:translateX(-50%);background:var(--navy);color:#fff;font-size:clamp(10px,1.4cqi,12px);font-weight:500;padding:6px 14px;border-radius:100px;white-space:nowrap;letter-spacing:0.3px;box-shadow:0 6px 16px rgba(0,0,0,0.25)}
-.vlp .sticker-feats{margin-top:28px;display:flex;flex-direction:column;gap:18px}
-.vlp .sticker-feat{display:flex;gap:14px;align-items:flex-start}
-.vlp .sticker-feat .ic{width:34px;height:34px;background:var(--green-pale);color:var(--green-dark);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700}
-.vlp .sticker-feat strong{display:block;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:2px;color:var(--navy)}
-.vlp .sticker-feat span{font-size:14px;color:var(--muted);line-height:1.6}
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .sticker-wrap{grid-template-columns:1fr}.vlp .diff,.vlp .cta{padding:36px}.vlp .sticker-wrap{gap:48px}}
+.vlp .procede-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:48px;align-items:center;margin-top:40px}
+.vlp .sticker-card{background:var(--white);border:1px solid var(--border);border-radius:24px;padding:44px;display:flex;justify-content:center}
+.vlp .sticker-card svg{width:100%;max-width:280px;height:auto;filter:drop-shadow(0 18px 40px rgba(13,31,60,0.18))}
+.vlp .feat{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.vlp .feat li{display:flex;gap:12px;font-size:14.5px;color:var(--text-mid);line-height:1.55}
+.vlp .feat li b{color:var(--navy)}
+.vlp .feat .fx{color:var(--green-dark);font-weight:700;flex-shrink:0}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .diff,.vlp .cta{padding:36px}}
 `;
 
 function LogoMark() {
   return (
     <span className="mark">
       <svg viewBox="0 0 120 120">
-        <path
-          d="M30 62 L52 84 L92 36"
-          stroke="#0D1F3C"
-          strokeWidth="16"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
+        <path d="M30 62 L52 84 L92 36" stroke="#0D1F3C" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     </span>
   );
@@ -223,11 +192,7 @@ function VelocistesLanding() {
             <LogoMark />
             <span>velopass</span>
           </a>
-          <a
-            className="nav-cta"
-            href="https://velopass.com/fr/shop#registreer"
-            onClick={() => trackShopSignupCtaClick("marquage_velo_nav", "fr")}
-          >
+          <a className="nav-cta" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_nav", "fr")}>
             Devenir point de marquage
           </a>
         </div>
@@ -235,42 +200,20 @@ function VelocistesLanding() {
 
       <header className="hero">
         <div className="wrap hero-in">
-          <span className="eyebrow">
-            <span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI
-          </span>
-          <h1>
-            Marquez les vélos. <em>Gardez les clients.</em>
-          </h1>
-          <p className="lead">
-            Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez
-            est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client
-            durable pour votre magasin.
-          </p>
+          <span className="eyebrow"><span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI</span>
+          <h1>Marquez les vélos. <em>Gardez les clients.</em></h1>
+          <p className="lead">Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client durable pour votre magasin.</p>
           <div className="btns">
-            <a
-              className="btn-p"
-              href="https://velopass.com/fr/shop#registreer"
-              onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}
-            >
+            <a className="btn-p" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
               Inscription vélociste — gratuite
             </a>
-            <a className="btn-s" href="https://velopass.com/fr/contact">
-              Parler à un conseiller
-            </a>
+            <a className="btn-s" href="https://velopass.com/fr/contact">Parler à un conseiller</a>
           </div>
           <div className="trust">
-            <div>
-              <strong>Europe</strong>Opérateur international
-            </div>
-            <div>
-              <strong>FNUCI</strong>Enregistrement conforme
-            </div>
-            <div>
-              <strong>0 €</strong>Inscription vélociste
-            </div>
-            <div>
-              <strong>À vie</strong>Carnet d'entretien numérique
-            </div>
+            <div><strong>Europe</strong>Opérateur international</div>
+            <div><strong>FNUCI</strong>Enregistrement conforme</div>
+            <div><strong>0 €</strong>Inscription vélociste</div>
+            <div><strong>À vie</strong>Carnet d'entretien numérique</div>
           </div>
         </div>
       </header>
@@ -278,11 +221,7 @@ function VelocistesLanding() {
       <div className="legal">
         <div className="wrap legal-in">
           <span className="chip">Loi LOM</span>
-          <span>
-            <strong>Le marquage est obligatoire en France.</strong> Tout vélo neuf vendu par un
-            professionnel doit être identifié par un opérateur agréé et enregistré au Fichier
-            National Unique des Cycles Identifiés (FNUCI).
-          </span>
+          <span><strong>Le marquage est obligatoire en France.</strong> Tout vélo neuf vendu par un professionnel doit être identifié par un opérateur agréé et enregistré au Fichier National Unique des Cycles Identifiés (FNUCI).</span>
         </div>
       </div>
 
@@ -290,35 +229,11 @@ function VelocistesLanding() {
         <div className="wrap">
           <p className="sec-label">Pourquoi Velopass</p>
           <h2 className="sec">Bien plus qu'une obligation légale</h2>
-          <p className="sec-desc">
-            Le marquage est une contrainte réglementaire. Velopass en fait un levier commercial
-            pour votre magasin.
-          </p>
+          <p className="sec-desc">Le marquage est une contrainte réglementaire. Velopass en fait un levier commercial pour votre magasin.</p>
           <div className="grid">
-            <div className="card">
-              <div className="ic">✓</div>
-              <h3>Conformité sans effort</h3>
-              <p>
-                Marquage en magasin, enregistrement FNUCI immédiat, zéro administration. Vous êtes
-                en règle avec la loi LOM dès la première étiquette.
-              </p>
-            </div>
-            <div className="card">
-              <div className="ic">↻</div>
-              <h3>Une relation client durable</h3>
-              <p>
-                Chaque vélo identifié reste lié à votre magasin. Rappels d'entretien automatiques
-                et contact maintenu après la vente — vos clients restent vos clients.
-              </p>
-            </div>
-            <div className="card">
-              <div className="ic">⚡</div>
-              <h3>Un écosystème intégré</h3>
-              <p>
-                Intégrations avec fabricants, sociétés de leasing, assureurs et assistance. Une
-                seule étiquette, tous les services connectés.
-              </p>
-            </div>
+            <div className="card"><div className="ic">✓</div><h3>Conformité sans effort</h3><p>Marquage en magasin, enregistrement FNUCI immédiat, zéro administration. Vous êtes en règle avec la loi LOM dès la première étiquette.</p></div>
+            <div className="card"><div className="ic">↻</div><h3>Une relation client durable</h3><p>Chaque vélo identifié reste lié à votre magasin. Rappels d'entretien automatiques et contact maintenu après la vente — vos clients restent vos clients.</p></div>
+            <div className="card"><div className="ic">⚡</div><h3>Un écosystème intégré</h3><p>Intégrations avec fabricants, sociétés de leasing, assureurs et assistance. Une seule étiquette, tous les services connectés.</p></div>
           </div>
         </div>
       </section>
@@ -328,74 +243,28 @@ function VelocistesLanding() {
           <p className="sec-label">Comment ça marche</p>
           <h2 className="sec">Opérationnel en quatre étapes</h2>
           <div className="steps">
-            <div className="step">
-              <div className="n">01</div>
-              <h3>Inscrivez-vous</h3>
-              <p>Créez votre compte vélociste en ligne, gratuitement, en quelques minutes.</p>
-            </div>
-            <div className="step">
-              <div className="n">02</div>
-              <h3>Recevez les étiquettes</h3>
-              <p>Vous recevez les étiquettes Frame-ID inviolables à code QR et identifiant unique.</p>
-            </div>
-            <div className="step">
-              <div className="n">03</div>
-              <h3>Marquez en magasin</h3>
-              <p>Appliquez l'étiquette sur le vélo. L'enregistrement au FNUCI est instantané.</p>
-            </div>
-            <div className="step">
-              <div className="n">04</div>
-              <h3>Fidélisez</h3>
-              <p>Le vélo et son propriétaire restent connectés à votre magasin, à vie.</p>
-            </div>
+            <div className="step"><div className="n">01</div><h3>Inscrivez-vous</h3><p>Créez votre compte vélociste en ligne, gratuitement, en quelques minutes.</p></div>
+            <div className="step"><div className="n">02</div><h3>Recevez les étiquettes</h3><p>Vous recevez les étiquettes Frame-ID inviolables à code QR et identifiant unique.</p></div>
+            <div className="step"><div className="n">03</div><h3>Marquez en magasin</h3><p>Appliquez l'étiquette sur le vélo. L'enregistrement au FNUCI est instantané.</p></div>
+            <div className="step"><div className="n">04</div><h3>Fidélisez</h3><p>Le vélo et son propriétaire restent connectés à votre magasin, à vie.</p></div>
           </div>
         </div>
       </section>
 
-      <section id="frame-id" style={{ background: "var(--white)" }}>
+      <section id="procede">
         <div className="wrap">
-          <div className="sticker-wrap">
-            <div className="sticker-frame">
-              <img src={stickerImg} alt="Frame-ID Velopass sur un cadre de vélo" width={1024} height={1024} loading="lazy" decoding="async" />
-              <div className="scan-overlay" aria-hidden="true">
-                <span className="scan-corner tl" />
-                <span className="scan-corner tr" />
-                <span className="scan-corner bl" />
-                <span className="scan-corner br" />
-                <span className="scan-line" />
-              </div>
-              <div className="scan-badge">Scan → accès à tout</div>
-            </div>
+          <div className="procede-grid">
+            <div className="sticker-card" dangerouslySetInnerHTML={{ __html: STICKER_SVG }} />
             <div>
-              <p className="sec-label">Le Frame-ID Velopass</p>
-              <h2 className="sec">Une étiquette. Un scan. Tout est connecté.</h2>
-              <p className="sec-desc">
-                Étiquette adhésive inviolable, code QR et identifiant unique. Appliquée en magasin,
-                enregistrée au FNUCI, liée à vie au vélo et à votre magasin.
-              </p>
-              <div className="sticker-feats">
-                <div className="sticker-feat">
-                  <div className="ic">✓</div>
-                  <div>
-                    <strong>Inviolable et conforme</strong>
-                    <span>Toute tentative de retrait détruit l'étiquette. Marquage conforme à la loi LOM et enregistré au FNUCI.</span>
-                  </div>
-                </div>
-                <div className="sticker-feat">
-                  <div className="ic">⚡</div>
-                  <div>
-                    <strong>Accès instantané</strong>
-                    <span>Un scan du QR ouvre le passeport numérique du vélo : preuve de propriété, historique d'entretien, services connectés.</span>
-                  </div>
-                </div>
-                <div className="sticker-feat">
-                  <div className="ic">↻</div>
-                  <div>
-                    <strong>Liée au cadre, pas à la personne</strong>
-                    <span>En cas de revente, l'historique se transfère en un clic. L'étiquette reste, les données suivent — votre magasin aussi.</span>
-                  </div>
-                </div>
-              </div>
+              <p className="sec-label">Le procédé d'identification</p>
+              <h2 className="sec">L'étiquette Frame-ID, inviolable</h2>
+              <p className="sec-desc">Un seul marquage, appliqué en magasin, qui protège le vélo et connecte son propriétaire à votre écosystème.</p>
+              <ul className="feat">
+                <li><span className="fx">✓</span><span><b>Identifiant unique.</b> Chaque étiquette porte un Frame-ID unique à code QR, enregistré au FNUCI dès l'application.</span></li>
+                <li><span className="fx">✓</span><span><b>Inviolable.</b> Toute tentative de retrait détruit l'étiquette et laisse des traces visibles.</span></li>
+                <li><span className="fx">✓</span><span><b>Scan instantané.</b> Un scan donne accès à la preuve de propriété, au statut du vélo et au carnet d'entretien.</span></li>
+                <li><span className="fx">✓</span><span><b>Posée en 30 secondes.</b> Le vélociste applique et enregistre le marquage directement au comptoir.</span></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -407,44 +276,12 @@ function VelocistesLanding() {
             <div className="diff-in">
               <p className="sec-label">Ce qui distingue Velopass</p>
               <h2>Les autres opérateurs marquent. Velopass connecte.</h2>
-              <p className="lead">
-                Velopass n'est pas seulement un registre de vélos. C'est une plateforme de relation
-                client qui utilise l'identification comme fondation.
-              </p>
+              <p className="lead">Velopass n'est pas seulement un registre de vélos. C'est une plateforme de relation client qui utilise l'identification comme fondation.</p>
               <div className="diff-grid">
-                <div className="diff-item">
-                  <h3>
-                    <span>→</span>Carnet numérique à vie
-                  </h3>
-                  <p>
-                    Preuve de propriété, historique d'entretien et transfert simple en cas de
-                    revente — pour chaque cycliste.
-                  </p>
-                </div>
-                <div className="diff-item">
-                  <h3>
-                    <span>→</span>Rappels automatiques
-                  </h3>
-                  <p>
-                    Le magasin recontacte ses clients au bon moment, sans effort administratif.
-                  </p>
-                </div>
-                <div className="diff-item">
-                  <h3>
-                    <span>→</span>Partenaires intégrés
-                  </h3>
-                  <p>
-                    Fabricants, leasing, assureurs et assistance dans un seul système connecté.
-                  </p>
-                </div>
-                <div className="diff-item">
-                  <h3>
-                    <span>→</span>Opérateur international
-                  </h3>
-                  <p>
-                    Une identité et un modèle de données unique, déployés à travers l'Europe.
-                  </p>
-                </div>
+                <div className="diff-item"><h3><span>→</span>Carnet numérique à vie</h3><p>Preuve de propriété, historique d'entretien et transfert simple en cas de revente — pour chaque cycliste.</p></div>
+                <div className="diff-item"><h3><span>→</span>Rappels automatiques</h3><p>Le magasin recontacte ses clients au bon moment, sans effort administratif.</p></div>
+                <div className="diff-item"><h3><span>→</span>Partenaires intégrés</h3><p>Fabricants, leasing, assureurs et assistance dans un seul système connecté.</p></div>
+                <div className="diff-item"><h3><span>→</span>Opérateur international</h3><p>Une identité et un modèle de données unique, déployés à travers l'Europe.</p></div>
               </div>
             </div>
           </div>
@@ -470,20 +307,11 @@ function VelocistesLanding() {
         <div className="wrap">
           <div className="cta">
             <h2>Prêt à devenir point de marquage agréé ?</h2>
-            <p>
-              Inscription gratuite, mise en route immédiate. Rejoignez les vélocistes qui
-              transforment chaque vente en relation durable.
-            </p>
-            <a
-              className="btn-d"
-              href="https://velopass.com/fr/shop#registreer"
-              onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}
-            >
+            <p>Inscription gratuite, mise en route immédiate. Rejoignez les vélocistes qui transforment chaque vente en relation durable.</p>
+            <a className="btn-d" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}>
               Créer mon compte vélociste
             </a>
-            <p className="fine">
-              Une question ? support@velopass.com · WhatsApp +32 471 60 15 73
-            </p>
+            <p className="fine">Une question ? support@velopass.com · WhatsApp +32 471 60 15 73</p>
           </div>
         </div>
       </section>
@@ -496,9 +324,7 @@ function VelocistesLanding() {
                 <LogoMark />
                 <span>velopass</span>
               </div>
-              <p style={{ maxWidth: 320, fontSize: 13.5 }}>
-                Opérateur d'identification de cycles agréé. Chaque vélo. Un client. Pour toujours.
-              </p>
+              <p style={{ maxWidth: 320, fontSize: 13.5 }}>Opérateur d'identification de cycles agréé. Chaque vélo. Un client. Pour toujours.</p>
             </div>
             <div>
               <h4>Vélocistes</h4>
