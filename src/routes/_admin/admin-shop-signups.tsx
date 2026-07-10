@@ -183,9 +183,11 @@ function ShopSignupsPage() {
       const managementId = res?.managementId;
       setPushSuccess({ id, managementId: managementId ?? "" });
       toast.success(
-        managementId
-          ? `Aangemaakt in velopass.pro (id: ${managementId})`
-          : "Doorgestuurd naar velopass.pro",
+        res?.alreadyExists
+          ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
+          : managementId
+            ? `Aangemaakt in velopass.pro (id: ${managementId})`
+            : "Doorgestuurd naar velopass.pro",
       );
       refetch();
     } catch (err: any) {
