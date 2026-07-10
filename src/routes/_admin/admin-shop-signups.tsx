@@ -874,7 +874,9 @@ function PushSuccessPanel({
       toast.error("Kopiëren mislukt");
     }
   };
-  const viewUrl = VELOPASS_PRO_ORGANISATION_URL;
+  const viewUrl = success.managementId
+    ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.managementId}`
+    : VELOPASS_PRO_ORGANISATION_URL;
 
   return (
     <div
@@ -949,8 +951,23 @@ function PushedInfoBanner({
   pushedByName?: string | null;
   managementId?: string | null;
 }) {
-  const viewUrl = VELOPASS_PRO_ORGANISATION_URL;
+  const viewUrl = managementId
+    ? `${VELOPASS_PRO_ORGANISATION_URL}/${managementId}`
+    : VELOPASS_PRO_ORGANISATION_URL;
   const actor = pushedByName || pushedByEmail;
+  const [copied, setCopied] = useState(false);
+  const copyId = async () => {
+    if (!managementId) return;
+    try {
+      await navigator.clipboard.writeText(managementId);
+      setCopied(true);
+      toast.success("Organisation-id gekopieerd");
+      setTimeout(() => setCopied(false), 1200);
+    } catch {
+      toast.error("Kopiëren mislukt");
+    }
+  };
+
   return (
     <div
       className="mb-4 rounded-xl p-3"
@@ -969,11 +986,23 @@ function PushedInfoBanner({
             ) : null}
           </div>
           {managementId && (
-            <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
-              Organisation-id: <code style={{ color: "#7AB0FF" }}>{managementId}</code>
+            <div className="mt-2 rounded-lg p-2.5" style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+                Organisation-id
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <code className="text-sm" style={{ color: "#7AB0FF" }}>{managementId}</code>
+                <button
+                  type="button"
+                  onClick={copyId}
+                  className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md"
+                  style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
+                >
+                  {copied ? <Check size={12} /> : <Copy size={12} />} {copied ? "Gekopieerd" : "Kopieer"}
+                </button>
+              </div>
             </div>
           )}
-
         </div>
         <a
           href={viewUrl}
