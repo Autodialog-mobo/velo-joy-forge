@@ -426,16 +426,32 @@ function ShopSignupsPage() {
                       </td>
                       <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                         {r.pushed_to_pro_at ? (
-                          <a
-                            href={VELOPASS_PRO_ORGANISATION_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-end gap-1 text-xs font-semibold"
-                            style={{ color: "#2ECC8A" }}
-                            title="Bekijk in velopass.pro"
-                          >
-                            <Check size={14} /> Doorgestuurd <ExternalLink size={12} />
-                          </a>
+                          <div className="inline-flex flex-col items-end gap-1">
+                            <a
+                              href={r.pushed_to_pro_management_id ? `${VELOPASS_PRO_ORGANISATION_URL}/${r.pushed_to_pro_management_id}` : VELOPASS_PRO_ORGANISATION_URL}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-end gap-1 text-xs font-semibold"
+                              style={{ color: "#2ECC8A" }}
+                              title="Bekijk in velopass.pro"
+                            >
+                              <Check size={14} /> Doorgestuurd <ExternalLink size={12} />
+                            </a>
+                            <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                              {new Date(r.pushed_to_pro_at).toLocaleString("nl-BE")}
+                            </div>
+                            {(r.pushed_to_pro_by_name || r.pushed_to_pro_by_email) && (
+                              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                                door {r.pushed_to_pro_by_name || r.pushed_to_pro_by_email}
+                              </div>
+                            )}
+                            {r.pushed_to_pro_management_id && (
+                              <div className="flex items-center gap-1.5 text-xs mt-0.5">
+                                <span style={{ color: "rgba(255,255,255,0.5)" }}>ID</span>
+                                <code style={{ color: "#7AB0FF" }}>{r.pushed_to_pro_management_id}</code>
+                              </div>
+                            )}
+                          </div>
                         ) : (
                           <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
                         )}
