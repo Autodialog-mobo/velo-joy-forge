@@ -35,7 +35,9 @@ const updateSchema = z.object({
   email: z.string().trim().email().max(255).nullable().optional().transform((v) => (v === "" ? null : v)),
   phone: nullableStr(60),
   vat: nullableStr(60),
-  address: nullableStr(500),
+  street: nullableStr(500),
+  postal: nullableStr(60),
+  city: nullableStr(120),
   country: nullableStr(120),
   lang: z.enum(["nl", "fr", "de", "en", "es"]).nullable().optional(),
   pos_system: nullableStr(120),
@@ -43,7 +45,7 @@ const updateSchema = z.object({
 });
 
 const EDITABLE_FIELDS = [
-  "first_name","last_name","shop_name","email","phone","vat","address","country",
+  "first_name","last_name","shop_name","email","phone","vat","street","postal","city","country",
   "lang","pos_system","pos_other","admin_notes",
 ] as const;
 
@@ -75,11 +77,23 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       changes.status = { from: before.status, to: data.status };
     }
     for (const f of EDITABLE_FIELDS) {
+      if (f === "street" || f === "postal" || f === "city") continue;
       const val = (data as any)[f];
       if (val === undefined) continue;
       if ((before as any)[f] !== val) {
         patch[f] = val;
         changes[f] = { from: (before as any)[f] ?? null, to: val ?? null };
+      }
+    }
+
+    // Recompose address when any of the split fields are edited.
+    if (data.street !== undefined || data.postal !== undefined || data.city !== undefined) {
+      const newAddress = [data.street, [data.postal, data.city].filter(Boolean).join(" ")]
+        .filter(Boolean)
+        .join(", ");
+      if (newAddress !== before.address) {
+        patch.address = newAddress;
+        changes.address = { from: before.address ?? null, to: newAddress ?? null };
       }
     }
 
