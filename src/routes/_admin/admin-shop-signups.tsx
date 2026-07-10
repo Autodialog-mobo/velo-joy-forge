@@ -563,7 +563,11 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
                 onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
+                onRepush={() => onPushToPro(open.id)}
+                repushLoading={pushingId === open.id}
+                repushDisabled={pushingId === open.id || savingId === open.id}
               />
+
 
             ) : (
               <NotPushedInfoBanner
