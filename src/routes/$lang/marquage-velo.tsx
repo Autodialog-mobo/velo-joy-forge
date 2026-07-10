@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { trackShopSignupCtaClick } from "@/lib/analytics";
+import heroMarquageImg from "@/assets/hero-marquage-velo.webp.asset.json";
+
 
 const FAQS = [
   { q: "Velopass est-il un opérateur d'identification de cycles agréé ?", a: "Oui. Velopass est un opérateur d'identification agréé référencé par l'APIC. Les vélos marqués sont enregistrés dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la réglementation française." },
@@ -76,6 +78,9 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
       { property: "og:title", content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
       { property: "og:description", content: "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable." },
       { property: "og:url", content: "https://www.velopass.com/fr/marquage-velo" },
+      { property: "og:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
+      { property: "twitter:card", content: "summary_large_image" },
+      { property: "twitter:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
     ],
     links: [
       { rel: "canonical", href: "https://www.velopass.com/fr/marquage-velo" },
@@ -105,7 +110,10 @@ const CSS = `
 .vlp .nav-cta{background:var(--navy);color:#fff;font-weight:500;font-size:14px;padding:9px 18px;border-radius:10px}
 .vlp .hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
 .vlp .hero::before{content:'';position:absolute;top:-260px;right:-160px;width:640px;height:640px;border-radius:50%;background:rgba(46,204,138,0.06)}
-.vlp .hero-in{position:relative;z-index:1;padding:72px 0 76px}
+.vlp .hero-in{position:relative;z-index:1;padding:72px 0 76px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center}
+.vlp .hero-text{text-align:left;position:relative;z-index:1}
+.vlp .hero-img{position:relative;z-index:1;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.28);aspect-ratio:3/2}
+.vlp .hero-img img{width:100%;height:100%;object-fit:cover;display:block}
 .vlp .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);background:rgba(46,204,138,0.1);border:1px solid rgba(46,204,138,0.25);padding:6px 14px;border-radius:100px;margin-bottom:26px}
 .vlp .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
 .vlp .hero h1{font-weight:800;font-size:clamp(34px,5vw,58px);max-width:840px;margin-bottom:22px}
@@ -180,7 +188,7 @@ const CSS = `
 .vlp .pos-text p{color:rgba(255,255,255,0.62);font-size:14.5px;line-height:1.6}
 .vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
 .vlp .pos-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:#fff;padding:12px 20px;border-radius:12px}
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid,.vlp .hero-in{grid-template-columns:1fr}.vlp .hero-img{order:-1;margin-bottom:8px}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
 function LogoMark() {
@@ -212,20 +220,25 @@ function VelocistesLanding() {
 
       <header className="hero">
         <div className="wrap hero-in">
-          <span className="eyebrow"><span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI</span>
-          <h1>Marquez les vélos. <em>Gardez les clients.</em></h1>
-          <p className="lead">Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client durable pour votre magasin.</p>
-          <div className="btns">
-            <a className="btn-p" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
-              Inscription vélociste — gratuite
-            </a>
-            <a className="btn-s" href="https://velopass.com/fr/contact">Parler à un conseiller</a>
+          <div className="hero-text">
+            <span className="eyebrow"><span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI</span>
+            <h1>Marquez les vélos. <em>Gardez les clients.</em></h1>
+            <p className="lead">Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client durable pour votre magasin.</p>
+            <div className="btns">
+              <a className="btn-p" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
+                Inscription vélociste — gratuite
+              </a>
+              <a className="btn-s" href="https://velopass.com/fr/contact">Parler à un conseiller</a>
+            </div>
+            <div className="trust">
+              <div><strong>Europe</strong>Opérateur international</div>
+              <div><strong>FNUCI</strong>Enregistrement conforme</div>
+              <div><strong>0 €</strong>Inscription vélociste</div>
+              <div><strong>À vie</strong>Carnet d'entretien numérique</div>
+            </div>
           </div>
-          <div className="trust">
-            <div><strong>Europe</strong>Opérateur international</div>
-            <div><strong>FNUCI</strong>Enregistrement conforme</div>
-            <div><strong>0 €</strong>Inscription vélociste</div>
-            <div><strong>À vie</strong>Carnet d'entretien numérique</div>
+          <div className="hero-img">
+            <img src={heroMarquageImg.url} alt="Vélociste appliquant une étiquette Frame-ID Velopass sur un vélo en magasin" width={1792} height={768} />
           </div>
         </div>
       </header>
