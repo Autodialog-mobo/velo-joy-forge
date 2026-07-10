@@ -20,6 +20,9 @@ export const listShopSignups = createServerFn({ method: "POST" })
       throw new Error(error.message);
     }
     return { rows: data ?? [] };
+  });
+
+
 
 
 export const setShopSignupManagementId = createServerFn({ method: "POST" })
