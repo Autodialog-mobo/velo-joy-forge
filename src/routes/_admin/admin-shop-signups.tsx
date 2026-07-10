@@ -485,11 +485,6 @@ function ShopSignupsPage() {
                             <div className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
                               {new Date(r.pushed_to_pro_at).toLocaleString("nl-BE")}
                             </div>
-                            {(r.pushed_to_pro_by_name || r.pushed_to_pro_by_email) && (
-                              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
-                                door {r.pushed_to_pro_by_name || r.pushed_to_pro_by_email}
-                              </div>
-                            )}
                           </div>
                         ) : (
                           <span className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>—</span>
