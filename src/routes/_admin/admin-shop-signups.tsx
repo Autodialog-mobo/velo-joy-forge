@@ -15,6 +15,7 @@ export const Route = createFileRoute("/_admin/admin-shop-signups")({
 const STATUSES = ["new", "contacted", "converted", "rejected"] as const;
 type Status = (typeof STATUSES)[number];
 const LANGS = ["nl", "fr", "de", "en", "es"] as const;
+const VELOPASS_PRO_ORGANISATION_URL = "https://app.velopass.pro/organisation";
 
 const STATUS_LABEL: Record<Status, string> = {
   new: "Nieuw",
@@ -862,9 +863,7 @@ function PushSuccessPanel({
       toast.error("Kopiëren mislukt");
     }
   };
-  const viewUrl = success.managementId
-    ? `https://app.velopass.pro/organisations/${success.managementId}`
-    : "https://app.velopass.pro";
+  const viewUrl = VELOPASS_PRO_ORGANISATION_URL;
 
   return (
     <div
@@ -937,9 +936,7 @@ function PushedInfoBanner({
   pushedByEmail?: string | null;
   managementId?: string | null;
 }) {
-  const viewUrl = managementId
-    ? `https://app.velopass.pro/organisations/${managementId}`
-    : "https://app.velopass.pro";
+  const viewUrl = VELOPASS_PRO_ORGANISATION_URL;
   return (
     <div
       className="mb-4 rounded-xl p-3"
