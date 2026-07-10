@@ -25,46 +25,6 @@ export const listShopSignups = createServerFn({ method: "POST" })
 const nullableStr = (max: number) =>
   z.string().trim().max(max).nullable().optional().transform((v) => (v === "" ? null : v));
 
-// Normalize a free-text country value to an ISO 3166-1 alpha-2 code that velopass.pro accepts.
-function normalizeCountryCode(input: string | null | undefined): string {
-  const raw = (input ?? "").trim();
-  if (!raw) return "";
-  const upper = raw.toUpperCase();
-  if (/^[A-Z]{2}$/.test(upper)) return upper;
-  const map: Record<string, string> = {
-    // Belgium
-    "BELGIE": "BE", "BELGIË": "BE", "BELGIUM": "BE", "BELGIQUE": "BE", "BELGIEN": "BE",
-    // Netherlands
-    "NEDERLAND": "NL", "NETHERLANDS": "NL", "THE NETHERLANDS": "NL", "HOLLAND": "NL", "PAYS-BAS": "NL", "NIEDERLANDE": "NL",
-    // Luxembourg
-    "LUXEMBURG": "LU", "LUXEMBOURG": "LU",
-    // France
-    "FRANKRIJK": "FR", "FRANCE": "FR", "FRANKREICH": "FR",
-    // Germany
-    "DUITSLAND": "DE", "DEUTSCHLAND": "DE", "GERMANY": "DE", "ALLEMAGNE": "DE",
-    // UK
-    "VERENIGD KONINKRIJK": "GB", "UNITED KINGDOM": "GB", "UK": "GB", "GREAT BRITAIN": "GB", "ENGLAND": "GB",
-    // Spain
-    "SPANJE": "ES", "SPAIN": "ES", "ESPAÑA": "ES", "ESPANA": "ES", "ESPAGNE": "ES",
-    // Italy
-    "ITALIE": "IT", "ITALIË": "IT", "ITALY": "IT", "ITALIA": "IT", "ITALIEN": "IT",
-    // Portugal
-    "PORTUGAL": "PT",
-    // Austria
-    "OOSTENRIJK": "AT", "AUSTRIA": "AT", "ÖSTERREICH": "AT", "OSTERREICH": "AT", "AUTRICHE": "AT",
-    // Switzerland
-    "ZWITSERLAND": "CH", "SWITZERLAND": "CH", "SCHWEIZ": "CH", "SUISSE": "CH",
-    // Others
-    "DENEMARKEN": "DK", "DENMARK": "DK",
-    "ZWEDEN": "SE", "SWEDEN": "SE",
-    "NOORWEGEN": "NO", "NORWAY": "NO",
-    "IERLAND": "IE", "IRELAND": "IE",
-    "POLEN": "PL", "POLAND": "PL",
-  };
-  return map[upper] ?? upper;
-}
-
-
 const updateSchema = z.object({
   id: z.string().uuid(),
   status: z.enum(["new", "contacted", "converted", "rejected"]).optional(),
@@ -173,6 +133,8 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
 
     const managementApiUrl =
       (process.env.VELOPASS_MANAGEMENT_API_URL || "https://managementapi.prod.velopass.com").replace(/\/+$/, "");
+    const managementEndpoint = (path: string) =>
+      `${managementApiUrl}${managementApiUrl.endsWith("/api") ? "" : "/api"}/${path.replace(/^\/+/, "")}`;
 
     const parseSignupAddress = (raw: string | null | undefined): { street: string; postal: string; city: string } => {
       const cleaned = (raw || "").replace(/\s+/g, " ").trim();
@@ -198,7 +160,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     };
 
     const readDefaultBikeShopPackageId = async (): Promise<string | null> => {
-      const res = await fetch(`${managementApiUrl}/api/bike-shop-packages/select`, {
+      const res = await fetch(managementEndpoint("bike-shop-packages/select"), {
         method: "GET",
         headers: {
           Authorization: bearer,
@@ -221,6 +183,115 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
 
       const selected = packages.find((p) => p?.isDefault && p.value) ?? packages.find((p) => p?.value);
       return selected?.value ?? null;
+    };
+
+    type CountryOption = { value: string; searchable: string[] };
+
+    const countryLookupKey = (value: string | null | undefined) =>
+      (value ?? "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "");
+
+    const countryCandidates = (input: string | null | undefined): string[] => {
+      const raw = (input ?? "").trim();
+      const key = countryLookupKey(raw);
+      const aliases: Record<string, string[]> = {
+        BE: ["Belgium", "België", "Belgique", "Belgien", "BE"],
+        BELGIE: ["Belgium", "België", "Belgique", "Belgien", "BE"],
+        BELGIUM: ["Belgium", "BE"],
+        BELGIQUE: ["Belgium", "Belgique", "BE"],
+        BELGIEN: ["Belgium", "Belgien", "BE"],
+        NL: ["Netherlands", "The Netherlands", "Nederland", "Pays-Bas", "NL"],
+        NEDERLAND: ["Netherlands", "Nederland", "NL"],
+        NETHERLANDS: ["Netherlands", "The Netherlands", "NL"],
+        THENETHERLANDS: ["The Netherlands", "Netherlands", "NL"],
+        HOLLAND: ["Netherlands", "NL"],
+        LU: ["Luxembourg", "Luxemburg", "LU"],
+        LUXEMBURG: ["Luxembourg", "LU"],
+        LUXEMBOURG: ["Luxembourg", "LU"],
+        FR: ["France", "Frankrijk", "FR"],
+        FRANKRIJK: ["France", "FR"],
+        FRANCE: ["France", "FR"],
+        DE: ["Germany", "Deutschland", "Duitsland", "DE"],
+        DUITSLAND: ["Germany", "Deutschland", "DE"],
+        DEUTSCHLAND: ["Germany", "Deutschland", "DE"],
+        GERMANY: ["Germany", "DE"],
+        GB: ["United Kingdom", "Great Britain", "GB", "UK"],
+        UK: ["United Kingdom", "Great Britain", "GB", "UK"],
+        UNITEDKINGDOM: ["United Kingdom", "GB"],
+        GREATBRITAIN: ["Great Britain", "United Kingdom", "GB"],
+        ES: ["Spain", "España", "Espana", "Spanje", "ES"],
+        SPAIN: ["Spain", "ES"],
+        SPANJE: ["Spain", "ES"],
+        IT: ["Italy", "Italia", "Italië", "Italie", "IT"],
+        ITALY: ["Italy", "IT"],
+        ITALIE: ["Italy", "IT"],
+        PT: ["Portugal", "PT"],
+        PORTUGAL: ["Portugal", "PT"],
+        AT: ["Austria", "Österreich", "Oostenrijk", "AT"],
+        AUSTRIA: ["Austria", "AT"],
+        OOSTENRIJK: ["Austria", "AT"],
+        CH: ["Switzerland", "Schweiz", "Suisse", "Zwitserland", "CH"],
+        SWITZERLAND: ["Switzerland", "CH"],
+        ZWITSERLAND: ["Switzerland", "CH"],
+        DK: ["Denmark", "Denemarken", "DK"],
+        SE: ["Sweden", "Zweden", "SE"],
+        NO: ["Norway", "Noorwegen", "NO"],
+        IE: ["Ireland", "Ierland", "IE"],
+        PL: ["Poland", "Polen", "PL"],
+      };
+      return aliases[key] ?? (raw ? [raw] : []);
+    };
+
+    const readCountryOptions = async (): Promise<CountryOption[]> => {
+      const res = await fetch(managementEndpoint("Countries"), {
+        method: "GET",
+        headers: {
+          Authorization: bearer,
+          Accept: "application/json",
+        },
+      });
+      const text = await res.text();
+      if (!res.ok) {
+        console.warn("[shop-signups] country lookup failed", { status: res.status, body: text.slice(0, 500) });
+        return [];
+      }
+
+      let parsed: unknown = [];
+      try {
+        parsed = text ? JSON.parse(text) : [];
+      } catch {
+        console.warn("[shop-signups] country lookup returned invalid JSON", { body: text.slice(0, 500) });
+        return [];
+      }
+      if (!Array.isArray(parsed)) return [];
+
+      return parsed.flatMap((item): CountryOption[] => {
+        if (typeof item === "string") return [{ value: item, searchable: [item] }];
+        if (!item || typeof item !== "object") return [];
+        const obj = item as Record<string, unknown>;
+        const value = [obj.value, obj.code, obj.name, obj.label, obj.id].find((v) => typeof v === "string" && v.trim());
+        if (typeof value !== "string") return [];
+        const searchable = [obj.value, obj.code, obj.name, obj.label, obj.id]
+          .filter((v): v is string => typeof v === "string" && v.trim().length > 0);
+        return [{ value, searchable }];
+      });
+    };
+
+    const resolveCountryForVelopass = (input: string | null | undefined, options: CountryOption[]): string => {
+      const candidates = countryCandidates(input);
+      const candidateKeys = new Set(candidates.map(countryLookupKey));
+      for (const option of options) {
+        if (option.searchable.some((value) => candidateKeys.has(countryLookupKey(value)))) {
+          const nonIsoValue = option.searchable.find((value) => !/^[A-Z]{2}$/i.test(value.trim()));
+          return /^[A-Z]{2}$/i.test(option.value.trim()) ? (nonIsoValue ?? candidates[0] ?? option.value) : option.value;
+        }
+      }
+      // The Organisations endpoint rejects ISO codes such as "BE" in some environments;
+      // if we cannot fetch the country list, prefer the English country name fallback.
+      return candidates[0] ?? "";
     };
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -281,6 +352,9 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       };
     }
 
+    const countryOptions = await readCountryOptions();
+    const country = resolveCountryForVelopass(row.country, countryOptions);
+
     const body: {
       name: string; phone: string; type: number;
       companyNumber: string; vatNumber: string;
@@ -298,14 +372,14 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       street,
       postalCode: postal,
       city,
-      country: normalizeCountryCode(row.country),
+      country,
       packageId,
     };
 
     let apiResponse: any = null;
     let apiStatus = 0;
     try {
-      const res = await fetch(`${managementApiUrl}/api/Organisations`, {
+      const res = await fetch(managementEndpoint("Organisations"), {
         method: "POST",
         headers: {
           Authorization: bearer,
