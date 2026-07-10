@@ -37,7 +37,29 @@ function statusStyle(s: string): React.CSSProperties {
   }
 }
 
-function ShopSignupsPage() {
+function parseSignupAddress(raw: string | null | undefined): { street: string; postal: string; city: string } {
+  const cleaned = (raw || "").replace(/\s+/g, " ").trim();
+  if (!cleaned) return { street: "", postal: "", city: "" };
+  const parts = cleaned.split(",").map((s) => s.trim()).filter(Boolean);
+  let street = "";
+  let tail = "";
+  if (parts.length >= 2) {
+    street = parts.slice(0, -1).join(", ");
+    tail = parts[parts.length - 1];
+  } else {
+    const m = cleaned.match(/^(.*?)\s+((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)\s+(.+)$/);
+    if (m) return { street: m[1].trim(), postal: m[2].trim(), city: m[3].trim() };
+    return { street: cleaned, postal: "", city: "" };
+  }
+  const pm = tail.match(/((?:[A-Z]{1,2}[- ]?)?\d{4,5}(?:\s?[A-Z]{2})?)/);
+  if (pm) {
+    const postal = pm[1].trim();
+    const city = tail.replace(pm[1], "").trim();
+    return { street, postal, city };
+  }
+  return { street, postal: "", city: tail };
+}
+
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
