@@ -1120,6 +1120,9 @@ function PushedInfoBanner({
   pushedByName,
   managementId,
   onSaveManagementId,
+  onRepush,
+  repushLoading,
+  repushDisabled,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
@@ -1127,7 +1130,11 @@ function PushedInfoBanner({
   managementId?: string | null;
   shopId?: string;
   onSaveManagementId?: (managementId: string) => Promise<boolean>;
+  onRepush?: () => void | Promise<void>;
+  repushLoading?: boolean;
+  repushDisabled?: boolean;
 }) {
+
   const viewUrl = managementId
     ? `${VELOPASS_PRO_ORGANISATION_URL}/${managementId}/`
     : VELOPASS_PRO_ORGANISATION_URL;
