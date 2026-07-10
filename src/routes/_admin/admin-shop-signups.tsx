@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw } from "lucide-react";
-import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro } from "@/lib/shop-signups.functions";
+import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
 
@@ -43,6 +43,7 @@ function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
+  const setManagementId = useServerFn(setShopSignupManagementId);
   const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shop-signups"],
@@ -207,6 +208,20 @@ function ShopSignupsPage() {
       isPushingRef.current = false;
     }
   };
+
+  const onSaveManagementId = async (id: string, managementId: string): Promise<boolean> => {
+    try {
+      await setManagementId({ data: { id, managementId } });
+      toast.success("Organisation-id gekoppeld");
+      refetch();
+      return true;
+    } catch (err: any) {
+      toast.error(err?.message ?? "Koppelen mislukt");
+      return false;
+    }
+  };
+
+
 
 
 
@@ -542,6 +557,7 @@ function ShopSignupsPage() {
                 pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
+                onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
               />
 
             ) : (
@@ -981,18 +997,23 @@ function PushedInfoBanner({
   pushedByEmail,
   pushedByName,
   managementId,
+  onSaveManagementId,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
   pushedByName?: string | null;
   managementId?: string | null;
   shopId?: string;
+  onSaveManagementId?: (managementId: string) => Promise<boolean>;
 }) {
   const viewUrl = managementId
     ? `${VELOPASS_PRO_ORGANISATION_URL}/${managementId}/`
     : VELOPASS_PRO_ORGANISATION_URL;
   const actor = pushedByName || pushedByEmail;
   const [copied, setCopied] = useState(false);
+  const [idInput, setIdInput] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [idError, setIdError] = useState<string | null>(null);
   const copyId = async () => {
     if (!managementId) return;
     try {
@@ -1004,6 +1025,20 @@ function PushedInfoBanner({
       toast.error("Kopiëren mislukt");
     }
   };
+  const submitId = async () => {
+    const trimmed = idInput.trim();
+    const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRe.test(trimmed)) {
+      setIdError("Voer een geldig organisation-id in (UUID-formaat).");
+      return;
+    }
+    if (!onSaveManagementId) return;
+    setIdError(null);
+    setSaving(true);
+    const ok = await onSaveManagementId(trimmed);
+    setSaving(false);
+    if (ok) setIdInput("");
+  };
 
   return (
     <div
@@ -1011,7 +1046,7 @@ function PushedInfoBanner({
       style={{ background: "rgba(122,176,255,0.08)", border: "1px solid rgba(122,176,255,0.30)" }}
     >
       <div className="flex items-start justify-between gap-3 flex-wrap">
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="text-xs uppercase tracking-wider" style={{ color: "#7AB0FF" }}>
             Doorgestuurd naar velopass.pro
           </div>
@@ -1022,7 +1057,7 @@ function PushedInfoBanner({
               <span style={{ color: "rgba(255,255,255,0.5)" }}> ({pushedByEmail})</span>
             ) : null}
           </div>
-          {managementId && (
+          {managementId ? (
             <div className="mt-2 rounded-lg p-2.5" style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.08)" }}>
               <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
                 Organisation-id
@@ -1039,6 +1074,39 @@ function PushedInfoBanner({
                 </button>
               </div>
             </div>
+          ) : (
+            <div className="mt-2 rounded-lg p-2.5" style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+                Organisation-id ontbreekt
+              </div>
+              <div className="text-xs mb-2" style={{ color: "rgba(255,255,255,0.6)" }}>
+                Plak hier de organisation-id uit velopass.pro om de link naar de shop te activeren.
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <input
+                  type="text"
+                  value={idInput}
+                  onChange={(e) => { setIdInput(e.target.value); if (idError) setIdError(null); }}
+                  placeholder="bv. fe79bcee-c75f-47db-9427-ab87fa9f76c0"
+                  disabled={saving || !onSaveManagementId}
+                  className="flex-1 min-w-[260px] px-2 py-1 rounded-md text-xs font-mono"
+                  style={{ background: "#15171C", color: "#fff", border: `1px solid ${idError ? "rgba(224,82,82,0.5)" : "rgba(255,255,255,0.12)"}` }}
+                />
+                <button
+                  type="button"
+                  onClick={submitId}
+                  disabled={saving || !idInput.trim() || !onSaveManagementId}
+                  className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                  style={{ background: "rgba(122,176,255,0.14)", color: "#7AB0FF", border: "1px solid rgba(122,176,255,0.35)" }}
+                >
+                  {saving ? <Loader2 size={12} className="animate-spin" /> : <Save size={12} />}
+                  {saving ? "Opslaan…" : "Koppelen"}
+                </button>
+              </div>
+              {idError && (
+                <div className="text-xs mt-1" style={{ color: "#E05252" }}>{idError}</div>
+              )}
+            </div>
           )}
         </div>
         <a
@@ -1054,6 +1122,7 @@ function PushedInfoBanner({
     </div>
   );
 }
+
 
 function NotPushedInfoBanner({
   onPush,
