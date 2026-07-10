@@ -284,7 +284,10 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       const candidates = countryCandidates(input);
       const candidateKeys = new Set(candidates.map(countryLookupKey));
       for (const option of options) {
-        if (option.searchable.some((value) => candidateKeys.has(countryLookupKey(value)))) return option.value;
+        if (option.searchable.some((value) => candidateKeys.has(countryLookupKey(value)))) {
+          const nonIsoValue = option.searchable.find((value) => !/^[A-Z]{2}$/i.test(value.trim()));
+          return /^[A-Z]{2}$/i.test(option.value.trim()) ? (nonIsoValue ?? candidates[0] ?? option.value) : option.value;
+        }
       }
       // The Organisations endpoint rejects ISO codes such as "BE" in some environments;
       // if we cannot fetch the country list, prefer the English country name fallback.
