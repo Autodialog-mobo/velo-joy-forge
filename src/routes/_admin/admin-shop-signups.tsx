@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
@@ -68,22 +68,43 @@ function ShopSignupsPage() {
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
 
-  // Sluit de detailmodal met de Escape-toets.
+  const rows: any[] = data?.rows ?? [];
+
+  const open = openId ? rows.find((r) => r.id === openId) : null;
+
+  const hasUnsavedChanges = useMemo(() => {
+    if (!open) return false;
+    const fields = [
+      "first_name", "last_name", "shop_name", "email", "phone",
+      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes",
+    ] as const;
+    return fields.some((k) => (draft[k] ?? "") !== (open[k] ?? ""));
+  }, [draft, open]);
+
+  const closeModal = useCallback(() => {
+    if (hasUnsavedChanges) {
+      const confirmed = window.confirm(
+        "Je hebt onopgeslagen wijzigingen in deze shop-aanmelding. Wil je het venster sluiten zonder op te slaan?"
+      );
+      if (!confirmed) return;
+    }
+    setOpenId(null);
+    setPushError(null);
+    setPushSuccess(null);
+  }, [hasUnsavedChanges]);
+
+  // Sluit de detailmodal met de Escape-toets, met waarschuwing bij onopgeslagen wijzigingen.
   useEffect(() => {
     if (!openId) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        setOpenId(null);
-        setPushError(null);
-        setPushSuccess(null);
+        closeModal();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [openId]);
-
-  const rows: any[] = data?.rows ?? [];
+  }, [openId, closeModal]);
 
 
   const countries = useMemo(() => {
@@ -260,7 +281,6 @@ function ShopSignupsPage() {
     }
   };
 
-  const open = openId ? rows.find((r) => r.id === openId) : null;
 
   return (
     <div style={{ background: "#0E0F12", minHeight: "100vh", color: "#fff" }}>
@@ -490,7 +510,7 @@ function ShopSignupsPage() {
       {/* Detail modal */}
       {open && (
         <div
-          onClick={() => { setOpenId(null); setPushError(null); setPushSuccess(null); }}
+          onClick={closeModal}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ background: "rgba(0,0,0,0.6)" }}
         >
@@ -644,7 +664,7 @@ function ShopSignupsPage() {
             <div className="flex justify-end gap-2 flex-wrap">
               <button
                 type="button"
-                onClick={() => setOpenId(null)}
+                onClick={closeModal}
                 disabled={pushingId === open.id}
                 className="px-4 py-2 rounded-lg text-sm disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ background: "rgba(255,255,255,0.06)", color: "#fff", border: "1px solid rgba(255,255,255,0.12)" }}
