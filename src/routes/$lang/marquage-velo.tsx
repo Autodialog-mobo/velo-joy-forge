@@ -352,6 +352,55 @@ function VelocistesLanding() {
         </div>
       </section>
 
+      <section id="frame-id" style={{ background: "var(--white)" }}>
+        <div className="wrap">
+          <div className="sticker-wrap">
+            <div className="sticker-frame">
+              <img src={stickerImg} alt="Frame-ID Velopass sur un cadre de vélo" width={1024} height={1024} loading="lazy" decoding="async" />
+              <div className="scan-overlay" aria-hidden="true">
+                <span className="scan-corner tl" />
+                <span className="scan-corner tr" />
+                <span className="scan-corner bl" />
+                <span className="scan-corner br" />
+                <span className="scan-line" />
+              </div>
+              <div className="scan-badge">Scan → accès à tout</div>
+            </div>
+            <div>
+              <p className="sec-label">Le Frame-ID Velopass</p>
+              <h2 className="sec">Une étiquette. Un scan. Tout est connecté.</h2>
+              <p className="sec-desc">
+                Étiquette adhésive inviolable, code QR et identifiant unique. Appliquée en magasin,
+                enregistrée au FNUCI, liée à vie au vélo et à votre magasin.
+              </p>
+              <div className="sticker-feats">
+                <div className="sticker-feat">
+                  <div className="ic">✓</div>
+                  <div>
+                    <strong>Inviolable et conforme</strong>
+                    <span>Toute tentative de retrait détruit l'étiquette. Marquage conforme à la loi LOM et enregistré au FNUCI.</span>
+                  </div>
+                </div>
+                <div className="sticker-feat">
+                  <div className="ic">⚡</div>
+                  <div>
+                    <strong>Accès instantané</strong>
+                    <span>Un scan du QR ouvre le passeport numérique du vélo : preuve de propriété, historique d'entretien, services connectés.</span>
+                  </div>
+                </div>
+                <div className="sticker-feat">
+                  <div className="ic">↻</div>
+                  <div>
+                    <strong>Liée au cadre, pas à la personne</strong>
+                    <span>En cas de revente, l'historique se transfère en un clic. L'étiquette reste, les données suivent — votre magasin aussi.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section>
         <div className="wrap">
           <div className="diff">
