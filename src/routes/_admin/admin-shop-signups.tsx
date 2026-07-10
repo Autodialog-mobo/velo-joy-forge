@@ -874,7 +874,9 @@ function PushSuccessPanel({
       toast.error("Kopiëren mislukt");
     }
   };
-  const viewUrl = VELOPASS_PRO_ORGANISATION_URL;
+  const viewUrl = success.managementId
+    ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.managementId}`
+    : VELOPASS_PRO_ORGANISATION_URL;
 
   return (
     <div
