@@ -77,11 +77,23 @@ export const updateShopSignup = createServerFn({ method: "POST" })
       changes.status = { from: before.status, to: data.status };
     }
     for (const f of EDITABLE_FIELDS) {
+      if (f === "street" || f === "postal" || f === "city") continue;
       const val = (data as any)[f];
       if (val === undefined) continue;
       if ((before as any)[f] !== val) {
         patch[f] = val;
         changes[f] = { from: (before as any)[f] ?? null, to: val ?? null };
+      }
+    }
+
+    // Recompose address when any of the split fields are edited.
+    if (data.street !== undefined || data.postal !== undefined || data.city !== undefined) {
+      const newAddress = [data.street, [data.postal, data.city].filter(Boolean).join(" ")]
+        .filter(Boolean)
+        .join(", ");
+      if (newAddress !== before.address) {
+        patch.address = newAddress;
+        changes.address = { from: before.address ?? null, to: newAddress ?? null };
       }
     }
 
