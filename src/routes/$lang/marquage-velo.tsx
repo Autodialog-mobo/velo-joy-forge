@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { trackShopSignupCtaClick } from "@/lib/analytics";
+import heroMarquageImg from "@/assets/hero-marquage-velo.webp.asset.json";
+
 
 const FAQS = [
   { q: "Velopass est-il un opérateur d'identification de cycles agréé ?", a: "Oui. Velopass est un opérateur d'identification agréé référencé par l'APIC. Les vélos marqués sont enregistrés dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la réglementation française." },
