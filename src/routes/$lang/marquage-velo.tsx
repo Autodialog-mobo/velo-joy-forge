@@ -56,7 +56,7 @@ const FAQ_JSONLD = {
   })),
 };
 
-export const Route = createFileRoute("/velocistes")({
+export const Route = createFileRoute("/$lang/marquage-velo")({
   head: () => ({
     meta: [
       { title: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
@@ -83,14 +83,14 @@ export const Route = createFileRoute("/velocistes")({
         content:
           "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable.",
       },
-      { property: "og:url", content: "https://www.velopass.com/velocistes" },
+      { property: "og:url", content: "https://www.velopass.com/fr/marquage-velo" },
     ],
     links: [
-      { rel: "canonical", href: "https://www.velopass.com/velocistes" },
-      { rel: "alternate", hrefLang: "fr", href: "https://www.velopass.com/velocistes" },
-      { rel: "alternate", hrefLang: "nl", href: "https://www.velopass.com/velocistes" },
-      { rel: "alternate", hrefLang: "de", href: "https://www.velopass.com/velocistes" },
-      { rel: "alternate", hrefLang: "x-default", href: "https://www.velopass.com/velocistes" },
+      { rel: "canonical", href: "https://www.velopass.com/fr/marquage-velo" },
+      { rel: "alternate", hrefLang: "fr", href: "https://www.velopass.com/fr/marquage-velo" },
+      { rel: "alternate", hrefLang: "nl", href: "https://www.velopass.com/nl/marquage-velo" },
+      { rel: "alternate", hrefLang: "de", href: "https://www.velopass.com/de/marquage-velo" },
+      { rel: "alternate", hrefLang: "x-default", href: "https://www.velopass.com/fr/marquage-velo" },
     ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(ORG_JSONLD) },
