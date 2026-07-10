@@ -35,7 +35,9 @@ const updateSchema = z.object({
   email: z.string().trim().email().max(255).nullable().optional().transform((v) => (v === "" ? null : v)),
   phone: nullableStr(60),
   vat: nullableStr(60),
-  address: nullableStr(500),
+  street: nullableStr(500),
+  postal: nullableStr(60),
+  city: nullableStr(120),
   country: nullableStr(120),
   lang: z.enum(["nl", "fr", "de", "en", "es"]).nullable().optional(),
   pos_system: nullableStr(120),
@@ -43,7 +45,7 @@ const updateSchema = z.object({
 });
 
 const EDITABLE_FIELDS = [
-  "first_name","last_name","shop_name","email","phone","vat","address","country",
+  "first_name","last_name","shop_name","email","phone","vat","street","postal","city","country",
   "lang","pos_system","pos_other","admin_notes",
 ] as const;
 
