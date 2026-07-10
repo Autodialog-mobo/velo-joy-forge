@@ -63,6 +63,7 @@ function ShopSignupsPage() {
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
   const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
+  const [pushedIds, setPushedIds] = useState<Set<string>>(new Set());
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
 
@@ -189,6 +190,7 @@ function ShopSignupsPage() {
       }
       const managementId = res?.managementId;
       setPushSuccess({ id, managementId: managementId ?? "" });
+      setPushedIds((prev) => new Set(prev).add(id));
       toast.success(
         res?.alreadyExists
           ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
@@ -533,9 +535,9 @@ function ShopSignupsPage() {
               />
             )}
 
-            {open.pushed_to_pro_at ? (
+            {open.pushed_to_pro_at || pushedIds.has(open.id) ? (
               <PushedInfoBanner
-                pushedAt={open.pushed_to_pro_at}
+                pushedAt={open.pushed_to_pro_at ?? new Date().toISOString()}
                 pushedByEmail={open.pushed_to_pro_by_email}
                 pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
@@ -545,7 +547,7 @@ function ShopSignupsPage() {
             ) : (
               <NotPushedInfoBanner
                 onPush={() => onPushToPro(open.id)}
-                disabled={pushingId === open.id || savingId === open.id}
+                disabled={pushingId === open.id || savingId === open.id || pushedIds.has(open.id)}
                 loading={pushingId === open.id}
               />
             )}
