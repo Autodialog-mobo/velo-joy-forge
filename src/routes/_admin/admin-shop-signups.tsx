@@ -539,6 +539,7 @@ function ShopSignupsPage() {
                 pushedByEmail={open.pushed_to_pro_by_email}
                 pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
+                shopId={open.id}
               />
 
             ) : (
