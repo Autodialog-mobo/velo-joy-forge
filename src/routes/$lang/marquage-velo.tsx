@@ -217,20 +217,25 @@ function VelocistesLanding() {
 
       <header className="hero">
         <div className="wrap hero-in">
-          <span className="eyebrow"><span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI</span>
-          <h1>Marquez les vélos. <em>Gardez les clients.</em></h1>
-          <p className="lead">Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client durable pour votre magasin.</p>
-          <div className="btns">
-            <a className="btn-p" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
-              Inscription vélociste — gratuite
-            </a>
-            <a className="btn-s" href="https://velopass.com/fr/contact">Parler à un conseiller</a>
+          <div className="hero-text">
+            <span className="eyebrow"><span className="dot"></span>Opérateur d'identification agréé · APIC / FNUCI</span>
+            <h1>Marquez les vélos. <em>Gardez les clients.</em></h1>
+            <p className="lead">Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client durable pour votre magasin.</p>
+            <div className="btns">
+              <a className="btn-p" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
+                Inscription vélociste — gratuite
+              </a>
+              <a className="btn-s" href="https://velopass.com/fr/contact">Parler à un conseiller</a>
+            </div>
+            <div className="trust">
+              <div><strong>Europe</strong>Opérateur international</div>
+              <div><strong>FNUCI</strong>Enregistrement conforme</div>
+              <div><strong>0 €</strong>Inscription vélociste</div>
+              <div><strong>À vie</strong>Carnet d'entretien numérique</div>
+            </div>
           </div>
-          <div className="trust">
-            <div><strong>Europe</strong>Opérateur international</div>
-            <div><strong>FNUCI</strong>Enregistrement conforme</div>
-            <div><strong>0 €</strong>Inscription vélociste</div>
-            <div><strong>À vie</strong>Carnet d'entretien numérique</div>
+          <div className="hero-img">
+            <img src={heroMarquageImg.url} alt="Vélociste appliquant une étiquette Frame-ID Velopass sur un vélo en magasin" width={1792} height={768} />
           </div>
         </div>
       </header>
