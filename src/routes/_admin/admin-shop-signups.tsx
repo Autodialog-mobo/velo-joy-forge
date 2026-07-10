@@ -463,11 +463,6 @@ function ShopSignupsPage() {
                             ))}
                           </select>
                         </div>
-                        {r.admin_notes && (
-                          <div className="text-xs mt-1 line-clamp-2 max-w-[220px]" style={{ color: "rgba(255,255,255,0.5)" }}>
-                            {r.admin_notes}
-                          </div>
-                        )}
                       </td>
                       <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                         {r.pushed_to_pro_at ? (
