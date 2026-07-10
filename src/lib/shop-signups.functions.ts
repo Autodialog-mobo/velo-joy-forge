@@ -25,6 +25,46 @@ export const listShopSignups = createServerFn({ method: "POST" })
 const nullableStr = (max: number) =>
   z.string().trim().max(max).nullable().optional().transform((v) => (v === "" ? null : v));
 
+// Normalize a free-text country value to an ISO 3166-1 alpha-2 code that velopass.pro accepts.
+function normalizeCountryCode(input: string | null | undefined): string {
+  const raw = (input ?? "").trim();
+  if (!raw) return "";
+  const upper = raw.toUpperCase();
+  if (/^[A-Z]{2}$/.test(upper)) return upper;
+  const map: Record<string, string> = {
+    // Belgium
+    "BELGIE": "BE", "BELGIË": "BE", "BELGIUM": "BE", "BELGIQUE": "BE", "BELGIEN": "BE",
+    // Netherlands
+    "NEDERLAND": "NL", "NETHERLANDS": "NL", "THE NETHERLANDS": "NL", "HOLLAND": "NL", "PAYS-BAS": "NL", "NIEDERLANDE": "NL",
+    // Luxembourg
+    "LUXEMBURG": "LU", "LUXEMBOURG": "LU",
+    // France
+    "FRANKRIJK": "FR", "FRANCE": "FR", "FRANKREICH": "FR",
+    // Germany
+    "DUITSLAND": "DE", "DEUTSCHLAND": "DE", "GERMANY": "DE", "ALLEMAGNE": "DE",
+    // UK
+    "VERENIGD KONINKRIJK": "GB", "UNITED KINGDOM": "GB", "UK": "GB", "GREAT BRITAIN": "GB", "ENGLAND": "GB",
+    // Spain
+    "SPANJE": "ES", "SPAIN": "ES", "ESPAÑA": "ES", "ESPANA": "ES", "ESPAGNE": "ES",
+    // Italy
+    "ITALIE": "IT", "ITALIË": "IT", "ITALY": "IT", "ITALIA": "IT", "ITALIEN": "IT",
+    // Portugal
+    "PORTUGAL": "PT",
+    // Austria
+    "OOSTENRIJK": "AT", "AUSTRIA": "AT", "ÖSTERREICH": "AT", "OSTERREICH": "AT", "AUTRICHE": "AT",
+    // Switzerland
+    "ZWITSERLAND": "CH", "SWITZERLAND": "CH", "SCHWEIZ": "CH", "SUISSE": "CH",
+    // Others
+    "DENEMARKEN": "DK", "DENMARK": "DK",
+    "ZWEDEN": "SE", "SWEDEN": "SE",
+    "NOORWEGEN": "NO", "NORWAY": "NO",
+    "IERLAND": "IE", "IRELAND": "IE",
+    "POLEN": "PL", "POLAND": "PL",
+  };
+  return map[upper] ?? upper;
+}
+
+
 const updateSchema = z.object({
   id: z.string().uuid(),
   status: z.enum(["new", "contacted", "converted", "rejected"]).optional(),
