@@ -1,0 +1,1 @@
+ALTER TABLE public.shop_signups ADD COLUMN IF NOT EXISTS pushed_to_pro_by_name text;

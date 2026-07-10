@@ -495,8 +495,10 @@ function ShopSignupsPage() {
               <PushedInfoBanner
                 pushedAt={open.pushed_to_pro_at}
                 pushedByEmail={open.pushed_to_pro_by_email}
+                pushedByName={open.pushed_to_pro_by_name}
                 managementId={open.pushed_to_pro_management_id}
               />
+
             ) : (
               <NotPushedInfoBanner
                 onPush={() => onPushToPro(open.id)}
@@ -930,13 +932,16 @@ function PushSuccessPanel({
 function PushedInfoBanner({
   pushedAt,
   pushedByEmail,
+  pushedByName,
   managementId,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
+  pushedByName?: string | null;
   managementId?: string | null;
 }) {
   const viewUrl = VELOPASS_PRO_ORGANISATION_URL;
+  const actor = pushedByName || pushedByEmail;
   return (
     <div
       className="mb-4 rounded-xl p-3"
@@ -949,13 +954,17 @@ function PushedInfoBanner({
           </div>
           <div className="text-sm mt-1" style={{ color: "#fff" }}>
             {new Date(pushedAt).toLocaleString("nl-BE")}
-            {pushedByEmail ? <> · door <span style={{ color: "rgba(255,255,255,0.8)" }}>{pushedByEmail}</span></> : null}
+            {actor ? <> · door <span style={{ color: "rgba(255,255,255,0.9)" }}>{actor}</span></> : null}
+            {pushedByName && pushedByEmail && pushedByName !== pushedByEmail ? (
+              <span style={{ color: "rgba(255,255,255,0.5)" }}> ({pushedByEmail})</span>
+            ) : null}
           </div>
           {managementId && (
             <div className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.6)" }}>
               Organisation-id: <code style={{ color: "#7AB0FF" }}>{managementId}</code>
             </div>
           )}
+
         </div>
         <a
           href={viewUrl}

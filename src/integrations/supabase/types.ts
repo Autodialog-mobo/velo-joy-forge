@@ -366,6 +366,7 @@ export type Database = {
           pushed_to_pro_at: string | null
           pushed_to_pro_by: string | null
           pushed_to_pro_by_email: string | null
+          pushed_to_pro_by_name: string | null
           pushed_to_pro_management_id: string | null
           shop_name: string | null
           status: string
@@ -393,6 +394,7 @@ export type Database = {
           pushed_to_pro_at?: string | null
           pushed_to_pro_by?: string | null
           pushed_to_pro_by_email?: string | null
+          pushed_to_pro_by_name?: string | null
           pushed_to_pro_management_id?: string | null
           shop_name?: string | null
           status?: string
@@ -420,6 +422,7 @@ export type Database = {
           pushed_to_pro_at?: string | null
           pushed_to_pro_by?: string | null
           pushed_to_pro_by_email?: string | null
+          pushed_to_pro_by_name?: string | null
           pushed_to_pro_management_id?: string | null
           shop_name?: string | null
           status?: string
