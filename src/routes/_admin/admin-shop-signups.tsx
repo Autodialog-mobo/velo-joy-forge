@@ -437,7 +437,7 @@ function ShopSignupsPage() {
                         {r.pushed_to_pro_at ? (
                           <div className="inline-flex flex-col items-end gap-1">
                             <a
-                              href={`${VELOPASS_PRO_ORGANISATION_URL}/${r.id}`}
+                              href={r.pushed_to_pro_management_id ? `${VELOPASS_PRO_ORGANISATION_URL}/${r.pushed_to_pro_management_id}/` : VELOPASS_PRO_ORGANISATION_URL}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center justify-end gap-1 text-xs font-semibold"
