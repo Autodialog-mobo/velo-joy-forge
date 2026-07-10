@@ -401,7 +401,24 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       };
     }
 
-    if (apiStatus < 200 || apiStatus >= 300) {
+    // Detect "Organisation already exists" — treat as success so the signup
+    // still gets marked as pushed and the button disappears.
+    const collectErrorMessages = (resp: any): string[] => {
+      const out: string[] = [];
+      if (!resp || typeof resp !== "object") return out;
+      if (Array.isArray(resp.Errors)) {
+        for (const e of resp.Errors) if (e && typeof e.Message === "string") out.push(e.Message);
+      }
+      if (typeof resp.title === "string") out.push(resp.title);
+      if (typeof resp.detail === "string") out.push(resp.detail);
+      if (typeof resp.message === "string") out.push(resp.message);
+      return out;
+    };
+    const alreadyExists =
+      apiStatus === 409 ||
+      collectErrorMessages(apiResponse).some((m) => /already\s+exists/i.test(m));
+
+    if ((apiStatus < 200 || apiStatus >= 300) && !alreadyExists) {
       console.error("[shop-signups] push failed", { id: data.id, status: apiStatus, apiResponse });
       // ASP.NET ProblemDetails style: { title, detail, errors: { field: [msgs] } }
       const problem = apiResponse && typeof apiResponse === "object" ? apiResponse : null;
