@@ -1,0 +1,1 @@
+ALTER TABLE public.shop_signups ALTER COLUMN status_updated_by TYPE text USING status_updated_by::text;
