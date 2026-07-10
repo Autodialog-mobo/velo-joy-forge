@@ -143,6 +143,32 @@ function parseSignupAddress(raw: string | null | undefined): { street: string; p
 const MANAGEMENT_API_URL =
   (process.env.VELOPASS_MANAGEMENT_API_URL || "https://managementapi.prod.velopass.com").replace(/\/+$/, "");
 
+async function readDefaultBikeShopPackageId(bearer: string): Promise<string | null> {
+  const res = await fetch(`${MANAGEMENT_API_URL}/api/bike-shop-packages/select`, {
+    method: "GET",
+    headers: {
+      Authorization: bearer,
+      Accept: "application/json",
+    },
+  });
+  const text = await res.text();
+  if (!res.ok) {
+    console.error("[shop-signups] package lookup failed", { status: res.status, body: text.slice(0, 1000) });
+    throw new Error(`Pakketlijst ophalen mislukte (${res.status}): ${text.slice(0, 500) || "geen details"}`);
+  }
+
+  let packages: Array<{ value?: string | null; isDefault?: boolean }> = [];
+  try {
+    const parsed = text ? JSON.parse(text) : [];
+    packages = Array.isArray(parsed) ? parsed : [];
+  } catch {
+    throw new Error("Pakketlijst ophalen mislukte: ongeldig antwoord van velopass.pro.");
+  }
+
+  const selected = packages.find((p) => p?.isDefault && p.value) ?? packages.find((p) => p?.value);
+  return selected?.value ?? null;
+}
+
 export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
@@ -197,11 +223,30 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     else if (digits.length > 0) normalizedPhone = "+" + digits;
     if (normalizedPhone.length > 14) normalizedPhone = normalizedPhone.slice(0, 14);
 
+    let packageId: string | null = null;
+    try {
+      packageId = await readDefaultBikeShopPackageId(bearer);
+    } catch (e: any) {
+      return {
+        ok: false as const,
+        stage: "api" as const,
+        message: e?.message ?? "Kon het standaardpakket voor deze organisatie niet ophalen.",
+      };
+    }
+    if (!packageId) {
+      return {
+        ok: false as const,
+        stage: "api" as const,
+        message: "Er is geen standaardpakket gevonden in velopass.pro. Stel daar eerst een actief standaardpakket in.",
+      };
+    }
+
     const body: {
       name: string; phone: string; type: number;
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
+      packageId: string;
     } = {
       name: row.shop_name,
       phone: normalizedPhone,
@@ -214,6 +259,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       postalCode: postal,
       city,
       country: row.country,
+      packageId,
     };
 
     let apiResponse: any = null;
