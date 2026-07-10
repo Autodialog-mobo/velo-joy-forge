@@ -6,7 +6,8 @@ const FAQS = [
   { q: "Comment devenir point de marquage vélo Velopass ?", a: "L'inscription des vélocistes est gratuite et se fait en ligne sur velopass.com/fr/shop. Vous recevez les étiquettes Frame-ID et marquez les vélos directement en magasin ; l'enregistrement dans le FNUCI est immédiat." },
   { q: "Le marquage des vélos est-il obligatoire en France ?", a: "Oui. Depuis la loi d'orientation des mobilités (loi LOM), tout vélo neuf vendu par un professionnel doit être identifié. Le marquage doit être réalisé par un opérateur agréé et enregistré dans le FNUCI." },
   { q: "Quel procédé d'identification Velopass utilise-t-il ?", a: "Velopass utilise une étiquette adhésive inviolable (Frame-ID) dotée d'un code QR et d'un identifiant unique. Toute tentative de retrait détruit l'étiquette et laisse des traces visibles." },
-  { q: "Qu'est-ce que Velopass apporte de plus qu'un simple marquage ?", a: "Au-delà de la conformité, chaque vélo marqué devient une relation client durable : rappels d'entretien automatiques, carnet numérique à vie, et intégrations avec les fabricants, sociétés de leasing et assureurs. Le vélociste reste en contact avec ses clients après la vente." }
+  { q: "Qu'est-ce que Velopass apporte de plus qu'un simple marquage ?", a: "Au-delà de la conformité, chaque vélo marqué devient une relation client durable : rappels d'entretien automatiques, carnet numérique à vie, et intégrations avec les fabricants, sociétés de leasing et assureurs. Le vélociste reste en contact avec ses clients après la vente." },
+  { q: "Velopass se connecte-t-il à mon système de caisse ?", a: "Oui. Velopass s'intègre aux principaux systèmes de caisse pour vélocistes, dont Shifter, G8 et CycleSoftware. Le marquage et l'enregistrement au FNUCI se font automatiquement au moment de la vente, sans double saisie." }
 ];
 
 const ORG_JSONLD = {
@@ -41,6 +42,7 @@ const FAQ_JSONLD = {
     { q: "Le marquage des vélos est-il obligatoire en France ?", a: "Oui. Depuis la loi d'orientation des mobilités (loi LOM), tout vélo neuf vendu par un professionnel doit être identifié. Le marquage doit être réalisé par un opérateur agréé et enregistré dans le FNUCI." },
     { q: "Quel procédé d'identification Velopass utilise-t-il ?", a: "Velopass utilise une étiquette adhésive inviolable (Frame-ID) dotée d'un code QR et d'un identifiant unique. Toute tentative de retrait détruit l'étiquette et laisse des traces visibles." },
     { q: "Qu'est-ce que Velopass apporte de plus qu'un simple marquage ?", a: "Au-delà de la conformité, chaque vélo marqué devient une relation client durable : rappels d'entretien automatiques, carnet numérique à vie, et intégrations avec les fabricants, sociétés de leasing et assureurs. Le vélociste reste en contact avec ses clients après la vente." },
+    { q: "Velopass se connecte-t-il à mon système de caisse ?", a: "Oui. Velopass s'intègre aux principaux systèmes de caisse pour vélocistes, dont Shifter, G8 et CycleSoftware. Le marquage et l'enregistrement au FNUCI se font automatiquement au moment de la vente, sans double saisie." },
   ].map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 
@@ -170,7 +172,15 @@ const CSS = `
 .vlp .feat li{display:flex;gap:12px;font-size:14.5px;color:var(--text-mid);line-height:1.55}
 .vlp .feat li b{color:var(--navy)}
 .vlp .feat .fx{color:var(--green-dark);font-weight:700;flex-shrink:0}
-@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .diff,.vlp .cta{padding:36px}}
+.vlp .pos-band{background:var(--navy);border-radius:24px;padding:38px 42px;display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;position:relative;overflow:hidden}
+.vlp .pos-band::before{content:'';position:absolute;top:-120px;right:-80px;width:340px;height:340px;border-radius:50%;background:rgba(46,204,138,0.06)}
+.vlp .pos-text{max-width:560px;position:relative;z-index:1}
+.vlp .pos-text .sec-label{color:var(--green);margin-bottom:8px}
+.vlp .pos-h{font-family:'Syne',sans-serif;color:#fff;font-size:23px;font-weight:700;margin-bottom:8px;letter-spacing:-0.02em}
+.vlp .pos-text p{color:rgba(255,255,255,0.62);font-size:14.5px;line-height:1.6}
+.vlp .pos-logos{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+.vlp .pos-chip{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:var(--navy);background:#fff;padding:12px 20px;border-radius:12px}
+@media(max-width:880px){.vlp .grid,.vlp .steps,.vlp .diff-grid,.vlp .foot-grid,.vlp .procede-grid{grid-template-columns:1fr}.vlp .diff,.vlp .cta,.vlp .pos-band{padding:32px}}
 `;
 
 function LogoMark() {
@@ -235,7 +245,7 @@ function VelocistesLanding() {
           <div className="grid">
             <div className="card"><div className="ic">✓</div><h3>Conformité sans effort</h3><p>Marquage en magasin, enregistrement FNUCI immédiat, zéro administration. Vous êtes en règle avec la loi LOM dès la première étiquette.</p></div>
             <div className="card"><div className="ic">↻</div><h3>Une relation client durable</h3><p>Chaque vélo identifié reste lié à votre magasin. Rappels d'entretien automatiques et contact maintenu après la vente — vos clients restent vos clients.</p></div>
-            <div className="card"><div className="ic">⚡</div><h3>Un écosystème intégré</h3><p>Intégrations avec fabricants, sociétés de leasing, assureurs et assistance. Une seule étiquette, tous les services connectés.</p></div>
+            <div className="card"><div className="ic">⚡</div><h3>Un écosystème intégré</h3><p>Intégré à votre système de caisse, aux fabricants, sociétés de leasing, assureurs et assistance. Une seule étiquette, tous les services connectés.</p></div>
           </div>
         </div>
       </section>
@@ -249,6 +259,23 @@ function VelocistesLanding() {
             <div className="step"><div className="n">02</div><h3>Recevez les étiquettes</h3><p>Vous recevez les étiquettes Frame-ID inviolables à code QR et identifiant unique.</p></div>
             <div className="step"><div className="n">03</div><h3>Marquez en magasin</h3><p>Appliquez l'étiquette sur le vélo. L'enregistrement au FNUCI est instantané.</p></div>
             <div className="step"><div className="n">04</div><h3>Fidélisez</h3><p>Le vélo et son propriétaire restent connectés à votre magasin, à vie.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="caisse" style={{ paddingBottom: 0 }}>
+        <div className="wrap">
+          <div className="pos-band">
+            <div className="pos-text">
+              <p className="sec-label">Intégration caisse</p>
+              <h3 className="pos-h">Le marquage se fait tout seul, à la vente</h3>
+              <p>Velopass se connecte à votre système de caisse : chaque vélo est identifié et enregistré au FNUCI au moment du passage en caisse, sans double saisie ni manipulation supplémentaire.</p>
+            </div>
+            <div className="pos-logos">
+              <span className="pos-chip">Shifter</span>
+              <span className="pos-chip">G8</span>
+              <span className="pos-chip">CycleSoftware</span>
+            </div>
           </div>
         </div>
       </section>
