@@ -274,6 +274,7 @@ export function RegisterForm() {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             autoComplete="given-name"
+            required
           />
         </div>
         <div className="form-row">
@@ -286,6 +287,7 @@ export function RegisterForm() {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             autoComplete="family-name"
+            required
           />
         </div>
       </div>
