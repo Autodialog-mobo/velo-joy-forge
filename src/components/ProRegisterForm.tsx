@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
+import { PlacesAutocompleteInput, type ParsedPlace } from "@/components/PlacesAutocompleteInput";
 
 type ViesResult =
   | { state: "idle" }
