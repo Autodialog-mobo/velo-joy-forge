@@ -413,6 +413,7 @@ export function RegisterForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             autoComplete="tel"
+            required
           />
         </div>
       </div>
@@ -423,6 +424,7 @@ export function RegisterForm() {
           className="finput"
           value={pos}
           onChange={(e) => setPos(e.target.value)}
+          required
         >
           <option value="" disabled>{tf("pos_select")}</option>
           <option value="cyclesoftware">CycleSoftware</option>
