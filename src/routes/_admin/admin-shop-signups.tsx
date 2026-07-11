@@ -1153,6 +1153,7 @@ function PushedInfoBanner({
   onRepush,
   repushLoading,
   repushDisabled,
+  diagnostics,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
@@ -1163,6 +1164,15 @@ function PushedInfoBanner({
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
+  diagnostics?: {
+    apiStatus?: number;
+    responseKeys?: string[];
+    checkedIdFields?: string[];
+    missingIdFields?: string[];
+    responsePreview?: string;
+    lookupAttempts?: Array<{ path: string; status: number | null; count: number; sampleKeys: string[] | null; matched: boolean; error?: string }>;
+    target?: { shop_name?: string | null; vat?: string | null; email?: string | null };
+  } | null;
 }) {
 
   const viewUrl = managementId
