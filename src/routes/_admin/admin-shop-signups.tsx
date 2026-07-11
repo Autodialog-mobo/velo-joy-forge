@@ -595,6 +595,7 @@ function ShopSignupsPage() {
                 onRepush={() => onPushToPro(open.id)}
                 repushLoading={pushingId === open.id}
                 repushDisabled={pushingId === open.id || savingId === open.id}
+                diagnostics={pushDiagnostics[open.id] ?? null}
               />
 
 
