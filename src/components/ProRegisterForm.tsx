@@ -319,6 +319,7 @@ export function RegisterForm() {
             if (autofilled.street) setAutofilled((s) => ({ ...s, street: false }));
           }}
           autoComplete="street-address"
+          required
         />
       </div>
       <div className="fgrid">
@@ -335,6 +336,7 @@ export function RegisterForm() {
               if (autofilled.postal) setAutofilled((s) => ({ ...s, postal: false }));
             }}
             autoComplete="postal-code"
+            required
           />
         </div>
         <div className="form-row">
@@ -350,6 +352,7 @@ export function RegisterForm() {
               if (autofilled.city) setAutofilled((s) => ({ ...s, city: false }));
             }}
             autoComplete="address-level2"
+            required
           />
         </div>
       </div>
@@ -362,6 +365,7 @@ export function RegisterForm() {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           autoComplete="country-name"
+          required
         >
           <option value="" disabled>{tf("country_select")}</option>
           <option value="BE">België / Belgique</option>
