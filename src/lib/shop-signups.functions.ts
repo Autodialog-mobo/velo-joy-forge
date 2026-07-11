@@ -531,18 +531,24 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     // the management-id and produce a deep link to the shop.
     if (!returnedId) {
       const norm = (v: unknown) => String(v ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+      const targetVat = norm(row.vat);
+      const targetEmail = norm(row.email);
+      const targetName = norm(row.shop_name);
       const matches = (o: any): boolean => {
         if (!o || typeof o !== "object") return false;
-        const cn = norm(o.companyNumber);
-        const vn = norm(o.vatNumber);
-        const em = norm(o.email);
-        const nm = norm(o.name);
-        const targetVat = norm(row.vat);
-        const targetEmail = norm(row.email);
-        const targetName = norm(row.shop_name);
-        if (targetVat && (cn === targetVat || vn === targetVat)) return true;
-        if (targetEmail && em === targetEmail) return true;
-        if (targetName && nm === targetName) return true;
+        const fields = [
+          o.companyNumber, o.CompanyNumber, o.vatNumber, o.VatNumber,
+          o.email, o.Email,
+          o.name, o.Name, o.label, o.Label, o.text, o.Text, o.title, o.Title,
+          o.displayName, o.DisplayName, o.organisationName, o.OrganisationName,
+        ].filter((v) => typeof v === "string");
+        for (const f of fields as string[]) {
+          const nf = norm(f);
+          if (!nf) continue;
+          if (targetVat && nf === targetVat) return true;
+          if (targetEmail && nf === targetEmail) return true;
+          if (targetName && nf === targetName) return true;
+        }
         return false;
       };
       const extractId = (o: any): string | null => extractIdFromObject(o);
@@ -553,7 +559,10 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
             method: "GET",
             headers: { Authorization: bearer, Accept: "application/json" },
           });
-          if (!res.ok) return null;
+          if (!res.ok) {
+            console.warn("[shop-signups] lookup HTTP error", { path, status: res.status });
+            return null;
+          }
           const text = await res.text();
           const parsed = text ? JSON.parse(text) : null;
           const list: any[] = Array.isArray(parsed)
@@ -564,23 +573,31 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
                 ? parsed.results
                 : Array.isArray(parsed?.data)
                   ? parsed.data
-                  : [];
+                  : Array.isArray(parsed?.value)
+                    ? parsed.value
+                    : [];
+          console.log("[shop-signups] lookup", {
+            path, count: list.length,
+            sampleKeys: list[0] && typeof list[0] === "object" ? Object.keys(list[0]).slice(0, 12) : null,
+            sample: list[0] ?? null,
+          });
           const hit = list.find(matches);
           return extractId(hit);
-        } catch {
+        } catch (e: any) {
+          console.warn("[shop-signups] lookup threw", { path, error: e?.message });
           return null;
         }
       };
 
       const q = encodeURIComponent(String(row.vat || row.email || row.shop_name || ""));
       const candidates = [
+        "Organisations/select",
         "Organisations",
         `Organisations?search=${q}`,
         `Organisations?query=${q}`,
         `Organisations?companyNumber=${encodeURIComponent(String(row.vat || ""))}`,
         `Organisations?vatNumber=${encodeURIComponent(String(row.vat || ""))}`,
         `Organisations?email=${encodeURIComponent(String(row.email || ""))}`,
-        "Organisations/select",
       ];
       for (const path of candidates) {
         const id = await tryLookup(path);
