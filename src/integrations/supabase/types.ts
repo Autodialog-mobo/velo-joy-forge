@@ -351,6 +351,8 @@ export type Database = {
         Row: {
           address: string | null
           admin_notes: string | null
+          confirmation_email_attempted_at: string | null
+          confirmation_email_error: string | null
           confirmation_email_sent_at: string | null
           country: string | null
           created_at: string
@@ -379,6 +381,8 @@ export type Database = {
         Insert: {
           address?: string | null
           admin_notes?: string | null
+          confirmation_email_attempted_at?: string | null
+          confirmation_email_error?: string | null
           confirmation_email_sent_at?: string | null
           country?: string | null
           created_at?: string
@@ -407,6 +411,8 @@ export type Database = {
         Update: {
           address?: string | null
           admin_notes?: string | null
+          confirmation_email_attempted_at?: string | null
+          confirmation_email_error?: string | null
           confirmation_email_sent_at?: string | null
           country?: string | null
           created_at?: string
