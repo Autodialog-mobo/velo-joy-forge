@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
+import { PlacesAutocompleteInput } from "@/components/PlacesAutocompleteInput";
 
 type ViesResult =
   | { state: "idle" }
@@ -293,33 +294,66 @@ export function RegisterForm() {
       </div>
       <div className="form-row">
         <label className="flabel" htmlFor="ps">{tf("shop_name")}</label>
-        <input
+        <PlacesAutocompleteInput
           id="ps"
           className={`finput${autofilled.shop ? " from-vies" : ""}`}
-          type="text"
           placeholder={tf("shop_name_placeholder")}
           value={shop}
-          onChange={(e) => {
-            setShop(e.target.value);
+          onChange={(v) => {
+            setShop(v);
             if (autofilled.shop) setAutofilled((s) => ({ ...s, shop: false }));
           }}
+          onPlaceSelected={(p) => {
+            if (p.name) setShop(p.name);
+            setAutofilled((s) => ({ ...s, shop: !!p.name }));
+            if (p.street && !street) {
+              setStreet(p.street);
+              setAutofilled((s) => ({ ...s, street: true }));
+            }
+            if (p.postal && !postalCode) {
+              setPostalCode(p.postal);
+              setAutofilled((s) => ({ ...s, postal: true }));
+            }
+            if (p.city && !city) {
+              setCity(p.city);
+              setAutofilled((s) => ({ ...s, city: true }));
+            }
+            if (p.country && !country) setCountry(p.country);
+          }}
           required
+          language={lang}
         />
       </div>
       <div className="form-row">
         <label className="flabel" htmlFor="pstreet">{tf("street")}</label>
-        <input
+        <PlacesAutocompleteInput
           id="pstreet"
           className={`finput${autofilled.street ? " from-vies" : ""}`}
-          type="text"
           placeholder={tf("street_placeholder")}
           value={street}
-          onChange={(e) => {
-            setStreet(e.target.value);
+          onChange={(v) => {
+            setStreet(v);
             if (autofilled.street) setAutofilled((s) => ({ ...s, street: false }));
           }}
+          onPlaceSelected={(p) => {
+            if (p.street) {
+              setStreet(p.street);
+              setAutofilled((s) => ({ ...s, street: true }));
+            }
+            if (p.postal) {
+              setPostalCode(p.postal);
+              setAutofilled((s) => ({ ...s, postal: true }));
+            }
+            if (p.city) {
+              setCity(p.city);
+              setAutofilled((s) => ({ ...s, city: true }));
+            }
+            if (p.country) setCountry(p.country);
+          }}
+          includedPrimaryTypes={["street_address", "route", "premise", "subpremise"]}
           autoComplete="street-address"
           required
+          language={lang}
         />
       </div>
       <div className="fgrid">
