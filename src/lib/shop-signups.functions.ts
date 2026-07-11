@@ -545,8 +545,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         if (targetName && nm === targetName) return true;
         return false;
       };
-      const extractId = (o: any): string | null =>
-        (o && typeof o === "object" && (o.id || o.organisationId || o.value)) || null;
+      const extractId = (o: any): string | null => extractIdFromObject(o);
 
       const tryLookup = async (path: string): Promise<string | null> => {
         try {
