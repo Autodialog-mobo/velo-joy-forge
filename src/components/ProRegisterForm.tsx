@@ -192,7 +192,7 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate>
+    <form onSubmit={onSubmit}>
       {/* Honeypot */}
       <div style={{ position: "absolute", left: "-10000px", height: 0, width: 0, overflow: "hidden" }} aria-hidden="true">
         <label>
