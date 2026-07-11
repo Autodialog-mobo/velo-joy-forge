@@ -554,6 +554,29 @@ function ShopSignupsPage() {
               />
             )}
 
+            {(open.confirmation_email_error || (open.confirmation_email_attempted_at && !open.confirmation_email_sent_at)) && (
+              <div
+                className="mb-4 rounded-lg p-3 flex items-start gap-2 text-sm"
+                style={{ background: "rgba(224,82,82,0.08)", border: "1px solid rgba(224,82,82,0.30)", color: "#E05252" }}
+              >
+                <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-semibold">Bevestigingsmail is niet verzonden</div>
+                  {open.confirmation_email_error && (
+                    <div className="mt-1 text-xs break-words" style={{ color: "rgba(255,255,255,0.7)" }}>
+                      {open.confirmation_email_error}
+                    </div>
+                  )}
+                  {open.confirmation_email_attempted_at && (
+                    <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      Laatste poging: {new Date(open.confirmation_email_attempted_at).toLocaleString("nl-BE")}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+
             {open.pushed_to_pro_at || pushedIds.has(open.id) ? (
               <PushedInfoBanner
                 pushedAt={open.pushed_to_pro_at ?? new Date().toISOString()}
