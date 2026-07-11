@@ -192,7 +192,7 @@ export function RegisterForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate>
+    <form onSubmit={onSubmit}>
       {/* Honeypot */}
       <div style={{ position: "absolute", left: "-10000px", height: 0, width: 0, overflow: "hidden" }} aria-hidden="true">
         <label>
@@ -274,6 +274,7 @@ export function RegisterForm() {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             autoComplete="given-name"
+            required
           />
         </div>
         <div className="form-row">
@@ -286,6 +287,7 @@ export function RegisterForm() {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             autoComplete="family-name"
+            required
           />
         </div>
       </div>
@@ -317,6 +319,7 @@ export function RegisterForm() {
             if (autofilled.street) setAutofilled((s) => ({ ...s, street: false }));
           }}
           autoComplete="street-address"
+          required
         />
       </div>
       <div className="fgrid">
@@ -333,6 +336,7 @@ export function RegisterForm() {
               if (autofilled.postal) setAutofilled((s) => ({ ...s, postal: false }));
             }}
             autoComplete="postal-code"
+            required
           />
         </div>
         <div className="form-row">
@@ -348,6 +352,7 @@ export function RegisterForm() {
               if (autofilled.city) setAutofilled((s) => ({ ...s, city: false }));
             }}
             autoComplete="address-level2"
+            required
           />
         </div>
       </div>
@@ -360,6 +365,7 @@ export function RegisterForm() {
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           autoComplete="country-name"
+          required
         >
           <option value="" disabled>{tf("country_select")}</option>
           <option value="BE">België / Belgique</option>
@@ -407,6 +413,7 @@ export function RegisterForm() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             autoComplete="tel"
+            required
           />
         </div>
       </div>
@@ -417,6 +424,7 @@ export function RegisterForm() {
           className="finput"
           value={pos}
           onChange={(e) => setPos(e.target.value)}
+          required
         >
           <option value="" disabled>{tf("pos_select")}</option>
           <option value="cyclesoftware">CycleSoftware</option>
