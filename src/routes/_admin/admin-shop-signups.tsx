@@ -65,6 +65,7 @@ function ShopSignupsPage() {
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
   const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
+  const [pushDiagnostics, setPushDiagnostics] = useState<Record<string, any>>({});
   const [pushedIds, setPushedIds] = useState<Set<string>>(new Set());
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
   const isPushingRef = useRef(false);
@@ -213,13 +214,19 @@ function ShopSignupsPage() {
       }
       const managementId = res?.managementId;
       setPushSuccess({ id, managementId: managementId ?? "" });
+      setPushDiagnostics((prev) => {
+        const next = { ...prev };
+        if (managementId) delete next[id];
+        else if (res?.idDiagnostics) next[id] = res.idDiagnostics;
+        return next;
+      });
       setPushedIds((prev) => new Set(prev).add(id));
       toast.success(
         res?.alreadyExists
           ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
           : managementId
             ? `Aangemaakt in velopass.pro (id: ${managementId})`
-            : "Doorgestuurd naar velopass.pro",
+            : "Doorgestuurd — maar geen organisation-id ontvangen",
       );
       refetch();
     } catch (err: any) {
@@ -588,6 +595,7 @@ function ShopSignupsPage() {
                 onRepush={() => onPushToPro(open.id)}
                 repushLoading={pushingId === open.id}
                 repushDisabled={pushingId === open.id || savingId === open.id}
+                diagnostics={pushDiagnostics[open.id] ?? null}
               />
 
 
@@ -1145,6 +1153,7 @@ function PushedInfoBanner({
   onRepush,
   repushLoading,
   repushDisabled,
+  diagnostics,
 }: {
   pushedAt: string;
   pushedByEmail?: string | null;
@@ -1155,6 +1164,15 @@ function PushedInfoBanner({
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
+  diagnostics?: {
+    apiStatus?: number;
+    responseKeys?: string[];
+    checkedIdFields?: string[];
+    missingIdFields?: string[];
+    responsePreview?: string;
+    lookupAttempts?: Array<{ path: string; status: number | null; count: number; sampleKeys: string[] | null; matched: boolean; error?: string }>;
+    target?: { shop_name?: string | null; vat?: string | null; email?: string | null };
+  } | null;
 }) {
 
   const viewUrl = managementId
@@ -1227,12 +1245,67 @@ function PushedInfoBanner({
             </div>
           ) : (
             <div className="mt-2 rounded-lg p-2.5" style={{ background: "#0E0F12", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <div className="text-xs uppercase tracking-wider mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
-                Organisation-id ontbreekt
+              <div className="flex items-center gap-1.5 mb-1">
+                <AlertCircle size={13} style={{ color: "#E0A33E" }} />
+                <div className="text-xs uppercase tracking-wider font-semibold" style={{ color: "#E0A33E" }}>
+                  Organisation-id ontbreekt
+                </div>
               </div>
-              <div className="text-xs mb-2" style={{ color: "rgba(255,255,255,0.6)" }}>
-                Plak hier de organisation-id uit velopass.pro om de link naar de shop te activeren.
+              <div className="text-xs mb-2" style={{ color: "rgba(255,255,255,0.75)" }}>
+                Velopass.pro heeft geen bruikbaar organisation-id teruggegeven. De aanmelding is doorgestuurd,
+                maar de deep-link naar het management-panel werkt pas nadat je hieronder de id koppelt.
               </div>
+              <div className="text-xs mb-2 rounded-md p-2" style={{ background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <div className="font-semibold mb-1" style={{ color: "#fff" }}>Hoe zoek je de id op?</div>
+                <ol className="list-decimal ml-4 space-y-0.5">
+                  <li>Open <a href={VELOPASS_PRO_ORGANISATION_URL} target="_blank" rel="noopener noreferrer" style={{ color: "#7AB0FF" }}>velopass.pro Organisations</a> en zoek de shop.</li>
+                  <li>Klik de shop open — de id staat in de URL (<code style={{ color: "#7AB0FF" }}>/Organisations/&lt;uuid&gt;/</code>).</li>
+                  <li>Kopieer de UUID en plak hem hieronder, klik dan Koppelen.</li>
+                </ol>
+              </div>
+
+              {diagnostics && (
+                <div className="text-xs mb-2 rounded-md p-2" style={{ background: "rgba(224,82,82,0.06)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(224,82,82,0.25)" }}>
+                  <div className="font-semibold mb-1" style={{ color: "#E05252" }}>Diagnose uit laatste push</div>
+                  <div>
+                    POST /Organisations gaf status <code>{diagnostics.apiStatus ?? "?"}</code>.
+                    {diagnostics.responseKeys && diagnostics.responseKeys.length > 0 ? (
+                      <> Response bevatte velden: <code>{diagnostics.responseKeys.join(", ")}</code>.</>
+                    ) : (
+                      <> Response bevatte geen JSON-object.</>
+                    )}
+                  </div>
+                  {diagnostics.missingIdFields && diagnostics.missingIdFields.length > 0 && (
+                    <div className="mt-1">
+                      Ontbrekende id-velden (waarnaar gezocht is):{" "}
+                      <code>{diagnostics.missingIdFields.join(", ")}</code>
+                    </div>
+                  )}
+                  {diagnostics.lookupAttempts && diagnostics.lookupAttempts.length > 0 && (
+                    <details className="mt-1">
+                      <summary className="cursor-pointer" style={{ color: "rgba(255,255,255,0.75)" }}>
+                        Lookup-pogingen ({diagnostics.lookupAttempts.length}) — geen match
+                      </summary>
+                      <ul className="mt-1 space-y-0.5">
+                        {diagnostics.lookupAttempts.map((a, i) => (
+                          <li key={i} className="font-mono" style={{ color: "rgba(255,255,255,0.6)" }}>
+                            {a.status ?? "err"} · {a.path} · {a.count} rijen
+                            {a.sampleKeys ? ` · keys: ${a.sampleKeys.join(",")}` : ""}
+                            {a.error ? ` · ${a.error}` : ""}
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
+                  {diagnostics.responsePreview && (
+                    <details className="mt-1">
+                      <summary className="cursor-pointer" style={{ color: "rgba(255,255,255,0.75)" }}>Response-preview</summary>
+                      <pre className="mt-1 whitespace-pre-wrap break-all text-[11px]" style={{ color: "rgba(255,255,255,0.55)" }}>{diagnostics.responsePreview}</pre>
+                    </details>
+                  )}
+                </div>
+              )}
+
               <div className="flex items-center gap-2 flex-wrap">
                 <input
                   type="text"

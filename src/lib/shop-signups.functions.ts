@@ -517,6 +517,28 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       return null;
     };
     let returnedId: string | null = extractIdFromObject(apiResponse);
+
+    // Diagnostics for the admin panel when we cannot resolve an organisation id.
+    const ID_FIELDS_CHECKED = [
+      "id", "Id", "organisationId", "OrganisationId",
+      "organizationId", "OrganizationId", "value", "Value",
+      "data.id", "result.id", "organisation.id",
+    ];
+    const responseKeys: string[] =
+      apiResponse && typeof apiResponse === "object" && !Array.isArray(apiResponse)
+        ? Object.keys(apiResponse)
+        : [];
+    const missingIdFields = ID_FIELDS_CHECKED.filter((k) => {
+      if (!apiResponse || typeof apiResponse !== "object") return true;
+      const [top, nested] = k.split(".");
+      const v = nested ? (apiResponse as any)?.[top]?.[nested] : (apiResponse as any)?.[top];
+      return !(typeof v === "string" && v.trim());
+    });
+    const lookupAttempts: Array<{
+      path: string; status: number | null; count: number;
+      sampleKeys: string[] | null; matched: boolean; error?: string;
+    }> = [];
+
     if (!returnedId) {
       console.warn("[shop-signups] push: no id in POST /Organisations response", {
         id: data.id, apiStatus,
@@ -561,30 +583,27 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
           });
           if (!res.ok) {
             console.warn("[shop-signups] lookup HTTP error", { path, status: res.status });
+            lookupAttempts.push({ path, status: res.status, count: 0, sampleKeys: null, matched: false });
             return null;
           }
           const text = await res.text();
           const parsed = text ? JSON.parse(text) : null;
           const list: any[] = Array.isArray(parsed)
             ? parsed
-            : Array.isArray(parsed?.items)
-              ? parsed.items
-              : Array.isArray(parsed?.results)
-                ? parsed.results
-                : Array.isArray(parsed?.data)
-                  ? parsed.data
-                  : Array.isArray(parsed?.value)
-                    ? parsed.value
+            : Array.isArray(parsed?.items) ? parsed.items
+              : Array.isArray(parsed?.results) ? parsed.results
+                : Array.isArray(parsed?.data) ? parsed.data
+                  : Array.isArray(parsed?.value) ? parsed.value
                     : [];
-          console.log("[shop-signups] lookup", {
-            path, count: list.length,
-            sampleKeys: list[0] && typeof list[0] === "object" ? Object.keys(list[0]).slice(0, 12) : null,
-            sample: list[0] ?? null,
-          });
+          const sampleKeys = list[0] && typeof list[0] === "object" ? Object.keys(list[0]).slice(0, 12) : null;
+          console.log("[shop-signups] lookup", { path, count: list.length, sampleKeys, sample: list[0] ?? null });
           const hit = list.find(matches);
-          return extractId(hit);
+          const id = extractId(hit);
+          lookupAttempts.push({ path, status: res.status, count: list.length, sampleKeys, matched: !!id });
+          return id;
         } catch (e: any) {
           console.warn("[shop-signups] lookup threw", { path, error: e?.message });
+          lookupAttempts.push({ path, status: null, count: 0, sampleKeys: null, matched: false, error: e?.message });
           return null;
         }
       };
@@ -609,6 +628,23 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         });
       }
     }
+
+    const idDiagnostics = returnedId ? null : {
+      apiStatus,
+      responseKeys,
+      checkedIdFields: ID_FIELDS_CHECKED,
+      missingIdFields,
+      responsePreview: typeof apiResponse === "string"
+        ? apiResponse.slice(0, 400)
+        : JSON.stringify(apiResponse ?? null).slice(0, 400),
+      lookupAttempts,
+      target: {
+        shop_name: row.shop_name ?? null,
+        vat: row.vat ?? null,
+        email: row.email ?? null,
+      },
+    };
+
 
 
     // ---- Create employee/user under the organisation ------------------------
@@ -787,6 +823,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       managementId: returnedId,
       alreadyExists,
       response: apiResponse,
+      idDiagnostics,
       employee: {
         status: employeeStatus,
         alreadyExists: employeeAlreadyExists,
