@@ -408,6 +408,15 @@ function ShopSignupsPage() {
                         <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
                           {new Date(r.created_at).toLocaleTimeString("nl-BE", { hour: "2-digit", minute: "2-digit" })}
                         </div>
+                        {(r.confirmation_email_error || (r.confirmation_email_attempted_at && !r.confirmation_email_sent_at)) && (
+                          <div
+                            className="inline-flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded text-[10px] font-semibold"
+                            style={{ background: "rgba(224,82,82,0.12)", color: "#E05252", border: "1px solid rgba(224,82,82,0.30)" }}
+                            title={r.confirmation_email_error || "Bevestigingsmail is niet verzonden"}
+                          >
+                            <AlertCircle size={10} /> Mail faalde
+                          </div>
+                        )}
                       </td>
                       <td className="px-4 py-3">
                         <div className="font-semibold">{r.shop_name || "—"}</div>
