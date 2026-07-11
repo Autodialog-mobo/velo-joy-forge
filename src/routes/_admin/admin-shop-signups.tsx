@@ -214,13 +214,19 @@ function ShopSignupsPage() {
       }
       const managementId = res?.managementId;
       setPushSuccess({ id, managementId: managementId ?? "" });
+      setPushDiagnostics((prev) => {
+        const next = { ...prev };
+        if (managementId) delete next[id];
+        else if (res?.idDiagnostics) next[id] = res.idDiagnostics;
+        return next;
+      });
       setPushedIds((prev) => new Set(prev).add(id));
       toast.success(
         res?.alreadyExists
           ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
           : managementId
             ? `Aangemaakt in velopass.pro (id: ${managementId})`
-            : "Doorgestuurd naar velopass.pro",
+            : "Doorgestuurd — maar geen organisation-id ontvangen",
       );
       refetch();
     } catch (err: any) {
