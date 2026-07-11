@@ -823,6 +823,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       managementId: returnedId,
       alreadyExists,
       response: apiResponse,
+      idDiagnostics,
       employee: {
         status: employeeStatus,
         alreadyExists: employeeAlreadyExists,
