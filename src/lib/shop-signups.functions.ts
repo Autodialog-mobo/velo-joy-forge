@@ -499,8 +499,32 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       };
     }
 
-    let returnedId: string | null =
-      (apiResponse && typeof apiResponse === "object" && (apiResponse.id || apiResponse.organisationId)) || null;
+    // Broadly extract an id from a variety of ASP.NET response shapes:
+    // { id }, { Id }, { organisationId }, { OrganisationId }, { value }, { Value },
+    // { data: { id } }, { result: { id } }, or a bare UUID string.
+    const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const extractIdFromObject = (o: any): string | null => {
+      if (!o) return null;
+      if (typeof o === "string") return UUID_RE.test(o.trim()) ? o.trim() : null;
+      if (typeof o !== "object") return null;
+      const direct = o.id ?? o.Id ?? o.organisationId ?? o.OrganisationId
+        ?? o.organizationId ?? o.OrganizationId ?? o.value ?? o.Value;
+      if (typeof direct === "string" && direct.trim()) return direct.trim();
+      for (const key of ["data", "result", "Data", "Result", "organisation", "Organisation"]) {
+        const nested = extractIdFromObject(o[key]);
+        if (nested) return nested;
+      }
+      return null;
+    };
+    let returnedId: string | null = extractIdFromObject(apiResponse);
+    if (!returnedId) {
+      console.warn("[shop-signups] push: no id in POST /Organisations response", {
+        id: data.id, apiStatus,
+        rawPreview: typeof apiResponse === "string"
+          ? apiResponse.slice(0, 500)
+          : JSON.stringify(apiResponse ?? null).slice(0, 500),
+      });
+    }
 
     // Fallback: when velopass.pro replies "already exists" (or a successful
     // response without an id), look the organisation up so we can still store
