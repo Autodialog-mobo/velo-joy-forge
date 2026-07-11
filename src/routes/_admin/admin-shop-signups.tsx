@@ -408,6 +408,15 @@ function ShopSignupsPage() {
                         <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
                           {new Date(r.created_at).toLocaleTimeString("nl-BE", { hour: "2-digit", minute: "2-digit" })}
                         </div>
+                        {(r.confirmation_email_error || (r.confirmation_email_attempted_at && !r.confirmation_email_sent_at)) && (
+                          <div
+                            className="inline-flex items-center gap-1 mt-1 px-1.5 py-0.5 rounded text-[10px] font-semibold"
+                            style={{ background: "rgba(224,82,82,0.12)", color: "#E05252", border: "1px solid rgba(224,82,82,0.30)" }}
+                            title={r.confirmation_email_error || "Bevestigingsmail is niet verzonden"}
+                          >
+                            <AlertCircle size={10} /> Mail faalde
+                          </div>
+                        )}
                       </td>
                       <td className="px-4 py-3">
                         <div className="font-semibold">{r.shop_name || "—"}</div>
@@ -544,6 +553,29 @@ function ShopSignupsPage() {
                 disabled={savingId === open.id}
               />
             )}
+
+            {(open.confirmation_email_error || (open.confirmation_email_attempted_at && !open.confirmation_email_sent_at)) && (
+              <div
+                className="mb-4 rounded-lg p-3 flex items-start gap-2 text-sm"
+                style={{ background: "rgba(224,82,82,0.08)", border: "1px solid rgba(224,82,82,0.30)", color: "#E05252" }}
+              >
+                <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                <div>
+                  <div className="font-semibold">Bevestigingsmail is niet verzonden</div>
+                  {open.confirmation_email_error && (
+                    <div className="mt-1 text-xs break-words" style={{ color: "rgba(255,255,255,0.7)" }}>
+                      {open.confirmation_email_error}
+                    </div>
+                  )}
+                  {open.confirmation_email_attempted_at && (
+                    <div className="mt-1 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      Laatste poging: {new Date(open.confirmation_email_attempted_at).toLocaleString("nl-BE")}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
 
             {open.pushed_to_pro_at || pushedIds.has(open.id) ? (
               <PushedInfoBanner

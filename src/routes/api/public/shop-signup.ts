@@ -136,16 +136,34 @@ export const Route = createFileRoute("/api/public/shop-signup")({
           emailRes = { ok: false, error: err };
         }
 
+        const nowIso = new Date().toISOString();
         if (emailRes.ok) {
           console.log(`[shop-signup ${reqId}] email_sent`);
           const updRes = await (supabaseAdmin.from("shop_signups") as any)
-            .update({ confirmation_email_sent_at: new Date().toISOString() })
+            .update({
+              confirmation_email_sent_at: nowIso,
+              confirmation_email_attempted_at: nowIso,
+              confirmation_email_error: null,
+            })
             .eq("id", signupId);
           if (updRes.error) {
             console.error(`[shop-signup ${reqId}] email_flag_update_failed`, updRes.error);
           }
         } else {
-          console.error(`[shop-signup ${reqId}] email_failed`, emailRes.error ?? "(no error object)");
+          const errMsg =
+            typeof emailRes.error === "string"
+              ? emailRes.error
+              : (emailRes.error as any)?.message ?? JSON.stringify(emailRes.error ?? {});
+          console.error(`[shop-signup ${reqId}] email_failed`, errMsg);
+          const updRes = await (supabaseAdmin.from("shop_signups") as any)
+            .update({
+              confirmation_email_attempted_at: nowIso,
+              confirmation_email_error: errMsg.slice(0, 2000),
+            })
+            .eq("id", signupId);
+          if (updRes.error) {
+            console.error(`[shop-signup ${reqId}] email_error_update_failed`, updRes.error);
+          }
         }
 
         // Return ok even if the confirmation email failed — the signup is stored.
