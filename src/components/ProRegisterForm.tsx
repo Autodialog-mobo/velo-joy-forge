@@ -318,7 +318,10 @@ export function RegisterForm() {
               setCity(p.city);
               setAutofilled((s) => ({ ...s, city: true }));
             }
-            if (p.country && !country) setCountry(p.country);
+            if (p.country && !country) {
+              const allowed = ["BE","NL","LU","FR","DE","AT","CH","ES","PT","IT","GB","IE","DK","SE","NO","FI","PL","CZ"];
+              setCountry(allowed.includes(p.country) ? p.country : "OTHER");
+            }
           }}
           required
           language={lang}
@@ -348,7 +351,10 @@ export function RegisterForm() {
               setCity(p.city);
               setAutofilled((s) => ({ ...s, city: true }));
             }
-            if (p.country) setCountry(p.country);
+            if (p.country && !country) {
+              const allowed = ["BE","NL","LU","FR","DE","AT","CH","ES","PT","IT","GB","IE","DK","SE","NO","FI","PL","CZ"];
+              setCountry(allowed.includes(p.country) ? p.country : "OTHER");
+            }
           }}
           includedPrimaryTypes={["street_address", "route", "premise", "subpremise"]}
           autoComplete="street-address"
