@@ -28,6 +28,7 @@
     "statShopsLabel": "tiendas activas",
     "statBikesLabel": "bicis registradas",
     "statRetentionLabel": "más retención de clientes",
+    "trustLine": "Operador de identificación homologado APIC — cada bicicleta marcada se registra en MyBike (Bélgica) y en FNUCI (Francia), desde un único registro europeo.",
     "dash": {
       "subtitle": "Velopass Pro",
       "stat1Label": "Clientes activos",
@@ -104,6 +105,7 @@
     "packageItem3Sub": "CycleSoftware, Vendit, Wilmar y más",
     "packageItem4": "Acceso gratuito a la Velopass Pro App — para quien escanea sobre la marcha o no tiene sistema de caja",
     "packageItem5": "Onboarding en tu idioma: NL · FR · EN",
+    "packageItem6": "Conformidad legal incluida — operador APIC homologado, registro FNUCI automático (Francia)",
     "packageNote": "Tras unirte, contactamos en 2 días laborables y enviamos tu pack.",
     "feat1Title": "Integración con caja o app gratuita",
     "feat1Body": "Funciona con tu sistema de caja actual. O usa la Pro App gratuita.",

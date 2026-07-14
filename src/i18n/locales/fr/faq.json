@@ -31,6 +31,10 @@
     {
       "q": "Quelle est la différence entre le code d'Velopassation et le numéro de châssis ?",
       "a": "Ce sont deux numéros différents. Le numéro de cadre est le numéro de série que le fabricant a gravé sur le cadre de ton vélo. Le code Velopass figure sur l'étiquette Frame-ID collée sur ton vélo et te permet d'accéder à ton passeport numérique. Sur bikesearch.velopass.com, tu peux effectuer une recherche en utilisant l'un ou l'autre."
+    },
+    {
+      "q": "Comment fonctionne Velopass avec le FNUCI, le registre national français ?",
+      "a": "Velopass est un opérateur d'identification de cycles agréé, référencé par l'APIC. Chaque vélo équipé d'un Frame-ID et enregistré par un vélociste Velopass est enregistré dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la loi d'orientation des mobilités. Votre passeport numérique Velopass et votre enregistrement officiel ne font qu'un."
     }
   ],
   "right": [

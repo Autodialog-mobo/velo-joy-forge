@@ -31,6 +31,10 @@
     {
       "q": "Was ist der Unterschied zwischen dem „Velopass“-Code und der Rahmennummer?",
       "a": "Es handelt sich um zwei verschiedene Nummern. Die Rahmennummer ist die Seriennummer, die der Hersteller auf den Rahmen deines Fahrrads eingraviert hat. Der „Velopass“-Code befindet sich auf dem Aufkleber „Frame-ID“, der an deinem Fahrrad angebracht ist, und ermöglicht dir den Zugriff auf deinen digitalen Pass. Auf bikesearch.velopass.com kannst du mit beiden Nummern suchen."
+    },
+    {
+      "q": "Wie funktioniert Velopass mit dem FNUCI, dem französischen nationalen Fahrradregister?",
+      "a": "Velopass ist ein zugelassener Fahrrad-Identifikationsbetreiber, gelistet bei APIC. Jedes Fahrrad mit einer Frame-ID, das von einem Velopass-Fahrradladen registriert wird, wird gemäß dem französischen Mobilitätsgesetz (loi LOM) in das FNUCI (Fichier National Unique des Cycles Identifiés) eingetragen. Dein digitaler Velopass-Pass und deine offizielle Registrierung sind ein und dasselbe."
     }
   ],
   "right": [

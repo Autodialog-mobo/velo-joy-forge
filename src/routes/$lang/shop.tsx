@@ -191,6 +191,9 @@ function VelopassPro() {
               <div className="stat-label">{t("hero.statRetentionLabel")}</div>
             </div>
           </div>
+          <p style={{ marginTop: 18, fontSize: 13, lineHeight: 1.55, color: "rgba(255,255,255,0.75)", maxWidth: 560 }}>
+            {t("hero.trustLine")}
+          </p>
         </div>
         <div className="pro-hero-right">
           <div className="dash">
@@ -347,6 +350,7 @@ function VelopassPro() {
                   <span className="reg-package-text">{t("register.packageItem4")}</span>
                 </div>
                 <div className="reg-package-item"><span className="reg-pcheck">✓</span><span className="reg-package-text">{t("register.packageItem5")}</span></div>
+                <div className="reg-package-item"><span className="reg-pcheck">✓</span><span className="reg-package-text">{t("register.packageItem6")}</span></div>
               </div>
               <p className="reg-package-note">{t("register.packageNote")}</p>
             </div>

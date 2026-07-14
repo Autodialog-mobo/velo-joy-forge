@@ -131,7 +131,7 @@
       "insurance": "Assurance",
       "ownership": "Une propriété sans souci",
       "theft_body": "{{shopCount}}+ vélocistes scannent automatiquement via leur caisse. Les cyclistes et la police qui scannent le QR voient aussi tout de suite que ton vélo est recherché.",
-      "theft_mybike": "Également lié à MyBike, le registre national belge des vélos.",
+      "theft_mybike": "Le registre Velopass est européen et connecté aux registres nationaux officiels : le FNUCI en France (via notre agrément APIC) et MyBike en Belgique.",
       "theft_stolen_link": "Vélo volé ou disparu ? Lis ce que tu dois faire →",
       "service_book_body": "Chaque entretien et chaque réparation : documenté et toujours à portée de main. Tu vends ton vélo ? Un historique d'entretien complet augmente sa valeur de revente.",
       "service_book_wallet_load": "Charge ton Velopass dans Apple Wallet ou Google Wallet. Il est toujours sur ton téléphone. Pas d'appli, pas de connexion au comptoir.",

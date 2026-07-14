@@ -28,6 +28,7 @@
     "statShopsLabel": "actieve fietswinkels",
     "statBikesLabel": "geregistreerde fietsen",
     "statRetentionLabel": "hogere klantenretentie",
+    "trustLine": "Erkend identificatie-operator APIC — elke gemarkeerde fiets wordt geregistreerd in MyBike (België) en het FNUCI (Frankrijk), vanuit één Europees register.",
     "dash": {
       "subtitle": "Velopass Pro",
       "stat1Label": "Actieve klanten",
@@ -104,6 +105,7 @@
     "packageItem3Sub": "CycleSoftware, Vendit, Wilmar en meer",
     "packageItem4": "Gratis toegang tot de Velopass Pro App — voor wie onderweg scant of nog geen kassasysteem heeft",
     "packageItem5": "Onboarding in jouw taal: NL · FR · EN",
+    "packageItem6": "Wettelijke conformiteit inbegrepen — erkend APIC-operator, automatische FNUCI-registratie (Frankrijk)",
     "packageNote": "Na aansluiting nemen we binnen 2 werkdagen contact op en sturen we je pakket.",
     "feat1Title": "Kassakoppeling of gratis app",
     "feat1Body": "Werkt met je bestaande kassasysteem. Of gebruik de gratis Pro app.",
