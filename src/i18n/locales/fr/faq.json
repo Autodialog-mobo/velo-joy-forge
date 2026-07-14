@@ -34,7 +34,7 @@
     },
     {
       "q": "Comment fonctionne Velopass avec le FNUCI, le registre national français ?",
-      "a": "Velopass est un opérateur d'identification de cycles agréé, référencé par l'APIC. Chaque vélo équipé d'un Frame-ID et enregistré par un vélociste Velopass français est enregistré dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la loi d'orientation des mobilités. Votre passeport numérique Velopass et votre enregistrement officiel ne font qu'un."
+      "a": "Velopass est un opérateur d'identification de cycles agréé, référencé par l'APIC. En France, les vélos identifiés par un vélociste Velopass français reçoivent un Frame-ID dont le code commence par « VP » — spécifique au marché français — et sont enregistrés dans le FNUCI (Fichier National Unique des Cycles Identifiés), conformément à la loi d'orientation des mobilités. Votre passeport numérique Velopass et votre enregistrement officiel ne font qu'un."
     }
   ],
   "right": [

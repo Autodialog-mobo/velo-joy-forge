@@ -131,7 +131,7 @@
       "insurance": "Seguro",
       "ownership": "Propiedad sin preocupaciones",
       "theft_body": "{{shopCount}}+ tiendas escanean automáticamente desde su sistema de caja. Los ciclistas y la policía que escanean el QR también ven al momento si tu bici está siendo buscada.",
-      "theft_mybike": "El registro Velopass es europeo y está conectado con los registros nacionales oficiales: MyBike en Bélgica y el FNUCI en Francia (a través de nuestra homologación APIC).",
+      "theft_mybike": "El registro Velopass es europeo y está conectado con los registros nacionales oficiales. En Bélgica está vinculado a MyBike. En Francia, las bicicletas identificadas por una tienda Velopass francesa llevan un Frame-ID con código « VP » y se inscriben en el FNUCI, a través de nuestra homologación APIC.",
       "theft_stolen_link": "¿Bici robada o desaparecida? Mira qué hacer →",
       "service_book_body": "Cada mantenimiento y cada reparación: documentados y siempre a mano. ¿Vendes tu bici? Un historial de servicio completo aumenta su valor de reventa.",
       "service_book_wallet_load": "Carga tu Velopass en Apple Wallet o Google Wallet. Así está siempre en tu móvil. Sin app, sin login en el mostrador.",

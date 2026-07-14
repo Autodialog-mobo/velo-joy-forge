@@ -34,7 +34,7 @@
     },
     {
       "q": "Hoe werkt Velopass samen met het FNUCI, het Franse nationale fietsregister?",
-      "a": "Velopass is een erkend fietsidentificatie-operator, opgenomen bij APIC. Elke fiets met een Frame-ID die door een Franse Velopass-fietswinkel wordt geregistreerd, wordt automatisch in het FNUCI (Fichier National Unique des Cycles Identifiés) opgenomen, conform de Franse mobiliteitswet (loi LOM). Je digitale Velopass-paspoort en je officiële registratie zijn één en hetzelfde."
+      "a": "Velopass is een erkend fietsidentificatie-operator, opgenomen bij APIC. In Frankrijk krijgen fietsen die door een Franse Velopass-fietswinkel geïdentificeerd worden een Frame-ID waarvan de code begint met « VP » — specifiek voor de Franse markt — en worden ze opgenomen in het FNUCI (Fichier National Unique des Cycles Identifiés), conform de Franse mobiliteitswet (loi LOM). Je digitale Velopass-paspoort en je officiële registratie zijn één en hetzelfde."
     }
   ],
   "right": [
