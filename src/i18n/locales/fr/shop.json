@@ -28,7 +28,7 @@
     "statShopsLabel": "vélocistes en activité",
     "statBikesLabel": "vélos immatriculés",
     "statRetentionLabel": "un taux de fidélisation plus élevé",
-    "trustLine": "Opérateur d'identification agréé APIC — chaque vélo marqué est enregistré au FNUCI (France) et à MyBike (Belgique), depuis un registre européen unique.",
+    "trustLine": "Opérateur d'identification agréé APIC. Un registre européen unique, connecté aux registres nationaux : MyBike en Belgique, et le FNUCI en France pour les vélos identifiés par nos vélocistes français (Frame-ID « VP »).",
     "dash": {
       "subtitle": "Velopass Pour",
       "stat1Label": "Clients actifs",
@@ -105,7 +105,7 @@
     "packageItem3Sub": "CycleSoftware, Vendit, Wilmar et bien d'autres encore",
     "packageItem4": "Accès gratuit à l'application Velopass Pro — pour ceux qui scannent leurs articles lors de leurs déplacements ou qui ne disposent pas encore d'un système de point de vente",
     "packageItem5": "Intégration dans ta langue : NL · FR · EN",
-    "packageItem6": "Conformité légale incluse — opérateur agréé APIC, enregistrement FNUCI automatique (France)",
+    "packageItem6": "Vélociste en France ? Conformité loi LOM incluse — opérateur agréé APIC, Frame-ID « VP » et enregistrement FNUCI automatique",
     "packageNote": "Une fois ton inscription validée, on te contactera dans les deux jours ouvrables et on t'enverra ton colis.",
     "feat1Title": "Intégration au système de caisse ou application gratuite",
     "feat1Body": "Fonctionne avec ton système de caisse existant. Ou utilise l'application Pro gratuite.",

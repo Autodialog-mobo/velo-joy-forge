@@ -28,7 +28,7 @@
     "statShopsLabel": "aktive Fahrradgeschäfte",
     "statBikesLabel": "zugelassene Fahrräder",
     "statRetentionLabel": "höhere Kundenbindung",
-    "trustLine": "APIC-zugelassener Identifikationsbetreiber — jedes markierte Fahrrad wird in MyBike (Belgien) und im FNUCI (Frankreich) registriert, aus einem einzigen europäischen Register.",
+    "trustLine": "APIC-zugelassener Identifikationsbetreiber. Ein einziges europäisches Register, verbunden mit den nationalen Registern: MyBike in Belgien und das FNUCI in Frankreich für Fahrräder, die von unseren französischen Fahrradläden registriert werden (Frame-ID „VP").",
     "dash": {
       "subtitle": "Velopass Pro",
       "stat1Label": "Aktive Kunden",
@@ -105,7 +105,7 @@
     "packageItem3Sub": "CycleSoftware, Vendit, Wilmar und weitere",
     "packageItem4": "Kostenloser Zugang zur „Velopass Pro“-App – für alle, die unterwegs scannen oder noch kein Kassensystem haben",
     "packageItem5": "Einführung in deiner Sprache: NL · FR · EN",
-    "packageItem6": "Rechtliche Konformität inbegriffen — APIC-zugelassener Betreiber, automatische FNUCI-Registrierung (Frankreich)",
+    "packageItem6": "Fahrradladen in Frankreich? Konformität mit dem Loi LOM inbegriffen — APIC-zugelassener Betreiber, Frame-ID „VP" und automatische FNUCI-Registrierung",
     "packageNote": "Nach der Registrierung melden wir uns innerhalb von 2 Werktagen bei dir und versenden dein Paket.",
     "feat1Title": "Kassenintegration oder kostenlose App",
     "feat1Body": "Funktioniert mit deinem bestehenden Kassensystem. Oder nutze die kostenlose Pro-App.",

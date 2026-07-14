@@ -131,7 +131,7 @@
       "insurance": "Verzekering",
       "ownership": "Zorgeloos eigenaarschap",
       "theft_body": "{{shopCount}}+ fietswinkels scannen automatisch via hun kassasysteem. Ook fietsers en politie die de QR scannen zien meteen dat jouw fiets gezocht wordt.",
-      "theft_mybike": "Het Velopass-register is Europees en gekoppeld aan de officiële nationale registers: MyBike in België en het FNUCI in Frankrijk (via onze APIC-erkenning).",
+      "theft_mybike": "Het Velopass-register is Europees en gekoppeld aan de officiële nationale registers. In België is het register verbonden met MyBike. In Frankrijk krijgen fietsen die door een Franse Velopass-fietswinkel geregistreerd worden een Frame-ID met « VP »-code en worden ze opgenomen in het FNUCI, via onze APIC-erkenning.",
       "theft_stolen_link": "Fiets gestolen of vermist? Lees wat je moet doen →",
       "service_book_body": "Elke onderhoudsbeurt en elke herstelling: gedocumenteerd en altijd bij de hand. Verkoop je je fiets? Een volledige servicehistorie verhoogt de restwaarde.",
       "service_book_wallet_load": "Laad je Velopass in Apple Wallet of Google Wallet. Zo zit hij altijd op je telefoon. Geen app, geen login aan de toonbank.",

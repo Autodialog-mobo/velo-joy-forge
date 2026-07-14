@@ -28,7 +28,7 @@
     "statShopsLabel": "active bike shops",
     "statBikesLabel": "registered bikes",
     "statRetentionLabel": "higher customer retention",
-    "trustLine": "APIC-approved identification operator — every marked bike is registered in MyBike (Belgium) and the FNUCI (France), from a single European register.",
+    "trustLine": "APIC-approved identification operator. One European register, connected to the national registers: MyBike in Belgium, and the FNUCI in France for bikes identified by our French shops (\"VP\" Frame-ID).",
     "dash": {
       "subtitle": "Velopass Pro",
       "stat1Label": "Active customers",
@@ -105,7 +105,7 @@
     "packageItem3Sub": "CycleSoftware, Vendit, Wilmar and more",
     "packageItem4": "Free access to the Velopass Pro App — for those who scan on the go or don't have a POS system yet",
     "packageItem5": "Onboarding in your language: NL · FR · EN",
-    "packageItem6": "Legal compliance included — APIC-approved operator, automatic FNUCI registration (France)",
+    "packageItem6": "Shop in France? Loi LOM compliance included — APIC-approved operator, \"VP\" Frame-ID and automatic FNUCI registration",
     "packageNote": "After registration we will contact you within 2 working days and send your package.",
     "feat1Title": "POS integration or free app",
     "feat1Body": "Works with your existing POS system. Or use the free Pro app.",
