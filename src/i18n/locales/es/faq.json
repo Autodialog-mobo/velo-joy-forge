@@ -31,6 +31,10 @@
     {
       "q": "¿Cuál es la diferencia entre el código Velopass y el número de cuadro?",
       "a": "Son dos números distintos. El número de cuadro es el número de serie que el fabricante ha grabado en el cuadro de tu bici. El código Velopass está en el Frame-ID pegado a tu bici y da acceso a tu pasaporte digital. En bikesearch.velopass.com puedes buscar con ambos."
+    },
+    {
+      "q": "¿Cómo funciona Velopass con FNUCI, el registro nacional francés de bicicletas?",
+      "a": "Velopass es un operador de identificación de bicicletas homologado, referenciado por APIC. Cada bicicleta con un Frame-ID registrada por una tienda Velopass queda inscrita en el FNUCI (Fichier National Unique des Cycles Identifiés), conforme a la ley francesa de movilidad (loi LOM). Tu pasaporte digital Velopass y tu registro oficial son uno solo."
     }
   ],
   "right": [

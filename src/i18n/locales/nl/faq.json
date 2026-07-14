@@ -31,6 +31,10 @@
     {
       "q": "Wat is het verschil tussen de Velopass-code en het framenummer?",
       "a": "Het zijn twee verschillende nummers. Het framenummer is het serienummer dat de fabrikant heeft ingegraveerd op het frame van je fiets. De Velopass-code staat op de Frame-ID die op je fiets geplakt is en geeft toegang tot je digitaal paspoort. Op bikesearch.velopass.com kan je zoeken met beide."
+    },
+    {
+      "q": "Hoe werkt Velopass samen met het FNUCI, het Franse nationale fietsregister?",
+      "a": "Velopass is een erkend fietsidentificatie-operator, opgenomen bij APIC. Elke fiets met een Frame-ID die door een Velopass-fietswinkel wordt geregistreerd, wordt automatisch in het FNUCI (Fichier National Unique des Cycles Identifiés) opgenomen, conform de Franse mobiliteitswet (loi LOM). Je digitale Velopass-paspoort en je officiële registratie zijn één en hetzelfde."
     }
   ],
   "right": [
