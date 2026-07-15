@@ -793,7 +793,7 @@ function BikeSearchPage() {
           </button>
         </div>
       </nav>
-      <section style={{ padding: "88px 6vw 0", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+      <section style={{ padding: "clamp(72px, 14vw, 88px) clamp(16px, 5vw, 32px) 0", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
         <button
           type="button"
           onClick={() => {
@@ -819,7 +819,7 @@ function BikeSearchPage() {
           {t("page.back")}
         </button>
       </section>
-      <section style={{ padding: "16px 6vw 16px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
+      <section style={{ padding: "16px clamp(16px, 5vw, 32px)", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
@@ -837,10 +837,10 @@ function BikeSearchPage() {
           style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(28px, 4vw, 42px)",
-            lineHeight: 1.1,
+            fontSize: "clamp(26px, 7vw, 42px)",
+            lineHeight: 1.15,
             color: "#0D1F3C",
-            letterSpacing: "-1px",
+            letterSpacing: "-0.5px",
             marginBottom: 12,
           }}
         >
@@ -873,7 +873,7 @@ function BikeSearchPage() {
       </section>
 
       {/* METHODS */}
-      <section style={{ padding: "12px 6vw 24px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+      <section style={{ padding: "12px clamp(16px, 5vw, 32px) 24px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
         <div className="bs-grid">
           {/* METHOD A */}
           <form onSubmit={submitA} className="bs-card bs-card-primary">
@@ -1452,7 +1452,7 @@ function BikeSearchPage() {
       </section>
 
       {/* STATUS OVERVIEW */}
-      <section style={{ padding: "48px 6vw", background: "#F5F3EE" }}>
+      <section style={{ padding: "clamp(32px, 7vw, 48px) clamp(16px, 5vw, 32px)", background: "#F5F3EE" }}>
         <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 28px" }}>
           <div
             style={{
@@ -1471,7 +1471,7 @@ function BikeSearchPage() {
             style={{
               fontFamily: "'Syne', sans-serif",
               fontWeight: 700,
-              fontSize: "clamp(22px, 3vw, 28px)",
+              fontSize: "clamp(20px, 5vw, 28px)",
               color: "#0D1F3C",
               lineHeight: 1.15,
               marginBottom: 8,
@@ -1706,7 +1706,7 @@ function BikeSearchPage() {
         style={{
           maxWidth: 900,
           margin: "40px auto 0",
-          padding: "0 6vw 64px",
+          padding: "0 clamp(16px, 5vw, 32px) clamp(40px, 8vw, 64px)",
         }}
       >
         <Link
