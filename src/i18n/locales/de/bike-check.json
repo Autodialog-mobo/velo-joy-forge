@@ -37,7 +37,7 @@
     "manual_fallback": "oder Code manuell eingeben",
     "example_inline": "zum Beispiel",
     "example_copy_aria": "Beispielcode {{value}} kopieren",
-    "format_confirmed": "✓ Als Identifikationscode erkannt",
+    "format_confirmed": "✓ Gültiges Codeformat",
     "unknown_format_hint": "Dieses Codeformat erkennen wir noch nicht. Prüfe, ob du den vollständigen Code übernommen hast, oder suche über Marke und Rahmennummer.",
     "unknown_qr_hint": "Diesen QR-Code erkennen wir nicht als Fahrradidentifikation. Suche über den Code auf dem Aufkleber oder über Marke und Rahmennummer.",
     "switch_to_brand_frame": "Über Marke und Rahmennummer suchen →"

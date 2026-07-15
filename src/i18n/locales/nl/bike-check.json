@@ -37,7 +37,7 @@
     "manual_fallback": "of voer de code handmatig in",
     "example_inline": "bijvoorbeeld",
     "example_copy_aria": "Kopieer voorbeeldcode {{value}}",
-    "format_confirmed": "✓ Herkend als identificatiecode",
+    "format_confirmed": "✓ Geldig codeformaat",
     "unknown_format_hint": "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
     "unknown_qr_hint": "Deze QR-code herkennen we niet als een fietsidentificatie. Zoek via de code op de sticker of via merk en framenummer.",
     "switch_to_brand_frame": "Zoek via merk en framenummer →"
