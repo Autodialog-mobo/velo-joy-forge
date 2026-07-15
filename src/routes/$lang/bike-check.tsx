@@ -873,7 +873,7 @@ function BikeSearchPage() {
       </section>
 
       {/* METHODS */}
-      <section style={{ padding: "12px 6vw 24px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+      <section style={{ padding: "12px clamp(16px, 5vw, 32px) 24px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
         <div className="bs-grid">
           {/* METHOD A */}
           <form onSubmit={submitA} className="bs-card bs-card-primary">
