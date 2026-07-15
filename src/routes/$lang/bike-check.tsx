@@ -819,7 +819,7 @@ function BikeSearchPage() {
           {t("page.back")}
         </button>
       </section>
-      <section style={{ padding: "16px 6vw 16px", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
+      <section style={{ padding: "16px clamp(16px, 5vw, 32px)", textAlign: "center", maxWidth: 720, margin: "0 auto" }}>
         <div
           style={{
             fontFamily: "'DM Sans', sans-serif",
