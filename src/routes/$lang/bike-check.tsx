@@ -714,7 +714,7 @@ function BikeSearchPage() {
     if (extracted) {
       setUnknownFormat(false);
       setCodeA(extracted);
-      void runCheck(extracted);
+      void runCheck(extracted, "qr");
       return;
     }
     // Unknown QR — show the soft hint (not an error) and let the user
