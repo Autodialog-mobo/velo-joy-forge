@@ -255,6 +255,21 @@ type CodePattern = { source: string; pattern: RegExp };
 const CODE_PATTERNS: CodePattern[] = [
   { source: "Velopass", pattern: /^[A-Z0-9]{10}$/ },
   { source: "FNUCI", pattern: /^[A-Z0-9]{10}$/ },
+  // Prefix-formats route exclusively to their register (no overlap with the
+  // bare 10-char patterns above). API wiring not yet live — the entry is
+  // present so format detection + sourcesSearched already behave correctly.
+  { source: "APIC-BE", pattern: /^BE[A-Z0-9]{10}$/ },
+];
+
+/**
+ * Retry map for the "user typed the identifier without its country prefix"
+ * edge case. Only consulted in the not-found path for bare 10-char codes,
+ * so happy-path latency is unaffected. Each entry prepends its prefix and
+ * routes the retried code to the matching prefix-register.
+ */
+type PrefixRetry = { prefix: string; source: string };
+const PREFIX_RETRIES: PrefixRetry[] = [
+  { prefix: "BE", source: "APIC-BE" },
 ];
 
 function matchCodePatterns(code: string): string[] {
