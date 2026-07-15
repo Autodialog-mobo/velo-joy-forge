@@ -614,12 +614,9 @@ function BikeSearchPage() {
   // Reset the "unknown format" hint as soon as the user edits the field.
   useEffect(() => { setUnknownFormat(false); }, [codeA]);
 
-  // Spotlight: na een (scan- of form-)submit dimmen we de rest van de
-  // pagina en lichten het resultaatpaneel even op. Werkt identiek op
-  // mobiel én desktop: backdrop is position:fixed, het resultaat zit op
-  // z-index 60 (onder de nav op 250, boven de dim op 50). Dismiss zodra
-  // de gebruiker interageert (klik, scroll, toetsenbord) of na 6s — zo
-  // wordt het op desktop niet weggeflitst voordat het oog het opmerkt.
+  // Spotlight: na een handmatige submit dimmen we de rest van de pagina kort
+  // en lichten het resultaatpaneel op. Na QR-scan doen we dit bewust niet:
+  // de scan moet onmiddellijk "weg" voelen zodra het resultaat binnenkomt.
   const [spotlight, setSpotlight] = useState(false);
   useEffect(() => {
     if (!(result || error)) return;
@@ -628,9 +625,9 @@ function BikeSearchPage() {
         resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     });
-    setSpotlight(true);
+    setSpotlight(lookupSource !== "qr");
     const dismiss = () => setSpotlight(false);
-    const tid = setTimeout(dismiss, 6000);
+    const tid = setTimeout(dismiss, 1800);
     // Pas listeners toe ná de scroll-animatie, anders dismisst onze eigen
     // smooth-scroll het direct via het 'scroll' event.
     const lid = setTimeout(() => {
@@ -638,7 +635,7 @@ function BikeSearchPage() {
       window.addEventListener("keydown", dismiss, { once: true });
       window.addEventListener("wheel", dismiss, { once: true, passive: true });
       window.addEventListener("touchmove", dismiss, { once: true, passive: true });
-    }, 800);
+    }, 300);
     return () => {
       clearTimeout(tid);
       clearTimeout(lid);
@@ -647,7 +644,7 @@ function BikeSearchPage() {
       window.removeEventListener("wheel", dismiss);
       window.removeEventListener("touchmove", dismiss);
     };
-  }, [result, error]);
+  }, [result, error, lookupSource]);
 
   // Lightbox: ESC closes the enlarged image view.
   useEffect(() => {
@@ -1361,7 +1358,7 @@ function BikeSearchPage() {
           }}
         >
           <Search size={13} strokeWidth={2} aria-hidden="true" />
-          <span>{t("coverage_note", { defaultValue: "Doorzoekt de Velopass-database en gekoppelde nationale registers" })}</span>
+          <span>{t("coverage_note", { defaultValue: "doorzoekt de Europese Velopass-database en gekoppelde nationale registers" })}</span>
         </p>
 
 

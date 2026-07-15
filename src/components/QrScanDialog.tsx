@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -668,18 +669,20 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       // off in onResult (turnstile token, server lookup, …) must not
       // delay the getUserMedia teardown — otherwise the camera preview
       // stays on screen for as long as the lookup runs.
-      setClosingAfterResult(true);
-      setScanPaused(true);
-      setActiveLabel(null);
-      setTorchSupported(false);
-      setTorchOn(false);
-      setBoostOn(false);
       stopCameraTracksNow();
-      setResult(null);
-      setCameraError(null);
-      setManual(false);
-      setManualCode("");
-      onOpenChange(false);
+      flushSync(() => {
+        setClosingAfterResult(true);
+        setScanPaused(true);
+        setActiveLabel(null);
+        setTorchSupported(false);
+        setTorchOn(false);
+        setBoostOn(false);
+        setResult(null);
+        setCameraError(null);
+        setManual(false);
+        setManualCode("");
+        onOpenChange(false);
+      });
       onResult(value);
       return;
     }
@@ -760,7 +763,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
   return (
-    <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
+    <Dialog open={open && !closingAfterResult} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
       <DialogContent
         className="max-w-md p-0 border-0 overflow-hidden flex flex-col z-[300] [&>button]:hidden"
         style={{ background: "#FFFFFF", borderRadius: 20, maxHeight: "85vh", marginTop: 32 }}
