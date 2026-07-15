@@ -454,7 +454,7 @@ function BikeSearchPage() {
   // Silence unused import warning — BIKE_BRANDS is referenced via brand-search.
   void BIKE_BRANDS;
 
-  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 32);
   const findVelopassCode = (raw: string) => {
     const value = raw.trim();
     const codes: string[] = [];
