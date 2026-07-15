@@ -24,6 +24,17 @@ import frameNumberAsset from "@/assets/frame-number.png.asset.json";
 // Cloudflare Turnstile site key — real production key.
 const TURNSTILE_SITE_KEY = "0x4AAAAAADkaXNe7SmFnETSM";
 
+// Client-side mirror of the server-side CODE_PATTERNS registry.
+// Kept in sync with src/lib/bike-check.functions.ts. Used for silent
+// format confirmation while typing and for the "unknown format" hint on
+// submit — the actual authoritative match happens server-side.
+const CODE_PATTERNS: RegExp[] = [
+  /^[A-Z0-9]{10}$/, // Velopass + FNUCI (FR) share the 10-char alphanumeric shape
+];
+function matchesAnyCodePattern(code: string): boolean {
+  return CODE_PATTERNS.some((p) => p.test(code));
+}
+
 declare global {
   interface Window {
     turnstile?: {
