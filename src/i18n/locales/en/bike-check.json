@@ -89,9 +89,13 @@
       "body": "Registered and actively reported by the owner. The Velopass Community is helping search."
     },
     "not_registered": {
-      "badge": "NOT REGISTERED",
-      "title": "Not registered",
+      "badge": "NOT REGISTERED YET",
+      "title": "Not registered yet",
       "body": "This bike is not in the Velopass database. It is not protected yet."
+    },
+    "not_found": {
+      "badge": "NOT FOUND",
+      "body": "Not found in the European Velopass database or the connected registries."
     }
   },
   "result": {
