@@ -2358,8 +2358,18 @@ function NotRegCard({ t }: { t: TFn }) {
           {t("status_cards.not_registered.badge")}
         </span>
       </div>
-      <h3 style={resultTitle}>{t("result.not_registered_title")}</h3>
-      <p style={resultBody}>{t("result.not_registered_body")}</p>
+      <p style={resultBody}>{t("status_cards.not_registered.body")}</p>
+      <p
+        style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: 14,
+          fontWeight: 500,
+          color: "#0D1F3C",
+          margin: "8px 0 12px",
+        }}
+      >
+        {t("status_overview.is_this_your_bike")}
+      </p>
       <a
         href={`/${lang}`}
         onClick={() => trackRegisterBikeClick("bikesearch", "search-result-not-registered")}
@@ -2372,10 +2382,25 @@ function NotRegCard({ t }: { t: TFn }) {
           fontSize: 14,
           fontWeight: 500,
           display: "inline-block",
+          alignSelf: "flex-start",
         }}
       >
-        {t("result.not_registered_cta")}
+        {t("status_overview.register_bike_cta")}
       </a>
+    </div>
+  );
+}
+
+function NotFoundCard({ t }: { t: TFn }) {
+  return (
+    <div style={resultCard("#CBD5E1", "dotted")}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ ...badgeBase, gap: 6, background: "#F1F5F9", color: "#0D1F3C" }}>
+          <Search size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.not_found.badge")}
+        </span>
+      </div>
+      <p style={resultBody}>{t("status_cards.not_found.body")}</p>
     </div>
   );
 }
