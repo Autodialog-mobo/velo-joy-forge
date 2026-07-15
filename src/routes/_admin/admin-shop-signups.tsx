@@ -238,14 +238,14 @@ function ShopSignupsPage() {
     }
   };
 
-  const onSaveManagementId = async (id: string, managementId: string): Promise<boolean> => {
+  const onSaveManagementId = async (id: string, managementId: string | null): Promise<boolean> => {
     try {
-      await setManagementId({ data: { id, managementId } });
-      toast.success("Organisation-id gekoppeld");
+      await setManagementId({ data: { id, managementId: managementId ?? "" } });
+      toast.success(managementId ? "Organisation-id gekoppeld" : "Organisation-id ontkoppeld");
       refetch();
       return true;
     } catch (err: any) {
-      toast.error(err?.message ?? "Koppelen mislukt");
+      toast.error(err?.message ?? (managementId ? "Koppelen mislukt" : "Ontkoppelen mislukt"));
       return false;
     }
   };
