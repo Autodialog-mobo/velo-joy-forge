@@ -660,7 +660,7 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
                 onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
-                onResetProPush={() => onResetProPush(open.id)}
+                onResetProPush={(opts) => onResetProPush(open.id, opts)}
                 onRepush={() => onPushToPro(open.id)}
                 repushLoading={pushingId === open.id}
                 repushDisabled={pushingId === open.id || savingId === open.id}
