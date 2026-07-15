@@ -65,7 +65,7 @@ function ShopSignupsPage() {
 
   const [pushingId, setPushingId] = useState<string | null>(null);
   const [pushError, setPushError] = useState<any | null>(null);
-  const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string } | null>(null);
+  const [pushSuccess, setPushSuccess] = useState<{ id: string; managementId: string; alreadyExists?: boolean } | null>(null);
   const [pushDiagnostics, setPushDiagnostics] = useState<Record<string, any>>({});
   const [pushedIds, setPushedIds] = useState<Set<string>>(new Set());
   const [statusError, setStatusError] = useState<{ id: string; status: Status; message: string } | null>(null);
@@ -217,7 +217,7 @@ function ShopSignupsPage() {
         return;
       }
       const managementId = res?.managementId;
-      setPushSuccess({ id, managementId: managementId ?? "" });
+      setPushSuccess({ id, managementId: managementId ?? "", alreadyExists: !!res?.alreadyExists });
       setPushDiagnostics((prev) => {
         const next = { ...prev };
         if (managementId) delete next[id];
@@ -254,7 +254,7 @@ function ShopSignupsPage() {
     }
   };
 
-  const onResetProPush = async (id: string): Promise<boolean> => {
+  const onResetProPush = async (id: string, opts?: { andRepush?: boolean }): Promise<boolean> => {
     try {
       await resetProPush({ data: { id } });
       setPushedIds((prev) => {
@@ -267,8 +267,50 @@ function ShopSignupsPage() {
         delete next[id];
         return next;
       });
-      toast.success("Push-status gereset");
-      refetch();
+      setPushError(null);
+      setPushSuccess(null);
+      if (opts?.andRepush) {
+        toast.success("Push-status gereset — opnieuw doorsturen…");
+        await refetch();
+        // Bypass the confirm() inside onPushToPro by inlining the push here.
+        setPushingId(id);
+        try {
+          const res: any = await pushToPro({ data: { id } });
+          if (res?.ok === false) {
+            setPushError(res);
+            if (res?.idDiagnostics) {
+              setPushDiagnostics((prev) => ({ ...prev, [id]: res.idDiagnostics }));
+            }
+            toast.error(res.message ?? "Doorsturen mislukt");
+          } else {
+            const managementId = res?.managementId;
+            setPushSuccess({ id, managementId: managementId ?? "", alreadyExists: !!res?.alreadyExists });
+            setPushDiagnostics((prev) => {
+              const next = { ...prev };
+              if (managementId) delete next[id];
+              else if (res?.idDiagnostics) next[id] = res.idDiagnostics;
+              return next;
+            });
+            setPushedIds((prev) => new Set(prev).add(id));
+            toast.success(
+              res?.alreadyExists
+                ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
+                : managementId
+                  ? `Aangemaakt in velopass.pro (id: ${managementId})`
+                  : "Doorgestuurd — maar geen organisation-id ontvangen",
+            );
+          }
+        } catch (err: any) {
+          setPushError({ stage: "unexpected", message: err?.message ?? "Onverwachte fout" });
+          toast.error(err?.message ?? "Doorsturen mislukt");
+        } finally {
+          setPushingId(null);
+          await refetch();
+        }
+      } else {
+        toast.success("Push-status gereset");
+        refetch();
+      }
       return true;
     } catch (err: any) {
       toast.error(err?.message ?? "Resetten mislukt");
@@ -618,7 +660,7 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
                 onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
-                onResetProPush={() => onResetProPush(open.id)}
+                onResetProPush={(opts) => onResetProPush(open.id, opts)}
                 onRepush={() => onPushToPro(open.id)}
                 repushLoading={pushingId === open.id}
                 repushDisabled={pushingId === open.id || savingId === open.id}
@@ -1091,7 +1133,7 @@ function PushSuccessPanel({
   success,
   onDismiss,
 }: {
-  success: { id: string; managementId: string };
+  success: { id: string; managementId: string; alreadyExists?: boolean };
   onDismiss: () => void;
 }) {
   const [copied, setCopied] = useState(false);
@@ -1110,18 +1152,25 @@ function PushSuccessPanel({
     ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.managementId}/`
     : VELOPASS_PRO_ORGANISATION_URL;
 
+  const isDuplicate = !!success.alreadyExists;
+  const accent = isDuplicate ? "#E0A33E" : "#2ECC8A";
+  const bg = isDuplicate ? "rgba(224,163,62,0.08)" : "rgba(46,204,138,0.08)";
+  const border = isDuplicate ? "rgba(224,163,62,0.35)" : "rgba(46,204,138,0.35)";
+
   return (
     <div
       className="mb-4 rounded-xl p-4"
-      style={{ background: "rgba(46,204,138,0.08)", border: "1px solid rgba(46,204,138,0.35)" }}
+      style={{ background: bg, border: `1px solid ${border}` }}
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div>
-          <div className="text-xs uppercase tracking-wider" style={{ color: "#2ECC8A" }}>
-            Succesvol doorgestuurd naar velopass.pro
+          <div className="text-xs uppercase tracking-wider" style={{ color: accent }}>
+            {isDuplicate ? "Reeds aanwezig in velopass.pro" : "Succesvol doorgestuurd naar velopass.pro"}
           </div>
           <div className="text-sm mt-1" style={{ color: "#fff" }}>
-            De Organisation is aangemaakt in het management panel.
+            {isDuplicate
+              ? "Velopass.pro meldt dat deze organisatie al bestaat. De aanmelding is gemarkeerd als doorgestuurd."
+              : "De Organisation is aangemaakt in het management panel."}
           </div>
         </div>
         <button
@@ -1190,7 +1239,7 @@ function PushedInfoBanner({
   managementId?: string | null;
   shopId?: string;
   onSaveManagementId?: (managementId: string | null) => Promise<boolean>;
-  onResetProPush?: () => Promise<boolean>;
+  onResetProPush?: (opts?: { andRepush?: boolean }) => Promise<boolean>;
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
@@ -1319,24 +1368,42 @@ function PushedInfoBanner({
                 </ol>
                 {onResetProPush && (
                   <div className="mt-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                    <div className="mb-1" style={{ color: "rgba(255,255,255,0.65)" }}>
-                      Verkeerd of vastgelopen doorgestuurd? Reset de lokale push-status en stuur daarna opnieuw door.
+                    <div className="mb-1.5" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      Verkeerd of vastgelopen doorgestuurd? Reset de lokale push-status en stuur meteen opnieuw door.
                     </div>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        if (!window.confirm("Lokale push-status resetten? De organisatie op velopass.pro wordt niet verwijderd.")) return;
-                        setSaving(true);
-                        await onResetProPush();
-                        setSaving(false);
-                      }}
-                      disabled={saving}
-                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
-                      style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
-                    >
-                      {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
-                      Push-status resetten
-                    </button>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!window.confirm("Push-status resetten en meteen opnieuw doorsturen naar velopass.pro?\n\nDe bestaande organisatie op velopass.pro blijft ongewijzigd. Bij duplicaten wordt de aanmelding gemarkeerd als reeds aanwezig.")) return;
+                          setSaving(true);
+                          await onResetProPush({ andRepush: true });
+                          setSaving(false);
+                        }}
+                        disabled={saving}
+                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                        style={{ background: "#2ECC8A", color: "#0E0F12", border: "1px solid #2ECC8A" }}
+                        title="Wist de lokale push-status en voert de push meteen opnieuw uit."
+                      >
+                        {saving ? <Loader2 size={12} className="animate-spin" /> : <RefreshCcw size={12} />}
+                        Reset & opnieuw doorsturen
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!window.confirm("Alleen de lokale push-status resetten? De organisatie op velopass.pro wordt niet verwijderd.")) return;
+                          setSaving(true);
+                          await onResetProPush();
+                          setSaving(false);
+                        }}
+                        disabled={saving}
+                        className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                        style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+                      >
+                        {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
+                        Alleen resetten
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
