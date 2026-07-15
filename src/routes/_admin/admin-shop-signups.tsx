@@ -1245,6 +1245,27 @@ function PushedInfoBanner({
                 >
                   {copied ? <Check size={12} /> : <Copy size={12} />} {copied ? "Gekopieerd" : "Kopieer"}
                 </button>
+                {onSaveManagementId && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!window.confirm("Organisation-id ontkoppelen? De aanmelding blijft bestaan; je kan daarna opnieuw doorsturen om een nieuwe organisatie aan te maken.")) return;
+                      setSaving(true);
+                      await onSaveManagementId(null);
+                      setSaving(false);
+                    }}
+                    disabled={saving}
+                    className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                    style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+                    title="Verbreekt de link met deze velopass.pro organisatie zodat je de aanmelding opnieuw kan doorsturen."
+                  >
+                    {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
+                    Ontkoppelen
+                  </button>
+                )}
+              </div>
+              <div className="text-[11px] mt-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>
+                Ontkoppelen wist alleen de lokale koppeling — de organisatie op velopass.pro blijft ongewijzigd. Gebruik dit als de verkeerde organisatie werd gekoppeld en klik nadien "Opnieuw doorsturen" om een nieuwe organisatie aan te maken.
               </div>
             </div>
           ) : (
