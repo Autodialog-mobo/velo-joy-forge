@@ -1272,13 +1272,30 @@ function PushedInfoBanner({
                 <div className="text-xs mb-2 rounded-md p-2" style={{ background: "rgba(224,82,82,0.06)", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(224,82,82,0.25)" }}>
                   <div className="font-semibold mb-1" style={{ color: "#E05252" }}>Diagnose uit laatste push</div>
                   <div>
-                    POST /Organisations gaf status <code>{diagnostics.apiStatus ?? "?"}</code>.
-                    {diagnostics.responseKeys && diagnostics.responseKeys.length > 0 ? (
-                      <> Response bevatte velden: <code>{diagnostics.responseKeys.join(", ")}</code>.</>
-                    ) : (
-                      <> Response bevatte geen JSON-object.</>
-                    )}
+                    POST /Organisations gaf status <code>{diagnostics.apiStatus ?? "?"}</code>
+                    {diagnostics.alreadyExists ? <> · <span style={{ color: "#E0A33E" }}>gedetecteerd als &laquo;already exists&raquo;</span></> : null}.
                   </div>
+                  {(diagnostics.apiTitle || diagnostics.apiDetail || (diagnostics.apiErrorMessages && diagnostics.apiErrorMessages.length > 0)) && (
+                    <div className="mt-1.5 rounded p-1.5" style={{ background: "rgba(224,82,82,0.10)", border: "1px solid rgba(224,82,82,0.30)" }}>
+                      <div className="font-semibold" style={{ color: "#fff" }}>Foutmelding van velopass.pro</div>
+                      {diagnostics.apiTitle && (
+                        <div className="mt-0.5" style={{ color: "rgba(255,255,255,0.9)" }}>{diagnostics.apiTitle}</div>
+                      )}
+                      {diagnostics.apiErrorMessages && diagnostics.apiErrorMessages.length > 0 && (
+                        <ul className="mt-0.5 ml-4 list-disc" style={{ color: "rgba(255,255,255,0.85)" }}>
+                          {diagnostics.apiErrorMessages.map((m, i) => <li key={i}>{m}</li>)}
+                        </ul>
+                      )}
+                      {diagnostics.apiDetail && (!diagnostics.apiErrorMessages || diagnostics.apiErrorMessages.length === 0) && (
+                        <pre className="mt-0.5 whitespace-pre-wrap break-all text-[11px]" style={{ color: "rgba(255,255,255,0.7)" }}>{diagnostics.apiDetail}</pre>
+                      )}
+                    </div>
+                  )}
+                  {diagnostics.responseKeys && diagnostics.responseKeys.length > 0 && (
+                    <div className="mt-1" style={{ color: "rgba(255,255,255,0.55)" }}>
+                      Response-velden: <code>{diagnostics.responseKeys.join(", ")}</code>
+                    </div>
+                  )}
                   {diagnostics.missingIdFields && diagnostics.missingIdFields.length > 0 && (
                     <div className="mt-1">
                       Ontbrekende id-velden (waarnaar gezocht is):{" "}
