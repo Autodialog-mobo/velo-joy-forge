@@ -662,9 +662,20 @@ function BikeSearchPage() {
   };
 
   const handleScanResult = (raw: string) => {
-    const clean = findVelopassCode(raw);
-    setCodeA(clean);
-    if (clean.length === 10) void runCheck(clean);
+    // Route QR content through the URL/pattern registry. The scanned URL
+    // is NEVER opened or followed — we only extract the identifier and
+    // hand it to the same server lookup as manual input.
+    const extracted = extractCodeFromQr(raw);
+    if (extracted) {
+      setUnknownFormat(false);
+      setCodeA(extracted);
+      void runCheck(extracted);
+      return;
+    }
+    // Unknown QR — show the soft hint (not an error) and let the user
+    // fall back to manual input or brand + frame search.
+    setUnknownFormatSource("qr");
+    setUnknownFormat(true);
   };
 
   const handleFrameScanResult = (raw: string) => {
