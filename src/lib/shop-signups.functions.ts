@@ -481,29 +481,139 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       packageId,
     };
 
+    // Preflight: check if an organisation with this VAT/company number already
+    // exists on velopass.pro. Avoids the 400 "Organisation already exists"
+    // round-trip when the shop was created before, and lets us reuse the
+    // existing management-id (deep link works immediately). Match is STRICT
+    // on companyNumber/vatNumber (plus country when the API returns it); a
+    // secondary email+name safety net catches shops without a VAT number.
+    const PF_UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    const pfExtractId = (o: any): string | null => {
+      if (!o) return null;
+      if (typeof o === "string") return PF_UUID_RE.test(o.trim()) ? o.trim() : null;
+      if (typeof o !== "object") return null;
+      const direct = o.id ?? o.Id ?? o.organisationId ?? o.OrganisationId
+        ?? o.organizationId ?? o.OrganizationId ?? o.value ?? o.Value;
+      if (typeof direct === "string" && direct.trim()) return direct.trim();
+      for (const key of ["data", "result", "Data", "Result", "organisation", "Organisation"]) {
+        const nested = pfExtractId(o[key]);
+        if (nested) return nested;
+      }
+      return null;
+    };
+    const pfNorm = (v: unknown) => String(v ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    const pfTargetVat = pfNorm(row.vat);
+    const pfTargetEmail = pfNorm(row.email);
+    const pfTargetName = pfNorm(row.shop_name);
+    const pfTargetCountry = pfNorm(country);
+    const pfMatches = (o: any): boolean => {
+      if (!o || typeof o !== "object") return false;
+      const pick = (keys: string[]): string => {
+        for (const k of keys) {
+          const v = (o as any)[k];
+          if (typeof v === "string") { const n = pfNorm(v); if (n) return n; }
+        }
+        return "";
+      };
+      const orgVat = pick(["companyNumber", "CompanyNumber", "vatNumber", "VatNumber"]);
+      if (pfTargetVat && orgVat && orgVat === pfTargetVat) {
+        const orgCountry = pick(["country", "Country", "countryCode", "CountryCode"]);
+        // If a country is returned, require it to agree (guards against
+        // matching a foreign shop that happens to share a VAT string).
+        if (!orgCountry || !pfTargetCountry || orgCountry === pfTargetCountry) return true;
+      }
+      const orgEmail = pick(["email", "Email"]);
+      const orgName = pick([
+        "name", "Name", "label", "Label", "displayName", "DisplayName",
+        "organisationName", "OrganisationName",
+      ]);
+      return !!(pfTargetEmail && pfTargetName && orgEmail === pfTargetEmail && orgName === pfTargetName);
+    };
+    const preflightAttempts: Array<{
+      path: string; status: number | null; count: number; matched: boolean; error?: string;
+    }> = [];
+    const preflightLookup = async (path: string): Promise<string | null> => {
+      try {
+        const res = await fetch(managementEndpoint(path), {
+          method: "GET",
+          headers: { Authorization: bearer, Accept: "application/json" },
+        });
+        if (!res.ok) {
+          preflightAttempts.push({ path, status: res.status, count: 0, matched: false });
+          return null;
+        }
+        const text = await res.text();
+        const parsed = text ? JSON.parse(text) : null;
+        const list: any[] = Array.isArray(parsed) ? parsed
+          : Array.isArray(parsed?.items) ? parsed.items
+          : Array.isArray(parsed?.results) ? parsed.results
+          : Array.isArray(parsed?.data) ? parsed.data
+          : Array.isArray(parsed?.value) ? parsed.value
+          : [];
+        const hit = list.find(pfMatches);
+        const id = pfExtractId(hit);
+        preflightAttempts.push({ path, status: res.status, count: list.length, matched: !!id });
+        return id;
+      } catch (e: any) {
+        preflightAttempts.push({ path, status: null, count: 0, matched: false, error: e?.message });
+        return null;
+      }
+    };
+    let preflightId: string | null = null;
+    if (pfTargetVat) {
+      const qVat = encodeURIComponent(String(row.vat));
+      const preflightPaths = [
+        `Organisations?companyNumber=${qVat}`,
+        `Organisations?vatNumber=${qVat}`,
+        `Organisations?search=${qVat}`,
+        "Organisations/select",
+        "Organisations",
+      ];
+      for (const p of preflightPaths) {
+        const id = await preflightLookup(p);
+        if (id) { preflightId = id; break; }
+      }
+    }
+    if (preflightId) {
+      console.log("[shop-signups] preflight: organisation already exists — skipping POST", {
+        id: data.id, orgId: preflightId, vat: row.vat, country,
+      });
+    } else {
+      console.log("[shop-signups] preflight: no existing organisation matched — proceeding to POST", {
+        id: data.id, vat: row.vat, attempts: preflightAttempts.length,
+      });
+    }
+
     let apiResponse: any = null;
     let apiStatus = 0;
-    try {
-      const res = await fetch(managementEndpoint("Organisations"), {
-        method: "POST",
-        headers: {
-          Authorization: bearer,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      apiStatus = res.status;
-      const text = await res.text();
-      try { apiResponse = text ? JSON.parse(text) : null; } catch { apiResponse = text; }
-    } catch (e: any) {
-      console.error("[shop-signups] push network error", { id: data.id, error: e?.message });
-      return {
-        ok: false as const,
-        stage: "network" as const,
-        message: `Kon velopass.pro niet bereiken: ${e?.message ?? "onbekende fout"}.`,
-        sentBody: body,
-      };
+    if (preflightId) {
+      // Skip creation; simulate a successful "already exists" response so the
+      // downstream flow reuses the id and marks the signup as pushed.
+      apiStatus = 200;
+      apiResponse = { id: preflightId, _preflight: true, message: "Organisation already exists (preflight match)" };
+    } else {
+      try {
+        const res = await fetch(managementEndpoint("Organisations"), {
+          method: "POST",
+          headers: {
+            Authorization: bearer,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(body),
+        });
+        apiStatus = res.status;
+        const text = await res.text();
+        try { apiResponse = text ? JSON.parse(text) : null; } catch { apiResponse = text; }
+      } catch (e: any) {
+        console.error("[shop-signups] push network error", { id: data.id, error: e?.message });
+        return {
+          ok: false as const,
+          stage: "network" as const,
+          message: `Kon velopass.pro niet bereiken: ${e?.message ?? "onbekende fout"}.`,
+          sentBody: body,
+        };
+      }
     }
 
     // Detect "Organisation already exists" — treat as success so the signup
