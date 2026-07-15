@@ -1742,6 +1742,18 @@ const badgeBase: React.CSSProperties = {
   borderRadius: 100,
   padding: "3px 12px",
 };
+const foundInBadge: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 12,
+  fontWeight: 500,
+  color: "#5A7090",
+  background: "rgba(13,31,60,0.04)",
+  border: "1px solid rgba(13,31,60,0.08)",
+  borderRadius: 100,
+  padding: "2px 10px",
+};
 // Border style is a redundant (non-color) status cue: solid = secured,
 // dashed = reported/warning, dotted = not registered. Pairs with the
 // status icon so users with color-vision deficiencies can still
