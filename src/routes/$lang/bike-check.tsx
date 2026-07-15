@@ -1452,7 +1452,7 @@ function BikeSearchPage() {
       </section>
 
       {/* STATUS OVERVIEW */}
-      <section style={{ padding: "48px 6vw", background: "#F5F3EE" }}>
+      <section style={{ padding: "clamp(32px, 7vw, 48px) clamp(16px, 5vw, 32px)", background: "#F5F3EE" }}>
         <div style={{ textAlign: "center", maxWidth: 720, margin: "0 auto 28px" }}>
           <div
             style={{
