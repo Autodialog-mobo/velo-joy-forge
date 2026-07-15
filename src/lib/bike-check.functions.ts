@@ -229,18 +229,19 @@ export const checkBikeByFrame = createServerFn({ method: "POST" })
     if (!apiKey) throw new Error("server_misconfigured");
 
     const country = resolveCountry(data.lang);
+    const sourcesSearched = ["Velopass"];
 
     // First attempt: raw brand.
     const first = await fetchByBrandFrame(apiKey, data.brand, data.frameNumber);
-    if (first) return { ...first, country };
+    if (first) return { ...first, country, source: "Velopass", sourcesSearched };
 
     // Fallback: normalize brand via Claude, retry once if it changed.
     const normalized = await normalizeBrand(data.brand);
     if (normalized && normalized.toLowerCase() !== data.brand.toLowerCase()) {
       const second = await fetchByBrandFrame(apiKey, normalized, data.frameNumber);
-      if (second) return { ...second, country };
+      if (second) return { ...second, country, source: "Velopass", sourcesSearched };
     }
-    return { ...NOT_FOUND_CORE, country };
+    return { ...NOT_FOUND_CORE, country, source: null, sourcesSearched };
   });
 
 export const checkBike = createServerFn({ method: "POST" })
