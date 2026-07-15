@@ -35,6 +35,47 @@ function matchesAnyCodePattern(code: string): boolean {
   return CODE_PATTERNS.some((p) => p.test(code));
 }
 
+/**
+ * QR-content URL registry. Each accredited operator's QR points at their
+ * own domain; the domain identifies the operator, so no parallel search is
+ * needed. Extraction returns the identifier only — the URL itself is NEVER
+ * opened, followed, or shown to the user. QR stickers on bikes are physically
+ * accessible and could be overplakt with a malicious QR (phishing).
+ *
+ * Add a new operator = one entry here + one server-side registry entry.
+ */
+type QrUrlPattern = { source: string; match: RegExp; group: number };
+const QR_URL_PATTERNS: QrUrlPattern[] = [
+  { source: "Velopass", match: /^https?:\/\/(?:www\.)?velopass\.com\/m\/([A-Za-z0-9_-]+)/i, group: 1 },
+];
+
+/**
+ * Extract a bike identifier from raw QR content.
+ * - Returns a normalized (uppercase, alnum) code when the QR is a known
+ *   operator URL or a bare code that matches a client-side pattern.
+ * - Returns null when the QR is neither — the caller renders a soft hint.
+ * NEVER navigates to or opens the scanned URL.
+ */
+function extractCodeFromQr(raw: string): string | null {
+  const value = (raw ?? "").trim();
+  if (!value) return null;
+
+  for (const p of QR_URL_PATTERNS) {
+    const m = value.match(p.match);
+    if (m && m[p.group]) {
+      const clean = m[p.group].toUpperCase().replace(/[^A-Z0-9]/g, "");
+      if (clean.length >= 6) return clean;
+    }
+  }
+
+  // Bare code (no URL) — accept anything the client-side pattern registry
+  // recognises so unknown-length codes still route through the normal flow.
+  const bare = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (bare && matchesAnyCodePattern(bare)) return bare;
+
+  return null;
+}
+
 declare global {
   interface Window {
     turnstile?: {
