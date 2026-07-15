@@ -645,14 +645,37 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       }
     }
 
+    // Surface the actual velopass.pro failure reason (ProblemDetails
+    // title/detail, or FluentResults Errors[].Message nested inside `detail`)
+    // so the admin sees WHY the push failed instead of a generic status code.
+    const apiErrorMessages: string[] = (() => {
+      const msgs = collectErrorMessages(apiResponse);
+      if (apiResponse && typeof (apiResponse as any).detail === "string") {
+        try {
+          const inner = JSON.parse((apiResponse as any).detail);
+          if (Array.isArray(inner?.Errors)) {
+            for (const e of inner.Errors) if (e?.Message) msgs.push(String(e.Message));
+          }
+        } catch { /* detail isn't nested JSON */ }
+      }
+      // Dedupe while keeping order.
+      return Array.from(new Set(msgs.map((m) => m.trim()).filter(Boolean)));
+    })();
+
     const idDiagnostics = returnedId ? null : {
       apiStatus,
+      apiTitle: (apiResponse && typeof (apiResponse as any).title === "string")
+        ? String((apiResponse as any).title) : null,
+      apiDetail: (apiResponse && typeof (apiResponse as any).detail === "string")
+        ? String((apiResponse as any).detail).slice(0, 800) : null,
+      apiErrorMessages,
+      alreadyExists,
       responseKeys,
       checkedIdFields: ID_FIELDS_CHECKED,
       missingIdFields,
       responsePreview: typeof apiResponse === "string"
         ? apiResponse.slice(0, 400)
-        : JSON.stringify(apiResponse ?? null).slice(0, 400),
+        : JSON.stringify(apiResponse ?? null).slice(0, 800),
       lookupAttempts,
       target: {
         shop_name: row.shop_name ?? null,
@@ -660,6 +683,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         email: row.email ?? null,
       },
     };
+
 
 
 
