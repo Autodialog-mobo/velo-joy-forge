@@ -893,8 +893,13 @@ function BikeSearchPage() {
               <img
                 src={velopassStickerAsset.url}
                 alt={t("method_a.image_alt")}
-                style={refImg}
+                style={{ ...refImg, cursor: "pointer" }}
                 loading="lazy"
+                onClick={() => setLightboxImage({ src: velopassStickerAsset.url, alt: t("method_a.image_alt") })}
+                role="button"
+                aria-label={t("common:close", { defaultValue: "Afbeelding vergroten" })}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightboxImage({ src: velopassStickerAsset.url, alt: t("method_a.image_alt") }); }}
               />
               <figcaption style={refImgCaption}>{t("method_a.image_caption")}</figcaption>
             </figure>
