@@ -697,7 +697,7 @@ function BikeSearchPage() {
       return;
     }
     setUnknownFormat(false);
-    await runCheck(clean);
+    await runCheck(clean, "manual");
   };
 
   const focusBrandFrame = () => {
