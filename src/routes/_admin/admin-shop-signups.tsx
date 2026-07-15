@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type * as React from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw, X } from "lucide-react";
-import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId } from "@/lib/shop-signups.functions";
+import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId, resetShopSignupProPush } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
 
@@ -45,6 +45,7 @@ function ShopSignupsPage() {
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
   const setManagementId = useServerFn(setShopSignupManagementId);
+  const resetProPush = useServerFn(resetShopSignupProPush);
   const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shop-signups"],
@@ -209,6 +210,9 @@ function ShopSignupsPage() {
       const res: any = await pushToPro({ data: { id } });
       if (res?.ok === false) {
         setPushError(res);
+        if (res?.idDiagnostics) {
+          setPushDiagnostics((prev) => ({ ...prev, [id]: res.idDiagnostics }));
+        }
         toast.error(res.message ?? "Doorsturen mislukt");
         return;
       }
@@ -246,6 +250,28 @@ function ShopSignupsPage() {
       return true;
     } catch (err: any) {
       toast.error(err?.message ?? (managementId ? "Koppelen mislukt" : "Ontkoppelen mislukt"));
+      return false;
+    }
+  };
+
+  const onResetProPush = async (id: string): Promise<boolean> => {
+    try {
+      await resetProPush({ data: { id } });
+      setPushedIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      setPushDiagnostics((prev) => {
+        const next = { ...prev };
+        delete next[id];
+        return next;
+      });
+      toast.success("Push-status gereset");
+      refetch();
+      return true;
+    } catch (err: any) {
+      toast.error(err?.message ?? "Resetten mislukt");
       return false;
     }
   };
@@ -592,6 +618,7 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
                 onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
+                onResetProPush={() => onResetProPush(open.id)}
                 onRepush={() => onPushToPro(open.id)}
                 repushLoading={pushingId === open.id}
                 repushDisabled={pushingId === open.id || savingId === open.id}
@@ -976,6 +1003,7 @@ function PushErrorPanel({ err, onDismiss }: { err: any; onDismiss: () => void })
     api: `API-fout${err?.apiStatus ? ` (HTTP ${err.apiStatus})` : ""}`,
     network: "Verbindingsfout",
     auth: "Authenticatiefout",
+    duplicate: "Dubbele organisatie",
     unexpected: "Onverwachte fout",
     unknown: "Fout",
   };
@@ -1150,6 +1178,7 @@ function PushedInfoBanner({
   pushedByName,
   managementId,
   onSaveManagementId,
+  onResetProPush,
   onRepush,
   repushLoading,
   repushDisabled,
@@ -1161,6 +1190,7 @@ function PushedInfoBanner({
   managementId?: string | null;
   shopId?: string;
   onSaveManagementId?: (managementId: string | null) => Promise<boolean>;
+  onResetProPush?: () => Promise<boolean>;
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
@@ -1287,6 +1317,28 @@ function PushedInfoBanner({
                   <li>Klik de shop open — de id staat in de URL (<code style={{ color: "#7AB0FF" }}>/Organisations/&lt;uuid&gt;/</code>).</li>
                   <li>Kopieer de UUID en plak hem hieronder, klik dan Koppelen.</li>
                 </ol>
+                {onResetProPush && (
+                  <div className="mt-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div className="mb-1" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      Verkeerd of vastgelopen doorgestuurd? Reset de lokale push-status en stuur daarna opnieuw door.
+                    </div>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!window.confirm("Lokale push-status resetten? De organisatie op velopass.pro wordt niet verwijderd.")) return;
+                        setSaving(true);
+                        await onResetProPush();
+                        setSaving(false);
+                      }}
+                      disabled={saving}
+                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                      style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+                    >
+                      {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
+                      Push-status resetten
+                    </button>
+                  </div>
+                )}
               </div>
 
               {diagnostics && (

@@ -80,6 +80,52 @@ export const setShopSignupManagementId = createServerFn({ method: "POST" })
     return { ok: true as const, managementId: data.managementId };
   });
 
+export const resetShopSignupProPush = createServerFn({ method: "POST" })
+  .middleware([requireAuth0Admin])
+  .inputValidator((d: unknown) =>
+    z.object({
+      id: z.string().uuid(),
+    }).parse(d)
+  )
+  .handler(async ({ data, context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: before, error: fetchErr } = await (supabaseAdmin as any)
+      .from("shop_signups")
+      .select("id, pushed_to_pro_management_id, pushed_to_pro_at, shop_name, email")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (fetchErr) throw new Error(fetchErr.message);
+    if (!before) throw new Error("Aanmelding niet gevonden");
+
+    const { error } = await (supabaseAdmin as any)
+      .from("shop_signups")
+      .update({
+        pushed_to_pro_at: null,
+        pushed_to_pro_by: null,
+        pushed_to_pro_by_email: null,
+        pushed_to_pro_by_name: null,
+        pushed_to_pro_management_id: null,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", data.id);
+    if (error) throw new Error(error.message);
+
+    const { writeAudit } = await import("@/lib/audit.server");
+    await writeAudit(context, {
+      action: "shop_signup.reset_pro_push",
+      target_type: "shop_signup",
+      target_id: data.id,
+      metadata: {
+        shop_name: before.shop_name ?? null,
+        email: before.email ?? null,
+        previous_management_id: before.pushed_to_pro_management_id ?? null,
+        previous_pushed_at: before.pushed_to_pro_at ?? null,
+      },
+    });
+
+    return { ok: true as const };
+  });
+
 
 const nullableStr = (max: number) =>
   z.string().trim().max(max).nullable().optional().transform((v) => (v === "" ? null : v));
@@ -689,6 +735,18 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
 
 
 
+
+    if (alreadyExists && !returnedId) {
+      return {
+        ok: false as const,
+        stage: "duplicate" as const,
+        message: "Velopass.pro meldt dat deze organisatie al bestaat, maar er werd geen veilige organisation-id gevonden om te koppelen.",
+        detail: "Zoek de bestaande organisatie manueel en koppel de id, of wijzig de unieke velden van de aanmelding en probeer opnieuw door te sturen.",
+        apiStatus,
+        idDiagnostics,
+        sentBody: body,
+      };
+    }
 
     // ---- Create employee/user under the organisation ------------------------
     // POST /api/users/pro { languageCode, email, organisationId,
