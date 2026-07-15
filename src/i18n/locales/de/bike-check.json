@@ -58,7 +58,8 @@
     "captcha": "Ich bin kein Roboter",
     "captcha_meta_privacy": "Datenschutz · Bedingungen",
     "image_alt": "Rahmennummer des Herstellers am Fahrradrahmen",
-    "image_caption": "Die Rahmennummer des Herstellers"
+    "image_caption": "Die Rahmennummer des Herstellers",
+    "image_enlarge_aria": "Klicken, um Bild zu vergrößern"
   },
   "errors": {
     "generic": "Etwas ist schiefgelaufen. Versuche es erneut."

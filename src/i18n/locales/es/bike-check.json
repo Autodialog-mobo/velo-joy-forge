@@ -58,7 +58,8 @@
     "captcha": "No soy un robot",
     "captcha_meta_privacy": "Privacidad · Condiciones",
     "image_alt": "Número de cuadro del fabricante en el cuadro",
-    "image_caption": "El número de cuadro del fabricante"
+    "image_caption": "El número de cuadro del fabricante",
+    "image_enlarge_aria": "Haz clic para ampliar la imagen"
   },
   "errors": {
     "generic": "Algo ha salido mal. Inténtalo de nuevo."

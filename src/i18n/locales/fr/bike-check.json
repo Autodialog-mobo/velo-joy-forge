@@ -58,7 +58,8 @@
     "captcha": "Je ne suis pas un robot",
     "captcha_meta_privacy": "Confidentialité · Conditions",
     "image_alt": "Numéro de cadre du fabricant sur le cadre du vélo",
-    "image_caption": "Le numéro de cadre du fabricant"
+    "image_caption": "Le numéro de cadre du fabricant",
+    "image_enlarge_aria": "Clique pour agrandir l'image"
   },
   "errors": {
     "generic": "Un problème est survenu. Réessaie."

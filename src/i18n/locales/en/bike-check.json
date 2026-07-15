@@ -58,7 +58,8 @@
     "captcha": "I am not a robot",
     "captcha_meta_privacy": "Privacy · Terms",
     "image_alt": "Manufacturer's frame number on the bike frame",
-    "image_caption": "The manufacturer's frame number"
+    "image_caption": "The manufacturer's frame number",
+    "image_enlarge_aria": "Click to enlarge image"
   },
   "errors": {
     "generic": "Something went wrong. Please try again."
