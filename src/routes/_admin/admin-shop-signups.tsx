@@ -79,7 +79,7 @@ function ShopSignupsPage() {
     if (!open) return false;
     const fields = [
       "first_name", "last_name", "shop_name", "email", "phone",
-      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes",
+      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes", "website",
     ] as const;
     return fields.some((k) => (draft[k] ?? "") !== (open[k] ?? ""));
   }, [draft, open]);
