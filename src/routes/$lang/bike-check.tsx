@@ -501,9 +501,29 @@ function BikeSearchPage() {
   const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
+  const [formatRecognized, setFormatRecognized] = useState(false);
+  const [unknownFormat, setUnknownFormat] = useState(false);
+  const brandInputRef = useRef<HTMLInputElement>(null);
+  const methodBFormRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
+
+  // Debounced silent format confirmation. Mirrors the server-side registry
+  // (CODE_PATTERNS in src/lib/bike-check.functions.ts). We intentionally do
+  // NOT name the matching operator — the user does not need to know which
+  // register issued their code, and a wrong operator name would confuse.
+  useEffect(() => {
+    const clean = codeA.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (!clean) { setFormatRecognized(false); return; }
+    const id = setTimeout(() => {
+      setFormatRecognized(matchesAnyCodePattern(clean));
+    }, 300);
+    return () => clearTimeout(id);
+  }, [codeA]);
+
+  // Reset the "unknown format" hint as soon as the user edits the field.
+  useEffect(() => { setUnknownFormat(false); }, [codeA]);
 
   // Spotlight: na een (scan- of form-)submit dimmen we de rest van de
   // pagina en lichten het resultaatpaneel even op. Werkt identiek op
