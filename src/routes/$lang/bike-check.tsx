@@ -596,7 +596,26 @@ function BikeSearchPage() {
 
   const submitA = async (e: React.FormEvent) => {
     e.preventDefault();
-    await runCheck(codeA);
+    const clean = sanitizeCode(codeA);
+    // Minimum length guard against empty / nutty queries.
+    if (clean.length < 6) return;
+    // Soft fallback: don't burn a Velopass/Turnstile call on codes we
+    // already know match no known register. Show an informative hint
+    // instead — never rendered as an error.
+    if (!matchesAnyCodePattern(clean)) {
+      setUnknownFormat(true);
+      setError(null);
+      setResult(null);
+      return;
+    }
+    setUnknownFormat(false);
+    await runCheck(clean);
+  };
+
+  const focusBrandFrame = () => {
+    setUnknownFormat(false);
+    methodBFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => brandInputRef.current?.focus(), 400);
   };
 
   const handleScanResult = (raw: string) => {
