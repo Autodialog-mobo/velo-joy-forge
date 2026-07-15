@@ -980,17 +980,17 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   // Lees op videoframerate zodat een gevonden QR meteen
                   // terugkomt; de dialog sluit direct na de eerste match.
                   scanDelay={0}
-                  retryDelay={33}
+                  retryDelay={16}
                   settleDelayMs={0}
                   sound={false}
                   constraints={{
                     ...(deviceId
                       ? { deviceId: { exact: deviceId } }
                       : { facingMode: { ideal: facingMode } }),
-                    // Hogere resolutie = scherpere kleine modules, dus
-                    // betrouwbaardere reads op een witte-op-zwart Frame-ID.
-                    width: { ideal: 1920 },
-                    height: { ideal: 1080 },
+                    // 720p houdt frames licht genoeg om snel te detecteren,
+                    // maar blijft scherp genoeg voor Frame-ID QR-codes.
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 },
                     frameRate: { ideal: 30 },
                     // Continu scherpstellen / belichten / witbalans — door de
                     // browser/camera ondersteund waar mogelijk, anders genegeerd.
