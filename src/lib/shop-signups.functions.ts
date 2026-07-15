@@ -145,11 +145,12 @@ const updateSchema = z.object({
   lang: z.enum(["nl", "fr", "de", "en", "es"]).nullable().optional(),
   pos_system: nullableStr(120),
   pos_other: nullableStr(200),
+  website: nullableStr(300),
 });
 
 const EDITABLE_FIELDS = [
   "first_name","last_name","shop_name","email","phone","vat","address","country",
-  "lang","pos_system","pos_other","admin_notes",
+  "lang","pos_system","pos_other","admin_notes","website",
 ] as const;
 
 export const updateShopSignup = createServerFn({ method: "POST" })
@@ -460,12 +461,18 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
+    const rawWebsite = String((row as any).website ?? "").trim();
+    const normalizedWebsite = rawWebsite
+      ? (/^https?:\/\//i.test(rawWebsite) ? rawWebsite : `https://${rawWebsite}`)
+      : "";
+
     const body: {
       name: string; phone: string; type: number;
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
       packageId: string;
+      website?: string; websiteUrl?: string;
     } = {
       name: row.shop_name,
       phone: normalizedPhone,
@@ -479,6 +486,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       city,
       country,
       packageId,
+      ...(normalizedWebsite ? { website: normalizedWebsite, websiteUrl: normalizedWebsite } : {}),
     };
 
     // Preflight: check if an organisation with this VAT/company number already

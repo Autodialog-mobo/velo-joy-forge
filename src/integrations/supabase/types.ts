@@ -377,6 +377,7 @@ export type Database = {
           updated_at: string
           user_agent: string | null
           vat: string | null
+          website: string | null
         }
         Insert: {
           address?: string | null
@@ -407,6 +408,7 @@ export type Database = {
           updated_at?: string
           user_agent?: string | null
           vat?: string | null
+          website?: string | null
         }
         Update: {
           address?: string | null
@@ -437,6 +439,7 @@ export type Database = {
           updated_at?: string
           user_agent?: string | null
           vat?: string | null
+          website?: string | null
         }
         Relationships: []
       }

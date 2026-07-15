@@ -79,7 +79,7 @@ function ShopSignupsPage() {
     if (!open) return false;
     const fields = [
       "first_name", "last_name", "shop_name", "email", "phone",
-      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes",
+      "vat", "address", "country", "lang", "pos_system", "pos_other", "admin_notes", "website",
     ] as const;
     return fields.some((k) => (draft[k] ?? "") !== (open[k] ?? ""));
   }, [draft, open]);
@@ -157,7 +157,7 @@ function ShopSignupsPage() {
       // does not silently discard the admin's other changes.
       const payload: any = { id, status };
       if (openId === id) {
-        for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
+        for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes","website"]) {
           if (draft[k] !== undefined) payload[k] = draft[k] ?? "";
         }
       }
@@ -182,7 +182,7 @@ function ShopSignupsPage() {
     setSavingId(id);
     try {
       const payload: any = { id };
-      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
+      for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes","website"]) {
         payload[k] = draft[k] ?? "";
       }
       const res = await update({ data: payload });
@@ -342,6 +342,7 @@ function ShopSignupsPage() {
       pos_system: r.pos_system ?? "",
       pos_other: r.pos_other ?? "",
       admin_notes: r.admin_notes ?? "",
+      website: r.website ?? "",
     });
   };
 
@@ -907,6 +908,9 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
       </div>
       <div className="sm:col-span-2">
         {renderRow("shop_name", "Winkel")}
+      </div>
+      <div className="sm:col-span-2">
+        {renderRow("website", "Website", "url")}
       </div>
       <AddressFields
         address={draft.address ?? ""}

@@ -1,0 +1,1 @@
+ALTER TABLE public.shop_signups ADD COLUMN IF NOT EXISTS website text;
