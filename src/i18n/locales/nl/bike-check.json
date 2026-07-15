@@ -34,7 +34,7 @@
     "image_alt": "Velopass Frame-ID sticker met QR-code",
     "image_caption": "De Velopass Frame-ID sticker",
     "manual_fallback": "of voer de code handmatig in",
-    "example_inline": "10 tekens · voorbeeld",
+    "example_inline": "bijvoorbeeld",
     "example_copy_aria": "Kopieer voorbeeldcode {{value}}",
     "format_confirmed": "✓ Herkend als identificatiecode",
     "unknown_format_hint": "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
