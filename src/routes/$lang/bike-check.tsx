@@ -1824,11 +1824,14 @@ function BikeDetails({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
 function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
     <div style={resultCard("#2ECC8A", "solid")}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
         <span style={{ ...badgeBase, gap: 6, background: "#2ECC8A", color: "#0D1F3C" }}>
           <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
           {t("status_cards.all_clear.badge")}
         </span>
+        {bike.source && (
+          <span style={foundInBadge}>{t("result.found_in", { source: bike.source, defaultValue: "Gevonden in {{source}}" })}</span>
+        )}
       </div>
       <h3 style={resultTitle}>{t("result.secured_title")}</h3>
       <p style={resultBody}>{t("result.secured_body")}</p>
@@ -1911,6 +1914,9 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
           <AlertTriangle size={14} strokeWidth={2.5} aria-hidden="true" />
           {t("status_cards.reported.badge")}
         </span>
+        {bike.source && (
+          <span style={foundInBadge}>{t("result.found_in", { source: bike.source, defaultValue: "Gevonden in {{source}}" })}</span>
+        )}
       </div>
       <h3 style={resultTitle}>{t("result.reported_title")}</h3>
       <p style={resultBody}>{t("result.reported_body")}</p>
