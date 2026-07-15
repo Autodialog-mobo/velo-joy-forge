@@ -27,7 +27,7 @@
     "subtext": "Velopass u otro operador acreditado",
     "desc": "Escanea el QR del Frame-ID o escribe el código Velopass.",
     "code_label": "Código Velopass",
-    "code_hint": "10 caracteres, por ejemplo UC9K4D3NCJ",
+    "code_hint": "por ejemplo: UC9K4D3NCJ",
     "scan_cta": "Escanea el QR",
     "manual_cta": "Introducir el código a mano",
     "loading": "Comprobando…",
