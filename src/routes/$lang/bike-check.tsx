@@ -793,7 +793,7 @@ function BikeSearchPage() {
           </button>
         </div>
       </nav>
-      <section style={{ padding: "88px 6vw 0", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+      <section style={{ padding: "clamp(72px, 14vw, 88px) clamp(16px, 5vw, 32px) 0", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
         <button
           type="button"
           onClick={() => {
