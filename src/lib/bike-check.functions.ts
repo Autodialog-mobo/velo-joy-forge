@@ -255,6 +255,21 @@ type CodePattern = { source: string; pattern: RegExp };
 const CODE_PATTERNS: CodePattern[] = [
   { source: "Velopass", pattern: /^[A-Z0-9]{10}$/ },
   { source: "FNUCI", pattern: /^[A-Z0-9]{10}$/ },
+  // Prefix-formats route exclusively to their register (no overlap with the
+  // bare 10-char patterns above). API wiring not yet live — the entry is
+  // present so format detection + sourcesSearched already behave correctly.
+  { source: "APIC-BE", pattern: /^BE[A-Z0-9]{10}$/ },
+];
+
+/**
+ * Retry map for the "user typed the identifier without its country prefix"
+ * edge case. Only consulted in the not-found path for bare 10-char codes,
+ * so happy-path latency is unaffected. Each entry prepends its prefix and
+ * routes the retried code to the matching prefix-register.
+ */
+type PrefixRetry = { prefix: string; source: string };
+const PREFIX_RETRIES: PrefixRetry[] = [
+  { prefix: "BE", source: "APIC-BE" },
 ];
 
 function matchCodePatterns(code: string): string[] {
@@ -327,12 +342,32 @@ export const checkBike = createServerFn({ method: "POST" })
       cf: { cacheTtl: 0, cacheEverything: false },
     });
 
-    if (res.status === 404) return notFound;
+    if (res.status === 404) return withPrefixRetries(notFound, normalizedCode);
     if (!res.ok) throw new Error(`upstream_error_${res.status}`);
 
     const raw = (await res.json()) as unknown;
-    if (Array.isArray(raw) && raw.length === 0) return notFound;
+    if (Array.isArray(raw) && raw.length === 0) return withPrefixRetries(notFound, normalizedCode);
     const mapped = mapBikePayload(raw);
-    return mapped.found ? { ...mapped, country, source: "Velopass", sourcesSearched } : notFound;
+    return mapped.found
+      ? { ...mapped, country, source: "Velopass", sourcesSearched }
+      : withPrefixRetries(notFound, normalizedCode);
   });
+
+/**
+ * Prefix-retry hook: only invoked in the not-found path. For a bare 10-char
+ * code, prepends each known prefix and — once the corresponding register API
+ * is wired — dispatches the retried lookup. Today it just records the extra
+ * registers in sourcesSearched so the "not found in …" copy stays accurate
+ * as coverage grows. Prefixed codes (e.g. already "BE…") are skipped: those
+ * were routed directly by the primary registry match.
+ */
+function withPrefixRetries(notFound: BikeCheckResult, normalizedCode: string): BikeCheckResult {
+  if (!/^[A-Z0-9]{10}$/.test(normalizedCode)) return notFound;
+  const extras = PREFIX_RETRIES
+    .filter((r) => /^[A-Z0-9]+$/.test(r.prefix))
+    .map((r) => r.source)
+    .filter((s) => !notFound.sourcesSearched.includes(s));
+  if (extras.length === 0) return notFound;
+  return { ...notFound, sourcesSearched: [...notFound.sourcesSearched, ...extras] };
+}
 
