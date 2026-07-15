@@ -24,6 +24,17 @@ import frameNumberAsset from "@/assets/frame-number.png.asset.json";
 // Cloudflare Turnstile site key — real production key.
 const TURNSTILE_SITE_KEY = "0x4AAAAAADkaXNe7SmFnETSM";
 
+// Client-side mirror of the server-side CODE_PATTERNS registry.
+// Kept in sync with src/lib/bike-check.functions.ts. Used for silent
+// format confirmation while typing and for the "unknown format" hint on
+// submit — the actual authoritative match happens server-side.
+const CODE_PATTERNS: RegExp[] = [
+  /^[A-Z0-9]{10}$/, // Velopass + FNUCI (FR) share the 10-char alphanumeric shape
+];
+function matchesAnyCodePattern(code: string): boolean {
+  return CODE_PATTERNS.some((p) => p.test(code));
+}
+
 declare global {
   interface Window {
     turnstile?: {
@@ -454,7 +465,7 @@ function BikeSearchPage() {
   // Silence unused import warning — BIKE_BRANDS is referenced via brand-search.
   void BIKE_BRANDS;
 
-  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 10);
+  const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 32);
   const findVelopassCode = (raw: string) => {
     const value = raw.trim();
     const codes: string[] = [];
@@ -501,9 +512,29 @@ function BikeSearchPage() {
   const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
+  const [formatRecognized, setFormatRecognized] = useState(false);
+  const [unknownFormat, setUnknownFormat] = useState(false);
+  const brandInputRef = useRef<HTMLInputElement>(null);
+  const methodBFormRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
+
+  // Debounced silent format confirmation. Mirrors the server-side registry
+  // (CODE_PATTERNS in src/lib/bike-check.functions.ts). We intentionally do
+  // NOT name the matching operator — the user does not need to know which
+  // register issued their code, and a wrong operator name would confuse.
+  useEffect(() => {
+    const clean = codeA.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (!clean) { setFormatRecognized(false); return; }
+    const id = setTimeout(() => {
+      setFormatRecognized(matchesAnyCodePattern(clean));
+    }, 300);
+    return () => clearTimeout(id);
+  }, [codeA]);
+
+  // Reset the "unknown format" hint as soon as the user edits the field.
+  useEffect(() => { setUnknownFormat(false); }, [codeA]);
 
   // Spotlight: na een (scan- of form-)submit dimmen we de rest van de
   // pagina en lichten het resultaatpaneel even op. Werkt identiek op
@@ -565,7 +596,26 @@ function BikeSearchPage() {
 
   const submitA = async (e: React.FormEvent) => {
     e.preventDefault();
-    await runCheck(codeA);
+    const clean = sanitizeCode(codeA);
+    // Minimum length guard against empty / nutty queries.
+    if (clean.length < 6) return;
+    // Soft fallback: don't burn a Velopass/Turnstile call on codes we
+    // already know match no known register. Show an informative hint
+    // instead — never rendered as an error.
+    if (!matchesAnyCodePattern(clean)) {
+      setUnknownFormat(true);
+      setError(null);
+      setResult(null);
+      return;
+    }
+    setUnknownFormat(false);
+    await runCheck(clean);
+  };
+
+  const focusBrandFrame = () => {
+    setUnknownFormat(false);
+    methodBFormRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => brandInputRef.current?.focus(), 400);
   };
 
   const handleScanResult = (raw: string) => {
@@ -845,6 +895,69 @@ function BikeSearchPage() {
               onCopy={(v) => setCodeA(sanitizeCode(v))}
             />
 
+            {/* Silent format confirmation — appears after ~300ms debounce.
+                Deliberately NOT operator-specific: users don't need to
+                know which register issued their code. */}
+            {formatRecognized && !unknownFormat && (
+              <p
+                style={{
+                  margin: "8px 0 0",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 12,
+                  color: "#2ECC8A",
+                }}
+                aria-live="polite"
+              >
+                {t("method_a.format_confirmed", { defaultValue: "✓ Herkend als identificatiecode" })}
+              </p>
+            )}
+
+            {/* Soft fallback when the entered code matches no known
+                format at submit-time. Informational styling — not an
+                error. Always offers the brand + frame escape hatch. */}
+            {unknownFormat && (
+              <div
+                role="status"
+                style={{
+                  marginTop: 12,
+                  padding: "12px 14px",
+                  background: "#F1F5F9",
+                  border: "1px solid rgba(13,31,60,0.08)",
+                  borderRadius: 10,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 13,
+                  color: "#0D1F3C",
+                  lineHeight: 1.5,
+                }}
+              >
+                <p style={{ margin: 0 }}>
+                  {t("method_a.unknown_format_hint", {
+                    defaultValue:
+                      "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
+                  })}
+                </p>
+                <button
+                  type="button"
+                  onClick={focusBrandFrame}
+                  style={{
+                    marginTop: 8,
+                    background: "transparent",
+                    border: "none",
+                    padding: 0,
+                    color: "#0D1F3C",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {t("method_a.switch_to_brand_frame", { defaultValue: "Zoek via merk en framenummer →" })}
+                </button>
+              </div>
+            )}
+
+
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
 
@@ -852,16 +965,20 @@ function BikeSearchPage() {
 
 
 
+            {(() => {
+              const codeTooShort = codeA.trim().length < 6;
+              const btnDisabled = loadingA || loadingB || codeTooShort;
+              return (
             <button
               type="submit"
-              disabled={loadingA || loadingB || !codeA}
+              disabled={btnDisabled}
               style={{
-                ...navyBtn(loadingA || loadingB || !codeA),
+                ...navyBtn(btnDisabled),
                 marginTop: 14,
                 width: "100%",
-                background: loadingA || loadingB || !codeA ? "#94A3B8" : "transparent",
-                color: loadingA || loadingB || !codeA ? "#fff" : "#0D1F3C",
-                border: loadingA || loadingB || !codeA ? "none" : "1.5px solid rgba(13,31,60,0.2)",
+                background: btnDisabled ? "#94A3B8" : "transparent",
+                color: btnDisabled ? "#fff" : "#0D1F3C",
+                border: btnDisabled ? "none" : "1.5px solid rgba(13,31,60,0.2)",
                 fontWeight: 500,
                 fontSize: 14,
               }}
@@ -878,11 +995,13 @@ function BikeSearchPage() {
                 t("method_b.check")
               )}
             </button>
+              );
+            })()}
 
           </form>
 
           {/* METHOD B */}
-          <form onSubmit={submitB} className="bs-card">
+          <form ref={methodBFormRef} onSubmit={submitB} className="bs-card">
             <div style={{ marginBottom: 14 }}>
               <Hash size={28} color="#5A7090" strokeWidth={1.8} />
             </div>
@@ -894,6 +1013,7 @@ function BikeSearchPage() {
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
             <div style={{ position: "relative" }}>
               <input
+                ref={brandInputRef}
                 id="bs-brand"
                 type="text"
                 autoCorrect="off"

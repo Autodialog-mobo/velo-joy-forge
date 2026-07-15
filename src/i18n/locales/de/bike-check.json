@@ -35,7 +35,10 @@
     "image_caption": "Der Velopass Frame-ID-Aufkleber",
     "manual_fallback": "oder Code manuell eingeben",
     "example_inline": "10 Zeichen · Beispiel",
-    "example_copy_aria": "Beispielcode {{value}} kopieren"
+    "example_copy_aria": "Beispielcode {{value}} kopieren",
+    "format_confirmed": "✓ Als Identifikationscode erkannt",
+    "unknown_format_hint": "Dieses Codeformat erkennen wir noch nicht. Prüfe, ob du den vollständigen Code übernommen hast, oder suche über Marke und Rahmennummer.",
+    "switch_to_brand_frame": "Über Marke und Rahmennummer suchen →"
   },
   "method_b": {
     "title": "Über Marke und Rahmennummer",

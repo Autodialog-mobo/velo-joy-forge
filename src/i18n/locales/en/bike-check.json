@@ -35,7 +35,10 @@
     "image_caption": "The Velopass Frame-ID sticker",
     "manual_fallback": "or enter the code manually",
     "example_inline": "10 characters · example",
-    "example_copy_aria": "Copy example code {{value}}"
+    "example_copy_aria": "Copy example code {{value}}",
+    "format_confirmed": "✓ Recognised as an identification code",
+    "unknown_format_hint": "We don't recognise this code format yet. Check that you copied the full code, or search by brand and frame number.",
+    "switch_to_brand_frame": "Search by brand and frame number →"
   },
   "method_b": {
     "title": "Via brand and frame number",
