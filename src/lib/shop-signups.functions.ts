@@ -461,56 +461,98 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
-    // Best-effort website lookup via Google Places Text Search v1. Uses the
-    // Google Maps browser key (referrer restrictions permitting). Returns a
-    // clean https URL or null. All errors are swallowed and logged.
-    const lookupWebsiteViaGooglePlaces = async (q: { name: string; address: string }): Promise<string | null> => {
-      const key =
-        process.env.GOOGLE_MAPS_SERVER_KEY ||
-        process.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY ||
-        process.env.GOOGLE_MAPS_BROWSER_KEY ||
-        "";
-      if (!key) {
-        console.log("[shop-signups] website lookup skipped: no Google Maps key");
+    // Best-effort website lookup via Google Places Text Search v1, routed
+    // through the Lovable connector gateway (server-side, no referrer
+    // problem). Tries a series of queries from most-specific to broadest so
+    // we still find a hit when the exact address doesn't match a Places
+    // record. Returns a clean https URL or null; all errors are logged.
+    const lookupWebsiteViaGooglePlaces = async (q: {
+      name: string;
+      street: string;
+      postal: string;
+      city: string;
+      country: string;
+    }): Promise<string | null> => {
+      const lovableKey = process.env.LOVABLE_API_KEY || "";
+      const gmapsKey = process.env.GOOGLE_MAPS_API_KEY || "";
+      if (!lovableKey || !gmapsKey) {
+        console.log("[shop-signups] website lookup skipped: missing gateway credentials", {
+          hasLovableKey: !!lovableKey,
+          hasGmapsKey: !!gmapsKey,
+        });
         return null;
       }
-      const textQuery = `${q.name} ${q.address}`.trim();
-      if (!textQuery) return null;
-      try {
-        const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
+
+      const name = q.name.trim();
+      const cityPart = `${q.postal} ${q.city}`.trim();
+      const fullAddress = [q.street, cityPart, q.country].filter(Boolean).join(", ");
+      // Ordered from broad-with-city (best hit rate for small local shops) to
+      // most-specific (full address) and finally name-only as a last resort.
+      // Duplicates are filtered so we never spend the same query twice.
+      const attempts = [
+        { label: "name+city", textQuery: [name, q.city].filter(Boolean).join(" ") },
+        { label: "name+city+country", textQuery: [name, q.city, q.country].filter(Boolean).join(" ") },
+        { label: "name+full-address", textQuery: [name, fullAddress].filter(Boolean).join(" ") },
+        { label: "name-only", textQuery: name },
+      ].filter((a, i, arr) => a.textQuery && arr.findIndex((x) => x.textQuery === a.textQuery) === i);
+
+      const trySearch = async (textQuery: string): Promise<{ status: number; websiteUri?: string; body?: unknown }> => {
+        const res = await fetch("https://connector-gateway.lovable.dev/google_maps/places/v1/places:searchText", {
           method: "POST",
           headers: {
+            Authorization: `Bearer ${lovableKey}`,
+            "X-Connection-Api-Key": gmapsKey,
             "Content-Type": "application/json",
-            "X-Goog-Api-Key": key,
             "X-Goog-FieldMask": "places.websiteUri,places.displayName,places.formattedAddress",
           },
-          body: JSON.stringify({ textQuery, maxResultCount: 1 }),
+          body: JSON.stringify({ textQuery, maxResultCount: 3 }),
         });
         const body: any = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          console.warn("[shop-signups] Places textSearch failed", { status: res.status, body });
-          return null;
+        if (!res.ok) return { status: res.status, body };
+        const uri: string | undefined = body?.places?.find((p: any) => typeof p?.websiteUri === "string" && p.websiteUri)?.websiteUri;
+        return { status: res.status, websiteUri: uri, body };
+      };
+
+      for (const attempt of attempts) {
+        try {
+          const result = await trySearch(attempt.textQuery);
+          if (result.websiteUri) {
+            const cleaned = result.websiteUri.trim().replace(/[#?].*$/, "").replace(/\/+$/, "");
+            if (cleaned) {
+              console.log("[shop-signups] Places textSearch hit", { attempt: attempt.label, textQuery: attempt.textQuery });
+              return cleaned;
+            }
+          }
+          console.log("[shop-signups] Places textSearch miss", {
+            attempt: attempt.label,
+            textQuery: attempt.textQuery,
+            status: result.status,
+            hasError: result.status >= 400,
+          });
+          // Hard auth/permission failure — no point in retrying other queries.
+          if (result.status === 401 || result.status === 403) {
+            console.warn("[shop-signups] Places textSearch aborted (auth/permission)", { status: result.status, body: result.body });
+            return null;
+          }
+        } catch (e) {
+          console.warn("[shop-signups] Places textSearch threw", { attempt: attempt.label, error: (e as any)?.message });
         }
-        const uri: string | undefined = body?.places?.[0]?.websiteUri;
-        if (!uri || typeof uri !== "string") return null;
-        // Strip common URL params / trailing slashes for tidiness.
-        const cleaned = uri.trim().replace(/[#?].*$/, "").replace(/\/+$/, "");
-        return cleaned || null;
-      } catch (e) {
-        console.warn("[shop-signups] Places textSearch threw", { error: (e as any)?.message });
-        return null;
       }
+      return null;
     };
 
     let rawWebsite = String((row as any).website ?? "").trim();
     // Signup form doesn't ask for a website — try to auto-discover one via
-    // Google Places (Text Search v1) using the shop name + full address, so
-    // velopass.pro gets a siteUrl on first push. Best-effort; failures are
-    // logged and non-fatal. Persist back to shop_signups.website when found.
+    // Google Places so velopass.pro gets a siteUrl on first push.
+    // Best-effort; failures are logged and non-fatal. Persist back to
+    // shop_signups.website when found.
     if (!rawWebsite) {
       const discovered = await lookupWebsiteViaGooglePlaces({
         name: row.shop_name,
-        address: [street, `${postal} ${city}`.trim(), row.country].filter(Boolean).join(", "),
+        street,
+        postal,
+        city,
+        country: row.country ?? "",
       });
       if (discovered) {
         rawWebsite = discovered;
