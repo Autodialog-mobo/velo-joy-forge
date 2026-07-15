@@ -92,6 +92,10 @@
       "badge": "PAS ENCORE ENREGISTRÉ",
       "title": "Pas encore enregistré",
       "body": "Ce vélo n'est pas encore dans Velopass. Il n'est donc pas encore protégé."
+    },
+    "not_found": {
+      "badge": "INTROUVABLE",
+      "body": "Introuvable dans la base de données européenne Velopass ou dans les registres connectés."
     }
   },
   "result": {
