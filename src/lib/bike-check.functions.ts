@@ -244,6 +244,25 @@ export const checkBikeByFrame = createServerFn({ method: "POST" })
     return { ...NOT_FOUND_CORE, country, source: null, sourcesSearched };
   });
 
+/**
+ * Registry of known code formats per operator/register.
+ *
+ * A new operator = one entry here + one endpoint wiring below.
+ * The frontend does NOT need to know about operators — it simply forwards
+ * the raw code. The registry decides which register(s) to query.
+ */
+type CodePattern = { source: string; pattern: RegExp };
+const CODE_PATTERNS: CodePattern[] = [
+  { source: "Velopass", pattern: /^[A-Z0-9]{10}$/ },
+  { source: "FNUCI", pattern: /^[A-Z0-9]{10}$/ },
+];
+
+function matchCodePatterns(code: string): string[] {
+  const norm = code.toUpperCase();
+  const matched = CODE_PATTERNS.filter((p) => p.pattern.test(norm)).map((p) => p.source);
+  return Array.from(new Set(matched));
+}
+
 export const checkBike = createServerFn({ method: "POST" })
   .inputValidator((input: { code: string; turnstileToken?: string; lang?: string }) => {
     if (!input || typeof input.code !== "string" || !input.code.trim()) {
@@ -274,12 +293,30 @@ export const checkBike = createServerFn({ method: "POST" })
       if (!captchaOk) throw new Error("captcha_failed");
     }
 
+    const country = resolveCountry(data.lang);
+
+    // Server-side format detection. If the code matches no known register
+    // pattern, don't burn quota on a guaranteed miss — return not-found
+    // immediately with an empty sourcesSearched list. The frontend renders
+    // an informative hint (not an error) in that case.
+    const normalizedCode = data.code.toUpperCase();
+    const candidateSources = matchCodePatterns(normalizedCode);
+    if (candidateSources.length === 0) {
+      return { ...NOT_FOUND_CORE, country, source: null, sourcesSearched: [] };
+    }
+
+    const sourcesSearched = candidateSources;
+    const notFound: BikeCheckResult = { ...NOT_FOUND_CORE, country, source: null, sourcesSearched };
+
     const apiKey = process.env.VELOPASS_API_KEY;
     if (!apiKey) throw new Error("server_misconfigured");
 
-    const country = resolveCountry(data.lang);
-    const sourcesSearched = ["Velopass"];
-    const notFound: BikeCheckResult = { ...NOT_FOUND_CORE, country, source: null, sourcesSearched };
+    // For now only the Velopass endpoint is wired up. When additional
+    // register APIs come online, dispatch to them here in parallel based
+    // on candidateSources and merge results (first hit wins).
+    if (!candidateSources.includes("Velopass")) {
+      return notFound;
+    }
 
     const url = `https://thirdpartyapi.prod.velopass.com/api/Bicycles?StickerCode=${encodeURIComponent(data.code)}`;
     const res = await fetch(url, {
@@ -298,3 +335,4 @@ export const checkBike = createServerFn({ method: "POST" })
     const mapped = mapBikePayload(raw);
     return mapped.found ? { ...mapped, country, source: "Velopass", sourcesSearched } : notFound;
   });
+
