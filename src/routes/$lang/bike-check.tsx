@@ -659,7 +659,7 @@ function BikeSearchPage() {
     return () => window.removeEventListener("keydown", close);
   }, [lightboxImage]);
 
-  const runCheck = async (code: string) => {
+  const runCheck = async (code: string, source: "qr" | "manual" = "manual") => {
     const clean = sanitizeCode(code);
     if (!clean || submitLockRef.current) return;
     submitLockRef.current = true;
@@ -667,9 +667,8 @@ function BikeSearchPage() {
     setResult(null);
     setLoadingA(true);
     setLastMethod("a");
+    setLookupSource(source);
     try {
-      // Always fetch a fresh, single-use Turnstile token immediately before
-      // calling the server fn (tokens become invalid after one siteverify).
       const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
