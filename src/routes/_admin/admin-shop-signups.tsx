@@ -217,7 +217,7 @@ function ShopSignupsPage() {
         return;
       }
       const managementId = res?.managementId;
-      setPushSuccess({ id, managementId: managementId ?? "" });
+      setPushSuccess({ id, managementId: managementId ?? "", alreadyExists: !!res?.alreadyExists });
       setPushDiagnostics((prev) => {
         const next = { ...prev };
         if (managementId) delete next[id];
