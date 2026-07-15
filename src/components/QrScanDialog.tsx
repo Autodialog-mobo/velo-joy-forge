@@ -620,14 +620,43 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
 
+  // Immediately stop every active videotrack the Scanner has attached.
+  // Radix Dialog delays the actual unmount for its close animation, so
+  // relying on the Scanner's own cleanup means the camera preview keeps
+  // running for the full exit transition. Yanking the tracks here makes
+  // the video freeze/black out in the same tick as the scan.
+  const stopCameraTracksNow = () => {
+    if (typeof document === "undefined") return;
+    try {
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const video = root?.querySelector("video") as HTMLVideoElement | null;
+      const stream = video?.srcObject as MediaStream | null;
+      stream?.getTracks?.().forEach((track) => {
+        try { track.stop(); } catch { /* ignore */ }
+      });
+      if (video) {
+        try { video.srcObject = null; } catch { /* ignore */ }
+      }
+    } catch {
+      /* best-effort — Scanner unmount will finish the job */
+    }
+  };
+
   const emitResult = (value: string) => {
     if (onResult) {
-      onResult(value);
+      // Close the dialog FIRST (synchronously, in the same tick as the
+      // scan detection) so the Scanner unmounts and the camera track is
+      // stopped immediately. Any async follow-up work the parent kicks
+      // off in onResult (turnstile token, server lookup, …) must not
+      // delay the getUserMedia teardown — otherwise the camera preview
+      // stays on screen for as long as the lookup runs.
+      stopCameraTracksNow();
       setResult(null);
       setCameraError(null);
       setManual(false);
       setManualCode("");
       onOpenChange(false);
+      onResult(value);
       return;
     }
     setResult(value);
