@@ -637,10 +637,35 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       apiResponse = { id: preflightId, _preflight: true, message: "Organisation already exists (preflight match)" };
 
       // POST was skipped, so the website was never sent. If we have one,
-      // PATCH it onto the existing organisation so it surfaces in velopass.pro.
+      // fetch the existing organisation, merge the website fields, and PUT
+      // the full object back — velopass.pro's PUT typically rejects partial bodies.
       if (normalizedWebsite) {
-        const patchBody = { website: normalizedWebsite, websiteUrl: normalizedWebsite };
-        for (const method of ["PATCH", "PUT"] as const) {
+        let existing: any = null;
+        try {
+          const getRes = await fetch(managementEndpoint(`Organisations/${preflightId}`), {
+            method: "GET",
+            headers: { Authorization: bearer, Accept: "application/json" },
+          });
+          if (getRes.ok) {
+            const t = await getRes.text();
+            existing = t ? JSON.parse(t) : null;
+          } else {
+            console.warn("[shop-signups] preflight website update: GET failed", {
+              id: data.id, orgId: preflightId, status: getRes.status,
+            });
+          }
+        } catch (e: any) {
+          console.warn("[shop-signups] preflight website update: GET threw", {
+            id: data.id, error: e?.message,
+          });
+        }
+
+        const orgObj = existing && typeof existing === "object"
+          ? (existing.data ?? existing.result ?? existing.organisation ?? existing)
+          : null;
+
+        const attempts: Array<{ method: string; status: number; ok: boolean; body?: string }> = [];
+        const tryReq = async (method: "PATCH" | "PUT", payload: any) => {
           try {
             const res = await fetch(managementEndpoint(`Organisations/${preflightId}`), {
               method,
@@ -649,18 +674,32 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
                 "Content-Type": "application/json",
                 Accept: "application/json",
               },
-              body: JSON.stringify(patchBody),
+              body: JSON.stringify(payload),
             });
-            console.log("[shop-signups] preflight website update", {
-              id: data.id, orgId: preflightId, method, status: res.status,
-            });
-            if (res.status >= 200 && res.status < 300) break;
+            const ok = res.status >= 200 && res.status < 300;
+            let bodyPreview: string | undefined;
+            if (!ok) { try { bodyPreview = (await res.text()).slice(0, 300); } catch {} }
+            attempts.push({ method, status: res.status, ok, body: bodyPreview });
+            return ok;
           } catch (e: any) {
-            console.warn("[shop-signups] preflight website update failed", {
-              id: data.id, method, error: e?.message,
-            });
+            attempts.push({ method, status: 0, ok: false, body: e?.message });
+            return false;
           }
+        };
+
+        let ok = false;
+        ok = await tryReq("PATCH", { website: normalizedWebsite, websiteUrl: normalizedWebsite });
+        if (!ok && orgObj) {
+          const merged = { ...orgObj, website: normalizedWebsite, websiteUrl: normalizedWebsite };
+          ok = await tryReq("PUT", merged);
         }
+        if (!ok) {
+          ok = await tryReq("PUT", { website: normalizedWebsite, websiteUrl: normalizedWebsite });
+        }
+
+        console.log("[shop-signups] preflight website update", {
+          id: data.id, orgId: preflightId, url: normalizedWebsite, ok, attempts,
+        });
       }
     } else {
       try {
