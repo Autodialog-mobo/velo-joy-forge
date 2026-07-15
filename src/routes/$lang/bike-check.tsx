@@ -1196,8 +1196,13 @@ function BikeSearchPage() {
               <img
                 src={frameNumberAsset.url}
                 alt={t("method_b.image_alt")}
-                style={refImg}
+                style={{ ...refImg, cursor: "pointer" }}
                 loading="lazy"
+                onClick={() => setLightboxImage({ src: frameNumberAsset.url, alt: t("method_b.image_alt") })}
+                role="button"
+                aria-label={t("method_b.image_enlarge_aria", { defaultValue: "Klik om de afbeelding te vergroten" })}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightboxImage({ src: frameNumberAsset.url, alt: t("method_b.image_alt") }); }}
               />
               <figcaption style={refImgCaption}>{t("method_b.image_caption")}</figcaption>
             </figure>
