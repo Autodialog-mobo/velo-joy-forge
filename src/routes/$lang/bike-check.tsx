@@ -753,6 +753,7 @@ function BikeSearchPage() {
     setResult(null);
     setLoadingB(true);
     setLastMethod("b");
+    setLookupSource("manual");
     try {
       const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckByFrame({
