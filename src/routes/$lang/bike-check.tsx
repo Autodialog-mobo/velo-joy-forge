@@ -1052,9 +1052,9 @@ function BikeSearchPage() {
                 ...navyBtn(btnDisabled),
                 marginTop: 14,
                 width: "100%",
-                background: btnDisabled ? "#94A3B8" : "transparent",
-                color: btnDisabled ? "#fff" : "#0D1F3C",
-                border: btnDisabled ? "none" : "1.5px solid rgba(13,31,60,0.2)",
+                background: btnDisabled ? "#E2E8F0" : "#0D1F3C",
+                color: btnDisabled ? "#94A3B8" : "#fff",
+                border: "none",
                 fontWeight: 500,
                 fontSize: 14,
               }}
