@@ -35,6 +35,47 @@ function matchesAnyCodePattern(code: string): boolean {
   return CODE_PATTERNS.some((p) => p.test(code));
 }
 
+/**
+ * QR-content URL registry. Each accredited operator's QR points at their
+ * own domain; the domain identifies the operator, so no parallel search is
+ * needed. Extraction returns the identifier only — the URL itself is NEVER
+ * opened, followed, or shown to the user. QR stickers on bikes are physically
+ * accessible and could be overplakt with a malicious QR (phishing).
+ *
+ * Add a new operator = one entry here + one server-side registry entry.
+ */
+type QrUrlPattern = { source: string; match: RegExp; group: number };
+const QR_URL_PATTERNS: QrUrlPattern[] = [
+  { source: "Velopass", match: /^https?:\/\/(?:www\.)?velopass\.com\/m\/([A-Za-z0-9_-]+)/i, group: 1 },
+];
+
+/**
+ * Extract a bike identifier from raw QR content.
+ * - Returns a normalized (uppercase, alnum) code when the QR is a known
+ *   operator URL or a bare code that matches a client-side pattern.
+ * - Returns null when the QR is neither — the caller renders a soft hint.
+ * NEVER navigates to or opens the scanned URL.
+ */
+function extractCodeFromQr(raw: string): string | null {
+  const value = (raw ?? "").trim();
+  if (!value) return null;
+
+  for (const p of QR_URL_PATTERNS) {
+    const m = value.match(p.match);
+    if (m && m[p.group]) {
+      const clean = m[p.group].toUpperCase().replace(/[^A-Z0-9]/g, "");
+      if (clean.length >= 6) return clean;
+    }
+  }
+
+  // Bare code (no URL) — accept anything the client-side pattern registry
+  // recognises so unknown-length codes still route through the normal flow.
+  const bare = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (bare && matchesAnyCodePattern(bare)) return bare;
+
+  return null;
+}
+
 declare global {
   interface Window {
     turnstile?: {
@@ -514,6 +555,8 @@ function BikeSearchPage() {
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
   const [formatRecognized, setFormatRecognized] = useState(false);
   const [unknownFormat, setUnknownFormat] = useState(false);
+  // Which surface triggered the unknown-format hint — controls copy only.
+  const [unknownFormatSource, setUnknownFormatSource] = useState<"manual" | "qr">("manual");
   const brandInputRef = useRef<HTMLInputElement>(null);
   const methodBFormRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -603,6 +646,7 @@ function BikeSearchPage() {
     // already know match no known register. Show an informative hint
     // instead — never rendered as an error.
     if (!matchesAnyCodePattern(clean)) {
+      setUnknownFormatSource("manual");
       setUnknownFormat(true);
       setError(null);
       setResult(null);
@@ -619,9 +663,20 @@ function BikeSearchPage() {
   };
 
   const handleScanResult = (raw: string) => {
-    const clean = findVelopassCode(raw);
-    setCodeA(clean);
-    if (clean.length === 10) void runCheck(clean);
+    // Route QR content through the URL/pattern registry. The scanned URL
+    // is NEVER opened or followed — we only extract the identifier and
+    // hand it to the same server lookup as manual input.
+    const extracted = extractCodeFromQr(raw);
+    if (extracted) {
+      setUnknownFormat(false);
+      setCodeA(extracted);
+      void runCheck(extracted);
+      return;
+    }
+    // Unknown QR — show the soft hint (not an error) and let the user
+    // fall back to manual input or brand + frame search.
+    setUnknownFormatSource("qr");
+    setUnknownFormat(true);
   };
 
   const handleFrameScanResult = (raw: string) => {
@@ -931,10 +986,15 @@ function BikeSearchPage() {
                 }}
               >
                 <p style={{ margin: 0 }}>
-                  {t("method_a.unknown_format_hint", {
-                    defaultValue:
-                      "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
-                  })}
+                  {unknownFormatSource === "qr"
+                    ? t("method_a.unknown_qr_hint", {
+                        defaultValue:
+                          "Deze QR-code herkennen we niet als een fietsidentificatie. Zoek via de code op de sticker of via merk en framenummer.",
+                      })
+                    : t("method_a.unknown_format_hint", {
+                        defaultValue:
+                          "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
+                      })}
                 </p>
                 <button
                   type="button"
