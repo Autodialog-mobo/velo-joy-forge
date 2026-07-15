@@ -461,7 +461,70 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
-    const rawWebsite = String((row as any).website ?? "").trim();
+    // Best-effort website lookup via Google Places Text Search v1. Uses the
+    // Google Maps browser key (referrer restrictions permitting). Returns a
+    // clean https URL or null. All errors are swallowed and logged.
+    const lookupWebsiteViaGooglePlaces = async (q: { name: string; address: string }): Promise<string | null> => {
+      const key =
+        process.env.GOOGLE_MAPS_SERVER_KEY ||
+        process.env.VITE_LOVABLE_CONNECTOR_GOOGLE_MAPS_BROWSER_KEY ||
+        process.env.GOOGLE_MAPS_BROWSER_KEY ||
+        "";
+      if (!key) {
+        console.log("[shop-signups] website lookup skipped: no Google Maps key");
+        return null;
+      }
+      const textQuery = `${q.name} ${q.address}`.trim();
+      if (!textQuery) return null;
+      try {
+        const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Goog-Api-Key": key,
+            "X-Goog-FieldMask": "places.websiteUri,places.displayName,places.formattedAddress",
+          },
+          body: JSON.stringify({ textQuery, maxResultCount: 1 }),
+        });
+        const body: any = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          console.warn("[shop-signups] Places textSearch failed", { status: res.status, body });
+          return null;
+        }
+        const uri: string | undefined = body?.places?.[0]?.websiteUri;
+        if (!uri || typeof uri !== "string") return null;
+        // Strip common URL params / trailing slashes for tidiness.
+        const cleaned = uri.trim().replace(/[#?].*$/, "").replace(/\/+$/, "");
+        return cleaned || null;
+      } catch (e) {
+        console.warn("[shop-signups] Places textSearch threw", { error: (e as any)?.message });
+        return null;
+      }
+    };
+
+    let rawWebsite = String((row as any).website ?? "").trim();
+    // Signup form doesn't ask for a website — try to auto-discover one via
+    // Google Places (Text Search v1) using the shop name + full address, so
+    // velopass.pro gets a siteUrl on first push. Best-effort; failures are
+    // logged and non-fatal. Persist back to shop_signups.website when found.
+    if (!rawWebsite) {
+      const discovered = await lookupWebsiteViaGooglePlaces({
+        name: row.shop_name,
+        address: [street, `${postal} ${city}`.trim(), row.country].filter(Boolean).join(", "),
+      });
+      if (discovered) {
+        rawWebsite = discovered;
+        try {
+          await (supabaseAdmin as any)
+            .from("shop_signups")
+            .update({ website: discovered })
+            .eq("id", data.id);
+        } catch (e) {
+          console.warn("[shop-signups] failed to persist discovered website", { id: data.id, error: (e as any)?.message });
+        }
+        console.log("[shop-signups] auto-discovered website", { id: data.id, website: discovered });
+      }
+    }
     const normalizedWebsite = rawWebsite
       ? (/^https?:\/\//i.test(rawWebsite) ? rawWebsite : `https://${rawWebsite}`)
       : "";
