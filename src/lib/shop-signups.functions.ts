@@ -461,7 +461,29 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
-    const rawWebsite = String((row as any).website ?? "").trim();
+    let rawWebsite = String((row as any).website ?? "").trim();
+    // Signup form doesn't ask for a website — try to auto-discover one via
+    // Google Places (Text Search v1) using the shop name + full address, so
+    // velopass.pro gets a siteUrl on first push. Best-effort; failures are
+    // logged and non-fatal. Persist back to shop_signups.website when found.
+    if (!rawWebsite) {
+      const discovered = await lookupWebsiteViaGooglePlaces({
+        name: row.shop_name,
+        address: [street, `${postal} ${city}`.trim(), row.country].filter(Boolean).join(", "),
+      });
+      if (discovered) {
+        rawWebsite = discovered;
+        try {
+          await (supabaseAdmin as any)
+            .from("shop_signups")
+            .update({ website: discovered })
+            .eq("id", data.id);
+        } catch (e) {
+          console.warn("[shop-signups] failed to persist discovered website", { id: data.id, error: (e as any)?.message });
+        }
+        console.log("[shop-signups] auto-discovered website", { id: data.id, website: discovered });
+      }
+    }
     const normalizedWebsite = rawWebsite
       ? (/^https?:\/\//i.test(rawWebsite) ? rawWebsite : `https://${rawWebsite}`)
       : "";
