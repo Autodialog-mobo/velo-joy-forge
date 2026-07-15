@@ -157,7 +157,7 @@ function ShopSignupsPage() {
       // does not silently discard the admin's other changes.
       const payload: any = { id, status };
       if (openId === id) {
-        for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes"]) {
+        for (const k of ["first_name","last_name","shop_name","email","phone","vat","address","country","lang","pos_system","pos_other","admin_notes","website"]) {
           if (draft[k] !== undefined) payload[k] = draft[k] ?? "";
         }
       }
