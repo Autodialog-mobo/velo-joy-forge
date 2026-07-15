@@ -38,6 +38,7 @@
     "example_copy_aria": "Copier le code d'exemple {{value}}",
     "format_confirmed": "✓ Reconnu comme code d'identification",
     "unknown_format_hint": "Nous ne reconnaissons pas encore ce format de code. Vérifie que tu as copié le code complet, ou recherche par marque et numéro de cadre.",
+    "unknown_qr_hint": "Nous ne reconnaissons pas ce code QR comme une identification de vélo. Recherche via le code sur l'étiquette ou par marque et numéro de cadre.",
     "switch_to_brand_frame": "Rechercher par marque et numéro de cadre →"
   },
   "method_b": {
