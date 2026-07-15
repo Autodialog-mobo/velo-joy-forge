@@ -582,6 +582,11 @@ function BikeSearchPage() {
   const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
+  // How the last lookup was triggered. Drives which "not found" variant
+  // we render: QR-scan → NOG NIET GEREGISTREERD (interim proxy for a
+  // sticker that was issued but not activated); manual code / brand+frame
+  // → NIET GEVONDEN (onbekende code, geen match in registers).
+  const [lookupSource, setLookupSource] = useState<"qr" | "manual">("manual");
   const [formatRecognized, setFormatRecognized] = useState(false);
   const [unknownFormat, setUnknownFormat] = useState(false);
   // Which surface triggered the unknown-format hint — controls copy only.
