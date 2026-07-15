@@ -897,7 +897,7 @@ function BikeSearchPage() {
                 loading="lazy"
                 onClick={() => setLightboxImage({ src: velopassStickerAsset.url, alt: t("method_a.image_alt") })}
                 role="button"
-                aria-label={t("common:close", { defaultValue: "Afbeelding vergroten" })}
+                aria-label={t("method_a.image_enlarge_aria", { defaultValue: "Klik om de afbeelding te vergroten" })}
                 tabIndex={0}
                 onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightboxImage({ src: velopassStickerAsset.url, alt: t("method_a.image_alt") }); }}
               />
