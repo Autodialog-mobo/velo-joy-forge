@@ -1232,7 +1232,7 @@ function PushedInfoBanner({
   managementId?: string | null;
   shopId?: string;
   onSaveManagementId?: (managementId: string | null) => Promise<boolean>;
-  onResetProPush?: () => Promise<boolean>;
+  onResetProPush?: (opts?: { andRepush?: boolean }) => Promise<boolean>;
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
