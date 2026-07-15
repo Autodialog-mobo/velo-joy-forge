@@ -599,6 +599,33 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       // downstream flow reuses the id and marks the signup as pushed.
       apiStatus = 200;
       apiResponse = { id: preflightId, _preflight: true, message: "Organisation already exists (preflight match)" };
+
+      // POST was skipped, so the website was never sent. If we have one,
+      // PATCH it onto the existing organisation so it surfaces in velopass.pro.
+      if (normalizedWebsite) {
+        const patchBody = { website: normalizedWebsite, websiteUrl: normalizedWebsite };
+        for (const method of ["PATCH", "PUT"] as const) {
+          try {
+            const res = await fetch(managementEndpoint(`Organisations/${preflightId}`), {
+              method,
+              headers: {
+                Authorization: bearer,
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify(patchBody),
+            });
+            console.log("[shop-signups] preflight website update", {
+              id: data.id, orgId: preflightId, method, status: res.status,
+            });
+            if (res.status >= 200 && res.status < 300) break;
+          } catch (e: any) {
+            console.warn("[shop-signups] preflight website update failed", {
+              id: data.id, method, error: e?.message,
+            });
+          }
+        }
+      }
     } else {
       try {
         const res = await fetch(managementEndpoint("Organisations"), {
