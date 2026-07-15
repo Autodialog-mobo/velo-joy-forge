@@ -615,6 +615,16 @@ function BikeSearchPage() {
     };
   }, [result, error]);
 
+  // Lightbox: ESC closes the enlarged image view.
+  useEffect(() => {
+    if (!lightboxImage) return;
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxImage(null);
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [lightboxImage]);
+
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
     if (!clean || submitLockRef.current) return;
