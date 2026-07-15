@@ -909,6 +909,9 @@ function EditableGrid({ draft, setDraft, copy, copiedKey, created_at }: EGProps)
       <div className="sm:col-span-2">
         {renderRow("shop_name", "Winkel")}
       </div>
+      <div className="sm:col-span-2">
+        {renderRow("website", "Website", "url")}
+      </div>
       <AddressFields
         address={draft.address ?? ""}
         onChange={(v) => setDraft((d) => ({ ...d, address: v }))}
