@@ -555,6 +555,8 @@ function BikeSearchPage() {
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
   const [formatRecognized, setFormatRecognized] = useState(false);
   const [unknownFormat, setUnknownFormat] = useState(false);
+  // Which surface triggered the unknown-format hint — controls copy only.
+  const [unknownFormatSource, setUnknownFormatSource] = useState<"manual" | "qr">("manual");
   const brandInputRef = useRef<HTMLInputElement>(null);
   const methodBFormRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
