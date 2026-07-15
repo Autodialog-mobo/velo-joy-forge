@@ -890,7 +890,7 @@ function BikeSearchPage() {
               sanitize={sanitizeCode}
             />
             <ExampleCopy
-              label={t("method_a.example_inline", { defaultValue: "10 tekens · voorbeeld" })}
+              label={t("method_a.example_inline", { defaultValue: "bijvoorbeeld" })}
               value="UC9K4D3NCJ"
               onCopy={(v) => setCodeA(sanitizeCode(v))}
             />
