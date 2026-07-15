@@ -681,6 +681,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       // off in onResult (turnstile token, server lookup, …) must not
       // delay the getUserMedia teardown — otherwise the camera preview
       // stays on screen for as long as the lookup runs.
+      stopCameraTracksNow();
       flushSync(() => {
         setClosingAfterResult(true);
         setScanPaused(true);
@@ -976,8 +977,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                   formats={isFrameMode
                     ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
                     : ["qr_code"]}
-                  // Sneller pollen tussen frames (default ~500ms). 80ms geeft
-                  // ~12 leespogingen per seconde zonder de CPU plat te leggen.
+                  // Lees op videoframerate zodat een gevonden QR meteen
+                  // terugkomt; de dialog sluit direct na de eerste match.
                   scanDelay={0}
                   retryDelay={33}
                   settleDelayMs={0}
