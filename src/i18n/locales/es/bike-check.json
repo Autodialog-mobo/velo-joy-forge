@@ -23,7 +23,8 @@
     "no_email_hint": "¿No has recibido correo? Tranquilo — escanea el Frame-ID y lo arreglas todo de una vez."
   },
   "method_a": {
-    "title": "Con el código Velopass",
+    "title": "Con el código en la bici",
+    "subtext": "Velopass u otro operador acreditado",
     "desc": "Escanea el QR del Frame-ID o escribe el código Velopass.",
     "code_label": "Código Velopass",
     "code_hint": "10 caracteres, por ejemplo UC9K4D3NCJ",
@@ -97,7 +98,8 @@
     "contact_owner": "Avisa al propietario de que la has encontrado →",
     "contact_owner_note": "Envías un mensaje directo al propietario. También puedes hacerlo de forma anónima.",
     "not_registered_title": "Aún no registrada",
-    "not_registered_body": "Esta bici aún no está en Velopass. Regístrala para protegerla.",
+    "not_registered_body": "No se ha encontrado en la base Velopass ni en los registros conectados.",
+    "found_in": "Encontrado en {{source}}",
     "not_registered_cta": "Registra tu bici →",
     "reported_be_primary": "Denuncia con Police-on-web →",
     "reported_be_secondary": "Encuentra tu zona policial local →",
@@ -123,5 +125,6 @@
   "police_note_de": "¿Has encontrado esta bici? Denuncia con la Onlinewache alemana.",
   "outcomes": {
     "reported_cta": "¿Has encontrado esta bici? Avisa al propietario de que la has encontrado."
-  }
+  },
+  "coverage_note": "Busca en la base Velopass y en los registros nacionales conectados"
 }

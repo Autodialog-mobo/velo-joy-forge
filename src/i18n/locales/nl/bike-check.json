@@ -23,7 +23,8 @@
     "no_email_hint": "Geen mail ontvangen? Geen zorgen — scan de Frame-ID en je regelt het in één keer."
   },
   "method_a": {
-    "title": "Via de Velopass-code",
+    "title": "Via de code op de fiets",
+    "subtext": "Velopass of een andere erkende operator",
     "desc": "Scan de QR-code op de Frame-ID of typ de Velopass-code in.",
     "code_label": "Velopass-code",
     "code_hint": "10 tekens, bijvoorbeeld UC9K4D3NCJ",
@@ -97,7 +98,8 @@
     "contact_owner": "Laat de eigenaar weten dat je 'm gevonden hebt →",
     "contact_owner_note": "Je stuurt een bericht rechtstreeks aan de eigenaar. Je kunt dit ook anoniem doen.",
     "not_registered_title": "Nog niet geregistreerd",
-    "not_registered_body": "Deze fiets staat nog niet in Velopass. Registreer 'm om hem te beschermen.",
+    "not_registered_body": "Niet gevonden in de Velopass-database of de gekoppelde registers.",
+    "found_in": "Gevonden in {{source}}",
     "not_registered_cta": "Registreer je fiets →",
     "reported_be_primary": "Doe aangifte via Police-on-web →",
     "reported_be_secondary": "Vind je lokale politiezone →",
@@ -123,5 +125,6 @@
   "police_note_de": "Heb je deze fiets gevonden? Doe aangifte via de Duitse Onlinewache.",
   "outcomes": {
     "reported_cta": "Deze fiets gevonden? Laat de eigenaar weten dat je 'm gevonden hebt."
-  }
+  },
+  "coverage_note": "Doorzoekt de Velopass-database en gekoppelde nationale registers"
 }

@@ -765,6 +765,9 @@ function BikeSearchPage() {
               <QrCode size={28} color="#2ECC8A" strokeWidth={1.8} />
             </div>
             <h2 style={cardTitle}>{t("method_a.title")}</h2>
+            <p style={{ margin: "-4px 0 6px", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5A7090" }}>
+              {t("method_a.subtext", { defaultValue: "Velopass of een andere erkende operator" })}
+            </p>
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
             <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
@@ -1106,6 +1109,25 @@ function BikeSearchPage() {
             Tokens are fetched on-demand per submit via the imperative ref,
             so each submission gets a fresh single-use token. */}
         <TurnstileWidget ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} />
+
+        {/* Coverage / trust line — shown once below both search cards. */}
+        <p
+          style={{
+            marginTop: 18,
+            marginBottom: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 12.5,
+            color: "#5A7090",
+            textAlign: "center",
+          }}
+        >
+          <Search size={13} strokeWidth={2} aria-hidden="true" />
+          <span>{t("coverage_note", { defaultValue: "Doorzoekt de Velopass-database en gekoppelde nationale registers" })}</span>
+        </p>
 
 
         {/* ERROR + RESULT scroll target.
@@ -1720,6 +1742,18 @@ const badgeBase: React.CSSProperties = {
   borderRadius: 100,
   padding: "3px 12px",
 };
+const foundInBadge: React.CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  fontFamily: "'DM Sans', sans-serif",
+  fontSize: 12,
+  fontWeight: 500,
+  color: "#5A7090",
+  background: "rgba(13,31,60,0.04)",
+  border: "1px solid rgba(13,31,60,0.08)",
+  borderRadius: 100,
+  padding: "2px 10px",
+};
 // Border style is a redundant (non-color) status cue: solid = secured,
 // dashed = reported/warning, dotted = not registered. Pairs with the
 // status icon so users with color-vision deficiencies can still
@@ -1802,11 +1836,14 @@ function BikeDetails({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
 function SecuredCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
   return (
     <div style={resultCard("#2ECC8A", "solid")}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
         <span style={{ ...badgeBase, gap: 6, background: "#2ECC8A", color: "#0D1F3C" }}>
           <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
           {t("status_cards.all_clear.badge")}
         </span>
+        {bike.source && (
+          <span style={foundInBadge}>{t("result.found_in", { source: bike.source, defaultValue: "Gevonden in {{source}}" })}</span>
+        )}
       </div>
       <h3 style={resultTitle}>{t("result.secured_title")}</h3>
       <p style={resultBody}>{t("result.secured_body")}</p>
@@ -1889,6 +1926,9 @@ function ReportedCard({ t, bike }: { t: TFn; bike: BikeCheckResult }) {
           <AlertTriangle size={14} strokeWidth={2.5} aria-hidden="true" />
           {t("status_cards.reported.badge")}
         </span>
+        {bike.source && (
+          <span style={foundInBadge}>{t("result.found_in", { source: bike.source, defaultValue: "Gevonden in {{source}}" })}</span>
+        )}
       </div>
       <h3 style={resultTitle}>{t("result.reported_title")}</h3>
       <p style={resultBody}>{t("result.reported_body")}</p>
