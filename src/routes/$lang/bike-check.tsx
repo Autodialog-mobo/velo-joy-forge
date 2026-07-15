@@ -837,10 +837,10 @@ function BikeSearchPage() {
           style={{
             fontFamily: "'Syne', sans-serif",
             fontWeight: 700,
-            fontSize: "clamp(28px, 4vw, 42px)",
-            lineHeight: 1.1,
+            fontSize: "clamp(26px, 7vw, 42px)",
+            lineHeight: 1.15,
             color: "#0D1F3C",
-            letterSpacing: "-1px",
+            letterSpacing: "-0.5px",
             marginBottom: 12,
           }}
         >
