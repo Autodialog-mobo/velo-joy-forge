@@ -23,7 +23,8 @@
     "no_email_hint": "Keine E-Mail bekommen? Kein Stress — einfach die Frame-ID scannen und fertig."
   },
   "method_a": {
-    "title": "Über den Velopass-Code",
+    "title": "Über den Code am Fahrrad",
+    "subtext": "Velopass oder ein anderer anerkannter Anbieter",
     "desc": "Scanne den QR-Code auf der Frame-ID oder gib den Velopass-Code ein.",
     "code_label": "Velopass-Code",
     "code_hint": "10 Zeichen, z.B. UC9K4D3NCJ",
@@ -97,7 +98,8 @@
     "contact_owner": "Lass den Eigentümer wissen, dass du es gefunden hast →",
     "contact_owner_note": "Du sendest eine Nachricht direkt an den Eigentümer. Du kannst das auch anonym tun.",
     "not_registered_title": "Noch nicht registriert",
-    "not_registered_body": "Dieses Fahrrad ist noch nicht in Velopass. Registriere es, um es zu schützen.",
+    "not_registered_body": "Nicht gefunden in der Velopass-Datenbank oder den verbundenen Registern.",
+    "found_in": "Gefunden in {{source}}",
     "not_registered_cta": "Registriere dein Fahrrad →",
     "reported_be_primary": "Anzeige über Police-on-web erstatten →",
     "reported_be_secondary": "Finde deine lokale Polizeizone →",
@@ -123,5 +125,6 @@
   "police_note_de": "Hast du dieses Fahrrad gefunden? Erstatte Anzeige über die deutsche Onlinewache.",
   "outcomes": {
     "reported_cta": "Dieses Fahrrad gefunden? Lass den Eigentümer wissen, dass du es gefunden hast."
-  }
+  },
+  "coverage_note": "Durchsucht die Velopass-Datenbank und verbundene nationale Register"
 }
