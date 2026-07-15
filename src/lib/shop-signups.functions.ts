@@ -556,21 +556,37 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       const targetVat = norm(row.vat);
       const targetEmail = norm(row.email);
       const targetName = norm(row.shop_name);
+      // Strict match: the company/VAT number MUST match. Name-only or
+      // email-only matches are unsafe — a French "VELOTOF" is not the same
+      // organisation as a Belgian "VELOTOF" with a different company number,
+      // and adding an employee to the wrong organisation is destructive.
+      // As a secondary safeguard we accept a match when BOTH email and name
+      // agree, which uniquely identifies the same shop in practice.
       const matches = (o: any): boolean => {
         if (!o || typeof o !== "object") return false;
-        const fields = [
-          o.companyNumber, o.CompanyNumber, o.vatNumber, o.VatNumber,
-          o.email, o.Email,
-          o.name, o.Name, o.label, o.Label, o.text, o.Text, o.title, o.Title,
-          o.displayName, o.DisplayName, o.organisationName, o.OrganisationName,
-        ].filter((v) => typeof v === "string");
-        for (const f of fields as string[]) {
-          const nf = norm(f);
-          if (!nf) continue;
-          if (targetVat && nf === targetVat) return true;
-          if (targetEmail && nf === targetEmail) return true;
-          if (targetName && nf === targetName) return true;
-        }
+        const pickNorm = (keys: string[]): string => {
+          for (const k of keys) {
+            const v = (o as any)[k];
+            if (typeof v === "string") {
+              const n = norm(v);
+              if (n) return n;
+            }
+          }
+          return "";
+        };
+        const orgVat = pickNorm(["companyNumber", "CompanyNumber", "vatNumber", "VatNumber"]);
+        if (targetVat && orgVat && orgVat === targetVat) return true;
+
+        const orgEmail = pickNorm(["email", "Email"]);
+        const orgName = pickNorm([
+          "name", "Name", "label", "Label", "text", "Text", "title", "Title",
+          "displayName", "DisplayName", "organisationName", "OrganisationName",
+        ]);
+        if (
+          targetEmail && targetName &&
+          orgEmail === targetEmail && orgName === targetName
+        ) return true;
+
         return false;
       };
       const extractId = (o: any): string | null => extractIdFromObject(o);
