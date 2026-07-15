@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type * as React from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw, X } from "lucide-react";
-import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId } from "@/lib/shop-signups.functions";
+import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId, resetShopSignupProPush } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
 
@@ -45,6 +45,7 @@ function ShopSignupsPage() {
   const update = useServerFn(updateShopSignup);
   const pushToPro = useServerFn(pushShopSignupToVelopassPro);
   const setManagementId = useServerFn(setShopSignupManagementId);
+  const resetProPush = useServerFn(resetShopSignupProPush);
   const queryClient = useQueryClient();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["shop-signups"],
@@ -209,6 +210,9 @@ function ShopSignupsPage() {
       const res: any = await pushToPro({ data: { id } });
       if (res?.ok === false) {
         setPushError(res);
+        if (res?.idDiagnostics) {
+          setPushDiagnostics((prev) => ({ ...prev, [id]: res.idDiagnostics }));
+        }
         toast.error(res.message ?? "Doorsturen mislukt");
         return;
       }
@@ -246,6 +250,28 @@ function ShopSignupsPage() {
       return true;
     } catch (err: any) {
       toast.error(err?.message ?? (managementId ? "Koppelen mislukt" : "Ontkoppelen mislukt"));
+      return false;
+    }
+  };
+
+  const onResetProPush = async (id: string): Promise<boolean> => {
+    try {
+      await resetProPush({ data: { id } });
+      setPushedIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      setPushDiagnostics((prev) => {
+        const next = { ...prev };
+        delete next[id];
+        return next;
+      });
+      toast.success("Push-status gereset");
+      refetch();
+      return true;
+    } catch (err: any) {
+      toast.error(err?.message ?? "Resetten mislukt");
       return false;
     }
   };
@@ -592,6 +618,7 @@ function ShopSignupsPage() {
                 managementId={open.pushed_to_pro_management_id}
                 shopId={open.id}
                 onSaveManagementId={(mid) => onSaveManagementId(open.id, mid)}
+                onResetProPush={() => onResetProPush(open.id)}
                 onRepush={() => onPushToPro(open.id)}
                 repushLoading={pushingId === open.id}
                 repushDisabled={pushingId === open.id || savingId === open.id}
