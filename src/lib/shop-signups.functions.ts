@@ -466,13 +466,24 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       ? (/^https?:\/\//i.test(rawWebsite) ? rawWebsite : `https://${rawWebsite}`)
       : "";
 
+    const websitePayload = normalizedWebsite
+      ? {
+          // velopass.pro's management UI binds these fields as siteUrl/siteName.
+          siteUrl: normalizedWebsite,
+          siteName: row.shop_name,
+          // Keep the older aliases too in case another API version reads them.
+          website: normalizedWebsite,
+          websiteUrl: normalizedWebsite,
+        }
+      : {};
+
     const body: {
       name: string; phone: string; type: number;
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
       packageId: string;
-      website?: string; websiteUrl?: string;
+      siteUrl?: string; siteName?: string; website?: string; websiteUrl?: string;
     } = {
       name: row.shop_name,
       phone: normalizedPhone,
@@ -486,7 +497,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       city,
       country,
       packageId,
-      ...(normalizedWebsite ? { website: normalizedWebsite, websiteUrl: normalizedWebsite } : {}),
+      ...websitePayload,
     };
 
     // Preflight: check if an organisation with this VAT/company number already
@@ -688,13 +699,13 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         };
 
         let ok = false;
-        ok = await tryReq("PATCH", { website: normalizedWebsite, websiteUrl: normalizedWebsite });
+        ok = await tryReq("PATCH", websitePayload);
         if (!ok && orgObj) {
-          const merged = { ...orgObj, website: normalizedWebsite, websiteUrl: normalizedWebsite };
+          const merged = { ...orgObj, ...websitePayload };
           ok = await tryReq("PUT", merged);
         }
         if (!ok) {
-          ok = await tryReq("PUT", { website: normalizedWebsite, websiteUrl: normalizedWebsite });
+          ok = await tryReq("PUT", websitePayload);
         }
 
         console.log("[shop-signups] preflight website update", {
