@@ -995,11 +995,13 @@ function BikeSearchPage() {
                 t("method_b.check")
               )}
             </button>
+              );
+            })()}
 
           </form>
 
           {/* METHOD B */}
-          <form onSubmit={submitB} className="bs-card">
+          <form ref={methodBFormRef} onSubmit={submitB} className="bs-card">
             <div style={{ marginBottom: 14 }}>
               <Hash size={28} color="#5A7090" strokeWidth={1.8} />
             </div>
