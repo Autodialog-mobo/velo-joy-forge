@@ -622,12 +622,18 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
   const emitResult = (value: string) => {
     if (onResult) {
-      onResult(value);
+      // Close the dialog FIRST (synchronously, in the same tick as the
+      // scan detection) so the Scanner unmounts and the camera track is
+      // stopped immediately. Any async follow-up work the parent kicks
+      // off in onResult (turnstile token, server lookup, …) must not
+      // delay the getUserMedia teardown — otherwise the camera preview
+      // stays on screen for as long as the lookup runs.
       setResult(null);
       setCameraError(null);
       setManual(false);
       setManualCode("");
       onOpenChange(false);
+      onResult(value);
       return;
     }
     setResult(value);
