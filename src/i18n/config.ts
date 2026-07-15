@@ -91,6 +91,12 @@ if (!i18n.isInitialized) {
     interpolation: { escapeValue: false },
     react: { useSuspense: false },
   });
+} else if (import.meta.env?.DEV) {
+  for (const [lang, bundles] of Object.entries(resources)) {
+    for (const [namespace, bundle] of Object.entries(bundles)) {
+      i18n.addResourceBundle(lang, namespace, bundle, true, true);
+    }
+  }
 }
 
 export default i18n;
