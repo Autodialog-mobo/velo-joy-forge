@@ -33,6 +33,7 @@
     "loading": "Comprobando…",
     "image_alt": "Adhesivo Velopass Frame-ID con QR",
     "image_caption": "El adhesivo Velopass Frame-ID",
+    "image_enlarge_aria": "Haz clic para ampliar la imagen",
     "manual_fallback": "o introduce el código manualmente",
     "example_inline": "por ejemplo",
     "example_copy_aria": "Copiar código de ejemplo {{value}}",

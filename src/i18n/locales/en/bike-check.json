@@ -33,6 +33,7 @@
     "loading": "Checking…",
     "image_alt": "Velopass Frame-ID sticker with QR-code",
     "image_caption": "The Velopass Frame-ID sticker",
+    "image_enlarge_aria": "Click to enlarge image",
     "manual_fallback": "or enter the code manually",
     "example_inline": "for example",
     "example_copy_aria": "Copy example code {{value}}",
