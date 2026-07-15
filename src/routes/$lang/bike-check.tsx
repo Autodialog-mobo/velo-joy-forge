@@ -49,6 +49,12 @@ const QR_URL_PATTERNS: QrUrlPattern[] = [
   { source: "Velopass", match: /^https?:\/\/(?:www\.)?velopass\.com\/m\/([A-Za-z0-9_-]+)/i, group: 1 },
 ];
 
+// Hosts we treat as "known Velopass QR" — any 10-char alphanumeric token found
+// anywhere in the URL (path, query, hash) is accepted as a Velopass code.
+// Real production stickers point at app.velopass.com/… with the code embedded
+// in various shapes; we don't want to hard-code every path variant.
+const VELOPASS_HOSTS = /(?:^|\.)velopass\.com$/i;
+
 /**
  * Extract a bike identifier from raw QR content.
  * - Returns a normalized (uppercase, alnum) code when the QR is a known
@@ -68,6 +74,28 @@ function extractCodeFromQr(raw: string): string | null {
     }
   }
 
+  // Any URL on a Velopass-owned host: pull the first 10-char alnum token
+  // out of the path / query / hash. The URL itself is never followed.
+  const parseUrl = (input: string): URL | null => {
+    try { return new URL(input); } catch { /* try below */ }
+    try { return new URL(`https://${input}`); } catch { return null; }
+  };
+  const url = parseUrl(value);
+  if (url && VELOPASS_HOSTS.test(url.hostname)) {
+    const haystacks: string[] = [];
+    url.searchParams.forEach((v) => haystacks.push(v));
+    haystacks.push(url.pathname, url.hash);
+    for (const h of haystacks) {
+      try { haystacks.push(decodeURIComponent(h)); } catch { /* ignore */ }
+    }
+    for (const h of haystacks) {
+      for (const part of h.split(/[^A-Za-z0-9]+/)) {
+        const token = part.toUpperCase();
+        if (/^[A-Z0-9]{10}$/.test(token)) return token;
+      }
+    }
+  }
+
   // Bare code (no URL) — accept anything the client-side pattern registry
   // recognises so unknown-length codes still route through the normal flow.
   const bare = value.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -75,6 +103,7 @@ function extractCodeFromQr(raw: string): string | null {
 
   return null;
 }
+
 
 declare global {
   interface Window {
