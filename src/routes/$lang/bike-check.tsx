@@ -765,6 +765,9 @@ function BikeSearchPage() {
               <QrCode size={28} color="#2ECC8A" strokeWidth={1.8} />
             </div>
             <h2 style={cardTitle}>{t("method_a.title")}</h2>
+            <p style={{ margin: "-4px 0 6px", fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: "#5A7090" }}>
+              {t("method_a.subtext", { defaultValue: "Velopass of een andere erkende operator" })}
+            </p>
             <p style={cardDesc}>{t("method_a.desc")}</p>
 
             <label style={labelStyle} htmlFor="bs-code">{t("method_a.code_label")}</label>
@@ -1106,6 +1109,25 @@ function BikeSearchPage() {
             Tokens are fetched on-demand per submit via the imperative ref,
             so each submission gets a fresh single-use token. */}
         <TurnstileWidget ref={turnstileRef} siteKey={TURNSTILE_SITE_KEY} />
+
+        {/* Coverage / trust line — shown once below both search cards. */}
+        <p
+          style={{
+            marginTop: 18,
+            marginBottom: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: 12.5,
+            color: "#5A7090",
+            textAlign: "center",
+          }}
+        >
+          <Search size={13} strokeWidth={2} aria-hidden="true" />
+          <span>{t("coverage_note", { defaultValue: "Doorzoekt de Velopass-database en gekoppelde nationale registers" })}</span>
+        </p>
 
 
         {/* ERROR + RESULT scroll target.
