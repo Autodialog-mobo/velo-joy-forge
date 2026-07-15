@@ -254,7 +254,7 @@ function ShopSignupsPage() {
     }
   };
 
-  const onResetProPush = async (id: string): Promise<boolean> => {
+  const onResetProPush = async (id: string, opts?: { andRepush?: boolean }): Promise<boolean> => {
     try {
       await resetProPush({ data: { id } });
       setPushedIds((prev) => {
@@ -267,8 +267,50 @@ function ShopSignupsPage() {
         delete next[id];
         return next;
       });
-      toast.success("Push-status gereset");
-      refetch();
+      setPushError(null);
+      setPushSuccess(null);
+      if (opts?.andRepush) {
+        toast.success("Push-status gereset — opnieuw doorsturen…");
+        await refetch();
+        // Bypass the confirm() inside onPushToPro by inlining the push here.
+        setPushingId(id);
+        try {
+          const res: any = await pushToPro({ data: { id } });
+          if (res?.ok === false) {
+            setPushError(res);
+            if (res?.idDiagnostics) {
+              setPushDiagnostics((prev) => ({ ...prev, [id]: res.idDiagnostics }));
+            }
+            toast.error(res.message ?? "Doorsturen mislukt");
+          } else {
+            const managementId = res?.managementId;
+            setPushSuccess({ id, managementId: managementId ?? "", alreadyExists: !!res?.alreadyExists });
+            setPushDiagnostics((prev) => {
+              const next = { ...prev };
+              if (managementId) delete next[id];
+              else if (res?.idDiagnostics) next[id] = res.idDiagnostics;
+              return next;
+            });
+            setPushedIds((prev) => new Set(prev).add(id));
+            toast.success(
+              res?.alreadyExists
+                ? "Reeds aanwezig in velopass.pro — gemarkeerd als doorgestuurd"
+                : managementId
+                  ? `Aangemaakt in velopass.pro (id: ${managementId})`
+                  : "Doorgestuurd — maar geen organisation-id ontvangen",
+            );
+          }
+        } catch (err: any) {
+          setPushError({ stage: "unexpected", message: err?.message ?? "Onverwachte fout" });
+          toast.error(err?.message ?? "Doorsturen mislukt");
+        } finally {
+          setPushingId(null);
+          await refetch();
+        }
+      } else {
+        toast.success("Push-status gereset");
+        refetch();
+      }
       return true;
     } catch (err: any) {
       toast.error(err?.message ?? "Resetten mislukt");
