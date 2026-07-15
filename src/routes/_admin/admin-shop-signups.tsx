@@ -1166,6 +1166,10 @@ function PushedInfoBanner({
   repushDisabled?: boolean;
   diagnostics?: {
     apiStatus?: number;
+    apiTitle?: string | null;
+    apiDetail?: string | null;
+    apiErrorMessages?: string[];
+    alreadyExists?: boolean;
     responseKeys?: string[];
     checkedIdFields?: string[];
     missingIdFields?: string[];
