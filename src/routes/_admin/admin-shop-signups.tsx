@@ -1003,6 +1003,7 @@ function PushErrorPanel({ err, onDismiss }: { err: any; onDismiss: () => void })
     api: `API-fout${err?.apiStatus ? ` (HTTP ${err.apiStatus})` : ""}`,
     network: "Verbindingsfout",
     auth: "Authenticatiefout",
+    duplicate: "Dubbele organisatie",
     unexpected: "Onverwachte fout",
     unknown: "Fout",
   };
@@ -1177,6 +1178,7 @@ function PushedInfoBanner({
   pushedByName,
   managementId,
   onSaveManagementId,
+  onResetProPush,
   onRepush,
   repushLoading,
   repushDisabled,
@@ -1188,6 +1190,7 @@ function PushedInfoBanner({
   managementId?: string | null;
   shopId?: string;
   onSaveManagementId?: (managementId: string | null) => Promise<boolean>;
+  onResetProPush?: () => Promise<boolean>;
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
@@ -1314,6 +1317,28 @@ function PushedInfoBanner({
                   <li>Klik de shop open — de id staat in de URL (<code style={{ color: "#7AB0FF" }}>/Organisations/&lt;uuid&gt;/</code>).</li>
                   <li>Kopieer de UUID en plak hem hieronder, klik dan Koppelen.</li>
                 </ol>
+                {onResetProPush && (
+                  <div className="mt-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+                    <div className="mb-1" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      Verkeerd of vastgelopen doorgestuurd? Reset de lokale push-status en stuur daarna opnieuw door.
+                    </div>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!window.confirm("Lokale push-status resetten? De organisatie op velopass.pro wordt niet verwijderd.")) return;
+                        setSaving(true);
+                        await onResetProPush();
+                        setSaving(false);
+                      }}
+                      disabled={saving}
+                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                      style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+                    >
+                      {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
+                      Push-status resetten
+                    </button>
+                  </div>
+                )}
               </div>
 
               {diagnostics && (
