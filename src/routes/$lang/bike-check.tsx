@@ -1013,6 +1013,7 @@ function BikeSearchPage() {
             <label style={labelStyle} htmlFor="bs-brand">{t("method_b.brand")}</label>
             <div style={{ position: "relative" }}>
               <input
+                ref={brandInputRef}
                 id="bs-brand"
                 type="text"
                 autoCorrect="off"
