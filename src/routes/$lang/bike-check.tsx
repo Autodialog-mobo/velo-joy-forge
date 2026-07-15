@@ -965,16 +965,20 @@ function BikeSearchPage() {
 
 
 
+            {(() => {
+              const codeTooShort = codeA.trim().length < 6;
+              const btnDisabled = loadingA || loadingB || codeTooShort;
+              return (
             <button
               type="submit"
-              disabled={loadingA || loadingB || !codeA}
+              disabled={btnDisabled}
               style={{
-                ...navyBtn(loadingA || loadingB || !codeA),
+                ...navyBtn(btnDisabled),
                 marginTop: 14,
                 width: "100%",
-                background: loadingA || loadingB || !codeA ? "#94A3B8" : "transparent",
-                color: loadingA || loadingB || !codeA ? "#fff" : "#0D1F3C",
-                border: loadingA || loadingB || !codeA ? "none" : "1.5px solid rgba(13,31,60,0.2)",
+                background: btnDisabled ? "#94A3B8" : "transparent",
+                color: btnDisabled ? "#fff" : "#0D1F3C",
+                border: btnDisabled ? "none" : "1.5px solid rgba(13,31,60,0.2)",
                 fontWeight: 500,
                 fontSize: 14,
               }}
