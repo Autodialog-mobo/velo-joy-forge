@@ -34,7 +34,7 @@
     "image_alt": "Autocollant Velopass Frame-ID avec QR-code",
     "image_caption": "L'autocollant Velopass Frame-ID",
     "manual_fallback": "ou saisir le code manuellement",
-    "example_inline": "10 caractères · exemple",
+    "example_inline": "par exemple",
     "example_copy_aria": "Copier le code d'exemple {{value}}",
     "format_confirmed": "✓ Reconnu comme code d'identification",
     "unknown_format_hint": "Nous ne reconnaissons pas encore ce format de code. Vérifie que tu as copié le code complet, ou recherche par marque et numéro de cadre.",
