@@ -736,6 +736,18 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
 
 
 
+    if (alreadyExists && !returnedId) {
+      return {
+        ok: false as const,
+        stage: "duplicate" as const,
+        message: "Velopass.pro meldt dat deze organisatie al bestaat, maar er werd geen veilige organisation-id gevonden om te koppelen.",
+        detail: "Zoek de bestaande organisatie manueel en koppel de id, of wijzig de unieke velden van de aanmelding en probeer opnieuw door te sturen.",
+        apiStatus,
+        idDiagnostics,
+        sentBody: body,
+      };
+    }
+
     // ---- Create employee/user under the organisation ------------------------
     // POST /api/users/pro { languageCode, email, organisationId,
     //                       firstName?, lastName? }
