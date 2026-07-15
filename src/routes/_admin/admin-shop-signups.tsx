@@ -1133,7 +1133,7 @@ function PushSuccessPanel({
   success,
   onDismiss,
 }: {
-  success: { id: string; managementId: string };
+  success: { id: string; managementId: string; alreadyExists?: boolean };
   onDismiss: () => void;
 }) {
   const [copied, setCopied] = useState(false);
@@ -1152,18 +1152,25 @@ function PushSuccessPanel({
     ? `${VELOPASS_PRO_ORGANISATION_URL}/${success.managementId}/`
     : VELOPASS_PRO_ORGANISATION_URL;
 
+  const isDuplicate = !!success.alreadyExists;
+  const accent = isDuplicate ? "#E0A33E" : "#2ECC8A";
+  const bg = isDuplicate ? "rgba(224,163,62,0.08)" : "rgba(46,204,138,0.08)";
+  const border = isDuplicate ? "rgba(224,163,62,0.35)" : "rgba(46,204,138,0.35)";
+
   return (
     <div
       className="mb-4 rounded-xl p-4"
-      style={{ background: "rgba(46,204,138,0.08)", border: "1px solid rgba(46,204,138,0.35)" }}
+      style={{ background: bg, border: `1px solid ${border}` }}
     >
       <div className="flex items-start justify-between gap-3 mb-2">
         <div>
-          <div className="text-xs uppercase tracking-wider" style={{ color: "#2ECC8A" }}>
-            Succesvol doorgestuurd naar velopass.pro
+          <div className="text-xs uppercase tracking-wider" style={{ color: accent }}>
+            {isDuplicate ? "Reeds aanwezig in velopass.pro" : "Succesvol doorgestuurd naar velopass.pro"}
           </div>
           <div className="text-sm mt-1" style={{ color: "#fff" }}>
-            De Organisation is aangemaakt in het management panel.
+            {isDuplicate
+              ? "Velopass.pro meldt dat deze organisatie al bestaat. De aanmelding is gemarkeerd als doorgestuurd."
+              : "De Organisation is aangemaakt in het management panel."}
           </div>
         </div>
         <button
