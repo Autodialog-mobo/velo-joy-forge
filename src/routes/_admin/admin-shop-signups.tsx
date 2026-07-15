@@ -342,6 +342,7 @@ function ShopSignupsPage() {
       pos_system: r.pos_system ?? "",
       pos_other: r.pos_other ?? "",
       admin_notes: r.admin_notes ?? "",
+      website: r.website ?? "",
     });
   };
 
