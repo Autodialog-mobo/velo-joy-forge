@@ -92,6 +92,10 @@
       "badge": "NOCH NICHT REGISTRIERT",
       "title": "Noch nicht registriert",
       "body": "Dieses Fahrrad ist noch nicht in Velopass. Es ist also noch nicht geschützt."
+    },
+    "not_found": {
+      "badge": "NICHT GEFUNDEN",
+      "body": "Nicht gefunden in der europäischen Velopass-Datenbank oder den verbundenen Registern."
     }
   },
   "result": {

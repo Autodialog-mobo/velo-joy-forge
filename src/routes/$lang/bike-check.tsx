@@ -582,6 +582,11 @@ function BikeSearchPage() {
   const [result, setResult] = useState<BikeCheckResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lastMethod, setLastMethod] = useState<"a" | "b" | null>(null);
+  // How the last lookup was triggered. Drives which "not found" variant
+  // we render: QR-scan → NOG NIET GEREGISTREERD (interim proxy for a
+  // sticker that was issued but not activated); manual code / brand+frame
+  // → NIET GEVONDEN (onbekende code, geen match in registers).
+  const [lookupSource, setLookupSource] = useState<"qr" | "manual">("manual");
   const [formatRecognized, setFormatRecognized] = useState(false);
   const [unknownFormat, setUnknownFormat] = useState(false);
   // Which surface triggered the unknown-format hint — controls copy only.
@@ -654,7 +659,7 @@ function BikeSearchPage() {
     return () => window.removeEventListener("keydown", close);
   }, [lightboxImage]);
 
-  const runCheck = async (code: string) => {
+  const runCheck = async (code: string, source: "qr" | "manual" = "manual") => {
     const clean = sanitizeCode(code);
     if (!clean || submitLockRef.current) return;
     submitLockRef.current = true;
@@ -662,9 +667,8 @@ function BikeSearchPage() {
     setResult(null);
     setLoadingA(true);
     setLastMethod("a");
+    setLookupSource(source);
     try {
-      // Always fetch a fresh, single-use Turnstile token immediately before
-      // calling the server fn (tokens become invalid after one siteverify).
       const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckBike({ data: { code: clean, turnstileToken, lang } });
       setResult(res);
@@ -693,7 +697,7 @@ function BikeSearchPage() {
       return;
     }
     setUnknownFormat(false);
-    await runCheck(clean);
+    await runCheck(clean, "manual");
   };
 
   const focusBrandFrame = () => {
@@ -710,7 +714,7 @@ function BikeSearchPage() {
     if (extracted) {
       setUnknownFormat(false);
       setCodeA(extracted);
-      void runCheck(extracted);
+      void runCheck(extracted, "qr");
       return;
     }
     // Unknown QR — show the soft hint (not an error) and let the user
@@ -749,6 +753,7 @@ function BikeSearchPage() {
     setResult(null);
     setLoadingB(true);
     setLastMethod("b");
+    setLookupSource("manual");
     try {
       const turnstileToken = await turnstileRef.current!.getFreshToken();
       const res = await runCheckByFrame({
@@ -1400,7 +1405,8 @@ function BikeSearchPage() {
           {/* RESULT */}
           {result && (
             <div style={{ maxWidth: 680, margin: "32px auto 0" }}>
-              {!result.found && <NotRegCard t={t} />}
+              {!result.found && lookupSource === "qr" && <NotRegCard t={t} />}
+              {!result.found && lookupSource !== "qr" && <NotFoundCard t={t} />}
               {result.found && result.status === "ALL_CLEAR" && <SecuredCard t={t} bike={result} />}
               {result.found && result.status === "REPORTED" && <ReportedCard t={t} bike={result} />}
             </div>
@@ -2352,8 +2358,18 @@ function NotRegCard({ t }: { t: TFn }) {
           {t("status_cards.not_registered.badge")}
         </span>
       </div>
-      <h3 style={resultTitle}>{t("result.not_registered_title")}</h3>
-      <p style={resultBody}>{t("result.not_registered_body")}</p>
+      <p style={resultBody}>{t("status_cards.not_registered.body")}</p>
+      <p
+        style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: 14,
+          fontWeight: 500,
+          color: "#0D1F3C",
+          margin: "8px 0 12px",
+        }}
+      >
+        {t("status_overview.is_this_your_bike")}
+      </p>
       <a
         href={`/${lang}`}
         onClick={() => trackRegisterBikeClick("bikesearch", "search-result-not-registered")}
@@ -2366,10 +2382,25 @@ function NotRegCard({ t }: { t: TFn }) {
           fontSize: 14,
           fontWeight: 500,
           display: "inline-block",
+          alignSelf: "flex-start",
         }}
       >
-        {t("result.not_registered_cta")}
+        {t("status_overview.register_bike_cta")}
       </a>
+    </div>
+  );
+}
+
+function NotFoundCard({ t }: { t: TFn }) {
+  return (
+    <div style={resultCard("#CBD5E1", "dotted")}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ ...badgeBase, gap: 6, background: "#F1F5F9", color: "#0D1F3C" }}>
+          <Search size={14} strokeWidth={2.5} aria-hidden="true" />
+          {t("status_cards.not_found.badge")}
+        </span>
+      </div>
+      <p style={resultBody}>{t("status_cards.not_found.body")}</p>
     </div>
   );
 }
