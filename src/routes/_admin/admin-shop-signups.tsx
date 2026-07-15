@@ -1361,24 +1361,42 @@ function PushedInfoBanner({
                 </ol>
                 {onResetProPush && (
                   <div className="mt-2 pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                    <div className="mb-1" style={{ color: "rgba(255,255,255,0.65)" }}>
-                      Verkeerd of vastgelopen doorgestuurd? Reset de lokale push-status en stuur daarna opnieuw door.
+                    <div className="mb-1.5" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      Verkeerd of vastgelopen doorgestuurd? Reset de lokale push-status en stuur meteen opnieuw door.
                     </div>
-                    <button
-                      type="button"
-                      onClick={async () => {
-                        if (!window.confirm("Lokale push-status resetten? De organisatie op velopass.pro wordt niet verwijderd.")) return;
-                        setSaving(true);
-                        await onResetProPush();
-                        setSaving(false);
-                      }}
-                      disabled={saving}
-                      className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
-                      style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
-                    >
-                      {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
-                      Push-status resetten
-                    </button>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!window.confirm("Push-status resetten en meteen opnieuw doorsturen naar velopass.pro?\n\nDe bestaande organisatie op velopass.pro blijft ongewijzigd. Bij duplicaten wordt de aanmelding gemarkeerd als reeds aanwezig.")) return;
+                          setSaving(true);
+                          await onResetProPush({ andRepush: true });
+                          setSaving(false);
+                        }}
+                        disabled={saving}
+                        className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
+                        style={{ background: "#2ECC8A", color: "#0E0F12", border: "1px solid #2ECC8A" }}
+                        title="Wist de lokale push-status en voert de push meteen opnieuw uit."
+                      >
+                        {saving ? <Loader2 size={12} className="animate-spin" /> : <RefreshCcw size={12} />}
+                        Reset & opnieuw doorsturen
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!window.confirm("Alleen de lokale push-status resetten? De organisatie op velopass.pro wordt niet verwijderd.")) return;
+                          setSaving(true);
+                          await onResetProPush();
+                          setSaving(false);
+                        }}
+                        disabled={saving}
+                        className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                        style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+                      >
+                        {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
+                        Alleen resetten
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
