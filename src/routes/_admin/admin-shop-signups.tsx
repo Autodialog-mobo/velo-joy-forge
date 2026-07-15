@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type * as React from "react";
-import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw } from "lucide-react";
+import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw, X } from "lucide-react";
 import { listShopSignups, updateShopSignup, pushShopSignupToVelopassPro, setShopSignupManagementId } from "@/lib/shop-signups.functions";
 import { toast } from "sonner";
 
@@ -238,14 +238,14 @@ function ShopSignupsPage() {
     }
   };
 
-  const onSaveManagementId = async (id: string, managementId: string): Promise<boolean> => {
+  const onSaveManagementId = async (id: string, managementId: string | null): Promise<boolean> => {
     try {
-      await setManagementId({ data: { id, managementId } });
-      toast.success("Organisation-id gekoppeld");
+      await setManagementId({ data: { id, managementId: managementId ?? "" } });
+      toast.success(managementId ? "Organisation-id gekoppeld" : "Organisation-id ontkoppeld");
       refetch();
       return true;
     } catch (err: any) {
-      toast.error(err?.message ?? "Koppelen mislukt");
+      toast.error(err?.message ?? (managementId ? "Koppelen mislukt" : "Ontkoppelen mislukt"));
       return false;
     }
   };
@@ -1160,7 +1160,7 @@ function PushedInfoBanner({
   pushedByName?: string | null;
   managementId?: string | null;
   shopId?: string;
-  onSaveManagementId?: (managementId: string) => Promise<boolean>;
+  onSaveManagementId?: (managementId: string | null) => Promise<boolean>;
   onRepush?: () => void | Promise<void>;
   repushLoading?: boolean;
   repushDisabled?: boolean;
@@ -1245,6 +1245,27 @@ function PushedInfoBanner({
                 >
                   {copied ? <Check size={12} /> : <Copy size={12} />} {copied ? "Gekopieerd" : "Kopieer"}
                 </button>
+                {onSaveManagementId && (
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!window.confirm("Organisation-id ontkoppelen? De aanmelding blijft bestaan; je kan daarna opnieuw doorsturen om een nieuwe organisatie aan te maken.")) return;
+                      setSaving(true);
+                      await onSaveManagementId(null);
+                      setSaving(false);
+                    }}
+                    disabled={saving}
+                    className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md disabled:opacity-60 disabled:cursor-not-allowed"
+                    style={{ background: "rgba(224,82,82,0.10)", color: "#E05252", border: "1px solid rgba(224,82,82,0.35)" }}
+                    title="Verbreekt de link met deze velopass.pro organisatie zodat je de aanmelding opnieuw kan doorsturen."
+                  >
+                    {saving ? <Loader2 size={12} className="animate-spin" /> : <X size={12} />}
+                    Ontkoppelen
+                  </button>
+                )}
+              </div>
+              <div className="text-[11px] mt-1.5" style={{ color: "rgba(255,255,255,0.5)" }}>
+                Ontkoppelen wist alleen de lokale koppeling — de organisatie op velopass.pro blijft ongewijzigd. Gebruik dit als de verkeerde organisatie werd gekoppeld en klik nadien "Opnieuw doorsturen" om een nieuwe organisatie aan te maken.
               </div>
             </div>
           ) : (

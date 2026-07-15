@@ -30,7 +30,10 @@ export const setShopSignupManagementId = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) =>
     z.object({
       id: z.string().uuid(),
-      managementId: z.string().trim().uuid("Ongeldig organisation-id (moet een UUID zijn)"),
+      // Empty string / null clears the link so the shop can be pushed again.
+      managementId: z
+        .union([z.string().trim().uuid("Ongeldig organisation-id (moet een UUID zijn)"), z.literal(""), z.null()])
+        .transform((v) => (v === "" || v === null ? null : v)),
     }).parse(d)
   )
   .handler(async ({ data, context }) => {
@@ -50,7 +53,7 @@ export const setShopSignupManagementId = createServerFn({ method: "POST" })
     };
     // If we're linking a management-id but the signup was never marked as pushed,
     // also stamp pushed_to_pro_at so the UI treats it as doorgestuurd.
-    if (!before.pushed_to_pro_at) {
+    if (data.managementId && !before.pushed_to_pro_at) {
       patch.pushed_to_pro_at = nowIso;
       patch.pushed_to_pro_by = context.userId;
     }
@@ -63,7 +66,7 @@ export const setShopSignupManagementId = createServerFn({ method: "POST" })
 
     const { writeAudit } = await import("@/lib/audit.server");
     await writeAudit(context, {
-      action: "shop_signup.set_management_id",
+      action: data.managementId ? "shop_signup.set_management_id" : "shop_signup.clear_management_id",
       target_type: "shop_signup",
       target_id: data.id,
       metadata: {
