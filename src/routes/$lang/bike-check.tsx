@@ -1889,12 +1889,13 @@ function BikeSearchPage() {
             alt={lightboxImage.alt}
             onClick={(e) => e.stopPropagation()}
             style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
+              width: 192,
+              height: 192,
               objectFit: "contain",
               borderRadius: 12,
               boxShadow: "0 24px 60px rgba(0,0,0,0.35)",
               cursor: "default",
+              background: "#0D1F3C",
             }}
           />
         </div>
