@@ -895,6 +895,69 @@ function BikeSearchPage() {
               onCopy={(v) => setCodeA(sanitizeCode(v))}
             />
 
+            {/* Silent format confirmation — appears after ~300ms debounce.
+                Deliberately NOT operator-specific: users don't need to
+                know which register issued their code. */}
+            {formatRecognized && !unknownFormat && (
+              <p
+                style={{
+                  margin: "8px 0 0",
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 12,
+                  color: "#2ECC8A",
+                }}
+                aria-live="polite"
+              >
+                {t("method_a.format_confirmed", { defaultValue: "✓ Herkend als identificatiecode" })}
+              </p>
+            )}
+
+            {/* Soft fallback when the entered code matches no known
+                format at submit-time. Informational styling — not an
+                error. Always offers the brand + frame escape hatch. */}
+            {unknownFormat && (
+              <div
+                role="status"
+                style={{
+                  marginTop: 12,
+                  padding: "12px 14px",
+                  background: "#F1F5F9",
+                  border: "1px solid rgba(13,31,60,0.08)",
+                  borderRadius: 10,
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: 13,
+                  color: "#0D1F3C",
+                  lineHeight: 1.5,
+                }}
+              >
+                <p style={{ margin: 0 }}>
+                  {t("method_a.unknown_format_hint", {
+                    defaultValue:
+                      "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
+                  })}
+                </p>
+                <button
+                  type="button"
+                  onClick={focusBrandFrame}
+                  style={{
+                    marginTop: 8,
+                    background: "transparent",
+                    border: "none",
+                    padding: 0,
+                    color: "#0D1F3C",
+                    fontFamily: "'DM Sans', sans-serif",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {t("method_a.switch_to_brand_frame", { defaultValue: "Zoek via merk en framenummer →" })}
+                </button>
+              </div>
+            )}
+
+
 
             {/* Turnstile widget is rendered once for the whole page (below). */}
 
