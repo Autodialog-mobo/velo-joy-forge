@@ -571,6 +571,7 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     if (pfTargetVat) {
       const qVat = encodeURIComponent(String(row.vat));
       const preflightPaths = [
+        `Organisations?query=${qVat}`,
         `Organisations?companyNumber=${qVat}`,
         `Organisations?vatNumber=${qVat}`,
         `Organisations?search=${qVat}`,
@@ -581,7 +582,42 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
         const id = await preflightLookup(p);
         if (id) { preflightId = id; break; }
       }
+      // Fallback: `?query=<vat>` on velopass.pro returns a narrow list where
+      // items only expose {id,name,type,avatarId} — no companyNumber/email —
+      // so strict pfMatches misses it. If that endpoint returns a single
+      // organisation whose name matches, trust the VAT-scoped query.
+      if (!preflightId) {
+        try {
+          const res = await fetch(managementEndpoint(`Organisations?query=${qVat}`), {
+            method: "GET",
+            headers: { Authorization: bearer, Accept: "application/json" },
+          });
+          if (res.ok) {
+            const text = await res.text();
+            const parsed = text ? JSON.parse(text) : null;
+            const list: any[] = Array.isArray(parsed) ? parsed
+              : Array.isArray(parsed?.items) ? parsed.items
+              : Array.isArray(parsed?.results) ? parsed.results
+              : Array.isArray(parsed?.data) ? parsed.data
+              : Array.isArray(parsed?.value) ? parsed.value
+              : [];
+            const nameMatch = list.find((o) => {
+              const n = pfNorm(o?.name ?? o?.Name);
+              return n && pfTargetName && n === pfTargetName;
+            });
+            const id = pfExtractId(nameMatch ?? (list.length === 1 ? list[0] : null));
+            if (id) {
+              preflightId = id;
+              preflightAttempts.push({
+                path: `Organisations?query=${qVat} [fallback name-match]`,
+                status: 200, count: list.length, matched: true,
+              });
+            }
+          }
+        } catch {}
+      }
     }
+
     if (preflightId) {
       console.log("[shop-signups] preflight: organisation already exists — skipping POST", {
         id: data.id, orgId: preflightId, vat: row.vat, country,
