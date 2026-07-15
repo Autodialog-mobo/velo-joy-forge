@@ -33,6 +33,7 @@
     "loading": "Bezig met controleren…",
     "image_alt": "Velopass Frame-ID sticker met QR-code",
     "image_caption": "De Velopass Frame-ID sticker",
+    "image_enlarge_aria": "Klik om de afbeelding te vergroten",
     "manual_fallback": "of voer de code handmatig in",
     "example_inline": "bijvoorbeeld",
     "example_copy_aria": "Kopieer voorbeeldcode {{value}}",
@@ -57,7 +58,8 @@
     "captcha": "Ik ben geen robot",
     "captcha_meta_privacy": "Privacy · Voorwaarden",
     "image_alt": "Framenummer van de fabrikant op het frame",
-    "image_caption": "Het framenummer van de fabrikant"
+    "image_caption": "Het framenummer van de fabrikant",
+    "image_enlarge_aria": "Klik om de afbeelding te vergroten"
   },
   "errors": {
     "generic": "Er ging iets mis. Probeer het opnieuw."

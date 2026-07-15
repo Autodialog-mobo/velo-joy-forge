@@ -33,6 +33,7 @@
     "loading": "Wird geprüft…",
     "image_alt": "Velopass Frame-ID-Aufkleber mit QR-Code",
     "image_caption": "Der Velopass Frame-ID-Aufkleber",
+    "image_enlarge_aria": "Klicken, um Bild zu vergrößern",
     "manual_fallback": "oder Code manuell eingeben",
     "example_inline": "zum Beispiel",
     "example_copy_aria": "Beispielcode {{value}} kopieren",
@@ -57,7 +58,8 @@
     "captcha": "Ich bin kein Roboter",
     "captcha_meta_privacy": "Datenschutz · Bedingungen",
     "image_alt": "Rahmennummer des Herstellers am Fahrradrahmen",
-    "image_caption": "Die Rahmennummer des Herstellers"
+    "image_caption": "Die Rahmennummer des Herstellers",
+    "image_enlarge_aria": "Klicken, um Bild zu vergrößern"
   },
   "errors": {
     "generic": "Etwas ist schiefgelaufen. Versuche es erneut."

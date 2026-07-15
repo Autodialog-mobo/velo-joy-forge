@@ -33,6 +33,7 @@
     "loading": "Comprobando…",
     "image_alt": "Adhesivo Velopass Frame-ID con QR",
     "image_caption": "El adhesivo Velopass Frame-ID",
+    "image_enlarge_aria": "Haz clic para ampliar la imagen",
     "manual_fallback": "o introduce el código manualmente",
     "example_inline": "por ejemplo",
     "example_copy_aria": "Copiar código de ejemplo {{value}}",
@@ -57,7 +58,8 @@
     "captcha": "No soy un robot",
     "captcha_meta_privacy": "Privacidad · Condiciones",
     "image_alt": "Número de cuadro del fabricante en el cuadro",
-    "image_caption": "El número de cuadro del fabricante"
+    "image_caption": "El número de cuadro del fabricante",
+    "image_enlarge_aria": "Haz clic para ampliar la imagen"
   },
   "errors": {
     "generic": "Algo ha salido mal. Inténtalo de nuevo."

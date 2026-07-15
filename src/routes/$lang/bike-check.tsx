@@ -557,6 +557,7 @@ function BikeSearchPage() {
   const [unknownFormat, setUnknownFormat] = useState(false);
   // Which surface triggered the unknown-format hint — controls copy only.
   const [unknownFormatSource, setUnknownFormatSource] = useState<"manual" | "qr">("manual");
+  const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null);
   const brandInputRef = useRef<HTMLInputElement>(null);
   const methodBFormRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -613,6 +614,16 @@ function BikeSearchPage() {
       window.removeEventListener("touchmove", dismiss);
     };
   }, [result, error]);
+
+  // Lightbox: ESC closes the enlarged image view.
+  useEffect(() => {
+    if (!lightboxImage) return;
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxImage(null);
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [lightboxImage]);
 
   const runCheck = async (code: string) => {
     const clean = sanitizeCode(code);
@@ -882,8 +893,13 @@ function BikeSearchPage() {
               <img
                 src={velopassStickerAsset.url}
                 alt={t("method_a.image_alt")}
-                style={refImg}
+                style={{ ...refImg, cursor: "pointer" }}
                 loading="lazy"
+                onClick={() => setLightboxImage({ src: velopassStickerAsset.url, alt: t("method_a.image_alt") })}
+                role="button"
+                aria-label={t("method_a.image_enlarge_aria", { defaultValue: "Klik om de afbeelding te vergroten" })}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightboxImage({ src: velopassStickerAsset.url, alt: t("method_a.image_alt") }); }}
               />
               <figcaption style={refImgCaption}>{t("method_a.image_caption")}</figcaption>
             </figure>
@@ -1180,8 +1196,13 @@ function BikeSearchPage() {
               <img
                 src={frameNumberAsset.url}
                 alt={t("method_b.image_alt")}
-                style={refImg}
+                style={{ ...refImg, cursor: "pointer" }}
                 loading="lazy"
+                onClick={() => setLightboxImage({ src: frameNumberAsset.url, alt: t("method_b.image_alt") })}
+                role="button"
+                aria-label={t("method_b.image_enlarge_aria", { defaultValue: "Klik om de afbeelding te vergroten" })}
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setLightboxImage({ src: frameNumberAsset.url, alt: t("method_b.image_alt") }); }}
               />
               <figcaption style={refImgCaption}>{t("method_b.image_caption")}</figcaption>
             </figure>
@@ -1786,6 +1807,63 @@ function BikeSearchPage() {
           }),
         }}
       />
+
+      {/* Lightbox: enlarge reference images on click */}
+      {lightboxImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("common:close", { defaultValue: "Afbeelding sluiten" })}
+          onClick={() => setLightboxImage(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            background: "rgba(13,31,60,0.92)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 24,
+            cursor: "pointer",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxImage(null)}
+            aria-label={t("common:close", { defaultValue: "Sluiten" })}
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              background: "rgba(255,255,255,0.12)",
+              border: "none",
+              borderRadius: 50,
+              width: 44,
+              height: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: "#fff",
+            }}
+          >
+            <X size={24} strokeWidth={2.5} />
+          </button>
+          <img
+            src={lightboxImage.src}
+            alt={lightboxImage.alt}
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              borderRadius: 12,
+              boxShadow: "0 24px 60px rgba(0,0,0,0.35)",
+              cursor: "default",
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }
