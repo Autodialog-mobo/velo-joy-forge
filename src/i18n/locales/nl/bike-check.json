@@ -27,7 +27,7 @@
     "subtext": "Velopass of een andere erkende operator",
     "desc": "Scan de QR-code op de Frame-ID of typ de Velopass-code in.",
     "code_label": "Velopass-code",
-    "code_hint": "10 tekens, bijvoorbeeld UC9K4D3NCJ",
+    "code_hint": "bijvoorbeeld: UC9K4D3NCJ",
     "scan_cta": "Scan de QR-code",
     "manual_cta": "Code zelf invoeren",
     "loading": "Bezig met controleren…",
