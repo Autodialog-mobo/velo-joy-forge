@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
-import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
+import { Scanner, type IDetectedBarcode, type IScannerHandle } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
 
@@ -256,6 +256,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // laat de camera op sommige browsers nog zichtbaar doorlopen.
   const [closingAfterResult, setClosingAfterResult] = useState(false);
   const resultEmittedRef = useRef(false);
+  const scannerRef = useRef<IScannerHandle | null>(null);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
@@ -639,6 +640,17 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const stopCameraTracksNow = () => {
     if (typeof document === "undefined") return;
     try {
+      const activeStream = scannerRef.current?.getStream?.() ?? null;
+      activeStream?.getTracks?.().forEach((track) => {
+        try { track.stop(); } catch { /* ignore */ }
+      });
+      const activeVideo = scannerRef.current?.getVideoElement?.() ?? null;
+      if (activeVideo) {
+        try { activeVideo.pause(); } catch { /* ignore */ }
+        try { activeVideo.srcObject = null; } catch { /* ignore */ }
+        activeVideo.removeAttribute("src");
+        try { activeVideo.load(); } catch { /* ignore */ }
+      }
       const root = document.querySelector("[data-qr-scanner-root]");
       const videos = [
         ...Array.from(root?.querySelectorAll("video") ?? []),
@@ -669,7 +681,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       // off in onResult (turnstile token, server lookup, …) must not
       // delay the getUserMedia teardown — otherwise the camera preview
       // stays on screen for as long as the lookup runs.
-      stopCameraTracksNow();
       flushSync(() => {
         setClosingAfterResult(true);
         setScanPaused(true);
@@ -683,6 +694,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         setManualCode("");
         onOpenChange(false);
       });
+      stopCameraTracksNow();
+      window.requestAnimationFrame(stopCameraTracksNow);
       onResult(value);
       return;
     }
@@ -951,6 +964,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 </div>
               ) : (
                 <Scanner
+                  ref={scannerRef}
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
@@ -964,7 +978,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                     : ["qr_code"]}
                   // Sneller pollen tussen frames (default ~500ms). 80ms geeft
                   // ~12 leespogingen per seconde zonder de CPU plat te leggen.
-                  scanDelay={80}
+                  scanDelay={0}
+                  retryDelay={33}
+                  settleDelayMs={0}
+                  sound={false}
                   constraints={{
                     ...(deviceId
                       ? { deviceId: { exact: deviceId } }
