@@ -17,6 +17,10 @@ export interface BikeCheckResult {
   yearOfCreation: number | null;
   lostReportUrl: string | null;
   country: BikeCheckCountry;
+  /** Human-readable name of the register the bike was found in (e.g. "Velopass"). Null when not found. */
+  source: string | null;
+  /** All registers actually queried for this lookup, in order. */
+  sourcesSearched: string[];
 }
 
 function resolveCountry(lang: string | undefined): BikeCheckCountry {
@@ -120,7 +124,7 @@ async function normalizeBrand(raw: string): Promise<string> {
   }
 }
 
-type BikeCheckCore = Omit<BikeCheckResult, "country">;
+type BikeCheckCore = Omit<BikeCheckResult, "country" | "source" | "sourcesSearched">;
 
 function mapBikePayload(raw: unknown): BikeCheckCore {
   const bike = (Array.isArray(raw) ? raw[0] : raw) as Record<string, unknown> | null;
