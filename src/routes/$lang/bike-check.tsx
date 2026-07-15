@@ -646,6 +646,7 @@ function BikeSearchPage() {
     // already know match no known register. Show an informative hint
     // instead — never rendered as an error.
     if (!matchesAnyCodePattern(clean)) {
+      setUnknownFormatSource("manual");
       setUnknownFormat(true);
       setError(null);
       setResult(null);
@@ -985,10 +986,15 @@ function BikeSearchPage() {
                 }}
               >
                 <p style={{ margin: 0 }}>
-                  {t("method_a.unknown_format_hint", {
-                    defaultValue:
-                      "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
-                  })}
+                  {unknownFormatSource === "qr"
+                    ? t("method_a.unknown_qr_hint", {
+                        defaultValue:
+                          "Deze QR-code herkennen we niet als een fietsidentificatie. Zoek via de code op de sticker of via merk en framenummer.",
+                      })
+                    : t("method_a.unknown_format_hint", {
+                        defaultValue:
+                          "Dit codeformaat herkennen we nog niet. Controleer of je de volledige code hebt overgenomen, of zoek via merk en framenummer.",
+                      })}
                 </p>
                 <button
                   type="button"
