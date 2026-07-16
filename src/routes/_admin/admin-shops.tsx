@@ -629,17 +629,17 @@ function AdminShopsPage() {
               <div style={{ color: TEXT_SEC, textTransform: "uppercase", fontFamily: "ui-monospace, monospace", fontSize: 11 }}>{r.country}</div>
               <div>
                 {r.source === "custom" ? (
-                  <span className="pill" style={{ background: "rgba(46,204,138,0.12)", color: GREEN, border: "1px solid rgba(46,204,138,0.30)", fontFamily: "ui-monospace, monospace" }}>
+                  <span className="pill" title="Aangepaste shop" style={{ background: "rgba(46,204,138,0.12)", color: GREEN, border: "1px solid rgba(46,204,138,0.30)", fontFamily: "ui-monospace, monospace" }}>
                     {r.shopId ?? "Aangepast"}
                   </span>
                 ) : (
-                  <span className="pill" style={{ background: "rgba(255,255,255,0.06)", color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}` }}>
-                    Statisch
+                  <span className="pill" title={`Statische shop · ${r.shopId ?? ""}`} style={{ background: "rgba(255,255,255,0.06)", color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}`, fontFamily: "ui-monospace, monospace" }}>
+                    {r.shopId ?? "Statisch"}
                   </span>
                 )}
               </div>
               <div style={{ textAlign: "right", display: "flex", gap: 6, justifyContent: "flex-end" }}>
-                {r.source === "custom" && r.customId && (
+                {r.source === "custom" && r.customId ? (
                   <>
                     <button
                       className="btn"
@@ -649,7 +649,21 @@ function AdminShopsPage() {
                     >
                       <Pencil size={12} />
                     </button>
-                    <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }}>
+                    <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }} title="Verwijderen">
+                      <Trash2 size={12} />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="btn"
+                      onClick={() => setEditor({ shopId: r.shopId, overrideStatic: true, form: rowToForm(r) })}
+                      style={{ padding: "4px 8px" }}
+                      title="Bewerken (maakt aangepaste kopie)"
+                    >
+                      <Pencil size={12} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleHideStatic(r)} style={{ padding: "4px 8px" }} title="Verbergen van kaart en lijst">
                       <Trash2 size={12} />
                     </button>
                   </>
