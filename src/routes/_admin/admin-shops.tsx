@@ -41,6 +41,21 @@ type Shop = {
 
 type Row = Shop & { source: "static" | "custom"; customId?: string; shopId?: string };
 
+type ShopForm = {
+  name: string; address: string; city: string; country: string;
+  status: string; brands: string; lat: string; lng: string;
+};
+
+const EMPTY_FORM: ShopForm = { name: "", address: "", city: "", country: "", status: "active", brands: "", lat: "", lng: "" };
+
+function rowToForm(r: Row): ShopForm {
+  return {
+    name: r.name, address: r.address, city: r.city ?? "", country: r.country ?? "",
+    status: r.status || "active", brands: (r.brands ?? []).join("|"),
+    lat: r.lat != null ? String(r.lat) : "", lng: r.lng != null ? String(r.lng) : "",
+  };
+}
+
 const CSV_HEADERS = ["shop_id", "name", "address", "city", "country", "status", "brands", "lat", "lng"];
 const SNAPSHOT_KEY = "velopass-shops-import-snapshot-v1";
 const SNAPSHOT_FIELDS = ["name", "address", "city", "country", "status", "brands", "lat", "lng"] as const;
