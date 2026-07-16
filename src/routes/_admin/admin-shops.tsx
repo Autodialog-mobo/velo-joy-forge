@@ -190,18 +190,10 @@ function AdminShopsPage() {
   const customCount = rows.filter((r) => r.source === "custom").length;
 
   function handleExport() {
-    const csv = toCsv(tabRows);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
     const stamp = new Date().toISOString().slice(0, 10);
-    a.href = url;
-    a.download = `velopass-shops-${tab}-${stamp}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    downloadCsv(`velopass-shops-${tab}-${stamp}.csv`, toCsv(tabRows));
   }
+
 
   function downloadCsv(name: string, csv: string) {
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
