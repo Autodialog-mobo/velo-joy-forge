@@ -175,10 +175,24 @@ export default function ShopFinderMap() {
   const markerRefs = useRef<Record<number, L.Marker | null>>({});
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
-  const rawShops = shopsData as Shop[];
+  const customShops = useCustomShops();
+  const rawShops = useMemo(
+    () => [...(shopsData as Shop[]), ...customShops.map((c) => ({
+      name: c.name,
+      address: c.address,
+      lat: c.lat ?? 0,
+      lng: c.lng ?? 0,
+      city: c.city ?? "",
+      country: c.country ?? "",
+      status: c.status,
+      brands: c.brands ?? [],
+    } as Shop))],
+    [customShops],
+  );
 
   // Deduplicate by normalized address: prefer the entry with the most brands.
   const shops = useMemo(() => dedupeShopsByAddress(rawShops), [rawShops]);
+
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
