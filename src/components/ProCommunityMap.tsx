@@ -7,7 +7,10 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
+import { useCustomShops } from "@/hooks/useCustomShops";
+import { useMemo } from "react";
 import { LeafletGestureSupport } from "./LeafletGestureSupport";
+
 
 type Shop = {
   name: string;
