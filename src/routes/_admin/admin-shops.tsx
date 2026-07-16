@@ -636,6 +636,65 @@ function AdminShopsPage() {
           </div>
         </div>
       </div>
+
+      {editor && (
+        <div
+          onClick={() => !saving && setEditor(null)}
+          style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)",
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, padding: 24,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="card"
+            style={{ width: "100%", maxWidth: 560, padding: 24, background: NAVY }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <div>
+                <div style={EYEBROW}>{editor.id ? "Shop bewerken" : "Nieuwe shop"}</div>
+                {editor.shopId && (
+                  <div style={{ fontSize: 12, color: TEXT_SEC, fontFamily: "ui-monospace, monospace", marginTop: 4 }}>{editor.shopId}</div>
+                )}
+              </div>
+              <button className="btn" onClick={() => setEditor(null)} disabled={saving} style={{ padding: "4px 8px" }}>
+                <X size={14} />
+              </button>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              {([
+                ["name", "Naam", "text", 2],
+                ["address", "Adres", "text", 2],
+                ["city", "Stad", "text", 1],
+                ["country", "Land (ISO)", "text", 1],
+                ["status", "Status", "text", 1],
+                ["brands", "Merken (|-gescheiden)", "text", 1],
+                ["lat", "Latitude", "text", 1],
+                ["lng", "Longitude", "text", 1],
+              ] as const).map(([key, label, _t, span]) => (
+                <label key={key} style={{ display: "block", gridColumn: `span ${span}` }}>
+                  <div style={{ ...EYEBROW, marginBottom: 6 }}>{label}</div>
+                  <input
+                    type="text"
+                    value={(editor.form as any)[key]}
+                    onChange={(e) => setEditor({ ...editor, form: { ...editor.form, [key]: e.target.value } })}
+                    style={{
+                      background: SURFACE, border: `1px solid ${SURFACE_BORDER}`, color: TEXT_PRI,
+                      padding: "8px 12px", borderRadius: 8, fontSize: 13, width: "100%",
+                    }}
+                  />
+                </label>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 20 }}>
+              <button className="btn" onClick={() => setEditor(null)} disabled={saving}>Annuleer</button>
+              <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+                {saving ? "Opslaan…" : "Opslaan"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
