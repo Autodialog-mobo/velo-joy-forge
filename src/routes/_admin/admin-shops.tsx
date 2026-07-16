@@ -411,8 +411,9 @@ function AdminShopsPage() {
           <div>
             Kolommen: <code style={{ color: TEXT_PRI }}>{CSV_HEADERS.join(", ")}</code>.
             Merken zijn pipe-gescheiden (<code>Trek|Cube|Giant</code>).
-            Bij import worden rijen die al in het statische winkelbestand staan overgeslagen;
-            bestaande aangepaste winkels (zelfde adres) worden bijgewerkt, nieuwe adressen toegevoegd.
+            Import-logica: rijen met een bestaande <code>shop_id</code> worden bijgewerkt (ook bij adreswijziging).
+            Rijen zonder <code>shop_id</code> waarvan het adres al in het statische bestand staat worden overgeslagen;
+            overige nieuwe adressen krijgen automatisch een nieuwe <code>shop_id</code> (bv. <code>vp_000042</code>).
           </div>
         </div>
       </div>
