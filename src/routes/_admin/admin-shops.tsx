@@ -239,12 +239,12 @@ function AdminShopsPage() {
       const parts: string[] = [];
       if (res.inserted) parts.push(`${res.inserted} nieuw`);
       if (res.updated) parts.push(`${res.updated} bijgewerkt`);
-      if (res.skipped) parts.push(`${res.skipped} overgeslagen (dubbel)`);
+      if (res.skipped) parts.push(`${res.skipped} overgeslagen`);
       toast.success(`Import klaar: ${parts.join(", ") || "geen wijzigingen"}`);
       if (res.errors?.length) {
-        toast.error(`${res.errors.length} rij(en) met fouten — zie console`);
-        console.warn("[shop-import] errors", res.errors);
+        toast.error(`${res.errors.length} rij(en) met fouten`);
       }
+      setImportReport(res.results ?? []);
       qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
     } catch (e: any) {
       toast.error(`Import mislukt: ${e?.message ?? e}`);
