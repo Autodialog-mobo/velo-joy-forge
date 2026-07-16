@@ -313,8 +313,31 @@ function AdminShopsPage() {
           </div>
         </div>
 
-        <div className="card" style={{ padding: 12, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ position: "relative", flex: 1 }}>
+        <div className="card" style={{ padding: 12, marginBottom: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "inline-flex", gap: 4, background: "rgba(0,0,0,0.20)", padding: 4, borderRadius: 8 }}>
+            {([
+              { key: "all", label: `Alle (${rows.length})` },
+              { key: "static", label: `Statisch (${staticCount})` },
+              { key: "custom", label: `Aangepast (${customCount})` },
+            ] as const).map((t) => {
+              const active = tab === t.key;
+              return (
+                <button
+                  key={t.key}
+                  onClick={() => setTab(t.key)}
+                  style={{
+                    padding: "6px 12px", borderRadius: 6, fontSize: 12, fontWeight: 600,
+                    border: "none", cursor: "pointer",
+                    background: active ? GREEN : "transparent",
+                    color: active ? NAVY : TEXT_SEC,
+                  }}
+                >
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ position: "relative", flex: 1, minWidth: 220 }}>
             <Search size={14} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: TEXT_MUTED }} />
             <input
               type="text"
@@ -324,7 +347,7 @@ function AdminShopsPage() {
             />
           </div>
           <div style={{ fontSize: 12, color: TEXT_SEC }}>
-            {filtered.length} van {rows.length} getoond
+            {filtered.length} van {tabRows.length} getoond
           </div>
         </div>
 
