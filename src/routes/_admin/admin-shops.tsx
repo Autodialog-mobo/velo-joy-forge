@@ -203,6 +203,61 @@ function AdminShopsPage() {
     URL.revokeObjectURL(url);
   }
 
+  function downloadCsv(name: string, csv: string) {
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function handleExportDiff() {
+    const snap = readSnapshot();
+    const snapShops = snap.shops ?? {};
+    if (Object.keys(snapShops).length === 0) {
+      toast.error("Geen snapshot beschikbaar — importeer eerst een CSV.");
+      return;
+    }
+    const lines = ["shop_id,name,field,before,after"];
+    let changes = 0;
+    // Current custom rows keyed by shop_id
+    const current = new Map<string, any>();
+    for (const c of customRows) if (c.shop_id) current.set(c.shop_id, c);
+
+    // Rows still present: compare fields.
+    for (const [sid, before] of Object.entries(snapShops)) {
+      const cur = current.get(sid);
+      if (!cur) {
+        lines.push([csvEscape(sid), csvEscape(before.name), "row", "present", "deleted"].join(","));
+        changes++;
+        continue;
+      }
+      for (const f of SNAPSHOT_FIELDS) {
+        const a = normField((before as any)[f], f);
+        const b = normField((cur as any)[f], f);
+        if (String(a) !== String(b)) {
+          lines.push([csvEscape(sid), csvEscape(cur.name), f, csvEscape(String(a)), csvEscape(String(b))].join(","));
+          changes++;
+        }
+      }
+    }
+    // New rows not in snapshot.
+    for (const [sid, cur] of current.entries()) {
+      if (!snapShops[sid]) {
+        lines.push([csvEscape(sid), csvEscape(cur.name), "row", "absent", "added"].join(","));
+        changes++;
+      }
+    }
+    if (changes === 0) {
+      toast.success("Geen wijzigingen t.o.v. laatste snapshot.");
+      return;
+    }
+    const stamp = new Date().toISOString().slice(0, 10);
+    downloadCsv(`velopass-shops-diff-${stamp}.csv`, lines.join("\n"));
+    toast.success(`${changes} wijziging(en) geëxporteerd.`);
+  }
+
   async function handleImport(file: File) {
     setImporting(true);
     try {
