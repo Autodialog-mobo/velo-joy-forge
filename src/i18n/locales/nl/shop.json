@@ -228,7 +228,9 @@
     "resultBannerPre": "Scan je de fiets daarna met de Pro App of het kassasysteem? Dan zie je meteen alles:",
     "resultBannerHighlight": "maatschappij, budget, contractnummer, einddatum en meer…",
     "ctaNote": "Nog geen partner? Sluit gratis aan en ontvang 5 Frame-ID-stickers om te proberen.",
-    "ctaBtn": "Sluit je winkel aan →"
+    "ctaBtn": "Sluit je winkel aan →",
+    "zoomInTitle": "Klik om te vergroten",
+    "zoomOutTitle": "Klik om te verkleinen"
   },
   "registerForm": {
     "vat_label": "BTW-nummer of ondernemingsnummer",
