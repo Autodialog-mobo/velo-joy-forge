@@ -455,6 +455,7 @@ export type Database = {
           lat: number | null
           lng: number | null
           name: string
+          shop_id: string
           status: string
           updated_at: string
         }
@@ -469,6 +470,7 @@ export type Database = {
           lat?: number | null
           lng?: number | null
           name: string
+          shop_id: string
           status?: string
           updated_at?: string
         }
@@ -483,6 +485,7 @@ export type Database = {
           lat?: number | null
           lng?: number | null
           name?: string
+          shop_id?: string
           status?: string
           updated_at?: string
         }
