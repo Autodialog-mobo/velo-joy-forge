@@ -118,6 +118,7 @@ function AdminShopsPage() {
   const listFn = useServerFn(listCustomShops);
   const importFn = useServerFn(importCustomShops);
   const deleteFn = useServerFn(deleteCustomShop);
+  const upsertFn = useServerFn(upsertCustomShop);
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [q, setQ] = useState("");
@@ -125,6 +126,8 @@ function AdminShopsPage() {
   const [importing, setImporting] = useState(false);
   const [importReport, setImportReport] = useState<any[] | null>(null);
   const [snapshotAt, setSnapshotAt] = useState<string | null>(null);
+  const [editor, setEditor] = useState<null | { id?: string; shopId?: string; form: ShopForm }>(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     try {
