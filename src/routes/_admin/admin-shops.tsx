@@ -160,28 +160,43 @@ function AdminShopsPage() {
 
   const customRows: any[] = data?.rows ?? [];
 
-  const rows: Row[] = useMemo(() => {
-    const staticShops = (shopsData as Shop[]).map((s) => ({ ...s, source: "static" as const }));
-    const customShops: Row[] = customRows.map((c) => ({
-      name: c.name,
-      address: c.address,
-      city: c.city ?? "",
-      country: c.country ?? "",
-      status: c.status,
-      brands: c.brands ?? [],
-      lat: c.lat ?? 0,
-      lng: c.lng ?? 0,
-      source: "custom" as const,
-      customId: c.id,
-      shopId: c.shop_id,
-    }));
-    const combined = [...staticShops, ...customShops];
-    // Dedupe the same way both maps do, then re-attach source based on address_key.
-    const kept = dedupeShopsByAddress(combined as any) as Row[];
-    // Note: dedupe may replace a static entry with a custom entry with more brands
-    // (or vice versa). Preserve whichever was kept.
-    return kept;
+  // Hidden set: address_keys van custom rows met hidden=true → statisch verbergen.
+  const hiddenKeys = useMemo(() => {
+    const s = new Set<string>();
+    for (const c of customRows) if (c.hidden && c.address_key) s.add(c.address_key);
+    return s;
   }, [customRows]);
+
+  const rows: Row[] = useMemo(() => {
+    const staticShops: Row[] = (shopsData as Shop[])
+      .filter((s) => {
+        const raw = (s.address ?? "").trim();
+        if (!raw) return true;
+        return !hiddenKeys.has(normalizeAddress(raw));
+      })
+      .map((s) => {
+        const key = normalizeAddress(s.address ?? "");
+        return { ...s, source: "static" as const, shopId: staticShopIdFromKey(key) };
+      });
+    const customShops: Row[] = customRows
+      .filter((c) => !c.hidden)
+      .map((c) => ({
+        name: c.name,
+        address: c.address,
+        city: c.city ?? "",
+        country: c.country ?? "",
+        status: c.status,
+        brands: c.brands ?? [],
+        lat: c.lat ?? 0,
+        lng: c.lng ?? 0,
+        source: "custom" as const,
+        customId: c.id,
+        shopId: c.shop_id,
+      }));
+    const combined = [...staticShops, ...customShops];
+    const kept = dedupeShopsByAddress(combined as any) as Row[];
+    return kept;
+  }, [customRows, hiddenKeys]);
 
   const staticKeys = useMemo(
     () => Array.from(new Set((shopsData as Shop[])
