@@ -125,6 +125,7 @@ function AdminShopsPage() {
       lng: c.lng ?? 0,
       source: "custom" as const,
       customId: c.id,
+      shopId: c.shop_id,
     }));
     const combined = [...staticShops, ...customShops];
     // Dedupe the same way both maps do, then re-attach source based on address_key.
