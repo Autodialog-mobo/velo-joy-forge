@@ -39,9 +39,9 @@ type Shop = {
   lng: number;
 };
 
-type Row = Shop & { source: "static" | "custom"; customId?: string };
+type Row = Shop & { source: "static" | "custom"; customId?: string; shopId?: string };
 
-const CSV_HEADERS = ["name", "address", "city", "country", "status", "brands", "lat", "lng"];
+const CSV_HEADERS = ["shop_id", "name", "address", "city", "country", "status", "brands", "lat", "lng"];
 
 function csvEscape(v: string) {
   if (v == null) return "";
@@ -54,6 +54,7 @@ function toCsv(rows: Row[]): string {
   const lines = [CSV_HEADERS.join(",")];
   for (const r of rows) {
     lines.push([
+      csvEscape(r.shopId ?? ""),
       csvEscape(r.name),
       csvEscape(r.address),
       csvEscape(r.city),
@@ -66,6 +67,7 @@ function toCsv(rows: Row[]): string {
   }
   return lines.join("\n");
 }
+
 
 // Minimal RFC4180-ish CSV parser (handles quotes, commas, newlines).
 function parseCsv(text: string): string[][] {
@@ -123,6 +125,7 @@ function AdminShopsPage() {
       lng: c.lng ?? 0,
       source: "custom" as const,
       customId: c.id,
+      shopId: c.shop_id,
     }));
     const combined = [...staticShops, ...customShops];
     // Dedupe the same way both maps do, then re-attach source based on address_key.
@@ -195,6 +198,7 @@ function AdminShopsPage() {
       const iBrands = idx("brands");
       const iLat = idx("lat");
       const iLng = idx("lng");
+      const iShopId = idx("shop_id");
 
       const rowsOut: ImportShopRow[] = [];
       for (let i = 1; i < parsed.length; i++) {
@@ -215,6 +219,7 @@ function AdminShopsPage() {
           return Number.isFinite(n) ? n : undefined;
         };
         rowsOut.push({
+          shop_id: iShopId >= 0 ? (r[iShopId] ?? "").trim() : "",
           name,
           address,
           city: iCity >= 0 ? (r[iCity] ?? "").trim() : "",
@@ -376,8 +381,8 @@ function AdminShopsPage() {
               <div style={{ color: TEXT_SEC, textTransform: "uppercase", fontFamily: "ui-monospace, monospace", fontSize: 11 }}>{r.country}</div>
               <div>
                 {r.source === "custom" ? (
-                  <span className="pill" style={{ background: "rgba(46,204,138,0.12)", color: GREEN, border: "1px solid rgba(46,204,138,0.30)" }}>
-                    Aangepast
+                  <span className="pill" style={{ background: "rgba(46,204,138,0.12)", color: GREEN, border: "1px solid rgba(46,204,138,0.30)", fontFamily: "ui-monospace, monospace" }}>
+                    {r.shopId ?? "Aangepast"}
                   </span>
                 ) : (
                   <span className="pill" style={{ background: "rgba(255,255,255,0.06)", color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}` }}>
@@ -406,8 +411,9 @@ function AdminShopsPage() {
           <div>
             Kolommen: <code style={{ color: TEXT_PRI }}>{CSV_HEADERS.join(", ")}</code>.
             Merken zijn pipe-gescheiden (<code>Trek|Cube|Giant</code>).
-            Bij import worden rijen die al in het statische winkelbestand staan overgeslagen;
-            bestaande aangepaste winkels (zelfde adres) worden bijgewerkt, nieuwe adressen toegevoegd.
+            Import-logica: rijen met een bestaande <code>shop_id</code> worden bijgewerkt (ook bij adreswijziging).
+            Rijen zonder <code>shop_id</code> waarvan het adres al in het statische bestand staat worden overgeslagen;
+            overige nieuwe adressen krijgen automatisch een nieuwe <code>shop_id</code> (bv. <code>vp_000042</code>).
           </div>
         </div>
       </div>
