@@ -57,6 +57,44 @@ const Check = () => (
   </svg>
 );
 
+function LeasingScanImage() {
+  const [zoomed, setZoomed] = useState(false);
+  const { t } = useTranslation("shop");
+  return (
+    <div
+      onClick={() => setZoomed((z) => !z)}
+      role="button"
+      aria-label={zoomed ? "Zoom uitzetten" : "Zoom inschakelen"}
+      title={zoomed ? "Klik om te verkleinen" : "Klik om 2× te vergroten"}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        borderRadius: 12,
+        cursor: zoomed ? "zoom-out" : "zoom-in",
+      }}
+    >
+      <img
+        src={leasingAppMockup}
+        alt={t("leasing.appAlt")}
+        loading="lazy"
+        decoding="async"
+        style={{
+          width: "100%",
+          maxHeight: 520,
+          objectFit: "contain",
+          borderRadius: 12,
+          filter: "drop-shadow(0 20px 40px rgba(13,31,60,0.15))",
+          transform: zoomed ? "scale(2)" : "scale(1)",
+          transformOrigin: "center center",
+          transition: "transform 0.3s ease",
+        }}
+      />
+    </div>
+  );
+}
+
 function VelopassPro() {
   const lang = useCurrentLang();
   const { t } = useTranslation("shop");
