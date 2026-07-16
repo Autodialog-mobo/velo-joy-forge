@@ -43,24 +43,56 @@ export const importCustomShops = createServerFn({ method: "POST" })
 
     const { data: existing, error: exErr } = await (supabaseAdmin as any)
       .from("shops_custom")
-      .select("id, shop_id, address_key");
+      .select("id, shop_id, address_key, name, address, city, country, status, brands, lat, lng");
     if (exErr) throw new Error(exErr.message);
-    const byAddress = new Map<string, string>();
-    const byShopId = new Map<string, string>();
+    const byAddress = new Map<string, any>();
+    const byShopId = new Map<string, any>();
     for (const r of existing ?? []) {
-      if (r.address_key) byAddress.set(r.address_key, r.id);
-      if (r.shop_id) byShopId.set(r.shop_id, r.id);
+      if (r.address_key) byAddress.set(r.address_key, r);
+      if (r.shop_id) byShopId.set(r.shop_id, r);
     }
 
+    const FIELDS = ["name", "address", "city", "country", "status", "brands", "lat", "lng"] as const;
+    function diffFields(before: any, after: any): string[] {
+      const changed: string[] = [];
+      for (const f of FIELDS) {
+        const a = before?.[f];
+        const b = after?.[f];
+        if (f === "brands") {
+          const aa = (Array.isArray(a) ? a : []).join("|");
+          const bb = (Array.isArray(b) ? b : []).join("|");
+          if (aa !== bb) changed.push(f);
+        } else if ((a ?? null) !== (b ?? null)) {
+          changed.push(f);
+        }
+      }
+      return changed;
+    }
+
+    type Result = {
+      row: number;
+      status: "insert" | "update" | "skip" | "error";
+      name: string;
+      address: string;
+      shop_id?: string;
+      changedFields?: string[];
+      reason?: string;
+      message?: string;
+    };
+    const results: Result[] = [];
     let inserted = 0;
     let updated = 0;
     let skipped = 0;
-    const errors: { row: number; message: string }[] = [];
 
     for (let i = 0; i < data.rows.length; i++) {
       const r = data.rows[i];
+      const rowNum = i + 1;
       const key = normalizeAddress(r.address);
-      if (!key) { skipped++; continue; }
+      if (!key) {
+        skipped++;
+        results.push({ row: rowNum, status: "skip", name: r.name, address: r.address, reason: "leeg adres" });
+        continue;
+      }
 
       const payload: any = {
         name: r.name,
@@ -74,49 +106,67 @@ export const importCustomShops = createServerFn({ method: "POST" })
         address_key: key,
       };
 
-      // 1) shop_id present → update that row (handles address changes cleanly).
       const providedId = (r.shop_id ?? "").trim();
       if (providedId) {
-        const dbId = byShopId.get(providedId);
-        if (!dbId) {
-          errors.push({ row: i + 1, message: `shop_id ${providedId} bestaat niet` });
+        const before = byShopId.get(providedId);
+        if (!before) {
+          results.push({ row: rowNum, status: "error", name: r.name, address: r.address, shop_id: providedId, message: `shop_id ${providedId} bestaat niet` });
+          continue;
+        }
+        const changed = diffFields(before, payload);
+        if (changed.length === 0) {
+          skipped++;
+          results.push({ row: rowNum, status: "skip", name: r.name, address: r.address, shop_id: providedId, reason: "geen wijzigingen" });
           continue;
         }
         const { error } = await (supabaseAdmin as any)
-          .from("shops_custom")
-          .update(payload)
-          .eq("id", dbId);
-        if (error) { errors.push({ row: i + 1, message: error.message }); continue; }
+          .from("shops_custom").update(payload).eq("id", before.id);
+        if (error) {
+          results.push({ row: rowNum, status: "error", name: r.name, address: r.address, shop_id: providedId, message: error.message });
+          continue;
+        }
         updated++;
+        results.push({ row: rowNum, status: "update", name: r.name, address: r.address, shop_id: providedId, changedFields: changed });
         continue;
       }
 
-      // 2) No shop_id + already in static shops.json → skip.
       if (staticSet.has(key) && !byAddress.has(key)) {
         skipped++;
+        results.push({ row: rowNum, status: "skip", name: r.name, address: r.address, reason: "staat in statisch bestand" });
         continue;
       }
 
-      // 3) No shop_id + address matches an existing custom row → update it.
       if (byAddress.has(key)) {
+        const before = byAddress.get(key);
+        const changed = diffFields(before, payload);
+        if (changed.length === 0) {
+          skipped++;
+          results.push({ row: rowNum, status: "skip", name: r.name, address: r.address, shop_id: before.shop_id, reason: "geen wijzigingen" });
+          continue;
+        }
         const { error } = await (supabaseAdmin as any)
-          .from("shops_custom")
-          .update(payload)
-          .eq("id", byAddress.get(key));
-        if (error) { errors.push({ row: i + 1, message: error.message }); continue; }
+          .from("shops_custom").update(payload).eq("id", before.id);
+        if (error) {
+          results.push({ row: rowNum, status: "error", name: r.name, address: r.address, shop_id: before.shop_id, message: error.message });
+          continue;
+        }
         updated++;
+        results.push({ row: rowNum, status: "update", name: r.name, address: r.address, shop_id: before.shop_id, changedFields: changed });
         continue;
       }
 
-      // 4) New shop → insert (shop_id auto-generated by trigger).
-      const { error } = await (supabaseAdmin as any)
-        .from("shops_custom")
-        .insert(payload);
-      if (error) { errors.push({ row: i + 1, message: error.message }); continue; }
+      const { data: ins, error } = await (supabaseAdmin as any)
+        .from("shops_custom").insert(payload).select("shop_id").single();
+      if (error) {
+        results.push({ row: rowNum, status: "error", name: r.name, address: r.address, message: error.message });
+        continue;
+      }
       inserted++;
+      results.push({ row: rowNum, status: "insert", name: r.name, address: r.address, shop_id: ins?.shop_id });
     }
 
-    return { inserted, updated, skipped, errors };
+    const errors = results.filter((r) => r.status === "error").map((r) => ({ row: r.row, message: r.message ?? "" }));
+    return { inserted, updated, skipped, errors, results };
   });
 
 export const deleteCustomShop = createServerFn({ method: "POST" })
