@@ -104,6 +104,7 @@ function AdminShopsPage() {
   const [q, setQ] = useState("");
   const [tab, setTab] = useState<"all" | "static" | "custom">("all");
   const [importing, setImporting] = useState(false);
+  const [importReport, setImportReport] = useState<any[] | null>(null);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["admin-shops-custom"],
