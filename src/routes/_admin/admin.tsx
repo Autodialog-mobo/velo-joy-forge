@@ -1064,6 +1064,13 @@ function AdminPage() {
                   </a>
                   {" · "}
                   <a
+                    href="/admin-shops"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Winkels
+                  </a>
+                  {" · "}
+                  <a
                     href="/admin-margin-poll"
                     style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
                   >
@@ -1071,6 +1078,7 @@ function AdminPage() {
                   </a>
                 </>
               )}
+
             </p>
           </div>
           <div className="flex items-center gap-4">

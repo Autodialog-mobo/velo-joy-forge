@@ -7,7 +7,10 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
+import { useCustomShops } from "@/hooks/useCustomShops";
+import { useMemo } from "react";
 import { LeafletGestureSupport } from "./LeafletGestureSupport";
+
 
 type Shop = {
   name: string;
@@ -69,7 +72,23 @@ function Clusters({ shops }: { shops: Shop[] }) {
 }
 
 export default function ProCommunityMap() {
-  const shops = dedupeShopsByAddress(shopsData as Shop[]) as Shop[];
+  const customShops = useCustomShops();
+  const shops = useMemo(
+    () => dedupeShopsByAddress([
+      ...(shopsData as Shop[]),
+      ...customShops.map((c) => ({
+        name: c.name,
+        address: c.address,
+        lat: c.lat ?? 0,
+        lng: c.lng ?? 0,
+        city: c.city ?? "",
+        country: c.country ?? "",
+        status: c.status,
+      } as Shop)),
+    ]) as Shop[],
+    [customShops],
+  );
+
   return (
     <MapContainer center={[50.85, 4.35]} zoom={6} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false} touchZoom={true}>
       <TileLayer
