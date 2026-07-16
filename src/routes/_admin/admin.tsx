@@ -1067,7 +1067,7 @@ function AdminPage() {
                     href="/admin-shops"
                     style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
                   >
-                    Winkels
+                    Shops
                   </a>
                   {" · "}
                   <a
