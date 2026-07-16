@@ -14,7 +14,7 @@ import { LeafletGestureSupport } from "./LeafletGestureSupport";
 import { ShopPanel } from "./ShopPanel";
 import { trackRegisterBikeClick, trackCheckBikeClick } from "@/lib/analytics";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
-import { useCustomShops } from "@/hooks/useCustomShops";
+import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/hooks/useCustomShops";
 
 
 type Shop = {
@@ -178,8 +178,9 @@ export default function ShopFinderMap() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   const customShops = useCustomShops();
+  const hiddenKeys = useHiddenShopAddressKeys();
   const rawShops = useMemo(
-    () => [...(shopsData as Shop[]), ...customShops.map((c) => ({
+    () => [...filterHiddenStatic(shopsData as Shop[], hiddenKeys), ...customShops.map((c) => ({
       name: c.name,
       address: c.address,
       lat: c.lat ?? 0,
@@ -189,7 +190,7 @@ export default function ShopFinderMap() {
       status: c.status,
       brands: c.brands ?? [],
     } as Shop))],
-    [customShops],
+    [customShops, hiddenKeys],
   );
 
   // Deduplicate by normalized address: prefer the entry with the most brands.
@@ -204,7 +205,7 @@ export default function ShopFinderMap() {
         !q ||
         s.name.toLowerCase().includes(q) ||
         s.city.toLowerCase().includes(q) ||
-        (s.brands ?? []).some((b) => b.toLowerCase().includes(q)),
+        (s.brands ?? []).some((b: string) => b.toLowerCase().includes(q)),
       );
   }, [shops, query]);
 

@@ -6,7 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, normalizeAddress } from "@/lib/dedupe-shops";
-import { listCustomShops, importCustomShops, deleteCustomShop, upsertCustomShop, type ImportShopRow } from "@/lib/shops-admin.functions";
+import { listCustomShops, importCustomShops, deleteCustomShop, upsertCustomShop, hideStaticShop, type ImportShopRow } from "@/lib/shops-admin.functions";
+import { staticShopIdFromKey } from "@/lib/static-shop-id";
 
 export const Route = createFileRoute("/_admin/admin-shops")({
   ssr: false,
@@ -134,6 +135,7 @@ function AdminShopsPage() {
   const importFn = useServerFn(importCustomShops);
   const deleteFn = useServerFn(deleteCustomShop);
   const upsertFn = useServerFn(upsertCustomShop);
+  const hideFn = useServerFn(hideStaticShop);
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [q, setQ] = useState("");
@@ -141,7 +143,7 @@ function AdminShopsPage() {
   const [importing, setImporting] = useState(false);
   const [importReport, setImportReport] = useState<any[] | null>(null);
   const [snapshotAt, setSnapshotAt] = useState<string | null>(null);
-  const [editor, setEditor] = useState<null | { id?: string; shopId?: string; form: ShopForm }>(null);
+  const [editor, setEditor] = useState<null | { id?: string; shopId?: string; overrideStatic?: boolean; form: ShopForm }>(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -158,28 +160,43 @@ function AdminShopsPage() {
 
   const customRows: any[] = data?.rows ?? [];
 
-  const rows: Row[] = useMemo(() => {
-    const staticShops = (shopsData as Shop[]).map((s) => ({ ...s, source: "static" as const }));
-    const customShops: Row[] = customRows.map((c) => ({
-      name: c.name,
-      address: c.address,
-      city: c.city ?? "",
-      country: c.country ?? "",
-      status: c.status,
-      brands: c.brands ?? [],
-      lat: c.lat ?? 0,
-      lng: c.lng ?? 0,
-      source: "custom" as const,
-      customId: c.id,
-      shopId: c.shop_id,
-    }));
-    const combined = [...staticShops, ...customShops];
-    // Dedupe the same way both maps do, then re-attach source based on address_key.
-    const kept = dedupeShopsByAddress(combined as any) as Row[];
-    // Note: dedupe may replace a static entry with a custom entry with more brands
-    // (or vice versa). Preserve whichever was kept.
-    return kept;
+  // Hidden set: address_keys van custom rows met hidden=true → statisch verbergen.
+  const hiddenKeys = useMemo(() => {
+    const s = new Set<string>();
+    for (const c of customRows) if (c.hidden && c.address_key) s.add(c.address_key);
+    return s;
   }, [customRows]);
+
+  const rows: Row[] = useMemo(() => {
+    const staticShops: Row[] = (shopsData as Shop[])
+      .filter((s) => {
+        const raw = (s.address ?? "").trim();
+        if (!raw) return true;
+        return !hiddenKeys.has(normalizeAddress(raw));
+      })
+      .map((s) => {
+        const key = normalizeAddress(s.address ?? "");
+        return { ...s, source: "static" as const, shopId: staticShopIdFromKey(key) };
+      });
+    const customShops: Row[] = customRows
+      .filter((c) => !c.hidden)
+      .map((c) => ({
+        name: c.name,
+        address: c.address,
+        city: c.city ?? "",
+        country: c.country ?? "",
+        status: c.status,
+        brands: c.brands ?? [],
+        lat: c.lat ?? 0,
+        lng: c.lng ?? 0,
+        source: "custom" as const,
+        customId: c.id,
+        shopId: c.shop_id,
+      }));
+    const combined = [...staticShops, ...customShops];
+    const kept = dedupeShopsByAddress(combined as any) as Row[];
+    return kept;
+  }, [customRows, hiddenKeys]);
 
   const staticKeys = useMemo(
     () => Array.from(new Set((shopsData as Shop[])
@@ -378,6 +395,27 @@ function AdminShopsPage() {
     }
   }
 
+  async function handleHideStatic(r: Row) {
+    if (!confirm(`"${r.name}" verbergen van de kaart en de lijst? Dit kan later ongedaan gemaakt worden.`)) return;
+    try {
+      await hideFn({
+        data: {
+          name: r.name,
+          address: r.address,
+          city: r.city ?? "",
+          country: r.country ?? "",
+          lat: r.lat ?? null,
+          lng: r.lng ?? null,
+          brands: r.brands ?? [],
+        },
+      });
+      toast.success("Winkel verborgen");
+      qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
+    } catch (e: any) {
+      toast.error(`Verbergen mislukt: ${e?.message ?? e}`);
+    }
+  }
+
   async function handleSave() {
     if (!editor) return;
     const f = editor.form;
@@ -396,6 +434,7 @@ function AdminShopsPage() {
       const res = await upsertFn({
         data: {
           id: editor.id,
+          overrideStatic: editor.overrideStatic === true,
           shop: {
             shop_id: editor.shopId ?? "",
             name: f.name.trim(),
@@ -590,17 +629,17 @@ function AdminShopsPage() {
               <div style={{ color: TEXT_SEC, textTransform: "uppercase", fontFamily: "ui-monospace, monospace", fontSize: 11 }}>{r.country}</div>
               <div>
                 {r.source === "custom" ? (
-                  <span className="pill" style={{ background: "rgba(46,204,138,0.12)", color: GREEN, border: "1px solid rgba(46,204,138,0.30)", fontFamily: "ui-monospace, monospace" }}>
+                  <span className="pill" title="Aangepaste shop" style={{ background: "rgba(46,204,138,0.12)", color: GREEN, border: "1px solid rgba(46,204,138,0.30)", fontFamily: "ui-monospace, monospace" }}>
                     {r.shopId ?? "Aangepast"}
                   </span>
                 ) : (
-                  <span className="pill" style={{ background: "rgba(255,255,255,0.06)", color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}` }}>
-                    Statisch
+                  <span className="pill" title={`Statische shop · ${r.shopId ?? ""}`} style={{ background: "rgba(255,255,255,0.06)", color: TEXT_SEC, border: `1px solid ${SURFACE_BORDER}`, fontFamily: "ui-monospace, monospace" }}>
+                    {r.shopId ?? "Statisch"}
                   </span>
                 )}
               </div>
               <div style={{ textAlign: "right", display: "flex", gap: 6, justifyContent: "flex-end" }}>
-                {r.source === "custom" && r.customId && (
+                {r.source === "custom" && r.customId ? (
                   <>
                     <button
                       className="btn"
@@ -610,7 +649,21 @@ function AdminShopsPage() {
                     >
                       <Pencil size={12} />
                     </button>
-                    <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }}>
+                    <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }} title="Verwijderen">
+                      <Trash2 size={12} />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="btn"
+                      onClick={() => setEditor({ shopId: r.shopId, overrideStatic: true, form: rowToForm(r) })}
+                      style={{ padding: "4px 8px" }}
+                      title="Bewerken (maakt aangepaste kopie)"
+                    >
+                      <Pencil size={12} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleHideStatic(r)} style={{ padding: "4px 8px" }} title="Verbergen van kaart en lijst">
                       <Trash2 size={12} />
                     </button>
                   </>

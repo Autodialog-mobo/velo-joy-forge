@@ -7,7 +7,7 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 import "leaflet.markercluster";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
-import { useCustomShops } from "@/hooks/useCustomShops";
+import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/hooks/useCustomShops";
 import { useMemo } from "react";
 import { LeafletGestureSupport } from "./LeafletGestureSupport";
 
@@ -73,9 +73,10 @@ function Clusters({ shops }: { shops: Shop[] }) {
 
 export default function ProCommunityMap() {
   const customShops = useCustomShops();
+  const hiddenKeys = useHiddenShopAddressKeys();
   const shops = useMemo(
     () => dedupeShopsByAddress([
-      ...(shopsData as Shop[]),
+      ...filterHiddenStatic(shopsData as Shop[], hiddenKeys),
       ...customShops.map((c) => ({
         name: c.name,
         address: c.address,
@@ -86,7 +87,7 @@ export default function ProCommunityMap() {
         status: c.status,
       } as Shop)),
     ]) as Shop[],
-    [customShops],
+    [customShops, hiddenKeys],
   );
 
   return (
