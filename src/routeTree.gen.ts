@@ -29,6 +29,7 @@ import { Route as MTokenRouteImport } from './routes/m.$token'
 import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
 import { Route as AdminAdminWebhooksRouteImport } from './routes/_admin/admin-webhooks'
 import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin-users'
+import { Route as AdminAdminShopsRouteImport } from './routes/_admin/admin-shops'
 import { Route as AdminAdminShopSignupsRouteImport } from './routes/_admin/admin-shop-signups'
 import { Route as AdminAdminMarginPollRouteImport } from './routes/_admin/admin-margin-poll'
 import { Route as AdminAdminEmailLogRouteImport } from './routes/_admin/admin-email-log'
@@ -154,6 +155,11 @@ const AdminAdminWebhooksRoute = AdminAdminWebhooksRouteImport.update({
 const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
   id: '/admin-users',
   path: '/admin-users',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminShopsRoute = AdminAdminShopsRouteImport.update({
+  id: '/admin-shops',
+  path: '/admin-shops',
   getParentRoute: () => AdminRouteRoute,
 } as any)
 const AdminAdminShopSignupsRoute = AdminAdminShopSignupsRouteImport.update({
@@ -333,6 +339,7 @@ export interface FileRoutesByFullPath {
   '/admin-email-log': typeof AdminAdminEmailLogRoute
   '/admin-margin-poll': typeof AdminAdminMarginPollRoute
   '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
+  '/admin-shops': typeof AdminAdminShopsRoute
   '/admin-users': typeof AdminAdminUsersRoute
   '/admin-webhooks': typeof AdminAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -380,6 +387,7 @@ export interface FileRoutesByTo {
   '/admin-email-log': typeof AdminAdminEmailLogRoute
   '/admin-margin-poll': typeof AdminAdminMarginPollRoute
   '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
+  '/admin-shops': typeof AdminAdminShopsRoute
   '/admin-users': typeof AdminAdminUsersRoute
   '/admin-webhooks': typeof AdminAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -430,6 +438,7 @@ export interface FileRoutesById {
   '/_admin/admin-email-log': typeof AdminAdminEmailLogRoute
   '/_admin/admin-margin-poll': typeof AdminAdminMarginPollRoute
   '/_admin/admin-shop-signups': typeof AdminAdminShopSignupsRoute
+  '/_admin/admin-shops': typeof AdminAdminShopsRoute
   '/_admin/admin-users': typeof AdminAdminUsersRoute
   '/_admin/admin-webhooks': typeof AdminAdminWebhooksRoute
   '/bestellen/bedankt': typeof BestellenBedanktRoute
@@ -480,6 +489,7 @@ export interface FileRouteTypes {
     | '/admin-email-log'
     | '/admin-margin-poll'
     | '/admin-shop-signups'
+    | '/admin-shops'
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
@@ -527,6 +537,7 @@ export interface FileRouteTypes {
     | '/admin-email-log'
     | '/admin-margin-poll'
     | '/admin-shop-signups'
+    | '/admin-shops'
     | '/admin-users'
     | '/admin-webhooks'
     | '/bestellen/bedankt'
@@ -576,6 +587,7 @@ export interface FileRouteTypes {
     | '/_admin/admin-email-log'
     | '/_admin/admin-margin-poll'
     | '/_admin/admin-shop-signups'
+    | '/_admin/admin-shops'
     | '/_admin/admin-users'
     | '/_admin/admin-webhooks'
     | '/bestellen/bedankt'
@@ -754,6 +766,13 @@ declare module '@tanstack/react-router' {
       path: '/admin-users'
       fullPath: '/admin-users'
       preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-shops': {
+      id: '/_admin/admin-shops'
+      path: '/admin-shops'
+      fullPath: '/admin-shops'
+      preLoaderRoute: typeof AdminAdminShopsRouteImport
       parentRoute: typeof AdminRouteRoute
     }
     '/_admin/admin-shop-signups': {
@@ -997,6 +1016,7 @@ interface AdminRouteRouteChildren {
   AdminAdminEmailLogRoute: typeof AdminAdminEmailLogRoute
   AdminAdminMarginPollRoute: typeof AdminAdminMarginPollRoute
   AdminAdminShopSignupsRoute: typeof AdminAdminShopSignupsRoute
+  AdminAdminShopsRoute: typeof AdminAdminShopsRoute
   AdminAdminUsersRoute: typeof AdminAdminUsersRoute
   AdminAdminWebhooksRoute: typeof AdminAdminWebhooksRoute
 }
@@ -1008,6 +1028,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminEmailLogRoute: AdminAdminEmailLogRoute,
   AdminAdminMarginPollRoute: AdminAdminMarginPollRoute,
   AdminAdminShopSignupsRoute: AdminAdminShopSignupsRoute,
+  AdminAdminShopsRoute: AdminAdminShopsRoute,
   AdminAdminUsersRoute: AdminAdminUsersRoute,
   AdminAdminWebhooksRoute: AdminAdminWebhooksRoute,
 }
