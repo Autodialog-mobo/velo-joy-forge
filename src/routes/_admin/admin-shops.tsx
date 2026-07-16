@@ -42,6 +42,25 @@ type Shop = {
 type Row = Shop & { source: "static" | "custom"; customId?: string; shopId?: string };
 
 const CSV_HEADERS = ["shop_id", "name", "address", "city", "country", "status", "brands", "lat", "lng"];
+const SNAPSHOT_KEY = "velopass-shops-import-snapshot-v1";
+const SNAPSHOT_FIELDS = ["name", "address", "city", "country", "status", "brands", "lat", "lng"] as const;
+type SnapshotShop = {
+  name: string; address: string; city: string; country: string;
+  status: string; brands: string[]; lat: number | null; lng: number | null;
+};
+type SnapshotFile = { _at?: string; shops?: Record<string, SnapshotShop> };
+
+function readSnapshot(): SnapshotFile {
+  try { return JSON.parse(localStorage.getItem(SNAPSHOT_KEY) ?? "{}") || {}; } catch { return {}; }
+}
+function writeSnapshot(next: SnapshotFile) {
+  localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(next));
+}
+function normField(v: any, f: string) {
+  if (f === "brands") return (Array.isArray(v) ? v : []).join("|");
+  if (f === "country") return String(v ?? "").toUpperCase();
+  return v ?? "";
+}
 
 function csvEscape(v: string) {
   if (v == null) return "";
