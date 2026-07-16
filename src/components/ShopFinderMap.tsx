@@ -205,7 +205,7 @@ export default function ShopFinderMap() {
         !q ||
         s.name.toLowerCase().includes(q) ||
         s.city.toLowerCase().includes(q) ||
-        (s.brands ?? []).some((b) => b.toLowerCase().includes(q)),
+        (s.brands ?? []).some((b: string) => b.toLowerCase().includes(q)),
       );
   }, [shops, query]);
 
