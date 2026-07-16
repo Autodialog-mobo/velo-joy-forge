@@ -386,7 +386,7 @@ function AdminShopsPage() {
             </Link>
             <h1 style={{ fontSize: 28, fontWeight: 700, margin: "8px 0 4px" }}>Shops</h1>
             <p style={{ color: TEXT_SEC, fontSize: 14, margin: 0 }}>
-              Alle winkels die op de fietser- en pro-map getoond worden. {rows.length} actief
+              Alle shops die op de fietser- en pro-map getoond worden. {rows.length} actief
               {" · "}{staticCount} statisch{customCount ? ` · ${customCount} aangepast` : ""}
             </p>
           </div>
@@ -468,7 +468,7 @@ function AdminShopsPage() {
             </div>
             <div style={{ maxHeight: 320, overflowY: "auto", border: `1px solid ${SURFACE_BORDER}`, borderRadius: 8 }}>
               <div style={{ display: "grid", gridTemplateColumns: "60px 90px 1fr 100px 1fr", gap: 12, padding: "8px 12px", ...EYEBROW, color: TEXT_MUTED, borderBottom: `1px solid ${SURFACE_BORDER}`, position: "sticky", top: 0, background: NAVY }}>
-                <div>Rij</div><div>Status</div><div>Winkel</div><div>shop_id</div><div>Detail</div>
+                <div>Rij</div><div>Status</div><div>Shop</div><div>shop_id</div><div>Detail</div>
               </div>
               {importReport.map((r: any, idx: number) => {
                 const c = r.status === "insert" ? GREEN
@@ -513,7 +513,7 @@ function AdminShopsPage() {
           </div>
           {filtered.length === 0 && (
             <div style={{ padding: 32, textAlign: "center", color: TEXT_MUTED, fontSize: 13 }}>
-              Geen winkels gevonden.
+              Geen shops gevonden.
             </div>
           )}
           {filtered.slice(0, 500).map((r, i) => (
