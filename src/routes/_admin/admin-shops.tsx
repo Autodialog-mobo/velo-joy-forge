@@ -599,11 +599,21 @@ function AdminShopsPage() {
                   </span>
                 )}
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div style={{ textAlign: "right", display: "flex", gap: 6, justifyContent: "flex-end" }}>
                 {r.source === "custom" && r.customId && (
-                  <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }}>
-                    <Trash2 size={12} />
-                  </button>
+                  <>
+                    <button
+                      className="btn"
+                      onClick={() => setEditor({ id: r.customId, shopId: r.shopId, form: rowToForm(r) })}
+                      style={{ padding: "4px 8px" }}
+                      title="Bewerken"
+                    >
+                      <Pencil size={12} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }}>
+                      <Trash2 size={12} />
+                    </button>
+                  </>
                 )}
               </div>
             </div>
