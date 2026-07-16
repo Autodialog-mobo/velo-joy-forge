@@ -350,7 +350,7 @@ function AdminShopsPage() {
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Deze aangepaste winkel verwijderen?")) return;
+    if (!confirm("Deze aangepaste shop verwijderen?")) return;
     try {
       await deleteFn({ data: { id } });
       toast.success("Winkel verwijderd");
