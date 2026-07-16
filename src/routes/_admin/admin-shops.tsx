@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, RefreshCw, Download, Upload, Store, Trash2, Search, GitCompare } from "lucide-react";
+import { ArrowLeft, RefreshCw, Download, Upload, Store, Trash2, Search, GitCompare, Pencil, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, normalizeAddress } from "@/lib/dedupe-shops";
-import { listCustomShops, importCustomShops, deleteCustomShop, type ImportShopRow } from "@/lib/shops-admin.functions";
+import { listCustomShops, importCustomShops, deleteCustomShop, upsertCustomShop, type ImportShopRow } from "@/lib/shops-admin.functions";
 
 export const Route = createFileRoute("/_admin/admin-shops")({
   ssr: false,
