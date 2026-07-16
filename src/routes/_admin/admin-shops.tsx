@@ -272,6 +272,27 @@ function AdminShopsPage() {
         toast.error(`${res.errors.length} rij(en) met fouten`);
       }
       setImportReport(res.results ?? []);
+
+      // Merge imported rows into the snapshot (keyed by shop_id).
+      const prev = readSnapshot();
+      const shops = { ...(prev.shops ?? {}) };
+      for (let i = 0; i < (res.results ?? []).length; i++) {
+        const rr: any = res.results[i];
+        if (rr.status === "error" || !rr.shop_id) continue;
+        const src = rowsOut[rr.row - 1];
+        if (!src) continue;
+        shops[rr.shop_id] = {
+          name: src.name, address: src.address,
+          city: src.city ?? "", country: (src.country ?? "").toUpperCase(),
+          status: src.status || "active",
+          brands: src.brands ?? [],
+          lat: src.lat ?? null, lng: src.lng ?? null,
+        };
+      }
+      const stamp = new Date().toISOString();
+      writeSnapshot({ _at: stamp, shops });
+      setSnapshotAt(stamp);
+
       qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
     } catch (e: any) {
       toast.error(`Import mislukt: ${e?.message ?? e}`);
