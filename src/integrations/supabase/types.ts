@@ -443,6 +443,51 @@ export type Database = {
         }
         Relationships: []
       }
+      shops_custom: {
+        Row: {
+          address: string
+          address_key: string
+          brands: string[]
+          city: string | null
+          country: string | null
+          created_at: string
+          id: string
+          lat: number | null
+          lng: number | null
+          name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          address_key: string
+          brands?: string[]
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          name: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          address_key?: string
+          brands?: string[]
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
