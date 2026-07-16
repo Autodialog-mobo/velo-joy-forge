@@ -395,6 +395,27 @@ function AdminShopsPage() {
     }
   }
 
+  async function handleHideStatic(r: Row) {
+    if (!confirm(`"${r.name}" verbergen van de kaart en de lijst? Dit kan later ongedaan gemaakt worden.`)) return;
+    try {
+      await hideFn({
+        data: {
+          name: r.name,
+          address: r.address,
+          city: r.city ?? "",
+          country: r.country ?? "",
+          lat: r.lat ?? null,
+          lng: r.lng ?? null,
+          brands: r.brands ?? [],
+        },
+      });
+      toast.success("Winkel verborgen");
+      qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
+    } catch (e: any) {
+      toast.error(`Verbergen mislukt: ${e?.message ?? e}`);
+    }
+  }
+
   async function handleSave() {
     if (!editor) return;
     const f = editor.form;
@@ -413,6 +434,7 @@ function AdminShopsPage() {
       const res = await upsertFn({
         data: {
           id: editor.id,
+          overrideStatic: editor.overrideStatic === true,
           shop: {
             shop_id: editor.shopId ?? "",
             name: f.name.trim(),
