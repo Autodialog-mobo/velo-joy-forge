@@ -6,7 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, normalizeAddress } from "@/lib/dedupe-shops";
-import { listCustomShops, importCustomShops, deleteCustomShop, upsertCustomShop, type ImportShopRow } from "@/lib/shops-admin.functions";
+import { listCustomShops, importCustomShops, deleteCustomShop, upsertCustomShop, hideStaticShop, type ImportShopRow } from "@/lib/shops-admin.functions";
+import { staticShopIdFromKey } from "@/lib/static-shop-id";
 
 export const Route = createFileRoute("/_admin/admin-shops")({
   ssr: false,
@@ -134,6 +135,7 @@ function AdminShopsPage() {
   const importFn = useServerFn(importCustomShops);
   const deleteFn = useServerFn(deleteCustomShop);
   const upsertFn = useServerFn(upsertCustomShop);
+  const hideFn = useServerFn(hideStaticShop);
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [q, setQ] = useState("");
@@ -141,7 +143,7 @@ function AdminShopsPage() {
   const [importing, setImporting] = useState(false);
   const [importReport, setImportReport] = useState<any[] | null>(null);
   const [snapshotAt, setSnapshotAt] = useState<string | null>(null);
-  const [editor, setEditor] = useState<null | { id?: string; shopId?: string; form: ShopForm }>(null);
+  const [editor, setEditor] = useState<null | { id?: string; shopId?: string; overrideStatic?: boolean; form: ShopForm }>(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
