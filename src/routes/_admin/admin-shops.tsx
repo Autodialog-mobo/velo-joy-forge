@@ -105,6 +105,14 @@ function AdminShopsPage() {
   const [tab, setTab] = useState<"all" | "static" | "custom">("all");
   const [importing, setImporting] = useState(false);
   const [importReport, setImportReport] = useState<any[] | null>(null);
+  const [snapshotAt, setSnapshotAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(SNAPSHOT_KEY);
+      if (raw) setSnapshotAt(JSON.parse(raw)?._at ?? null);
+    } catch {}
+  }, []);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["admin-shops-custom"],
