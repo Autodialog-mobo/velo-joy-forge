@@ -455,6 +455,9 @@ function AdminShopsPage() {
               <RefreshCw size={14} style={{ opacity: isFetching ? 0.5 : 1 }} />
               Ververs
             </button>
+            <button className="btn btn-primary" onClick={() => setEditor({ form: { ...EMPTY_FORM } })}>
+              <Plus size={14} /> Nieuwe shop
+            </button>
             <button className="btn" onClick={handleExport}>
               <Download size={14} /> Exporteer CSV
             </button>
