@@ -181,3 +181,48 @@ export const deleteCustomShop = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true as const };
   });
+
+const UpsertInput = z.object({
+  id: z.string().uuid().optional(),
+  shop: ShopRow,
+  staticKeys: z.array(z.string()).optional().default([]),
+});
+
+export const upsertCustomShop = createServerFn({ method: "POST" })
+  .middleware([requireAuth0Admin])
+  .inputValidator((d: unknown) => UpsertInput.parse(d))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const r = data.shop;
+    const key = normalizeAddress(r.address);
+    if (!key) throw new Error("Ongeldig adres");
+    const payload: any = {
+      name: r.name,
+      address: r.address,
+      city: r.city ?? "",
+      country: (r.country ?? "").toUpperCase(),
+      status: r.status || "active",
+      brands: r.brands ?? [],
+      lat: r.lat ?? null,
+      lng: r.lng ?? null,
+      address_key: key,
+    };
+
+    if (data.id) {
+      const { data: upd, error } = await (supabaseAdmin as any)
+        .from("shops_custom").update(payload).eq("id", data.id).select("id, shop_id").single();
+      if (error) throw new Error(error.message);
+      return { ok: true as const, id: upd?.id, shop_id: upd?.shop_id, mode: "update" as const };
+    }
+
+    const staticSet = new Set(data.staticKeys ?? []);
+    if (staticSet.has(key)) throw new Error("Adres staat al in het statische bestand");
+    const { data: dup } = await (supabaseAdmin as any)
+      .from("shops_custom").select("id").eq("address_key", key).maybeSingle();
+    if (dup) throw new Error("Adres bestaat al als aangepaste shop");
+
+    const { data: ins, error } = await (supabaseAdmin as any)
+      .from("shops_custom").insert(payload).select("id, shop_id").single();
+    if (error) throw new Error(error.message);
+    return { ok: true as const, id: ins?.id, shop_id: ins?.shop_id, mode: "insert" as const };
+  });

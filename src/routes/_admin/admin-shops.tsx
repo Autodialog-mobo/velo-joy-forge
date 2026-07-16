@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, RefreshCw, Download, Upload, Store, Trash2, Search, GitCompare } from "lucide-react";
+import { ArrowLeft, RefreshCw, Download, Upload, Store, Trash2, Search, GitCompare, Pencil, Plus, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, normalizeAddress } from "@/lib/dedupe-shops";
-import { listCustomShops, importCustomShops, deleteCustomShop, type ImportShopRow } from "@/lib/shops-admin.functions";
+import { listCustomShops, importCustomShops, deleteCustomShop, upsertCustomShop, type ImportShopRow } from "@/lib/shops-admin.functions";
 
 export const Route = createFileRoute("/_admin/admin-shops")({
   ssr: false,
@@ -40,6 +40,21 @@ type Shop = {
 };
 
 type Row = Shop & { source: "static" | "custom"; customId?: string; shopId?: string };
+
+type ShopForm = {
+  name: string; address: string; city: string; country: string;
+  status: string; brands: string; lat: string; lng: string;
+};
+
+const EMPTY_FORM: ShopForm = { name: "", address: "", city: "", country: "", status: "active", brands: "", lat: "", lng: "" };
+
+function rowToForm(r: Row): ShopForm {
+  return {
+    name: r.name, address: r.address, city: r.city ?? "", country: r.country ?? "",
+    status: r.status || "active", brands: (r.brands ?? []).join("|"),
+    lat: r.lat != null ? String(r.lat) : "", lng: r.lng != null ? String(r.lng) : "",
+  };
+}
 
 const CSV_HEADERS = ["shop_id", "name", "address", "city", "country", "status", "brands", "lat", "lng"];
 const SNAPSHOT_KEY = "velopass-shops-import-snapshot-v1";
@@ -118,6 +133,7 @@ function AdminShopsPage() {
   const listFn = useServerFn(listCustomShops);
   const importFn = useServerFn(importCustomShops);
   const deleteFn = useServerFn(deleteCustomShop);
+  const upsertFn = useServerFn(upsertCustomShop);
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [q, setQ] = useState("");
@@ -125,6 +141,8 @@ function AdminShopsPage() {
   const [importing, setImporting] = useState(false);
   const [importReport, setImportReport] = useState<any[] | null>(null);
   const [snapshotAt, setSnapshotAt] = useState<string | null>(null);
+  const [editor, setEditor] = useState<null | { id?: string; shopId?: string; form: ShopForm }>(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     try {
@@ -360,6 +378,48 @@ function AdminShopsPage() {
     }
   }
 
+  async function handleSave() {
+    if (!editor) return;
+    const f = editor.form;
+    if (!f.name.trim() || !f.address.trim()) {
+      toast.error("Naam en adres zijn verplicht");
+      return;
+    }
+    const parseNum = (s: string) => {
+      const t = s.trim();
+      if (!t) return null;
+      const n = Number(t.replace(",", "."));
+      return Number.isFinite(n) ? n : null;
+    };
+    setSaving(true);
+    try {
+      const res = await upsertFn({
+        data: {
+          id: editor.id,
+          shop: {
+            shop_id: editor.shopId ?? "",
+            name: f.name.trim(),
+            address: f.address.trim(),
+            city: f.city.trim(),
+            country: f.country.trim(),
+            status: f.status.trim() || "active",
+            brands: f.brands.split(/[|;]/).map((b) => b.trim()).filter(Boolean),
+            lat: parseNum(f.lat),
+            lng: parseNum(f.lng),
+          },
+          staticKeys,
+        },
+      });
+      toast.success(res.mode === "insert" ? `Shop toegevoegd (${res.shop_id})` : "Shop bijgewerkt");
+      setEditor(null);
+      qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
+    } catch (e: any) {
+      toast.error(`Opslaan mislukt: ${e?.message ?? e}`);
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: NAVY, color: TEXT_PRI, fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif" }}>
       <style>{`
@@ -394,6 +454,9 @@ function AdminShopsPage() {
             <button className="btn" onClick={() => refetch()} disabled={isFetching}>
               <RefreshCw size={14} style={{ opacity: isFetching ? 0.5 : 1 }} />
               Ververs
+            </button>
+            <button className="btn btn-primary" onClick={() => setEditor({ form: { ...EMPTY_FORM } })}>
+              <Plus size={14} /> Nieuwe shop
             </button>
             <button className="btn" onClick={handleExport}>
               <Download size={14} /> Exporteer CSV
@@ -536,11 +599,21 @@ function AdminShopsPage() {
                   </span>
                 )}
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div style={{ textAlign: "right", display: "flex", gap: 6, justifyContent: "flex-end" }}>
                 {r.source === "custom" && r.customId && (
-                  <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }}>
-                    <Trash2 size={12} />
-                  </button>
+                  <>
+                    <button
+                      className="btn"
+                      onClick={() => setEditor({ id: r.customId, shopId: r.shopId, form: rowToForm(r) })}
+                      style={{ padding: "4px 8px" }}
+                      title="Bewerken"
+                    >
+                      <Pencil size={12} />
+                    </button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(r.customId!)} style={{ padding: "4px 8px" }}>
+                      <Trash2 size={12} />
+                    </button>
+                  </>
                 )}
               </div>
             </div>
@@ -563,6 +636,65 @@ function AdminShopsPage() {
           </div>
         </div>
       </div>
+
+      {editor && (
+        <div
+          onClick={() => !saving && setEditor(null)}
+          style={{
+            position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)",
+            display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50, padding: 24,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="card"
+            style={{ width: "100%", maxWidth: 560, padding: 24, background: NAVY }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <div>
+                <div style={EYEBROW}>{editor.id ? "Shop bewerken" : "Nieuwe shop"}</div>
+                {editor.shopId && (
+                  <div style={{ fontSize: 12, color: TEXT_SEC, fontFamily: "ui-monospace, monospace", marginTop: 4 }}>{editor.shopId}</div>
+                )}
+              </div>
+              <button className="btn" onClick={() => setEditor(null)} disabled={saving} style={{ padding: "4px 8px" }}>
+                <X size={14} />
+              </button>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              {([
+                ["name", "Naam", "text", 2],
+                ["address", "Adres", "text", 2],
+                ["city", "Stad", "text", 1],
+                ["country", "Land (ISO)", "text", 1],
+                ["status", "Status", "text", 1],
+                ["brands", "Merken (|-gescheiden)", "text", 1],
+                ["lat", "Latitude", "text", 1],
+                ["lng", "Longitude", "text", 1],
+              ] as const).map(([key, label, _t, span]) => (
+                <label key={key} style={{ display: "block", gridColumn: `span ${span}` }}>
+                  <div style={{ ...EYEBROW, marginBottom: 6 }}>{label}</div>
+                  <input
+                    type="text"
+                    value={(editor.form as any)[key]}
+                    onChange={(e) => setEditor({ ...editor, form: { ...editor.form, [key]: e.target.value } })}
+                    style={{
+                      background: SURFACE, border: `1px solid ${SURFACE_BORDER}`, color: TEXT_PRI,
+                      padding: "8px 12px", borderRadius: 8, fontSize: 13, width: "100%",
+                    }}
+                  />
+                </label>
+              ))}
+            </div>
+            <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 20 }}>
+              <button className="btn" onClick={() => setEditor(null)} disabled={saving}>Annuleer</button>
+              <button className="btn btn-primary" onClick={handleSave} disabled={saving}>
+                {saving ? "Opslaan…" : "Opslaan"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
