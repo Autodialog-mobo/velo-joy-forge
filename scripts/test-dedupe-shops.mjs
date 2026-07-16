@@ -197,6 +197,7 @@ test("all pages/components read the counter via useActiveShopCount (single sourc
       "src/components/ShopFinderMap.tsx",
       "src/components/ProCommunityMap.tsx",
       "src/routes/dedup-audit.tsx",
+      "src/routes/_admin/admin-shops.tsx",
     ].map((p) => join(root, p)),
   );
 
