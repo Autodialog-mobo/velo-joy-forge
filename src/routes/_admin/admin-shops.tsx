@@ -139,16 +139,21 @@ function AdminShopsPage() {
     [],
   );
 
+  const tabRows = useMemo(
+    () => (tab === "all" ? rows : rows.filter((r) => r.source === tab)),
+    [rows, tab],
+  );
+
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return rows;
-    return rows.filter((r) =>
+    if (!query) return tabRows;
+    return tabRows.filter((r) =>
       r.name.toLowerCase().includes(query) ||
       (r.city ?? "").toLowerCase().includes(query) ||
       (r.address ?? "").toLowerCase().includes(query) ||
       (r.country ?? "").toLowerCase().includes(query),
     );
-  }, [rows, q]);
+  }, [tabRows, q]);
 
   const staticCount = rows.filter((r) => r.source === "static").length;
   const customCount = rows.filter((r) => r.source === "custom").length;
