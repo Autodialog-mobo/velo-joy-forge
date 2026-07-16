@@ -100,6 +100,7 @@ function AdminShopsPage() {
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [q, setQ] = useState("");
+  const [tab, setTab] = useState<"all" | "static" | "custom">("all");
   const [importing, setImporting] = useState(false);
 
   const { data, isFetching, refetch } = useQuery({
