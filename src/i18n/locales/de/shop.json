@@ -228,7 +228,9 @@
     "resultBannerPre": "Das Fahrrad anschließend mit der Pro App oder dem Kassensystem scannen? Dann siehst du sofort alles:",
     "resultBannerHighlight": "Unternehmen, Budget, Vertragsnummer, Enddatum und mehr...",
     "ctaNote": "Noch kein Partner? Registriere dich kostenlos und erhalte 5 „Frame-ID“-Aufkleber zum Ausprobieren.",
-    "ctaBtn": "Registriere dein Fahrradgeschäft →"
+    "ctaBtn": "Registriere dein Fahrradgeschäft →",
+    "zoomInTitle": "Klicken zum 2× Vergrößern",
+    "zoomOutTitle": "Klicken zum Verkleinern"
   },
   "registerForm": {
     "vat_label": "USt-IdNr. oder Unternehmensnummer",

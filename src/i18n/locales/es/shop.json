@@ -228,7 +228,9 @@
     "resultBannerPre": "¿Escaneas la bici después con la Pro App o el sistema de caja? Verás todo al instante:",
     "resultBannerHighlight": "empresa, presupuesto, número de contrato, fecha de fin y más…",
     "ctaNote": "¿Aún no eres partner? Únete gratis y recibe 5 adhesivos Frame-ID para probar.",
-    "ctaBtn": "Une tu tienda →"
+    "ctaBtn": "Une tu tienda →",
+    "zoomInTitle": "Haz clic para ampliar 2×",
+    "zoomOutTitle": "Haz clic para reducir"
   },
   "registerForm": {
     "vat_label": "Número de IVA o número de empresa",

@@ -228,7 +228,9 @@
     "resultBannerPre": "Scan the bike afterwards with the Pro App or POS system? Then you immediately see everything:",
     "resultBannerHighlight": "company, budget, contract number, end date, and more...",
     "ctaNote": "Not a partner yet? Register for free and receive 5 Frame-ID stickers to try.",
-    "ctaBtn": "Register your bike shop →"
+    "ctaBtn": "Register your bike shop →",
+    "zoomInTitle": "Click to zoom in 2×",
+    "zoomOutTitle": "Click to zoom out"
   },
   "registerForm": {
     "vat_label": "VAT or company number",
