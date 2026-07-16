@@ -198,6 +198,7 @@ function AdminShopsPage() {
       const iBrands = idx("brands");
       const iLat = idx("lat");
       const iLng = idx("lng");
+      const iShopId = idx("shop_id");
 
       const rowsOut: ImportShopRow[] = [];
       for (let i = 1; i < parsed.length; i++) {
@@ -218,6 +219,7 @@ function AdminShopsPage() {
           return Number.isFinite(n) ? n : undefined;
         };
         rowsOut.push({
+          shop_id: iShopId >= 0 ? (r[iShopId] ?? "").trim() : "",
           name,
           address,
           city: iCity >= 0 ? (r[iCity] ?? "").trim() : "",
