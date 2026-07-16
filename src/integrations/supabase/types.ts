@@ -451,6 +451,7 @@ export type Database = {
           city: string | null
           country: string | null
           created_at: string
+          hidden: boolean
           id: string
           lat: number | null
           lng: number | null
@@ -466,6 +467,7 @@ export type Database = {
           city?: string | null
           country?: string | null
           created_at?: string
+          hidden?: boolean
           id?: string
           lat?: number | null
           lng?: number | null
@@ -481,6 +483,7 @@ export type Database = {
           city?: string | null
           country?: string | null
           created_at?: string
+          hidden?: boolean
           id?: string
           lat?: number | null
           lng?: number | null
@@ -636,6 +639,7 @@ export type Database = {
       }
     }
     Functions: {
+      get_hidden_shop_address_keys: { Args: never; Returns: string[] }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
