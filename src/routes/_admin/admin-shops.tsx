@@ -11,7 +11,7 @@ import { listCustomShops, importCustomShops, deleteCustomShop, type ImportShopRo
 export const Route = createFileRoute("/_admin/admin-shops")({
   ssr: false,
   component: AdminShopsPage,
-  head: () => ({ meta: [{ title: "Winkels — Velopass admin" }] }),
+  head: () => ({ meta: [{ title: "Shops — Velopass admin" }] }),
 });
 
 const NAVY = "#0D1F3C";
@@ -283,7 +283,7 @@ function AdminShopsPage() {
             <Link to="/admin" style={{ ...EYEBROW, color: TEXT_SEC, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
               <ArrowLeft size={12} /> Terug naar admin
             </Link>
-            <h1 style={{ fontSize: 28, fontWeight: 700, margin: "8px 0 4px" }}>Winkels</h1>
+            <h1 style={{ fontSize: 28, fontWeight: 700, margin: "8px 0 4px" }}>Shops</h1>
             <p style={{ color: TEXT_SEC, fontSize: 14, margin: 0 }}>
               Alle winkels die op de fietser- en pro-map getoond worden. {rows.length} actief
               {" · "}{staticCount} statisch{customCount ? ` · ${customCount} aangepast` : ""}
