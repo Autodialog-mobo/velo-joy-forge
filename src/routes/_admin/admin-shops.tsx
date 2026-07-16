@@ -104,6 +104,7 @@ function AdminShopsPage() {
   const [q, setQ] = useState("");
   const [tab, setTab] = useState<"all" | "static" | "custom">("all");
   const [importing, setImporting] = useState(false);
+  const [importReport, setImportReport] = useState<any[] | null>(null);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["admin-shops-custom"],
@@ -238,12 +239,12 @@ function AdminShopsPage() {
       const parts: string[] = [];
       if (res.inserted) parts.push(`${res.inserted} nieuw`);
       if (res.updated) parts.push(`${res.updated} bijgewerkt`);
-      if (res.skipped) parts.push(`${res.skipped} overgeslagen (dubbel)`);
+      if (res.skipped) parts.push(`${res.skipped} overgeslagen`);
       toast.success(`Import klaar: ${parts.join(", ") || "geen wijzigingen"}`);
       if (res.errors?.length) {
-        toast.error(`${res.errors.length} rij(en) met fouten — zie console`);
-        console.warn("[shop-import] errors", res.errors);
+        toast.error(`${res.errors.length} rij(en) met fouten`);
       }
+      setImportReport(res.results ?? []);
       qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
     } catch (e: any) {
       toast.error(`Import mislukt: ${e?.message ?? e}`);
@@ -355,6 +356,48 @@ function AdminShopsPage() {
             {filtered.length} van {tabRows.length} getoond
           </div>
         </div>
+
+        {importReport && importReport.length > 0 && (
+          <div className="card" style={{ marginBottom: 16, padding: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+              <div style={{ ...EYEBROW }}>Import-rapport ({importReport.length} rijen)</div>
+              <button className="btn" onClick={() => setImportReport(null)} style={{ padding: "4px 10px", fontSize: 11 }}>Sluit</button>
+            </div>
+            <div style={{ maxHeight: 320, overflowY: "auto", border: `1px solid ${SURFACE_BORDER}`, borderRadius: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "60px 90px 1fr 100px 1fr", gap: 12, padding: "8px 12px", ...EYEBROW, color: TEXT_MUTED, borderBottom: `1px solid ${SURFACE_BORDER}`, position: "sticky", top: 0, background: NAVY }}>
+                <div>Rij</div><div>Status</div><div>Winkel</div><div>shop_id</div><div>Detail</div>
+              </div>
+              {importReport.map((r: any, idx: number) => {
+                const c = r.status === "insert" ? GREEN
+                        : r.status === "update" ? "#5aa3ff"
+                        : r.status === "error" ? RED
+                        : TEXT_MUTED;
+                const label = r.status === "insert" ? "Nieuw"
+                            : r.status === "update" ? "Bijgewerkt"
+                            : r.status === "error" ? "Fout"
+                            : "Overgeslagen";
+                const detail = r.status === "update"
+                  ? `${r.changedFields?.length ?? 0} veld(en): ${(r.changedFields ?? []).join(", ")}`
+                  : r.status === "error"
+                  ? r.message
+                  : r.status === "skip"
+                  ? r.reason
+                  : "";
+                return (
+                  <div key={idx} style={{ display: "grid", gridTemplateColumns: "60px 90px 1fr 100px 1fr", gap: 12, padding: "6px 12px", fontSize: 12, borderBottom: `1px solid ${SURFACE_BORDER}`, alignItems: "center" }}>
+                    <div style={{ color: TEXT_MUTED, fontFamily: "ui-monospace, monospace" }}>{r.row}</div>
+                    <div>
+                      <span className="pill" style={{ background: "transparent", color: c, border: `1px solid ${c}44` }}>{label}</span>
+                    </div>
+                    <div style={{ color: TEXT_PRI, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.name}</div>
+                    <div style={{ color: TEXT_SEC, fontFamily: "ui-monospace, monospace", fontSize: 11 }}>{r.shop_id ?? ""}</div>
+                    <div style={{ color: TEXT_SEC, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{detail}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <div className="card">
           <div className="row" style={{ ...EYEBROW, color: TEXT_MUTED }}>
