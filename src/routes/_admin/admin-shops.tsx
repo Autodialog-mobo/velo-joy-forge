@@ -100,6 +100,7 @@ function AdminShopsPage() {
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [q, setQ] = useState("");
+  const [tab, setTab] = useState<"all" | "static" | "custom">("all");
   const [importing, setImporting] = useState(false);
 
   const { data, isFetching, refetch } = useQuery({
@@ -138,28 +139,33 @@ function AdminShopsPage() {
     [],
   );
 
+  const tabRows = useMemo(
+    () => (tab === "all" ? rows : rows.filter((r) => r.source === tab)),
+    [rows, tab],
+  );
+
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
-    if (!query) return rows;
-    return rows.filter((r) =>
+    if (!query) return tabRows;
+    return tabRows.filter((r) =>
       r.name.toLowerCase().includes(query) ||
       (r.city ?? "").toLowerCase().includes(query) ||
       (r.address ?? "").toLowerCase().includes(query) ||
       (r.country ?? "").toLowerCase().includes(query),
     );
-  }, [rows, q]);
+  }, [tabRows, q]);
 
   const staticCount = rows.filter((r) => r.source === "static").length;
   const customCount = rows.filter((r) => r.source === "custom").length;
 
   function handleExport() {
-    const csv = toCsv(rows);
+    const csv = toCsv(tabRows);
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     const stamp = new Date().toISOString().slice(0, 10);
     a.href = url;
-    a.download = `velopass-shops-${stamp}.csv`;
+    a.download = `velopass-shops-${tab}-${stamp}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -307,8 +313,31 @@ function AdminShopsPage() {
           </div>
         </div>
 
-        <div className="card" style={{ padding: 12, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ position: "relative", flex: 1 }}>
+        <div className="card" style={{ padding: 12, marginBottom: 16, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+          <div style={{ display: "inline-flex", gap: 4, background: "rgba(0,0,0,0.20)", padding: 4, borderRadius: 8 }}>
+            {([
+              { key: "all", label: `Alle (${rows.length})` },
+              { key: "static", label: `Statisch (${staticCount})` },
+              { key: "custom", label: `Aangepast (${customCount})` },
+            ] as const).map((t) => {
+              const active = tab === t.key;
+              return (
+                <button
+                  key={t.key}
+                  onClick={() => setTab(t.key)}
+                  style={{
+                    padding: "6px 12px", borderRadius: 6, fontSize: 12, fontWeight: 600,
+                    border: "none", cursor: "pointer",
+                    background: active ? GREEN : "transparent",
+                    color: active ? NAVY : TEXT_SEC,
+                  }}
+                >
+                  {t.label}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ position: "relative", flex: 1, minWidth: 220 }}>
             <Search size={14} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: TEXT_MUTED }} />
             <input
               type="text"
@@ -318,7 +347,7 @@ function AdminShopsPage() {
             />
           </div>
           <div style={{ fontSize: 12, color: TEXT_SEC }}>
-            {filtered.length} van {rows.length} getoond
+            {filtered.length} van {tabRows.length} getoond
           </div>
         </div>
 
