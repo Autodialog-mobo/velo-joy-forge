@@ -378,6 +378,48 @@ function AdminShopsPage() {
     }
   }
 
+  async function handleSave() {
+    if (!editor) return;
+    const f = editor.form;
+    if (!f.name.trim() || !f.address.trim()) {
+      toast.error("Naam en adres zijn verplicht");
+      return;
+    }
+    const parseNum = (s: string) => {
+      const t = s.trim();
+      if (!t) return null;
+      const n = Number(t.replace(",", "."));
+      return Number.isFinite(n) ? n : null;
+    };
+    setSaving(true);
+    try {
+      const res = await upsertFn({
+        data: {
+          id: editor.id,
+          shop: {
+            shop_id: editor.shopId ?? "",
+            name: f.name.trim(),
+            address: f.address.trim(),
+            city: f.city.trim(),
+            country: f.country.trim(),
+            status: f.status.trim() || "active",
+            brands: f.brands.split(/[|;]/).map((b) => b.trim()).filter(Boolean),
+            lat: parseNum(f.lat),
+            lng: parseNum(f.lng),
+          },
+          staticKeys,
+        },
+      });
+      toast.success(res.mode === "insert" ? `Shop toegevoegd (${res.shop_id})` : "Shop bijgewerkt");
+      setEditor(null);
+      qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
+    } catch (e: any) {
+      toast.error(`Opslaan mislukt: ${e?.message ?? e}`);
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <div style={{ minHeight: "100vh", background: NAVY, color: TEXT_PRI, fontFamily: "ui-sans-serif, system-ui, -apple-system, sans-serif" }}>
       <style>{`
