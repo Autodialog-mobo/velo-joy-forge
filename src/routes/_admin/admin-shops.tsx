@@ -398,6 +398,14 @@ function AdminShopsPage() {
             <button className="btn" onClick={handleExport}>
               <Download size={14} /> Exporteer CSV
             </button>
+            <button
+              className="btn"
+              onClick={handleExportDiff}
+              disabled={!snapshotAt}
+              title={snapshotAt ? `Snapshot: ${new Date(snapshotAt).toLocaleString()}` : "Nog geen snapshot — importeer eerst een CSV"}
+            >
+              <GitCompare size={14} /> Diff CSV
+            </button>
             <input
               ref={fileRef}
               type="file"
