@@ -14,7 +14,7 @@ import { LeafletGestureSupport } from "./LeafletGestureSupport";
 import { ShopPanel } from "./ShopPanel";
 import { trackRegisterBikeClick, trackCheckBikeClick } from "@/lib/analytics";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
-import { useCustomShops } from "@/hooks/useCustomShops";
+import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/hooks/useCustomShops";
 
 
 type Shop = {
