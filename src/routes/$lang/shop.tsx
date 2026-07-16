@@ -64,8 +64,8 @@ function LeasingScanImage() {
     <div
       onClick={() => setZoomed((z) => !z)}
       role="button"
-      aria-label={zoomed ? "Zoom uitzetten" : "Zoom inschakelen"}
-      title={zoomed ? "Klik om te verkleinen" : "Klik om 2× te vergroten"}
+      aria-label={zoomed ? t("leasing.zoomOutTitle") : t("leasing.zoomInTitle")}
+      title={zoomed ? t("leasing.zoomOutTitle") : t("leasing.zoomInTitle")}
       style={{
         display: "flex",
         justifyContent: "center",
