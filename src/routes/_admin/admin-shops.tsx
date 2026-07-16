@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, RefreshCw, Download, Upload, Store, Trash2, Search } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { ArrowLeft, RefreshCw, Download, Upload, Store, Trash2, Search, GitCompare } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import shopsData from "@/data/shops.json";
 import { dedupeShopsByAddress, normalizeAddress } from "@/lib/dedupe-shops";
@@ -42,6 +42,25 @@ type Shop = {
 type Row = Shop & { source: "static" | "custom"; customId?: string; shopId?: string };
 
 const CSV_HEADERS = ["shop_id", "name", "address", "city", "country", "status", "brands", "lat", "lng"];
+const SNAPSHOT_KEY = "velopass-shops-import-snapshot-v1";
+const SNAPSHOT_FIELDS = ["name", "address", "city", "country", "status", "brands", "lat", "lng"] as const;
+type SnapshotShop = {
+  name: string; address: string; city: string; country: string;
+  status: string; brands: string[]; lat: number | null; lng: number | null;
+};
+type SnapshotFile = { _at?: string; shops?: Record<string, SnapshotShop> };
+
+function readSnapshot(): SnapshotFile {
+  try { return JSON.parse(localStorage.getItem(SNAPSHOT_KEY) ?? "{}") || {}; } catch { return {}; }
+}
+function writeSnapshot(next: SnapshotFile) {
+  localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(next));
+}
+function normField(v: any, f: string) {
+  if (f === "brands") return (Array.isArray(v) ? v : []).join("|");
+  if (f === "country") return String(v ?? "").toUpperCase();
+  return v ?? "";
+}
 
 function csvEscape(v: string) {
   if (v == null) return "";
@@ -105,6 +124,14 @@ function AdminShopsPage() {
   const [tab, setTab] = useState<"all" | "static" | "custom">("all");
   const [importing, setImporting] = useState(false);
   const [importReport, setImportReport] = useState<any[] | null>(null);
+  const [snapshotAt, setSnapshotAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(SNAPSHOT_KEY);
+      if (raw) setSnapshotAt(JSON.parse(raw)?._at ?? null);
+    } catch {}
+  }, []);
 
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["admin-shops-custom"],
@@ -163,17 +190,64 @@ function AdminShopsPage() {
   const customCount = rows.filter((r) => r.source === "custom").length;
 
   function handleExport() {
-    const csv = toCsv(tabRows);
+    const stamp = new Date().toISOString().slice(0, 10);
+    downloadCsv(`velopass-shops-${tab}-${stamp}.csv`, toCsv(tabRows));
+  }
+
+
+  function downloadCsv(name: string, csv: string) {
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    const stamp = new Date().toISOString().slice(0, 10);
-    a.href = url;
-    a.download = `velopass-shops-${tab}-${stamp}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  }
+
+  function handleExportDiff() {
+    const snap = readSnapshot();
+    const snapShops = snap.shops ?? {};
+    if (Object.keys(snapShops).length === 0) {
+      toast.error("Geen snapshot beschikbaar — importeer eerst een CSV.");
+      return;
+    }
+    const lines = ["shop_id,name,field,before,after"];
+    let changes = 0;
+    // Current custom rows keyed by shop_id
+    const current = new Map<string, any>();
+    for (const c of customRows) if (c.shop_id) current.set(c.shop_id, c);
+
+    // Rows still present: compare fields.
+    for (const [sid, before] of Object.entries(snapShops)) {
+      const cur = current.get(sid);
+      if (!cur) {
+        lines.push([csvEscape(sid), csvEscape(before.name), "row", "present", "deleted"].join(","));
+        changes++;
+        continue;
+      }
+      for (const f of SNAPSHOT_FIELDS) {
+        const a = normField((before as any)[f], f);
+        const b = normField((cur as any)[f], f);
+        if (String(a) !== String(b)) {
+          lines.push([csvEscape(sid), csvEscape(cur.name), f, csvEscape(String(a)), csvEscape(String(b))].join(","));
+          changes++;
+        }
+      }
+    }
+    // New rows not in snapshot.
+    for (const [sid, cur] of current.entries()) {
+      if (!snapShops[sid]) {
+        lines.push([csvEscape(sid), csvEscape(cur.name), "row", "absent", "added"].join(","));
+        changes++;
+      }
+    }
+    if (changes === 0) {
+      toast.success("Geen wijzigingen t.o.v. laatste snapshot.");
+      return;
+    }
+    const stamp = new Date().toISOString().slice(0, 10);
+    downloadCsv(`velopass-shops-diff-${stamp}.csv`, lines.join("\n"));
+    toast.success(`${changes} wijziging(en) geëxporteerd.`);
   }
 
   async function handleImport(file: File) {
@@ -245,6 +319,27 @@ function AdminShopsPage() {
         toast.error(`${res.errors.length} rij(en) met fouten`);
       }
       setImportReport(res.results ?? []);
+
+      // Merge imported rows into the snapshot (keyed by shop_id).
+      const prev = readSnapshot();
+      const shops = { ...(prev.shops ?? {}) };
+      for (let i = 0; i < (res.results ?? []).length; i++) {
+        const rr: any = res.results[i];
+        if (rr.status === "error" || !rr.shop_id) continue;
+        const src = rowsOut[rr.row - 1];
+        if (!src) continue;
+        shops[rr.shop_id] = {
+          name: src.name, address: src.address,
+          city: src.city ?? "", country: (src.country ?? "").toUpperCase(),
+          status: src.status || "active",
+          brands: src.brands ?? [],
+          lat: src.lat ?? null, lng: src.lng ?? null,
+        };
+      }
+      const stamp = new Date().toISOString();
+      writeSnapshot({ _at: stamp, shops });
+      setSnapshotAt(stamp);
+
       qc.invalidateQueries({ queryKey: ["admin-shops-custom"] });
     } catch (e: any) {
       toast.error(`Import mislukt: ${e?.message ?? e}`);
@@ -302,6 +397,14 @@ function AdminShopsPage() {
             </button>
             <button className="btn" onClick={handleExport}>
               <Download size={14} /> Exporteer CSV
+            </button>
+            <button
+              className="btn"
+              onClick={handleExportDiff}
+              disabled={!snapshotAt}
+              title={snapshotAt ? `Snapshot: ${new Date(snapshotAt).toLocaleString()}` : "Nog geen snapshot — importeer eerst een CSV"}
+            >
+              <GitCompare size={14} /> Diff CSV
             </button>
             <input
               ref={fileRef}
