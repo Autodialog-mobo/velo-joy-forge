@@ -186,6 +186,7 @@ const UpsertInput = z.object({
   id: z.string().uuid().optional(),
   shop: ShopRow,
   staticKeys: z.array(z.string()).optional().default([]),
+  overrideStatic: z.boolean().optional().default(false),
 });
 
 export const upsertCustomShop = createServerFn({ method: "POST" })
@@ -206,6 +207,7 @@ export const upsertCustomShop = createServerFn({ method: "POST" })
       lat: r.lat ?? null,
       lng: r.lng ?? null,
       address_key: key,
+      hidden: false,
     };
 
     if (data.id) {
@@ -215,14 +217,74 @@ export const upsertCustomShop = createServerFn({ method: "POST" })
       return { ok: true as const, id: upd?.id, shop_id: upd?.shop_id, mode: "update" as const };
     }
 
-    const staticSet = new Set(data.staticKeys ?? []);
-    if (staticSet.has(key)) throw new Error("Adres staat al in het statische bestand");
+    // Als er al een aangepaste rij bestaat voor dit adres (bv. van een eerdere override
+    // of een verborgen static), werk die dan bij i.p.v. een duplicate te maken.
     const { data: dup } = await (supabaseAdmin as any)
-      .from("shops_custom").select("id").eq("address_key", key).maybeSingle();
-    if (dup) throw new Error("Adres bestaat al als aangepaste shop");
+      .from("shops_custom").select("id, shop_id").eq("address_key", key).maybeSingle();
+    if (dup) {
+      const { data: upd, error } = await (supabaseAdmin as any)
+        .from("shops_custom").update(payload).eq("id", dup.id).select("id, shop_id").single();
+      if (error) throw new Error(error.message);
+      return { ok: true as const, id: upd?.id, shop_id: upd?.shop_id, mode: "update" as const };
+    }
+
+    // Nieuwe rij: check statisch alleen als expliciet niet overschreven wordt.
+    const staticSet = new Set(data.staticKeys ?? []);
+    if (!data.overrideStatic && staticSet.has(key)) {
+      throw new Error("Adres staat al in het statische bestand");
+    }
 
     const { data: ins, error } = await (supabaseAdmin as any)
       .from("shops_custom").insert(payload).select("id, shop_id").single();
     if (error) throw new Error(error.message);
     return { ok: true as const, id: ins?.id, shop_id: ins?.shop_id, mode: "insert" as const };
   });
+
+// Verbergt een statische shop door een shops_custom-rij met hidden=true toe te voegen
+// (of bestaande rij te markeren). Zowel de admin-lijst als de map filteren hidden rows uit.
+const HideStaticInput = z.object({
+  name: z.string().trim().min(1),
+  address: z.string().trim().min(1),
+  city: z.string().trim().optional().default(""),
+  country: z.string().trim().optional().default(""),
+  lat: z.number().nullish(),
+  lng: z.number().nullish(),
+  brands: z.array(z.string()).optional().default([]),
+});
+
+export const hideStaticShop = createServerFn({ method: "POST" })
+  .middleware([requireAuth0Admin])
+  .inputValidator((d: unknown) => HideStaticInput.parse(d))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const key = normalizeAddress(data.address);
+    if (!key) throw new Error("Ongeldig adres");
+
+    const { data: dup } = await (supabaseAdmin as any)
+      .from("shops_custom").select("id, shop_id").eq("address_key", key).maybeSingle();
+
+    const payload: any = {
+      name: data.name,
+      address: data.address,
+      city: data.city ?? "",
+      country: (data.country ?? "").toUpperCase(),
+      status: "active",
+      brands: data.brands ?? [],
+      lat: data.lat ?? null,
+      lng: data.lng ?? null,
+      address_key: key,
+      hidden: true,
+    };
+
+    if (dup) {
+      const { data: upd, error } = await (supabaseAdmin as any)
+        .from("shops_custom").update({ hidden: true }).eq("id", dup.id).select("id, shop_id").single();
+      if (error) throw new Error(error.message);
+      return { ok: true as const, id: upd?.id, shop_id: upd?.shop_id, mode: "update" as const };
+    }
+    const { data: ins, error } = await (supabaseAdmin as any)
+      .from("shops_custom").insert(payload).select("id, shop_id").single();
+    if (error) throw new Error(error.message);
+    return { ok: true as const, id: ins?.id, shop_id: ins?.shop_id, mode: "insert" as const };
+  });
+
