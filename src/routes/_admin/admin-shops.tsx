@@ -357,6 +357,48 @@ function AdminShopsPage() {
           </div>
         </div>
 
+        {importReport && importReport.length > 0 && (
+          <div className="card" style={{ marginBottom: 16, padding: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+              <div style={{ ...EYEBROW }}>Import-rapport ({importReport.length} rijen)</div>
+              <button className="btn" onClick={() => setImportReport(null)} style={{ padding: "4px 10px", fontSize: 11 }}>Sluit</button>
+            </div>
+            <div style={{ maxHeight: 320, overflowY: "auto", border: `1px solid ${SURFACE_BORDER}`, borderRadius: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "60px 90px 1fr 100px 1fr", gap: 12, padding: "8px 12px", ...EYEBROW, color: TEXT_MUTED, borderBottom: `1px solid ${SURFACE_BORDER}`, position: "sticky", top: 0, background: NAVY }}>
+                <div>Rij</div><div>Status</div><div>Winkel</div><div>shop_id</div><div>Detail</div>
+              </div>
+              {importReport.map((r: any, idx: number) => {
+                const c = r.status === "insert" ? GREEN
+                        : r.status === "update" ? "#5aa3ff"
+                        : r.status === "error" ? RED
+                        : TEXT_MUTED;
+                const label = r.status === "insert" ? "Nieuw"
+                            : r.status === "update" ? "Bijgewerkt"
+                            : r.status === "error" ? "Fout"
+                            : "Overgeslagen";
+                const detail = r.status === "update"
+                  ? `${r.changedFields?.length ?? 0} veld(en): ${(r.changedFields ?? []).join(", ")}`
+                  : r.status === "error"
+                  ? r.message
+                  : r.status === "skip"
+                  ? r.reason
+                  : "";
+                return (
+                  <div key={idx} style={{ display: "grid", gridTemplateColumns: "60px 90px 1fr 100px 1fr", gap: 12, padding: "6px 12px", fontSize: 12, borderBottom: `1px solid ${SURFACE_BORDER}`, alignItems: "center" }}>
+                    <div style={{ color: TEXT_MUTED, fontFamily: "ui-monospace, monospace" }}>{r.row}</div>
+                    <div>
+                      <span className="pill" style={{ background: "transparent", color: c, border: `1px solid ${c}44` }}>{label}</span>
+                    </div>
+                    <div style={{ color: TEXT_PRI, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.name}</div>
+                    <div style={{ color: TEXT_SEC, fontFamily: "ui-monospace, monospace", fontSize: 11 }}>{r.shop_id ?? ""}</div>
+                    <div style={{ color: TEXT_SEC, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{detail}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         <div className="card">
           <div className="row" style={{ ...EYEBROW, color: TEXT_MUTED }}>
             <div>Naam</div>
