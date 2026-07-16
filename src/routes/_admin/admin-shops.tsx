@@ -39,9 +39,9 @@ type Shop = {
   lng: number;
 };
 
-type Row = Shop & { source: "static" | "custom"; customId?: string };
+type Row = Shop & { source: "static" | "custom"; customId?: string; shopId?: string };
 
-const CSV_HEADERS = ["name", "address", "city", "country", "status", "brands", "lat", "lng"];
+const CSV_HEADERS = ["shop_id", "name", "address", "city", "country", "status", "brands", "lat", "lng"];
 
 function csvEscape(v: string) {
   if (v == null) return "";
@@ -54,6 +54,7 @@ function toCsv(rows: Row[]): string {
   const lines = [CSV_HEADERS.join(",")];
   for (const r of rows) {
     lines.push([
+      csvEscape(r.shopId ?? ""),
       csvEscape(r.name),
       csvEscape(r.address),
       csvEscape(r.city),
@@ -66,6 +67,7 @@ function toCsv(rows: Row[]): string {
   }
   return lines.join("\n");
 }
+
 
 // Minimal RFC4180-ish CSV parser (handles quotes, commas, newlines).
 function parseCsv(text: string): string[][] {
