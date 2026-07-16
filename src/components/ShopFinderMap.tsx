@@ -178,8 +178,9 @@ export default function ShopFinderMap() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   const customShops = useCustomShops();
+  const hiddenKeys = useHiddenShopAddressKeys();
   const rawShops = useMemo(
-    () => [...(shopsData as Shop[]), ...customShops.map((c) => ({
+    () => [...filterHiddenStatic(shopsData as Shop[], hiddenKeys), ...customShops.map((c) => ({
       name: c.name,
       address: c.address,
       lat: c.lat ?? 0,
@@ -189,7 +190,7 @@ export default function ShopFinderMap() {
       status: c.status,
       brands: c.brands ?? [],
     } as Shop))],
-    [customShops],
+    [customShops, hiddenKeys],
   );
 
   // Deduplicate by normalized address: prefer the entry with the most brands.
