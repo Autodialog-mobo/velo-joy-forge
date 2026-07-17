@@ -675,9 +675,9 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     if (resultEmittedRef.current) return;
     resultEmittedRef.current = true;
     // Yank the camera stream in the SAME tick as the detection, before any
-    // React re-render or Radix close-animation runs. Otherwise the last
-    // video frame lingers on screen for the exit transition (and, in the
-    // onResult flow, for the full duration of the parent's async lookup).
+    // React re-render or parent lookup runs. In the onResult flow we also
+    // render `null` while closing, so Radix' exit presence cannot keep the
+    // final camera frame on screen.
     stopCameraTracksNow();
     if (onResult) {
       flushSync(() => {
@@ -783,8 +783,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     onOpenChange(false);
   };
 
+  if (closingAfterResult) return null;
+
   return (
-    <Dialog open={open && !closingAfterResult} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
+    <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
       <DialogContent
         className="max-w-md p-0 border-0 overflow-hidden flex flex-col z-[300] [&>button]:hidden"
         style={{ background: "#FFFFFF", borderRadius: 20, maxHeight: "85vh", marginTop: 32 }}
@@ -968,11 +970,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 formats={isFrameMode
                   ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
                   : ["qr_code"]}
-                // Lees op videoframerate zodat een gevonden QR meteen
-                // terugkomt; de dialog sluit direct na de eerste match.
+                // Houd de detectielus snel maar niet op videoframerate: de
+                // polyfill kan anders de main thread blokkeren waardoor het
+                // camerabeeld lijkt te blijven hangen.
                 scanDelay={0}
-                retryDelay={16}
-                settleDelayMs={0}
+                retryDelay={120}
+                settleDelayMs={250}
                 sound={false}
                 constraints={{
                   ...(deviceId
