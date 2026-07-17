@@ -957,7 +957,48 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 background: "#0D1F3C",
               }}
             >
-              {permission === "checking" ? (
+              <Scanner
+                ref={scannerRef}
+                key={scannerKey}
+                onScan={handleScan}
+                onError={handleError}
+                paused={scanPaused}
+                // QR always. In frame mode we ook 1D-barcodes (Code-128/39,
+                // EAN, UPC, ITF, Codabar) zodat de framenummer-sticker direct
+                // gelezen wordt. BarcodeDetector wordt gebruikt waar
+                // ondersteund; anders valt de library terug op zxing-wasm.
+                formats={isFrameMode
+                  ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
+                  : ["qr_code"]}
+                // Lees op videoframerate zodat een gevonden QR meteen
+                // terugkomt; de dialog sluit direct na de eerste match.
+                scanDelay={0}
+                retryDelay={16}
+                settleDelayMs={0}
+                sound={false}
+                constraints={{
+                  ...(deviceId
+                    ? { deviceId: { exact: deviceId } }
+                    : { facingMode: { ideal: facingMode } }),
+                  // 720p houdt frames licht genoeg om snel te detecteren,
+                  // maar blijft scherp genoeg voor Frame-ID QR-codes.
+                  width: { ideal: 1280 },
+                  height: { ideal: 720 },
+                  frameRate: { ideal: 30 },
+                  // Continu scherpstellen / belichten / witbalans — door de
+                  // browser/camera ondersteund waar mogelijk, anders genegeerd.
+                  advanced: ([
+                    { focusMode: "continuous" },
+                    { exposureMode: "continuous" },
+                    { whiteBalanceMode: "continuous" },
+                  ] as unknown) as MediaTrackConstraintSet[],
+
+                }}
+                styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
+                components={{ finder: false }}
+              />
+
+              {permission === "checking" && (
                 <div
                   style={{
                     position: "absolute",
@@ -972,48 +1013,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 >
                   {t("preparing_camera")}
                 </div>
-              ) : (
-                <Scanner
-                  ref={scannerRef}
-                  key={scannerKey}
-                  onScan={handleScan}
-                  onError={handleError}
-                  paused={scanPaused}
-                  // QR always. In frame mode we ook 1D-barcodes (Code-128/39,
-                  // EAN, UPC, ITF, Codabar) zodat de framenummer-sticker direct
-                  // gelezen wordt. BarcodeDetector wordt gebruikt waar
-                  // ondersteund; anders valt de library terug op zxing-wasm.
-                  formats={isFrameMode
-                    ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
-                    : ["qr_code"]}
-                  // Lees op videoframerate zodat een gevonden QR meteen
-                  // terugkomt; de dialog sluit direct na de eerste match.
-                  scanDelay={0}
-                  retryDelay={16}
-                  settleDelayMs={0}
-                  sound={false}
-                  constraints={{
-                    ...(deviceId
-                      ? { deviceId: { exact: deviceId } }
-                      : { facingMode: { ideal: facingMode } }),
-                    // 720p houdt frames licht genoeg om snel te detecteren,
-                    // maar blijft scherp genoeg voor Frame-ID QR-codes.
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 },
-                    frameRate: { ideal: 30 },
-                    // Continu scherpstellen / belichten / witbalans — door de
-                    // browser/camera ondersteund waar mogelijk, anders genegeerd.
-                    advanced: ([
-                      { focusMode: "continuous" },
-                      { exposureMode: "continuous" },
-                      { whiteBalanceMode: "continuous" },
-                    ] as unknown) as MediaTrackConstraintSet[],
-
-                  }}
-                  styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
-                  components={{ finder: false }}
-                />
-
               )}
               {/* Targeting overlay */}
               <div
