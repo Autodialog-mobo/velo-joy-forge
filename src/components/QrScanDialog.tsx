@@ -682,7 +682,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     if (onResult) {
       flushSync(() => {
         setClosingAfterResult(true);
-        setScanPaused(true);
         setActiveLabel(null);
         setTorchSupported(false);
         setTorchOn(false);
@@ -702,7 +701,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     // decoder and hard-stop the video so the result screen doesn't render
     // on top of a still-live camera preview.
     flushSync(() => {
-      setScanPaused(true);
       setActiveLabel(null);
       setTorchSupported(false);
       setTorchOn(false);
