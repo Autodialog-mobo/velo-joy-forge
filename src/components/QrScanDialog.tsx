@@ -783,7 +783,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     onOpenChange(false);
   };
 
-  return (
   if (closingAfterResult) return null;
 
   return (
