@@ -674,14 +674,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const emitResult = (value: string) => {
     if (resultEmittedRef.current) return;
     resultEmittedRef.current = true;
+    // Yank the camera stream in the SAME tick as the detection, before any
+    // React re-render or Radix close-animation runs. Otherwise the last
+    // video frame lingers on screen for the exit transition (and, in the
+    // onResult flow, for the full duration of the parent's async lookup).
+    stopCameraTracksNow();
     if (onResult) {
-      // Close the dialog FIRST (synchronously, in the same tick as the
-      // scan detection) so the Scanner unmounts and the camera track is
-      // stopped immediately. Any async follow-up work the parent kicks
-      // off in onResult (turnstile token, server lookup, …) must not
-      // delay the getUserMedia teardown — otherwise the camera preview
-      // stays on screen for as long as the lookup runs.
-      stopCameraTracksNow();
       flushSync(() => {
         setClosingAfterResult(true);
         setScanPaused(true);
@@ -700,13 +698,24 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       onResult(value);
       return;
     }
-    setResult(value);
+    // Homepage flow: show the confirmation panel, but first pause the
+    // decoder and hard-stop the video so the result screen doesn't render
+    // on top of a still-live camera preview.
+    flushSync(() => {
+      setScanPaused(true);
+      setActiveLabel(null);
+      setTorchSupported(false);
+      setTorchOn(false);
+      setBoostOn(false);
+      setResult(value);
+    });
+    stopCameraTracksNow();
+    window.requestAnimationFrame(stopCameraTracksNow);
   };
 
   const handleScan = (codes: IDetectedBarcode[]) => {
-    if (codes.length > 0) {
-      emitResult(codes[0].rawValue);
-    }
+    if (codes.length === 0 || resultEmittedRef.current) return;
+    emitResult(codes[0].rawValue);
   };
 
   const handleError = (err: unknown) => {
