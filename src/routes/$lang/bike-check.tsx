@@ -614,28 +614,33 @@ function BikeSearchPage() {
   // Reset the "unknown format" hint as soon as the user edits the field.
   useEffect(() => { setUnknownFormat(false); }, [codeA]);
 
+  // Auto-scroll to the result block whenever a result or error is rendered,
+  // for both scan and manual lookups and on every viewport. The small timeout
+  // waits for the status card to paint before measuring.
+  const resultBlockRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!result && !error) return;
+    const timer = setTimeout(() => {
+      resultBlockRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+    return () => clearTimeout(timer);
+  }, [result, error]);
+
   // Spotlight: na een handmatige submit dimmen we de rest van de pagina kort
   // en lichten het resultaatpaneel op. Na QR-scan doen we dit bewust niet:
   // de scan moet onmiddellijk "weg" voelen zodra het resultaat binnenkomt.
   const [spotlight, setSpotlight] = useState(false);
   useEffect(() => {
     if (!(result || error)) return;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
     setSpotlight(lookupSource !== "qr");
     const dismiss = () => setSpotlight(false);
     const tid = setTimeout(dismiss, 1800);
-    // Pas listeners toe ná de scroll-animatie, anders dismisst onze eigen
-    // smooth-scroll het direct via het 'scroll' event.
     const lid = setTimeout(() => {
       window.addEventListener("pointerdown", dismiss, { once: true });
       window.addEventListener("keydown", dismiss, { once: true });
       window.addEventListener("wheel", dismiss, { once: true, passive: true });
       window.addEventListener("touchmove", dismiss, { once: true, passive: true });
-    }, 300);
+    }, 100);
     return () => {
       clearTimeout(tid);
       clearTimeout(lid);
