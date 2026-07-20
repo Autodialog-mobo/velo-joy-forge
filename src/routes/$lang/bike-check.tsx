@@ -1372,14 +1372,14 @@ function BikeSearchPage() {
 
 
         {/* ERROR + RESULT scroll target.
-            scrollMarginTop houdt de top vrij van de sticky nav (mobiel + desktop),
-            zodat scrollIntoView({block:"start"}) NOOIT het bovenste stuk van het
-            resultaat onder de nav verbergt. zIndex + transition geven het paneel
-            extra prominentie zodra `spotlight` aanstaat. */}
+            scrollMarginTop (~80px) houdt de top vrij van de sticky nav (mobiel +
+            desktop), zodat scrollIntoView({block:"start"}) NOOIT het bovenste
+            stuk van het resultaat onder de nav verbergt. zIndex + transition
+            geven het paneel extra prominentie zodra `spotlight` aanstaat. */}
         <div
-          ref={resultRef}
+          ref={resultBlockRef}
           style={{
-            scrollMarginTop: "calc(env(safe-area-inset-top, 0px) + 96px)",
+            scrollMarginTop: "calc(env(safe-area-inset-top, 0px) + 80px)",
             position: "relative",
             zIndex: spotlight ? 60 : "auto",
             transition: "transform 240ms ease, filter 240ms ease",
