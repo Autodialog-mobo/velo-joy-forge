@@ -725,8 +725,24 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const emitResult = (value: string) => {
     if (resultEmittedRef.current) return;
     resultEmittedRef.current = true;
+    // 1) Freeze the decoded value in a local so unmount cannot lose it.
+    const decoded = value;
+    // eslint-disable-next-line no-console
+    console.log("[QR-DEBUG] emitResult decoded:", decoded);
+    // 2) Stop tracks (best-effort — never throws).
     stopCameraTracksNow();
     if (onResult) {
+      // 3) Deliver the result to the PARENT FIRST, before we unmount the
+      //    dialog. This guarantees the parent's state update (runCheck /
+      //    setUnknownFormat) is scheduled even if our own unmount path
+      //    throws or is interrupted.
+      try {
+        onResult(decoded);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("[QR-DEBUG] onResult threw:", err);
+      }
+      // 4) THEN close + unmount the scanner dialog.
       flushSync(() => {
         setClosingAfterResult(true);
         setActiveLabel(null);
@@ -741,7 +757,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       });
       stopCameraTracksNow();
       window.requestAnimationFrame(stopCameraTracksNow);
-      onResult(value);
       return;
     }
     flushSync(() => {
@@ -749,7 +764,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       setTorchSupported(false);
       setTorchOn(false);
       setBoostOn(false);
-      setResult(value);
+      setResult(decoded);
     });
     stopCameraTracksNow();
     window.requestAnimationFrame(stopCameraTracksNow);
