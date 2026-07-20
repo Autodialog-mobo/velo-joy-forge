@@ -704,10 +704,14 @@ function BikeSearchPage() {
   };
 
   const handleScanResult = (raw: string) => {
+    // eslint-disable-next-line no-console
+    console.log("[QR-DEBUG] handleScanResult received:", raw);
     // Route QR content through the URL/pattern registry. The scanned URL
     // is NEVER opened or followed — we only extract the identifier and
     // hand it to the same server lookup as manual input.
     const extracted = extractCodeFromQr(raw);
+    // eslint-disable-next-line no-console
+    console.log("[QR-DEBUG] extractCodeFromQr →", extracted);
     if (extracted) {
       setUnknownFormat(false);
       setCodeA(extracted);
