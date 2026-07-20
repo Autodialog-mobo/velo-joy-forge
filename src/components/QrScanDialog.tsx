@@ -970,12 +970,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 formats={isFrameMode
                   ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
                   : ["qr_code"]}
-                // Houd de detectielus snel maar niet op videoframerate: de
-                // polyfill kan anders de main thread blokkeren waardoor het
-                // camerabeeld lijkt te blijven hangen.
+                // Snelle detectielus. Het "hangende beeld" na een scan
+                // wordt niet opgelost door retryDelay te verhogen, maar door
+                // de scanner direct te unmounten (`closingAfterResult`) +
+                // de tracks synchroon te stoppen in `emitResult`. Hou hier
+                // dus de originele lage waardes aan zodat detectie snappy
+                // voelt zoals voordien.
                 scanDelay={0}
-                retryDelay={120}
-                settleDelayMs={250}
+                retryDelay={30}
                 sound={false}
                 constraints={{
                   ...(deviceId
