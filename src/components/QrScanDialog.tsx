@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Scanner, type IDetectedBarcode, type IScannerHandle } from "@yudiel/react-qr-scanner";
-import { BarcodeDetector as PonyfillBarcodeDetector } from "barcode-detector/ponyfill";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
 
