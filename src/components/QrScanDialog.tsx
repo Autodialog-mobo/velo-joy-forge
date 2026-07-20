@@ -521,8 +521,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   }, [open, manual, scannerKey, deviceId, facingMode, closingAfterResult]);
 
   // [TEMP DEBUG] Log de daadwerkelijke resolutie/frameRate die het device
-  // levert. Dit bewijst runtime of onze 1920×1080 constraints effectief
-  // aankomen bij getUserMedia, of dat de lib op zijn eigen default draait.
+  // levert. Volledig defensief: alles in try/catch zodat een falende
+  // getSettings/getCapabilities-call de scanner-mount nooit kan breken.
   useEffect(() => {
     if (!open || manual || closingAfterResult) return;
     let stopped = false;
@@ -530,36 +530,45 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     let pollId: number | null = null;
     const tick = () => {
       if (stopped) return;
-      const root = document.querySelector("[data-qr-scanner-root]");
-      const video = root?.querySelector("video") as HTMLVideoElement | null;
-      const stream = video?.srcObject as MediaStream | null;
-      const track = stream?.getVideoTracks?.()[0];
-      if (track && track.readyState === "live") {
-        const settings = track.getSettings?.() ?? {};
-        const caps = track.getCapabilities?.() ?? {};
+      try {
+        const root = document.querySelector("[data-qr-scanner-root]");
+        const video = root?.querySelector("video") as HTMLVideoElement | null;
+        const stream = (video?.srcObject as MediaStream | null) ?? null;
+        const track = stream && typeof stream.getVideoTracks === "function"
+          ? stream.getVideoTracks()[0]
+          : null;
+        if (track && track.readyState === "live") {
+          const settings = (typeof track.getSettings === "function" ? track.getSettings() : {}) as MediaTrackSettings;
+          const caps = (typeof track.getCapabilities === "function" ? track.getCapabilities() : {}) as MediaTrackCapabilities;
+          // eslint-disable-next-line no-console
+          console.log("[QR-DEBUG] active track settings:", {
+            width: settings.width,
+            height: settings.height,
+            frameRate: settings.frameRate,
+            facingMode: settings.facingMode,
+            deviceId: settings.deviceId,
+            videoElement: { videoWidth: video?.videoWidth, videoHeight: video?.videoHeight },
+            capsMaxW: caps.width,
+            capsMaxH: caps.height,
+          });
+          return;
+        }
+      } catch (err) {
         // eslint-disable-next-line no-console
-        console.log("[QR-DEBUG] active track settings:", {
-          width: (settings as MediaTrackSettings).width,
-          height: (settings as MediaTrackSettings).height,
-          frameRate: (settings as MediaTrackSettings).frameRate,
-          facingMode: (settings as MediaTrackSettings).facingMode,
-          deviceId: (settings as MediaTrackSettings).deviceId,
-          videoElement: { videoWidth: video?.videoWidth, videoHeight: video?.videoHeight },
-          capsMaxW: (caps as MediaTrackCapabilities).width,
-          capsMaxH: (caps as MediaTrackCapabilities).height,
-        });
+        console.warn("[QR-DEBUG] settings probe failed:", err);
         return;
       }
       attempts += 1;
       if (attempts < 20) pollId = window.setTimeout(tick, 200);
     };
-    const t = window.setTimeout(tick, 400);
+    const probeTimer = window.setTimeout(tick, 400);
     return () => {
       stopped = true;
-      clearTimeout(t);
+      clearTimeout(probeTimer);
       if (pollId !== null) clearTimeout(pollId);
     };
   }, [open, manual, scannerKey, deviceId, facingMode, closingAfterResult]);
+
 
   const toggleTorch = async () => {
     // Re-resolve the live track from the DOM every time. The <Scanner />
