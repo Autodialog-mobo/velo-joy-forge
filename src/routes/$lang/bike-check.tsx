@@ -1647,7 +1647,6 @@ function BikeSearchPage() {
               <Search size={20} color="#5A7090" />
               <span style={statusBadgeStyle("#F1F5F9")}>{t("status_cards.not_registered.badge")}</span>
             </div>
-            <h3 style={statusTitleStyle}>{t("status_cards.not_registered.title")}</h3>
             <p style={statusBodyStyle}>
               {t("status_cards.not_registered.body")}
             </p>
