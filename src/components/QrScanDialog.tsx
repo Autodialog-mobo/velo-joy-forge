@@ -520,54 +520,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     };
   }, [open, manual, scannerKey, deviceId, facingMode, closingAfterResult]);
 
-  // [TEMP DEBUG] Log de daadwerkelijke resolutie/frameRate die het device
-  // levert. Volledig defensief: alles in try/catch zodat een falende
-  // getSettings/getCapabilities-call de scanner-mount nooit kan breken.
-  useEffect(() => {
-    if (!open || manual || closingAfterResult) return;
-    let stopped = false;
-    let attempts = 0;
-    let pollId: number | null = null;
-    const tick = () => {
-      if (stopped) return;
-      try {
-        const root = document.querySelector("[data-qr-scanner-root]");
-        const video = root?.querySelector("video") as HTMLVideoElement | null;
-        const stream = (video?.srcObject as MediaStream | null) ?? null;
-        const track = stream && typeof stream.getVideoTracks === "function"
-          ? stream.getVideoTracks()[0]
-          : null;
-        if (track && track.readyState === "live") {
-          const settings = (typeof track.getSettings === "function" ? track.getSettings() : {}) as MediaTrackSettings;
-          const caps = (typeof track.getCapabilities === "function" ? track.getCapabilities() : {}) as MediaTrackCapabilities;
-          // eslint-disable-next-line no-console
-          console.log("[QR-DEBUG] active track settings:", {
-            width: settings.width,
-            height: settings.height,
-            frameRate: settings.frameRate,
-            facingMode: settings.facingMode,
-            deviceId: settings.deviceId,
-            videoElement: { videoWidth: video?.videoWidth, videoHeight: video?.videoHeight },
-            capsMaxW: caps.width,
-            capsMaxH: caps.height,
-          });
-          return;
-        }
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.warn("[QR-DEBUG] settings probe failed:", err);
-        return;
-      }
-      attempts += 1;
-      if (attempts < 20) pollId = window.setTimeout(tick, 200);
-    };
-    const probeTimer = window.setTimeout(tick, 400);
-    return () => {
-      stopped = true;
-      clearTimeout(probeTimer);
-      if (pollId !== null) clearTimeout(pollId);
-    };
-  }, [open, manual, scannerKey, deviceId, facingMode, closingAfterResult]);
+
+
 
 
   const toggleTorch = async () => {
@@ -725,47 +679,34 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const emitResult = (value: string) => {
     if (resultEmittedRef.current) return;
     resultEmittedRef.current = true;
-    // 1) Freeze the decoded value in a local so unmount cannot lose it.
     const decoded = value;
     // eslint-disable-next-line no-console
     console.log("[QR-DEBUG] emitResult decoded:", decoded);
-    // 2) Stop tracks (best-effort — never throws).
-    stopCameraTracksNow();
     if (onResult) {
-      // 3) Deliver the result to the PARENT FIRST, before we unmount the
-      //    dialog. This guarantees the parent's state update (runCheck /
-      //    setUnknownFormat) is scheduled even if our own unmount path
-      //    throws or is interrupted.
+      // 1) Deliver to the parent FIRST — synchronously, no flushSync,
+      //    no state races. Parent's setState calls are scheduled normally.
       try {
         onResult(decoded);
       } catch (err) {
         // eslint-disable-next-line no-console
         console.error("[QR-DEBUG] onResult threw:", err);
       }
-      // 4) THEN close + unmount the scanner dialog.
-      flushSync(() => {
-        setClosingAfterResult(true);
-        setActiveLabel(null);
-        setTorchSupported(false);
-        setTorchOn(false);
-        setBoostOn(false);
-        setResult(null);
-        setCameraError(null);
-        setManual(false);
-        setManualCode("");
-        onOpenChange(false);
-      });
+      // 2) Stop camera tracks + close the dialog via the normal path so
+      //    Radix animations run and state isn't torn down mid-render.
       stopCameraTracksNow();
-      window.requestAnimationFrame(stopCameraTracksNow);
-      return;
-    }
-    flushSync(() => {
       setActiveLabel(null);
       setTorchSupported(false);
       setTorchOn(false);
       setBoostOn(false);
-      setResult(decoded);
-    });
+      onOpenChange(false);
+      window.requestAnimationFrame(stopCameraTracksNow);
+      return;
+    }
+    setActiveLabel(null);
+    setTorchSupported(false);
+    setTorchOn(false);
+    setBoostOn(false);
+    setResult(decoded);
     stopCameraTracksNow();
     window.requestAnimationFrame(stopCameraTracksNow);
   };
@@ -851,7 +792,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     onOpenChange(false);
   };
 
-  if (closingAfterResult) return null;
+  
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
