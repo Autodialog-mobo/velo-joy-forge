@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
-import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
+import { Scanner, type IDetectedBarcode, type IScannerHandle } from "@yudiel/react-qr-scanner";
 import { BarcodeDetector as PonyfillBarcodeDetector } from "barcode-detector/ponyfill";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
@@ -234,6 +235,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // tears down any previous MediaStream/track and starts a clean
   // getUserMedia attempt. Used on "Opnieuw proberen".
   const [scannerKey, setScannerKey] = useState(0);
+  // On a successful scan we hard-stop camera tracks and hide the scanner
+  // immediately. Parent-side lookup/routing must never keep the video layer
+  // visible after the decoder produced a value.
+  const [closingAfterResult, setClosingAfterResult] = useState(false);
+  const resultEmittedRef = useRef(false);
+  const scannerRef = useRef<IScannerHandle | null>(null);
   // Torch / zaklamp: alleen ondersteund op telefoons met een back-camera
   // die `MediaStreamTrack.getCapabilities().torch` rapporteert (vooral
   // Chrome/Edge op Android). iOS Safari ondersteunt dit niet.
@@ -298,7 +305,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
-    if (open) setManual(initialManual);
+    if (open) {
+      resultEmittedRef.current = false;
+      setClosingAfterResult(false);
+      setScanPaused(false);
+      setManual(initialManual);
+    }
   }, [open, initialManual]);
 
   // When the dialog opens for camera scanning, peek at the Permissions API
@@ -307,7 +319,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // owns that lifecycle. Pre-warming a second stream caused
   // NotReadableError ("camera in use") on some setups.
   useEffect(() => {
-    if (!open || manual) return;
+    if (!open || manual || closingAfterResult) return;
     let cancelled = false;
     setPermission("checking");
     void (async () => {
@@ -339,14 +351,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => {
       cancelled = true;
     };
-  }, [open, manual, deviceId]);
+  }, [open, manual, deviceId, closingAfterResult]);
 
   // Labels van enumerateDevices zijn pas zichtbaar nadat de scanner
   // permissie heeft gekregen. Luister op `devicechange` (vuurt ook na de
   // eerste grant) en her-enumerate, zodat het selectiemenu de echte
   // cameranamen toont in plaats van "Camera 1/2".
   useEffect(() => {
-    if (!open || manual) return;
+    if (!open || manual || closingAfterResult) return;
     if (typeof navigator === "undefined" || !navigator.mediaDevices?.addEventListener) return;
     const onChange = async () => {
       try {
@@ -363,13 +375,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => {
       navigator.mediaDevices.removeEventListener("devicechange", onChange);
     };
-  }, [open, manual]);
+  }, [open, manual, closingAfterResult]);
 
   // Na elke (re)mount van de scanner: even wachten op de
   // getUserMedia-grant en dan de labels opnieuw inlezen. Zonder grant
   // geeft enumerateDevices lege labels terug.
   useEffect(() => {
-    if (!open || manual) return;
+    if (!open || manual || closingAfterResult) return;
     const t = setTimeout(async () => {
       try {
         const devices = await navigator.mediaDevices?.enumerateDevices?.();
@@ -383,13 +395,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       }
     }, 800);
     return () => clearTimeout(t);
-  }, [open, manual, scannerKey]);
+  }, [open, manual, scannerKey, closingAfterResult]);
 
   // Lees het label van de actieve videotrack uit het door de Scanner
   // gerenderde <video>-element. We pollen een paar keer omdat het stream-
   // object pas na getUserMedia-resolve gekoppeld wordt.
   useEffect(() => {
-    if (!open || manual) {
+    if (!open || manual || closingAfterResult) {
       setActiveLabel(null);
       return;
     }
@@ -413,12 +425,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       stopped = true;
       clearTimeout(t);
     };
-  }, [open, manual, scannerKey]);
+  }, [open, manual, scannerKey, closingAfterResult]);
 
   // Detecteer of de actieve videotrack een torch (zaklamp) ondersteunt.
   // Pollen omdat het stream-object pas na getUserMedia-resolve beschikbaar is.
   useEffect(() => {
-    if (!open || manual) {
+    if (!open || manual || closingAfterResult) {
       setTorchSupported(false);
       setTorchOn(false);
       setTorchFlash(null);
@@ -506,7 +518,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         torchFlashTimerRef.current = null;
       }
     };
-  }, [open, manual, scannerKey, deviceId, facingMode]);
+  }, [open, manual, scannerKey, deviceId, facingMode, closingAfterResult]);
 
   const toggleTorch = async () => {
     // Re-resolve the live track from the DOM every time. The <Scanner />
@@ -621,21 +633,80 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
 
+  // Immediately stop every active videotrack the Scanner has attached.
+  // Radix/Dialog close animations and parent async lookups must not keep
+  // a live camera preview or the last frame visible after a successful decode.
+  const stopCameraTracksNow = () => {
+    if (typeof document === "undefined") return;
+    try {
+      const activeStream = scannerRef.current?.getStream?.() ?? null;
+      activeStream?.getTracks?.().forEach((track) => {
+        try { track.stop(); } catch { /* ignore */ }
+      });
+
+      const activeVideo = scannerRef.current?.getVideoElement?.() ?? null;
+      if (activeVideo) {
+        try { activeVideo.pause(); } catch { /* ignore */ }
+        try { activeVideo.srcObject = null; } catch { /* ignore */ }
+        activeVideo.removeAttribute("src");
+        try { activeVideo.load(); } catch { /* ignore */ }
+      }
+
+      const root = document.querySelector("[data-qr-scanner-root]");
+      const videos = [
+        ...Array.from(root?.querySelectorAll("video") ?? []),
+        ...Array.from(document.querySelectorAll("video")),
+      ] as HTMLVideoElement[];
+      for (const video of videos) {
+        const stream = video.srcObject as MediaStream | null;
+        stream?.getTracks?.().forEach((track) => {
+          try { track.stop(); } catch { /* ignore */ }
+        });
+        try { video.pause(); } catch { /* ignore */ }
+        try { video.srcObject = null; } catch { /* ignore */ }
+        video.removeAttribute("src");
+        try { video.load(); } catch { /* ignore */ }
+      }
+    } catch {
+      /* best-effort — Scanner unmount will finish cleanup */
+    }
+  };
+
   const emitResult = (value: string) => {
+    if (resultEmittedRef.current) return;
+    resultEmittedRef.current = true;
+    stopCameraTracksNow();
     if (onResult) {
+      flushSync(() => {
+        setClosingAfterResult(true);
+        setActiveLabel(null);
+        setTorchSupported(false);
+        setTorchOn(false);
+        setBoostOn(false);
+        setResult(null);
+        setCameraError(null);
+        setManual(false);
+        setManualCode("");
+        onOpenChange(false);
+      });
+      stopCameraTracksNow();
+      window.requestAnimationFrame(stopCameraTracksNow);
       onResult(value);
-      setResult(null);
-      setCameraError(null);
-      setManual(false);
-      setManualCode("");
-      onOpenChange(false);
       return;
     }
-    setResult(value);
+    flushSync(() => {
+      setActiveLabel(null);
+      setTorchSupported(false);
+      setTorchOn(false);
+      setBoostOn(false);
+      setResult(value);
+    });
+    stopCameraTracksNow();
+    window.requestAnimationFrame(stopCameraTracksNow);
   };
 
   const handleScan = (codes: IDetectedBarcode[]) => {
-    if (codes.length > 0) {
+    if (codes.length > 0 && !resultEmittedRef.current) {
       emitResult(codes[0].rawValue);
     }
   };
@@ -663,7 +734,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   const invertEmittedRef = useRef(false);
   useEffect(() => {
     invertEmittedRef.current = false;
-    if (!open || manual || cameraError || result !== null) return;
+    if (!open || manual || cameraError || result !== null || closingAfterResult) return;
     if (permission !== "granted" && permission !== "prompt") return;
     if (typeof window === "undefined") return;
 
@@ -682,7 +753,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     let timerId: number | null = null;
 
     const runOnce = async () => {
-      if (cancelled || invertEmittedRef.current || scanPaused) return;
+      if (cancelled || invertEmittedRef.current || resultEmittedRef.current || scanPaused) return;
       const root = document.querySelector("[data-qr-scanner-root]");
       const video = root?.querySelector("video") as HTMLVideoElement | null;
       if (!video || video.readyState < 2 || !video.videoWidth) return;
@@ -729,7 +800,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       if (timerId !== null) window.clearTimeout(timerId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, manual, cameraError, result, permission, scannerKey, scanPaused]);
+  }, [open, manual, cameraError, result, permission, scannerKey, scanPaused, closingAfterResult]);
 
 
   const handleError = (err: unknown) => {
@@ -783,6 +854,10 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
   const reset = () => {
+    resultEmittedRef.current = false;
+    setClosingAfterResult(false);
+    setScanPaused(false);
+    stopCameraTracksNow();
     setResult(null);
     setCameraError(null);
     setManual(false);
@@ -794,6 +869,8 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     reset();
     onOpenChange(false);
   };
+
+  if (closingAfterResult) return null;
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
@@ -956,7 +1033,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             );
           })()}
 
-          {!result && !cameraError && !manual && permission !== "denied" && (
+          {!result && !cameraError && !manual && permission !== "denied" && !closingAfterResult && (
             <div
               data-qr-scanner-root
               style={{
@@ -984,6 +1061,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 </div>
               ) : (
                 <Scanner
+                  ref={scannerRef}
                   key={scannerKey}
                   onScan={handleScan}
                   onError={handleError}
