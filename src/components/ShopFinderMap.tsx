@@ -180,16 +180,21 @@ export default function ShopFinderMap() {
   const customShops = useCustomShops();
   const hiddenKeys = useHiddenShopAddressKeys();
   const rawShops = useMemo(
-    () => [...filterHiddenStatic(shopsData as Shop[], hiddenKeys), ...customShops.map((c) => ({
-      name: c.name,
-      address: c.address,
-      lat: c.lat ?? 0,
-      lng: c.lng ?? 0,
-      city: c.city ?? "",
-      country: c.country ?? "",
-      status: c.status,
-      brands: c.brands ?? [],
-    } as Shop))],
+    () => [
+      ...filterHiddenStatic(shopsData as Shop[], hiddenKeys),
+      ...customShops
+        .filter((c) => typeof c.lat === "number" && typeof c.lng === "number" && !(c.lat === 0 && c.lng === 0))
+        .map((c) => ({
+          name: c.name,
+          address: c.address,
+          lat: c.lat as number,
+          lng: c.lng as number,
+          city: c.city ?? "",
+          country: c.country ?? "",
+          status: c.status,
+          brands: c.brands ?? [],
+        } as Shop)),
+    ],
     [customShops, hiddenKeys],
   );
 

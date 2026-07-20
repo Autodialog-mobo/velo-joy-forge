@@ -77,15 +77,17 @@ export default function ProCommunityMap() {
   const shops = useMemo(
     () => dedupeShopsByAddress([
       ...filterHiddenStatic(shopsData as Shop[], hiddenKeys),
-      ...customShops.map((c) => ({
-        name: c.name,
-        address: c.address,
-        lat: c.lat ?? 0,
-        lng: c.lng ?? 0,
-        city: c.city ?? "",
-        country: c.country ?? "",
-        status: c.status,
-      } as Shop)),
+      ...customShops
+        .filter((c) => typeof c.lat === "number" && typeof c.lng === "number" && !(c.lat === 0 && c.lng === 0))
+        .map((c) => ({
+          name: c.name,
+          address: c.address,
+          lat: c.lat as number,
+          lng: c.lng as number,
+          city: c.city ?? "",
+          country: c.country ?? "",
+          status: c.status,
+        } as Shop)),
     ]) as Shop[],
     [customShops, hiddenKeys],
   );
