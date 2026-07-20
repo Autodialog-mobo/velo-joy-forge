@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
-import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
-import { Scanner, type IDetectedBarcode, type IScannerHandle } from "@yudiel/react-qr-scanner";
+import { Scanner, type IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
 
@@ -251,12 +250,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // exposureCompensation/brightness/contrast via track-constraints.
   const [boostOn, setBoostOn] = useState(false);
   const [boostHint, setBoostHint] = useState(false);
-  // Zodra een QR/barcode gelezen is, verbergen/pauzeren we de scanner
-  // onmiddellijk. Wachten op de controlled Dialog-close of parent lookup
-  // laat de camera op sommige browsers nog zichtbaar doorlopen.
-  const [closingAfterResult, setClosingAfterResult] = useState(false);
-  const resultEmittedRef = useRef(false);
-  const scannerRef = useRef<IScannerHandle | null>(null);
   // Which camera to use. "environment" = achterzijde (standaard, beste voor
   // QR-scans op telefoon/tablet); "user" = front-facing (laptops, selfie-cam).
   // Tablets met meerdere camera's krijgen een wisselknop in beeld.
@@ -304,12 +297,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
 
   // Sync when dialog opens with a different initial mode
   useEffect(() => {
-    if (open) {
-      resultEmittedRef.current = false;
-      setClosingAfterResult(false);
-      setScanPaused(false);
-      setManual(initialManual);
-    }
+    if (open) setManual(initialManual);
   }, [open, initialManual]);
 
   // When the dialog opens for camera scanning, peek at the Permissions API
@@ -318,7 +306,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   // owns that lifecycle. Pre-warming a second stream caused
   // NotReadableError ("camera in use") on some setups.
   useEffect(() => {
-    if (!open || manual || closingAfterResult) return;
+    if (!open || manual) return;
     let cancelled = false;
     setPermission("checking");
     void (async () => {
@@ -350,14 +338,14 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => {
       cancelled = true;
     };
-  }, [open, manual, deviceId, closingAfterResult]);
+  }, [open, manual, deviceId]);
 
   // Labels van enumerateDevices zijn pas zichtbaar nadat de scanner
   // permissie heeft gekregen. Luister op `devicechange` (vuurt ook na de
   // eerste grant) en her-enumerate, zodat het selectiemenu de echte
   // cameranamen toont in plaats van "Camera 1/2".
   useEffect(() => {
-    if (!open || manual || closingAfterResult) return;
+    if (!open || manual) return;
     if (typeof navigator === "undefined" || !navigator.mediaDevices?.addEventListener) return;
     const onChange = async () => {
       try {
@@ -374,13 +362,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     return () => {
       navigator.mediaDevices.removeEventListener("devicechange", onChange);
     };
-  }, [open, manual, closingAfterResult]);
+  }, [open, manual]);
 
   // Na elke (re)mount van de scanner: even wachten op de
   // getUserMedia-grant en dan de labels opnieuw inlezen. Zonder grant
   // geeft enumerateDevices lege labels terug.
   useEffect(() => {
-    if (!open || manual || closingAfterResult) return;
+    if (!open || manual) return;
     const t = setTimeout(async () => {
       try {
         const devices = await navigator.mediaDevices?.enumerateDevices?.();
@@ -394,13 +382,13 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       }
     }, 800);
     return () => clearTimeout(t);
-  }, [open, manual, scannerKey, closingAfterResult]);
+  }, [open, manual, scannerKey]);
 
   // Lees het label van de actieve videotrack uit het door de Scanner
   // gerenderde <video>-element. We pollen een paar keer omdat het stream-
   // object pas na getUserMedia-resolve gekoppeld wordt.
   useEffect(() => {
-    if (!open || manual || closingAfterResult) {
+    if (!open || manual) {
       setActiveLabel(null);
       return;
     }
@@ -424,12 +412,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
       stopped = true;
       clearTimeout(t);
     };
-  }, [open, manual, scannerKey, closingAfterResult]);
+  }, [open, manual, scannerKey]);
 
   // Detecteer of de actieve videotrack een torch (zaklamp) ondersteunt.
   // Pollen omdat het stream-object pas na getUserMedia-resolve beschikbaar is.
   useEffect(() => {
-    if (!open || manual || closingAfterResult) {
+    if (!open || manual) {
       setTorchSupported(false);
       setTorchOn(false);
       setTorchFlash(null);
@@ -517,7 +505,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
         torchFlashTimerRef.current = null;
       }
     };
-  }, [open, manual, scannerKey, deviceId, facingMode, closingAfterResult]);
+  }, [open, manual, scannerKey, deviceId, facingMode]);
 
   const toggleTorch = async () => {
     // Re-resolve the live track from the DOM every time. The <Scanner />
@@ -632,88 +620,23 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
 
-  // Immediately stop every active videotrack the Scanner has attached.
-  // Radix Dialog delays the actual unmount for its close animation, so
-  // relying on the Scanner's own cleanup means the camera preview keeps
-  // running for the full exit transition. Yanking the tracks here makes
-  // the video freeze/black out in the same tick as the scan.
-  const stopCameraTracksNow = () => {
-    if (typeof document === "undefined") return;
-    try {
-      const activeStream = scannerRef.current?.getStream?.() ?? null;
-      activeStream?.getTracks?.().forEach((track) => {
-        try { track.stop(); } catch { /* ignore */ }
-      });
-      const activeVideo = scannerRef.current?.getVideoElement?.() ?? null;
-      if (activeVideo) {
-        try { activeVideo.pause(); } catch { /* ignore */ }
-        try { activeVideo.srcObject = null; } catch { /* ignore */ }
-        activeVideo.removeAttribute("src");
-        try { activeVideo.load(); } catch { /* ignore */ }
-      }
-      const root = document.querySelector("[data-qr-scanner-root]");
-      const videos = [
-        ...Array.from(root?.querySelectorAll("video") ?? []),
-        ...Array.from(document.querySelectorAll("video")),
-      ] as HTMLVideoElement[];
-      for (const video of videos) {
-        const stream = video.srcObject as MediaStream | null;
-        stream?.getTracks?.().forEach((track) => {
-          try { track.stop(); } catch { /* ignore */ }
-        });
-        try { video.pause(); } catch { /* ignore */ }
-        try { video.srcObject = null; } catch { /* ignore */ }
-        video.removeAttribute("src");
-        try { video.load(); } catch { /* ignore */ }
-      }
-    } catch {
-      /* best-effort — Scanner unmount will finish the job */
-    }
-  };
-
   const emitResult = (value: string) => {
-    if (resultEmittedRef.current) return;
-    resultEmittedRef.current = true;
-    // Yank the camera stream in the SAME tick as the detection, before any
-    // React re-render or parent lookup runs. In the onResult flow we also
-    // render `null` while closing, so Radix' exit presence cannot keep the
-    // final camera frame on screen.
-    stopCameraTracksNow();
     if (onResult) {
-      flushSync(() => {
-        setClosingAfterResult(true);
-        setActiveLabel(null);
-        setTorchSupported(false);
-        setTorchOn(false);
-        setBoostOn(false);
-        setResult(null);
-        setCameraError(null);
-        setManual(false);
-        setManualCode("");
-        onOpenChange(false);
-      });
-      stopCameraTracksNow();
-      window.requestAnimationFrame(stopCameraTracksNow);
       onResult(value);
+      setResult(null);
+      setCameraError(null);
+      setManual(false);
+      setManualCode("");
+      onOpenChange(false);
       return;
     }
-    // Homepage flow: show the confirmation panel, but first pause the
-    // decoder and hard-stop the video so the result screen doesn't render
-    // on top of a still-live camera preview.
-    flushSync(() => {
-      setActiveLabel(null);
-      setTorchSupported(false);
-      setTorchOn(false);
-      setBoostOn(false);
-      setResult(value);
-    });
-    stopCameraTracksNow();
-    window.requestAnimationFrame(stopCameraTracksNow);
+    setResult(value);
   };
 
   const handleScan = (codes: IDetectedBarcode[]) => {
-    if (codes.length === 0 || resultEmittedRef.current) return;
-    emitResult(codes[0].rawValue);
+    if (codes.length > 0) {
+      emitResult(codes[0].rawValue);
+    }
   };
 
   const handleError = (err: unknown) => {
@@ -767,10 +690,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
   };
 
   const reset = () => {
-    resultEmittedRef.current = false;
-    setClosingAfterResult(false);
-    setScanPaused(false);
-    stopCameraTracksNow();
     setResult(null);
     setCameraError(null);
     setManual(false);
@@ -782,8 +701,6 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     reset();
     onOpenChange(false);
   };
-
-  if (closingAfterResult) return null;
 
   return (
     <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
@@ -946,7 +863,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
             );
           })()}
 
-          {!result && !cameraError && !manual && permission !== "denied" && !closingAfterResult && (
+          {!result && !cameraError && !manual && permission !== "denied" && (
             <div
               data-qr-scanner-root
               style={{
@@ -957,51 +874,7 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 background: "#0D1F3C",
               }}
             >
-              <Scanner
-                ref={scannerRef}
-                key={scannerKey}
-                onScan={handleScan}
-                onError={handleError}
-                paused={scanPaused}
-                // QR always. In frame mode we ook 1D-barcodes (Code-128/39,
-                // EAN, UPC, ITF, Codabar) zodat de framenummer-sticker direct
-                // gelezen wordt. BarcodeDetector wordt gebruikt waar
-                // ondersteund; anders valt de library terug op zxing-wasm.
-                formats={isFrameMode
-                  ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
-                  : ["qr_code"]}
-                // Snelle detectielus. Het "hangende beeld" na een scan
-                // wordt niet opgelost door retryDelay te verhogen, maar door
-                // de scanner direct te unmounten (`closingAfterResult`) +
-                // de tracks synchroon te stoppen in `emitResult`. Hou hier
-                // dus de originele lage waardes aan zodat detectie snappy
-                // voelt zoals voordien.
-                scanDelay={0}
-                retryDelay={30}
-                sound={false}
-                constraints={{
-                  ...(deviceId
-                    ? { deviceId: { exact: deviceId } }
-                    : { facingMode: { ideal: facingMode } }),
-                  // 720p houdt frames licht genoeg om snel te detecteren,
-                  // maar blijft scherp genoeg voor Frame-ID QR-codes.
-                  width: { ideal: 1280 },
-                  height: { ideal: 720 },
-                  frameRate: { ideal: 30 },
-                  // Continu scherpstellen / belichten / witbalans — door de
-                  // browser/camera ondersteund waar mogelijk, anders genegeerd.
-                  advanced: ([
-                    { focusMode: "continuous" },
-                    { exposureMode: "continuous" },
-                    { whiteBalanceMode: "continuous" },
-                  ] as unknown) as MediaTrackConstraintSet[],
-
-                }}
-                styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
-                components={{ finder: false }}
-              />
-
-              {permission === "checking" && (
+              {permission === "checking" ? (
                 <div
                   style={{
                     position: "absolute",
@@ -1016,6 +889,44 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
                 >
                   {t("preparing_camera")}
                 </div>
+              ) : (
+                <Scanner
+                  key={scannerKey}
+                  onScan={handleScan}
+                  onError={handleError}
+                  paused={scanPaused}
+                  // QR always. In frame mode we ook 1D-barcodes (Code-128/39,
+                  // EAN, UPC, ITF, Codabar) zodat de framenummer-sticker direct
+                  // gelezen wordt. BarcodeDetector wordt gebruikt waar
+                  // ondersteund; anders valt de library terug op zxing-wasm.
+                  formats={isFrameMode
+                    ? ["qr_code", "code_128", "code_39", "code_93", "codabar", "ean_13", "ean_8", "itf", "upc_a", "upc_e", "data_matrix"]
+                    : ["qr_code"]}
+                  // Sneller pollen tussen frames (default ~500ms). 80ms geeft
+                  // ~12 leespogingen per seconde zonder de CPU plat te leggen.
+                  scanDelay={80}
+                  constraints={{
+                    ...(deviceId
+                      ? { deviceId: { exact: deviceId } }
+                      : { facingMode: { ideal: facingMode } }),
+                    // Hogere resolutie = scherpere kleine modules, dus
+                    // betrouwbaardere reads op een witte-op-zwart Frame-ID.
+                    width: { ideal: 1920 },
+                    height: { ideal: 1080 },
+                    frameRate: { ideal: 30 },
+                    // Continu scherpstellen / belichten / witbalans — door de
+                    // browser/camera ondersteund waar mogelijk, anders genegeerd.
+                    advanced: ([
+                      { focusMode: "continuous" },
+                      { exposureMode: "continuous" },
+                      { whiteBalanceMode: "continuous" },
+                    ] as unknown) as MediaTrackConstraintSet[],
+
+                  }}
+                  styles={{ container: { width: "100%", height: "100%" }, video: { objectFit: "cover" } }}
+                  components={{ finder: false }}
+                />
+
               )}
               {/* Targeting overlay */}
               <div
