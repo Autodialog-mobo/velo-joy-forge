@@ -613,17 +613,30 @@ function BikeSearchPage() {
   // Reset the "unknown format" hint as soon as the user edits the field.
   useEffect(() => { setUnknownFormat(false); }, [codeA]);
 
-  // Auto-scroll to the result block whenever a result or error is rendered,
-  // for both scan and manual lookups and on every viewport. The small timeout
-  // waits for the status card to paint before measuring.
+  // Auto-scroll naar het resultaatblok. Belangrijk detail voor mobiel: Radix
+  // Dialog zet tijdens open + exit-animatie een scroll-lock op de body
+  // (position: fixed / overflow: hidden). Als we scrollen terwijl die lock
+  // nog actief is, doet scrollIntoView niets op iOS/Android. Daarom wachten
+  // we tot de scanner-dialog écht dicht is (scanOpen === false) én tot na de
+  // exit-animatie (rAF + ~260ms) voor we scrollen. Voor manuele zoekopdrachten
+  // (geen dialog) is scanOpen al false, dus die scrollen direct.
   const resultBlockRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!result && !error) return;
+    if (scanOpen) return; // wacht tot de dialog echt dicht is
+    const wasScan = lookupSource === "qr";
+    const delay = wasScan ? 280 : 80;
+    let rafId = 0;
     const timer = setTimeout(() => {
-      resultBlockRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
-    return () => clearTimeout(timer);
-  }, [result, error]);
+      rafId = requestAnimationFrame(() => {
+        resultBlockRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }, delay);
+    return () => {
+      clearTimeout(timer);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [result, error, scanOpen, lookupSource]);
 
   // Spotlight: na een handmatige submit dimmen we de rest van de pagina kort
   // en lichten het resultaatpaneel op. Na QR-scan doen we dit bewust niet:
