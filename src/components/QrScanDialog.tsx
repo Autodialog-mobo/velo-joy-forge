@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Scanner, type IDetectedBarcode, type IScannerHandle } from "@yudiel/react-qr-scanner";
-import { BarcodeDetector as PonyfillBarcodeDetector } from "barcode-detector/ponyfill";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { QrCode, CheckCircle2, AlertCircle, X, SwitchCamera, Camera, ArrowRight, ChevronRight, Copy, Check, Flashlight, FlashlightOff, Sun, SunDim } from "lucide-react";
 
@@ -711,96 +711,12 @@ export function QrScanDialog({ open, onOpenChange, initialManual = false, onResu
     }
   };
 
-  // ------------------------------------------------------------------
-  // Invert-first fast-path decoder (LAAG 2 — decoder configuratie).
-  //
-  // Velopass Frame-ID stickers zijn ALTIJD een witte QR op een donkere
-  // (navy) achtergrond — een geïnverteerde code. De onderliggende
-  // zxing-wasm decoder heeft `tryInvert: true` standaard aan, maar
-  // probeert normale polariteit eerst; op zwakke telefoons kost dat een
-  // extra frame voor de sticker "klikt".
-  //
-  // We draaien hier een LICHTE, PARALLELLE pass die de video sample-t,
-  // de pixels inverteert, en één BarcodeDetector.detect() aanroept.
-  // Op success: emitResult direct → sticker herkend op de eerste
-  // pixel-invert-poging. De reguliere <Scanner /> loop blijft
-  // onaangeroerd en dient als fallback voor standaard zwart-op-wit
-  // codes van andere operatoren.
-  //
-  // Interval = 140ms (langzamer dan Scanner's 80ms) → geen halvering
-  // van de effectieve framerate, wel een gegarandeerde "invert-first"
-  // korte-circuit voor Velopass stickers.
-  // ------------------------------------------------------------------
-  const invertEmittedRef = useRef(false);
-  useEffect(() => {
-    invertEmittedRef.current = false;
-    if (!open || manual || cameraError || result !== null || closingAfterResult) return;
-    if (permission !== "granted" && permission !== "prompt") return;
-    if (typeof window === "undefined") return;
+  // Invert-first is delegated to the decoder library itself. The Scanner
+  // component uses the native BarcodeDetector where available, otherwise
+  // barcode-detector's zxing-wasm ponyfill — both handle inverted QR
+  // codes natively (`tryInvert: true` by default). No parallel canvas
+  // pipeline: one decode loop, one interval.
 
-    let cancelled = false;
-    let detector: InstanceType<typeof PonyfillBarcodeDetector> | null = null;
-    try {
-      detector = new PonyfillBarcodeDetector({ formats: ["qr_code"] });
-    } catch {
-      return;
-    }
-
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    if (!ctx) return;
-
-    let timerId: number | null = null;
-
-    const runOnce = async () => {
-      if (cancelled || invertEmittedRef.current || resultEmittedRef.current || scanPaused) return;
-      const root = document.querySelector("[data-qr-scanner-root]");
-      const video = root?.querySelector("video") as HTMLVideoElement | null;
-      if (!video || video.readyState < 2 || !video.videoWidth) return;
-
-      // Sample op ~640px breed — voldoende voor QR modules, houdt de
-      // pixel-invert goedkoop (< 1ms per frame op typische mobiele CPU).
-      const targetW = Math.min(640, video.videoWidth);
-      const scale = targetW / video.videoWidth;
-      const w = Math.round(video.videoWidth * scale);
-      const h = Math.round(video.videoHeight * scale);
-      if (canvas.width !== w) canvas.width = w;
-      if (canvas.height !== h) canvas.height = h;
-
-      try {
-        ctx.drawImage(video, 0, 0, w, h);
-        const img = ctx.getImageData(0, 0, w, h);
-        const d = img.data;
-        for (let i = 0; i < d.length; i += 4) {
-          d[i] = 255 - d[i];
-          d[i + 1] = 255 - d[i + 1];
-          d[i + 2] = 255 - d[i + 2];
-        }
-        ctx.putImageData(img, 0, 0);
-        const found = await detector!.detect(canvas);
-        if (cancelled || invertEmittedRef.current) return;
-        if (found.length > 0 && found[0].rawValue) {
-          invertEmittedRef.current = true;
-          emitResult(found[0].rawValue);
-        }
-      } catch {
-        /* stille fallback — Scanner-loop blijft draaien */
-      }
-    };
-
-    const loop = () => {
-      if (cancelled) return;
-      void runOnce();
-      timerId = window.setTimeout(loop, 140);
-    };
-    timerId = window.setTimeout(loop, 300);
-
-    return () => {
-      cancelled = true;
-      if (timerId !== null) window.clearTimeout(timerId);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, manual, cameraError, result, permission, scannerKey, scanPaused, closingAfterResult]);
 
 
   const handleError = (err: unknown) => {
