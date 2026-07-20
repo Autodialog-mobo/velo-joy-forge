@@ -594,7 +594,6 @@ function BikeSearchPage() {
   const [lightboxImage, setLightboxImage] = useState<{ src: string; alt: string } | null>(null);
   const brandInputRef = useRef<HTMLInputElement>(null);
   const methodBFormRef = useRef<HTMLFormElement>(null);
-  const resultRef = useRef<HTMLDivElement>(null);
   // Shared submit-lock: blocks both forms while Turnstile + server call are in flight.
   const submitLockRef = useRef(false);
 
@@ -614,28 +613,33 @@ function BikeSearchPage() {
   // Reset the "unknown format" hint as soon as the user edits the field.
   useEffect(() => { setUnknownFormat(false); }, [codeA]);
 
+  // Auto-scroll to the result block whenever a result or error is rendered,
+  // for both scan and manual lookups and on every viewport. The small timeout
+  // waits for the status card to paint before measuring.
+  const resultBlockRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!result && !error) return;
+    const timer = setTimeout(() => {
+      resultBlockRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+    return () => clearTimeout(timer);
+  }, [result, error]);
+
   // Spotlight: na een handmatige submit dimmen we de rest van de pagina kort
   // en lichten het resultaatpaneel op. Na QR-scan doen we dit bewust niet:
   // de scan moet onmiddellijk "weg" voelen zodra het resultaat binnenkomt.
   const [spotlight, setSpotlight] = useState(false);
   useEffect(() => {
     if (!(result || error)) return;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
     setSpotlight(lookupSource !== "qr");
     const dismiss = () => setSpotlight(false);
     const tid = setTimeout(dismiss, 1800);
-    // Pas listeners toe ná de scroll-animatie, anders dismisst onze eigen
-    // smooth-scroll het direct via het 'scroll' event.
     const lid = setTimeout(() => {
       window.addEventListener("pointerdown", dismiss, { once: true });
       window.addEventListener("keydown", dismiss, { once: true });
       window.addEventListener("wheel", dismiss, { once: true, passive: true });
       window.addEventListener("touchmove", dismiss, { once: true, passive: true });
-    }, 300);
+    }, 100);
     return () => {
       clearTimeout(tid);
       clearTimeout(lid);
@@ -1367,14 +1371,14 @@ function BikeSearchPage() {
 
 
         {/* ERROR + RESULT scroll target.
-            scrollMarginTop houdt de top vrij van de sticky nav (mobiel + desktop),
-            zodat scrollIntoView({block:"start"}) NOOIT het bovenste stuk van het
-            resultaat onder de nav verbergt. zIndex + transition geven het paneel
-            extra prominentie zodra `spotlight` aanstaat. */}
+            scrollMarginTop (~80px) houdt de top vrij van de sticky nav (mobiel +
+            desktop), zodat scrollIntoView({block:"start"}) NOOIT het bovenste
+            stuk van het resultaat onder de nav verbergt. zIndex + transition
+            geven het paneel extra prominentie zodra `spotlight` aanstaat. */}
         <div
-          ref={resultRef}
+          ref={resultBlockRef}
           style={{
-            scrollMarginTop: "calc(env(safe-area-inset-top, 0px) + 96px)",
+            scrollMarginTop: "calc(env(safe-area-inset-top, 0px) + 80px)",
             position: "relative",
             zIndex: spotlight ? 60 : "auto",
             transition: "transform 240ms ease, filter 240ms ease",
