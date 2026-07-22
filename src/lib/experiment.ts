@@ -55,8 +55,29 @@ export function variantFor(visitorId: string): Variant {
   return (h >>> 0) % 2 === 0 ? "A" : "B";
 }
 
+const FORCE_COOKIE = "vp_ab";
+const FORCE_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+
+// QA/preview override. Visiting ?ab=A or ?ab=B forces that variant and remembers
+// it (so it survives navigation into checkout); ?ab=off clears the override and
+// returns to normal deterministic bucketing.
+function forcedVariant(): Variant | null {
+  if (typeof window === "undefined") return null;
+  let q: string | null = null;
+  try {
+    q = new URLSearchParams(window.location.search).get("ab");
+  } catch {
+    q = null;
+  }
+  if (q === "A" || q === "B") writeCookie(FORCE_COOKIE, q, FORCE_MAX_AGE);
+  else if (q === "off" || q === "clear" || q === "reset") writeCookie(FORCE_COOKIE, "", 0);
+  const forced = readCookie(FORCE_COOKIE);
+  return forced === "A" || forced === "B" ? forced : null;
+}
+
 // Resolve (and persist) this visitor's id + variant for the current experiment.
 export function assignVariant(): { visitorId: string; variant: Variant } {
   const visitorId = getVisitorId();
-  return { visitorId, variant: variantFor(visitorId) };
+  const variant = forcedVariant() ?? variantFor(visitorId);
+  return { visitorId, variant };
 }
