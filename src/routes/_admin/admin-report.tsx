@@ -16,7 +16,12 @@ import {
   LabelList,
 } from "recharts";
 import { TrendingUp, AlertTriangle, Info, RefreshCw } from "lucide-react";
-import { orderReport, type ReportOrder, type ReportLine } from "@/lib/report.functions";
+import {
+  orderReport,
+  type ReportOrder,
+  type ReportLine,
+  type ExperimentImpression,
+} from "@/lib/report.functions";
 import {
   BUNDLE_ORDER,
   BUNDLE_LABELS,
@@ -107,6 +112,7 @@ function AdminReportPage() {
 
   const allOrders: ReportOrder[] = data?.orders ?? [];
   const lines: ReportLine[] = data?.lines ?? [];
+  const impressions: ExperimentImpression[] = data?.impressions ?? [];
 
   const linesByOrder = useMemo(() => {
     const m = new Map<string, ReportLine[]>();
@@ -266,6 +272,56 @@ function AdminReportPage() {
   /* ---- Rule-based signals ---- */
   const signals = useMemo(() => computeSignals(orders, linesByOrder), [orders, linesByOrder]);
 
+  /* ---- A/B experiment (global, not country-filtered) ---- */
+  const experiment = useMemo(() => {
+    const markers = new Set<string>();
+    for (const im of impressions) markers.add(im.marker);
+    for (const o of allOrders) if (o.experiment_variant) markers.add(o.experiment_variant);
+    if (!markers.size) return null;
+    const imprByMarker = new Map(impressions.map((i) => [i.marker, i]));
+    const rows = Array.from(markers)
+      .map((marker) => {
+        const [key, variant] = marker.split(":");
+        const os = allOrders.filter((o) => o.experiment_variant === marker);
+        let revenue = 0;
+        let solo = 0;
+        let duo = 0;
+        let family = 0;
+        let units = 0;
+        for (const o of os) {
+          revenue += o.amount_total || 0;
+          for (const l of linesByOrder.get(o.id) ?? []) {
+            const q = l.quantity || 0;
+            units += q;
+            if (l.bundle_key === "frameid_solo_onetime") solo += q;
+            else if (l.bundle_key === "frameid_duo_onetime") duo += q;
+            else if (l.bundle_key === "frameid_family_onetime") family += q;
+          }
+        }
+        const im = imprByMarker.get(marker);
+        const visitors = im?.visitors ?? 0;
+        const orders = os.length;
+        return {
+          marker,
+          key,
+          variant,
+          visitors,
+          impressions: im?.impressions ?? 0,
+          orders,
+          revenue,
+          aov: orders ? revenue / orders : 0,
+          duoShare: units ? (duo / units) * 100 : 0,
+          soloShare: units ? (solo / units) * 100 : 0,
+          conv: visitors ? (orders / visitors) * 100 : 0,
+          solo,
+          duo,
+          family,
+        };
+      })
+      .sort((a, b) => (a.variant < b.variant ? -1 : 1));
+    return { key: rows[0]?.key ?? "", rows };
+  }, [impressions, allOrders, linesByOrder]);
+
   /* ---------------------------------------------------------------- */
   const evoColor = metric === "revenue" ? INFO : ACCENT;
 
@@ -357,6 +413,51 @@ function AdminReportPage() {
                     <SignalCard key={i} signal={s} />
                   ))}
                 </div>
+              </Card>
+            )}
+
+            {/* A/B experiment */}
+            {experiment && (
+              <Card className="mb-6">
+                <SectionTitle>A/B-test: bundelkeuze</SectionTitle>
+                <div style={{ color: TEXT_MUTED, fontSize: 12, marginBottom: 12 }}>
+                  Variant A = huidige pagina · Variant B = duo voorgeselecteerd met besparing benadrukt.
+                  Wereldwijd, niet beperkt door het landfilter.
+                </div>
+                <div className="overflow-x-auto">
+                  <table style={tableStyle}>
+                    <thead>
+                      <tr>
+                        <Th>Variant</Th>
+                        <Th right>Bezoekers</Th>
+                        <Th right>Bestellingen</Th>
+                        <Th right>Conversie</Th>
+                        <Th right>Gem. orderwaarde</Th>
+                        <Th right>Duo-aandeel</Th>
+                        <Th right>Solo-aandeel</Th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {experiment.rows.map((r) => (
+                        <tr key={r.marker}>
+                          <Td>
+                            <strong style={{ color: TEXT }}>{r.variant}</strong>{" "}
+                            <span style={{ color: TEXT_MUTED }}>
+                              {r.variant === "A" ? "(controle)" : r.variant === "B" ? "(duo vooraf)" : ""}
+                            </span>
+                          </Td>
+                          <Td right>{r.visitors || "-"}</Td>
+                          <Td right>{r.orders}</Td>
+                          <Td right>{r.visitors ? `${r.conv.toFixed(1)}%` : "-"}</Td>
+                          <Td right>{fmtEUR(r.aov)}</Td>
+                          <Td right>{r.duoShare.toFixed(0)}%</Td>
+                          <Td right>{r.soloShare.toFixed(0)}%</Td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <ExperimentInsight rows={experiment.rows} />
               </Card>
             )}
 
@@ -732,6 +833,36 @@ function SignalCard({ signal }: { signal: Signal }) {
         <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 2 }}>{signal.title}</div>
         <div style={{ color: TEXT_2, fontSize: 13, lineHeight: 1.5 }}>{signal.body}</div>
       </div>
+    </div>
+  );
+}
+
+function ExperimentInsight({ rows }: { rows: any[] }) {
+  const A = rows.find((r) => r.variant === "A");
+  const B = rows.find((r) => r.variant === "B");
+  if (!A || !B) return null;
+  const duoDiff = B.duoShare - A.duoShare;
+  const bothVisitors = A.visitors > 0 && B.visitors > 0;
+  const convDiff = B.conv - A.conv;
+  const lowVol = A.orders + B.orders < 30 || (bothVisitors && A.visitors + B.visitors < 200);
+  const tone = duoDiff > 0 ? POSITIVE : duoDiff < 0 ? WARNING : INFO;
+  return (
+    <div
+      className="rounded-xl p-4 mt-4"
+      style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}`, borderLeft: `3px solid ${tone}` }}
+    >
+      <div style={{ fontSize: 13, color: TEXT_2, lineHeight: 1.6 }}>
+        Duo-aandeel: variant B {B.duoShare.toFixed(0)}% vs A {A.duoShare.toFixed(0)}% ({duoDiff >= 0 ? "+" : ""}
+        {duoDiff.toFixed(0)} pp).{" "}
+        {bothVisitors
+          ? `Conversie: B ${B.conv.toFixed(1)}% vs A ${A.conv.toFixed(1)}% (${convDiff >= 0 ? "+" : ""}${convDiff.toFixed(1)} pp).`
+          : "Conversie nog niet te vergelijken (impressies ontbreken nog)."}
+      </div>
+      {lowVol && (
+        <div style={{ fontSize: 12, color: WARNING, marginTop: 6 }}>
+          Let op: te weinig volume voor een betrouwbare conclusie. Laat de test langer lopen.
+        </div>
+      )}
     </div>
   );
 }

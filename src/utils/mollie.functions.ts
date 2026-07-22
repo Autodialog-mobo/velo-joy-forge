@@ -82,6 +82,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         country: string;
       };
       referralSource?: string | null;
+      experimentVariant?: string | null;
     }) => {
       if (!Array.isArray(data.items) || data.items.length === 0) {
         throw new Error("Minstens één bundel is vereist");
@@ -107,6 +108,14 @@ export const createMolliePayment = createServerFn({ method: "POST" })
       const ALLOWED_REFERRAL = new Set(["bike_shop","friend_family","social","search","ai","insurance","roadside","other"]);
       if (data.referralSource != null && data.referralSource !== "" && !ALLOWED_REFERRAL.has(data.referralSource)) {
         throw new Error("Ongeldige referral_source");
+      }
+      if (
+        data.experimentVariant != null &&
+        data.experimentVariant !== "" &&
+        !/^[a-z0-9_]{1,64}:[AB]$/.test(data.experimentVariant)
+      ) {
+        // Non-fatal: ignore a malformed marker rather than block checkout.
+        data.experimentVariant = null;
       }
       return data;
     },
@@ -207,6 +216,18 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         },
         { onConflict: "mollie_payment_id" },
       );
+
+      // Best-effort: tag the order with its A/B variant in a separate update so a
+      // missing column (before the migration lands) can never break checkout.
+      if (data.experimentVariant && data.experimentVariant !== "") {
+        try {
+          await (supabaseAdmin.from("orders") as any)
+            .update({ experiment_variant: data.experimentVariant })
+            .eq("mollie_payment_id", payment.id);
+        } catch (e) {
+          console.error("experiment_variant tag failed:", e instanceof Error ? e.message : e);
+        }
+      }
 
       const checkoutUrl = payment?._links?.checkout?.href;
       if (!checkoutUrl) throw new Error("Mollie gaf geen checkout-URL terug");

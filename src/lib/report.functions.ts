@@ -13,7 +13,7 @@ const PAID_STATUSES = ["paid", "printed", "shipped"] as const;
 
 // Trimmed column set: only what the report needs, never PII beyond country.
 const ORDER_COLUMNS =
-  "id, created_at, status, shipping_country, referral_source, amount_total, amount_subtotal, amount_shipping, amount_tax, currency";
+  "id, created_at, status, shipping_country, referral_source, amount_total, amount_subtotal, amount_shipping, amount_tax, currency, experiment_variant";
 
 const LINE_COLUMNS = "order_id, bundle_key, bundle_sku, quantity, sticker_count, unit_price_cents";
 
@@ -28,6 +28,13 @@ export type ReportOrder = {
   amount_shipping: number;
   amount_tax: number;
   currency: string;
+  experiment_variant: string | null;
+};
+
+export type ExperimentImpression = {
+  marker: string; // "<experiment>:<variant>"
+  impressions: number;
+  visitors: number;
 };
 
 export type ReportLine = {
@@ -55,18 +62,34 @@ export const orderReport = createServerFn({ method: "POST" })
     const env = data?.environment ?? "live";
 
     // Page through all paid orders (Supabase caps a single request at 1000 rows).
+    // experiment_variant is new; if the column is missing (before the migration
+    // lands) fall back to the base columns so the report never breaks.
+    const BASE_COLUMNS = ORDER_COLUMNS.replace(", experiment_variant", "");
+    let columns = ORDER_COLUMNS;
     const orders: ReportOrder[] = [];
     for (let from = 0; ; from += PAGE) {
       const { data: page, error } = await (supabaseAdmin as any)
         .from("orders")
-        .select(ORDER_COLUMNS)
+        .select(columns)
         .eq("environment", env)
         .is("deleted_at", null)
         .in("status", PAID_STATUSES as unknown as string[])
         .order("created_at", { ascending: true })
         .range(from, from + PAGE - 1);
-      if (error) throw new Error(error.message);
-      const rows = (page ?? []) as ReportOrder[];
+      if (error) {
+        if (columns === ORDER_COLUMNS && /experiment_variant/.test(error.message)) {
+          // Retry the whole fetch without the new column.
+          columns = BASE_COLUMNS;
+          orders.length = 0;
+          from = -PAGE; // loop's += PAGE resets to 0
+          continue;
+        }
+        throw new Error(error.message);
+      }
+      const rows = ((page ?? []) as any[]).map((o) => ({
+        experiment_variant: null,
+        ...o,
+      })) as ReportOrder[];
       orders.push(...rows);
       if (rows.length < PAGE) break;
     }
@@ -84,5 +107,46 @@ export const orderReport = createServerFn({ method: "POST" })
       lines.push(...((l ?? []) as ReportLine[]));
     }
 
-    return { orders, lines, environment: env };
+    // Experiment impressions (denominator for conversion). Best-effort: if the
+    // table does not exist yet, return none rather than failing the report.
+    const impressions: ExperimentImpression[] = [];
+    try {
+      const visitorsByMarker = new Map<string, Set<string>>();
+      const countByMarker = new Map<string, number>();
+      for (let from = 0; ; from += PAGE) {
+        const { data: page, error } = await (supabaseAdmin as any)
+          .from("experiment_impressions")
+          .select("experiment, variant, visitor_id")
+          .eq("environment", env)
+          .range(from, from + PAGE - 1);
+        if (error) throw error;
+        const rows = (page ?? []) as {
+          experiment: string;
+          variant: string;
+          visitor_id: string;
+        }[];
+        for (const r of rows) {
+          const marker = `${r.experiment}:${r.variant}`;
+          countByMarker.set(marker, (countByMarker.get(marker) ?? 0) + 1);
+          let set = visitorsByMarker.get(marker);
+          if (!set) {
+            set = new Set<string>();
+            visitorsByMarker.set(marker, set);
+          }
+          set.add(r.visitor_id);
+        }
+        if (rows.length < PAGE) break;
+      }
+      for (const [marker, count] of countByMarker) {
+        impressions.push({
+          marker,
+          impressions: count,
+          visitors: visitorsByMarker.get(marker)?.size ?? 0,
+        });
+      }
+    } catch (e) {
+      console.error("orderReport: impressions unavailable:", e instanceof Error ? e.message : e);
+    }
+
+    return { orders, lines, impressions, environment: env };
   });

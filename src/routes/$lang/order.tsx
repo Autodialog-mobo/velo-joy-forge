@@ -1,5 +1,8 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect, useRef } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { useTranslation } from "react-i18next";
+import { assignVariant, EXPERIMENT, type Variant } from "@/lib/experiment";
+import { logImpression } from "@/lib/experiment.functions";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight, Info } from "lucide-react";
@@ -69,6 +72,28 @@ function BestellenPage() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [navOpen, setNavOpen] = useState(false);
 
+  // A/B experiment: bucket the visitor, log an impression once, and (variant B)
+  // preselect the featured duo bundle. Runs client-side only, after hydration.
+  const [variant, setVariant] = useState<Variant | null>(null);
+  const experimentInit = useRef(false);
+  const logImpressionFn = useServerFn(logImpression);
+  useEffect(() => {
+    if (experimentInit.current) return;
+    experimentInit.current = true;
+    const { visitorId, variant: v } = assignVariant();
+    setVariant(v);
+    if (v === "B") {
+      setQuantities((prev) => ({
+        ...prev,
+        frameid_duo_onetime: Math.max(prev.frameid_duo_onetime, 1),
+      }));
+    }
+    // Fire-and-forget; never block the page on analytics.
+    logImpressionFn({ data: { experiment: EXPERIMENT.key, variant: v, visitorId } }).catch(
+      () => undefined,
+    );
+  }, [logImpressionFn]);
+
   const handleBack = useCallback(() => {
     if (typeof window !== "undefined") {
       const referrer = document.referrer;
@@ -127,6 +152,7 @@ function BestellenPage() {
             country,
           },
           referralSource: referralSource || null,
+          experimentVariant: variant ? `${EXPERIMENT.key}:${variant}` : null,
         },
       });
       if ("error" in result) {
@@ -283,6 +309,23 @@ function BestellenPage() {
                         <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.18)", color: "#0F8A5C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
                           {t(`bundles.${b.discountKey}` as const)}
                         </span>
+                      )}
+                      {variant === "B" && b.key === "frameid_duo_onetime" && b.discountKey && (
+                        <div
+                          style={{
+                            marginTop: 10,
+                            padding: "8px 12px",
+                            background: "#2ECC8A",
+                            color: "#0D1F3C",
+                            borderRadius: 10,
+                            fontWeight: 700,
+                            fontSize: 13,
+                            alignSelf: "stretch",
+                            textAlign: "center",
+                          }}
+                        >
+                          {t(`bundles.${b.discountKey}` as const)}
+                        </div>
                       )}
 
                       <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
