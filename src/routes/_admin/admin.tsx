@@ -320,6 +320,24 @@ function AdminPage() {
   const activeOrders = useMemo(() => orders.filter((o: any) => !o.deleted_at), [orders]);
   const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
 
+  // Compact snapshot for the Rapportage teaser card (paid orders only).
+  const reportSummary = useMemo(() => {
+    const PAID = new Set(["paid", "printed", "shipped"]);
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    let count30 = 0;
+    let revenue30 = 0;
+    let totalPaid = 0;
+    for (const o of activeOrders as any[]) {
+      if (!PAID.has(o.status)) continue;
+      totalPaid++;
+      if (new Date(o.created_at).getTime() >= cutoff) {
+        count30++;
+        revenue30 += o.amount_total || 0;
+      }
+    }
+    return { count30, revenue30, totalPaid };
+  }, [activeOrders]);
+
   const counts = useMemo(() => {
     // Paid/Printed: full outstanding work (any age).
     // Shipped: rolling 30-day window (recently shipped).
@@ -1145,6 +1163,58 @@ function AdminPage() {
             </button>
           </div>
         </header>
+
+        {/* Rapportage teaser */}
+        {isAdmin && (
+          <a
+            href="/admin-report"
+            className="block mb-6 rounded-[18px] p-5 transition"
+            style={{
+              background: "rgba(46,204,138,0.06)",
+              border: `1px solid rgba(46,204,138,0.30)`,
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,204,138,0.10)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(46,204,138,0.06)")}
+          >
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-5 flex-wrap">
+                <div>
+                  <div style={{ ...EYEBROW, color: GREEN, marginBottom: 4 }}>Rapportage</div>
+                  <div style={{ color: TEXT_PRI, fontSize: 15, fontWeight: 600 }}>
+                    Evolutie, bundels &amp; herkomst
+                  </div>
+                </div>
+                <div className="flex items-center gap-5">
+                  <div>
+                    <div style={{ color: TEXT_PRI, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 22 }}>
+                      {reportSummary.count30}
+                    </div>
+                    <div style={{ color: TEXT_MUTED, fontSize: 11 }}>bestellingen (30d)</div>
+                  </div>
+                  <div>
+                    <div style={{ color: TEXT_PRI, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 22 }}>
+                      {formatEur(reportSummary.revenue30)}
+                    </div>
+                    <div style={{ color: TEXT_MUTED, fontSize: 11 }}>omzet (30d)</div>
+                  </div>
+                  <div>
+                    <div style={{ color: TEXT_PRI, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 22 }}>
+                      {reportSummary.totalPaid}
+                    </div>
+                    <div style={{ color: TEXT_MUTED, fontSize: 11 }}>betaald totaal</div>
+                  </div>
+                </div>
+              </div>
+              <span
+                className="px-4 py-2 rounded-full text-[13px] font-semibold whitespace-nowrap"
+                style={{ background: GREEN, color: NAVY }}
+              >
+                Bekijk rapportage &rarr;
+              </span>
+            </div>
+          </a>
+        )}
 
         {/* Pipeline */}
         <section className="mb-6" aria-label="Fulfillment pipeline">
