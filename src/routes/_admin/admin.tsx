@@ -10,6 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation, logPrintAudit } from "@/lib/admin.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { useAuth } from "@/lib/auth";
+import { ResponsiveContainer, AreaChart, Area } from "recharts";
+import { bucketOf, buildBuckets, BUNDLE_ORDER, BUNDLE_LABELS, BUNDLE_COLORS } from "@/lib/report.aggregate";
 import { toast } from "sonner";
 
 const adminSearchSchema = z.object({
@@ -320,23 +322,32 @@ function AdminPage() {
   const activeOrders = useMemo(() => orders.filter((o: any) => !o.deleted_at), [orders]);
   const deletedOrders = useMemo(() => orders.filter((o: any) => !!o.deleted_at), [orders]);
 
-  // Compact snapshot for the Rapportage teaser card (paid orders only).
-  const reportSummary = useMemo(() => {
+  // Rapportage teaser: weekly bundle mix from paid orders (mirrors the
+  // "succes per bundel" chart on /admin-report, compact + non-interactive).
+  const bundleTeaser = useMemo(() => {
     const PAID = new Set(["paid", "printed", "shipped"]);
-    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    let count30 = 0;
-    let revenue30 = 0;
-    let totalPaid = 0;
-    for (const o of activeOrders as any[]) {
-      if (!PAID.has(o.status)) continue;
-      totalPaid++;
-      if (new Date(o.created_at).getTime() >= cutoff) {
-        count30++;
-        revenue30 += o.amount_total || 0;
+    const paid = (activeOrders as any[]).filter((o) => PAID.has(o.status));
+    const totals: Record<string, number> = {};
+    if (!paid.length) return { rows: [] as any[], totals };
+    const times = paid.map((o) => new Date(o.created_at).getTime());
+    const min = new Date(Math.min(...times));
+    const max = new Date(Math.max(...times));
+    const buckets = buildBuckets(min, max, "week");
+    const idx = new Map(buckets.map((b, i) => [b.key, i]));
+    const rows: any[] = buckets.map((b) => {
+      const r: any = { label: b.label };
+      for (const k of BUNDLE_ORDER) r[k] = 0;
+      return r;
+    });
+    for (const o of paid) {
+      const i = idx.get(bucketOf(o.created_at, "week").key);
+      for (const l of linesByOrder.get(o.id) ?? []) {
+        if (i != null) rows[i][l.bundle_key] = (rows[i][l.bundle_key] ?? 0) + (l.quantity || 0);
+        totals[l.bundle_key] = (totals[l.bundle_key] ?? 0) + (l.quantity || 0);
       }
     }
-    return { count30, revenue30, totalPaid };
-  }, [activeOrders]);
+    return { rows, totals };
+  }, [activeOrders, linesByOrder]);
 
   const counts = useMemo(() => {
     // Paid/Printed: full outstanding work (any age).
@@ -1177,34 +1188,10 @@ function AdminPage() {
             onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(46,204,138,0.10)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(46,204,138,0.06)")}
           >
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <div className="flex items-center gap-5 flex-wrap">
-                <div>
-                  <div style={{ ...EYEBROW, color: GREEN, marginBottom: 4 }}>Rapportage</div>
-                  <div style={{ color: TEXT_PRI, fontSize: 15, fontWeight: 600 }}>
-                    Evolutie, bundels &amp; herkomst
-                  </div>
-                </div>
-                <div className="flex items-center gap-5">
-                  <div>
-                    <div style={{ color: TEXT_PRI, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 22 }}>
-                      {reportSummary.count30}
-                    </div>
-                    <div style={{ color: TEXT_MUTED, fontSize: 11 }}>bestellingen (30d)</div>
-                  </div>
-                  <div>
-                    <div style={{ color: TEXT_PRI, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 22 }}>
-                      {formatEur(reportSummary.revenue30)}
-                    </div>
-                    <div style={{ color: TEXT_MUTED, fontSize: 11 }}>omzet (30d)</div>
-                  </div>
-                  <div>
-                    <div style={{ color: TEXT_PRI, fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 22 }}>
-                      {reportSummary.totalPaid}
-                    </div>
-                    <div style={{ color: TEXT_MUTED, fontSize: 11 }}>betaald totaal</div>
-                  </div>
-                </div>
+            <div className="flex items-center justify-between gap-4 mb-3 flex-wrap">
+              <div>
+                <div style={{ ...EYEBROW, color: GREEN, marginBottom: 4 }}>Rapportage</div>
+                <div style={{ color: TEXT_PRI, fontSize: 15, fontWeight: 600 }}>Succes per bundel</div>
               </div>
               <span
                 className="px-4 py-2 rounded-full text-[13px] font-semibold whitespace-nowrap"
@@ -1213,6 +1200,45 @@ function AdminPage() {
                 Bekijk rapportage &rarr;
               </span>
             </div>
+            {bundleTeaser.rows.length > 0 ? (
+              <>
+                <div style={{ height: 96 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={bundleTeaser.rows} margin={{ top: 4, right: 0, left: 0, bottom: 0 }}>
+                      {BUNDLE_ORDER.map((k) => (
+                        <Area
+                          key={k}
+                          type="monotone"
+                          dataKey={k}
+                          stackId="u"
+                          stroke={BUNDLE_COLORS[k]}
+                          strokeWidth={1.5}
+                          fill={BUNDLE_COLORS[k]}
+                          fillOpacity={0.5}
+                          isAnimationActive={false}
+                        />
+                      ))}
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="flex items-center gap-4 mt-2 flex-wrap">
+                  {BUNDLE_ORDER.map((k) => (
+                    <span
+                      key={k}
+                      style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, color: TEXT_SEC }}
+                    >
+                      <span style={{ width: 9, height: 9, borderRadius: 3, background: BUNDLE_COLORS[k] }} />
+                      {BUNDLE_LABELS[k]}{" "}
+                      <span style={{ color: TEXT_PRI, fontWeight: 600 }}>{bundleTeaser.totals[k] ?? 0}</span>
+                    </span>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div style={{ color: TEXT_MUTED, fontSize: 13 }}>
+                Nog geen betaalde bestellingen om te tonen.
+              </div>
+            )}
           </a>
         )}
 

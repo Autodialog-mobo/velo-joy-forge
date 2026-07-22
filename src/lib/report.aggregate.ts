@@ -15,6 +15,12 @@ export const BUNDLE_LABELS: Record<string, string> = {
   frameid_duo_onetime: "Duo (2)",
   frameid_family_onetime: "Family (5)",
 };
+// Categorical trio (dataviz slots 1-3, dark): blue / orange / aqua.
+export const BUNDLE_COLORS: Record<string, string> = {
+  frameid_solo_onetime: "#3987e5",
+  frameid_duo_onetime: "#d95926",
+  frameid_family_onetime: "#199e70",
+};
 export function bundleLabel(key: string) {
   return BUNDLE_LABELS[key] ?? key;
 }

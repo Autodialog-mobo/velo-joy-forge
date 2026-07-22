@@ -20,6 +20,7 @@ import { orderReport, type ReportOrder, type ReportLine } from "@/lib/report.fun
 import {
   BUNDLE_ORDER,
   BUNDLE_LABELS,
+  BUNDLE_COLORS,
   REFERRAL_LABELS,
   bucketOf,
   buildBuckets,
@@ -50,12 +51,6 @@ const POSITIVE = "#2ECC8A";
 const WARNING = "#F5B94D";
 const INFO = "#7AB0FF";
 
-// Bundle categorical slots (dataviz slots 1-3, dark): blue / orange / aqua.
-const BUNDLE_COLORS: Record<string, string> = {
-  frameid_solo_onetime: "#3987e5",
-  frameid_duo_onetime: "#d95926",
-  frameid_family_onetime: "#199e70",
-};
 function bundleMeta(key: string) {
   return { label: BUNDLE_LABELS[key] ?? key, color: BUNDLE_COLORS[key] ?? "#9085e9" };
 }
