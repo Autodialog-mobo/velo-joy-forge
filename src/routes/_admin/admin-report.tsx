@@ -153,19 +153,34 @@ function AdminReportPage() {
 
   /* ---- Evolution series (count + revenue) ---- */
   const evolution = useMemo(() => {
-    if (!orders.length) return [] as { key: string; label: string; count: number; revenue: number }[];
+    if (!orders.length)
+      return [] as {
+        key: string;
+        label: string;
+        count: number;
+        revenue: number;
+        refs: Record<string, number>;
+      }[];
     const dates = orders.map((o) => new Date(o.created_at));
     const min = new Date(Math.min(...dates.map((d) => d.getTime())));
     const max = new Date(Math.max(...dates.map((d) => d.getTime())));
     const buckets = buildBuckets(min, max, granularity);
     const idx = new Map(buckets.map((b, i) => [b.key, i]));
-    const rows = buckets.map((b) => ({ key: b.key, label: b.label, count: 0, revenue: 0 }));
+    const rows = buckets.map((b) => ({
+      key: b.key,
+      label: b.label,
+      count: 0,
+      revenue: 0,
+      refs: {} as Record<string, number>,
+    }));
     for (const o of orders) {
       const b = bucketOf(o.created_at, granularity);
       const i = idx.get(b.key);
       if (i == null) continue;
       rows[i].count += 1;
       rows[i].revenue += (o.amount_total || 0) / 100;
+      const refKey = o.referral_source && o.referral_source !== "" ? o.referral_source : "__unknown";
+      rows[i].refs[refKey] = (rows[i].refs[refKey] ?? 0) + 1;
     }
     return rows;
   }, [orders, granularity]);
@@ -748,12 +763,27 @@ function tooltipBox(children: React.ReactNode) {
 function EvoTooltip({ active, payload, label, metric }: any) {
   if (!active || !payload?.length) return null;
   const v = payload[0].value;
+  const row = payload[0].payload ?? {};
+  const refs = Object.entries(row.refs ?? {}).sort(
+    (a, b) => (b[1] as number) - (a[1] as number),
+  ) as [string, number][];
   return tooltipBox(
     <>
       <div style={{ color: TEXT_MUTED, marginBottom: 4 }}>{label}</div>
       <div style={{ fontWeight: 600 }}>
         {metric === "revenue" ? fmtEUR(Number(v) * 100) : `${v} bestellingen`}
       </div>
+      {refs.length > 0 && (
+        <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 6, paddingTop: 6 }}>
+          <div style={{ color: TEXT_MUTED, fontSize: 11, marginBottom: 4 }}>Hoe gevonden</div>
+          {refs.map(([k, n]) => (
+            <div key={k} style={{ display: "flex", justifyContent: "space-between", gap: 16 }}>
+              <span style={{ color: TEXT_2 }}>{REFERRAL_LABELS[k] ?? k}</span>
+              <span style={{ fontWeight: 600 }}>{n}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </>,
   );
 }
