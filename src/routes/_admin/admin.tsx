@@ -440,12 +440,24 @@ function AdminPage() {
   useEffect(() => {
     if (!detailOrder) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") { e.preventDefault(); gotoNav(-1); }
-      else if (e.key === "ArrowRight") { e.preventDefault(); gotoNav(1); }
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      // Negeer wanneer de gebruiker in een tekstveld typt of iets contenteditable is
+      const t = e.target as HTMLElement | null;
+      const tag = t?.tagName;
+      if (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        (t && t.isContentEditable)
+      ) return;
+      e.preventDefault();
+      gotoNav(e.key === "ArrowLeft" ? -1 : 1);
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
   });
+
 
   const toggle = (id: string) => {
     setSelected((prev) => {
