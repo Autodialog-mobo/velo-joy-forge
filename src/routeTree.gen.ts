@@ -9,117 +9,59 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as ProfessionalsRouteImport } from './routes/professionals'
-import { Route as McpRouteImport } from './routes/mcp'
-import { Route as GestolenRouteImport } from './routes/gestolen'
-import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
-import { Route as DedupAuditRouteImport } from './routes/dedup-audit'
-import { Route as BikesearchRouteImport } from './routes/bikesearch'
-import { Route as BestellenRouteImport } from './routes/bestellen'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
-import { Route as AdminAuthCheckRouteImport } from './routes/admin-auth-check'
-import { Route as AdminRouteRouteImport } from './routes/_admin/route'
-import { Route as LangRouteRouteImport } from './routes/$lang/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LangRouteRouteImport } from './routes/$lang/route'
+import { Route as AdminRouteRouteImport } from './routes/_admin/route'
+import { Route as AdminAuthCheckRouteImport } from './routes/admin-auth-check'
+import { Route as AlEenStickerRouteImport } from './routes/al-een-sticker'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BestellenRouteImport } from './routes/bestellen'
+import { Route as BikesearchRouteImport } from './routes/bikesearch'
+import { Route as DedupAuditRouteImport } from './routes/dedup-audit'
+import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
+import { Route as GestolenRouteImport } from './routes/gestolen'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as ProfessionalsRouteImport } from './routes/professionals'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as LangIndexRouteImport } from './routes/$lang/index'
-import { Route as MTokenRouteImport } from './routes/m.$token'
-import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
-import { Route as AdminAdminWebhooksRouteImport } from './routes/_admin/admin-webhooks'
-import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin-users'
-import { Route as AdminAdminShopsRouteImport } from './routes/_admin/admin-shops'
-import { Route as AdminAdminShopSignupsRouteImport } from './routes/_admin/admin-shop-signups'
-import { Route as AdminAdminMarginPollRouteImport } from './routes/_admin/admin-margin-poll'
-import { Route as AdminAdminEmailLogRouteImport } from './routes/_admin/admin-email-log'
-import { Route as AdminAdminEmailEventsRouteImport } from './routes/_admin/admin-email-events'
-import { Route as AdminAdminAuditRouteImport } from './routes/_admin/admin-audit'
-import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
-import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
-import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
-import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
-import { Route as LangShopRouteImport } from './routes/$lang/shop'
-import { Route as LangProRouteImport } from './routes/$lang/pro'
-import { Route as LangPrivacyRouteImport } from './routes/$lang/privacy'
-import { Route as LangOrderRouteImport } from './routes/$lang/order'
-import { Route as LangMarquageVeloRouteImport } from './routes/$lang/marquage-velo'
-import { Route as LangManufacturerRouteImport } from './routes/$lang/manufacturer'
-import { Route as LangLeasingRouteImport } from './routes/$lang/leasing'
-import { Route as LangInsuranceRouteImport } from './routes/$lang/insurance'
-import { Route as LangContactRouteImport } from './routes/$lang/contact'
-import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
-import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
 import { Route as LangAlreadyHaveOneRouteImport } from './routes/$lang/already-have-one'
-import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
-import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
-import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
-import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
+import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
+import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
+import { Route as LangContactRouteImport } from './routes/$lang/contact'
+import { Route as LangInsuranceRouteImport } from './routes/$lang/insurance'
+import { Route as LangLeasingRouteImport } from './routes/$lang/leasing'
+import { Route as LangManufacturerRouteImport } from './routes/$lang/manufacturer'
+import { Route as LangMarquageVeloRouteImport } from './routes/$lang/marquage-velo'
+import { Route as LangOrderRouteImport } from './routes/$lang/order'
+import { Route as LangPrivacyRouteImport } from './routes/$lang/privacy'
+import { Route as LangProRouteImport } from './routes/$lang/pro'
+import { Route as LangShopRouteImport } from './routes/$lang/shop'
+import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
+import { Route as AdminAdminAuditRouteImport } from './routes/_admin/admin-audit'
+import { Route as AdminAdminEmailEventsRouteImport } from './routes/_admin/admin-email-events'
+import { Route as AdminAdminEmailLogRouteImport } from './routes/_admin/admin-email-log'
+import { Route as AdminAdminMarginPollRouteImport } from './routes/_admin/admin-margin-poll'
+import { Route as AdminAdminReportRouteImport } from './routes/_admin/admin-report'
+import { Route as AdminAdminShopSignupsRouteImport } from './routes/_admin/admin-shop-signups'
+import { Route as AdminAdminShopsRouteImport } from './routes/_admin/admin-shops'
+import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin-users'
+import { Route as AdminAdminWebhooksRouteImport } from './routes/_admin/admin-webhooks'
+import { Route as BestellenBedanktRouteImport } from './routes/bestellen.bedankt'
+import { Route as MTokenRouteImport } from './routes/m.$token'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
+import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
+import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfessionalsRoute = ProfessionalsRouteImport.update({
-  id: '/professionals',
-  path: '/professionals',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const McpRoute = McpRouteImport.update({
-  id: '/mcp',
-  path: '/mcp',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GestolenRoute = GestolenRouteImport.update({
-  id: '/gestolen',
-  path: '/gestolen',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FietsControlerenRoute = FietsControlerenRouteImport.update({
-  id: '/fiets-controleren',
-  path: '/fiets-controleren',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DedupAuditRoute = DedupAuditRouteImport.update({
-  id: '/dedup-audit',
-  path: '/dedup-audit',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BikesearchRoute = BikesearchRouteImport.update({
-  id: '/bikesearch',
-  path: '/bikesearch',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BestellenRoute = BestellenRouteImport.update({
-  id: '/bestellen',
-  path: '/bestellen',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AlEenStickerRoute = AlEenStickerRouteImport.update({
-  id: '/al-een-sticker',
-  path: '/al-een-sticker',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminAuthCheckRoute = AdminAuthCheckRouteImport.update({
-  id: '/admin-auth-check',
-  path: '/admin-auth-check',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRouteRoute = AdminRouteRouteImport.update({
-  id: '/_admin',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LangRouteRoute = LangRouteRouteImport.update({
@@ -127,9 +69,68 @@ const LangRouteRoute = LangRouteRouteImport.update({
   path: '/$lang',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuthCheckRoute = AdminAuthCheckRouteImport.update({
+  id: '/admin-auth-check',
+  path: '/admin-auth-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlEenStickerRoute = AlEenStickerRouteImport.update({
+  id: '/al-een-sticker',
+  path: '/al-een-sticker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BestellenRoute = BestellenRouteImport.update({
+  id: '/bestellen',
+  path: '/bestellen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BikesearchRoute = BikesearchRouteImport.update({
+  id: '/bikesearch',
+  path: '/bikesearch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DedupAuditRoute = DedupAuditRouteImport.update({
+  id: '/dedup-audit',
+  path: '/dedup-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FietsControlerenRoute = FietsControlerenRouteImport.update({
+  id: '/fiets-controleren',
+  path: '/fiets-controleren',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GestolenRoute = GestolenRouteImport.update({
+  id: '/gestolen',
+  path: '/gestolen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfessionalsRoute = ProfessionalsRouteImport.update({
+  id: '/professionals',
+  path: '/professionals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LangIndexRoute = LangIndexRouteImport.update({
@@ -137,126 +138,9 @@ const LangIndexRoute = LangIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LangRouteRoute,
 } as any)
-const MTokenRoute = MTokenRouteImport.update({
-  id: '/m/$token',
-  path: '/m/$token',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
-  id: '/bedankt',
-  path: '/bedankt',
-  getParentRoute: () => BestellenRoute,
-} as any)
-const AdminAdminWebhooksRoute = AdminAdminWebhooksRouteImport.update({
-  id: '/admin-webhooks',
-  path: '/admin-webhooks',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
-  id: '/admin-users',
-  path: '/admin-users',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminShopsRoute = AdminAdminShopsRouteImport.update({
-  id: '/admin-shops',
-  path: '/admin-shops',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminShopSignupsRoute = AdminAdminShopSignupsRouteImport.update({
-  id: '/admin-shop-signups',
-  path: '/admin-shop-signups',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminMarginPollRoute = AdminAdminMarginPollRouteImport.update({
-  id: '/admin-margin-poll',
-  path: '/admin-margin-poll',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminEmailLogRoute = AdminAdminEmailLogRouteImport.update({
-  id: '/admin-email-log',
-  path: '/admin-email-log',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminEmailEventsRoute = AdminAdminEmailEventsRouteImport.update({
-  id: '/admin-email-events',
-  path: '/admin-email-events',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminAuditRoute = AdminAdminAuditRouteImport.update({
-  id: '/admin-audit',
-  path: '/admin-audit',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const AdminAdminRoute = AdminAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
-const Char91DotwellKnownChar93OauthProtectedResourceRoute =
-  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
-    id: '/.well-known/oauth-protected-resource',
-    path: '/.well-known/oauth-protected-resource',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const Char91DotmcpChar93ListToolsRoute =
-  Char91DotmcpChar93ListToolsRouteImport.update({
-    id: '/.mcp/list-tools',
-    path: '/.mcp/list-tools',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const LangStolenRoute = LangStolenRouteImport.update({
-  id: '/stolen',
-  path: '/stolen',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangShopRoute = LangShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangProRoute = LangProRouteImport.update({
-  id: '/pro',
-  path: '/pro',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangPrivacyRoute = LangPrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangOrderRoute = LangOrderRouteImport.update({
-  id: '/order',
-  path: '/order',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangMarquageVeloRoute = LangMarquageVeloRouteImport.update({
-  id: '/marquage-velo',
-  path: '/marquage-velo',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangManufacturerRoute = LangManufacturerRouteImport.update({
-  id: '/manufacturer',
-  path: '/manufacturer',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangLeasingRoute = LangLeasingRouteImport.update({
-  id: '/leasing',
-  path: '/leasing',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangInsuranceRoute = LangInsuranceRouteImport.update({
-  id: '/insurance',
-  path: '/insurance',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangContactRoute = LangContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => LangRouteRoute,
-} as any)
-const LangBikeCheckRoute = LangBikeCheckRouteImport.update({
-  id: '/bike-check',
-  path: '/bike-check',
+const LangAlreadyHaveOneRoute = LangAlreadyHaveOneRouteImport.update({
+  id: '/already-have-one',
+  path: '/already-have-one',
   getParentRoute: () => LangRouteRoute,
 } as any)
 const LangAssistanceRoute = LangAssistanceRouteImport.update({
@@ -264,31 +148,132 @@ const LangAssistanceRoute = LangAssistanceRouteImport.update({
   path: '/assistance',
   getParentRoute: () => LangRouteRoute,
 } as any)
-const LangAlreadyHaveOneRoute = LangAlreadyHaveOneRouteImport.update({
-  id: '/already-have-one',
-  path: '/already-have-one',
+const LangBikeCheckRoute = LangBikeCheckRouteImport.update({
+  id: '/bike-check',
+  path: '/bike-check',
   getParentRoute: () => LangRouteRoute,
 } as any)
-const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
-  id: '/api/public/vies-lookup',
-  path: '/api/public/vies-lookup',
-  getParentRoute: () => rootRouteImport,
+const LangContactRoute = LangContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => LangRouteRoute,
 } as any)
-const ApiPublicShopSignupRoute = ApiPublicShopSignupRouteImport.update({
-  id: '/api/public/shop-signup',
-  path: '/api/public/shop-signup',
-  getParentRoute: () => rootRouteImport,
+const LangInsuranceRoute = LangInsuranceRouteImport.update({
+  id: '/insurance',
+  path: '/insurance',
+  getParentRoute: () => LangRouteRoute,
 } as any)
-const Char91DotmcpChar93InvokeToolToolRoute =
-  Char91DotmcpChar93InvokeToolToolRouteImport.update({
-    id: '/.mcp/invoke-tool/$tool',
-    path: '/.mcp/invoke-tool/$tool',
+const LangLeasingRoute = LangLeasingRouteImport.update({
+  id: '/leasing',
+  path: '/leasing',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangManufacturerRoute = LangManufacturerRouteImport.update({
+  id: '/manufacturer',
+  path: '/manufacturer',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangMarquageVeloRoute = LangMarquageVeloRouteImport.update({
+  id: '/marquage-velo',
+  path: '/marquage-velo',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangOrderRoute = LangOrderRouteImport.update({
+  id: '/order',
+  path: '/order',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangPrivacyRoute = LangPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangProRoute = LangProRouteImport.update({
+  id: '/pro',
+  path: '/pro',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangShopRoute = LangShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const LangStolenRoute = LangStolenRouteImport.update({
+  id: '/stolen',
+  path: '/stolen',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
-const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
-  id: '/order_/thanks',
-  path: '/order/thanks',
-  getParentRoute: () => LangRouteRoute,
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AdminAdminRoute = AdminAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminAuditRoute = AdminAdminAuditRouteImport.update({
+  id: '/admin-audit',
+  path: '/admin-audit',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminEmailEventsRoute = AdminAdminEmailEventsRouteImport.update({
+  id: '/admin-email-events',
+  path: '/admin-email-events',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminEmailLogRoute = AdminAdminEmailLogRouteImport.update({
+  id: '/admin-email-log',
+  path: '/admin-email-log',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminMarginPollRoute = AdminAdminMarginPollRouteImport.update({
+  id: '/admin-margin-poll',
+  path: '/admin-margin-poll',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminReportRoute = AdminAdminReportRouteImport.update({
+  id: '/admin-report',
+  path: '/admin-report',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminShopSignupsRoute = AdminAdminShopSignupsRouteImport.update({
+  id: '/admin-shop-signups',
+  path: '/admin-shop-signups',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminShopsRoute = AdminAdminShopsRouteImport.update({
+  id: '/admin-shops',
+  path: '/admin-shops',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminUsersRoute = AdminAdminUsersRouteImport.update({
+  id: '/admin-users',
+  path: '/admin-users',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminWebhooksRoute = AdminAdminWebhooksRouteImport.update({
+  id: '/admin-webhooks',
+  path: '/admin-webhooks',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const BestellenBedanktRoute = BestellenBedanktRouteImport.update({
+  id: '/bedankt',
+  path: '/bedankt',
+  getParentRoute: () => BestellenRoute,
+} as any)
+const MTokenRoute = MTokenRouteImport.update({
+  id: '/m/$token',
+  path: '/m/$token',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LangGuidesBuyingSecondHandRoute =
   LangGuidesBuyingSecondHandRouteImport.update({
@@ -296,6 +281,27 @@ const LangGuidesBuyingSecondHandRoute =
     path: '/guides/buying-second-hand',
     getParentRoute: () => LangRouteRoute,
   } as any)
+const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
+  id: '/order_/thanks',
+  path: '/order/thanks',
+  getParentRoute: () => LangRouteRoute,
+} as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicShopSignupRoute = ApiPublicShopSignupRouteImport.update({
+  id: '/api/public/shop-signup',
+  path: '/api/public/shop-signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicViesLookupRoute = ApiPublicViesLookupRouteImport.update({
+  id: '/api/public/vies-lookup',
+  path: '/api/public/vies-lookup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaymentsMollieWebhookRoute =
   ApiPublicPaymentsMollieWebhookRouteImport.update({
     id: '/api/public/payments/mollie-webhook',
@@ -338,6 +344,7 @@ export interface FileRoutesByFullPath {
   '/admin-email-events': typeof AdminAdminEmailEventsRoute
   '/admin-email-log': typeof AdminAdminEmailLogRoute
   '/admin-margin-poll': typeof AdminAdminMarginPollRoute
+  '/admin-report': typeof AdminAdminReportRoute
   '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
   '/admin-shops': typeof AdminAdminShopsRoute
   '/admin-users': typeof AdminAdminUsersRoute
@@ -386,6 +393,7 @@ export interface FileRoutesByTo {
   '/admin-email-events': typeof AdminAdminEmailEventsRoute
   '/admin-email-log': typeof AdminAdminEmailLogRoute
   '/admin-margin-poll': typeof AdminAdminMarginPollRoute
+  '/admin-report': typeof AdminAdminReportRoute
   '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
   '/admin-shops': typeof AdminAdminShopsRoute
   '/admin-users': typeof AdminAdminUsersRoute
@@ -437,6 +445,7 @@ export interface FileRoutesById {
   '/_admin/admin-email-events': typeof AdminAdminEmailEventsRoute
   '/_admin/admin-email-log': typeof AdminAdminEmailLogRoute
   '/_admin/admin-margin-poll': typeof AdminAdminMarginPollRoute
+  '/_admin/admin-report': typeof AdminAdminReportRoute
   '/_admin/admin-shop-signups': typeof AdminAdminShopSignupsRoute
   '/_admin/admin-shops': typeof AdminAdminShopsRoute
   '/_admin/admin-users': typeof AdminAdminUsersRoute
@@ -488,6 +497,7 @@ export interface FileRouteTypes {
     | '/admin-email-events'
     | '/admin-email-log'
     | '/admin-margin-poll'
+    | '/admin-report'
     | '/admin-shop-signups'
     | '/admin-shops'
     | '/admin-users'
@@ -536,6 +546,7 @@ export interface FileRouteTypes {
     | '/admin-email-events'
     | '/admin-email-log'
     | '/admin-margin-poll'
+    | '/admin-report'
     | '/admin-shop-signups'
     | '/admin-shops'
     | '/admin-users'
@@ -586,6 +597,7 @@ export interface FileRouteTypes {
     | '/_admin/admin-email-events'
     | '/_admin/admin-email-log'
     | '/_admin/admin-margin-poll'
+    | '/_admin/admin-report'
     | '/_admin/admin-shop-signups'
     | '/_admin/admin-shops'
     | '/_admin/admin-users'
@@ -628,95 +640,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/professionals': {
-      id: '/professionals'
-      path: '/professionals'
-      fullPath: '/professionals'
-      preLoaderRoute: typeof ProfessionalsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/mcp': {
-      id: '/mcp'
-      path: '/mcp'
-      fullPath: '/mcp'
-      preLoaderRoute: typeof McpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gestolen': {
-      id: '/gestolen'
-      path: '/gestolen'
-      fullPath: '/gestolen'
-      preLoaderRoute: typeof GestolenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/fiets-controleren': {
-      id: '/fiets-controleren'
-      path: '/fiets-controleren'
-      fullPath: '/fiets-controleren'
-      preLoaderRoute: typeof FietsControlerenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dedup-audit': {
-      id: '/dedup-audit'
-      path: '/dedup-audit'
-      fullPath: '/dedup-audit'
-      preLoaderRoute: typeof DedupAuditRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bikesearch': {
-      id: '/bikesearch'
-      path: '/bikesearch'
-      fullPath: '/bikesearch'
-      preLoaderRoute: typeof BikesearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bestellen': {
-      id: '/bestellen'
-      path: '/bestellen'
-      fullPath: '/bestellen'
-      preLoaderRoute: typeof BestellenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/al-een-sticker': {
-      id: '/al-een-sticker'
-      path: '/al-een-sticker'
-      fullPath: '/al-een-sticker'
-      preLoaderRoute: typeof AlEenStickerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin-auth-check': {
-      id: '/admin-auth-check'
-      path: '/admin-auth-check'
-      fullPath: '/admin-auth-check'
-      preLoaderRoute: typeof AdminAuthCheckRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_admin': {
-      id: '/_admin'
-      path: ''
+    '/': {
+      id: '/'
+      path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AdminRouteRouteImport
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$lang': {
@@ -726,11 +654,95 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
+    '/_admin': {
+      id: '/_admin'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-auth-check': {
+      id: '/admin-auth-check'
+      path: '/admin-auth-check'
+      fullPath: '/admin-auth-check'
+      preLoaderRoute: typeof AdminAuthCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/al-een-sticker': {
+      id: '/al-een-sticker'
+      path: '/al-een-sticker'
+      fullPath: '/al-een-sticker'
+      preLoaderRoute: typeof AlEenStickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bestellen': {
+      id: '/bestellen'
+      path: '/bestellen'
+      fullPath: '/bestellen'
+      preLoaderRoute: typeof BestellenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bikesearch': {
+      id: '/bikesearch'
+      path: '/bikesearch'
+      fullPath: '/bikesearch'
+      preLoaderRoute: typeof BikesearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dedup-audit': {
+      id: '/dedup-audit'
+      path: '/dedup-audit'
+      fullPath: '/dedup-audit'
+      preLoaderRoute: typeof DedupAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fiets-controleren': {
+      id: '/fiets-controleren'
+      path: '/fiets-controleren'
+      fullPath: '/fiets-controleren'
+      preLoaderRoute: typeof FietsControlerenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gestolen': {
+      id: '/gestolen'
+      path: '/gestolen'
+      fullPath: '/gestolen'
+      preLoaderRoute: typeof GestolenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/professionals': {
+      id: '/professionals'
+      path: '/professionals'
+      fullPath: '/professionals'
+      preLoaderRoute: typeof ProfessionalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$lang/': {
@@ -740,172 +752,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangIndexRouteImport
       parentRoute: typeof LangRouteRoute
     }
-    '/m/$token': {
-      id: '/m/$token'
-      path: '/m/$token'
-      fullPath: '/m/$token'
-      preLoaderRoute: typeof MTokenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/bestellen/bedankt': {
-      id: '/bestellen/bedankt'
-      path: '/bedankt'
-      fullPath: '/bestellen/bedankt'
-      preLoaderRoute: typeof BestellenBedanktRouteImport
-      parentRoute: typeof BestellenRoute
-    }
-    '/_admin/admin-webhooks': {
-      id: '/_admin/admin-webhooks'
-      path: '/admin-webhooks'
-      fullPath: '/admin-webhooks'
-      preLoaderRoute: typeof AdminAdminWebhooksRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-users': {
-      id: '/_admin/admin-users'
-      path: '/admin-users'
-      fullPath: '/admin-users'
-      preLoaderRoute: typeof AdminAdminUsersRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-shops': {
-      id: '/_admin/admin-shops'
-      path: '/admin-shops'
-      fullPath: '/admin-shops'
-      preLoaderRoute: typeof AdminAdminShopsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-shop-signups': {
-      id: '/_admin/admin-shop-signups'
-      path: '/admin-shop-signups'
-      fullPath: '/admin-shop-signups'
-      preLoaderRoute: typeof AdminAdminShopSignupsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-margin-poll': {
-      id: '/_admin/admin-margin-poll'
-      path: '/admin-margin-poll'
-      fullPath: '/admin-margin-poll'
-      preLoaderRoute: typeof AdminAdminMarginPollRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-email-log': {
-      id: '/_admin/admin-email-log'
-      path: '/admin-email-log'
-      fullPath: '/admin-email-log'
-      preLoaderRoute: typeof AdminAdminEmailLogRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-email-events': {
-      id: '/_admin/admin-email-events'
-      path: '/admin-email-events'
-      fullPath: '/admin-email-events'
-      preLoaderRoute: typeof AdminAdminEmailEventsRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin-audit': {
-      id: '/_admin/admin-audit'
-      path: '/admin-audit'
-      fullPath: '/admin-audit'
-      preLoaderRoute: typeof AdminAdminAuditRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/_admin/admin': {
-      id: '/_admin/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminAdminRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
-    '/.well-known/oauth-protected-resource': {
-      id: '/.well-known/oauth-protected-resource'
-      path: '/.well-known/oauth-protected-resource'
-      fullPath: '/.well-known/oauth-protected-resource'
-      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/.mcp/list-tools': {
-      id: '/.mcp/list-tools'
-      path: '/.mcp/list-tools'
-      fullPath: '/.mcp/list-tools'
-      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$lang/stolen': {
-      id: '/$lang/stolen'
-      path: '/stolen'
-      fullPath: '/$lang/stolen'
-      preLoaderRoute: typeof LangStolenRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/shop': {
-      id: '/$lang/shop'
-      path: '/shop'
-      fullPath: '/$lang/shop'
-      preLoaderRoute: typeof LangShopRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/pro': {
-      id: '/$lang/pro'
-      path: '/pro'
-      fullPath: '/$lang/pro'
-      preLoaderRoute: typeof LangProRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/privacy': {
-      id: '/$lang/privacy'
-      path: '/privacy'
-      fullPath: '/$lang/privacy'
-      preLoaderRoute: typeof LangPrivacyRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/order': {
-      id: '/$lang/order'
-      path: '/order'
-      fullPath: '/$lang/order'
-      preLoaderRoute: typeof LangOrderRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/marquage-velo': {
-      id: '/$lang/marquage-velo'
-      path: '/marquage-velo'
-      fullPath: '/$lang/marquage-velo'
-      preLoaderRoute: typeof LangMarquageVeloRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/manufacturer': {
-      id: '/$lang/manufacturer'
-      path: '/manufacturer'
-      fullPath: '/$lang/manufacturer'
-      preLoaderRoute: typeof LangManufacturerRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/leasing': {
-      id: '/$lang/leasing'
-      path: '/leasing'
-      fullPath: '/$lang/leasing'
-      preLoaderRoute: typeof LangLeasingRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/insurance': {
-      id: '/$lang/insurance'
-      path: '/insurance'
-      fullPath: '/$lang/insurance'
-      preLoaderRoute: typeof LangInsuranceRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/contact': {
-      id: '/$lang/contact'
-      path: '/contact'
-      fullPath: '/$lang/contact'
-      preLoaderRoute: typeof LangContactRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/bike-check': {
-      id: '/$lang/bike-check'
-      path: '/bike-check'
-      fullPath: '/$lang/bike-check'
-      preLoaderRoute: typeof LangBikeCheckRouteImport
+    '/$lang/already-have-one': {
+      id: '/$lang/already-have-one'
+      path: '/already-have-one'
+      fullPath: '/$lang/already-have-one'
+      preLoaderRoute: typeof LangAlreadyHaveOneRouteImport
       parentRoute: typeof LangRouteRoute
     }
     '/$lang/assistance': {
@@ -915,18 +766,200 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAssistanceRouteImport
       parentRoute: typeof LangRouteRoute
     }
-    '/$lang/already-have-one': {
-      id: '/$lang/already-have-one'
-      path: '/already-have-one'
-      fullPath: '/$lang/already-have-one'
-      preLoaderRoute: typeof LangAlreadyHaveOneRouteImport
+    '/$lang/bike-check': {
+      id: '/$lang/bike-check'
+      path: '/bike-check'
+      fullPath: '/$lang/bike-check'
+      preLoaderRoute: typeof LangBikeCheckRouteImport
       parentRoute: typeof LangRouteRoute
     }
-    '/api/public/vies-lookup': {
-      id: '/api/public/vies-lookup'
-      path: '/api/public/vies-lookup'
-      fullPath: '/api/public/vies-lookup'
-      preLoaderRoute: typeof ApiPublicViesLookupRouteImport
+    '/$lang/contact': {
+      id: '/$lang/contact'
+      path: '/contact'
+      fullPath: '/$lang/contact'
+      preLoaderRoute: typeof LangContactRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/insurance': {
+      id: '/$lang/insurance'
+      path: '/insurance'
+      fullPath: '/$lang/insurance'
+      preLoaderRoute: typeof LangInsuranceRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/leasing': {
+      id: '/$lang/leasing'
+      path: '/leasing'
+      fullPath: '/$lang/leasing'
+      preLoaderRoute: typeof LangLeasingRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/manufacturer': {
+      id: '/$lang/manufacturer'
+      path: '/manufacturer'
+      fullPath: '/$lang/manufacturer'
+      preLoaderRoute: typeof LangManufacturerRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/marquage-velo': {
+      id: '/$lang/marquage-velo'
+      path: '/marquage-velo'
+      fullPath: '/$lang/marquage-velo'
+      preLoaderRoute: typeof LangMarquageVeloRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/order': {
+      id: '/$lang/order'
+      path: '/order'
+      fullPath: '/$lang/order'
+      preLoaderRoute: typeof LangOrderRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/privacy': {
+      id: '/$lang/privacy'
+      path: '/privacy'
+      fullPath: '/$lang/privacy'
+      preLoaderRoute: typeof LangPrivacyRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/pro': {
+      id: '/$lang/pro'
+      path: '/pro'
+      fullPath: '/$lang/pro'
+      preLoaderRoute: typeof LangProRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/shop': {
+      id: '/$lang/shop'
+      path: '/shop'
+      fullPath: '/$lang/shop'
+      preLoaderRoute: typeof LangShopRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/stolen': {
+      id: '/$lang/stolen'
+      path: '/stolen'
+      fullPath: '/$lang/stolen'
+      preLoaderRoute: typeof LangStolenRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin/admin': {
+      id: '/_admin/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAdminRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-audit': {
+      id: '/_admin/admin-audit'
+      path: '/admin-audit'
+      fullPath: '/admin-audit'
+      preLoaderRoute: typeof AdminAdminAuditRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-email-events': {
+      id: '/_admin/admin-email-events'
+      path: '/admin-email-events'
+      fullPath: '/admin-email-events'
+      preLoaderRoute: typeof AdminAdminEmailEventsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-email-log': {
+      id: '/_admin/admin-email-log'
+      path: '/admin-email-log'
+      fullPath: '/admin-email-log'
+      preLoaderRoute: typeof AdminAdminEmailLogRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-margin-poll': {
+      id: '/_admin/admin-margin-poll'
+      path: '/admin-margin-poll'
+      fullPath: '/admin-margin-poll'
+      preLoaderRoute: typeof AdminAdminMarginPollRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-report': {
+      id: '/_admin/admin-report'
+      path: '/admin-report'
+      fullPath: '/admin-report'
+      preLoaderRoute: typeof AdminAdminReportRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-shop-signups': {
+      id: '/_admin/admin-shop-signups'
+      path: '/admin-shop-signups'
+      fullPath: '/admin-shop-signups'
+      preLoaderRoute: typeof AdminAdminShopSignupsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-shops': {
+      id: '/_admin/admin-shops'
+      path: '/admin-shops'
+      fullPath: '/admin-shops'
+      preLoaderRoute: typeof AdminAdminShopsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-users': {
+      id: '/_admin/admin-users'
+      path: '/admin-users'
+      fullPath: '/admin-users'
+      preLoaderRoute: typeof AdminAdminUsersRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin-webhooks': {
+      id: '/_admin/admin-webhooks'
+      path: '/admin-webhooks'
+      fullPath: '/admin-webhooks'
+      preLoaderRoute: typeof AdminAdminWebhooksRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/bestellen/bedankt': {
+      id: '/bestellen/bedankt'
+      path: '/bedankt'
+      fullPath: '/bestellen/bedankt'
+      preLoaderRoute: typeof BestellenBedanktRouteImport
+      parentRoute: typeof BestellenRoute
+    }
+    '/m/$token': {
+      id: '/m/$token'
+      path: '/m/$token'
+      fullPath: '/m/$token'
+      preLoaderRoute: typeof MTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$lang/guides/buying-second-hand': {
+      id: '/$lang/guides/buying-second-hand'
+      path: '/guides/buying-second-hand'
+      fullPath: '/$lang/guides/buying-second-hand'
+      preLoaderRoute: typeof LangGuidesBuyingSecondHandRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/$lang/order_/thanks': {
+      id: '/$lang/order_/thanks'
+      path: '/order/thanks'
+      fullPath: '/$lang/order/thanks'
+      preLoaderRoute: typeof LangOrderThanksRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/shop-signup': {
@@ -936,26 +969,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicShopSignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/.mcp/invoke-tool/$tool': {
-      id: '/.mcp/invoke-tool/$tool'
-      path: '/.mcp/invoke-tool/$tool'
-      fullPath: '/.mcp/invoke-tool/$tool'
-      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+    '/api/public/vies-lookup': {
+      id: '/api/public/vies-lookup'
+      path: '/api/public/vies-lookup'
+      fullPath: '/api/public/vies-lookup'
+      preLoaderRoute: typeof ApiPublicViesLookupRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/$lang/order_/thanks': {
-      id: '/$lang/order_/thanks'
-      path: '/order/thanks'
-      fullPath: '/$lang/order/thanks'
-      preLoaderRoute: typeof LangOrderThanksRouteImport
-      parentRoute: typeof LangRouteRoute
-    }
-    '/$lang/guides/buying-second-hand': {
-      id: '/$lang/guides/buying-second-hand'
-      path: '/guides/buying-second-hand'
-      fullPath: '/$lang/guides/buying-second-hand'
-      preLoaderRoute: typeof LangGuidesBuyingSecondHandRouteImport
-      parentRoute: typeof LangRouteRoute
     }
     '/api/public/payments/mollie-webhook': {
       id: '/api/public/payments/mollie-webhook'
@@ -1015,6 +1034,7 @@ interface AdminRouteRouteChildren {
   AdminAdminEmailEventsRoute: typeof AdminAdminEmailEventsRoute
   AdminAdminEmailLogRoute: typeof AdminAdminEmailLogRoute
   AdminAdminMarginPollRoute: typeof AdminAdminMarginPollRoute
+  AdminAdminReportRoute: typeof AdminAdminReportRoute
   AdminAdminShopSignupsRoute: typeof AdminAdminShopSignupsRoute
   AdminAdminShopsRoute: typeof AdminAdminShopsRoute
   AdminAdminUsersRoute: typeof AdminAdminUsersRoute
@@ -1027,6 +1047,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminEmailEventsRoute: AdminAdminEmailEventsRoute,
   AdminAdminEmailLogRoute: AdminAdminEmailLogRoute,
   AdminAdminMarginPollRoute: AdminAdminMarginPollRoute,
+  AdminAdminReportRoute: AdminAdminReportRoute,
   AdminAdminShopSignupsRoute: AdminAdminShopSignupsRoute,
   AdminAdminShopsRoute: AdminAdminShopsRoute,
   AdminAdminUsersRoute: AdminAdminUsersRoute,

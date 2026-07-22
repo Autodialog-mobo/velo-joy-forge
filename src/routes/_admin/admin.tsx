@@ -1030,6 +1030,13 @@ function AdminPage() {
                 <>
                   {" · "}
                   <a
+                    href="/admin-report"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    Rapportage
+                  </a>
+                  {" · "}
+                  <a
                     href="/admin-webhooks"
                     style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
                   >
