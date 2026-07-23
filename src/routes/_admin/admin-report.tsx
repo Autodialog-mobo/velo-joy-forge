@@ -95,6 +95,22 @@ function countryLabel(code: string) {
   }
 }
 
+const PERIOD_OPTIONS = [
+  { v: "mtd", label: "Deze maand" },
+  { v: "30d", label: "Laatste 30 dagen" },
+  { v: "90d", label: "Laatste 90 dagen" },
+  { v: "ytd", label: "Dit jaar" },
+  { v: "all", label: "Alles" },
+];
+function periodStart(period: string): Date | null {
+  const now = new Date();
+  if (period === "all") return null;
+  if (period === "mtd") return new Date(now.getFullYear(), now.getMonth(), 1);
+  if (period === "ytd") return new Date(now.getFullYear(), 0, 1);
+  if (period === "90d") return new Date(now.getTime() - 90 * 86400000);
+  return new Date(now.getTime() - 30 * 86400000); // 30d default
+}
+
 /* ------------------------------------------------------------------ */
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
@@ -103,6 +119,7 @@ function AdminReportPage() {
   const [granularity, setGranularity] = useState<Granularity>("week");
   const [metric, setMetric] = useState<"count" | "revenue">("count");
   const [country, setCountry] = useState<string>("__all");
+  const [period, setPeriod] = useState<string>("30d");
   const [showEvoTable, setShowEvoTable] = useState(false);
 
   const run = useServerFn(orderReport);
@@ -141,21 +158,30 @@ function AdminReportPage() {
     return allOrders.filter((o) => (o.shipping_country || "").trim().toUpperCase() === country);
   }, [allOrders, country]);
 
+  // Period-scoped orders drive the KPIs, charts and breakdowns. Signals keep
+  // their own 30-vs-30-day windows; country + A/B use the full set.
+  const periodOrders = useMemo(() => {
+    const from = periodStart(period);
+    if (!from) return orders;
+    const t0 = from.getTime();
+    return orders.filter((o) => new Date(o.created_at).getTime() >= t0);
+  }, [orders, period]);
+
   /* ---- KPIs ---- */
   const kpis = useMemo(() => {
     let revenue = 0;
     let stickers = 0;
-    for (const o of orders) revenue += o.amount_total || 0;
-    for (const o of orders) {
+    for (const o of periodOrders) revenue += o.amount_total || 0;
+    for (const o of periodOrders) {
       for (const l of linesByOrder.get(o.id) ?? []) stickers += l.sticker_count || 0;
     }
-    const count = orders.length;
+    const count = periodOrders.length;
     return { count, revenue, stickers, aov: count ? revenue / count : 0 };
-  }, [orders, linesByOrder]);
+  }, [periodOrders, linesByOrder]);
 
   /* ---- Evolution series (count + revenue) ---- */
   const evolution = useMemo(() => {
-    if (!orders.length)
+    if (!periodOrders.length)
       return [] as {
         key: string;
         label: string;
@@ -163,7 +189,7 @@ function AdminReportPage() {
         revenue: number;
         refs: Record<string, number>;
       }[];
-    const dates = orders.map((o) => new Date(o.created_at));
+    const dates = periodOrders.map((o) => new Date(o.created_at));
     const min = new Date(Math.min(...dates.map((d) => d.getTime())));
     const max = new Date(Math.max(...dates.map((d) => d.getTime())));
     const buckets = buildBuckets(min, max, granularity);
@@ -175,7 +201,7 @@ function AdminReportPage() {
       revenue: 0,
       refs: {} as Record<string, number>,
     }));
-    for (const o of orders) {
+    for (const o of periodOrders) {
       const b = bucketOf(o.created_at, granularity);
       const i = idx.get(b.key);
       if (i == null) continue;
@@ -185,12 +211,12 @@ function AdminReportPage() {
       rows[i].refs[refKey] = (rows[i].refs[refKey] ?? 0) + 1;
     }
     return rows;
-  }, [orders, granularity]);
+  }, [periodOrders, granularity]);
 
   /* ---- Bundle evolution (units per bundle per bucket, stacked) ---- */
   const bundleEvolution = useMemo(() => {
-    if (!orders.length) return [] as any[];
-    const dates = orders.map((o) => new Date(o.created_at));
+    if (!periodOrders.length) return [] as any[];
+    const dates = periodOrders.map((o) => new Date(o.created_at));
     const min = new Date(Math.min(...dates.map((d) => d.getTime())));
     const max = new Date(Math.max(...dates.map((d) => d.getTime())));
     const buckets = buildBuckets(min, max, granularity);
@@ -200,7 +226,7 @@ function AdminReportPage() {
       for (const k of BUNDLE_ORDER) r[k] = 0;
       return r;
     });
-    for (const o of orders) {
+    for (const o of periodOrders) {
       const b = bucketOf(o.created_at, granularity);
       const i = idx.get(b.key);
       if (i == null) continue;
@@ -210,12 +236,12 @@ function AdminReportPage() {
       }
     }
     return rows;
-  }, [orders, linesByOrder, granularity]);
+  }, [periodOrders, linesByOrder, granularity]);
 
   /* ---- Bundle breakdown totals ---- */
   const bundleStats = useMemo(() => {
     const map = new Map<string, { units: number; stickers: number; revenue: number; orders: number }>();
-    for (const o of orders) {
+    for (const o of periodOrders) {
       const seenBundles = new Set<string>();
       for (const l of linesByOrder.get(o.id) ?? []) {
         const cur = map.get(l.bundle_key) ?? { units: 0, stickers: 0, revenue: 0, orders: 0 };
@@ -234,16 +260,16 @@ function AdminReportPage() {
       (a, b) => BUNDLE_ORDER.indexOf(a as any) - BUNDLE_ORDER.indexOf(b as any),
     );
     return keys.map((k) => ({ key: k, ...map.get(k)!, share: (map.get(k)!.units / totalUnits) * 100 }));
-  }, [orders, linesByOrder]);
+  }, [periodOrders, linesByOrder]);
 
   /* ---- Referral breakdown ---- */
   const referralStats = useMemo(() => {
     const map = new Map<string, number>();
-    for (const o of orders) {
+    for (const o of periodOrders) {
       const key = o.referral_source && o.referral_source !== "" ? o.referral_source : "__unknown";
       map.set(key, (map.get(key) ?? 0) + 1);
     }
-    const total = orders.length || 1;
+    const total = periodOrders.length || 1;
     return Array.from(map.entries())
       .map(([key, count]) => ({
         key,
@@ -252,7 +278,7 @@ function AdminReportPage() {
         share: (count / total) * 100,
       }))
       .sort((a, b) => b.count - a.count);
-  }, [orders]);
+  }, [periodOrders]);
 
   /* ---- Country breakdown (always full, ignores the country filter) ---- */
   const countryStats = useMemo(() => {
@@ -350,6 +376,18 @@ function AdminReportPage() {
             value={environment}
             onChange={(v) => setEnvironment(v as any)}
           />
+          <select
+            value={period}
+            onChange={(e) => setPeriod(e.target.value)}
+            style={selectStyle}
+            aria-label="Periode"
+          >
+            {PERIOD_OPTIONS.map((p) => (
+              <option key={p.v} value={p.v}>
+                {p.label}
+              </option>
+            ))}
+          </select>
           <select
             value={country}
             onChange={(e) => setCountry(e.target.value)}
