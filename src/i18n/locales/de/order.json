@@ -63,8 +63,8 @@
     "country_fr": "Frankreich",
     "country_lu": "Luxemburg",
     "country_de": "Deutschland",
-    "referral_label": "Wie hast du von Velopass erfahren? (optional)",
-    "referral_placeholder": "Treffe eine Auswahl (optional)",
+    "referral_label": "Wie hast du von Velopass erfahren?",
+    "referral_placeholder": "Treffe eine Auswahl",
     "referral_shop": "Über meinen Fahrradhändler",
     "referral_friend": "Über einen Freund oder ein Familienmitglied",
     "referral_social": "Social Media",
@@ -85,7 +85,8 @@
   "tooltips": {
     "need_bundle": "Wähle mindestens ein Paket aus, das du bezahlen möchtest.",
     "need_email": "Gib eine gültige E-Mail-Adresse ein, um fortzufahren.",
-    "need_shipping": "Gib deine Lieferadresse ein, um fortzufahren."
+    "need_shipping": "Gib deine Lieferadresse ein, um fortzufahren.",
+    "need_referral": "Sag uns, wie du von Velopass erfahren hast, um fortzufahren."
   },
   "checkout_stage": {
     "label": "Bezahlung",

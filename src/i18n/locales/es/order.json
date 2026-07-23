@@ -63,8 +63,8 @@
     "country_fr": "Francia",
     "country_lu": "Luxemburgo",
     "country_de": "Alemania",
-    "referral_label": "¿Cómo nos has conocido? (opcional)",
-    "referral_placeholder": "Elige una opción (opcional)",
+    "referral_label": "¿Cómo nos has conocido?",
+    "referral_placeholder": "Elige una opción",
     "referral_shop": "Por mi tienda de bicis",
     "referral_friend": "Por un amigo o familiar",
     "referral_social": "Redes sociales",
@@ -85,7 +85,8 @@
   "tooltips": {
     "need_bundle": "Elige primero un pack para poder pagar.",
     "need_email": "Introduce un correo válido para continuar.",
-    "need_shipping": "Introduce tu dirección de envío para continuar."
+    "need_shipping": "Introduce tu dirección de envío para continuar.",
+    "need_referral": "Indícanos cómo nos has conocido para continuar."
   },
   "checkout_stage": {
     "label": "Pago",

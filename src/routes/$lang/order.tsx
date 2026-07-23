@@ -128,7 +128,8 @@ function BestellenPage() {
     postalCode.trim().length > 0 &&
     city.trim().length > 0 &&
     /^(BE|NL|FR|LU|DE)$/.test(country);
-  const canCheckout = hasItems && emailValid && shippingValid;
+  const referralChosen = referralSource !== "";
+  const canCheckout = hasItems && emailValid && shippingValid && referralChosen;
 
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
@@ -492,7 +493,7 @@ function BestellenPage() {
                 )}
                 <div style={{ display: "grid", gap: 6 }}>
                   <label htmlFor="referral_source" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
-                    {t("cart.referral_label")}
+                    {t("cart.referral_label")} <span style={{ color: "#D64545" }}>*</span>
                   </label>
                   <select
                     id="referral_source"
@@ -571,7 +572,9 @@ function BestellenPage() {
                       ? t("tooltips.need_bundle")
                       : !emailValid
                       ? t("tooltips.need_email")
-                      : t("tooltips.need_shipping")}
+                      : !shippingValid
+                      ? t("tooltips.need_shipping")
+                      : t("tooltips.need_referral")}
                     <span
                       style={{
                         position: "absolute",

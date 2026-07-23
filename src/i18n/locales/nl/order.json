@@ -63,8 +63,8 @@
     "country_fr": "Frankrijk",
     "country_lu": "Luxemburg",
     "country_de": "Duitsland",
-    "referral_label": "Hoe heb je over Velopass gehoord? (optioneel)",
-    "referral_placeholder": "Maak een keuze (optioneel)",
+    "referral_label": "Hoe heb je over Velopass gehoord?",
+    "referral_placeholder": "Maak een keuze",
     "referral_shop": "Via mijn fietswinkel",
     "referral_friend": "Via een vriend of familielid",
     "referral_social": "Social media",
@@ -85,7 +85,8 @@
   "tooltips": {
     "need_bundle": "Kies eerst een bundel om te betalen.",
     "need_email": "Vul een geldig e-mailadres in om verder te gaan.",
-    "need_shipping": "Vul je verzendadres in om verder te gaan."
+    "need_shipping": "Vul je verzendadres in om verder te gaan.",
+    "need_referral": "Laat ons weten hoe je Velopass hebt gevonden om verder te gaan."
   },
   "checkout_stage": {
     "label": "Betaling",
