@@ -30,6 +30,7 @@ import {
   bucketOf,
   buildBuckets,
   computeSignals,
+  twoProportionZTest,
   type Granularity,
   type Signal,
 } from "@/lib/report.aggregate";
@@ -844,8 +845,25 @@ function ExperimentInsight({ rows }: { rows: any[] }) {
   const duoDiff = B.duoShare - A.duoShare;
   const bothVisitors = A.visitors > 0 && B.visitors > 0;
   const convDiff = B.conv - A.conv;
-  const lowVol = A.orders + B.orders < 30 || (bothVisitors && A.visitors + B.visitors < 200);
   const tone = duoDiff > 0 ? POSITIVE : duoDiff < 0 ? WARNING : INFO;
+
+  // Significance of the conversion difference (orders per visitor).
+  const zt = bothVisitors ? twoProportionZTest(A.orders, A.visitors, B.orders, B.visitors) : null;
+  let sigLabel = "";
+  let sigColor = TEXT_MUTED;
+  if (zt) {
+    if (!zt.enoughData) {
+      sigLabel = "nog niet genoeg data";
+      sigColor = WARNING;
+    } else if (zt.significant) {
+      sigLabel = "significant";
+      sigColor = POSITIVE;
+    } else {
+      sigLabel = "niet significant";
+      sigColor = TEXT_MUTED;
+    }
+  }
+
   return (
     <div
       className="rounded-xl p-4 mt-4"
@@ -858,11 +876,29 @@ function ExperimentInsight({ rows }: { rows: any[] }) {
           ? `Conversie: B ${B.conv.toFixed(1)}% vs A ${A.conv.toFixed(1)}% (${convDiff >= 0 ? "+" : ""}${convDiff.toFixed(1)} pp).`
           : "Conversie nog niet te vergelijken (impressies ontbreken nog)."}
       </div>
-      {lowVol && (
-        <div style={{ fontSize: 12, color: WARNING, marginTop: 6 }}>
-          Let op: te weinig volume voor een betrouwbare conclusie. Laat de test langer lopen.
+      {zt && (
+        <div style={{ fontSize: 12, marginTop: 8, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <span
+            style={{
+              padding: "2px 8px",
+              borderRadius: 999,
+              background: sigColor === TEXT_MUTED ? "rgba(255,255,255,0.08)" : `${sigColor}22`,
+              color: sigColor === TEXT_MUTED ? TEXT_2 : sigColor,
+              fontWeight: 600,
+            }}
+          >
+            {sigLabel}
+          </span>
+          <span style={{ color: TEXT_MUTED }}>
+            p = {zt.p < 0.001 ? "<0,001" : zt.p.toFixed(3).replace(".", ",")} (conversie B vs A)
+          </span>
         </div>
       )}
+      <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 6 }}>
+        {zt?.enoughData
+          ? "Significant = p < 0,05: het conversieverschil is waarschijnlijk echt, niet toeval."
+          : "Nog te weinig bezoekers/bestellingen per variant voor een betrouwbare toets. Laat de test langer lopen."}
+      </div>
     </div>
   );
 }

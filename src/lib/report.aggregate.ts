@@ -90,6 +90,54 @@ export function buildBuckets(min: Date, max: Date, g: Granularity): { key: strin
   return out;
 }
 
+/* ---------------- significance (two-proportion z-test) ---------------- */
+export type ZTestResult = {
+  pA: number; // conversion rate A (0..1)
+  pB: number; // conversion rate B (0..1)
+  diffPp: number; // (pB - pA) in percentage points
+  z: number;
+  p: number; // two-tailed p-value
+  significant: boolean; // p < 0.05 AND enough data
+  enoughData: boolean;
+};
+
+// Abramowitz & Stegun 7.1.26 approximation of the error function.
+function erf(x: number): number {
+  const t = 1 / (1 + 0.3275911 * Math.abs(x));
+  const y =
+    1 -
+    ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) *
+      t *
+      Math.exp(-x * x);
+  return x >= 0 ? y : -y;
+}
+function normalCdf(z: number): number {
+  return 0.5 * (1 + erf(z / Math.SQRT2));
+}
+
+// Two-proportion z-test comparing conversion of B (xB/nB) vs A (xA/nA).
+// x = conversions (orders), n = visitors. Returns null if a group has no visitors.
+export function twoProportionZTest(
+  xA: number,
+  nA: number,
+  xB: number,
+  nB: number,
+): ZTestResult | null {
+  if (nA <= 0 || nB <= 0) return null;
+  const pA = xA / nA;
+  const pB = xB / nB;
+  // Guard against the normal approximation on tiny samples.
+  const enoughData = nA >= 30 && nB >= 30 && xA + xB >= 10;
+  const pool = (xA + xB) / (nA + nB);
+  const se = Math.sqrt(pool * (1 - pool) * (1 / nA + 1 / nB));
+  if (se === 0) {
+    return { pA, pB, diffPp: (pB - pA) * 100, z: 0, p: 1, significant: false, enoughData };
+  }
+  const z = (pB - pA) / se;
+  const p = 2 * (1 - normalCdf(Math.abs(z)));
+  return { pA, pB, diffPp: (pB - pA) * 100, z, p, significant: enoughData && p < 0.05, enoughData };
+}
+
 /* ---------------- signals ---------------- */
 export type Signal = { tone: "positive" | "warning" | "info"; title: string; body: string };
 
