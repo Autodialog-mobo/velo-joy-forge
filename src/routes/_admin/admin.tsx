@@ -453,6 +453,35 @@ function AdminPage() {
     return arr;
   }, [activeOrders, deletedOrders, viewingDeleted, filter, statusFilter, langFilter, countryFilter, stickerFilter, stickerTotalById, searchQuery, sort]);
 
+  // Secondary filters (beyond the status/pipeline stage) that can silently
+  // empty the list even though the status tab shows a count.
+  const hasSecondaryFilters =
+    langFilter !== "any" || countryFilter !== "any" || stickerFilter !== "any" || !!searchQuery;
+  const clearSecondaryFilters = () => {
+    setLangFilter("any");
+    setCountryFilter("any");
+    setStickerFilter("any");
+    setSearchInput("");
+    setSearchQuery("");
+  };
+  const activeFilterSummary = [
+    langFilter !== "any" ? `taal: ${langFilter}` : null,
+    countryFilter !== "any" ? `land: ${countryFilter}` : null,
+    stickerFilter !== "any" ? `aantal: ${stickerFilter}` : null,
+    searchQuery ? "zoekterm" : null,
+  ]
+    .filter(Boolean)
+    .join(", ");
+  // Orders matching the current status stage, ignoring the secondary filters.
+  const statusMatchCount = useMemo(() => {
+    const base = viewingDeleted ? deletedOrders : activeOrders;
+    return base.filter((o: any) =>
+      statusFilter !== "any" ? o.status === statusFilter : filter === "all" || o.status === filter,
+    ).length;
+  }, [viewingDeleted, deletedOrders, activeOrders, statusFilter, filter]);
+  const filtersHidingOrders =
+    !viewingDeleted && hasSecondaryFilters && statusMatchCount > 0 && !filtered.length;
+
   const gotoNav = (delta: number) => {
     if (!detailOrder || navIds.length === 0) return;
     const next = navIndex + delta;
@@ -1766,16 +1795,37 @@ function AdminPage() {
                       <td colSpan={8}>
                         <div className="flex flex-col items-center justify-center text-center" style={{ padding: "80px 24px" }}>
                           <Inbox className="w-10 h-10 mb-4" strokeWidth={1.5} style={{ color: TEXT_MUTED }} />
-                          <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
-                            {searchQuery
-                              ? `Geen bestellingen gevonden voor "${searchInput.trim()}"`
-                              : "Geen bestellingen in deze status"}
-                          </p>
-                          <p className="text-[13px] mt-1 max-w-sm" style={{ color: TEXT_SEC }}>
-                            {searchQuery
-                              ? "Probeer een andere zoekterm of wis de zoekopdracht."
-                              : "Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden."}
-                          </p>
+                          {filtersHidingOrders ? (
+                            <>
+                              <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
+                                {statusMatchCount} {statusMatchCount === 1 ? "bestelling" : "bestellingen"} verborgen door actieve filters
+                              </p>
+                              <p className="text-[13px] mt-1 max-w-sm" style={{ color: TEXT_SEC }}>
+                                Er staan wel orders in deze status, maar een filter verbergt ze. Actief: {activeFilterSummary}.
+                              </p>
+                              <button
+                                type="button"
+                                onClick={clearSecondaryFilters}
+                                className="mt-4 px-4 py-2 rounded-full text-[13px] font-semibold"
+                                style={{ background: GREEN, color: NAVY, border: "none", cursor: "pointer" }}
+                              >
+                                Wis filters
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <p className="text-[15px] font-semibold" style={{ color: TEXT_PRI }}>
+                                {searchQuery
+                                  ? `Geen bestellingen gevonden voor "${searchInput.trim()}"`
+                                  : "Geen bestellingen in deze status"}
+                              </p>
+                              <p className="text-[13px] mt-1 max-w-sm" style={{ color: TEXT_SEC }}>
+                                {searchQuery
+                                  ? "Probeer een andere zoekterm of wis de zoekopdracht."
+                                  : "Orders verschijnen hier zodra ze betaald zijn en gemarkeerd worden."}
+                              </p>
+                            </>
+                          )}
                         </div>
                       </td>
                     </tr>
