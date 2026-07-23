@@ -418,7 +418,7 @@ function AdminReportPage() {
             )}
 
             {/* A/B experiment */}
-            {experiment && (
+            {experiment ? (
               <Card className="mb-6">
                 <SectionTitle>A/B-test: bundelkeuze</SectionTitle>
                 <div style={{ color: TEXT_MUTED, fontSize: 12, marginBottom: 12 }}>
@@ -459,6 +459,20 @@ function AdminReportPage() {
                   </table>
                 </div>
                 <ExperimentInsight rows={experiment.rows} />
+              </Card>
+            ) : (
+              <Card className="mb-6">
+                <SectionTitle>A/B-test: bundelkeuze</SectionTitle>
+                <div style={{ color: TEXT_2, fontSize: 13, lineHeight: 1.6 }}>
+                  Test loopt - nog geen data. Zodra bezoekers de bestelpagina openen en bestellen,
+                  verschijnen hier per variant de bezoekers, conversie, gemiddelde orderwaarde en het
+                  duo-/solo-aandeel, met een significantietoets. Variant A = huidige pagina, variant B =
+                  duo voorgeselecteerd met besparing benadrukt.
+                </div>
+                <div style={{ color: TEXT_MUTED, fontSize: 11, marginTop: 8 }}>
+                  Blijft dit leeg terwijl er wel verkeer is? Controleer of de databasemigratie (tabel
+                  experiment_impressions) is toegepast.
+                </div>
               </Card>
             )}
 
