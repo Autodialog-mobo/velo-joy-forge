@@ -116,6 +116,33 @@ export type Database = {
         }
         Relationships: []
       }
+      experiment_impressions: {
+        Row: {
+          created_at: string
+          environment: string
+          experiment: string
+          id: string
+          variant: string
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          environment?: string
+          experiment: string
+          id?: string
+          variant: string
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          environment?: string
+          experiment?: string
+          id?: string
+          variant?: string
+          visitor_id?: string
+        }
+        Relationships: []
+      }
       margin_poll_responses: {
         Row: {
           choice: string
@@ -254,6 +281,7 @@ export type Database = {
           deleted_at: string | null
           email_confirmation_sent_at: string | null
           environment: string
+          experiment_variant: string | null
           id: string
           lang: string | null
           mollie_payment_id: string | null
@@ -288,6 +316,7 @@ export type Database = {
           deleted_at?: string | null
           email_confirmation_sent_at?: string | null
           environment?: string
+          experiment_variant?: string | null
           id?: string
           lang?: string | null
           mollie_payment_id?: string | null
@@ -322,6 +351,7 @@ export type Database = {
           deleted_at?: string | null
           email_confirmation_sent_at?: string | null
           environment?: string
+          experiment_variant?: string | null
           id?: string
           lang?: string | null
           mollie_payment_id?: string | null
