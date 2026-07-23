@@ -325,14 +325,19 @@ function AdminPage() {
   // Rapportage teaser: weekly bundle mix from paid orders (mirrors the
   // "succes per bundel" chart on /admin-report, compact + non-interactive).
   const bundleTeaser = useMemo(() => {
+    // Rolling last 30 days, daily resolution — a clean recent curve that matches
+    // the report's default period (avoids a flat tail from older recovered orders).
     const PAID = new Set(["paid", "printed", "shipped"]);
-    const paid = (activeOrders as any[]).filter((o) => PAID.has(o.status));
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const paid = (activeOrders as any[]).filter(
+      (o) => PAID.has(o.status) && new Date(o.created_at).getTime() >= cutoff,
+    );
     const totals: Record<string, number> = {};
     if (!paid.length) return { rows: [] as any[], totals };
     const times = paid.map((o) => new Date(o.created_at).getTime());
     const min = new Date(Math.min(...times));
     const max = new Date(Math.max(...times));
-    const buckets = buildBuckets(min, max, "week");
+    const buckets = buildBuckets(min, max, "day");
     const idx = new Map(buckets.map((b, i) => [b.key, i]));
     const rows: any[] = buckets.map((b) => {
       const r: any = { label: b.label };
@@ -340,7 +345,7 @@ function AdminPage() {
       return r;
     });
     for (const o of paid) {
-      const i = idx.get(bucketOf(o.created_at, "week").key);
+      const i = idx.get(bucketOf(o.created_at, "day").key);
       for (const l of linesByOrder.get(o.id) ?? []) {
         if (i != null) rows[i][l.bundle_key] = (rows[i][l.bundle_key] ?? 0) + (l.quantity || 0);
         totals[l.bundle_key] = (totals[l.bundle_key] ?? 0) + (l.quantity || 0);
@@ -1221,6 +1226,7 @@ function AdminPage() {
               <div>
                 <div style={{ ...EYEBROW, color: GREEN, marginBottom: 4 }}>Rapportage</div>
                 <div style={{ color: TEXT_PRI, fontSize: 15, fontWeight: 600 }}>Succes per bundel</div>
+                <div style={{ color: TEXT_MUTED, fontSize: 11, marginTop: 2 }}>laatste 30 dagen</div>
               </div>
               <span
                 className="px-4 py-2 rounded-full text-[13px] font-semibold whitespace-nowrap"
