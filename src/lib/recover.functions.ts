@@ -62,6 +62,10 @@ export const recoverOrdersFromMollie = createServerFn({ method: "POST" })
             : null;
         const customerEmail = p.metadata?.email ?? p.billingEmail ?? p.customerEmail ?? "";
         const totals = items.length ? computeB2CTotals(items) : null;
+        // Keep the historical timeline: created_at = when ordered, updated_at =
+        // when paid (never "now", so recovered orders don't look freshly touched).
+        const createdAt = p.createdAt ?? p.paidAt ?? new Date().toISOString();
+        const updatedAt = p.paidAt ?? createdAt;
 
         const { data: upserted, error: upsertError } = await (supabaseAdmin.from("orders") as any)
           .upsert(
@@ -88,8 +92,8 @@ export const recoverOrdersFromMollie = createServerFn({ method: "POST" })
               lang: metaLang,
               payment_method: typeof p.method === "string" ? p.method : null,
               // Preserve the original timeline so the report stays accurate.
-              created_at: p.createdAt ?? p.paidAt ?? new Date().toISOString(),
-              updated_at: new Date().toISOString(),
+              created_at: createdAt,
+              updated_at: updatedAt,
             },
             { onConflict: "mollie_payment_id" },
           )
