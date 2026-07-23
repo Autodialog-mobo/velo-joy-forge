@@ -13,7 +13,7 @@ const formatAmount = (cents: number) => (cents / 100).toFixed(2);
 
 const MOLLIE_API = "https://api.mollie.com/v2";
 
-async function mollieFetch(path: string, init: RequestInit = {}) {
+export async function mollieFetch(path: string, init: RequestInit = {}) {
   const apiKey = process.env.MOLLIE_API_KEY;
   if (!apiKey) throw new Error("MOLLIE_API_KEY is not configured");
   const method = (init.method ?? "GET").toUpperCase();
