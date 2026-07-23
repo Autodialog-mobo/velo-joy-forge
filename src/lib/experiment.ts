@@ -76,8 +76,11 @@ function forcedVariant(): Variant | null {
 }
 
 // Resolve (and persist) this visitor's id + variant for the current experiment.
-export function assignVariant(): { visitorId: string; variant: Variant } {
+// `forced` is true when the variant came from the ?ab= QA override — callers
+// should then skip impression logging / order tagging so previews stay out of
+// the real experiment data.
+export function assignVariant(): { visitorId: string; variant: Variant; forced: boolean } {
   const visitorId = getVisitorId();
-  const variant = forcedVariant() ?? variantFor(visitorId);
-  return { visitorId, variant };
+  const forced = forcedVariant();
+  return { visitorId, variant: forced ?? variantFor(visitorId), forced: forced !== null };
 }

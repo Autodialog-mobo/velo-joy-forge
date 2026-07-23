@@ -75,23 +75,28 @@ function BestellenPage() {
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
   // preselect the featured duo bundle. Runs client-side only, after hydration.
   const [variant, setVariant] = useState<Variant | null>(null);
+  const [experimentForced, setExperimentForced] = useState(false);
   const experimentInit = useRef(false);
   const logImpressionFn = useServerFn(logImpression);
   useEffect(() => {
     if (experimentInit.current) return;
     experimentInit.current = true;
-    const { visitorId, variant: v } = assignVariant();
+    const { visitorId, variant: v, forced } = assignVariant();
     setVariant(v);
+    setExperimentForced(forced);
     if (v === "B") {
       setQuantities((prev) => ({
         ...prev,
         frameid_duo_onetime: Math.max(prev.frameid_duo_onetime, 1),
       }));
     }
-    // Fire-and-forget; never block the page on analytics.
-    logImpressionFn({ data: { experiment: EXPERIMENT.key, variant: v, visitorId } }).catch(
-      () => undefined,
-    );
+    // Skip logging for forced ?ab= previews so QA never pollutes the experiment.
+    if (!forced) {
+      // Fire-and-forget; never block the page on analytics.
+      logImpressionFn({ data: { experiment: EXPERIMENT.key, variant: v, visitorId } }).catch(
+        () => undefined,
+      );
+    }
   }, [logImpressionFn]);
 
   const handleBack = useCallback(() => {
@@ -153,7 +158,7 @@ function BestellenPage() {
             country,
           },
           referralSource: referralSource || null,
-          experimentVariant: variant ? `${EXPERIMENT.key}:${variant}` : null,
+          experimentVariant: variant && !experimentForced ? `${EXPERIMENT.key}:${variant}` : null,
         },
       });
       if ("error" in result) {
