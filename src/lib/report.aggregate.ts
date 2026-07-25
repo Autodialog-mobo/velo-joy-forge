@@ -25,6 +25,14 @@ export function bundleLabel(key: string) {
   return BUNDLE_LABELS[key] ?? key;
 }
 
+// Normalise a stored referral_source to a grouping key. Free-text "other:<..>"
+// values (from the order form's "Anders" input) all fold into "other".
+export function referralKey(src?: string | null): string {
+  if (!src || src === "") return "__unknown";
+  if (src === "other" || src.startsWith("other:")) return "other";
+  return src;
+}
+
 export const REFERRAL_LABELS: Record<string, string> = {
   bike_shop: "Fietswinkel",
   friend_family: "Vriend / familie",

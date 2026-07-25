@@ -106,7 +106,12 @@ export const createMolliePayment = createServerFn({ method: "POST" })
       }
       if (!/^[A-Z]{2}$/.test(s.country)) throw new Error("Ongeldig land (ISO 2-letter vereist)");
       const ALLOWED_REFERRAL = new Set(["bike_shop","friend_family","social","search","ai","insurance","roadside","other"]);
-      if (data.referralSource != null && data.referralSource !== "" && !ALLOWED_REFERRAL.has(data.referralSource)) {
+      if (
+        data.referralSource != null &&
+        data.referralSource !== "" &&
+        !ALLOWED_REFERRAL.has(data.referralSource) &&
+        !/^other:.{1,80}$/.test(data.referralSource)
+      ) {
         throw new Error("Ongeldige referral_source");
       }
       if (

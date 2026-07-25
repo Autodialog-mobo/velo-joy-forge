@@ -65,6 +65,7 @@
     "country_de": "Allemagne",
     "referral_label": "Comment as-tu entendu parler de Velopass ?",
     "referral_placeholder": "Fais un choix",
+    "referral_other_placeholder": "Précise comment tu nous as trouvés",
     "referral_shop": "Via mon vélociste",
     "referral_friend": "Par un ami ou un proche",
     "referral_social": "Social media",

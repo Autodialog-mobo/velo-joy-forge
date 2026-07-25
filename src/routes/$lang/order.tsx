@@ -67,6 +67,7 @@ function BestellenPage() {
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("BE");
   const [referralSource, setReferralSource] = useState("");
+  const [referralOther, setReferralOther] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -133,8 +134,15 @@ function BestellenPage() {
     postalCode.trim().length > 0 &&
     city.trim().length > 0 &&
     /^(BE|NL|FR|LU|DE)$/.test(country);
-  const referralChosen = referralSource !== "";
+  const referralChosen =
+    referralSource !== "" && (referralSource !== "other" || referralOther.trim() !== "");
   const canCheckout = hasItems && emailValid && shippingValid && referralChosen;
+  // "Anders" carries the free text as "other:<text>"; the report folds it back
+  // under "Anders" while the admin order detail shows the typed value.
+  const referralValue =
+    referralSource === "other" && referralOther.trim()
+      ? `other:${referralOther.trim().slice(0, 80)}`
+      : referralSource || null;
 
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
@@ -157,7 +165,7 @@ function BestellenPage() {
             city: city.trim(),
             country,
           },
-          referralSource: referralSource || null,
+          referralSource: referralValue,
           experimentVariant: variant && !experimentForced ? `${EXPERIMENT.key}:${variant}` : null,
         },
       });
@@ -517,6 +525,18 @@ function BestellenPage() {
                     <option value="roadside">{t("cart.referral_roadside")}</option>
                     <option value="other">{t("cart.referral_other")}</option>
                   </select>
+                  {referralSource === "other" && (
+                    <input
+                      id="referral_other"
+                      name="referral_other"
+                      type="text"
+                      maxLength={80}
+                      value={referralOther}
+                      onChange={(e) => setReferralOther(e.target.value)}
+                      placeholder={t("cart.referral_other_placeholder")}
+                      style={{ padding: "10px 12px", borderRadius: 10, border: "1px solid rgba(13,31,60,0.15)", fontSize: 14, fontFamily: "inherit", color: "#0D1F3C", background: "#fff", width: "100%", boxSizing: "border-box", minWidth: 0 }}
+                    />
+                  )}
                 </div>
               </div>
               </form>

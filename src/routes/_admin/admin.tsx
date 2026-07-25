@@ -37,7 +37,14 @@ const REFERRAL_LABEL_NL: Record<string, string> = {
   roadside: "Via mijn pechhulpverlener",
   other: "Anders",
 };
-const referralLabel = (key?: string | null) => (key && REFERRAL_LABEL_NL[key]) || "—";
+const referralLabel = (key?: string | null) => {
+  if (!key) return "—";
+  if (key.startsWith("other:")) {
+    const txt = key.slice(6).trim();
+    return txt ? `Anders: ${txt}` : "Anders";
+  }
+  return REFERRAL_LABEL_NL[key] || "—";
+};
 
 const LEGACY_SKU_MAP: Record<string, string> = {
   frameid_solo_onetime: "VP-FID-1",

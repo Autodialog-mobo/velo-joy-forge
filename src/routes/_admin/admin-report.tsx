@@ -27,6 +27,7 @@ import {
   BUNDLE_LABELS,
   BUNDLE_COLORS,
   REFERRAL_LABELS,
+  referralKey,
   bucketOf,
   buildBuckets,
   computeSignals,
@@ -207,7 +208,7 @@ function AdminReportPage() {
       if (i == null) continue;
       rows[i].count += 1;
       rows[i].revenue += (o.amount_total || 0) / 100;
-      const refKey = o.referral_source && o.referral_source !== "" ? o.referral_source : "__unknown";
+      const refKey = referralKey(o.referral_source);
       rows[i].refs[refKey] = (rows[i].refs[refKey] ?? 0) + 1;
     }
     return rows;
@@ -266,7 +267,7 @@ function AdminReportPage() {
   const referralStats = useMemo(() => {
     const map = new Map<string, number>();
     for (const o of periodOrders) {
-      const key = o.referral_source && o.referral_source !== "" ? o.referral_source : "__unknown";
+      const key = referralKey(o.referral_source);
       map.set(key, (map.get(key) ?? 0) + 1);
     }
     const total = periodOrders.length || 1;
