@@ -8,7 +8,8 @@ import BIKE_BRANDS from "@/data/bike-brands.json";
 // Same-origin proxy (src/routes/api/public/brands.ts) — avoids CORS and adds a
 // short server cache. Falls through to the static list if it ever fails.
 const BRANDS_API = "/api/public/brands";
-const CACHE_KEY = "vp_active_brands_v1";
+// v2: bumped so sessions that cached the pre-filter list refetch a clean one.
+const CACHE_KEY = "vp_active_brands_v2";
 
 // The API includes a placeholder entry ("Niet gespecifieerd/Non spécifiée")
 // that should never appear in the brand autofill.
@@ -22,7 +23,10 @@ function readCache(): string[] | null {
     const raw = sessionStorage.getItem(CACHE_KEY);
     if (!raw) return null;
     const arr = JSON.parse(raw);
-    return Array.isArray(arr) && arr.length ? (arr as string[]) : null;
+    if (!Array.isArray(arr) || !arr.length) return null;
+    // Defensive: strip placeholders even from a cached list.
+    const clean = (arr as string[]).filter((s) => s && !PLACEHOLDER_RE.test(s));
+    return clean.length ? clean : null;
   } catch {
     return null;
   }
