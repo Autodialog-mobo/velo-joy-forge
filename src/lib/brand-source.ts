@@ -10,6 +10,10 @@ import BIKE_BRANDS from "@/data/bike-brands.json";
 const BRANDS_API = "/api/public/brands";
 const CACHE_KEY = "vp_active_brands_v1";
 
+// The API includes a placeholder entry ("Niet gespecifieerd/Non spécifiée")
+// that should never appear in the brand autofill.
+const PLACEHOLDER_RE = /niet\s*gespecif|non\s*sp[eé]cif|not\s*specified|unspecified/i;
+
 let inflight: Promise<string[]> | null = null;
 
 function readCache(): string[] | null {
@@ -49,7 +53,7 @@ export async function getBrands(): Promise<string[]> {
       const names = (Array.isArray(data) ? data : [])
         .map((x: any) => (typeof x === "string" ? x : x?.label || x?.value || ""))
         .map((s: string) => (typeof s === "string" ? s.trim() : ""))
-        .filter(Boolean);
+        .filter((s: string) => s && !PLACEHOLDER_RE.test(s));
       const unique = Array.from(new Set(names)).sort((a, b) => a.localeCompare(b));
       if (!unique.length) throw new Error("empty brands response");
       writeCache(unique);
