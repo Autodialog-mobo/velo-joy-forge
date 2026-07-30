@@ -14,6 +14,7 @@ import { isLang } from "@/i18n/config";
 import { checkBike, checkBikeByFrame, type BikeCheckResult } from "@/lib/bike-check.functions";
 import BIKE_BRANDS from "@/data/bike-brands.json";
 import { searchBrands, resolveCanonicalBrand } from "@/lib/brand-search";
+import { getBrands } from "@/lib/brand-source";
 import nlBikeCheck from "@/i18n/locales/nl/bike-check.json";
 import enBikeCheck from "@/i18n/locales/en/bike-check.json";
 import frBikeCheck from "@/i18n/locales/fr/bike-check.json";
@@ -520,10 +521,25 @@ function BikeSearchPage() {
     return () => clearTimeout(id);
   }, [brand]);
 
+  // Active brands: live list from the bikesearch API (session-cached), with the
+  // bundled static list as the initial value and offline fallback.
+  const [brands, setBrands] = useState<string[]>(BIKE_BRANDS as string[]);
+  useEffect(() => {
+    let alive = true;
+    getBrands()
+      .then((list) => {
+        if (alive && list.length) setBrands(list);
+      })
+      .catch(() => undefined);
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   const brandSuggestions = (() => {
     const q = brandQuery.trim();
     if (!q) return [] as string[];
-    return searchBrands(q, 10).map((s) => s.name);
+    return searchBrands(q, 10, brands).map((s) => s.name);
   })();
   // Free-text input: users can type any brand even if not in suggestions.
   const optionCount = brandSuggestions.length;
@@ -531,9 +547,6 @@ function BikeSearchPage() {
   useEffect(() => {
     setActiveIdx(-1);
   }, [brandQuery]);
-
-  // Silence unused import warning — BIKE_BRANDS is referenced via brand-search.
-  void BIKE_BRANDS;
 
   const sanitizeCode = (raw: string) => raw.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 32);
   const findVelopassCode = (raw: string) => {
@@ -763,7 +776,7 @@ function BikeSearchPage() {
   const submitB = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitLockRef.current) return;
-    const cleanBrand = resolveCanonicalBrand(brand);
+    const cleanBrand = resolveCanonicalBrand(brand, brands);
     const cleanFrame = sanitizeAlnum(frame);
     if (!cleanBrand || !cleanFrame) return;
     submitLockRef.current = true;

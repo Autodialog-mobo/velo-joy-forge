@@ -21,14 +21,22 @@ for (const [canonical, list] of Object.entries(ALIASES)) {
 }
 
 // Brand key -> canonical name (for canonical matches).
-const BRAND_BY_KEY = new Map<string, string>();
-for (const b of BRANDS) BRAND_BY_KEY.set(normalizeBrandKey(b), b);
+function buildKeyMap(brands: string[]): Map<string, string> {
+  const m = new Map<string, string>();
+  for (const b of brands) m.set(normalizeBrandKey(b), b);
+  return m;
+}
+const DEFAULT_KEY_MAP = buildKeyMap(BRANDS);
 
-/** Resolve a free-typed brand to its canonical form if possible. */
-export function resolveCanonicalBrand(input: string): string {
+/**
+ * Resolve a free-typed brand to its canonical form if possible.
+ * Pass `brands` (e.g. the live list) to resolve against it; defaults to static.
+ */
+export function resolveCanonicalBrand(input: string, brands?: string[]): string {
   const key = normalizeBrandKey(input);
   if (!key) return input.trim();
-  return ALIAS_TO_CANONICAL.get(key) ?? BRAND_BY_KEY.get(key) ?? input.trim();
+  const keyMap = brands ? buildKeyMap(brands) : DEFAULT_KEY_MAP;
+  return ALIAS_TO_CANONICAL.get(key) ?? keyMap.get(key) ?? input.trim();
 }
 
 export interface BrandSuggestion {
@@ -37,11 +45,11 @@ export interface BrandSuggestion {
   rank: number;
 }
 
-export function searchBrands(query: string, limit = 8): BrandSuggestion[] {
+export function searchBrands(query: string, limit = 8, brands: string[] = BRANDS): BrandSuggestion[] {
   const q = normalizeBrandKey(query);
   if (!q) return [];
   const out: BrandSuggestion[] = [];
-  for (const b of BRANDS) {
+  for (const b of brands) {
     const k = normalizeBrandKey(b);
     if (k === q) out.push({ name: b, rank: 0 });
     else if (k.startsWith(q)) out.push({ name: b, rank: 1 });
