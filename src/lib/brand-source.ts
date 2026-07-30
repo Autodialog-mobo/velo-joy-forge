@@ -5,7 +5,9 @@ import BIKE_BRANDS from "@/data/bike-brands.json";
 // bundled static list on any failure (offline, CORS, error) so autofill never
 // breaks.
 
-const BRANDS_API = "https://bikesearchapi.prod.velopass.com/api/brands";
+// Same-origin proxy (src/routes/api/public/brands.ts) — avoids CORS and adds a
+// short server cache. Falls through to the static list if it ever fails.
+const BRANDS_API = "/api/public/brands";
 const CACHE_KEY = "vp_active_brands_v1";
 
 let inflight: Promise<string[]> | null = null;

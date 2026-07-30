@@ -56,6 +56,7 @@ import { Route as MTokenRouteImport } from './routes/m.$token'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as ApiPublicBrandsRouteImport } from './routes/api/public/brands'
 import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -298,6 +299,11 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicBrandsRoute = ApiPublicBrandsRouteImport.update({
+  id: '/api/public/brands',
+  path: '/api/public/brands',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicShopSignupRoute = ApiPublicShopSignupRouteImport.update({
   id: '/api/public/shop-signup',
   path: '/api/public/shop-signup',
@@ -362,6 +368,7 @@ export interface FileRoutesByFullPath {
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -412,6 +419,7 @@ export interface FileRoutesByTo {
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -465,6 +473,7 @@ export interface FileRoutesById {
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
+  '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
@@ -518,6 +527,7 @@ export interface FileRouteTypes {
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/brands'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -568,6 +578,7 @@ export interface FileRouteTypes {
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/brands'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -620,6 +631,7 @@ export interface FileRouteTypes {
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
     | '/.mcp/invoke-tool/$tool'
+    | '/api/public/brands'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/payments/mollie-webhook'
@@ -645,6 +657,7 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   MTokenRoute: typeof MTokenRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
+  ApiPublicBrandsRoute: typeof ApiPublicBrandsRoute
   ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
@@ -981,6 +994,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/brands': {
+      id: '/api/public/brands'
+      path: '/api/public/brands'
+      fullPath: '/api/public/brands'
+      preLoaderRoute: typeof ApiPublicBrandsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/shop-signup': {
       id: '/api/public/shop-signup'
       path: '/api/public/shop-signup'
@@ -1112,6 +1132,7 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   MTokenRoute: MTokenRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
+  ApiPublicBrandsRoute: ApiPublicBrandsRoute,
   ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
