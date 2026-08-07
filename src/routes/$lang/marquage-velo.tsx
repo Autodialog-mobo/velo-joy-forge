@@ -26,7 +26,7 @@ const ORG_JSONLD = {
   contactPoint: {
     "@type": "ContactPoint",
     email: "support@velopass.com",
-    telephone: "+32471601573",
+    telephone: getWhatsAppNumber(),
     contactType: "sales",
     availableLanguage: ["French", "Dutch", "English"],
   },
@@ -359,7 +359,7 @@ function VelocistesLanding() {
             <a className="btn-d" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}>
               Créer mon compte vélociste
             </a>
-            <p className="fine">Une question ? support@velopass.com · WhatsApp +32 471 60 15 73</p>
+            <p className="fine">Une question ? support@velopass.com · WhatsApp {getWhatsAppDisplayNumber()}</p>
           </div>
         </div>
       </section>
@@ -389,7 +389,7 @@ function VelocistesLanding() {
           </div>
           <div className="foot-bottom">
             <span>© 2026 Velopass BV · Stokerijstraat 29/a1, 2110 Wijnegem, Belgique</span>
-            <span>support@velopass.com · +32 471 60 15 73</span>
+            <span>support@velopass.com · {getWhatsAppDisplayNumber()}</span>
           </div>
         </div>
       </footer>
