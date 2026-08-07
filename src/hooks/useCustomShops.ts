@@ -40,14 +40,14 @@ export function useHiddenShopAddressKeys(): Set<string> {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const { data, error } = await (supabase as any).rpc("get_hidden_shop_address_keys");
-      if (cancelled || error || !data) return;
-      const set = new Set<string>();
-      for (const row of data as any[]) {
-        const k = typeof row === "string" ? row : row?.get_hidden_shop_address_keys ?? row?.address_key;
-        if (k) set.add(String(k));
+      let data: string[] = [];
+      try {
+        data = await getHiddenShopAddressKeys();
+      } catch {
+        return;
       }
-      setKeys(set);
+      if (cancelled || !Array.isArray(data)) return;
+      setKeys(new Set(data.map(String)));
     })();
     return () => { cancelled = true; };
   }, []);
