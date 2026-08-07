@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { normalizeAddress } from "@/lib/dedupe-shops";
+import { getHiddenShopAddressKeys } from "@/lib/shops-public.functions";
 
 export type CustomShop = {
   id: string;
