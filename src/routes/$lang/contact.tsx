@@ -19,6 +19,8 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { VelopassMark } from "@/components/VelopassMark";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { getWhatsAppNumber } from "@/lib/whatsapp-number";
+
 
 const searchSchema = z.object({
   type: fallback(z.enum(["rider", "shop"]), "rider").default("rider"),
@@ -38,7 +40,7 @@ export const Route = createFileRoute("/$lang/contact")({
   component: ContactPage,
 });
 
-const WA_NUMBER = "32471601573";
+const WA_NUMBER = getWhatsAppNumber();
 
 const RIDER_ICONS: LucideIcon[] = [HelpCircle, Package, ScanLine];
 const SHOP_ICONS: LucideIcon[] = [CalendarCheck, Monitor, HelpCircle];
