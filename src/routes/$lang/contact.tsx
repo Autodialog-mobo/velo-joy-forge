@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$lang/contact")({
   component: ContactPage,
 });
 
-const WA_NUMBER = "32471601573";
+const WA_NUMBER = getWhatsAppNumber();
 
 const RIDER_ICONS: LucideIcon[] = [HelpCircle, Package, ScanLine];
 const SHOP_ICONS: LucideIcon[] = [CalendarCheck, Monitor, HelpCircle];
