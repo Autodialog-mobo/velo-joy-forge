@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { trackShopSignupCtaClick } from "@/lib/analytics";
-import { getWhatsAppDisplayNumber } from "@/lib/whatsapp-number";
+import { getWhatsAppDisplayNumber, getWhatsAppNumber } from "@/lib/whatsapp-number";
 import heroMarquageImg from "@/assets/hero-marquage-velo.webp.asset.json";
 
 
