@@ -265,32 +265,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       return { street, postal: "", city: tail };
     };
 
-    const readDefaultBikeShopPackageId = async (): Promise<string | null> => {
-      const res = await fetch(managementEndpoint("bike-shop-packages/select"), {
-        method: "GET",
-        headers: {
-          Authorization: bearer,
-          Accept: "application/json",
-        },
-      });
-      const text = await res.text();
-      if (!res.ok) {
-        console.error("[shop-signups] package lookup failed", { status: res.status, body: text.slice(0, 1000) });
-        throw new Error(`Pakketlijst ophalen mislukte (${res.status}): ${text.slice(0, 500) || "geen details"}`);
-      }
-
-      let packages: Array<{ value?: string | null; isDefault?: boolean }> = [];
-      try {
-        const parsed = text ? JSON.parse(text) : [];
-        packages = Array.isArray(parsed) ? parsed : [];
-      } catch {
-        throw new Error("Pakketlijst ophalen mislukte: ongeldig antwoord van velopass.pro.");
-      }
-
-      const selected = packages.find((p) => p?.isDefault && p.value) ?? packages.find((p) => p?.value);
-      return selected?.value ?? null;
-    };
-
     type CountryOption = { value: string; searchable: string[] };
 
     const countryLookupKey = (value: string | null | undefined) =>
