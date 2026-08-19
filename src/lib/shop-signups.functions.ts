@@ -543,7 +543,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
-      packageId: string;
       siteUrl?: string; siteName?: string; website?: string; websiteUrl?: string;
     } = {
       name: row.shop_name,
@@ -557,7 +556,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       postalCode: postal,
       city,
       country,
-      packageId,
       ...websitePayload,
     };
 
