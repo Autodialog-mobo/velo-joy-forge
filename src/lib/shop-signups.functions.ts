@@ -223,10 +223,14 @@ export const updateShopSignup = createServerFn({ method: "POST" })
 // admin's Auth0 bearer token (same audience as the management API).
 // ---------------------------------------------------------------------------
 
-export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
+// V2 intentionally has a new server-function identity. The previous published
+// RPC artifact still contained the removed package lookup, even after its
+// source was updated, so callers must not resolve to that stale endpoint.
+export const pushShopSignupToVelopassProV2 = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
+    console.log("[shop-signups] push v2: package-free organisation create", { id: data.id });
     const request = getRequest();
     const bearer = request?.headers?.get("authorization") ?? "";
     if (!bearer.startsWith("Bearer ")) {
