@@ -4,7 +4,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type * as React from "react";
 import { Search, Store, Mail, Phone, ExternalLink, Save, Copy, Check, ArrowUpDown, ArrowUp, ArrowDown, Send, Loader2, AlertCircle, RefreshCcw, X } from "lucide-react";
-import { listShopSignups, updateShopSignup, pushShopSignupToVelopassProV2, setShopSignupManagementId, resetShopSignupProPush } from "@/lib/shop-signups.functions";
+import { listShopSignups, updateShopSignup, setShopSignupManagementId, resetShopSignupProPush } from "@/lib/shop-signups.functions";
+import { pushShopSignupToVelopassProV3 } from "@/lib/shop-signups-push-v3.functions";
 import { toast } from "sonner";
 
 
@@ -43,7 +44,7 @@ function statusStyle(s: string): React.CSSProperties {
 function ShopSignupsPage() {
   const list = useServerFn(listShopSignups);
   const update = useServerFn(updateShopSignup);
-  const pushToPro = useServerFn(pushShopSignupToVelopassProV2);
+  const pushToPro = useServerFn(pushShopSignupToVelopassProV3);
   const setManagementId = useServerFn(setShopSignupManagementId);
   const resetProPush = useServerFn(resetShopSignupProPush);
   const queryClient = useQueryClient();
