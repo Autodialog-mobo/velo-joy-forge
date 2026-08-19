@@ -265,32 +265,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       return { street, postal: "", city: tail };
     };
 
-    const readDefaultBikeShopPackageId = async (): Promise<string | null> => {
-      const res = await fetch(managementEndpoint("bike-shop-packages/select"), {
-        method: "GET",
-        headers: {
-          Authorization: bearer,
-          Accept: "application/json",
-        },
-      });
-      const text = await res.text();
-      if (!res.ok) {
-        console.error("[shop-signups] package lookup failed", { status: res.status, body: text.slice(0, 1000) });
-        throw new Error(`Pakketlijst ophalen mislukte (${res.status}): ${text.slice(0, 500) || "geen details"}`);
-      }
-
-      let packages: Array<{ value?: string | null; isDefault?: boolean }> = [];
-      try {
-        const parsed = text ? JSON.parse(text) : [];
-        packages = Array.isArray(parsed) ? parsed : [];
-      } catch {
-        throw new Error("Pakketlijst ophalen mislukte: ongeldig antwoord van velopass.pro.");
-      }
-
-      const selected = packages.find((p) => p?.isDefault && p.value) ?? packages.find((p) => p?.value);
-      return selected?.value ?? null;
-    };
-
     type CountryOption = { value: string; searchable: string[] };
 
     const countryLookupKey = (value: string | null | undefined) =>
@@ -440,24 +414,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     else if (digits.length > 0) normalizedPhone = "+" + digits;
     if (normalizedPhone.length > 14) normalizedPhone = normalizedPhone.slice(0, 14);
 
-    let packageId: string | null = null;
-    try {
-      packageId = await readDefaultBikeShopPackageId();
-    } catch (e: any) {
-      return {
-        ok: false as const,
-        stage: "api" as const,
-        message: e?.message ?? "Kon het standaardpakket voor deze organisatie niet ophalen.",
-      };
-    }
-    if (!packageId) {
-      return {
-        ok: false as const,
-        stage: "api" as const,
-        message: "Er is geen standaardpakket gevonden in velopass.pro. Stel daar eerst een actief standaardpakket in.",
-      };
-    }
-
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
@@ -587,7 +543,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
-      packageId: string;
       siteUrl?: string; siteName?: string; website?: string; websiteUrl?: string;
     } = {
       name: row.shop_name,
@@ -601,7 +556,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
       postalCode: postal,
       city,
       country,
-      packageId,
       ...websitePayload,
     };
 
