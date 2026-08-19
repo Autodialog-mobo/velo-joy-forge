@@ -8,7 +8,7 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
-    console.log("[shop-signups] push v2: package-free organisation create", { id: data.id });
+    console.log("[shop-signups] push v3: package-free organisation create", { id: data.id });
     const request = getRequest();
     const bearer = request?.headers?.get("authorization") ?? "";
     if (!bearer.startsWith("Bearer ")) {
