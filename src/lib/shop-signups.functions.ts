@@ -414,24 +414,6 @@ export const pushShopSignupToVelopassPro = createServerFn({ method: "POST" })
     else if (digits.length > 0) normalizedPhone = "+" + digits;
     if (normalizedPhone.length > 14) normalizedPhone = normalizedPhone.slice(0, 14);
 
-    let packageId: string | null = null;
-    try {
-      packageId = await readDefaultBikeShopPackageId();
-    } catch (e: any) {
-      return {
-        ok: false as const,
-        stage: "api" as const,
-        message: e?.message ?? "Kon het standaardpakket voor deze organisatie niet ophalen.",
-      };
-    }
-    if (!packageId) {
-      return {
-        ok: false as const,
-        stage: "api" as const,
-        message: "Er is geen standaardpakket gevonden in velopass.pro. Stel daar eerst een actief standaardpakket in.",
-      };
-    }
-
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
