@@ -859,22 +859,10 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
     let employeeError: string | null = null;
 
     if (returnedId) {
-      // Language code format used by velopass.pro is `<lang>-<country>`,
-      // e.g. `nl-be`, `fr-fr`. Fall back to `nl-be`.
-      const langBase = (row.lang || "nl").toLowerCase().slice(0, 2);
-      const countryIso = (() => {
-        const raw = String(row.country || "").trim().toUpperCase();
-        if (/^[A-Z]{2}$/.test(raw)) return raw.toLowerCase();
-        const map: Record<string, string> = {
-          BELGIE: "be", BELGIUM: "be", BELGIQUE: "be", BELGIEN: "be",
-          NEDERLAND: "nl", NETHERLANDS: "nl", HOLLAND: "nl",
-          FRANCE: "fr", FRANKRIJK: "fr",
-          LUXEMBOURG: "lu", LUXEMBURG: "lu",
-          GERMANY: "de", DUITSLAND: "de", DEUTSCHLAND: "de",
-        };
-        return map[raw.replace(/[^A-Z]/g, "")] || "be";
-      })();
-      const languageCode = `${langBase}-${countryIso}`;
+      // Re-use the same `<lang>-<country>` mapping that is sent on the
+      // Organisation create call.
+      const languageCode = buildLanguageCode(row.lang, row.country);
+
 
       const employeeBody: Record<string, unknown> = {
         languageCode,
