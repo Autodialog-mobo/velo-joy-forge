@@ -199,6 +199,30 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
+    // Velopass.pro expects a `<lang>-<country>` languageCode on both the
+    // Organisation create and the user/employee create calls.
+    const buildLanguageCode = (lang: string | null | undefined, countryRaw: string | null | undefined): string => {
+      const langBase = (lang || "nl").toLowerCase().slice(0, 2);
+      const raw = String(countryRaw || "").trim().toUpperCase();
+      let countryIso = "be";
+      if (/^[A-Z]{2}$/.test(raw)) {
+        countryIso = raw.toLowerCase();
+      } else {
+        const map: Record<string, string> = {
+          BELGIE: "be", BELGIUM: "be", BELGIQUE: "be", BELGIEN: "be",
+          NEDERLAND: "nl", NETHERLANDS: "nl", HOLLAND: "nl",
+          FRANCE: "fr", FRANKRIJK: "fr",
+          LUXEMBOURG: "lu", LUXEMBURG: "lu",
+          GERMANY: "de", DUITSLAND: "de", DEUTSCHLAND: "de",
+        };
+        countryIso = map[raw.replace(/[^A-Z]/g, "")] || "be";
+      }
+      return `${langBase}-${countryIso}`;
+    };
+
+    const languageCode = buildLanguageCode(row.lang, row.country);
+
+
     // Best-effort website lookup via Google Places Text Search v1, routed
     // through the Lovable connector gateway (server-side, no referrer
     // problem). Tries a series of queries from most-specific to broadest so
