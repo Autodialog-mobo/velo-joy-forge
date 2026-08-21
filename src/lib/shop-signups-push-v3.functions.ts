@@ -199,6 +199,30 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
     const countryOptions = await readCountryOptions();
     const country = resolveCountryForVelopass(row.country, countryOptions);
 
+    // Velopass.pro expects a `<lang>-<country>` languageCode on both the
+    // Organisation create and the user/employee create calls.
+    const buildLanguageCode = (lang: string | null | undefined, countryRaw: string | null | undefined): string => {
+      const langBase = (lang || "nl").toLowerCase().slice(0, 2);
+      const raw = String(countryRaw || "").trim().toUpperCase();
+      let countryIso = "be";
+      if (/^[A-Z]{2}$/.test(raw)) {
+        countryIso = raw.toLowerCase();
+      } else {
+        const map: Record<string, string> = {
+          BELGIE: "be", BELGIUM: "be", BELGIQUE: "be", BELGIEN: "be",
+          NEDERLAND: "nl", NETHERLANDS: "nl", HOLLAND: "nl",
+          FRANCE: "fr", FRANKRIJK: "fr",
+          LUXEMBOURG: "lu", LUXEMBURG: "lu",
+          GERMANY: "de", DUITSLAND: "de", DEUTSCHLAND: "de",
+        };
+        countryIso = map[raw.replace(/[^A-Z]/g, "")] || "be";
+      }
+      return `${langBase}-${countryIso}`;
+    };
+
+    const languageCode = buildLanguageCode(row.lang, row.country);
+
+
     // Best-effort website lookup via Google Places Text Search v1, routed
     // through the Lovable connector gateway (server-side, no referrer
     // problem). Tries a series of queries from most-specific to broadest so
@@ -325,6 +349,7 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
+      languageCode: string;
       siteUrl?: string; siteName?: string; website?: string; websiteUrl?: string;
     } = {
       name: row.shop_name,
@@ -338,8 +363,10 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
       postalCode: postal,
       city,
       country,
+      languageCode,
       ...websitePayload,
     };
+
 
     // Preflight: check if an organisation with this VAT/company number already
     // exists on velopass.pro. Avoids the 400 "Organisation already exists"
@@ -832,22 +859,10 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
     let employeeError: string | null = null;
 
     if (returnedId) {
-      // Language code format used by velopass.pro is `<lang>-<country>`,
-      // e.g. `nl-be`, `fr-fr`. Fall back to `nl-be`.
-      const langBase = (row.lang || "nl").toLowerCase().slice(0, 2);
-      const countryIso = (() => {
-        const raw = String(row.country || "").trim().toUpperCase();
-        if (/^[A-Z]{2}$/.test(raw)) return raw.toLowerCase();
-        const map: Record<string, string> = {
-          BELGIE: "be", BELGIUM: "be", BELGIQUE: "be", BELGIEN: "be",
-          NEDERLAND: "nl", NETHERLANDS: "nl", HOLLAND: "nl",
-          FRANCE: "fr", FRANKRIJK: "fr",
-          LUXEMBOURG: "lu", LUXEMBURG: "lu",
-          GERMANY: "de", DUITSLAND: "de", DEUTSCHLAND: "de",
-        };
-        return map[raw.replace(/[^A-Z]/g, "")] || "be";
-      })();
-      const languageCode = `${langBase}-${countryIso}`;
+      // Re-use the same `<lang>-<country>` mapping that is sent on the
+      // Organisation create call.
+      const languageCode = buildLanguageCode(row.lang, row.country);
+
 
       const employeeBody: Record<string, unknown> = {
         languageCode,
