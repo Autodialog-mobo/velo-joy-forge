@@ -6,8 +6,8 @@ import countShops from "./tools/count-shops";
 const OAUTH_ISSUER = "https://dlcjwyfrjfcyyagzjmdi.supabase.co/auth/v1";
 
 export default defineMcp({
-  name: "velopass-mcp",
-  title: "Velopass MCP",
+  name: "velopass-nextgen",
+  title: "VeloPass NextGen",
   version: "0.1.0",
   instructions:
     "Tools for the Velopass bike-registration app. Use `search_shops` to find partner bike shops by name, city, country, or brand, and `count_shops` to get the total number of active partner shops (optionally per country).",
