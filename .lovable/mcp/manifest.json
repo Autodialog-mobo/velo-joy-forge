@@ -12,9 +12,9 @@
   },
   "mcp": {
     "server": {
-      "name": "velopass-mcp",
+      "name": "velopass-nextgen",
       "version": "0.1.0",
-      "title": "Velopass MCP"
+      "title": "VeloPass NextGen"
     },
     "tools": [
       {
