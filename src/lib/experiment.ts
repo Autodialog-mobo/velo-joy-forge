@@ -7,7 +7,7 @@ export type Variant = "A" | "B";
 // The running experiment. Bump the key to start a fresh experiment (resets
 // buckets). "A" is control (current page), "B" is the treatment.
 export const EXPERIMENT = {
-  key: "bundle_default_v1",
+  key: "bundle_default_v2",
   variants: ["A", "B"] as Variant[],
 };
 

@@ -316,15 +316,20 @@ function AdminReportPage() {
         let duo = 0;
         let family = 0;
         let units = 0;
+        let duoOrders = 0;
         for (const o of os) {
           revenue += o.amount_total || 0;
+          let orderHasDuo = false;
           for (const l of linesByOrder.get(o.id) ?? []) {
             const q = l.quantity || 0;
             units += q;
             if (l.bundle_key === "frameid_solo_onetime") solo += q;
-            else if (l.bundle_key === "frameid_duo_onetime") duo += q;
-            else if (l.bundle_key === "frameid_family_onetime") family += q;
+            else if (l.bundle_key === "frameid_duo_onetime") {
+              duo += q;
+              orderHasDuo = true;
+            } else if (l.bundle_key === "frameid_family_onetime") family += q;
           }
+          if (orderHasDuo) duoOrders += 1;
         }
         const im = imprByMarker.get(marker);
         const visitors = im?.visitors ?? 0;
@@ -339,6 +344,8 @@ function AdminReportPage() {
           revenue,
           aov: orders ? revenue / orders : 0,
           duoShare: units ? (duo / units) * 100 : 0,
+          duoOrders,
+          duoOrdersShare: orders ? (duoOrders / orders) * 100 : 0,
           soloShare: units ? (solo / units) * 100 : 0,
           conv: visitors ? (orders / visitors) * 100 : 0,
           solo,
@@ -506,7 +513,7 @@ function AdminReportPage() {
                   Test loopt - nog geen data. Zodra bezoekers de bestelpagina openen en bestellen,
                   verschijnen hier per variant de bezoekers, conversie, gemiddelde orderwaarde en het
                   duo-/solo-aandeel, met een significantietoets. Variant A = huidige pagina, variant B =
-                  duo voorgeselecteerd met besparing benadrukt.
+                  duo voorgeselecteerd.
                 </div>
                 <div style={{ color: TEXT_MUTED, fontSize: 11, marginTop: 8 }}>
                   Blijft dit leeg terwijl er wel verkeer is? Controleer of de databasemigratie (tabel
@@ -900,22 +907,24 @@ function ExperimentInsight({ rows }: { rows: any[] }) {
   const convDiff = B.conv - A.conv;
   const tone = duoDiff > 0 ? POSITIVE : duoDiff < 0 ? WARNING : INFO;
 
-  // Significance of the conversion difference (orders per visitor).
-  const zt = bothVisitors ? twoProportionZTest(A.orders, A.visitors, B.orders, B.visitors) : null;
-  let sigLabel = "";
-  let sigColor = TEXT_MUTED;
-  if (zt) {
-    if (!zt.enoughData) {
-      sigLabel = "nog niet genoeg data";
-      sigColor = WARNING;
-    } else if (zt.significant) {
-      sigLabel = "significant";
-      sigColor = POSITIVE;
-    } else {
-      sigLabel = "niet significant";
-      sigColor = TEXT_MUTED;
-    }
+  // Primary metric: order-level duo share (duo orders / total orders per variant).
+  const ztDuo =
+    A.orders > 0 && B.orders > 0
+      ? twoProportionZTest(A.duoOrders, A.orders, B.duoOrders, B.orders)
+      : null;
+
+  // Secondary / indicative metric: conversion (orders per visitor).
+  const ztConv = bothVisitors ? twoProportionZTest(A.orders, A.visitors, B.orders, B.visitors) : null;
+
+  function sigLabel(zt: ReturnType<typeof twoProportionZTest>) {
+    if (!zt) return { text: "", color: TEXT_MUTED };
+    if (!zt.enoughData) return { text: "nog niet genoeg data", color: WARNING };
+    if (zt.significant) return { text: "significant", color: POSITIVE };
+    return { text: "niet significant", color: TEXT_MUTED };
   }
+
+  const duoSig = sigLabel(ztDuo);
+  const convSig = sigLabel(ztConv);
 
   return (
     <div
@@ -929,28 +938,49 @@ function ExperimentInsight({ rows }: { rows: any[] }) {
           ? `Conversie: B ${B.conv.toFixed(1)}% vs A ${A.conv.toFixed(1)}% (${convDiff >= 0 ? "+" : ""}${convDiff.toFixed(1)} pp).`
           : "Conversie nog niet te vergelijken (impressies ontbreken nog)."}
       </div>
-      {zt && (
-        <div style={{ fontSize: 12, marginTop: 8, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+
+      {ztDuo && (
+        <div style={{ fontSize: 12, marginTop: 10, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
           <span
             style={{
               padding: "2px 8px",
               borderRadius: 999,
-              background: sigColor === TEXT_MUTED ? "rgba(255,255,255,0.08)" : `${sigColor}22`,
-              color: sigColor === TEXT_MUTED ? TEXT_2 : sigColor,
+              background: duoSig.color === TEXT_MUTED ? "rgba(255,255,255,0.08)" : `${duoSig.color}22`,
+              color: duoSig.color === TEXT_MUTED ? TEXT_2 : duoSig.color,
               fontWeight: 600,
             }}
           >
-            {sigLabel}
+            {duoSig.text}
           </span>
           <span style={{ color: TEXT_MUTED }}>
-            p = {zt.p < 0.001 ? "<0,001" : zt.p.toFixed(3).replace(".", ",")} (conversie B vs A)
+            p = {ztDuo.p < 0.001 ? "<0,001" : ztDuo.p.toFixed(3).replace(".", ",")} (duo-aandeel op orderniveau — primair)
           </span>
         </div>
       )}
+
+      {ztConv && (
+        <div style={{ fontSize: 12, marginTop: 6, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <span
+            style={{
+              padding: "2px 8px",
+              borderRadius: 999,
+              background: convSig.color === TEXT_MUTED ? "rgba(255,255,255,0.08)" : `${convSig.color}22`,
+              color: convSig.color === TEXT_MUTED ? TEXT_2 : convSig.color,
+              fontWeight: 600,
+            }}
+          >
+            {convSig.text}
+          </span>
+          <span style={{ color: TEXT_MUTED }}>
+            p = {ztConv.p < 0.001 ? "<0,001" : ztConv.p.toFixed(3).replace(".", ",")} (conversie — secundair/indicatief)
+          </span>
+        </div>
+      )}
+
       <div style={{ fontSize: 11, color: TEXT_MUTED, marginTop: 6 }}>
-        {zt?.enoughData
-          ? "Significant = p < 0,05: het conversieverschil is waarschijnlijk echt, niet toeval."
-          : "Nog te weinig bezoekers/bestellingen per variant voor een betrouwbare toets. Laat de test langer lopen."}
+        {ztDuo?.enoughData
+          ? "Significant = p < 0,05: het verschil in duo-aandeel is waarschijnlijk echt, niet toeval."
+          : "Nog te weinig bestellingen per variant voor een betrouwbare toets op het duo-aandeel. Laat de test langer lopen."}
       </div>
     </div>
   );
