@@ -57,6 +57,7 @@ import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vie
 import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
 import { Route as ApiPublicBrandsRouteImport } from './routes/api/public/brands'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
@@ -303,6 +304,11 @@ const Char91DotmcpChar93InvokeToolToolRoute =
     path: '/.mcp/invoke-tool/$tool',
     getParentRoute: () => rootRouteImport,
   } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LangOrderThanksRoute = LangOrderThanksRouteImport.update({
   id: '/order_/thanks',
   path: '/order/thanks',
@@ -367,6 +373,7 @@ export interface FileRoutesByFullPath {
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
@@ -418,6 +425,7 @@ export interface FileRoutesByTo {
   '/$lang': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order/thanks': typeof LangOrderThanksRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
@@ -472,6 +480,7 @@ export interface FileRoutesById {
   '/$lang/': typeof LangIndexRoute
   '/$lang/guides/buying-second-hand': typeof LangGuidesBuyingSecondHandRoute
   '/$lang/order_/thanks': typeof LangOrderThanksRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
@@ -526,6 +535,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/brands'
     | '/api/public/shop-signup'
@@ -577,6 +587,7 @@ export interface FileRouteTypes {
     | '/$lang'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order/thanks'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/brands'
     | '/api/public/shop-signup'
@@ -630,6 +641,7 @@ export interface FileRouteTypes {
     | '/$lang/'
     | '/$lang/guides/buying-second-hand'
     | '/$lang/order_/thanks'
+    | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/brands'
     | '/api/public/shop-signup'
@@ -656,6 +668,7 @@ export interface RootRouteChildren {
   Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   MTokenRoute: typeof MTokenRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicBrandsRoute: typeof ApiPublicBrandsRoute
   ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
@@ -1001,6 +1014,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$lang/order_/thanks': {
       id: '/$lang/order_/thanks'
       path: '/order/thanks'
@@ -1131,6 +1151,7 @@ const rootRouteChildren: RootRouteChildren = {
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   MTokenRoute: MTokenRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicBrandsRoute: ApiPublicBrandsRoute,
   ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
