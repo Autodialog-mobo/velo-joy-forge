@@ -14,28 +14,30 @@ const FAQS = [
   { q: "Velopass se connecte-t-il à mon système de caisse ?", a: "Oui. Velopass s'intègre aux principaux systèmes de caisse pour vélocistes, dont Shifter, G8 et CycleSoftware. Le marquage et l'enregistrement au FNUCI se font automatiquement au moment de la vente, sans double saisie." }
 ];
 
-const ORG_JSONLD = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Velopass",
-  url: "https://velopass.com/fr",
-  logo: "https://velopass.com/logo.png",
-  description:
-    "Velopass est un opérateur d'identification de cycles agréé (FNUCI) qui protège les vélos contre le vol et transforme chaque vélo marqué en une relation client durable pour le vélociste.",
-  areaServed: { "@type": "Place", name: "Europe" },
-  contactPoint: {
-    "@type": "ContactPoint",
-    email: "support@velopass.com",
-    telephone: getWhatsAppNumber(),
-    contactType: "sales",
-    availableLanguage: ["French", "Dutch", "English"],
-  },
-  memberOf: {
+function buildOrgJsonLd() {
+  return {
+    "@context": "https://schema.org",
     "@type": "Organization",
-    name: "APIC — Association de Promotion de l'Identification des Cycles",
-    url: "https://apic-asso.com",
-  },
-};
+    name: "Velopass",
+    url: "https://velopass.com/fr",
+    logo: "https://velopass.com/logo.png",
+    description:
+      "Velopass est un opérateur d'identification de cycles agréé (FNUCI) qui protège les vélos contre le vol et transforme chaque vélo marqué en une relation client durable pour le vélociste.",
+    areaServed: { "@type": "Place", name: "Europe" },
+    contactPoint: {
+      "@type": "ContactPoint",
+      email: "support@velopass.com",
+      telephone: getWhatsAppNumber(),
+      contactType: "sales",
+      availableLanguage: ["French", "Dutch", "English"],
+    },
+    memberOf: {
+      "@type": "Organization",
+      name: "APIC — Association de Promotion de l'Identification des Cycles",
+      url: "https://apic-asso.com",
+    },
+  };
+}
 
 const FAQ_JSONLD = {
   "@context": "https://schema.org",
@@ -90,7 +92,7 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
       { rel: "alternate", hrefLang: "x-default", href: "https://www.velopass.com/fr/marquage-velo" },
     ],
     scripts: [
-      { type: "application/ld+json", children: JSON.stringify(ORG_JSONLD) },
+      { type: "application/ld+json", children: JSON.stringify(buildOrgJsonLd()) },
       { type: "application/ld+json", children: JSON.stringify(FAQ_JSONLD) },
     ],
   }),
