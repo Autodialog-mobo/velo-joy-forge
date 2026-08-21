@@ -316,15 +316,20 @@ function AdminReportPage() {
         let duo = 0;
         let family = 0;
         let units = 0;
+        let duoOrders = 0;
         for (const o of os) {
           revenue += o.amount_total || 0;
+          let orderHasDuo = false;
           for (const l of linesByOrder.get(o.id) ?? []) {
             const q = l.quantity || 0;
             units += q;
             if (l.bundle_key === "frameid_solo_onetime") solo += q;
-            else if (l.bundle_key === "frameid_duo_onetime") duo += q;
-            else if (l.bundle_key === "frameid_family_onetime") family += q;
+            else if (l.bundle_key === "frameid_duo_onetime") {
+              duo += q;
+              orderHasDuo = true;
+            } else if (l.bundle_key === "frameid_family_onetime") family += q;
           }
+          if (orderHasDuo) duoOrders += 1;
         }
         const im = imprByMarker.get(marker);
         const visitors = im?.visitors ?? 0;
@@ -339,6 +344,8 @@ function AdminReportPage() {
           revenue,
           aov: orders ? revenue / orders : 0,
           duoShare: units ? (duo / units) * 100 : 0,
+          duoOrders,
+          duoOrdersShare: orders ? (duoOrders / orders) * 100 : 0,
           soloShare: units ? (solo / units) * 100 : 0,
           conv: visitors ? (orders / visitors) * 100 : 0,
           solo,
