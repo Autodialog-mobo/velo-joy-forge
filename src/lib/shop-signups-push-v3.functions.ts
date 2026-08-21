@@ -349,6 +349,7 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
       companyNumber: string; vatNumber: string;
       transferOfOwnershipEmail: string; email: string;
       street: string; postalCode: string; city: string; country: string;
+      languageCode: string;
       siteUrl?: string; siteName?: string; website?: string; websiteUrl?: string;
     } = {
       name: row.shop_name,
@@ -362,8 +363,10 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
       postalCode: postal,
       city,
       country,
+      languageCode,
       ...websitePayload,
     };
+
 
     // Preflight: check if an organisation with this VAT/company number already
     // exists on velopass.pro. Avoids the 400 "Organisation already exists"
