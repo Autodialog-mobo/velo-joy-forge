@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$lang/contact")({
   component: ContactPage,
 });
 
-const WA_NUMBER = getWhatsAppNumber();
+
 
 const RIDER_ICONS: LucideIcon[] = [HelpCircle, Package, ScanLine];
 const SHOP_ICONS: LucideIcon[] = [CalendarCheck, Monitor, HelpCircle];
@@ -195,7 +195,7 @@ function ContactPage() {
       `${t("rider.wa_message_email")}: ${wa.email}\n` +
       (wa.phone ? `${t("rider.wa_message_phone")}: ${wa.phone}\n` : "") +
       (wa.note ? `\n${wa.note}\n` : "");
-    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/${getWhatsAppNumber()}?text=${encodeURIComponent(text)}`;
   }, [wa, t]);
 
 
