@@ -12,6 +12,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = useSearch({ from: "/auth" });
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
@@ -21,9 +22,13 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/admin" });
+      if (data.user) {
+        // If the user already has a session, send them straight back to the
+        // originally requested page (e.g. the MCP consent screen).
+        void navigate({ href: next });
+      }
     });
-  }, [navigate]);
+  }, [navigate, next]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +40,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/admin" },
+          options: { emailRedirectTo: window.location.origin + next },
         });
         if (error) throw error;
         setInfo("Account aangemaakt. Controleer je inbox of log direct in.");
@@ -49,7 +54,7 @@ function AuthPage() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        navigate({ to: "/admin" });
+        void navigate({ href: next });
       }
     } catch (err: any) {
       setError(err.message ?? "Er ging iets mis");
