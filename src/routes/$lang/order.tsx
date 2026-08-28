@@ -363,14 +363,7 @@ const [navOpen, setNavOpen] = useState(false);
                         </div>
 <button
                           type="button"
-                          onClick={() => {
-                            if (addingKey === b.key) return;
-                            updateQty(b.key, 1);
-                            setAddingKey(b.key);
-                            toast.success(t("bundles.added_to_cart", { tier: b.tier }));
-                            if (addTimer.current) clearTimeout(addTimer.current);
-                            addTimer.current = setTimeout(() => setAddingKey(null), 450);
-                          }}
+                          onClick={() => handleAdd(b.key, b.tier)}
                           disabled={addingKey === b.key}
                           style={{
                             background: addingKey === b.key ? "rgba(13,31,60,0.4)" : qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
