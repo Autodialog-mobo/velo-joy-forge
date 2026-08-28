@@ -716,7 +716,8 @@ const [navOpen, setNavOpen] = useState(false);
         </div>
       )}
 
-      <style>{`
+<style>{`
+@keyframes orderSpin { to { transform: rotate(360deg); } }
 @media (max-width: 600px) {
           .bundles-grid { grid-template-columns: 1fr !important; }
         }
