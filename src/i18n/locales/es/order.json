@@ -25,7 +25,8 @@
     "qty_decrease_aria": "Menos",
     "qty_increase_aria": "Más",
     "add_one_more": "Añade otro",
-    "add": "Añadir"
+    "add": "Añadir",
+    "added_to_cart": "{{tier}} añadido a tu cesta"
   },
   "info": {
     "combine_note": "Puedes combinar varios packs en un mismo pedido. El IVA y los impuestos locales se calculan automáticamente al pagar."

@@ -25,7 +25,8 @@
     "qty_decrease_aria": "Minder",
     "qty_increase_aria": "Meer",
     "add_one_more": "Voeg er nog één toe",
-    "add": "Toevoegen"
+    "add": "Toevoegen",
+    "added_to_cart": "{{tier}} toegevoegd aan je winkelmandje"
   },
   "info": {
     "combine_note": "Combineer gerust meerdere bundels in één bestelling. Btw en eventuele lokale taksen worden automatisch berekend bij het afrekenen."
