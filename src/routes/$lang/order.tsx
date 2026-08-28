@@ -346,25 +346,49 @@ const [navOpen, setNavOpen] = useState(false);
                             <Plus size={14} />
                           </button>
                         </div>
-                        <button
+<button
                           type="button"
                           onClick={() => {
+                            if (addingKey === b.key) return;
                             updateQty(b.key, 1);
+                            setAddingKey(b.key);
                             toast.success(t("bundles.added_to_cart", { tier: b.tier }));
+                            if (addTimer.current) clearTimeout(addTimer.current);
+                            addTimer.current = setTimeout(() => setAddingKey(null), 450);
                           }}
+                          disabled={addingKey === b.key}
                           style={{
-                            background: qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
-                            color: qty > 0 ? "#0D1F3C" : "#fff",
+                            background: addingKey === b.key ? "rgba(13,31,60,0.4)" : qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
+                            color: addingKey === b.key ? "#fff" : qty > 0 ? "#0D1F3C" : "#fff",
                             border: "none",
                             padding: "10px 14px",
                             borderRadius: 10,
                             fontFamily: "DM Sans, sans-serif",
                             fontWeight: 600,
                             fontSize: 13,
-                            cursor: "pointer",
+                            cursor: addingKey === b.key ? "not-allowed" : "pointer",
+                            opacity: addingKey === b.key ? 0.75 : 1,
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 8,
+                            transition: "background 0.15s ease, opacity 0.15s ease",
                           }}
                         >
-                          {qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
+                          {addingKey === b.key ? (
+                            <>
+                              <span
+                                style={{
+                                  width: 12,
+                                  height: 12,
+                                  borderRadius: "50%",
+                                  border: "2px solid rgba(255,255,255,0.4)",
+                                  borderTopColor: "#fff",
+                                  animation: "orderSpin 0.6s linear infinite",
+                                }}
+                              />
+                              {qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
+                            </>
+                          ) : qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
                         </button>
                       </div>
 
