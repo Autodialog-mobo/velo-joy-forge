@@ -279,10 +279,8 @@ function BestellenPage() {
 
       <div className="order-page-body" style={{ maxWidth: 1100, margin: "-40px auto 0", padding: "0 24px 72px", position: "relative" }}>
         {stage === "select" && (
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 360px", gap: 24, alignItems: "start" }} className="bestel-grid">
-            {/* Cards column */}
-            <div style={{ display: "grid", gap: 16 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
+<div style={{ display: "grid", gap: 24 }}>
+            <div className="bundles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 16 }}>
                 {BUNDLES.map((b) => {
                   const qty = quantities[b.key];
                   const isFeatured = b.featured;
@@ -316,24 +314,26 @@ function BestellenPage() {
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 14, color: "rgba(13,31,60,0.7)", marginTop: 2 }}>
                         {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
-                      <div style={{
-                        height: b.stickers === 1 ? 4 : b.stickers === 2 ? 8 : 13,
+<div style={{
+                        height: b.stickers === 1 ? 6 : b.stickers === 2 ? 10 : 14,
                         background: "#2ECC8A",
                         margin: "16px -24px",
                       }} />
                       <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
-                      <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
-                        {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
-                      </p>
+                      {b.stickers > 1 && (
+                        <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
+                          {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
+                        </p>
+                      )}
                       {b.discountKey && (
                         <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.12)", color: "#0D1F3C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
                           {t(`bundles.${b.discountKey}` as const)}
                         </span>
                       )}
 
-                      <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                      <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
                         <div style={{ display: "inline-flex", alignItems: "center", border: "1px solid rgba(13,31,60,0.15)", borderRadius: 10, overflow: "hidden", background: "#fff" }}>
                           <button type="button" aria-label={t("bundles.qty_decrease_aria")} onClick={() => updateQty(b.key, -1)} style={qtyBtn} disabled={qty === 0}>
                             <Minus size={14} />
@@ -394,12 +394,10 @@ function BestellenPage() {
                     <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.deterrent_body")}</p>
                   </div>
                 </div>
-              </div>
+</div>
 
-            </div>
-
-            {/* Cart sidebar */}
-            <aside id="order-cart" style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", position: "sticky", top: 20, scrollMarginTop: 80 }}>
+            {/* Cart / summary + form */}
+            <aside id="order-cart" style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", maxWidth: 560, justifySelf: "center", width: "100%", boxSizing: "border-box" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <ShoppingBag size={18} color="#0D1F3C" />
                 <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: 0, color: "#0D1F3C" }}>{t("cart.title")}</h2>
@@ -689,8 +687,8 @@ function BestellenPage() {
       )}
 
       <style>{`
-        @media (max-width: 900px) {
-          .bestel-grid { grid-template-columns: 1fr !important; }
+@media (max-width: 600px) {
+          .bundles-grid { grid-template-columns: 1fr !important; }
         }
         .mobile-pay-bar { display: none; }
         @media (max-width: 900px) {
