@@ -279,10 +279,8 @@ function BestellenPage() {
 
       <div className="order-page-body" style={{ maxWidth: 1100, margin: "-40px auto 0", padding: "0 24px 72px", position: "relative" }}>
         {stage === "select" && (
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 360px", gap: 24, alignItems: "start" }} className="bestel-grid">
-            {/* Cards column */}
-            <div style={{ display: "grid", gap: 16 }}>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
+<div style={{ display: "grid", gap: 24 }}>
+            <div className="bundles-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 16 }}>
                 {BUNDLES.map((b) => {
                   const qty = quantities[b.key];
                   const isFeatured = b.featured;
