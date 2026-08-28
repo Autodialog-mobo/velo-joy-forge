@@ -72,7 +72,9 @@ function BestellenPage() {
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const [navOpen, setNavOpen] = useState(false);
+const [navOpen, setNavOpen] = useState(false);
+  const [addingKey, setAddingKey] = useState<BundleKey | null>(null);
+  const addTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 2026-08-28: Card CI restyle to sleeve style (both variants A and B) — removed mint fill, navy DM Sans numbers, green reserved for the horizontal weight bar / Duo border / badge. Use this date as the split point when reading absolute duo-share trends; the A-vs-B delta is unaffected.
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
