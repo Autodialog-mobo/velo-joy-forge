@@ -25,7 +25,8 @@
     "qty_decrease_aria": "Weniger",
     "qty_increase_aria": "Mehr",
     "add_one_more": "Noch eins dazu",
-    "add": "Hinzufügen"
+    "add": "Hinzufügen",
+    "added_to_cart": "{{tier}} zum Warenkorb hinzugefügt"
   },
   "info": {
     "combine_note": "Du kannst gerne mehrere Pakete in einer Bestellung kombinieren. Die Mehrwertsteuer und etwaige lokale Steuern werden an der Kasse automatisch berechnet."

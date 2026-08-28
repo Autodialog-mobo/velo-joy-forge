@@ -12,6 +12,7 @@ import { getRequestUrl } from "@tanstack/react-start/server";
 import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
+import { Toaster } from "@/components/ui/sonner";
 import ogShareImage from "../assets/og-share.jpg?url";
 
 const SITE_URL = "https://velopass.com";
@@ -143,6 +144,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster position="bottom-center" richColors />
     </QueryClientProvider>
   );
 }

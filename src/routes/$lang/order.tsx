@@ -1,4 +1,5 @@
 import { useMemo, useState, useCallback, useEffect, useRef } from "react";
+import { toast } from "sonner";
 import { useServerFn } from "@tanstack/react-start";
 import { useTranslation } from "react-i18next";
 import { assignVariant, EXPERIMENT, type Variant } from "@/lib/experiment";
@@ -345,7 +346,10 @@ function BestellenPage() {
                         </div>
                         <button
                           type="button"
-                          onClick={() => updateQty(b.key, 1)}
+                          onClick={() => {
+                            updateQty(b.key, 1);
+                            toast.success(t("bundles.added_to_cart", { tier: b.tier }));
+                          }}
                           style={{
                             background: qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
                             color: qty > 0 ? "#0D1F3C" : "#fff",
