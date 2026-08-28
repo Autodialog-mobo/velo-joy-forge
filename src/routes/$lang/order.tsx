@@ -73,7 +73,7 @@ function BestellenPage() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [navOpen, setNavOpen] = useState(false);
 
-  // 2026-08-28: Card CI restyle — Solo/Duo/Family tier names + number/price switched to DM Sans (both variants A and B). Use this date as the split point when reading absolute duo-share trends over time; the A-vs-B delta itself is unaffected.
+  // 2026-08-28: Card CI restyle to sleeve style (both variants A and B) — removed mint fill, navy DM Sans numbers, green reserved for the horizontal weight bar / Duo border / badge. Use this date as the split point when reading absolute duo-share trends; the A-vs-B delta is unaffected.
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
   // preselect the featured duo bundle. Runs client-side only, after hydration.
   const [variant, setVariant] = useState<Variant | null>(null);
@@ -287,14 +287,13 @@ function BestellenPage() {
                   const qty = quantities[b.key];
                   const isFeatured = b.featured;
                   return (
-                    <div
+<div
                       key={b.key}
                       style={{
-                        background: isFeatured ? "#EAFAF3" : "#fff",
-                        borderRadius: "0 16px 16px 0",
+                        background: "#fff",
+                        borderRadius: 16,
                         padding: 24,
                         border: isFeatured ? "2px solid #2ECC8A" : "1px solid rgba(13,31,60,0.06)",
-                        borderLeft: `${b.stickers === 1 ? 4 : b.stickers === 2 ? 10 : 22}px solid #2ECC8A`,
                         boxShadow: "0 4px 20px rgba(13,31,60,0.08)",
                         position: "relative",
                         fontFamily: "DM Sans, sans-serif",
@@ -311,12 +310,17 @@ function BestellenPage() {
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.04em", color: "#5A7090", textTransform: "uppercase" }}>
                         {b.tier}
                       </div>
-                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#2ECC8A", marginTop: 2 }}>
+                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#0D1F3C", marginTop: 2 }}>
                         {b.stickers}
                       </div>
-                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 16, color: "#0D1F3C", marginTop: 2 }}>
+                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 14, color: "rgba(13,31,60,0.7)", marginTop: 2 }}>
                         {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
+                      <div style={{
+                        height: b.stickers === 1 ? 4 : b.stickers === 2 ? 8 : 13,
+                        background: "#2ECC8A",
+                        margin: "16px -24px",
+                      }} />
                       <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
@@ -324,7 +328,7 @@ function BestellenPage() {
                         {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
                       </p>
                       {b.discountKey && (
-                        <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.18)", color: "#0F8A5C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
+                        <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.12)", color: "#0D1F3C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
                           {t(`bundles.${b.discountKey}` as const)}
                         </span>
                       )}
