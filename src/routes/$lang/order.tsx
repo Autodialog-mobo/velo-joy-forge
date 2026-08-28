@@ -151,6 +151,21 @@ const [navOpen, setNavOpen] = useState(false);
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
 
+  const handleAdd = (key: BundleKey, tier: string) => {
+    if (addingKey === key) return;
+    if (addTimer.current) clearTimeout(addTimer.current);
+    try {
+      updateQty(key, 1);
+      toast.success(t("bundles.added_to_cart", { tier }));
+    } catch {
+      toast.error(t("bundles.add_to_cart_failed"));
+      setAddingKey(null);
+      return;
+    }
+    setAddingKey(key);
+    addTimer.current = setTimeout(() => setAddingKey(null), 450);
+  };
+
   const startCheckout = async () => {
     setStage("checkout");
     setCheckoutError(null);
