@@ -163,16 +163,20 @@ const [navOpen, setNavOpen] = useState(false);
   const handleAdd = (key: BundleKey, tier: string) => {
     if (addingKey === key) return;
     if (addTimer.current) clearTimeout(addTimer.current);
+    const seq = ++addSeq.current;
     try {
       updateQty(key, 1);
       toast.success(t("bundles.added_to_cart", { tier }));
     } catch {
       toast.error(t("bundles.add_to_cart_failed"));
-      setAddingKey(null);
+      if (addSeq.current === seq) setAddingKey(null);
       return;
     }
     setAddingKey(key);
-    addTimer.current = setTimeout(() => setAddingKey(null), 450);
+    addTimer.current = setTimeout(() => {
+      addTimer.current = null;
+      if (addSeq.current === seq) setAddingKey(null);
+    }, 450);
   };
 
   const startCheckout = async () => {
