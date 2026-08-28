@@ -392,12 +392,10 @@ function BestellenPage() {
                     <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.deterrent_body")}</p>
                   </div>
                 </div>
-              </div>
+</div>
 
-            </div>
-
-            {/* Cart sidebar */}
-            <aside id="order-cart" style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", position: "sticky", top: 20, scrollMarginTop: 80 }}>
+            {/* Cart / summary + form */}
+            <aside id="order-cart" style={{ background: "#fff", borderRadius: 16, padding: 24, boxShadow: "0 4px 20px rgba(13,31,60,0.08)", fontFamily: "DM Sans, sans-serif", maxWidth: 560, justifySelf: "center", width: "100%", boxSizing: "border-box" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                 <ShoppingBag size={18} color="#0D1F3C" />
                 <h2 style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 18, margin: 0, color: "#0D1F3C" }}>{t("cart.title")}</h2>
