@@ -72,7 +72,9 @@ function BestellenPage() {
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const [navOpen, setNavOpen] = useState(false);
+const [navOpen, setNavOpen] = useState(false);
+  const [addingKey, setAddingKey] = useState<BundleKey | null>(null);
+  const addTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 2026-08-28: Card CI restyle to sleeve style (both variants A and B) — removed mint fill, navy DM Sans numbers, green reserved for the horizontal weight bar / Duo border / badge. Use this date as the split point when reading absolute duo-share trends; the A-vs-B delta is unaffected.
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
@@ -344,25 +346,49 @@ function BestellenPage() {
                             <Plus size={14} />
                           </button>
                         </div>
-                        <button
+<button
                           type="button"
                           onClick={() => {
+                            if (addingKey === b.key) return;
                             updateQty(b.key, 1);
+                            setAddingKey(b.key);
                             toast.success(t("bundles.added_to_cart", { tier: b.tier }));
+                            if (addTimer.current) clearTimeout(addTimer.current);
+                            addTimer.current = setTimeout(() => setAddingKey(null), 450);
                           }}
+                          disabled={addingKey === b.key}
                           style={{
-                            background: qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
-                            color: qty > 0 ? "#0D1F3C" : "#fff",
+                            background: addingKey === b.key ? "rgba(13,31,60,0.4)" : qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
+                            color: addingKey === b.key ? "#fff" : qty > 0 ? "#0D1F3C" : "#fff",
                             border: "none",
                             padding: "10px 14px",
                             borderRadius: 10,
                             fontFamily: "DM Sans, sans-serif",
                             fontWeight: 600,
                             fontSize: 13,
-                            cursor: "pointer",
+                            cursor: addingKey === b.key ? "not-allowed" : "pointer",
+                            opacity: addingKey === b.key ? 0.75 : 1,
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 8,
+                            transition: "background 0.15s ease, opacity 0.15s ease",
                           }}
                         >
-                          {qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
+                          {addingKey === b.key ? (
+                            <>
+                              <span
+                                style={{
+                                  width: 12,
+                                  height: 12,
+                                  borderRadius: "50%",
+                                  border: "2px solid rgba(255,255,255,0.4)",
+                                  borderTopColor: "#fff",
+                                  animation: "orderSpin 0.6s linear infinite",
+                                }}
+                              />
+                              {qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
+                            </>
+                          ) : qty > 0 ? t("bundles.add_one_more") : t("bundles.add")}
                         </button>
                       </div>
 
@@ -690,7 +716,8 @@ function BestellenPage() {
         </div>
       )}
 
-      <style>{`
+<style>{`
+@keyframes orderSpin { to { transform: rotate(360deg); } }
 @media (max-width: 600px) {
           .bundles-grid { grid-template-columns: 1fr !important; }
         }
