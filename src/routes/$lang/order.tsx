@@ -73,7 +73,7 @@ function BestellenPage() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [navOpen, setNavOpen] = useState(false);
 
-  // 2026-08-28: Solo/Duo/Family tier names added to the cards (both variants A and B). Use this date as the split point when reading absolute duo-share trends over time; the A-vs-B delta itself is unaffected.
+  // 2026-08-28: Card CI restyle — Solo/Duo/Family tier names + number/price switched to DM Sans (both variants A and B). Use this date as the split point when reading absolute duo-share trends over time; the A-vs-B delta itself is unaffected.
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
   // preselect the featured duo bundle. Runs client-side only, after hydration.
   const [variant, setVariant] = useState<Variant | null>(null);
@@ -311,13 +311,13 @@ function BestellenPage() {
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.04em", color: "#5A7090", textTransform: "uppercase" }}>
                         {b.tier}
                       </div>
-                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#2ECC8A", marginTop: 2 }}>
+                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#2ECC8A", marginTop: 2 }}>
                         {b.stickers}
                       </div>
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 16, color: "#0D1F3C", marginTop: 2 }}>
                         {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
-                      <p style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
+                      <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
                       <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
