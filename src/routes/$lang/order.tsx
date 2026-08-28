@@ -314,17 +314,19 @@ function BestellenPage() {
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 14, color: "rgba(13,31,60,0.7)", marginTop: 2 }}>
                         {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
-                      <div style={{
-                        height: b.stickers === 1 ? 4 : b.stickers === 2 ? 8 : 13,
+<div style={{
+                        height: b.stickers === 1 ? 6 : b.stickers === 2 ? 10 : 14,
                         background: "#2ECC8A",
                         margin: "16px -24px",
                       }} />
                       <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
-                      <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
-                        {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
-                      </p>
+                      {b.stickers > 1 && (
+                        <p style={{ fontSize: 13, color: "rgba(13,31,60,0.6)", margin: 0 }}>
+                          {t("bundles.per_unit_template", { price: eur(b.pricePerUnit) })}
+                        </p>
+                      )}
                       {b.discountKey && (
                         <span style={{ display: "inline-block", marginTop: 10, background: "rgba(46,204,138,0.12)", color: "#0D1F3C", fontWeight: 700, fontSize: 11, padding: "4px 8px", borderRadius: 999, alignSelf: "flex-start" }}>
                           {t(`bundles.${b.discountKey}` as const)}
