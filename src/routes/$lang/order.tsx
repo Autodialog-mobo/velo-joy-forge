@@ -151,6 +151,21 @@ const [navOpen, setNavOpen] = useState(false);
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
 
+  const handleAdd = (key: BundleKey, tier: string) => {
+    if (addingKey === key) return;
+    if (addTimer.current) clearTimeout(addTimer.current);
+    try {
+      updateQty(key, 1);
+      toast.success(t("bundles.added_to_cart", { tier }));
+    } catch {
+      toast.error(t("bundles.add_to_cart_failed"));
+      setAddingKey(null);
+      return;
+    }
+    setAddingKey(key);
+    addTimer.current = setTimeout(() => setAddingKey(null), 450);
+  };
+
   const startCheckout = async () => {
     setStage("checkout");
     setCheckoutError(null);
@@ -348,14 +363,7 @@ const [navOpen, setNavOpen] = useState(false);
                         </div>
 <button
                           type="button"
-                          onClick={() => {
-                            if (addingKey === b.key) return;
-                            updateQty(b.key, 1);
-                            setAddingKey(b.key);
-                            toast.success(t("bundles.added_to_cart", { tier: b.tier }));
-                            if (addTimer.current) clearTimeout(addTimer.current);
-                            addTimer.current = setTimeout(() => setAddingKey(null), 450);
-                          }}
+                          onClick={() => handleAdd(b.key, b.tier)}
                           disabled={addingKey === b.key}
                           style={{
                             background: addingKey === b.key ? "rgba(13,31,60,0.4)" : qty > 0 ? "rgba(13,31,60,0.06)" : "#0D1F3C",
