@@ -316,7 +316,7 @@ function BestellenPage() {
                         {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
 <div style={{
-                        height: b.stickers === 1 ? 6 : b.stickers === 2 ? 10 : 14,
+                        height: b.stickers === 1 ? 6 : b.stickers === 2 ? 12 : 18,
                         background: "#2ECC8A",
                         margin: "16px -24px",
                       }} />
