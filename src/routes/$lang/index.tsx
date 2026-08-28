@@ -8,6 +8,7 @@ import walletPassImg from "@/assets/velopass-wallet-pass.png.asset.json";
 import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.asset.json";
 import heroBgAvif from "@/assets/hero-cyclist-bg-harmonized-desktop.avif.asset.json";
+import sleevesImg from "@/assets/velopass-sleeves-product.svg";
 import heroBgAvifMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.avif.asset.json";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
@@ -744,6 +745,14 @@ function VelopassHome() {
         <p className="eyebrow">{t("home:paths.order.eyebrow")}</p>
         <h2 className="sec-title">{t("home:paths.order.title")}</h2>
         <p className="sec-sub">{t("home:paths.order.body")}</p>
+        <div style={{ maxWidth: 420, margin: "0 auto 28px", padding: "20px 24px", background: "var(--bg)", borderRadius: "var(--r-lg)" }}>
+          <img
+            src={sleevesImg}
+            alt={t("home:paths.order.sleeves_alt")}
+            style={{ width: "100%", height: "auto", display: "block" }}
+            loading="lazy"
+          />
+        </div>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
             <div style={pathIconBox}><Store size={24} color="#fff" strokeWidth={1.8} /></div>
