@@ -73,7 +73,7 @@ function BestellenPage() {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [navOpen, setNavOpen] = useState(false);
 
-  // 2026-08-28: Card CI restyle — Solo/Duo/Family tier names + number/price switched to DM Sans (both variants A and B). Use this date as the split point when reading absolute duo-share trends over time; the A-vs-B delta itself is unaffected.
+  // 2026-08-28: Card CI restyle to sleeve style (both variants A and B) — removed mint fill, navy DM Sans numbers, green reserved for the horizontal weight bar / Duo border / badge. Use this date as the split point when reading absolute duo-share trends; the A-vs-B delta is unaffected.
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
   // preselect the featured duo bundle. Runs client-side only, after hydration.
   const [variant, setVariant] = useState<Variant | null>(null);
