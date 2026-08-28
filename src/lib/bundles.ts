@@ -10,6 +10,7 @@ export type BundleKey =
 export type Bundle = {
   key: BundleKey;
   name: string;
+  tier: "Solo" | "Duo" | "Family";
   stickers: number;
   price: number; // total price, cents, INCL. VAT
   pricePerUnit: number; // per-unit price, cents, INCL. VAT
@@ -21,6 +22,7 @@ export const BUNDLES: Bundle[] = [
   {
     key: "frameid_solo_onetime",
     name: "1 Frame-ID",
+    tier: "Solo",
     stickers: 1,
     price: 1295,
     pricePerUnit: 1295,
@@ -28,6 +30,7 @@ export const BUNDLES: Bundle[] = [
   {
     key: "frameid_duo_onetime",
     name: "2 Frame-ID's",
+    tier: "Duo",
     stickers: 2,
     price: 2195,
     pricePerUnit: 1098,
@@ -37,6 +40,7 @@ export const BUNDLES: Bundle[] = [
   {
     key: "frameid_family_onetime",
     name: "5 Frame-ID's",
+    tier: "Family",
     stickers: 5,
     price: 4995,
     pricePerUnit: 999,

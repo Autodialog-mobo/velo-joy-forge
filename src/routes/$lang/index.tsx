@@ -10,6 +10,7 @@ import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.as
 import heroBgAvif from "@/assets/hero-cyclist-bg-harmonized-desktop.avif.asset.json";
 import sleevesImg from "@/assets/velopass-sleeves-product.svg";
 import heroBgAvifMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.avif.asset.json";
+import { BUNDLES } from "@/lib/bundles";
 import { VelopassMark } from "@/components/VelopassMark";
 import { ShopFinder } from "@/components/ShopFinder";
 import { QrScanDialog } from "@/components/QrScanDialog";
@@ -752,6 +753,30 @@ function VelopassHome() {
             style={{ width: "100%", height: "auto", display: "block" }}
             loading="lazy"
           />
+          <div
+            style={{
+              display: "flex",
+              marginTop: 16,
+            }}
+          >
+            {BUNDLES.map((b) => (
+              <div
+                key={b.key}
+                style={{
+                  flex: 1,
+                  textAlign: "center",
+                  fontFamily: "DM Sans, sans-serif",
+                  fontWeight: 600,
+                  fontSize: 13,
+                  letterSpacing: "0.04em",
+                  color: "#5A7090",
+                  textTransform: "uppercase",
+                }}
+              >
+                {b.tier}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="steps-new two-paths">
           <div className="sn path-shop">
