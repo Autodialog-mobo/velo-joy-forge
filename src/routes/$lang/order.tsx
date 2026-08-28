@@ -687,8 +687,8 @@ function BestellenPage() {
       )}
 
       <style>{`
-        @media (max-width: 900px) {
-          .bestel-grid { grid-template-columns: 1fr !important; }
+@media (max-width: 600px) {
+          .bundles-grid { grid-template-columns: 1fr !important; }
         }
         .mobile-pay-bar { display: none; }
         @media (max-width: 900px) {
