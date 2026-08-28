@@ -75,6 +75,15 @@ function BestellenPage() {
 const [navOpen, setNavOpen] = useState(false);
   const [addingKey, setAddingKey] = useState<BundleKey | null>(null);
   const addTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Monotonic sequence id: only the latest add may clear the loading state,
+  // so a stale timer from an earlier click can never leave the button stuck.
+  const addSeq = useRef(0);
+  useEffect(
+    () => () => {
+      if (addTimer.current) clearTimeout(addTimer.current);
+    },
+    [],
+  );
 
   // 2026-08-28: Card CI restyle to sleeve style (both variants A and B) — removed mint fill, navy DM Sans numbers, green reserved for the horizontal weight bar / Duo border / badge. Use this date as the split point when reading absolute duo-share trends; the A-vs-B delta is unaffected.
   // A/B experiment: bucket the visitor, log an impression once, and (variant B)
@@ -154,16 +163,20 @@ const [navOpen, setNavOpen] = useState(false);
   const handleAdd = (key: BundleKey, tier: string) => {
     if (addingKey === key) return;
     if (addTimer.current) clearTimeout(addTimer.current);
+    const seq = ++addSeq.current;
     try {
       updateQty(key, 1);
       toast.success(t("bundles.added_to_cart", { tier }));
     } catch {
       toast.error(t("bundles.add_to_cart_failed"));
-      setAddingKey(null);
+      if (addSeq.current === seq) setAddingKey(null);
       return;
     }
     setAddingKey(key);
-    addTimer.current = setTimeout(() => setAddingKey(null), 450);
+    addTimer.current = setTimeout(() => {
+      addTimer.current = null;
+      if (addSeq.current === seq) setAddingKey(null);
+    }, 450);
   };
 
   const startCheckout = async () => {
