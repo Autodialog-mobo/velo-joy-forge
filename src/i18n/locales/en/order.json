@@ -26,7 +26,8 @@
     "qty_increase_aria": "More",
     "add_one_more": "Add one more",
     "add": "Add",
-    "added_to_cart": "{{tier}} added to your cart"
+    "added_to_cart": "{{tier}} added to your cart",
+    "add_to_cart_failed": "Adding to your cart failed. Please try again."
   },
   "info": {
     "combine_note": "Feel free to combine multiple bundles in one order. VAT and any local taxes are calculated automatically at checkout."

@@ -26,7 +26,8 @@
     "qty_increase_aria": "En savoir plus",
     "add_one_more": "Ajoute-en un de plus",
     "add": "Ajouter",
-    "added_to_cart": "{{tier}} ajouté à votre panier"
+    "added_to_cart": "{{tier}} ajouté à votre panier",
+    "add_to_cart_failed": "L'ajout au panier a échoué. Veuillez réessayer."
   },
   "info": {
     "combine_note": "N'hésite pas à regrouper plusieurs lots dans une seule commande. La TVA et les taxes locales éventuelles sont calculées automatiquement lors du paiement."

@@ -26,7 +26,8 @@
     "qty_increase_aria": "Mehr",
     "add_one_more": "Noch eins dazu",
     "add": "Hinzufügen",
-    "added_to_cart": "{{tier}} zum Warenkorb hinzugefügt"
+    "added_to_cart": "{{tier}} zum Warenkorb hinzugefügt",
+    "add_to_cart_failed": "Das Hinzufügen zum Warenkorb ist fehlgeschlagen. Bitte versuche es erneut."
   },
   "info": {
     "combine_note": "Du kannst gerne mehrere Pakete in einer Bestellung kombinieren. Die Mehrwertsteuer und etwaige lokale Steuern werden an der Kasse automatisch berechnet."
