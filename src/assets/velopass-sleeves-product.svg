@@ -1,0 +1,59 @@
+<svg width="400" height="220" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialGradient id="sh" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0D1F3C" stop-opacity="0.22"/><stop offset="100%" stop-color="#0D1F3C" stop-opacity="0"/></radialGradient>
+<mask id="hole" maskUnits="userSpaceOnUse" x="0" y="0" width="112" height="180">
+<rect x="8" y="0" width="96" height="170" rx="5" fill="white"/>
+<path d="M 44.00 5.00 L 51.03 5.00 A 5 5 0 0 1 60.97 5.00 L 68.00 5.00 A 4.0 4.0 0 0 1 68.00 13.00 L 44.00 13.00 A 4.0 4.0 0 0 1 44.00 5.00 Z" fill="black"/>
+</mask>
+</defs>
+<g transform="translate(10,22)">
+<ellipse cx="56" cy="180" rx="54" ry="9" fill="url(#sh)"/>
+<g mask="url(#hole)">
+<rect x="8" y="0" width="96" height="20" rx="5" fill="#122A50"/>
+<rect x="8" y="20" width="96" height="150" rx="5" fill="#0D1F3C"/>
+<g transform="translate(16,30)">
+<rect x="0" y="0" width="15" height="15" rx="3.3" fill="#2ECC8A"/>
+<path d="M3.6 8 L6.2 10.6 L11.6 4.4" fill="none" stroke="#0D1F3C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="19" y="12" fill="#F5F3EE" font-family="Syne, sans-serif" font-size="11" font-weight="700" letter-spacing="-0.3">velopass</text>
+</g>
+<text x="56" y="112" text-anchor="middle" fill="#FFFFFF" font-family="Syne, sans-serif" font-size="54" font-weight="800">1</text>
+<text x="56" y="129" text-anchor="middle" fill="#8FA3BE" font-family="DM Sans, sans-serif" font-size="6.5" letter-spacing="1.5">FRAME-ID</text>
+<rect x="8" y="140" width="96" height="3" fill="#2ECC8A"/>
+<rect x="8" y="148" width="96" height="16" rx="2" fill="#F5F3EE"/>
+<text x="56" y="159" text-anchor="middle" fill="#0D1F3C" font-family="DM Sans, sans-serif" font-size="9" font-weight="800">€12,95</text>
+</g></g>
+<g transform="translate(138,22)">
+<ellipse cx="56" cy="180" rx="54" ry="9" fill="url(#sh)"/>
+<g mask="url(#hole)">
+<rect x="8" y="0" width="96" height="20" rx="5" fill="#122A50"/>
+<rect x="8" y="20" width="96" height="150" rx="5" fill="#0D1F3C"/>
+<g transform="translate(16,30)">
+<rect x="0" y="0" width="15" height="15" rx="3.3" fill="#2ECC8A"/>
+<path d="M3.6 8 L6.2 10.6 L11.6 4.4" fill="none" stroke="#0D1F3C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="19" y="12" fill="#F5F3EE" font-family="Syne, sans-serif" font-size="11" font-weight="700" letter-spacing="-0.3">velopass</text>
+</g>
+<text x="56" y="108" text-anchor="middle" fill="#FFFFFF" font-family="Syne, sans-serif" font-size="54" font-weight="800">2</text>
+<text x="56" y="125" text-anchor="middle" fill="#8FA3BE" font-family="DM Sans, sans-serif" font-size="6.5" letter-spacing="1.5">FRAME-ID'S</text>
+<rect x="8" y="132" width="96" height="6" fill="#2ECC8A"/>
+<rect x="8" y="143" width="96" height="21" rx="2" fill="#F5F3EE"/>
+<text x="56" y="153" text-anchor="middle" fill="#0D1F3C" font-family="DM Sans, sans-serif" font-size="8.5" font-weight="800">€21,95</text>
+<text x="56" y="161" text-anchor="middle" fill="#5A7090" font-family="DM Sans, sans-serif" font-size="5">€10,98 / stuk</text>
+</g></g>
+<g transform="translate(266,22)">
+<ellipse cx="56" cy="180" rx="54" ry="9" fill="url(#sh)"/>
+<g mask="url(#hole)">
+<rect x="8" y="0" width="96" height="20" rx="5" fill="#122A50"/>
+<rect x="8" y="20" width="96" height="150" rx="5" fill="#0D1F3C"/>
+<g transform="translate(16,30)">
+<rect x="0" y="0" width="15" height="15" rx="3.3" fill="#2ECC8A"/>
+<path d="M3.6 8 L6.2 10.6 L11.6 4.4" fill="none" stroke="#0D1F3C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="19" y="12" fill="#F5F3EE" font-family="Syne, sans-serif" font-size="11" font-weight="700" letter-spacing="-0.3">velopass</text>
+</g>
+<text x="56" y="104" text-anchor="middle" fill="#FFFFFF" font-family="Syne, sans-serif" font-size="54" font-weight="800">5</text>
+<text x="56" y="121" text-anchor="middle" fill="#8FA3BE" font-family="DM Sans, sans-serif" font-size="6.5" letter-spacing="1.5">FRAME-ID'S</text>
+<rect x="8" y="126" width="96" height="12" fill="#2ECC8A"/>
+<rect x="8" y="143" width="96" height="21" rx="2" fill="#F5F3EE"/>
+<text x="56" y="153" text-anchor="middle" fill="#0D1F3C" font-family="DM Sans, sans-serif" font-size="8.5" font-weight="800">€49,95</text>
+<text x="56" y="161" text-anchor="middle" fill="#5A7090" font-family="DM Sans, sans-serif" font-size="5">€9,99 / stuk</text>
+</g></g>
+</svg>
