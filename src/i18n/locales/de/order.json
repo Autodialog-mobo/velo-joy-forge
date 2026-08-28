@@ -18,7 +18,7 @@
   "bundles": {
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID",
-    "popular_badge": "AM BELIEBTESTEN",
+    "popular_badge": "Beliebt",
     "per_unit_template": "{{price}} jeder",
     "discount_15": "15 % Rabatt",
     "discount_23": "23 % Rabatt",
