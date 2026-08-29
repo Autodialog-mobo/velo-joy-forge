@@ -420,47 +420,23 @@ const [navOpen, setNavOpen] = useState(false);
                 })}
               </div>
 
-              {/* Productbeeld bij de pakketkeuze */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, fontFamily: "DM Sans, sans-serif" }}>
-                <img
-                  src={velopassStickerAsset.url}
-                  alt={t("bundles.artefact_caption")}
-                  width={100}
-                  height={100}
-                  loading="lazy"
-                  style={{ width: 100, height: "auto", aspectRatio: "1 / 1", borderRadius: 10, display: "block" }}
-                />
-                <p style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C", margin: 0, textAlign: "center" }}>{t("bundles.artefact_caption")}</p>
-              </div>
-
               <p style={{ fontSize: 12, color: "rgba(13,31,60,0.55)", margin: 0, fontFamily: "DM Sans, sans-serif" }}>
                 {t("info.combine_note")}
               </p>
 
-              {/* PRO TIP — klevinstructies */}
-              <div style={{ background: "rgba(46,204,138,0.06)", border: "1px solid rgba(46,204,138,0.2)", borderRadius: 12, padding: "20px 24px", fontFamily: "DM Sans, sans-serif" }}>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                  <Lightbulb size={16} color="#2ECC8A" />
-                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>{t("pro_tip.label")}</span>
-                </div>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
-                  <div>
-                    <Droplets size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.degrease_title")}</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.degrease_body")}</p>
-                  </div>
-                  <div>
-                    <Eye size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.visible_title")}</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.visible_body")}</p>
-                  </div>
-                  <div>
-                    <ShieldCheck size={28} color="#2ECC8A" strokeWidth={1.8} />
-                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.deterrent_title")}</p>
-                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.deterrent_body")}</p>
-                  </div>
-                </div>
+              {/* Mini-productregel bij de pakketkeuze */}
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontFamily: "DM Sans, sans-serif" }}>
+                <img
+                  src={velopassStickerAsset.url}
+                  alt={t("bundles.artefact_caption")}
+                  width={56}
+                  height={56}
+                  loading="lazy"
+                  style={{ width: 56, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block" }}
+                />
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C" }}>{t("bundles.artefact_caption")}</span>
               </div>
+
 
 
 
@@ -676,6 +652,32 @@ const [navOpen, setNavOpen] = useState(false);
               </p>
 
             </aside>
+
+              {/* PRO TIP — klevinstructies */}
+              <div style={{ background: "rgba(46,204,138,0.06)", border: "1px solid rgba(46,204,138,0.2)", borderRadius: 12, padding: "20px 24px", fontFamily: "DM Sans, sans-serif" }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                  <Lightbulb size={16} color="#2ECC8A" />
+                  <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>{t("pro_tip.label")}</span>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
+                  <div>
+                    <Droplets size={28} color="#2ECC8A" strokeWidth={1.8} />
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.degrease_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.degrease_body")}</p>
+                  </div>
+                  <div>
+                    <Eye size={28} color="#2ECC8A" strokeWidth={1.8} />
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.visible_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.visible_body")}</p>
+                  </div>
+                  <div>
+                    <ShieldCheck size={28} color="#2ECC8A" strokeWidth={1.8} />
+                    <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.deterrent_title")}</p>
+                    <p style={{ fontSize: 12, color: "rgba(13,31,60,0.6)", margin: 0, lineHeight: 1.55 }}>{t("pro_tip.deterrent_body")}</p>
+                  </div>
+                </div>
+              </div>
+
           </div>
         )}
 
