@@ -18,6 +18,7 @@
   "bundles": {
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID",
+    "artefact_caption": "Se pega en el cuadro",
     "popular_badge": "Popular",
     "per_unit_template": "{{price}} por unidad",
     "discount_15": "15% de descuento",
@@ -34,7 +35,6 @@
   },
   "pro_tip": {
     "label": "Consejo pro",
-    "artefact_caption": "Este es tu Frame-ID",
     "degrease_title": "Desengrasa primero",
     "degrease_body": "Limpia primero el cuadro con un desengrasante para una adhesión perfecta.",
     "visible_title": "Colócalo bien visible",

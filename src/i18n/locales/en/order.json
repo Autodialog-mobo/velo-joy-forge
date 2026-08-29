@@ -18,6 +18,7 @@
   "bundles": {
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID's",
+    "artefact_caption": "This goes on your frame",
     "popular_badge": "Popular",
     "per_unit_template": "{{price}} each",
     "discount_15": "15% off",
@@ -34,7 +35,6 @@
   },
   "pro_tip": {
     "label": "Pro tip",
-    "artefact_caption": "This is your Frame-ID",
     "degrease_title": "Degrease first",
     "degrease_body": "Clean the frame surface first with a degreaser for optimal adhesion.",
     "visible_title": "Place it visibly",
