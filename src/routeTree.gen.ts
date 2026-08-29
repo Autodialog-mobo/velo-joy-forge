@@ -14,6 +14,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ProfessionalsRouteImport } from './routes/professionals'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as GestolenRouteImport } from './routes/gestolen'
+import { Route as FrameIdRouteImport } from './routes/frame-id'
 import { Route as FietsControlerenRouteImport } from './routes/fiets-controleren'
 import { Route as DedupAuditRouteImport } from './routes/dedup-audit'
 import { Route as BikesearchRouteImport } from './routes/bikesearch'
@@ -49,6 +50,7 @@ import { Route as LangMarquageVeloRouteImport } from './routes/$lang/marquage-ve
 import { Route as LangManufacturerRouteImport } from './routes/$lang/manufacturer'
 import { Route as LangLeasingRouteImport } from './routes/$lang/leasing'
 import { Route as LangInsuranceRouteImport } from './routes/$lang/insurance'
+import { Route as LangFrameIdRouteImport } from './routes/$lang/frame-id'
 import { Route as LangContactRouteImport } from './routes/$lang/contact'
 import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
 import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
@@ -85,6 +87,11 @@ const McpRoute = McpRouteImport.update({
 const GestolenRoute = GestolenRouteImport.update({
   id: '/gestolen',
   path: '/gestolen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FrameIdRoute = FrameIdRouteImport.update({
+  id: '/frame-id',
+  path: '/frame-id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FietsControlerenRoute = FietsControlerenRouteImport.update({
@@ -263,6 +270,11 @@ const LangInsuranceRoute = LangInsuranceRouteImport.update({
   path: '/insurance',
   getParentRoute: () => LangRouteRoute,
 } as any)
+const LangFrameIdRoute = LangFrameIdRouteImport.update({
+  id: '/frame-id',
+  path: '/frame-id',
+  getParentRoute: () => LangRouteRoute,
+} as any)
 const LangContactRoute = LangContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -337,6 +349,7 @@ export interface FileRoutesByFullPath {
   '/bikesearch': typeof BikesearchRoute
   '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
+  '/frame-id': typeof FrameIdRoute
   '/gestolen': typeof GestolenRoute
   '/mcp': typeof McpRoute
   '/professionals': typeof ProfessionalsRoute
@@ -346,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/frame-id': typeof LangFrameIdRoute
   '/$lang/insurance': typeof LangInsuranceRoute
   '/$lang/leasing': typeof LangLeasingRoute
   '/$lang/manufacturer': typeof LangManufacturerRoute
@@ -389,6 +403,7 @@ export interface FileRoutesByTo {
   '/bikesearch': typeof BikesearchRoute
   '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
+  '/frame-id': typeof FrameIdRoute
   '/gestolen': typeof GestolenRoute
   '/mcp': typeof McpRoute
   '/professionals': typeof ProfessionalsRoute
@@ -398,6 +413,7 @@ export interface FileRoutesByTo {
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/frame-id': typeof LangFrameIdRoute
   '/$lang/insurance': typeof LangInsuranceRoute
   '/$lang/leasing': typeof LangLeasingRoute
   '/$lang/manufacturer': typeof LangManufacturerRoute
@@ -444,6 +460,7 @@ export interface FileRoutesById {
   '/bikesearch': typeof BikesearchRoute
   '/dedup-audit': typeof DedupAuditRoute
   '/fiets-controleren': typeof FietsControlerenRoute
+  '/frame-id': typeof FrameIdRoute
   '/gestolen': typeof GestolenRoute
   '/mcp': typeof McpRoute
   '/professionals': typeof ProfessionalsRoute
@@ -453,6 +470,7 @@ export interface FileRoutesById {
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/frame-id': typeof LangFrameIdRoute
   '/$lang/insurance': typeof LangInsuranceRoute
   '/$lang/leasing': typeof LangLeasingRoute
   '/$lang/manufacturer': typeof LangManufacturerRoute
@@ -499,6 +517,7 @@ export interface FileRouteTypes {
     | '/bikesearch'
     | '/dedup-audit'
     | '/fiets-controleren'
+    | '/frame-id'
     | '/gestolen'
     | '/mcp'
     | '/professionals'
@@ -508,6 +527,7 @@ export interface FileRouteTypes {
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
+    | '/$lang/frame-id'
     | '/$lang/insurance'
     | '/$lang/leasing'
     | '/$lang/manufacturer'
@@ -551,6 +571,7 @@ export interface FileRouteTypes {
     | '/bikesearch'
     | '/dedup-audit'
     | '/fiets-controleren'
+    | '/frame-id'
     | '/gestolen'
     | '/mcp'
     | '/professionals'
@@ -560,6 +581,7 @@ export interface FileRouteTypes {
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
+    | '/$lang/frame-id'
     | '/$lang/insurance'
     | '/$lang/leasing'
     | '/$lang/manufacturer'
@@ -605,6 +627,7 @@ export interface FileRouteTypes {
     | '/bikesearch'
     | '/dedup-audit'
     | '/fiets-controleren'
+    | '/frame-id'
     | '/gestolen'
     | '/mcp'
     | '/professionals'
@@ -614,6 +637,7 @@ export interface FileRouteTypes {
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
+    | '/$lang/frame-id'
     | '/$lang/insurance'
     | '/$lang/leasing'
     | '/$lang/manufacturer'
@@ -660,6 +684,7 @@ export interface RootRouteChildren {
   BikesearchRoute: typeof BikesearchRoute
   DedupAuditRoute: typeof DedupAuditRoute
   FietsControlerenRoute: typeof FietsControlerenRoute
+  FrameIdRoute: typeof FrameIdRoute
   GestolenRoute: typeof GestolenRoute
   McpRoute: typeof McpRoute
   ProfessionalsRoute: typeof ProfessionalsRoute
@@ -711,6 +736,13 @@ declare module '@tanstack/react-router' {
       path: '/gestolen'
       fullPath: '/gestolen'
       preLoaderRoute: typeof GestolenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/frame-id': {
+      id: '/frame-id'
+      path: '/frame-id'
+      fullPath: '/frame-id'
+      preLoaderRoute: typeof FrameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fiets-controleren': {
@@ -958,6 +990,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangInsuranceRouteImport
       parentRoute: typeof LangRouteRoute
     }
+    '/$lang/frame-id': {
+      id: '/$lang/frame-id'
+      path: '/frame-id'
+      fullPath: '/$lang/frame-id'
+      preLoaderRoute: typeof LangFrameIdRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
     '/$lang/contact': {
       id: '/$lang/contact'
       path: '/contact'
@@ -1050,6 +1089,7 @@ interface LangRouteRouteChildren {
   LangAssistanceRoute: typeof LangAssistanceRoute
   LangBikeCheckRoute: typeof LangBikeCheckRoute
   LangContactRoute: typeof LangContactRoute
+  LangFrameIdRoute: typeof LangFrameIdRoute
   LangInsuranceRoute: typeof LangInsuranceRoute
   LangLeasingRoute: typeof LangLeasingRoute
   LangManufacturerRoute: typeof LangManufacturerRoute
@@ -1069,6 +1109,7 @@ const LangRouteRouteChildren: LangRouteRouteChildren = {
   LangAssistanceRoute: LangAssistanceRoute,
   LangBikeCheckRoute: LangBikeCheckRoute,
   LangContactRoute: LangContactRoute,
+  LangFrameIdRoute: LangFrameIdRoute,
   LangInsuranceRoute: LangInsuranceRoute,
   LangLeasingRoute: LangLeasingRoute,
   LangManufacturerRoute: LangManufacturerRoute,
@@ -1142,6 +1183,7 @@ const rootRouteChildren: RootRouteChildren = {
   BikesearchRoute: BikesearchRoute,
   DedupAuditRoute: DedupAuditRoute,
   FietsControlerenRoute: FietsControlerenRoute,
+  FrameIdRoute: FrameIdRoute,
   GestolenRoute: GestolenRoute,
   McpRoute: McpRoute,
   ProfessionalsRoute: ProfessionalsRoute,

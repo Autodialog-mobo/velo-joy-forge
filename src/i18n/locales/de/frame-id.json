@@ -1,0 +1,28 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "So funktioniert dein Frame-ID — Velopass",
+    "description": "Du hast einen Velopass Frame-ID gescannt. Hier siehst du kurz, wie Diebstahlschutz und Registrierung deines Fahrrads funktionieren.",
+    "ogDescription": "Diebstahlschutz und Registrierung deines Fahrrads — mit einem Scan."
+  },
+  "hero": {
+    "eyebrow": "FRAME-ID",
+    "title": "So funktioniert dein Frame-ID",
+    "subtitle": "Diebstahlschutz und Registrierung deines Fahrrads — mit einem Scan."
+  },
+  "video": {
+    "caption": "Sieh dir an, wie es funktioniert",
+    "aria": "Video: So funktioniert dein Frame-ID"
+  },
+  "steps": {
+    "title": "So funktioniert es",
+    "one": "Klebe den Aufkleber gut sichtbar auf deinen Rahmen.",
+    "two": "Scanne den QR-Code mit deinem Handy.",
+    "three": "Melde dein Fahrrad im digitalen Pass auf deinen Namen an."
+  },
+  "value": "Ein digitaler Fahrradpass, Diebstahlschutz und ein sichtbares Signal, dass dein Fahrrad registriert ist.",
+  "cta": {
+    "order": "Bestelle deinen Frame-ID",
+    "check": "Ein Fahrrad prüfen"
+  }
+}

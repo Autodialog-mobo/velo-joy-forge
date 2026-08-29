@@ -1,0 +1,28 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Comment fonctionne votre Frame-ID — Velopass",
+    "description": "Vous avez scanné un Velopass Frame-ID. Voici en bref comment fonctionnent la protection antivol et l'enregistrement de votre vélo.",
+    "ogDescription": "Protection antivol et enregistrement de votre vélo — en un scan."
+  },
+  "hero": {
+    "eyebrow": "FRAME-ID",
+    "title": "Comment fonctionne votre Frame-ID",
+    "subtitle": "Protection antivol et enregistrement de votre vélo — en un seul scan."
+  },
+  "video": {
+    "caption": "Voyez comment ça marche",
+    "aria": "Vidéo : comment fonctionne votre Frame-ID"
+  },
+  "steps": {
+    "title": "Comment ça marche",
+    "one": "Collez l'autocollant bien visible sur votre cadre.",
+    "two": "Scannez le QR avec votre téléphone.",
+    "three": "Mettez votre vélo à votre nom dans le passeport numérique."
+  },
+  "value": "Un passeport vélo numérique, une protection antivol et un signal visible indiquant que votre vélo est enregistré.",
+  "cta": {
+    "order": "Commandez votre Frame-ID",
+    "check": "Vérifier un vélo"
+  }
+}

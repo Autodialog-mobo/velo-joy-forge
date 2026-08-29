@@ -1,0 +1,28 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Zo werkt je Frame-ID — Velopass",
+    "description": "Je scande een Velopass Frame-ID. Ontdek in het kort hoe diefstalbescherming en registratie van je fiets werken.",
+    "ogDescription": "Diefstalbescherming en registratie van je fiets — in één scan."
+  },
+  "hero": {
+    "eyebrow": "FRAME-ID",
+    "title": "Zo werkt je Frame-ID",
+    "subtitle": "Diefstalbescherming en registratie van je fiets — in één scan."
+  },
+  "video": {
+    "caption": "Bekijk hoe het werkt",
+    "aria": "Video: zo werkt je Frame-ID"
+  },
+  "steps": {
+    "title": "Zo werkt het",
+    "one": "Plak de sticker zichtbaar op je frame.",
+    "two": "Scan de QR met je telefoon.",
+    "three": "Zet je fiets op je naam in het digitale paspoort."
+  },
+  "value": "Een digitaal fietspaspoort, diefstalbescherming, en een zichtbaar signaal dat je fiets geregistreerd is.",
+  "cta": {
+    "order": "Bestel je Frame-ID",
+    "check": "Een fiets controleren"
+  }
+}
