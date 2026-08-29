@@ -20,7 +20,7 @@
     "plural_label": "Frame-ID",
     "popular_badge": "Popular",
     "per_unit_template": "{{price}} por unidad",
-"discount_15": "15% de descuento",
+    "discount_15": "15% de descuento",
     "discount_23": "23% de descuento",
     "qty_decrease_aria": "Menos",
     "qty_increase_aria": "Más",
@@ -34,6 +34,7 @@
   },
   "pro_tip": {
     "label": "Consejo pro",
+    "artefact_caption": "Este es tu Frame-ID",
     "degrease_title": "Desengrasa primero",
     "degrease_body": "Limpia primero el cuadro con un desengrasante para una adhesión perfecta.",
     "visible_title": "Colócalo bien visible",

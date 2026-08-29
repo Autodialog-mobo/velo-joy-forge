@@ -20,7 +20,7 @@
     "plural_label": "Frame-ID",
     "popular_badge": "Beliebt",
     "per_unit_template": "{{price}} jeder",
-"discount_15": "15% Rabatt",
+    "discount_15": "15% Rabatt",
     "discount_23": "23% Rabatt",
     "qty_decrease_aria": "Weniger",
     "qty_increase_aria": "Mehr",
@@ -34,6 +34,7 @@
   },
   "pro_tip": {
     "label": "Profi-Tipp",
+    "artefact_caption": "Das ist dein Frame-ID",
     "degrease_title": "Zuerst entfetten",
     "degrease_body": "Reinige die Rahmenoberfläche zunächst mit einem Entfetter, um eine optimale Haftung zu gewährleisten.",
     "visible_title": "Stell es gut sichtbar hin",
