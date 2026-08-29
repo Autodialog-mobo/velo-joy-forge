@@ -34,6 +34,7 @@
   },
   "pro_tip": {
     "label": "Pro tip",
+    "artefact_caption": "This is your Frame-ID",
     "degrease_title": "Degrease first",
     "degrease_body": "Clean the frame surface first with a degreaser for optimal adhesion.",
     "visible_title": "Place it visibly",

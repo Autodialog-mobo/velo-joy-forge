@@ -8,6 +8,8 @@ import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight, Info } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
+import stickerImg from "@/assets/velopass-sticker.webp";
+
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { createMolliePayment } from "@/utils/mollie.functions";
@@ -428,7 +430,19 @@ const [navOpen, setNavOpen] = useState(false);
                   <Lightbulb size={16} color="#2ECC8A" />
                   <span style={{ color: "#2ECC8A", fontWeight: 700, fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" }}>{t("pro_tip.label")}</span>
                 </div>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, marginBottom: 20 }}>
+                  <img
+                    src={stickerImg}
+                    alt={t("pro_tip.artefact_caption")}
+                    width={150}
+                    height={150}
+                    loading="lazy"
+                    style={{ width: 150, height: "auto", aspectRatio: "1 / 1", borderRadius: 10, display: "block" }}
+                  />
+                  <p style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C", margin: 0 }}>{t("pro_tip.artefact_caption")}</p>
+                </div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 18 }}>
+
                   <div>
                     <Droplets size={28} color="#2ECC8A" strokeWidth={1.8} />
                     <p style={{ fontWeight: 600, fontSize: 13, color: "#0D1F3C", margin: "8px 0 4px" }}>{t("pro_tip.degrease_title")}</p>

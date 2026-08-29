@@ -20,7 +20,7 @@
     "plural_label": "Frame-ID",
     "popular_badge": "Populaire",
     "per_unit_template": "{{price}} chacun",
-"discount_15": "15% de remise",
+    "discount_15": "15% de remise",
     "discount_23": "23% de remise",
     "qty_decrease_aria": "Moins",
     "qty_increase_aria": "En savoir plus",
@@ -34,6 +34,7 @@
   },
   "pro_tip": {
     "label": "Conseil de pro",
+    "artefact_caption": "Voici votre Frame-ID",
     "degrease_title": "Dégraisse d'abord",
     "degrease_body": "Nettoie d'abord la surface du cadre avec un dégraissant pour garantir une adhérence optimale.",
     "visible_title": "Place-le bien en vue",
