@@ -50,6 +50,7 @@ import { Route as LangMarquageVeloRouteImport } from './routes/$lang/marquage-ve
 import { Route as LangManufacturerRouteImport } from './routes/$lang/manufacturer'
 import { Route as LangLeasingRouteImport } from './routes/$lang/leasing'
 import { Route as LangInsuranceRouteImport } from './routes/$lang/insurance'
+import { Route as LangFrameIdRouteImport } from './routes/$lang/frame-id'
 import { Route as LangContactRouteImport } from './routes/$lang/contact'
 import { Route as LangBikeCheckRouteImport } from './routes/$lang/bike-check'
 import { Route as LangAssistanceRouteImport } from './routes/$lang/assistance'
@@ -269,6 +270,11 @@ const LangInsuranceRoute = LangInsuranceRouteImport.update({
   path: '/insurance',
   getParentRoute: () => LangRouteRoute,
 } as any)
+const LangFrameIdRoute = LangFrameIdRouteImport.update({
+  id: '/frame-id',
+  path: '/frame-id',
+  getParentRoute: () => LangRouteRoute,
+} as any)
 const LangContactRoute = LangContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -353,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/frame-id': typeof LangFrameIdRoute
   '/$lang/insurance': typeof LangInsuranceRoute
   '/$lang/leasing': typeof LangLeasingRoute
   '/$lang/manufacturer': typeof LangManufacturerRoute
@@ -406,6 +413,7 @@ export interface FileRoutesByTo {
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/frame-id': typeof LangFrameIdRoute
   '/$lang/insurance': typeof LangInsuranceRoute
   '/$lang/leasing': typeof LangLeasingRoute
   '/$lang/manufacturer': typeof LangManufacturerRoute
@@ -462,6 +470,7 @@ export interface FileRoutesById {
   '/$lang/assistance': typeof LangAssistanceRoute
   '/$lang/bike-check': typeof LangBikeCheckRoute
   '/$lang/contact': typeof LangContactRoute
+  '/$lang/frame-id': typeof LangFrameIdRoute
   '/$lang/insurance': typeof LangInsuranceRoute
   '/$lang/leasing': typeof LangLeasingRoute
   '/$lang/manufacturer': typeof LangManufacturerRoute
@@ -518,6 +527,7 @@ export interface FileRouteTypes {
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
+    | '/$lang/frame-id'
     | '/$lang/insurance'
     | '/$lang/leasing'
     | '/$lang/manufacturer'
@@ -571,6 +581,7 @@ export interface FileRouteTypes {
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
+    | '/$lang/frame-id'
     | '/$lang/insurance'
     | '/$lang/leasing'
     | '/$lang/manufacturer'
@@ -626,6 +637,7 @@ export interface FileRouteTypes {
     | '/$lang/assistance'
     | '/$lang/bike-check'
     | '/$lang/contact'
+    | '/$lang/frame-id'
     | '/$lang/insurance'
     | '/$lang/leasing'
     | '/$lang/manufacturer'
@@ -978,6 +990,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangInsuranceRouteImport
       parentRoute: typeof LangRouteRoute
     }
+    '/$lang/frame-id': {
+      id: '/$lang/frame-id'
+      path: '/frame-id'
+      fullPath: '/$lang/frame-id'
+      preLoaderRoute: typeof LangFrameIdRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
     '/$lang/contact': {
       id: '/$lang/contact'
       path: '/contact'
@@ -1070,6 +1089,7 @@ interface LangRouteRouteChildren {
   LangAssistanceRoute: typeof LangAssistanceRoute
   LangBikeCheckRoute: typeof LangBikeCheckRoute
   LangContactRoute: typeof LangContactRoute
+  LangFrameIdRoute: typeof LangFrameIdRoute
   LangInsuranceRoute: typeof LangInsuranceRoute
   LangLeasingRoute: typeof LangLeasingRoute
   LangManufacturerRoute: typeof LangManufacturerRoute
@@ -1089,6 +1109,7 @@ const LangRouteRouteChildren: LangRouteRouteChildren = {
   LangAssistanceRoute: LangAssistanceRoute,
   LangBikeCheckRoute: LangBikeCheckRoute,
   LangContactRoute: LangContactRoute,
+  LangFrameIdRoute: LangFrameIdRoute,
   LangInsuranceRoute: LangInsuranceRoute,
   LangLeasingRoute: LangLeasingRoute,
   LangManufacturerRoute: LangManufacturerRoute,
