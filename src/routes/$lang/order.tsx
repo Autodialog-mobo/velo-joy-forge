@@ -425,7 +425,7 @@ const [navOpen, setNavOpen] = useState(false);
               </p>
 
               {/* Mini-productregel bij de pakketkeuze */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, fontFamily: "DM Sans, sans-serif" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "2px 0", margin: "-10px 0 -6px", fontFamily: "DM Sans, sans-serif" }}>
                 <img
                   src={velopassStickerAsset.url}
                   alt={t("bundles.artefact_caption")}
