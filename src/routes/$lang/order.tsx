@@ -8,6 +8,8 @@ import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Truck, ShieldCheck, ArrowLeft, Plus, Minus, ShoppingBag, Lightbulb, Droplets, Eye, ArrowUpRight, Info } from "lucide-react";
 import { VelopassMark } from "@/components/VelopassMark";
+import stickerImg from "@/assets/velopass-sticker.webp";
+
 import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { createMolliePayment } from "@/utils/mollie.functions";
