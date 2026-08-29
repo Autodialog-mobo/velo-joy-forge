@@ -80,7 +80,7 @@ function FrameIdPage() {
         </div>
       </nav>
 
-      <section style={{ background: OFFWHITE, padding: "48px 24px 64px" }}>
+      <section style={{ background: OFFWHITE, padding: "104px 24px 64px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto", display: "grid", gap: 28 }}>
           <header style={{ display: "grid", gap: 10 }}>
             <span style={{ fontFamily: "'DM Sans', sans-serif", color: GREEN, fontWeight: 700, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase" }}>
