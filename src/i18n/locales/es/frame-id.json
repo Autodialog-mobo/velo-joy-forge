@@ -1,0 +1,28 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Así funciona tu Frame-ID — Velopass",
+    "description": "Has escaneado un Velopass Frame-ID. Aquí tienes en breve cómo funcionan la protección antirrobo y el registro de tu bici.",
+    "ogDescription": "Protección antirrobo y registro de tu bici — en un solo escaneo."
+  },
+  "hero": {
+    "eyebrow": "FRAME-ID",
+    "title": "Así funciona tu Frame-ID",
+    "subtitle": "Protección antirrobo y registro de tu bici — en un solo escaneo."
+  },
+  "video": {
+    "caption": "Mira cómo funciona",
+    "aria": "Vídeo: así funciona tu Frame-ID"
+  },
+  "steps": {
+    "title": "Cómo funciona",
+    "one": "Pega la pegatina bien visible en tu cuadro.",
+    "two": "Escanea el QR con tu móvil.",
+    "three": "Pon la bici a tu nombre en el pasaporte digital."
+  },
+  "value": "Un pasaporte digital para tu bici, protección antirrobo y una señal visible de que tu bici está registrada.",
+  "cta": {
+    "order": "Pide tu Frame-ID",
+    "check": "Comprobar una bici"
+  }
+}
