@@ -135,9 +135,6 @@ export const Route = createFileRoute("/$lang/")({
       path: "",
       title: m.title,
       description: m.description,
-      ogTitle: "Velopass — Every bike. A customer for life.",
-      ogDescription:
-        "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop.",
     });
     return {
       ...base,

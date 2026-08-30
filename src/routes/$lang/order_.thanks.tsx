@@ -8,19 +8,36 @@ import { Footer } from "@/components/Footer";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { getOrderByMolliePayment, retryOrderPayment } from "@/utils/mollie.functions";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang, DEFAULT_LANG, type Lang } from "@/i18n/config";
+import nlThanks from "@/i18n/locales/nl/order-thanks.json";
+import enThanks from "@/i18n/locales/en/order-thanks.json";
+import frThanks from "@/i18n/locales/fr/order-thanks.json";
+import deThanks from "@/i18n/locales/de/order-thanks.json";
+import esThanks from "@/i18n/locales/es/order-thanks.json";
+
+const THANKS_META: Record<Lang, { title: string; description: string }> = {
+  nl: nlThanks.meta,
+  en: enThanks.meta,
+  fr: frThanks.meta,
+  de: deThanks.meta,
+  es: esThanks.meta,
+};
 
 export const Route = createFileRoute("/$lang/order_/thanks")({
   validateSearch: (search: Record<string, unknown>): { payment_id?: string } => ({
     payment_id: typeof search.payment_id === "string" ? search.payment_id : undefined,
   }),
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang: Lang = isLang(params.lang) ? params.lang : DEFAULT_LANG;
+    const m = THANKS_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "order/thanks",
-      title: "Bedankt voor je bestelling — Velopass",
-      description: "Je Velopass-bestelling is bevestigd.",
+      title: m.title,
+      description: m.description,
       noindex: true,
-    }),
+    });
+  },
   component: BedanktPage,
 });
 

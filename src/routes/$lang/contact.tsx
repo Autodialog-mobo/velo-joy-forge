@@ -19,7 +19,21 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { VelopassMark } from "@/components/VelopassMark";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang, DEFAULT_LANG, type Lang } from "@/i18n/config";
+import nlContact from "@/i18n/locales/nl/contact.json";
+import enContact from "@/i18n/locales/en/contact.json";
+import frContact from "@/i18n/locales/fr/contact.json";
+import deContact from "@/i18n/locales/de/contact.json";
+import esContact from "@/i18n/locales/es/contact.json";
 import { getWhatsAppNumber } from "@/lib/whatsapp-number";
+
+const CONTACT_META: Record<Lang, { title: string; description: string; og_description: string }> = {
+  nl: nlContact.meta,
+  en: enContact.meta,
+  fr: frContact.meta,
+  de: deContact.meta,
+  es: esContact.meta,
+};
 
 
 const searchSchema = z.object({
@@ -28,15 +42,17 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/$lang/contact")({
   validateSearch: zodValidator(searchSchema),
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang: Lang = isLang(params.lang) ? params.lang : DEFAULT_LANG;
+    const m = CONTACT_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "contact",
-      title: "Contact — Velopass",
-      description:
-        "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
-      ogDescription: "Kies een onderwerp en chat met het Velopass-team via WhatsApp.",
-    }),
+      title: m.title,
+      description: m.description,
+      ogDescription: m.og_description,
+    });
+  },
   component: ContactPage,
 });
 

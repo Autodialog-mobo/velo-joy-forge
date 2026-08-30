@@ -2,16 +2,43 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { VelopassMark } from "@/components/VelopassMark";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang, DEFAULT_LANG, type Lang } from "@/i18n/config";
+
+const PRO_META: Record<Lang, { title: string; description: string }> = {
+  nl: {
+    title: "Velopass Pro — Partnerportaal",
+    description: "Log in om toegang te krijgen tot jouw Velopass-werkomgeving.",
+  },
+  en: {
+    title: "Velopass Pro — Partner portal",
+    description: "Log in to access your Velopass workspace.",
+  },
+  fr: {
+    title: "Velopass Pro — Portail partenaire",
+    description: "Connecte-toi pour accéder à ton espace de travail Velopass.",
+  },
+  de: {
+    title: "Velopass Pro — Partnerportal",
+    description: "Melde dich an, um auf deinen Velopass-Arbeitsbereich zuzugreifen.",
+  },
+  es: {
+    title: "Velopass Pro — Portal de socios",
+    description: "Inicia sesión para acceder a tu espacio de trabajo Velopass.",
+  },
+};
 
 export const Route = createFileRoute("/$lang/pro")({
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang: Lang = isLang(params.lang) ? params.lang : DEFAULT_LANG;
+    const m = PRO_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "pro",
-      title: "Velopass Pro — Partnerportaal",
-      description: "Log in om toegang te krijgen tot jouw Velopass-werkomgeving.",
+      title: m.title,
+      description: m.description,
       noindex: true,
-    }),
+    });
+  },
   component: PartnerLogin,
 });
 
