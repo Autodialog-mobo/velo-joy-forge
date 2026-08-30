@@ -317,6 +317,7 @@ const [navOpen, setNavOpen] = useState(false);
             </div>
           ) : null}
           <button
+            type="button"
             onClick={handleBack}
             style={{
               display: "inline-flex",
