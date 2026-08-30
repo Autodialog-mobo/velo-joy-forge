@@ -298,10 +298,13 @@ const [navOpen, setNavOpen] = useState(false);
               maxWidth: 1100,
               margin: "0 auto",
               display: "flex",
+              flexWrap: "wrap",
               alignItems: "center",
               gap: 8,
+              minWidth: 0,
               fontFamily: "DM Sans, sans-serif",
               fontSize: 13,
+              lineHeight: 1.4,
               color: "rgba(13,31,60,0.72)",
             }}
           >
