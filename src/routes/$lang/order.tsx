@@ -628,7 +628,20 @@ const [navOpen, setNavOpen] = useState(false);
 
 
 
+              {shopBadge ? (
+                <p
+                  style={{
+                    fontFamily: "DM Sans, sans-serif",
+                    fontSize: 12.5,
+                    color: "rgba(13,31,60,0.6)",
+                    margin: "0 0 10px",
+                  }}
+                >
+                  {t("shop_cart_line", { shop: shopBadge.name })}
+                </p>
+              ) : null}
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
+
                 <button
                   type="button"
                   onClick={() => {
