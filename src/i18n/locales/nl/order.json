@@ -100,5 +100,6 @@
     "redirecting": "Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…",
     "unknown_error": "Onbekende fout"
   },
-  "shop_badge": "Je bestelt bij {{shop}}"
+  "shop_ordering_from": "Je bestelt bij",
+  "shop_cart_line": "Deze bestelling loopt via {{shop}}."
 }

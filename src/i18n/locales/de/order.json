@@ -100,5 +100,6 @@
     "redirecting": "Du wirst zur sicheren Zahlungsseite von Mollie weitergeleitet…",
     "unknown_error": "Unbekannter Fehler"
   },
-  "shop_badge": "Du bestellst bei {{shop}}"
+  "shop_ordering_from": "Du bestellst bei",
+  "shop_cart_line": "Diese Bestellung läuft über {{shop}}."
 }
