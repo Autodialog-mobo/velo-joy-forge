@@ -8,6 +8,7 @@
     "validate:i18n": "node scripts/validate-i18n.mjs",
     "check:emdash": "node scripts/check-emdash.mjs",
     "test:bundles": "node scripts/test-bundle-parity.mjs",
+    "test:localized-head": "node scripts/test-localized-head.mjs",
     "test:mollie-recovery": "node scripts/test-mollie-recovery.mjs",
     "test:dedupe-shops": "node --experimental-strip-types --no-warnings scripts/test-dedupe-shops.mjs",
     "prebuild": "node scripts/validate-i18n.mjs && node scripts/check-emdash.mjs && node scripts/test-bundle-parity.mjs && node --experimental-strip-types --no-warnings scripts/test-dedupe-shops.mjs",
