@@ -284,38 +284,46 @@ const [navOpen, setNavOpen] = useState(false);
         </div>
       </nav>
 
+      {/* Partner strip (shop attribution) */}
+      {shopBadge ? (
+        <div
+          style={{
+            background: "#F5F3EE",
+            borderBottom: "1px solid rgba(13,31,60,0.08)",
+            padding: "72px 24px 10px",
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 1100,
+              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              fontFamily: "DM Sans, sans-serif",
+              fontSize: 13,
+              color: "rgba(13,31,60,0.72)",
+            }}
+          >
+            <span>{t("shop_ordering_from")}</span>
+            {shopBadge.logoUrl ? (
+              <img
+                src={shopBadge.logoUrl}
+                alt=""
+                width={20}
+                height={20}
+                style={{ width: 20, height: 20, objectFit: "contain", borderRadius: 4, display: "block" }}
+              />
+            ) : null}
+            <strong style={{ color: "#0D1F3C", fontWeight: 700 }}>{shopBadge.name}</strong>
+          </div>
+        </div>
+      ) : null}
+
       {/* Hero */}
-      <section style={{ background: "#0D1F3C", color: "#fff", padding: "88px 24px 72px" }}>
+      <section style={{ background: "#0D1F3C", color: "#fff", padding: shopBadge ? "32px 24px 72px" : "88px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          {shopBadge ? (
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 10,
-                background: "rgba(255,255,255,0.08)",
-                border: "1px solid rgba(255,255,255,0.16)",
-                borderRadius: 999,
-                padding: "6px 14px",
-                marginBottom: 16,
-                fontFamily: "DM Sans, sans-serif",
-                fontSize: 13,
-                fontWeight: 500,
-                color: "rgba(255,255,255,0.92)",
-              }}
-            >
-              {shopBadge.logoUrl ? (
-                <img
-                  src={shopBadge.logoUrl}
-                  alt=""
-                  width={22}
-                  height={22}
-                  style={{ width: 22, height: 22, objectFit: "contain", borderRadius: 4, display: "block" }}
-                />
-              ) : null}
-              <span>{t("shop_badge", { shop: shopBadge.name })}</span>
-            </div>
-          ) : null}
+
           <button
             type="button"
             onClick={handleBack}
