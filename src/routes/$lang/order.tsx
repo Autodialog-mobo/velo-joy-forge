@@ -290,7 +290,7 @@ const [navOpen, setNavOpen] = useState(false);
           style={{
             background: "#F5F3EE",
             borderBottom: "1px solid rgba(13,31,60,0.08)",
-            padding: "72px 24px 10px",
+            padding: "74px 24px 12px",
           }}
         >
           <div
@@ -303,12 +303,10 @@ const [navOpen, setNavOpen] = useState(false);
               gap: 8,
               minWidth: 0,
               fontFamily: "DM Sans, sans-serif",
-              fontSize: 13,
               lineHeight: 1.4,
-              color: "rgba(13,31,60,0.72)",
             }}
           >
-            <span style={{ flexShrink: 0 }}>{t("shop_ordering_from")}</span>
+            <span style={{ flexShrink: 0, fontSize: 13, color: "rgba(13,31,60,0.6)" }}>{t("shop_ordering_from")}</span>
             {shopBadge.logoUrl ? (
               <img
                 src={shopBadge.logoUrl}
@@ -318,7 +316,8 @@ const [navOpen, setNavOpen] = useState(false);
                 style={{ width: 20, height: 20, flexShrink: 0, objectFit: "contain", borderRadius: 4, display: "block" }}
               />
             ) : null}
-            <strong style={{ color: "#0D1F3C", fontWeight: 700, minWidth: 0, overflowWrap: "anywhere" }}>{shopBadge.name}</strong>
+            <strong style={{ color: "#0D1F3C", fontWeight: 700, fontSize: 15.5, minWidth: 0, overflowWrap: "anywhere" }}>{shopBadge.name}</strong>
+
           </div>
         </div>
       ) : null}
@@ -635,14 +634,28 @@ const [navOpen, setNavOpen] = useState(false);
                 <p
                   style={{
                     fontFamily: "DM Sans, sans-serif",
-                    fontSize: 12.5,
+                    fontSize: 13,
+                    lineHeight: 1.5,
                     color: "rgba(13,31,60,0.6)",
                     margin: "0 0 10px",
+                    overflowWrap: "anywhere",
                   }}
                 >
-                  {t("shop_cart_line", { shop: shopBadge.name })}
+                  {t("shop_cart_line", { shop: "\u0000" })
+                    .split("\u0000")
+                    .flatMap((part, i) =>
+                      i === 0
+                        ? [<span key={`p${i}`}>{part}</span>]
+                        : [
+                            <strong key={`s${i}`} style={{ color: "#0D1F3C", fontWeight: 700 }}>
+                              {shopBadge.name}
+                            </strong>,
+                            <span key={`p${i}`}>{part}</span>,
+                          ],
+                    )}
                 </p>
               ) : null}
+
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
 
                 <button
