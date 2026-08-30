@@ -597,7 +597,9 @@ const [navOpen, setNavOpen] = useState(false);
                     </p>
                   </div>
                 )}
+                {!referralAutoFromShop && (
                 <div style={{ display: "grid", gap: 6 }}>
+
                   <label htmlFor="referral_source" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
                     {t("cart.referral_label")} <span style={{ color: "#D64545" }}>*</span>
                   </label>
