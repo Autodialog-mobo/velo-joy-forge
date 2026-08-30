@@ -308,17 +308,17 @@ const [navOpen, setNavOpen] = useState(false);
               color: "rgba(13,31,60,0.72)",
             }}
           >
-            <span>{t("shop_ordering_from")}</span>
+            <span style={{ flexShrink: 0 }}>{t("shop_ordering_from")}</span>
             {shopBadge.logoUrl ? (
               <img
                 src={shopBadge.logoUrl}
                 alt=""
                 width={20}
                 height={20}
-                style={{ width: 20, height: 20, objectFit: "contain", borderRadius: 4, display: "block" }}
+                style={{ width: 20, height: 20, flexShrink: 0, objectFit: "contain", borderRadius: 4, display: "block" }}
               />
             ) : null}
-            <strong style={{ color: "#0D1F3C", fontWeight: 700 }}>{shopBadge.name}</strong>
+            <strong style={{ color: "#0D1F3C", fontWeight: 700, minWidth: 0, overflowWrap: "anywhere" }}>{shopBadge.name}</strong>
           </div>
         </div>
       ) : null}
