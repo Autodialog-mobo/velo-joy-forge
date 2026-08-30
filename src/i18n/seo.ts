@@ -64,6 +64,9 @@ export function buildLocalizedHead(opts: LocalizedHeadOptions): {
     { property: "og:description", content: ogDescription },
     { property: "og:url", content: canonical },
     { property: "og:type", content: ogType },
+    // Twitter/X and some in-app previews prefer twitter:* over og:*; keep them localized too.
+    { name: "twitter:title", content: ogTitle },
+    { name: "twitter:description", content: ogDescription },
   ];
 
   if (opts.noindex) {
