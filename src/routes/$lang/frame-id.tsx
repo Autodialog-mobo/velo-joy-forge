@@ -7,17 +7,33 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import { Footer } from "@/components/Footer";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { buildLocalizedHead } from "@/i18n/seo";
+import { isLang } from "@/i18n/config";
+import nlFrameId from "@/i18n/locales/nl/frame-id.json";
+import enFrameId from "@/i18n/locales/en/frame-id.json";
+import frFrameId from "@/i18n/locales/fr/frame-id.json";
+import deFrameId from "@/i18n/locales/de/frame-id.json";
+import esFrameId from "@/i18n/locales/es/frame-id.json";
+
+const FRAME_ID_META = {
+  nl: nlFrameId.meta,
+  en: enFrameId.meta,
+  fr: frFrameId.meta,
+  de: deFrameId.meta,
+  es: esFrameId.meta,
+} as const;
 
 export const Route = createFileRoute("/$lang/frame-id")({
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang = isLang(params.lang) ? params.lang : "en";
+    const m = FRAME_ID_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "frame-id",
-      title: "How your Frame-ID works — Velopass",
-      description:
-        "You scanned a Velopass Frame-ID. Here is the short version of how theft protection and bike registration work.",
-      ogDescription: "Theft protection and bike registration — in one scan.",
-    }),
+      title: m.title,
+      description: m.description,
+      ogDescription: m.ogDescription,
+    });
+  },
   component: FrameIdPage,
 });
 
