@@ -634,14 +634,28 @@ const [navOpen, setNavOpen] = useState(false);
                 <p
                   style={{
                     fontFamily: "DM Sans, sans-serif",
-                    fontSize: 12.5,
+                    fontSize: 13,
+                    lineHeight: 1.5,
                     color: "rgba(13,31,60,0.6)",
                     margin: "0 0 10px",
+                    overflowWrap: "anywhere",
                   }}
                 >
-                  {t("shop_cart_line", { shop: shopBadge.name })}
+                  {t("shop_cart_line", { shop: "\u0000" })
+                    .split("\u0000")
+                    .flatMap((part, i) =>
+                      i === 0
+                        ? [<span key={`p${i}`}>{part}</span>]
+                        : [
+                            <strong key={`s${i}`} style={{ color: "#0D1F3C", fontWeight: 700 }}>
+                              {shopBadge.name}
+                            </strong>,
+                            <span key={`p${i}`}>{part}</span>,
+                          ],
+                    )}
                 </p>
               ) : null}
+
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
 
                 <button
