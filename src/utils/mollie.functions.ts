@@ -83,6 +83,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
       };
       referralSource?: string | null;
       experimentVariant?: string | null;
+      shopId?: string | null;
     }) => {
       if (!Array.isArray(data.items) || data.items.length === 0) {
         throw new Error("Minstens één bundel is vereist");
@@ -121,6 +122,10 @@ export const createMolliePayment = createServerFn({ method: "POST" })
       ) {
         // Non-fatal: ignore a malformed marker rather than block checkout.
         data.experimentVariant = null;
+      }
+      if (data.shopId != null && !/^[A-Za-z0-9_-]{1,64}$/.test(data.shopId)) {
+        // Non-fatal: ignore a malformed shop id rather than block checkout.
+        data.shopId = null;
       }
       return data;
     },
@@ -180,6 +185,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
             email: data.customerEmail,
             shipping: shippingAddress,
             lang: data.lang,
+            shopId: data.shopId && data.shopId !== "" ? data.shopId : null,
           },
         }),
       });

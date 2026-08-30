@@ -15,6 +15,7 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import { createMolliePayment } from "@/utils/mollie.functions";
 import { SHIPPING_FEE_CENTS } from "@/lib/shipping";
 import { BUNDLES, type BundleKey } from "@/lib/bundles";
+import { resolveActiveShopId, resolveShop, type ShopBadge } from "@/lib/shop-attribution";
 
 
 
@@ -201,6 +202,7 @@ const [navOpen, setNavOpen] = useState(false);
           },
           referralSource: referralValue,
           experimentVariant: variant && !experimentForced ? `${EXPERIMENT.key}:${variant}` : null,
+          shopId,
         },
       });
       if ("error" in result) {
