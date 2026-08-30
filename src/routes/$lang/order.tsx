@@ -76,6 +76,19 @@ function BestellenPage() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 const [navOpen, setNavOpen] = useState(false);
+  // Shop attribution (shared element, identical for both A/B variants).
+  const [shopId, setShopId] = useState<string | null>(null);
+  const [shopBadge, setShopBadge] = useState<ShopBadge | null>(null);
+  useEffect(() => {
+    const id = resolveActiveShopId();
+    if (!id) return;
+    setShopId(id);
+    let cancelled = false;
+    resolveShop(id)
+      .then((s) => { if (!cancelled) setShopBadge(s); })
+      .catch(() => { /* fail safe: no badge */ });
+    return () => { cancelled = true; };
+  }, []);
   const [addingKey, setAddingKey] = useState<BundleKey | null>(null);
   const addTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Monotonic sequence id: only the latest add may clear the loading state,
