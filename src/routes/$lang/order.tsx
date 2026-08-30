@@ -287,8 +287,36 @@ const [navOpen, setNavOpen] = useState(false);
       {/* Hero */}
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "88px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          {shopBadge ? (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.16)",
+                borderRadius: 999,
+                padding: "6px 14px",
+                marginBottom: 16,
+                fontFamily: "DM Sans, sans-serif",
+                fontSize: 13,
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.92)",
+              }}
+            >
+              {shopBadge.logoUrl ? (
+                <img
+                  src={shopBadge.logoUrl}
+                  alt=""
+                  width={22}
+                  height={22}
+                  style={{ width: 22, height: 22, objectFit: "contain", borderRadius: 4, display: "block" }}
+                />
+              ) : null}
+              <span>{t("shop_badge", { shop: shopBadge.name })}</span>
+            </div>
+          ) : null}
           <button
-            type="button"
             onClick={handleBack}
             style={{
               display: "inline-flex",
