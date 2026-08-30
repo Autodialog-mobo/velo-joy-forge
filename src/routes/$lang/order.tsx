@@ -15,6 +15,7 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import { createMolliePayment } from "@/utils/mollie.functions";
 import { SHIPPING_FEE_CENTS } from "@/lib/shipping";
 import { BUNDLES, type BundleKey } from "@/lib/bundles";
+import { resolveActiveShopId, resolveShop, type ShopBadge } from "@/lib/shop-attribution";
 
 
 
@@ -75,6 +76,19 @@ function BestellenPage() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 const [navOpen, setNavOpen] = useState(false);
+  // Shop attribution (shared element, identical for both A/B variants).
+  const [shopId, setShopId] = useState<string | null>(null);
+  const [shopBadge, setShopBadge] = useState<ShopBadge | null>(null);
+  useEffect(() => {
+    const id = resolveActiveShopId();
+    if (!id) return;
+    setShopId(id);
+    let cancelled = false;
+    resolveShop(id)
+      .then((s) => { if (!cancelled) setShopBadge(s); })
+      .catch(() => { /* fail safe: no badge */ });
+    return () => { cancelled = true; };
+  }, []);
   const [addingKey, setAddingKey] = useState<BundleKey | null>(null);
   const addTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Monotonic sequence id: only the latest add may clear the loading state,
@@ -201,6 +215,7 @@ const [navOpen, setNavOpen] = useState(false);
           },
           referralSource: referralValue,
           experimentVariant: variant && !experimentForced ? `${EXPERIMENT.key}:${variant}` : null,
+          shopId,
         },
       });
       if ("error" in result) {
@@ -272,6 +287,35 @@ const [navOpen, setNavOpen] = useState(false);
       {/* Hero */}
       <section style={{ background: "#0D1F3C", color: "#fff", padding: "88px 24px 72px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          {shopBadge ? (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.16)",
+                borderRadius: 999,
+                padding: "6px 14px",
+                marginBottom: 16,
+                fontFamily: "DM Sans, sans-serif",
+                fontSize: 13,
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.92)",
+              }}
+            >
+              {shopBadge.logoUrl ? (
+                <img
+                  src={shopBadge.logoUrl}
+                  alt=""
+                  width={22}
+                  height={22}
+                  style={{ width: 22, height: 22, objectFit: "contain", borderRadius: 4, display: "block" }}
+                />
+              ) : null}
+              <span>{t("shop_badge", { shop: shopBadge.name })}</span>
+            </div>
+          ) : null}
           <button
             type="button"
             onClick={handleBack}

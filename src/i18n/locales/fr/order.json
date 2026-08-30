@@ -99,5 +99,6 @@
     "error_prefix": "Une erreur s'est produite lors du lancement du paiement :",
     "redirecting": "Tu vas être redirigé vers la page de paiement sécurisée Mollie…",
     "unknown_error": "Erreur inconnue"
-  }
+  },
+  "shop_badge": "Vous commandez chez {{shop}}"
 }

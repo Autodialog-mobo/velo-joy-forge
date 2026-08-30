@@ -99,5 +99,6 @@
     "error_prefix": "Something went wrong starting the payment:",
     "redirecting": "You are being redirected to the secure Mollie payment page…",
     "unknown_error": "Unknown error"
-  }
+  },
+  "shop_badge": "You're ordering from {{shop}}"
 }
