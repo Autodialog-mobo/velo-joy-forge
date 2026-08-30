@@ -42,15 +42,17 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/$lang/contact")({
   validateSearch: zodValidator(searchSchema),
-  head: ({ params }) =>
-    buildLocalizedHead({
-      lang: params.lang,
+  head: ({ params }) => {
+    const lang: Lang = isLang(params.lang) ? params.lang : DEFAULT_LANG;
+    const m = CONTACT_META[lang];
+    return buildLocalizedHead({
+      lang,
       path: "contact",
-      title: "Contact — Velopass",
-      description:
-        "Hulp nodig bij activatie, je Frame-ID of een gevonden fiets? Stuur het Velopass-team een bericht via WhatsApp.",
-      ogDescription: "Kies een onderwerp en chat met het Velopass-team via WhatsApp.",
-    }),
+      title: m.title,
+      description: m.description,
+      ogDescription: m.og_description,
+    });
+  },
   component: ContactPage,
 });
 
