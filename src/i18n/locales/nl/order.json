@@ -99,5 +99,6 @@
     "error_prefix": "Er ging iets mis bij het starten van de betaling:",
     "redirecting": "Je wordt doorgestuurd naar de beveiligde Mollie-betaalpagina…",
     "unknown_error": "Onbekende fout"
-  }
+  },
+  "shop_badge": "Je bestelt bij {{shop}}"
 }

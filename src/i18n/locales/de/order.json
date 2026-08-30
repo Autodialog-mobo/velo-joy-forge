@@ -99,5 +99,6 @@
     "error_prefix": "Beim Starten der Zahlung ist ein Fehler aufgetreten:",
     "redirecting": "Du wirst zur sicheren Zahlungsseite von Mollie weitergeleitet…",
     "unknown_error": "Unbekannter Fehler"
-  }
+  },
+  "shop_badge": "Du bestellst bei {{shop}}"
 }

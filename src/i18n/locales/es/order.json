@@ -99,5 +99,6 @@
     "error_prefix": "Algo ha fallado al iniciar el pago:",
     "redirecting": "Te estamos redirigiendo a la página de pago segura de Mollie…",
     "unknown_error": "Error desconocido"
-  }
+  },
+  "shop_badge": "Estás comprando en {{shop}}"
 }
