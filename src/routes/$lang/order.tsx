@@ -163,15 +163,21 @@ const [navOpen, setNavOpen] = useState(false);
     postalCode.trim().length > 0 &&
     city.trim().length > 0 &&
     /^(BE|NL|FR|LU|DE)$/.test(country);
+  // When a shop is attributed (?shop= or stored id) we already know the referral
+  // source: that shop. Hide the question and answer it automatically.
+  const referralAutoFromShop = shopId !== null;
   const referralChosen =
-    referralSource !== "" && (referralSource !== "other" || referralOther.trim() !== "");
+    referralAutoFromShop ||
+    (referralSource !== "" && (referralSource !== "other" || referralOther.trim() !== ""));
   const canCheckout = hasItems && emailValid && shippingValid && referralChosen;
   // "Anders" carries the free text as "other:<text>"; the report folds it back
   // under "Anders" while the admin order detail shows the typed value.
-  const referralValue =
-    referralSource === "other" && referralOther.trim()
+  const referralValue = referralAutoFromShop
+    ? "bike_shop"
+    : referralSource === "other" && referralOther.trim()
       ? `other:${referralOther.trim().slice(0, 80)}`
       : referralSource || null;
+
 
   const updateQty = (key: BundleKey, delta: number) =>
     setQuantities((q) => ({ ...q, [key]: Math.max(0, Math.min(20, q[key] + delta)) }));
@@ -591,7 +597,9 @@ const [navOpen, setNavOpen] = useState(false);
                     </p>
                   </div>
                 )}
+                {!referralAutoFromShop && (
                 <div style={{ display: "grid", gap: 6 }}>
+
                   <label htmlFor="referral_source" style={{ fontSize: 12, fontWeight: 500, color: "rgba(13,31,60,0.75)" }}>
                     {t("cart.referral_label")} <span style={{ color: "#D64545" }}>*</span>
                   </label>
@@ -625,6 +633,8 @@ const [navOpen, setNavOpen] = useState(false);
                     />
                   )}
                 </div>
+                )}
+
               </div>
               </form>
 
