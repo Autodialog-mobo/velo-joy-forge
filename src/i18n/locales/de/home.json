@@ -67,7 +67,9 @@
       "final": {
         "title": "Immer im Sattel. Alles geregelt.",
         "body": "Dein Velopass ist aktiv. Diebstahlschutz, Pannenhilfe, Versicherung und dein digitales Serviceheft — alles erreichbar über einen Scan des QR-Codes auf deiner Frame-ID."
-      }
+      },
+      "sticker_alt": "Velopass Frame-ID-Aufkleber mit QR-Code",
+      "sticker_caption": "So sieht die Frame-ID aus: 25 x 25 mm, mit einzigartigem Code und QR."
     },
     "second_hand": {
       "tag": "Ein gebrauchtes Fahrrad mit Frame-ID?",

@@ -9,6 +9,7 @@ import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.j
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.asset.json";
 import heroBgAvif from "@/assets/hero-cyclist-bg-harmonized-desktop.avif.asset.json";
 import sleevesImg from "@/assets/velopass-sleeves-product.svg";
+import stickerImg from "@/assets/velopass-sticker.png.asset.json";
 import heroBgAvifMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.avif.asset.json";
 import { BUNDLES } from "@/lib/bundles";
 import { VelopassMark } from "@/components/VelopassMark";

@@ -67,7 +67,9 @@
       "final": {
         "title": "Toujours en selle. Tout est réglé.",
         "body": "Votre Velopass est actif. Protection antivol, assistance dépannage, assurance et votre carnet d'entretien numérique — tout est accessible via un scan du QR-code sur votre Frame-ID."
-      }
+      },
+      "sticker_alt": "Autocollant Velopass Frame-ID avec code QR",
+      "sticker_caption": "Voici le Frame-ID : 25 x 25 mm, avec un code unique et un QR."
     },
     "second_hand": {
       "tag": "Vélo d'occasion avec Frame-ID ?",
