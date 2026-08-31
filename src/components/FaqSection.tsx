@@ -224,9 +224,9 @@ export function FaqSection() {
   };
 
   return (
-    <section id="faq" style={{ background: "#FFFFFF", padding: "80px 6vw" }}>
+    <section id="faq" style={{ background: "#FFFFFF", padding: "clamp(48px, 9vw, 80px) 6vw" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(32px, 7vw, 56px)" }}>
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
