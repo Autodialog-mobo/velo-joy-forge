@@ -3,7 +3,6 @@ import { WalletDialog, WalletDialogContent } from "@/components/ui/wallet-dialog
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
-import stickerImg from "@/assets/velopass-sticker.webp";
 import velopassStickerAsset from "@/assets/velopass-sticker.png.asset.json";
 import walletPassImg from "@/assets/velopass-wallet-pass.png.asset.json";
 import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.json";
