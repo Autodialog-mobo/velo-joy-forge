@@ -74,6 +74,8 @@ function BestellenPage() {
   const [referralOther, setReferralOther] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [stickerZoom, setStickerZoom] = useState(false);
+
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 const [navOpen, setNavOpen] = useState(false);
   // Shop attribution (shared element, identical for both A/B variants).
@@ -492,10 +494,43 @@ const [navOpen, setNavOpen] = useState(false);
                   width={56}
                   height={56}
                   loading="lazy"
-                  style={{ width: 56, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block" }}
+                  onClick={() => setStickerZoom(true)}
+                  style={{ width: 56, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block", cursor: "zoom-in" }}
                 />
                 <span style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C" }}>{t("bundles.artefact_caption")}</span>
               </div>
+
+              {stickerZoom && (
+                <div
+                  role="dialog"
+                  aria-modal="true"
+                  onClick={() => setStickerZoom(false)}
+                  style={{
+                    position: "fixed",
+                    inset: 0,
+                    background: "rgba(13,31,60,0.72)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 12,
+                    zIndex: 1000,
+                    cursor: "zoom-out",
+                    fontFamily: "DM Sans, sans-serif",
+                  }}
+                >
+                  <div style={{ background: "#fff", padding: 16, borderRadius: 12, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+                    <img
+                      src={velopassStickerAsset.url}
+                      alt={t("bundles.artefact_caption")}
+                      style={{ width: "25mm", height: "25mm", display: "block", borderRadius: 4 }}
+                    />
+                    <span style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C" }}>25 × 25 mm</span>
+                  </div>
+                </div>
+              )}
+
+
 
 
 
