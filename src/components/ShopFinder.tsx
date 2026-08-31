@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Trans, useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
@@ -12,9 +12,31 @@ export function ShopFinder() {
   const { t } = useTranslation("home");
   const totalActive = useActiveShopCount();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const placeholderRef = useRef<HTMLElement | null>(null);
+
+  // Mobiel: de kaart (Leaflet + tiles) is zwaar en staat ver onder de vouw.
+  // We laden hem pas wanneer de sectie in de buurt van het scherm komt.
+  useEffect(() => {
+    const el = placeholderRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setMounted(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setMounted(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   if (!mounted) {
+
     return (
       <section className="shop-finder scroll-target" id="community">
         <div className="sf-hero">
