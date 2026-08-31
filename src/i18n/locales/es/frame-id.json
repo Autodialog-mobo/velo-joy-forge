@@ -24,5 +24,9 @@
   "cta": {
     "order": "Pide tu Frame-ID",
     "check": "Comprobar una bici"
+  },
+  "sticker": {
+    "alt": "Adhesivo Velopass Frame-ID con código QR",
+    "caption": "Este es el adhesivo Velopass Frame-ID: 25 x 25 mm, con código único y QR."
   }
 }

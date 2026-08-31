@@ -24,5 +24,9 @@
   "cta": {
     "order": "Commandez votre Frame-ID",
     "check": "Vérifier un vélo"
+  },
+  "sticker": {
+    "alt": "Autocollant Velopass Frame-ID avec code QR",
+    "caption": "Voici l'autocollant Velopass Frame-ID : 25 x 25 mm, avec un code unique et un QR."
   }
 }

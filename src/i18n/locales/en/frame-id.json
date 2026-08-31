@@ -24,5 +24,9 @@
   "cta": {
     "order": "Order your Frame-ID",
     "check": "Check a bike"
+  },
+  "sticker": {
+    "alt": "Velopass Frame-ID sticker with QR code",
+    "caption": "This is the Velopass Frame-ID sticker: 25 x 25 mm, with a unique code and QR."
   }
 }
