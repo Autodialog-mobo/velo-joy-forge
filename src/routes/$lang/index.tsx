@@ -3,7 +3,7 @@ import { WalletDialog, WalletDialogContent } from "@/components/ui/wallet-dialog
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Store, Package, QrCode, ArrowRightLeft, Mail, KeyRound, CheckCircle2, ArrowUpRight, ChevronDown } from "lucide-react";
-import stickerImg from "@/assets/velopass-sticker.webp";
+import velopassStickerAsset from "@/assets/velopass-sticker.png.asset.json";
 import walletPassImg from "@/assets/velopass-wallet-pass.png.asset.json";
 import heroBgWebp from "@/assets/hero-cyclist-bg-harmonized-desktop.webp.asset.json";
 import heroBgWebpMobile from "@/assets/hero-cyclist-bg-harmonized-mobile.webp.asset.json";
@@ -170,8 +170,8 @@ function VelopassHome() {
   const activeShopsCount = useActiveShopCount();
   const QR_STORAGE_KEY = "velopass:qr-overlay:v2";
   const [qrX, setQrX] = useState(50);
-  const [qrY, setQrY] = useState(49);
-  const [qrSize, setQrSize] = useState(26);
+  const [qrY, setQrY] = useState(48);
+  const [qrSize, setQrSize] = useState(44);
   const [tunerOpen, setTunerOpen] = useState(false);
   const [noMailOpen, setNoMailOpen] = useState(false);
   const [walletOpen, setWalletOpen] = useState(false);
@@ -528,7 +528,7 @@ function VelopassHome() {
                 ['--qr-size' as any]: `${qrSize}%`,
               }}
             >
-              <img src={stickerImg} alt={t("home:sticker.img_alt")} width={1024} height={1024} loading="lazy" decoding="async" />
+              <img src={velopassStickerAsset.url} alt={t("home:sticker.img_alt")} width={1024} height={1024} loading="lazy" decoding="async" />
               <div className="scan-overlay" aria-hidden="true">
                 <span className="scan-corner tl" />
                 <span className="scan-corner tr" />
@@ -537,7 +537,6 @@ function VelopassHome() {
                 <span className="scan-line" />
               </div>
               <div className="scan-badge">{t("home:sticker.scan_badge")}</div>
-              <div className="secured-tag" aria-label="Secured"><span className="secured-tag-dot" />SECURED</div>
             </div>
             {import.meta.env.DEV && typeof window !== "undefined" && new URLSearchParams(window.location.search).has("tune") && (
               <div className="qr-tuner">
@@ -776,7 +775,7 @@ function VelopassHome() {
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginTop: 18, paddingTop: 16, borderTop: "1px solid rgba(13,31,60,0.08)" }}>
             <img
-              src={stickerImg}
+              src={velopassStickerAsset.url}
               alt={t("home:paths.order.sticker_alt")}
               width={72}
               height={72}
