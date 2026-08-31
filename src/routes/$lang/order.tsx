@@ -382,6 +382,7 @@ const [navOpen, setNavOpen] = useState(false);
                   return (
 <div
                       key={b.key}
+                      className="bundle-card"
                       style={{
                         background: "#fff",
                         borderRadius: 16,
@@ -403,18 +404,18 @@ const [navOpen, setNavOpen] = useState(false);
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 600, fontSize: 13, letterSpacing: "0.04em", color: "#5A7090", textTransform: "uppercase" }}>
                         {b.tier}
                       </div>
-                      <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#0D1F3C", marginTop: 2 }}>
+                      <div className="bundle-num" style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 56, lineHeight: 1, color: "#0D1F3C", marginTop: 2 }}>
                         {b.stickers}
                       </div>
                       <div style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 500, fontSize: 14, color: "rgba(13,31,60,0.7)", marginTop: 2 }}>
                         {b.stickers === 1 ? t("bundles.single_label") : t("bundles.plural_label")}
                       </div>
-<div style={{
+<div className="bundle-bar" style={{
                         height: b.stickers === 1 ? 6 : b.stickers === 2 ? 12 : 18,
                         background: "#2ECC8A",
                         margin: "16px -24px",
                       }} />
-                      <p style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
+                      <p className="bundle-price" style={{ fontFamily: "DM Sans, sans-serif", fontWeight: 700, fontSize: 30, margin: "4px 0 4px", color: "#0D1F3C" }}>
                         {eur(b.price)}
                       </p>
                       {b.stickers > 1 && (
@@ -885,8 +886,13 @@ const [navOpen, setNavOpen] = useState(false);
 <style>{`
 @keyframes orderSpin { to { transform: rotate(360deg); } }
 @media (max-width: 600px) {
-          .bundles-grid { grid-template-columns: 1fr !important; }
+          .bundles-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+          .bundle-card { padding: 18px !important; }
+          .bundle-num { font-size: 42px !important; }
+          .bundle-price { font-size: 26px !important; }
+          .bundle-bar { margin: 12px -18px !important; }
         }
+
         .mobile-pay-bar { display: none; }
         @media (max-width: 900px) {
           .mobile-pay-bar {
@@ -929,8 +935,8 @@ const [navOpen, setNavOpen] = useState(false);
 }
 
 const qtyBtn: React.CSSProperties = {
-  width: 32,
-  height: 36,
+  width: 44,
+  height: 44,
   border: "none",
   background: "transparent",
   cursor: "pointer",
