@@ -74,6 +74,8 @@ function BestellenPage() {
   const [referralOther, setReferralOther] = useState("");
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [stickerZoom, setStickerZoom] = useState(false);
+
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 const [navOpen, setNavOpen] = useState(false);
   // Shop attribution (shared element, identical for both A/B variants).
