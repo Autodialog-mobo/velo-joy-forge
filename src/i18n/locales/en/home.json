@@ -67,7 +67,9 @@
       "final": {
         "title": "Always on your bike. Everything sorted.",
         "body": "Your Velopass is active. Theft protection, roadside assistance, insurance and your digital service book — all accessible via one scan of the QR code on your Frame-ID."
-      }
+      },
+      "sticker_alt": "Velopass Frame-ID sticker with QR code",
+      "sticker_caption": "This is what the Frame-ID looks like: 25 x 25 mm, with a unique code and QR."
     },
     "second_hand": {
       "tag": "Second-hand bike with Frame-ID?",

@@ -67,7 +67,9 @@
       "final": {
         "title": "Altijd op de fiets. Alles geregeld.",
         "body": "Jouw Velopass is actief. Diefstalbescherming, pechhulp, verzekering en jouw digitaal serviceboekje — alles bereikbaar via één scan van de QR-code op je Frame-ID."
-      }
+      },
+      "sticker_alt": "Velopass Frame-ID-sticker met QR-code",
+      "sticker_caption": "Zo ziet de Frame-ID eruit: 25 x 25 mm, met unieke code en QR."
     },
     "second_hand": {
       "tag": "Tweedehands fiets met Frame-ID?",

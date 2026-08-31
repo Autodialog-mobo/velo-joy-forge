@@ -67,7 +67,9 @@
       "final": {
         "title": "Siempre en bici. Todo resuelto.",
         "body": "Tu Velopass está activo. Protección antirrobo, asistencia en carretera, seguro y tu libro de servicio digital — todo accesible con un escaneo del QR de tu Frame-ID."
-      }
+      },
+      "sticker_alt": "Adhesivo Velopass Frame-ID con código QR",
+      "sticker_caption": "Así es el Frame-ID: 25 x 25 mm, con código único y QR."
     },
     "second_hand": {
       "tag": "¿Bici de segunda mano con Frame-ID?",
