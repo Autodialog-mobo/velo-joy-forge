@@ -38,7 +38,7 @@ export function ShopFinder() {
   if (!mounted) {
 
     return (
-      <section className="shop-finder scroll-target" id="community">
+      <section ref={placeholderRef} className="shop-finder scroll-target" id="community">
         <div className="sf-hero">
           <p className="eyebrow" style={{ color: "#2ECC8A" }}>{t("community.eyebrow")}</p>
           <h2 className="sf-headline">{t("community.headline")}</h2>
