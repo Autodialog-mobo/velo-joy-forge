@@ -175,6 +175,7 @@ function VelopassHome() {
   const [tunerOpen, setTunerOpen] = useState(false);
   const [noMailOpen, setNoMailOpen] = useState(false);
   const [walletOpen, setWalletOpen] = useState(false);
+  const [stickerZoom, setStickerZoom] = useState(false);
   useEffect(() => {
     try {
       const raw = localStorage.getItem(QR_STORAGE_KEY);
@@ -780,12 +781,42 @@ function VelopassHome() {
               width={72}
               height={72}
               loading="lazy"
-              style={{ width: 72, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block", flex: "0 0 auto" }}
+              onClick={() => setStickerZoom(true)}
+              style={{ width: 72, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block", flex: "0 0 auto", cursor: "zoom-in" }}
             />
             <span style={{ fontFamily: "DM Sans, sans-serif", fontSize: 13, lineHeight: 1.5, color: "#5A7090" }}>
               {t("home:paths.order.sticker_caption")}
             </span>
           </div>
+          {stickerZoom && (
+            <div
+              role="dialog"
+              aria-modal="true"
+              onClick={() => setStickerZoom(false)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "rgba(13,31,60,0.72)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 12,
+                zIndex: 1000,
+                cursor: "zoom-out",
+                fontFamily: "DM Sans, sans-serif",
+              }}
+            >
+              <div style={{ background: "#fff", padding: 16, borderRadius: 12, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+                <img
+                  src={velopassStickerAsset.url}
+                  alt={t("home:paths.order.sticker_alt")}
+                  style={{ width: "25mm", height: "25mm", display: "block", borderRadius: 4 }}
+                />
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C" }}>25 × 25 mm</span>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="steps-new two-paths">
