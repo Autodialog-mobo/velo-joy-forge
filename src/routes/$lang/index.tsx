@@ -774,7 +774,7 @@ function VelopassHome() {
               </div>
             ))}
           </div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: 18, paddingTop: 16, borderTop: "1px solid rgba(13,31,60,0.08)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginTop: 18, paddingTop: 16, borderTop: "1px solid rgba(13,31,60,0.08)" }}>
             <img
               src={stickerImg}
               alt={t("home:paths.order.sticker_alt")}
@@ -783,8 +783,10 @@ function VelopassHome() {
               loading="lazy"
               style={{ width: 72, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block", flex: "0 0 auto" }}
             />
+            <span style={{ fontFamily: "DM Sans, sans-serif", fontSize: 13, lineHeight: 1.5, color: "#5A7090" }}>
+              {t("home:paths.order.sticker_caption")}
+            </span>
           </div>
-
         </div>
 
         <div className="steps-new two-paths">
