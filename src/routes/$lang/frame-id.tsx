@@ -13,6 +13,7 @@ import enFrameId from "@/i18n/locales/en/frame-id.json";
 import frFrameId from "@/i18n/locales/fr/frame-id.json";
 import deFrameId from "@/i18n/locales/de/frame-id.json";
 import esFrameId from "@/i18n/locales/es/frame-id.json";
+import velopassStickerAsset from "@/assets/velopass-sticker.png.asset.json";
 
 const FRAME_ID_META = {
   nl: nlFrameId.meta,

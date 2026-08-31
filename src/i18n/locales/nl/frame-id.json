@@ -24,5 +24,9 @@
   "cta": {
     "order": "Bestel je Frame-ID",
     "check": "Een fiets controleren"
+  },
+  "sticker": {
+    "alt": "Velopass Frame-ID-sticker met QR-code",
+    "caption": "Dit is de Velopass Frame-ID-sticker: 25 x 25 mm, met unieke code en QR."
   }
 }
