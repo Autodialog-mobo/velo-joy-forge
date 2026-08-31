@@ -178,6 +178,35 @@ function FrameIdPage() {
             </ol>
           </div>
 
+          {/* De sticker zelf, rechtstreeks zichtbaar op de pagina */}
+          <figure
+            style={{
+              margin: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: 16,
+              background: "#F5F3EE",
+              border: "1px solid rgba(13,31,60,0.08)",
+              borderRadius: 16,
+              padding: 16,
+              flexWrap: "wrap",
+            }}
+          >
+            <img
+              src={velopassStickerAsset.url}
+              alt={t("sticker.alt")}
+              width={120}
+              height={120}
+              loading="lazy"
+              style={{ width: 120, height: "auto", aspectRatio: "1 / 1", borderRadius: 10, display: "block", flex: "0 0 auto" }}
+            />
+            <figcaption style={{ fontFamily: "'DM Sans', sans-serif", color: "rgba(13,31,60,0.7)", fontSize: 14, lineHeight: 1.55, minWidth: 180, flex: 1 }}>
+              {t("sticker.caption")}
+            </figcaption>
+          </figure>
+
+
+
           <p
             style={{
               fontFamily: "'DM Sans', sans-serif",
