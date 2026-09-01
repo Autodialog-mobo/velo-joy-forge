@@ -95,6 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Velopass — Altijd op de fiets. Alles geregeld." },
       { name: "author", content: "Velopass" },
       { name: "google-site-verification", content: "880ygI-cryIjD26ixQIRqhEmjhJEtSn4YRjwZeM94Ng" },
+      { name: "google-site-verification", content: "y29FQwiQB_kcfaYeLUZCcjIcLk_KljdsIDcZN-82qxM" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "Velopass — Altijd op de fiets. Alles geregeld." },
       { name: "twitter:title", content: "Velopass — Altijd op de fiets. Alles geregeld." },
