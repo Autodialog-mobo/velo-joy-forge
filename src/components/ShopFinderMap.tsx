@@ -15,6 +15,7 @@ import { ShopPanel } from "./ShopPanel";
 import { trackRegisterBikeClick, trackCheckBikeClick } from "@/lib/analytics";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/hooks/useCustomShops";
+import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from "@/lib/carto";
 
 
 type Shop = {
@@ -383,10 +384,7 @@ export default function ShopFinderMap() {
 
         <div className="sf-map">
           <MapContainer center={[50.85, 4.35]} zoom={6} style={{ height: "100%", width: "100%" }} scrollWheelZoom={false} touchZoom={true}>
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-            />
+            <TileLayer attribution={CARTO_ATTRIBUTION} url={CARTO_LIGHT_TILE_URL} />
             <LeafletGestureSupport />
             <FlyTo target={flyTarget} />
             <ClusterLayer
