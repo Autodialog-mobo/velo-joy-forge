@@ -1,0 +1,110 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Terms & Conditions — Velopass",
+    "description": "The terms and conditions for orders on and use of Velopass."
+  },
+  "eyebrow": "Terms & Conditions",
+  "title": "Terms & Conditions",
+  "last_updated": "Last updated: July 2026",
+  "sections": [
+    {
+      "title": "1. Who we are",
+      "body": "This website and the Frame-ID products and services are offered by Velopass BV, Stokerijstraat 29 bus a1, 2110 Wijnegem, Belgium. Company/VAT number BE 0777.359.681 — RPR Antwerp, Antwerp division. Email: support@velopass.com — Phone: +32 471 60 15 73. In these terms, \"Velopass\", \"we\" and \"us\" refer to Velopass BV; \"you\" refers to the consumer customer."
+    },
+    {
+      "title": "2. Scope and the contract",
+      "body": "These terms apply to every offer on velopass.com and to every agreement between Velopass and a consumer concluded through the website. By placing an order, you accept these terms. Separate terms apply to bike shops and business partners.",
+      "outro": "You can conclude the agreement in Dutch, French, German, English or Spanish. We confirm your order by email; keep that email, as you will find the terms there and on this page. The current version is always available at velopass.com/terms."
+    },
+    {
+      "title": "3. The product and service",
+      "body": "Velopass sells the Frame-ID: a physical marker applied to a bike frame that registers the bike in the international bike register, together with an ongoing digital passport. It is therefore a mixed offer: a physical product and a digital service.",
+      "outro": "The Frame-ID protects your bike through registration, visible marking and identification in the international bike register: this deters theft and makes recovering and identifying a bike easier. The Frame-ID is, however, not a physical lock and not insurance, and does not in itself guarantee that a bike will not be stolen or will be recovered. Where we refer to \"protected\" or \"secured\", this refers to this registration and identification, not to a physical security device or insurance cover."
+    },
+    {
+      "title": "4. Prices",
+      "body": "All prices are in euro and include VAT. Shipping costs are listed separately and added before you complete your order. The total amount at checkout is the amount you pay. Obvious mistakes or errors in the offer do not bind Velopass."
+    },
+    {
+      "title": "5. Orders and formation",
+      "body": "You complete your order by paying via Mollie. Once your payment has been received and processed, the agreement is concluded and you receive a confirmation by email. If a product is no longer available, we will notify you as soon as possible and refund any amount already paid."
+    },
+    {
+      "title": "6. Payment and retention of title",
+      "body": "Payments are handled by our payment partner Mollie, using the methods offered at checkout. The order is processed after payment has been received. The goods delivered remain the property of Velopass until you have paid the full price."
+    },
+    {
+      "title": "7. Delivery",
+      "body": "We ship your order to the address provided. Shipping costs vary by destination and are always listed separately before you complete your order. Countries outside our standard delivery area are not excluded, but may have different shipping costs and delivery times; if a destination is not available at checkout, contact us at support@velopass.com. Delivery times are indicative; we deliver within 30 days of the order at the latest, unless otherwise agreed. If we cannot, you may cancel the agreement and we will refund you. In the event of force majeure or a delay beyond our control (for example at the carrier), the delivery time is reasonably extended; we will notify you. The risk of loss or damage passes to you once you physically take possession of the goods. Mandatory consumer rules of your own country of residence remain fully in force."
+    },
+    {
+      "title": "8. Right of withdrawal",
+      "body": "As a consumer, you may withdraw from the purchase within 14 calendar days of receiving the goods, without giving a reason. Notify us unambiguously within that period, for example at support@velopass.com or using the model form at the bottom of these terms. After your notification, return the goods within 14 days. The direct cost of returning them is yours. We refund the payments received within 14 days; we may wait to do so until we have received the goods back or until you have demonstrated that you have returned them, whichever comes first.",
+      "list_rich": [
+        { "label": "Unused and not applied:", "body": "if you return the Frame-ID without having applied it, the right of withdrawal applies fully and we refund in full." },
+        { "label": "Self-applied within the withdrawal period:", "body": "you may still withdraw, but you are liable for the loss in value. A Frame-ID bonds permanently to the frame; if it can therefore no longer be taken back in saleable condition, the refund may be reduced proportionally or to zero." },
+        { "label": "Applied to a specific bike and registered by a shop or Velopass:", "body": "in that case the product can no longer be taken back in its original condition and the right of withdrawal may be limited or excluded." }
+      ],
+      "outro": "If you withdraw, any registration or digital passport linked to the returned Frame-ID is deactivated."
+    },
+    {
+      "title": "9. Legal warranty",
+      "body": "You benefit from the 2-year legal warranty of conformity on consumer goods, in accordance with Belgian law. In the event of a lack of conformity, contact us at support@velopass.com."
+    },
+    {
+      "title": "10. Liability",
+      "body": "Velopass is not liable for damage arising from improper use of the Frame-ID, from theft or loss of the bike, or from services provided by third parties. To the extent permitted by law, our liability is limited to the amount of the order concerned. Liability that cannot be excluded under mandatory law (such as for death, personal injury or intent/gross negligence) remains fully in force."
+    },
+    {
+      "title": "11. The digital passport and the register",
+      "body": "The Frame-ID comes with an ongoing digital service: registration in the register and a digital passport. The following applies:",
+      "list": [
+        "You can transfer the passport to the new owner when you sell the bike.",
+        "If you remove the Frame-ID from the frame, its link to that bike lapses.",
+        "If you delete your account or in the event of death, the rules in our privacy policy on data retention and deletion apply.",
+        "Velopass may adjust the terms of use and features of the register/platform over time, with reasonable prior notice."
+      ]
+    },
+    {
+      "title": "12. Third-party services",
+      "body": "Services such as insurance or roadside assistance are provided by the relevant third party, under its own terms. That third party is your contracting party for that service; activation is separate. Velopass does not act as an insurer or roadside provider and does not assume any liability of those third parties."
+    },
+    {
+      "title": "13. Intellectual property",
+      "body": "All trademarks, texts, images and the design on velopass.com are the property of Velopass or its licensors and may not be used without permission."
+    },
+    {
+      "title": "14. Personal data",
+      "body": "We process your personal data in accordance with our privacy policy at velopass.com/privacy. It explains which data we process, why, and what your rights are."
+    },
+    {
+      "title": "15. Complaints and disputes",
+      "body": "If you have a complaint, please contact us first at support@velopass.com; we will look for a solution together. As a consumer, you can also use the European ODR platform: https://ec.europa.eu/consumers/odr.",
+      "outro": "Belgian law applies to this agreement. Disputes fall under the jurisdiction of the courts of the judicial district of Antwerp, Antwerp division, insofar as the law does not mandatorily prescribe a different competent court (a consumer can often bring proceedings in their own country of residence)."
+    },
+    {
+      "title": "16. Changes",
+      "body": "Velopass may amend these terms. For an order, the version in force at the time of the order applies. For the ongoing digital service, amended terms may apply after reasonable notice. The current version is always available on this page."
+    },
+    {
+      "title": "17. Contact",
+      "body": "Questions about these terms?",
+      "outro_prefix": "Email us at",
+      "outro_email": "support@velopass.com",
+      "outro_suffix": "or call/WhatsApp +32 471 60 15 73, and we will help you."
+    },
+    {
+      "title": "Annex — Model withdrawal form",
+      "body": "Complete and return this only if you wish to withdraw from the agreement. To Velopass BV, Stokerijstraat 29 bus a1, 2110 Wijnegem, Belgium — support@velopass.com: I/we (*) hereby give notice that I/we (*) withdraw from the agreement concerning the sale of the following goods (*):",
+      "list": [
+        "Ordered on (*) / received on (*): …",
+        "Name of consumer(s): …",
+        "Address of consumer(s): …",
+        "Order number: …",
+        "Date: …"
+      ],
+      "outro": "(*) Delete as appropriate."
+    }
+  ]
+}
