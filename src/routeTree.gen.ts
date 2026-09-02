@@ -41,6 +41,7 @@ import { Route as AdminAdminAuditRouteImport } from './routes/_admin/admin-audit
 import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as LangTermsRouteImport } from './routes/$lang/terms'
 import { Route as LangStolenRouteImport } from './routes/$lang/stolen'
 import { Route as LangShopRouteImport } from './routes/$lang/shop'
 import { Route as LangProRouteImport } from './routes/$lang/pro'
@@ -225,6 +226,11 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const LangTermsRoute = LangTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => LangRouteRoute,
+} as any)
 const LangStolenRoute = LangStolenRouteImport.update({
   id: '/stolen',
   path: '/stolen',
@@ -369,6 +375,7 @@ export interface FileRoutesByFullPath {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
+  '/$lang/terms': typeof LangTermsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin': typeof AdminAdminRoute
@@ -423,6 +430,7 @@ export interface FileRoutesByTo {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
+  '/$lang/terms': typeof LangTermsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin': typeof AdminAdminRoute
@@ -480,6 +488,7 @@ export interface FileRoutesById {
   '/$lang/pro': typeof LangProRoute
   '/$lang/shop': typeof LangShopRoute
   '/$lang/stolen': typeof LangStolenRoute
+  '/$lang/terms': typeof LangTermsRoute
   '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_admin/admin': typeof AdminAdminRoute
@@ -537,6 +546,7 @@ export interface FileRouteTypes {
     | '/$lang/pro'
     | '/$lang/shop'
     | '/$lang/stolen'
+    | '/$lang/terms'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin'
@@ -591,6 +601,7 @@ export interface FileRouteTypes {
     | '/$lang/pro'
     | '/$lang/shop'
     | '/$lang/stolen'
+    | '/$lang/terms'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/admin'
@@ -647,6 +658,7 @@ export interface FileRouteTypes {
     | '/$lang/pro'
     | '/$lang/shop'
     | '/$lang/stolen'
+    | '/$lang/terms'
     | '/.mcp/list-tools'
     | '/.well-known/oauth-protected-resource'
     | '/_admin/admin'
@@ -927,6 +939,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$lang/terms': {
+      id: '/$lang/terms'
+      path: '/terms'
+      fullPath: '/$lang/terms'
+      preLoaderRoute: typeof LangTermsRouteImport
+      parentRoute: typeof LangRouteRoute
+    }
     '/$lang/stolen': {
       id: '/$lang/stolen'
       path: '/stolen'
@@ -1099,6 +1118,7 @@ interface LangRouteRouteChildren {
   LangProRoute: typeof LangProRoute
   LangShopRoute: typeof LangShopRoute
   LangStolenRoute: typeof LangStolenRoute
+  LangTermsRoute: typeof LangTermsRoute
   LangIndexRoute: typeof LangIndexRoute
   LangGuidesBuyingSecondHandRoute: typeof LangGuidesBuyingSecondHandRoute
   LangOrderThanksRoute: typeof LangOrderThanksRoute
@@ -1119,6 +1139,7 @@ const LangRouteRouteChildren: LangRouteRouteChildren = {
   LangProRoute: LangProRoute,
   LangShopRoute: LangShopRoute,
   LangStolenRoute: LangStolenRoute,
+  LangTermsRoute: LangTermsRoute,
   LangIndexRoute: LangIndexRoute,
   LangGuidesBuyingSecondHandRoute: LangGuidesBuyingSecondHandRoute,
   LangOrderThanksRoute: LangOrderThanksRoute,
