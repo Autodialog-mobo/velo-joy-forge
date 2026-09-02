@@ -1,0 +1,110 @@
+{
+  "_translated": true,
+  "meta": {
+    "title": "Allgemeine Geschäftsbedingungen — Velopass",
+    "description": "Die Allgemeinen Geschäftsbedingungen für Bestellungen und die Nutzung von Velopass."
+  },
+  "eyebrow": "Allgemeine Geschäftsbedingungen",
+  "title": "Allgemeine Geschäftsbedingungen",
+  "last_updated": "Zuletzt aktualisiert: Juli 2026",
+  "sections": [
+    {
+      "title": "1. Wer wir sind",
+      "body": "Diese Website sowie die Frame-ID-Produkte und -Dienste werden angeboten von Velopass BV, Stokerijstraat 29 bus a1, 2110 Wijnegem, Belgien. Unternehmens-/USt-Nummer BE 0777.359.681 — RPR Antwerpen, Abteilung Antwerpen. E-Mail: support@velopass.com — Telefon: +32 471 60 15 73. In diesen Bedingungen bezeichnen \"Velopass\", \"wir\" und \"uns\" die Velopass BV; \"du\" bezeichnet den Verbraucherkunden."
+    },
+    {
+      "title": "2. Geltungsbereich und Vertrag",
+      "body": "Diese Bedingungen gelten für jedes Angebot auf velopass.com und für jeden über die Website zustande gekommenen Vertrag zwischen Velopass und einem Verbraucher. Mit deiner Bestellung akzeptierst du diese Bedingungen. Für Fahrradgeschäfte und Geschäftspartner gelten gesonderte Bedingungen.",
+      "outro": "Du kannst den Vertrag auf Niederländisch, Französisch, Deutsch, Englisch oder Spanisch schließen. Wir bestätigen deine Bestellung per E-Mail; bewahre diese E-Mail auf, denn dort und auf dieser Seite findest du die Bedingungen. Die aktuelle Fassung ist stets auf velopass.com/terms verfügbar."
+    },
+    {
+      "title": "3. Das Produkt und die Dienstleistung",
+      "body": "Velopass verkauft die Frame-ID: eine physische Markierung, die am Fahrradrahmen angebracht wird und das Fahrrad im internationalen Fahrradregister registriert, zusammen mit einem fortlaufenden digitalen Pass. Es handelt sich also um ein gemischtes Angebot: ein physisches Produkt und eine digitale Dienstleistung.",
+      "outro": "Die Frame-ID schützt dein Fahrrad durch Registrierung, sichtbare Markierung und Identifikation im internationalen Fahrradregister: das schreckt Diebstahl ab und erleichtert das Wiederauffinden und Identifizieren eines Fahrrads. Die Frame-ID ist jedoch kein physisches Schloss und keine Versicherung und garantiert für sich genommen nicht, dass ein Fahrrad nicht gestohlen oder wiedergefunden wird. Wenn wir von \"geschützt\" oder \"gesichert\" sprechen, bezieht sich das auf diese Registrierung und Identifikation, nicht auf eine physische Sicherung oder einen Versicherungsschutz."
+    },
+    {
+      "title": "4. Preise",
+      "body": "Alle Preise sind in Euro angegeben und inklusive MwSt. Versandkosten werden separat ausgewiesen und vor dem Abschluss deiner Bestellung hinzugefügt. Der Gesamtbetrag beim Bezahlen ist der Betrag, den du zahlst. Offensichtliche Irrtümer oder Fehler im Angebot binden Velopass nicht."
+    },
+    {
+      "title": "5. Bestellung und Zustandekommen",
+      "body": "Du schließt deine Bestellung ab, indem du über Mollie bezahlst. Sobald deine Zahlung eingegangen und verarbeitet ist, kommt der Vertrag zustande und du erhältst eine Bestätigung per E-Mail. Ist ein Produkt nicht mehr verfügbar, informieren wir dich so schnell wie möglich und erstatten einen bereits gezahlten Betrag."
+    },
+    {
+      "title": "6. Zahlung und Eigentumsvorbehalt",
+      "body": "Zahlungen werden über unseren Zahlungspartner Mollie abgewickelt, mit den beim Bezahlen angebotenen Methoden. Die Bestellung wird nach Zahlungseingang bearbeitet. Die gelieferte Ware bleibt bis zur vollständigen Bezahlung des Preises Eigentum von Velopass."
+    },
+    {
+      "title": "7. Lieferung",
+      "body": "Wir versenden deine Bestellung an die angegebene Adresse. Die Versandkosten variieren je nach Zielort und werden stets separat vor dem Abschluss deiner Bestellung ausgewiesen. Länder außerhalb unseres Standard-Liefergebiets sind nicht ausgeschlossen, können jedoch abweichende Versandkosten und Lieferzeiten haben; ist ein Zielort beim Bezahlen nicht verfügbar, kontaktiere uns unter support@velopass.com. Lieferfristen sind Richtwerte; wir liefern spätestens innerhalb von 30 Tagen nach der Bestellung, sofern nichts anderes vereinbart ist. Gelingt dies nicht, kannst du den Vertrag auflösen und wir erstatten dir den Betrag. Bei höherer Gewalt oder einer Verzögerung außerhalb unseres Einflusses (zum Beispiel beim Transportunternehmen) verlängert sich die Lieferzeit angemessen; wir informieren dich. Das Risiko für Verlust oder Beschädigung geht auf dich über, sobald du die Ware physisch in Besitz nimmst. Zwingende Verbraucherschutzregeln deines Wohnsitzlandes bleiben uneingeschränkt in Kraft."
+    },
+    {
+      "title": "8. Widerrufsrecht",
+      "body": "Als Verbraucher kannst du den Kauf innerhalb von 14 Kalendertagen nach Erhalt der Ware ohne Angabe von Gründen widerrufen. Teile uns dies innerhalb dieser Frist eindeutig mit, zum Beispiel unter support@velopass.com oder mit dem Musterformular am Ende dieser Bedingungen. Nach deiner Mitteilung sende die Ware innerhalb von 14 Tagen zurück. Die unmittelbaren Kosten der Rücksendung trägst du. Wir erstatten die erhaltenen Zahlungen innerhalb von 14 Tagen; wir dürfen damit warten, bis wir die Ware zurückerhalten haben oder bis du nachgewiesen hast, dass du sie zurückgesandt hast, je nachdem, was zuerst eintritt.",
+      "list_rich": [
+        { "label": "Unbenutzt und nicht angebracht:", "body": "sendest du die Frame-ID unaufgeklebt zurück, gilt das Widerrufsrecht vollständig und wir erstatten in voller Höhe." },
+        { "label": "Selbst innerhalb der Frist angebracht:", "body": "du kannst weiterhin widerrufen, haftest aber für den Wertverlust. Eine Frame-ID haftet unlösbar am Rahmen; kann sie dadurch nicht mehr in verkaufsfähigem Zustand zurückgenommen werden, kann die Erstattung anteilig gemindert oder auf null herabgesetzt werden." },
+        { "label": "Von einem Geschäft oder Velopass an einem bestimmten Fahrrad angebracht und registriert:", "body": "in diesem Fall kann das Produkt nicht mehr im Originalzustand zurückgenommen werden und das Widerrufsrecht kann eingeschränkt oder ausgeschlossen sein." }
+      ],
+      "outro": "Widerrufst du, wird eine Registrierung oder ein digitaler Pass, der mit der zurückgesandten Frame-ID verknüpft ist, deaktiviert."
+    },
+    {
+      "title": "9. Gesetzliche Gewährleistung",
+      "body": "Du genießt die gesetzliche Konformitätsgewährleistung von 2 Jahren auf Verbrauchsgüter gemäß belgischem Recht. Bei einem Mangel an Vertragsmäßigkeit kontaktiere uns unter support@velopass.com."
+    },
+    {
+      "title": "10. Haftung",
+      "body": "Velopass haftet nicht für Schäden, die aus unsachgemäßem Gebrauch der Frame-ID, aus Diebstahl oder Verlust des Fahrrads oder aus von Dritten erbrachten Diensten entstehen. Soweit gesetzlich zulässig, ist unsere Haftung auf den Betrag der betreffenden Bestellung beschränkt. Eine Haftung, die nach zwingendem Recht nicht ausgeschlossen werden kann (etwa bei Tod, Körperverletzung oder Vorsatz/grober Fahrlässigkeit), bleibt uneingeschränkt bestehen."
+    },
+    {
+      "title": "11. Der digitale Pass und das Register",
+      "body": "Zur Frame-ID gehört eine fortlaufende digitale Dienstleistung: die Registrierung im Register und ein digitaler Pass. Dafür gilt:",
+      "list": [
+        "Du kannst den Pass beim Verkauf des Fahrrads an den neuen Eigentümer übertragen.",
+        "Entfernst du die Frame-ID vom Rahmen, entfällt die Verknüpfung mit diesem Fahrrad.",
+        "Bei Löschung deines Kontos oder im Todesfall gelten die Regeln unserer Datenschutzerklärung zur Aufbewahrung und Löschung von Daten.",
+        "Velopass kann die Nutzungsbedingungen und Funktionen des Registers/der Plattform im Laufe der Zeit anpassen, mit angemessener Vorankündigung."
+      ]
+    },
+    {
+      "title": "12. Dienste Dritter",
+      "body": "Dienste wie Versicherung oder Pannenhilfe werden vom jeweiligen Dritten zu dessen eigenen Bedingungen erbracht. Dieser Dritte ist dein Vertragspartner für diesen Dienst; die Aktivierung erfolgt gesondert. Velopass tritt dabei nicht als Versicherer oder Pannenhelfer auf und übernimmt keine Haftung dieser Dritten."
+    },
+    {
+      "title": "13. Geistiges Eigentum",
+      "body": "Alle Marken, Texte, Bilder und das Design auf velopass.com sind Eigentum von Velopass oder ihrer Lizenzgeber und dürfen ohne Erlaubnis nicht verwendet werden."
+    },
+    {
+      "title": "14. Personenbezogene Daten",
+      "body": "Wir verarbeiten deine personenbezogenen Daten gemäß unserer Datenschutzerklärung auf velopass.com/privacy. Dort liest du, welche Daten wir verarbeiten, warum, und welche Rechte du hast."
+    },
+    {
+      "title": "15. Beschwerden und Streitigkeiten",
+      "body": "Hast du eine Beschwerde, kontaktiere uns bitte zuerst unter support@velopass.com; wir suchen gemeinsam nach einer Lösung. Als Verbraucher kannst du dich auch an die europäische OS-Plattform wenden: https://ec.europa.eu/consumers/odr.",
+      "outro": "Auf diesen Vertrag ist belgisches Recht anwendbar. Streitigkeiten fallen in die Zuständigkeit der Gerichte des Gerichtsbezirks Antwerpen, Abteilung Antwerpen, soweit das Gesetz nicht zwingend ein anderes zuständiges Gericht vorschreibt (ein Verbraucher kann oft in seinem Wohnsitzland klagen)."
+    },
+    {
+      "title": "16. Änderungen",
+      "body": "Velopass kann diese Bedingungen anpassen. Für eine Bestellung gilt die zum Zeitpunkt der Bestellung geltende Fassung. Für die fortlaufende digitale Dienstleistung können nach angemessener Vorankündigung geänderte Bedingungen gelten. Die aktuelle Fassung ist stets auf dieser Seite verfügbar."
+    },
+    {
+      "title": "17. Kontakt",
+      "body": "Fragen zu diesen Bedingungen?",
+      "outro_prefix": "Schreib uns an",
+      "outro_email": "support@velopass.com",
+      "outro_suffix": "oder ruf an/WhatsApp +32 471 60 15 73, und wir helfen dir weiter."
+    },
+    {
+      "title": "Anhang — Muster-Widerrufsformular",
+      "body": "Nur ausfüllen und zurücksenden, wenn du den Vertrag widerrufen möchtest. An Velopass BV, Stokerijstraat 29 bus a1, 2110 Wijnegem, Belgien — support@velopass.com: Hiermit teile(n) ich/wir (*) mit, dass ich/wir (*) den Vertrag über den Verkauf der folgenden Waren widerrufe(n) (*):",
+      "list": [
+        "Bestellt am (*) / erhalten am (*): …",
+        "Name des/der Verbraucher(s): …",
+        "Anschrift des/der Verbraucher(s): …",
+        "Bestellnummer: …",
+        "Datum: …"
+      ],
+      "outro": "(*) Unzutreffendes streichen."
+    }
+  ]
+}
