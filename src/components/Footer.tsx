@@ -34,7 +34,7 @@ export function Footer({ variant = "default" }: FooterProps) {
         </div>
         <ul className="flinks">
           <li><Link to="/$lang/privacy" params={{ lang }}>{t("footer.privacy")}</Link></li>
-          <li><a href="#">{t("footer.terms")}</a></li>
+          <li><Link to="/$lang/terms" params={{ lang }}>{t("footer.terms")}</Link></li>
           <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "shop" }}>{t("footer.contact")}</Link></li>
           <li><Link to="/$lang" params={{ lang }} hash="faq" onClick={scrollToFaq}>{t("footer.faq")}</Link></li>
           <li><a href={PRO_LOGIN} onClick={() => trackProLoginClick("footer", lang)}>{t("nav.proLogin")}</a></li>
@@ -77,7 +77,7 @@ export function Footer({ variant = "default" }: FooterProps) {
       </div>
       <ul className="flinks">
         <li><Link to="/$lang/privacy" params={{ lang }}>{t("footer.privacy")}</Link></li>
-        <li><a href="#">{t("footer.terms")}</a></li>
+        <li><Link to="/$lang/terms" params={{ lang }}>{t("footer.terms")}</Link></li>
         <li><Link to="/$lang/contact" params={{ lang }} search={{ type: "rider" }}>{t("footer.contact")}</Link></li>
         <li><Link to="/$lang/bike-check" params={{ lang }}>{t("footer.bike_check")}</Link></li>
         <li><Link to="/$lang/stolen" params={{ lang }}>{t("footer.stolen")}</Link></li>
