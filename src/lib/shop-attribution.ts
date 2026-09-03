@@ -17,6 +17,11 @@ function isValidId(id: unknown): id is string {
   return typeof id === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(id);
 }
 
+/** Demo/test ids resolve from the URL but are never remembered. */
+export function isDemoId(id: string): boolean {
+  return /^vp_demo_/i.test(id);
+}
+
 export function readStoredShopId(): string | null {
   if (typeof window === "undefined") return null;
   try {
@@ -24,6 +29,11 @@ export function readStoredShopId(): string | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Stored;
     if (!isValidId(parsed?.shopId) || typeof parsed.ts !== "number") return null;
+    // Purge any legacy stored demo id so it never resurfaces on a plain /order.
+    if (isDemoId(parsed.shopId)) {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
     if (Date.now() - parsed.ts > TTL_MS) {
       window.localStorage.removeItem(STORAGE_KEY);
       return null;
