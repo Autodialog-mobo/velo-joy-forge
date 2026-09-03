@@ -46,6 +46,8 @@ export function readStoredShopId(): string | null {
 
 export function storeShopId(shopId: string): void {
   if (typeof window === "undefined") return;
+  // Demo ids are URL-only: never persisted.
+  if (isDemoId(shopId)) return;
   try {
     window.localStorage.setItem(
       STORAGE_KEY,
