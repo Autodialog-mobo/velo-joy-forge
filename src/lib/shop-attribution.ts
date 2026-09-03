@@ -17,6 +17,11 @@ function isValidId(id: unknown): id is string {
   return typeof id === "string" && /^[A-Za-z0-9_-]{1,64}$/.test(id);
 }
 
+/** Demo/test ids resolve from the URL but are never remembered. */
+export function isDemoId(id: string): boolean {
+  return /^vp_demo_/i.test(id);
+}
+
 export function readStoredShopId(): string | null {
   if (typeof window === "undefined") return null;
   try {
@@ -24,6 +29,11 @@ export function readStoredShopId(): string | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Stored;
     if (!isValidId(parsed?.shopId) || typeof parsed.ts !== "number") return null;
+    // Purge any legacy stored demo id so it never resurfaces on a plain /order.
+    if (isDemoId(parsed.shopId)) {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
     if (Date.now() - parsed.ts > TTL_MS) {
       window.localStorage.removeItem(STORAGE_KEY);
       return null;
@@ -36,6 +46,8 @@ export function readStoredShopId(): string | null {
 
 export function storeShopId(shopId: string): void {
   if (typeof window === "undefined") return;
+  // Demo ids are URL-only: never persisted.
+  if (isDemoId(shopId)) return;
   try {
     window.localStorage.setItem(
       STORAGE_KEY,
@@ -74,21 +86,15 @@ const STUB_SHOPS: Record<string, ShopBadge> = {
  * Resolve shop name + optional logo. Fails safe: returns null on any error or
  * empty result so the badge is simply not rendered (never show a raw id).
  */
-function isDemoEnvironment(): boolean {
-  if (typeof window === "undefined") return false;
-  const host = window.location.hostname;
-  return host.includes("localhost") || host.endsWith(".lovable.app");
-}
-
 export async function resolveShop(shopId: string): Promise<ShopBadge | null> {
   if (!isValidId(shopId)) return null;
   try {
     // TEMPORARY: stub lookup until the shop-badge endpoint is live.
-    // Dev/preview only — demo data must never resolve on production.
-    if (isDemoEnvironment()) {
-      const stub = STUB_SHOPS[shopId];
-      if (stub) return stub;
-    }
+    // Resolves everywhere (incl. production test links), but demo ids are
+    // never stored, so they cannot linger on a plain /order.
+    const stub = STUB_SHOPS[shopId];
+    if (stub) return stub;
+
 
     const res = await fetch(`/api/public/shop-badge?shop=${encodeURIComponent(shopId)}`);
     if (!res.ok) return null;
