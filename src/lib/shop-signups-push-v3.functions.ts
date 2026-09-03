@@ -859,44 +859,55 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
     let employeeError: string | null = null;
 
     if (returnedId) {
-      // Re-use the same `<lang>-<country>` mapping that is sent on the
-      // Organisation create call.
-      const languageCode = buildLanguageCode(row.lang, row.country);
+      // users/pro rejects the lowercase `nl-be` form with 400 "Unsupported
+      // locale". Try BCP-47 casing (nl-BE) first, then the bare language code
+      // (nl) as a fallback before reporting an error.
+      const base = buildLanguageCode(row.lang, row.country);
+      const [langBase = "nl", countryIso = "be"] = base.split("-");
+      const localeCandidates = [`${langBase}-${countryIso.toUpperCase()}`, langBase, base];
 
-
-      const employeeBody: Record<string, unknown> = {
-        languageCode,
-        email: row.email,
-        organisationId: returnedId,
-      };
-      if (row.first_name) employeeBody.firstName = row.first_name;
-      if (row.last_name) employeeBody.lastName = row.last_name;
+      let msgs: string[] = [];
 
       try {
-        const res = await fetch(managementEndpoint("users/pro"), {
-          method: "POST",
-          headers: {
-            Authorization: bearer,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(employeeBody),
-        });
-        employeeStatus = res.status;
-        const text = await res.text();
-        try { employeeResponse = text ? JSON.parse(text) : null; } catch { employeeResponse = text; }
+        for (const candidate of localeCandidates) {
+          const employeeBody: Record<string, unknown> = {
+            languageCode: candidate,
+            email: row.email,
+            organisationId: returnedId,
+          };
+          if (row.first_name) employeeBody.firstName = row.first_name;
+          if (row.last_name) employeeBody.lastName = row.last_name;
 
-        const msgs = collectErrorMessages(employeeResponse);
-        // ProblemDetails wraps the FluentResults error string inside `detail`.
-        if (employeeResponse && typeof (employeeResponse as any).detail === "string") {
-          try {
-            const inner = JSON.parse((employeeResponse as any).detail);
-            if (Array.isArray(inner?.Errors)) {
-              for (const e of inner.Errors) if (e?.Message) msgs.push(String(e.Message));
-            }
-          } catch { /* ignore */ }
+          const res = await fetch(managementEndpoint("users/pro"), {
+            method: "POST",
+            headers: {
+              Authorization: bearer,
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(employeeBody),
+          });
+          employeeStatus = res.status;
+          const text = await res.text();
+          try { employeeResponse = text ? JSON.parse(text) : null; } catch { employeeResponse = text; }
+
+          msgs = collectErrorMessages(employeeResponse);
+          // ProblemDetails wraps the FluentResults error string inside `detail`.
+          if (employeeResponse && typeof (employeeResponse as any).detail === "string") {
+            try {
+              const inner = JSON.parse((employeeResponse as any).detail);
+              if (Array.isArray(inner?.Errors)) {
+                for (const e of inner.Errors) if (e?.Message) msgs.push(String(e.Message));
+              }
+            } catch { /* ignore */ }
+          }
+          employeeAlreadyExists = msgs.some((m) => /already\s+exists/i.test(m));
+
+          const okStatus = employeeStatus >= 200 && employeeStatus < 300;
+          const unsupportedLocale = msgs.some((m) => /unsupported\s+locale/i.test(m));
+          if (okStatus || employeeAlreadyExists || !unsupportedLocale) break;
         }
-        employeeAlreadyExists = msgs.some((m) => /already\s+exists/i.test(m));
+
 
         if ((employeeStatus < 200 || employeeStatus >= 300) && !employeeAlreadyExists) {
           employeeError = msgs[0] || `velopass.pro gaf ${employeeStatus} bij het aanmaken van de gebruiker.`;
