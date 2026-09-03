@@ -909,7 +909,7 @@ export const pushShopSignupToVelopassProV3 = createServerFn({ method: "POST" })
         }
 
 
-        if ((employeeStatus < 200 || employeeStatus >= 300) && !employeeAlreadyExists) {
+        if ((employeeStatus === null || employeeStatus < 200 || employeeStatus >= 300) && !employeeAlreadyExists) {
           employeeError = msgs[0] || `velopass.pro gaf ${employeeStatus} bij het aanmaken van de gebruiker.`;
           console.error("[shop-signups] employee push failed", {
             id: data.id, status: employeeStatus, employeeResponse,
