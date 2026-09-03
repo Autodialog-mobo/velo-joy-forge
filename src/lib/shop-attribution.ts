@@ -86,21 +86,15 @@ const STUB_SHOPS: Record<string, ShopBadge> = {
  * Resolve shop name + optional logo. Fails safe: returns null on any error or
  * empty result so the badge is simply not rendered (never show a raw id).
  */
-function isDemoEnvironment(): boolean {
-  if (typeof window === "undefined") return false;
-  const host = window.location.hostname;
-  return host.includes("localhost") || host.endsWith(".lovable.app");
-}
-
 export async function resolveShop(shopId: string): Promise<ShopBadge | null> {
   if (!isValidId(shopId)) return null;
   try {
     // TEMPORARY: stub lookup until the shop-badge endpoint is live.
-    // Dev/preview only — demo data must never resolve on production.
-    if (isDemoEnvironment()) {
-      const stub = STUB_SHOPS[shopId];
-      if (stub) return stub;
-    }
+    // Resolves everywhere (incl. production test links), but demo ids are
+    // never stored, so they cannot linger on a plain /order.
+    const stub = STUB_SHOPS[shopId];
+    if (stub) return stub;
+
 
     const res = await fetch(`/api/public/shop-badge?shop=${encodeURIComponent(shopId)}`);
     if (!res.ok) return null;
