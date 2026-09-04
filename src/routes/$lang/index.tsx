@@ -105,7 +105,7 @@ export const Route = createFileRoute("/$lang/")({
     const lang = isLang(params.lang) ? params.lang : "en";
     const HOME_META: Record<Lang, { title: string; description: string }> = {
       en: {
-        title: "Velopass — Every bike. A customer for life.",
+        title: "Velopass — Always riding. Everything handled.",
         description:
           "One Frame-ID on your bike and you always have access to theft protection, roadside assistance, insurance and your bike shop. The digital bike passport.",
       },
@@ -120,7 +120,7 @@ export const Route = createFileRoute("/$lang/")({
           "Un Frame-ID sur ton vélo et tu as toujours accès à la protection antivol, l'assistance dépannage, l'assurance et ton magasin de vélo. Le passeport vélo numérique.",
       },
       de: {
-        title: "Velopass — Immer aufs Rad. Alles geregelt.",
+        title: "Velopass — Immer auf dem Rad. Alles geregelt.",
         description:
           "Eine Frame-ID an deinem Rad und du hast immer Zugriff auf Diebstahlschutz, Pannenhilfe, Versicherung und deinen Fahrradladen. Der digitale Fahrradpass.",
       },
