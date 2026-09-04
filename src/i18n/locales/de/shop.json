@@ -33,7 +33,7 @@
       "subtitle": "Velopass Pro",
       "stat1Label": "Aktive Kunden",
       "stat1Delta": "↑ +12 in diesem Monat",
-      "stat2Label": "Erworbene Leistungspunkte",
+      "stat2Label": "Verdientes Guthaben",
       "stat2Delta": "↑ über Aktivierungen",
       "stat3Label": "Erinnerungen",
       "stat3Delta": "↑ 18 umgewandelt",
@@ -58,7 +58,7 @@
     },
     "p2": {
       "title": "Zusätzliche Leistungen, ohne zusätzlichen Aufwand",
-      "body": "Biete über Velopass Versicherungen und Pannenhilfe an – automatisch und genau zum richtigen Zeitpunkt. Für jede Aktivierung erhältst du Credits.",
+      "body": "Biete über Velopass Versicherungen und Pannenhilfe an – automatisch und genau zum richtigen Zeitpunkt. Jede Aktivierung bringt Ihnen Guthaben, in Euro.",
       "tag": "Unser Ziel: Velopass kostet dich letztendlich nichts"
     },
     "p3": {
@@ -109,7 +109,7 @@
     "packageNote": "Nach der Registrierung melden wir uns innerhalb von 2 Werktagen bei dir und versenden dein Paket.",
     "feat1Title": "Kassenintegration oder kostenlose App",
     "feat1Body": "Funktioniert mit deinem bestehenden Kassensystem. Oder nutze die kostenlose Pro-App.",
-    "feat2Title": "Guthaben, das sich ansammelt",
+    "feat2Title": "Guthaben, das wächst",
     "feat2Body": "Mit jeder Aktivierung kommst du der kostenlosen Nutzung ein Stück näher.",
     "feat3Title": "Einführung inklusive",
     "feat3Body": "Wir helfen dir beim Einstieg. In deiner Sprache."

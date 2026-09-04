@@ -33,7 +33,7 @@
       "subtitle": "Velopass Pro",
       "stat1Label": "Clientes activos",
       "stat1Delta": "↑ +12 este mes",
-      "stat2Label": "Credits ganados",
+      "stat2Label": "Saldo ganado",
       "stat2Delta": "↑ por activaciones",
       "stat3Label": "Recordatorios",
       "stat3Delta": "↑ 18 convertidos",
@@ -58,7 +58,7 @@
     },
     "p2": {
       "title": "Servicios extra, cero trabajo extra",
-      "body": "Ofrece seguro y asistencia a través de Velopass — automático, en el momento adecuado. Cada activación te da Credits.",
+      "body": "Ofrece seguro y asistencia a través de Velopass — automático, en el momento adecuado. Cada activación te genera saldo, en euros.",
       "tag": "Nuestro objetivo: que Velopass acabe sin costarte nada"
     },
     "p3": {
@@ -109,7 +109,7 @@
     "packageNote": "Tras unirte, contactamos en 2 días laborables y enviamos tu pack.",
     "feat1Title": "Integración con caja o app gratuita",
     "feat1Body": "Funciona con tu sistema de caja actual. O usa la Pro App gratuita.",
-    "feat2Title": "Credits que se acumulan",
+    "feat2Title": "Un saldo que crece",
     "feat2Body": "Cada activación te acerca al uso gratuito.",
     "feat3Title": "Onboarding incluido",
     "feat3Body": "Te ayudamos a empezar. En tu idioma."
