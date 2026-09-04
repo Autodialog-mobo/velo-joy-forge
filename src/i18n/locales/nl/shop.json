@@ -33,7 +33,7 @@
       "subtitle": "Velopass Pro",
       "stat1Label": "Actieve klanten",
       "stat1Delta": "↑ +12 deze maand",
-      "stat2Label": "Verdiende Credits",
+      "stat2Label": "Verdiend tegoed",
       "stat2Delta": "↑ via activaties",
       "stat3Label": "Reminders",
       "stat3Delta": "↑ 18 omgezet",
@@ -58,7 +58,7 @@
     },
     "p2": {
       "title": "Extra services, nul extra werk",
-      "body": "Bied verzekering en pechhulp aan via Velopass — automatisch, op het juiste moment. Elke activatie levert je Credits op.",
+      "body": "Bied verzekering en pechhulp aan via Velopass — automatisch, op het juiste moment. Elke activatie levert je tegoed op, in euro.",
       "tag": "Ons doel: Velopass kost je uiteindelijk niets"
     },
     "p3": {
@@ -109,7 +109,7 @@
     "packageNote": "Na aansluiting nemen we binnen 2 werkdagen contact op en sturen we je pakket.",
     "feat1Title": "Kassakoppeling of gratis app",
     "feat1Body": "Werkt met je bestaande kassasysteem. Of gebruik de gratis Pro app.",
-    "feat2Title": "Credits die oplopen",
+    "feat2Title": "Tegoed dat oploopt",
     "feat2Body": "Elke activatie brengt je dichter bij gratis gebruik.",
     "feat3Title": "Onboarding inbegrepen",
     "feat3Body": "We helpen je op weg. In jouw taal."

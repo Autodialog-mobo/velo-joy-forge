@@ -33,7 +33,7 @@
       "subtitle": "Velopass Pro",
       "stat1Label": "Active customers",
       "stat1Delta": "↑ +12 this month",
-      "stat2Label": "Credits earned",
+      "stat2Label": "Balance earned",
       "stat2Delta": "↑ via activations",
       "stat3Label": "Reminders",
       "stat3Delta": "↑ 18 converted",
@@ -58,7 +58,7 @@
     },
     "p2": {
       "title": "Extra services, zero extra work",
-      "body": "Offer insurance and roadside assistance via Velopass — automatically, at the right moment. Every activation earns you Credits.",
+      "body": "Offer insurance and roadside assistance via Velopass — automatically, at the right moment. Every activation earns you balance, in euros.",
       "tag": "Our goal: Velopass ultimately costs you nothing"
     },
     "p3": {
@@ -109,7 +109,7 @@
     "packageNote": "After registration we will contact you within 2 working days and send your package.",
     "feat1Title": "POS integration or free app",
     "feat1Body": "Works with your existing POS system. Or use the free Pro app.",
-    "feat2Title": "Credits that accumulate",
+    "feat2Title": "A balance that grows",
     "feat2Body": "Every activation brings you closer to free usage.",
     "feat3Title": "Onboarding included",
     "feat3Body": "We help you get started. In your language."

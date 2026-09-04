@@ -33,7 +33,7 @@
       "subtitle": "Velopass Pour",
       "stat1Label": "Clients actifs",
       "stat1Delta": "↑ +12 ce mois-ci",
-      "stat2Label": "Crédits obtenus",
+      "stat2Label": "Avoir gagné",
       "stat2Delta": "↑ via les activations",
       "stat3Label": "Rappels",
       "stat3Delta": "↑ 18 convertis",
@@ -58,7 +58,7 @@
     },
     "p2": {
       "title": "Des services en plus, sans effort supplémentaire",
-      "body": "Propose des assurances et une assistance routière via Velopass — automatiquement, au bon moment. Chaque activation te rapporte des crédits.",
+      "body": "Propose des assurances et une assistance routière via Velopass — automatiquement, au bon moment. Chaque activation vous rapporte un avoir, en euros.",
       "tag": "Notre objectif : Velopass ne te coûtera finalement rien"
     },
     "p3": {
@@ -109,7 +109,7 @@
     "packageNote": "Une fois ton inscription validée, on te contactera dans les deux jours ouvrables et on t'enverra ton colis.",
     "feat1Title": "Intégration au système de caisse ou application gratuite",
     "feat1Body": "Fonctionne avec ton système de caisse existant. Ou utilise l'application Pro gratuite.",
-    "feat2Title": "Les crédits qui s'accumulent",
+    "feat2Title": "Un avoir qui grandit",
     "feat2Body": "Chaque activation te rapproche de l'accès gratuit.",
     "feat3Title": "L'intégration est comprise",
     "feat3Body": "On t'aide à te lancer. Dans ta langue."
