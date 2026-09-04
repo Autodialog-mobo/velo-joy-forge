@@ -17,8 +17,9 @@
     "current": "Langue actuelle"
   },
   "footer": {
-    "tagline": "Chaque vélo. Un client. Pour toujours.",
-    "tagline_pro": "Chaque vélo. Un client. Pour la vie.",
+    "tagline": "Toujours en selle. Tout est réglé.",
+    "tagline_pro": "Every bike. A customer. For life.",
+    "mission": "Nous simplifions la gestion des magasins de vélo — et la collaboration avec eux.",
     "coverage": "Frame-ID Disponible dans toute l'Europe · Magasins présents en Belgique, aux Pays-Bas et en France",
     "privacy": "Confidentialité",
     "terms": "Conditions",

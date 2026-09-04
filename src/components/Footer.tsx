@@ -31,6 +31,19 @@ export function Footer({ variant = "default" }: FooterProps) {
             velopass<span style={{ color: "var(--green)" }}>pro</span>
           </div>
           <div className="ftagline">{t("footer.tagline_pro")}</div>
+          <div
+            className="fmission"
+            style={{
+              fontSize: 12,
+              color: "rgba(255,255,255,0.35)",
+              marginTop: 6,
+              maxWidth: 340,
+              lineHeight: 1.5,
+              fontFamily: "'DM Sans', sans-serif",
+            }}
+          >
+            {t("footer.mission")}
+          </div>
         </div>
         <ul className="flinks">
           <li><Link to="/$lang/privacy" params={{ lang }}>{t("footer.privacy")}</Link></li>
