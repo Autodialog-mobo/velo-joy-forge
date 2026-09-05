@@ -286,6 +286,8 @@ function VelopassPro() {
             </div>
             <h3>{t("pillars.p2.title")}</h3>
             <p>{t("pillars.p2.body")}</p>
+            <p style={{ fontSize: 12, lineHeight: 1.5, opacity: 0.6, marginTop: 6 }}>{t("pillars.p2.note")}</p>
+
             <div className="ctag">{t("pillars.p2.tag")}</div>
           </div>
           <div className="pc">
