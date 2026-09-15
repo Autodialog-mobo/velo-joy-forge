@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789482991938,
+      "tag": "0000_add_b2b_push_columns",
+      "breakpoints": true
+    }
+  ]
+}
