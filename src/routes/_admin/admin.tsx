@@ -915,6 +915,48 @@ function AdminPage() {
     downloadBlob(new Blob([csv], { type: "text/csv" }), `velopass-orders-${Date.now()}.csv`);
   };
 
+  const handlePushB2B = async () => {
+    if (!selectedOrders.length) return;
+    setB2bBusy(true);
+    try {
+      const res: any = await doPushB2B({ data: { orderIds: selectedOrders.map((o: any) => o.id) } });
+      const results = res?.results ?? [];
+      const okCount = results.filter((r: any) => r.ok).length;
+      const failed = results.filter((r: any) => !r.ok);
+      if (failed.length === 0) {
+        toast.success(`${okCount} ${okCount === 1 ? "bestelling" : "bestellingen"} doorgestuurd naar Velopass`);
+      } else {
+        toast.error(
+          `${okCount} doorgestuurd, ${failed.length} mislukt — ${failed[0]?.skipped ?? failed[0]?.error ?? "onbekende fout"}`,
+        );
+      }
+      await refetch();
+    } catch (e: any) {
+      toast.error(e?.message ?? "Doorsturen mislukt");
+    } finally {
+      setB2bBusy(false);
+    }
+  };
+
+  const downloadBackfill = async (limit?: number) => {
+    setB2bBusy(true);
+    try {
+      const res: any = await doExportBackfill({ data: { limit: limit ?? 5000, environment: env } });
+      const json = JSON.stringify(res.payloads, null, 2);
+      downloadBlob(
+        new Blob([json], { type: "application/json" }),
+        `velopass-backfill-${res.count}-${Date.now()}.json`,
+      );
+      toast.success(`${res.count} ${res.count === 1 ? "bestelling" : "bestellingen"} geëxporteerd`);
+    } catch (e: any) {
+      toast.error(e?.message ?? "Export mislukt");
+    } finally {
+      setB2bBusy(false);
+    }
+  };
+
+
+
   const handleMarkPrinted = async () => {
     if (!selectedOrders.length) return;
     setBusy(true);
