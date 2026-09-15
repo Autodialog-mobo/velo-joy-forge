@@ -1625,6 +1625,30 @@ function AdminPage() {
                 >
                   CSV export
                 </button>
+                <button
+                  onClick={handlePushB2B}
+                  disabled={b2bBusy || !hasSelection || viewingDeleted}
+                  title="Geselecteerde bestellingen doorsturen naar de Velopass B2B-orderapp"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Naar Velopass ({viewingDeleted ? 0 : selectedOrders.length})
+                </button>
+                <button
+                  onClick={() => downloadBackfill(5)}
+                  disabled={b2bBusy}
+                  title="Proefbestand met 5 bestellingen voor de eenmalige import bij Velopass"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40"
+                >
+                  Backfill JSON (5)
+                </button>
+                <button
+                  onClick={() => downloadBackfill()}
+                  disabled={b2bBusy}
+                  title="Volledig backfill-bestand met alle betaalde en verzonden bestellingen"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40"
+                >
+                  Backfill JSON (alles)
+                </button>
               </div>
 
 
