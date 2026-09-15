@@ -1695,6 +1695,7 @@ function AdminPage() {
                       </span>
                     </th>
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Status</th>
+                    <th className="px-6 py-3 text-left hidden lg:table-cell" style={EYEBROW}>Velopass</th>
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Klant</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Adres</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Items</th>
