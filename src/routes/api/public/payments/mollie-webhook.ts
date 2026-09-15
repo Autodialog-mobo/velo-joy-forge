@@ -392,6 +392,47 @@ export const Route = createFileRoute("/api/public/payments/mollie-webhook")({
             wlog("info", "status is not paid — no confirmation email sent", { status });
           }
 
+          // Push the paid order to the Velopass B2B orders app (fulfilment).
+          // Atomic claim on b2b_pushed_at so concurrent deliveries push once.
+          // Never let a failure here affect the webhook response.
+          if (orderId && status === "paid") {
+            try {
+              const { data: claimed } = await (supabaseAdmin.from("orders") as any)
+                .update({ b2b_pushed_at: new Date().toISOString() })
+                .eq("id", orderId)
+                .is("b2b_pushed_at", null)
+                .is("b2b_order_id", null)
+                .select("id")
+                .maybeSingle();
+
+              if (!claimed) {
+                wlog("info", "b2b push already claimed or done — skipping", { orderId });
+              } else {
+                const { pushOrderToB2B } = await import("@/lib/b2b/push.server");
+                const pushed = await pushOrderToB2B(orderId, { force: true });
+                if (pushed.ok) {
+                  wlog("info", "b2b push ok", { orderId, velopassOrderId: pushed.velopassOrderId });
+                } else {
+                  wlog("error", "b2b push failed", { orderId, error: pushed.error, skipped: pushed.skipped });
+                  if (pushed.skipped) {
+                    await (supabaseAdmin.from("orders") as any)
+                      .update({ b2b_pushed_at: null })
+                      .eq("id", orderId);
+                  }
+                }
+              }
+            } catch (e: any) {
+              wlog("error", "b2b push threw", { orderId, error: e?.message });
+              try {
+                await (supabaseAdmin.from("orders") as any)
+                  .update({ b2b_pushed_at: null, b2b_push_error: String(e?.message ?? e).slice(0, 1000) })
+                  .eq("id", orderId);
+              } catch {}
+            }
+          }
+
+
+
           // Recovery email: when payment expires without ever being paid, send
           // ONE follow-up email with a fresh Mollie checkout URL. Atomic claim
           // on recovery_email_sent_at guarantees a single send per order.

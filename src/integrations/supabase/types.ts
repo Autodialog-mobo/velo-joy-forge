@@ -275,6 +275,11 @@ export type Database = {
           amount_subtotal: number
           amount_tax: number
           amount_total: number
+          b2b_environment: string | null
+          b2b_order_id: string | null
+          b2b_price_flag: string | null
+          b2b_push_error: string | null
+          b2b_pushed_at: string | null
           created_at: string
           currency: string
           customer_email: string
@@ -310,6 +315,11 @@ export type Database = {
           amount_subtotal: number
           amount_tax?: number
           amount_total: number
+          b2b_environment?: string | null
+          b2b_order_id?: string | null
+          b2b_price_flag?: string | null
+          b2b_push_error?: string | null
+          b2b_pushed_at?: string | null
           created_at?: string
           currency?: string
           customer_email: string
@@ -345,6 +355,11 @@ export type Database = {
           amount_subtotal?: number
           amount_tax?: number
           amount_total?: number
+          b2b_environment?: string | null
+          b2b_order_id?: string | null
+          b2b_price_flag?: string | null
+          b2b_push_error?: string | null
+          b2b_pushed_at?: string | null
           created_at?: string
           currency?: string
           customer_email?: string

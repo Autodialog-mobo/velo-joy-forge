@@ -8,6 +8,7 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation, logPrintAudit } from "@/lib/admin.functions";
+import { pushB2BBatch, retryB2BPush, exportB2BBackfill } from "@/lib/b2b.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { useAuth } from "@/lib/auth";
 import { ResponsiveContainer, AreaChart, Area } from "recharts";
@@ -147,6 +148,10 @@ function AdminPage() {
   const doRestore = useServerFn(restoreOrder);
   const fetchEvents = useServerFn(listOrderEvents);
   const doSendTestEmail = useServerFn(sendTestOrderConfirmation);
+  const doPushB2B = useServerFn(pushB2BBatch);
+  const doRetryB2B = useServerFn(retryB2BPush);
+  const doExportBackfill = useServerFn(exportB2BBackfill);
+  const [b2bBusy, setB2bBusy] = useState(false);
   const [testEmailBusy, setTestEmailBusy] = useState(false);
   const [testEmailMsg, setTestEmailMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
   // reset further below once detailOrder is declared
@@ -915,6 +920,48 @@ function AdminPage() {
     downloadBlob(new Blob([csv], { type: "text/csv" }), `velopass-orders-${Date.now()}.csv`);
   };
 
+  const handlePushB2B = async () => {
+    if (!selectedOrders.length) return;
+    setB2bBusy(true);
+    try {
+      const res: any = await doPushB2B({ data: { orderIds: selectedOrders.map((o: any) => o.id) } });
+      const results = res?.results ?? [];
+      const okCount = results.filter((r: any) => r.ok).length;
+      const failed = results.filter((r: any) => !r.ok);
+      if (failed.length === 0) {
+        toast.success(`${okCount} ${okCount === 1 ? "bestelling" : "bestellingen"} doorgestuurd naar Velopass`);
+      } else {
+        toast.error(
+          `${okCount} doorgestuurd, ${failed.length} mislukt — ${failed[0]?.skipped ?? failed[0]?.error ?? "onbekende fout"}`,
+        );
+      }
+      await refetch();
+    } catch (e: any) {
+      toast.error(e?.message ?? "Doorsturen mislukt");
+    } finally {
+      setB2bBusy(false);
+    }
+  };
+
+  const downloadBackfill = async (limit?: number) => {
+    setB2bBusy(true);
+    try {
+      const res: any = await doExportBackfill({ data: { limit: limit ?? 5000, environment } });
+      const json = JSON.stringify(res.payloads, null, 2);
+      downloadBlob(
+        new Blob([json], { type: "application/json" }),
+        `velopass-backfill-${res.count}-${Date.now()}.json`,
+      );
+      toast.success(`${res.count} ${res.count === 1 ? "bestelling" : "bestellingen"} geëxporteerd`);
+    } catch (e: any) {
+      toast.error(e?.message ?? "Export mislukt");
+    } finally {
+      setB2bBusy(false);
+    }
+  };
+
+
+
   const handleMarkPrinted = async () => {
     if (!selectedOrders.length) return;
     setBusy(true);
@@ -1578,6 +1625,30 @@ function AdminPage() {
                 >
                   CSV export
                 </button>
+                <button
+                  onClick={handlePushB2B}
+                  disabled={b2bBusy || !hasSelection || viewingDeleted}
+                  title="Geselecteerde bestellingen doorsturen naar de Velopass B2B-orderapp"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Naar Velopass ({viewingDeleted ? 0 : selectedOrders.length})
+                </button>
+                <button
+                  onClick={() => downloadBackfill(5)}
+                  disabled={b2bBusy}
+                  title="Proefbestand met 5 bestellingen voor de eenmalige import bij Velopass"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40"
+                >
+                  Backfill JSON (5)
+                </button>
+                <button
+                  onClick={() => downloadBackfill()}
+                  disabled={b2bBusy}
+                  title="Volledig backfill-bestand met alle betaalde en verzonden bestellingen"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40"
+                >
+                  Backfill JSON (alles)
+                </button>
               </div>
 
 
@@ -1624,6 +1695,7 @@ function AdminPage() {
                       </span>
                     </th>
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Status</th>
+                    <th className="px-6 py-3 text-left hidden lg:table-cell" style={EYEBROW}>Velopass</th>
                     <th className="px-6 py-3 text-left" style={EYEBROW}>Klant</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Adres</th>
                     <th className="px-6 py-3 text-left hidden md:table-cell" style={EYEBROW}>Items</th>
@@ -1699,6 +1771,49 @@ function AdminPage() {
                             />
                             {statusLabelNl(o.status)}
                           </span>
+                        </td>
+                        <td
+                          className="px-6 py-4 align-middle hidden lg:table-cell text-[12px]"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {o.b2b_order_id ? (
+                            <span
+                              style={{ color: TEXT_SEC, fontVariantNumeric: "tabular-nums" }}
+                              title={
+                                o.b2b_price_flag
+                                  ? `Doorgestuurd — prijsafwijking: ${o.b2b_price_flag}`
+                                  : "Doorgestuurd naar Velopass"
+                              }
+                            >
+                              {o.b2b_order_id}
+                              {o.b2b_price_flag ? " ⚠" : ""}
+                            </span>
+                          ) : o.b2b_push_error ? (
+                            <span className="inline-flex items-center gap-2">
+                              <span style={{ color: "rgba(248,113,113,0.9)" }} title={o.b2b_push_error}>
+                                Mislukt
+                              </span>
+                              <button
+                                onClick={async () => {
+                                  setB2bBusy(true);
+                                  try {
+                                    const r: any = await doRetryB2B({ data: { orderId: o.id, force: true } });
+                                    if (r?.ok) toast.success(`Doorgestuurd: ${r.velopassOrderId}`);
+                                    else toast.error(r?.error ?? r?.skipped ?? "Doorsturen mislukt");
+                                    await refetch();
+                                  } finally {
+                                    setB2bBusy(false);
+                                  }
+                                }}
+                                disabled={b2bBusy}
+                                className="btn-ghost h-6 px-2 rounded-[8px] text-[11px] font-medium disabled:opacity-40"
+                              >
+                                Opnieuw
+                              </button>
+                            </span>
+                          ) : (
+                            <span style={{ color: TEXT_MUTED }}>—</span>
+                          )}
                         </td>
                         <td className="px-6 py-4 align-middle">
                           <div className="flex items-center gap-2">
