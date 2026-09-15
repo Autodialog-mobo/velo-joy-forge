@@ -8,6 +8,7 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { listOrders, markPrinted, markShipped, revertToPaid, revertToPrinted, softDeleteOrder, restoreOrder, listOrderEvents, sendTestOrderConfirmation, logPrintAudit } from "@/lib/admin.functions";
+import { pushB2BBatch, retryB2BPush, exportB2BBackfill } from "@/lib/b2b.functions";
 import { generateLabelsPdf, downloadBlob, ordersToCsv, type LabelData } from "@/lib/labels";
 import { useAuth } from "@/lib/auth";
 import { ResponsiveContainer, AreaChart, Area } from "recharts";
@@ -147,6 +148,10 @@ function AdminPage() {
   const doRestore = useServerFn(restoreOrder);
   const fetchEvents = useServerFn(listOrderEvents);
   const doSendTestEmail = useServerFn(sendTestOrderConfirmation);
+  const doPushB2B = useServerFn(pushB2BBatch);
+  const doRetryB2B = useServerFn(retryB2BPush);
+  const doExportBackfill = useServerFn(exportB2BBackfill);
+  const [b2bBusy, setB2bBusy] = useState(false);
   const [testEmailBusy, setTestEmailBusy] = useState(false);
   const [testEmailMsg, setTestEmailMsg] = useState<{ kind: "ok" | "err"; text: string } | null>(null);
   // reset further below once detailOrder is declared
@@ -941,7 +946,7 @@ function AdminPage() {
   const downloadBackfill = async (limit?: number) => {
     setB2bBusy(true);
     try {
-      const res: any = await doExportBackfill({ data: { limit: limit ?? 5000, environment: env } });
+      const res: any = await doExportBackfill({ data: { limit: limit ?? 5000, environment } });
       const json = JSON.stringify(res.payloads, null, 2);
       downloadBlob(
         new Blob([json], { type: "application/json" }),
