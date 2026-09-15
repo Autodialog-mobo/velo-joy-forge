@@ -64,7 +64,7 @@ export async function getB2BToken(force = false): Promise<string> {
 async function authedFetch(path: string, init: RequestInit = {}): Promise<Response> {
   let token = await getB2BToken();
   const doCall = (t: string) =>
-    fetch(`${BASE_URL}${path}`, {
+    fetch(`${baseUrl()}${path}`, {
       ...init,
       headers: {
         ...(init.headers ?? {}),
