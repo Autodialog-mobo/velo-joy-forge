@@ -1772,6 +1772,49 @@ function AdminPage() {
                             {statusLabelNl(o.status)}
                           </span>
                         </td>
+                        <td
+                          className="px-6 py-4 align-middle hidden lg:table-cell text-[12px]"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {o.b2b_order_id ? (
+                            <span
+                              style={{ color: TEXT_SEC, fontVariantNumeric: "tabular-nums" }}
+                              title={
+                                o.b2b_price_flag
+                                  ? `Doorgestuurd — prijsafwijking: ${o.b2b_price_flag}`
+                                  : "Doorgestuurd naar Velopass"
+                              }
+                            >
+                              {o.b2b_order_id}
+                              {o.b2b_price_flag ? " ⚠" : ""}
+                            </span>
+                          ) : o.b2b_push_error ? (
+                            <span className="inline-flex items-center gap-2">
+                              <span style={{ color: "rgba(248,113,113,0.9)" }} title={o.b2b_push_error}>
+                                Mislukt
+                              </span>
+                              <button
+                                onClick={async () => {
+                                  setB2bBusy(true);
+                                  try {
+                                    const r: any = await doRetryB2B({ data: { orderId: o.id, force: true } });
+                                    if (r?.ok) toast.success(`Doorgestuurd: ${r.velopassOrderId}`);
+                                    else toast.error(r?.error ?? r?.skipped ?? "Doorsturen mislukt");
+                                    await refetch();
+                                  } finally {
+                                    setB2bBusy(false);
+                                  }
+                                }}
+                                disabled={b2bBusy}
+                                className="btn-ghost h-6 px-2 rounded-[8px] text-[11px] font-medium disabled:opacity-40"
+                              >
+                                Opnieuw
+                              </button>
+                            </span>
+                          ) : (
+                            <span style={{ color: TEXT_MUTED }}>—</span>
+                          )}
+                        </td>
                         <td className="px-6 py-4 align-middle">
                           <div className="flex items-center gap-2">
                             <div className="text-[14px] font-medium leading-[1.4]" style={{ color: TEXT_PRI }}>
