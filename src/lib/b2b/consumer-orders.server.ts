@@ -125,13 +125,17 @@ export type PostOrderResult =
       error: string;
     };
 
-export async function postConsumerOrder(payload: unknown): Promise<PostOrderResult> {
+export async function postConsumerOrder(
+  payload: unknown,
+  mode: B2BMode = "live",
+): Promise<PostOrderResult> {
   let res: Response;
   try {
-    res = await authedFetch("/consumer-orders", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
+    res = await authedFetch(
+      "/consumer-orders",
+      { method: "POST", body: JSON.stringify(payload) },
+      mode,
+    );
   } catch (e: any) {
     return { ok: false, status: 0, permanent: false, error: e?.message ?? "network error" };
   }
