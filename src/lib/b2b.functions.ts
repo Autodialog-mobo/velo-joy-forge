@@ -102,11 +102,16 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
     const ids = orders.map((o: any) => o.id);
     const linesByOrder = new Map<string, any[]>();
     const shippedAt = new Map<string, string>();
-    if (ids.length) {
+    const chunk = <T,>(arr: T[], size: number) => {
+      const out: T[][] = [];
+      for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+      return out;
+    };
+    for (const part of chunk(ids, 200)) {
       const { data: lines } = await admin
         .from("order_lines")
         .select("order_id, bundle_key, quantity, unit_price_cents")
-        .in("order_id", ids);
+        .in("order_id", part);
       for (const l of lines ?? []) {
         const arr = linesByOrder.get(l.order_id) ?? [];
         arr.push(l);
@@ -115,7 +120,7 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
       const { data: events } = await admin
         .from("order_events")
         .select("order_id, event_type, created_at")
-        .in("order_id", ids)
+        .in("order_id", part)
         .eq("event_type", "shipped")
         .order("created_at", { ascending: true });
       for (const e of events ?? []) {
@@ -123,8 +128,14 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
       }
     }
 
-    const payloads = (orders ?? []).map((o: any) =>
+    // Legacy = imported orders without any order lines; webshop = the rest.
+    const selected = legacyMode
+      ? orders.filter((o: any) => !(linesByOrder.get(o.id)?.length))
+      : orders.filter((o: any) => (linesByOrder.get(o.id)?.length ?? 0) > 0);
+
+    const payloads = selected.map((o: any) =>
       buildConsumerOrderPayload(o, linesByOrder.get(o.id) ?? [], {
+        legacy: legacyMode,
         fulfilment:
           o.status === "shipped"
             ? {
@@ -139,7 +150,7 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
     await writeAudit(context as any, {
       action: "order.b2b_backfill_export",
       target_type: "order",
-      metadata: { count: payloads.length, environment: env, limit },
+      metadata: { count: payloads.length, environment: env, limit, mode: data?.mode ?? "webshop" },
     });
 
     return { payloads, count: payloads.length };
