@@ -943,14 +943,16 @@ function AdminPage() {
     }
   };
 
-  const downloadBackfill = async (limit?: number) => {
+  const downloadBackfill = async (limit?: number, mode?: "webshop" | "legacy") => {
     setB2bBusy(true);
     try {
-      const res: any = await doExportBackfill({ data: { limit: limit ?? 5000, environment } });
+      const res: any = await doExportBackfill({
+        data: { limit: limit ?? (mode === "legacy" ? 10000 : 5000), environment, mode },
+      });
       const json = JSON.stringify(res.payloads, null, 2);
       downloadBlob(
         new Blob([json], { type: "application/json" }),
-        `velopass-backfill-${res.count}-${Date.now()}.json`,
+        `velopass-${mode === "legacy" ? "legacy" : "backfill"}-${res.count}-${Date.now()}.json`,
       );
       toast.success(`${res.count} ${res.count === 1 ? "bestelling" : "bestellingen"} geëxporteerd`);
     } catch (e: any) {
