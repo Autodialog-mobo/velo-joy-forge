@@ -74,6 +74,24 @@ export type Database = {
         }
         Relationships: []
       }
+      b2b_sync_config: {
+        Row: {
+          created_at: string
+          id: boolean
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          id?: boolean
+          token?: string
+        }
+        Update: {
+          created_at?: string
+          id?: boolean
+          token?: string
+        }
+        Relationships: []
+      }
       email_send_log: {
         Row: {
           created_at: string

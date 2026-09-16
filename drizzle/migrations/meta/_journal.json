@@ -8,6 +8,13 @@
       "when": 1789482991938,
       "tag": "0000_add_b2b_push_columns",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789573230327,
+      "tag": "0001_b2b_sync_cron",
+      "breakpoints": true
     }
   ]
 }
