@@ -10,7 +10,6 @@ const BUNDLE_MAP: Record<string, BundleSpec> = {
 };
 
 const LANGS = ["nl", "fr", "de", "en", "es"] as const;
-const COUNTRIES = ["BE", "NL", "FR", "DE", "LU"] as const;
 
 function euros(cents: number | null | undefined): number {
   return Math.round(Number(cents ?? 0)) / 100;
