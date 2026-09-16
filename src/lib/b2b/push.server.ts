@@ -24,7 +24,7 @@ export async function pushOrderToB2B(
   orderId: string,
   opts: { force?: boolean; ignoreEnvironment?: boolean } = {},
 ): Promise<PushOutcome> {
-  if (!b2bCredentials()) return { ok: false, skipped: "no_credentials" };
+  // mode is decided below, after we know the order's environment
 
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const admin = supabaseAdmin as any;
