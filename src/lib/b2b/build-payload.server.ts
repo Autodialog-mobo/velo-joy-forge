@@ -10,7 +10,6 @@ const BUNDLE_MAP: Record<string, BundleSpec> = {
 };
 
 const LANGS = ["nl", "fr", "de", "en", "es"] as const;
-const COUNTRIES = ["BE", "NL", "FR", "DE", "LU"] as const;
 
 function euros(cents: number | null | undefined): number {
   return Math.round(Number(cents ?? 0)) / 100;
@@ -26,14 +25,19 @@ export type LineRow = Record<string, any>;
 export function buildConsumerOrderPayload(
   order: OrderRow,
   lines: LineRow[],
-  opts: { catalogVersion?: string | null; fulfilment?: { status: "paid" | "shipped"; shipped_at?: string } } = {},
+  opts: {
+    catalogVersion?: string | null;
+    fulfilment?: { status: "paid" | "shipped"; shipped_at?: string };
+    /** Pre-existing imported order: no email, no order lines, no inferred sticker count. */
+    legacy?: boolean;
+  } = {},
 ): Record<string, any> {
   const lang = LANGS.includes(String(order.lang ?? "").toLowerCase() as any)
     ? (String(order.lang).toLowerCase() as (typeof LANGS)[number])
     : "nl";
 
-  const rawCountry = String(order.shipping_country ?? "").toUpperCase().trim();
-  const country = (COUNTRIES as readonly string[]).includes(rawCountry) ? rawCountry : "BE";
+  // Send the real country as stored (ISO-2, uppercase). Never rewrite it to BE.
+  const country = String(order.shipping_country ?? "").toUpperCase().trim();
 
   const items = lines
     .map((l) => {
@@ -61,12 +65,15 @@ export function buildConsumerOrderPayload(
     external_order_id: externalOrderId(String(order.id)),
     channel: "website",
     created_at: new Date(order.created_at ?? Date.now()).toISOString(),
-    locale: `${lang}-${country}`,
+    locale: `${lang}-${country || "BE"}`,
     currency: "EUR",
     customer: {
       // Full name as one field — never split.
       name: String(order.shipping_name ?? "").trim() || String(order.payment_consumer_name ?? "").trim(),
-      email: order.customer_email,
+      // Legacy imported orders have no email at all: omit the field instead of sending "".
+      ...(String(order.customer_email ?? "").trim()
+        ? { email: String(order.customer_email).trim() }
+        : {}),
       language: lang,
     },
     shipping_address: {
@@ -74,7 +81,7 @@ export function buildConsumerOrderPayload(
       ...(order.shipping_line2 ? { line2: String(order.shipping_line2).trim() } : {}),
       postal_code: String(order.shipping_postal_code ?? "").trim(),
       city: String(order.shipping_city ?? "").trim(),
-      country,
+      ...(country ? { country } : {}),
     },
     items,
     shipping_cost: euros(order.amount_shipping),
@@ -95,6 +102,11 @@ export function buildConsumerOrderPayload(
 
   if (opts.catalogVersion) payload.catalog_version = opts.catalogVersion;
   if (opts.fulfilment) payload.fulfilment = opts.fulfilment;
+  if (opts.legacy) {
+    payload.legacy = true;
+    payload.product_name = order.product_name ?? "Velopass Frame-ID";
+    payload.metadata = { ...payload.metadata, source: "legacy_import" };
+  }
 
   return payload;
 }

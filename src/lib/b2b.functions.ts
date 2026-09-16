@@ -61,37 +61,57 @@ export const getB2BCatalog = createServerFn({ method: "POST" })
 export const exportB2BBackfill = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator(
-    (d: { limit?: number; environment?: "live" | "sandbox"; onlyNotPushed?: boolean } = {}) => d ?? {},
+    (
+      d: {
+        limit?: number;
+        environment?: "live" | "sandbox";
+        onlyNotPushed?: boolean;
+        /** "legacy" = only pre-existing imported orders (no order_lines, no email). */
+        mode?: "webshop" | "legacy";
+      } = {},
+    ) => d ?? {},
   )
   .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const admin = supabaseAdmin as any;
     const { buildConsumerOrderPayload } = await import("./b2b/build-payload.server");
 
-    const limit = Math.min(Math.max(data?.limit ?? 1000, 1), 5000);
+    const legacyMode = data?.mode === "legacy";
+    const limit = Math.min(Math.max(data?.limit ?? 1000, 1), legacyMode ? 10000 : 5000);
     const env = data?.environment ?? "live";
 
-    let q = admin
-      .from("orders")
-      .select("*")
-      .eq("environment", env)
-      .in("status", ["paid", "printed", "shipped"])
-      .is("deleted_at", null)
-      .order("created_at", { ascending: true })
-      .limit(limit);
-    if (data?.onlyNotPushed) q = q.is("b2b_order_id", null);
+    const orders: any[] = [];
+    const pageSize = 1000;
+    for (let from = 0; from < limit; from += pageSize) {
+      let q = admin
+        .from("orders")
+        .select("*")
+        .eq("environment", env)
+        .in("status", ["paid", "printed", "shipped"])
+        .is("deleted_at", null)
+        .order("created_at", { ascending: true })
+        .range(from, Math.min(from + pageSize, limit) - 1);
+      if (data?.onlyNotPushed) q = q.is("b2b_order_id", null);
+      const { data: page, error } = await q;
+      if (error) throw new Error(error.message);
+      if (!page?.length) break;
+      orders.push(...page);
+      if (page.length < pageSize) break;
+    }
 
-    const { data: orders, error } = await q;
-    if (error) throw new Error(error.message);
-
-    const ids = (orders ?? []).map((o: any) => o.id);
+    const ids = orders.map((o: any) => o.id);
     const linesByOrder = new Map<string, any[]>();
     const shippedAt = new Map<string, string>();
-    if (ids.length) {
+    const chunk = <T,>(arr: T[], size: number) => {
+      const out: T[][] = [];
+      for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+      return out;
+    };
+    for (const part of chunk(ids, 200)) {
       const { data: lines } = await admin
         .from("order_lines")
         .select("order_id, bundle_key, quantity, unit_price_cents")
-        .in("order_id", ids);
+        .in("order_id", part);
       for (const l of lines ?? []) {
         const arr = linesByOrder.get(l.order_id) ?? [];
         arr.push(l);
@@ -100,7 +120,7 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
       const { data: events } = await admin
         .from("order_events")
         .select("order_id, event_type, created_at")
-        .in("order_id", ids)
+        .in("order_id", part)
         .eq("event_type", "shipped")
         .order("created_at", { ascending: true });
       for (const e of events ?? []) {
@@ -108,8 +128,14 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
       }
     }
 
-    const payloads = (orders ?? []).map((o: any) =>
+    // Legacy = imported orders without any order lines; webshop = the rest.
+    const selected = legacyMode
+      ? orders.filter((o: any) => !(linesByOrder.get(o.id)?.length))
+      : orders.filter((o: any) => (linesByOrder.get(o.id)?.length ?? 0) > 0);
+
+    const payloads = selected.map((o: any) =>
       buildConsumerOrderPayload(o, linesByOrder.get(o.id) ?? [], {
+        legacy: legacyMode,
         fulfilment:
           o.status === "shipped"
             ? {
@@ -124,7 +150,7 @@ export const exportB2BBackfill = createServerFn({ method: "POST" })
     await writeAudit(context as any, {
       action: "order.b2b_backfill_export",
       target_type: "order",
-      metadata: { count: payloads.length, environment: env, limit },
+      metadata: { count: payloads.length, environment: env, limit, mode: data?.mode ?? "webshop" },
     });
 
     return { payloads, count: payloads.length };
