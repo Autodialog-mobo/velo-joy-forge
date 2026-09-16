@@ -61,30 +61,45 @@ export const getB2BCatalog = createServerFn({ method: "POST" })
 export const exportB2BBackfill = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
   .inputValidator(
-    (d: { limit?: number; environment?: "live" | "sandbox"; onlyNotPushed?: boolean } = {}) => d ?? {},
+    (
+      d: {
+        limit?: number;
+        environment?: "live" | "sandbox";
+        onlyNotPushed?: boolean;
+        /** "legacy" = only pre-existing imported orders (no order_lines, no email). */
+        mode?: "webshop" | "legacy";
+      } = {},
+    ) => d ?? {},
   )
   .handler(async ({ data, context }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const admin = supabaseAdmin as any;
     const { buildConsumerOrderPayload } = await import("./b2b/build-payload.server");
 
-    const limit = Math.min(Math.max(data?.limit ?? 1000, 1), 5000);
+    const legacyMode = data?.mode === "legacy";
+    const limit = Math.min(Math.max(data?.limit ?? 1000, 1), legacyMode ? 10000 : 5000);
     const env = data?.environment ?? "live";
 
-    let q = admin
-      .from("orders")
-      .select("*")
-      .eq("environment", env)
-      .in("status", ["paid", "printed", "shipped"])
-      .is("deleted_at", null)
-      .order("created_at", { ascending: true })
-      .limit(limit);
-    if (data?.onlyNotPushed) q = q.is("b2b_order_id", null);
+    const orders: any[] = [];
+    const pageSize = 1000;
+    for (let from = 0; from < limit; from += pageSize) {
+      let q = admin
+        .from("orders")
+        .select("*")
+        .eq("environment", env)
+        .in("status", ["paid", "printed", "shipped"])
+        .is("deleted_at", null)
+        .order("created_at", { ascending: true })
+        .range(from, Math.min(from + pageSize, limit) - 1);
+      if (data?.onlyNotPushed) q = q.is("b2b_order_id", null);
+      const { data: page, error } = await q;
+      if (error) throw new Error(error.message);
+      if (!page?.length) break;
+      orders.push(...page);
+      if (page.length < pageSize) break;
+    }
 
-    const { data: orders, error } = await q;
-    if (error) throw new Error(error.message);
-
-    const ids = (orders ?? []).map((o: any) => o.id);
+    const ids = orders.map((o: any) => o.id);
     const linesByOrder = new Map<string, any[]>();
     const shippedAt = new Map<string, string>();
     if (ids.length) {
