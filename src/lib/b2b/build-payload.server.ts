@@ -102,6 +102,11 @@ export function buildConsumerOrderPayload(
 
   if (opts.catalogVersion) payload.catalog_version = opts.catalogVersion;
   if (opts.fulfilment) payload.fulfilment = opts.fulfilment;
+  if (opts.legacy) {
+    payload.legacy = true;
+    payload.product_name = order.product_name ?? "Velopass Frame-ID";
+    payload.metadata = { ...payload.metadata, source: "legacy_import" };
+  }
 
   return payload;
 }
