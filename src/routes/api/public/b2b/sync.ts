@@ -54,15 +54,21 @@ async function runSync(limit: number) {
 }
 
 async function handle({ request }: { request: Request }) {
-  const secret = process.env["B2B_SYNC_SECRET"];
-  if (!secret) return new Response("not configured", { status: 503 });
-
   const url = new URL(request.url);
   const provided =
-    request.headers.get("x-sync-secret") ??
-    (request.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "") ??
-    url.searchParams.get("secret");
-  if (provided !== secret) return new Response("unauthorized", { status: 401 });
+    request.headers.get("x-sync-secret") ||
+    (request.headers.get("authorization") ?? "").replace(/^Bearer\s+/i, "") ||
+    url.searchParams.get("secret") ||
+    "";
+
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data: cfg } = await (supabaseAdmin as any)
+    .from("b2b_sync_config")
+    .select("token")
+    .maybeSingle();
+  const expected = cfg?.token ?? process.env["B2B_SYNC_SECRET"];
+  if (!expected) return new Response("not configured", { status: 503 });
+  if (provided !== expected) return new Response("unauthorized", { status: 401 });
 
   const limit = Math.min(Math.max(Number(url.searchParams.get("limit") ?? 50), 1), 200);
 
