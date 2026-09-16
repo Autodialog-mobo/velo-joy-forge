@@ -26,22 +26,34 @@ export type Catalog = {
   bundles: CatalogBundle[];
 };
 
-let tokenCache: { token: string; expiresAt: number } | null = null;
-let catalogCache: { catalog: Catalog; expiresAt: number } | null = null;
+export type B2BMode = "live" | "sandbox";
 
-export function b2bCredentials(): { clientId: string; clientSecret: string } | null {
-  const clientId = process.env["VELOPASS_B2B_CLIENT_ID"];
-  const clientSecret = process.env["VELOPASS_B2B_CLIENT_SECRET"];
+const tokenCache: Record<string, { token: string; expiresAt: number } | null> = {
+  live: null,
+  sandbox: null,
+};
+const catalogCache: Record<string, { catalog: Catalog; expiresAt: number } | null> = {
+  live: null,
+  sandbox: null,
+};
+
+export function b2bCredentials(
+  mode: B2BMode = "live",
+): { clientId: string; clientSecret: string } | null {
+  const prefix = mode === "sandbox" ? "VELOPASS_B2B_SANDBOX_" : "VELOPASS_B2B_";
+  const clientId = process.env[`${prefix}CLIENT_ID`];
+  const clientSecret = process.env[`${prefix}CLIENT_SECRET`];
   if (!clientId || !clientSecret) return null;
   return { clientId, clientSecret };
 }
 
-export async function getB2BToken(force = false): Promise<string> {
+export async function getB2BToken(force = false, mode: B2BMode = "live"): Promise<string> {
   const now = Date.now();
-  if (!force && tokenCache && tokenCache.expiresAt > now) return tokenCache.token;
+  const cached = tokenCache[mode];
+  if (!force && cached && cached.expiresAt > now) return cached.token;
 
-  const creds = b2bCredentials();
-  if (!creds) throw new Error("B2B credentials ontbreken (VELOPASS_B2B_CLIENT_ID / _SECRET)");
+  const creds = b2bCredentials(mode);
+  if (!creds) throw new Error(`B2B credentials ontbreken voor ${mode}`);
 
   const res = await fetch(AUTH0_TOKEN_URL, {
     method: "POST",
@@ -56,16 +68,20 @@ export async function getB2BToken(force = false): Promise<string> {
   const text = await res.text();
   if (!res.ok) throw new Error(`Auth0 token failed (${res.status}): ${text.slice(0, 300)}`);
   const json = JSON.parse(text) as { access_token: string; expires_in: number };
-  tokenCache = {
+  tokenCache[mode] = {
     token: json.access_token,
     // refresh 5 minutes before expiry
     expiresAt: now + Math.max((json.expires_in ?? 3600) - 300, 60) * 1000,
   };
-  return tokenCache.token;
+  return json.access_token;
 }
 
-async function authedFetch(path: string, init: RequestInit = {}): Promise<Response> {
-  let token = await getB2BToken();
+async function authedFetch(
+  path: string,
+  init: RequestInit = {},
+  mode: B2BMode = "live",
+): Promise<Response> {
+  let token = await getB2BToken(false, mode);
   const doCall = (t: string) =>
     fetch(`${baseUrl()}${path}`, {
       ...init,
@@ -77,20 +93,21 @@ async function authedFetch(path: string, init: RequestInit = {}): Promise<Respon
     });
   let res = await doCall(token);
   if (res.status === 401) {
-    token = await getB2BToken(true);
+    token = await getB2BToken(true, mode);
     res = await doCall(token);
   }
   return res;
 }
 
-export async function fetchCatalog(force = false): Promise<Catalog> {
+export async function fetchCatalog(force = false, mode: B2BMode = "live"): Promise<Catalog> {
   const now = Date.now();
-  if (!force && catalogCache && catalogCache.expiresAt > now) return catalogCache.catalog;
-  const res = await authedFetch("/consumer-orders/catalog", { method: "GET" });
+  const cached = catalogCache[mode];
+  if (!force && cached && cached.expiresAt > now) return cached.catalog;
+  const res = await authedFetch("/consumer-orders/catalog", { method: "GET" }, mode);
   const text = await res.text();
   if (!res.ok) throw new Error(`Catalog fetch failed (${res.status}): ${text.slice(0, 300)}`);
   const catalog = JSON.parse(text) as Catalog;
-  catalogCache = { catalog, expiresAt: now + 5 * 60 * 1000 };
+  catalogCache[mode] = { catalog, expiresAt: now + 5 * 60 * 1000 };
   return catalog;
 }
 
