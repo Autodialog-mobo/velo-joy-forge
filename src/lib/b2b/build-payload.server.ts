@@ -25,7 +25,12 @@ export type LineRow = Record<string, any>;
 export function buildConsumerOrderPayload(
   order: OrderRow,
   lines: LineRow[],
-  opts: { catalogVersion?: string | null; fulfilment?: { status: "paid" | "shipped"; shipped_at?: string } } = {},
+  opts: {
+    catalogVersion?: string | null;
+    fulfilment?: { status: "paid" | "shipped"; shipped_at?: string };
+    /** Pre-existing imported order: no email, no order lines, no inferred sticker count. */
+    legacy?: boolean;
+  } = {},
 ): Record<string, any> {
   const lang = LANGS.includes(String(order.lang ?? "").toLowerCase() as any)
     ? (String(order.lang).toLowerCase() as (typeof LANGS)[number])
