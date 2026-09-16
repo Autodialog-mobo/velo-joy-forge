@@ -64,6 +64,7 @@ import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.
 import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thanks'
 import { Route as LangGuidesBuyingSecondHandRouteImport } from './routes/$lang/guides.buying-second-hand'
 import { Route as ApiPublicPaymentsMollieWebhookRouteImport } from './routes/api/public/payments/mollie-webhook'
+import { Route as ApiPublicB2bSyncRouteImport } from './routes/api/public/b2b/sync'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -344,6 +345,11 @@ const ApiPublicPaymentsMollieWebhookRoute =
     path: '/api/public/payments/mollie-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicB2bSyncRoute = ApiPublicB2bSyncRouteImport.update({
+  id: '/api/public/b2b/sync',
+  path: '/api/public/b2b/sync',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -399,6 +405,7 @@ export interface FileRoutesByFullPath {
   '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
+  '/api/public/b2b/sync': typeof ApiPublicB2bSyncRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -454,6 +461,7 @@ export interface FileRoutesByTo {
   '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
+  '/api/public/b2b/sync': typeof ApiPublicB2bSyncRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRoutesById {
@@ -512,6 +520,7 @@ export interface FileRoutesById {
   '/api/public/brands': typeof ApiPublicBrandsRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
+  '/api/public/b2b/sync': typeof ApiPublicB2bSyncRoute
   '/api/public/payments/mollie-webhook': typeof ApiPublicPaymentsMollieWebhookRoute
 }
 export interface FileRouteTypes {
@@ -570,6 +579,7 @@ export interface FileRouteTypes {
     | '/api/public/brands'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
+    | '/api/public/b2b/sync'
     | '/api/public/payments/mollie-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -625,6 +635,7 @@ export interface FileRouteTypes {
     | '/api/public/brands'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
+    | '/api/public/b2b/sync'
     | '/api/public/payments/mollie-webhook'
   id:
     | '__root__'
@@ -682,6 +693,7 @@ export interface FileRouteTypes {
     | '/api/public/brands'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
+    | '/api/public/b2b/sync'
     | '/api/public/payments/mollie-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -710,6 +722,7 @@ export interface RootRouteChildren {
   ApiPublicBrandsRoute: typeof ApiPublicBrandsRoute
   ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
+  ApiPublicB2bSyncRoute: typeof ApiPublicB2bSyncRoute
   ApiPublicPaymentsMollieWebhookRoute: typeof ApiPublicPaymentsMollieWebhookRoute
 }
 
@@ -1100,6 +1113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsMollieWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/b2b/sync': {
+      id: '/api/public/b2b/sync'
+      path: '/api/public/b2b/sync'
+      fullPath: '/api/public/b2b/sync'
+      preLoaderRoute: typeof ApiPublicB2bSyncRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -1219,6 +1239,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicBrandsRoute: ApiPublicBrandsRoute,
   ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
+  ApiPublicB2bSyncRoute: ApiPublicB2bSyncRoute,
   ApiPublicPaymentsMollieWebhookRoute: ApiPublicPaymentsMollieWebhookRoute,
 }
 export const routeTree = rootRouteImport
