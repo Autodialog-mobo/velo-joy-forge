@@ -24,7 +24,7 @@ export async function pushOrderToB2B(
   orderId: string,
   opts: { force?: boolean; ignoreEnvironment?: boolean } = {},
 ): Promise<PushOutcome> {
-  if (!b2bCredentials()) return { ok: false, skipped: "no_credentials" };
+  // mode is decided below, after we know the order's environment
 
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const admin = supabaseAdmin as any;
@@ -39,9 +39,10 @@ export async function pushOrderToB2B(
   if (order.status !== "paid" && order.status !== "printed" && order.status !== "shipped") {
     return { ok: false, skipped: "not_paid" };
   }
-  if (!opts.ignoreEnvironment && String(order.environment) !== configuredB2BEnvironment()) {
-    return { ok: false, skipped: "environment_mismatch" };
-  }
+  // Sandbox orders go to the sandbox client, live orders to the live client.
+  const mode: "live" | "sandbox" =
+    String(order.environment) === "sandbox" ? "sandbox" : "live";
+  if (!b2bCredentials(mode)) return { ok: false, skipped: "no_credentials" };
   if (order.b2b_order_id && !opts.force) {
     return { ok: true, velopassOrderId: order.b2b_order_id, skipped: "already_pushed" };
   }
@@ -53,13 +54,13 @@ export async function pushOrderToB2B(
 
   let catalogVersion: string | null = null;
   try {
-    catalogVersion = (await fetchCatalog()).catalog_version;
+    catalogVersion = (await fetchCatalog(false, mode)).catalog_version;
   } catch (e: any) {
     console.error("B2B catalog fetch failed:", e?.message);
   }
 
   const payload = buildConsumerOrderPayload(order, lines ?? [], { catalogVersion });
-  const result = await postConsumerOrder(payload);
+  const result = await postConsumerOrder(payload, mode);
 
   if (result.ok) {
     await admin
@@ -69,7 +70,7 @@ export async function pushOrderToB2B(
         b2b_pushed_at: new Date().toISOString(),
         b2b_price_flag: result.priceFlag,
         b2b_push_error: null,
-        b2b_environment: configuredB2BEnvironment(),
+        b2b_environment: mode,
       })
       .eq("id", orderId);
     try {
@@ -89,7 +90,7 @@ export async function pushOrderToB2B(
     .update({
       b2b_pushed_at: null,
       b2b_push_error: result.error.slice(0, 1000),
-      b2b_environment: configuredB2BEnvironment(),
+      b2b_environment: mode,
     })
     .eq("id", orderId);
   return { ok: false, error: result.error, permanent: result.permanent };

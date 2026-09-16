@@ -41,12 +41,13 @@ export const pushB2BBatch = createServerFn({ method: "POST" })
 
 export const getB2BCatalog = createServerFn({ method: "POST" })
   .middleware([requireAuth0Admin])
-  .inputValidator((d: { force?: boolean } = {}) => d ?? {})
+  .inputValidator((d: { force?: boolean; mode?: "live" | "sandbox" } = {}) => d ?? {})
   .handler(async ({ data }) => {
     const { fetchCatalog, b2bCredentials } = await import("./b2b/consumer-orders.server");
-    if (!b2bCredentials()) return { ok: false as const, error: "credentials_missing" };
+    const mode = data?.mode ?? "live";
+    if (!b2bCredentials(mode)) return { ok: false as const, error: "credentials_missing" };
     try {
-      const catalog = await fetchCatalog(data?.force ?? false);
+      const catalog = await fetchCatalog(data?.force ?? false, mode);
       return { ok: true as const, catalog };
     } catch (e: any) {
       return { ok: false as const, error: e?.message ?? "unknown error" };
