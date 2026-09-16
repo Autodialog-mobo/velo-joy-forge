@@ -6,7 +6,10 @@ const AUDIENCE = "https://api.b2b-orders";
 
 /** Base URL of the Velopass B2B orders API; override with a secret if needed. */
 function baseUrl(): string {
-  return (process.env["VELOPASS_B2B_BASE_URL"] || "https://api.velopass.pro/v1").replace(/\/$/, "");
+  return (
+    process.env["VELOPASS_B2B_BASE_URL"] ||
+    "https://qdiqklhdmcxnkmglfbrp.supabase.co/functions/v1"
+  ).replace(/\/$/, "");
 }
 
 export type CatalogBundle = {
