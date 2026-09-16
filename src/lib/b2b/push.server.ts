@@ -70,7 +70,7 @@ export async function pushOrderToB2B(
         b2b_pushed_at: new Date().toISOString(),
         b2b_price_flag: result.priceFlag,
         b2b_push_error: null,
-        b2b_environment: configuredB2BEnvironment(),
+        b2b_environment: mode,
       })
       .eq("id", orderId);
     try {
@@ -90,7 +90,7 @@ export async function pushOrderToB2B(
     .update({
       b2b_pushed_at: null,
       b2b_push_error: result.error.slice(0, 1000),
-      b2b_environment: configuredB2BEnvironment(),
+      b2b_environment: mode,
     })
     .eq("id", orderId);
   return { ok: false, error: result.error, permanent: result.permanent };
