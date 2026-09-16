@@ -31,8 +31,8 @@ export function buildConsumerOrderPayload(
     ? (String(order.lang).toLowerCase() as (typeof LANGS)[number])
     : "nl";
 
-  const rawCountry = String(order.shipping_country ?? "").toUpperCase().trim();
-  const country = (COUNTRIES as readonly string[]).includes(rawCountry) ? rawCountry : "BE";
+  // Send the real country as stored (ISO-2, uppercase). Never rewrite it to BE.
+  const country = String(order.shipping_country ?? "").toUpperCase().trim();
 
   const items = lines
     .map((l) => {
