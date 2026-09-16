@@ -60,12 +60,15 @@ export function buildConsumerOrderPayload(
     external_order_id: externalOrderId(String(order.id)),
     channel: "website",
     created_at: new Date(order.created_at ?? Date.now()).toISOString(),
-    locale: `${lang}-${country}`,
+    locale: `${lang}-${country || "BE"}`,
     currency: "EUR",
     customer: {
       // Full name as one field — never split.
       name: String(order.shipping_name ?? "").trim() || String(order.payment_consumer_name ?? "").trim(),
-      email: order.customer_email,
+      // Legacy imported orders have no email at all: omit the field instead of sending "".
+      ...(String(order.customer_email ?? "").trim()
+        ? { email: String(order.customer_email).trim() }
+        : {}),
       language: lang,
     },
     shipping_address: {
@@ -73,7 +76,7 @@ export function buildConsumerOrderPayload(
       ...(order.shipping_line2 ? { line2: String(order.shipping_line2).trim() } : {}),
       postal_code: String(order.shipping_postal_code ?? "").trim(),
       city: String(order.shipping_city ?? "").trim(),
-      country,
+      ...(country ? { country } : {}),
     },
     items,
     shipping_cost: euros(order.amount_shipping),
