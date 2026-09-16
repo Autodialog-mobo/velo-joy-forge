@@ -1651,6 +1651,14 @@ function AdminPage() {
                 >
                   Backfill JSON (alles)
                 </button>
+                <button
+                  onClick={() => downloadBackfill(undefined, "legacy")}
+                  disabled={b2bBusy}
+                  title="Bestand met alle eerder geïmporteerde bestellingen (zonder e-mail en zonder productregels)"
+                  className="btn-ghost h-8 px-3 rounded-[10px] text-[12px] font-medium disabled:opacity-40"
+                >
+                  Oude bestellingen (JSON)
+                </button>
               </div>
 
 
