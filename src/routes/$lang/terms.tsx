@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { Footer } from "@/components/Footer";
@@ -10,6 +10,7 @@ type RichItem = { label: string; body: string };
 type Section = {
   title: string;
   body?: string;
+  paragraphs?: string[];
   intro?: string;
   list?: string[];
   list_rich?: RichItem[];
@@ -25,6 +26,8 @@ type Section = {
 };
 
 export const Route = createFileRoute("/$lang/terms")({
+  validateSearch: (search: Record<string, unknown>): { pays?: string } =>
+    typeof search.pays === "string" ? { pays: search.pays } : {},
   head: ({ params }) => {
     const t = i18n.getFixedT(typeof params.lang === "string" ? params.lang : "en", "terms");
     return buildLocalizedHead({
@@ -40,9 +43,12 @@ export const Route = createFileRoute("/$lang/terms")({
 function TermsPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation("terms");
-  const rawSections = t("sections", { returnObjects: true });
+  const { pays } = Route.useSearch();
+  const navigate = useNavigate({ from: "/$lang/terms" });
+  const isFr = lang === "fr";
+  const france = isFr && pays !== "autres";
+  const rawSections = t(france ? "_fr_country.sections" : "sections", { returnObjects: true });
   const sections: Section[] = Array.isArray(rawSections) ? (rawSections as Section[]) : [];
-
 
   return (
     <>
@@ -57,6 +63,40 @@ function TermsPage() {
           minHeight: "100vh",
         }}
       >
+        {isFr && (
+          <div
+            role="group"
+            aria-label={t("_fr_country.label")}
+            style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" }}
+          >
+            <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{t("_fr_country.label")} :</span>
+            {(["france", "autres"] as const).map((key) => {
+              const active = key === "france" ? france : !france;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() =>
+                    void navigate({ search: key === "france" ? {} : { pays: "autres" }, replace: true })
+                  }
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 999,
+                    border: "1px solid var(--navy)",
+                    background: active ? "var(--navy)" : "transparent",
+                    color: active ? "#fff" : "var(--navy)",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    cursor: "pointer",
+                  }}
+                >
+                  {t(key === "france" ? "_fr_country.france" : "_fr_country.other")}
+                </button>
+              );
+            })}
+          </div>
+        )}
         <p
           style={{
             fontSize: 11,
@@ -90,7 +130,7 @@ function TermsPage() {
             marginBottom: 48,
           }}
         >
-          {t("last_updated")}
+          {t(france ? "_fr_country.last_updated" : "last_updated")}
         </p>
 
         {sections.map((section, idx) => (
@@ -125,6 +165,9 @@ function SectionBlock({ section, lang }: { section: Section; lang: string }) {
         }}
       >
         {section.body && <p style={{ margin: 0 }}>{section.body}</p>}
+        {section.paragraphs?.map((p, i) => (
+          <p key={i} style={{ margin: "10px 0 0" }}>{p}</p>
+        ))}
         {section.intro && <p style={{ margin: 0 }}>{section.intro}</p>}
         {section.list && (
           <ul style={ulStyle}>
