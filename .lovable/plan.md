@@ -10,7 +10,7 @@
 ## Tekst
 - De bijlage wordt 1-op-1 letterlijk overgenomen, met dezelfde opbouw (titel, alinea's, lijsten, modelformulier).
 - De markeringen `[MOD]` in de bijlage zijn interne aanduidingen voor gewijzigde stukken en worden **niet** getoond.
-- Datum "Dernière mise à jour" blijft gelijk aan de huidige Franse pagina, tenzij de bijlage er zelf een vermeldt.
+- Datum op de Frankrijk-versie: "Dernière mise à jour : 12 octobre 2026".
 
 ## Technische details
 - Nieuwe sleutel `sections_fr_country` (plus eventueel `country_label`, `country_france`, `country_other`) in `src/i18n/locales/fr/terms.json`; bestaande `sections` blijft de "autres pays"-versie.
