@@ -130,12 +130,11 @@
             "text": "Données générées par l'utilisation"
           },
           {
-            "type": "p",
-            "text": "Historique des connexions, journal des actions sur votre compte (changements de statut, transferts, demandes)."
-          },
-          {
-            "type": "p",
-            "text": "Données techniques : adresse IP, type d'appareil et de navigateur, données de cookies (voir article 7)."
+            "type": "list",
+            "items": [
+              "Historique des connexions, journal des actions sur votre compte (changements de statut, transferts, demandes).",
+              "Données techniques : adresse IP, type d'appareil et de navigateur, données de cookies (voir article 7)."
+            ]
           },
           {
             "type": "p",

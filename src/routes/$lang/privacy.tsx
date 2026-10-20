@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { useCurrentLang } from "@/i18n/useCurrentLang";
 import { Footer } from "@/components/Footer";
@@ -7,8 +8,14 @@ import { buildLocalizedHead } from "@/i18n/seo";
 import i18n from "@/i18n/config";
 
 type RichItem = { label: string; body: string };
+type Block =
+  | { type: "p"; text: string; label?: string }
+  | { type: "h"; text: string }
+  | { type: "list"; items: string[] }
+  | { type: "table"; head: [string, string]; rows: [string, string][] };
 type Section = {
   title: string;
+  blocks?: Block[];
   body?: string;
   intro?: string;
   list?: string[];
@@ -25,6 +32,8 @@ type Section = {
 };
 
 export const Route = createFileRoute("/$lang/privacy")({
+  validateSearch: (search: Record<string, unknown>): { pays?: string } =>
+    typeof search.pays === "string" ? { pays: search.pays } : {},
   head: ({ params }) => {
     const t = i18n.getFixedT(typeof params.lang === "string" ? params.lang : "en", "privacy");
     return buildLocalizedHead({
@@ -37,12 +46,33 @@ export const Route = createFileRoute("/$lang/privacy")({
   component: PrivacyPage,
 });
 
+const EMAIL_RE = /([\w.+-]+@[\w-]+\.[\w.]+[a-z])/g;
+function Linkify({ text }: { text: string }) {
+  const parts = text.split(EMAIL_RE);
+  return (
+    <>
+      {parts.map((part, i) =>
+        i % 2 === 1 ? (
+          <a key={i} href={`mailto:${part}`} style={{ color: "var(--green)", textDecoration: "underline" }}>
+            {part}
+          </a>
+        ) : (
+          <Fragment key={i}>{part}</Fragment>
+        ),
+      )}
+    </>
+  );
+}
+
 function PrivacyPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation("privacy");
-  const rawSections = t("sections", { returnObjects: true });
+  const { pays } = Route.useSearch();
+  const navigate = useNavigate({ from: "/$lang/privacy" });
+  const isFr = lang === "fr";
+  const france = isFr && pays !== "autres";
+  const rawSections = t(france ? "_fr_country.sections" : "sections", { returnObjects: true });
   const sections: Section[] = Array.isArray(rawSections) ? (rawSections as Section[]) : [];
-
 
   return (
     <>
@@ -57,6 +87,40 @@ function PrivacyPage() {
           minHeight: "100vh",
         }}
       >
+        {isFr && (
+          <div
+            role="group"
+            aria-label={t("_fr_country.label")}
+            style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 28, flexWrap: "wrap" }}
+          >
+            <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{t("_fr_country.label")} :</span>
+            {(["france", "autres"] as const).map((key) => {
+              const active = key === "france" ? france : !france;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() =>
+                    void navigate({ search: key === "france" ? {} : { pays: "autres" }, replace: true })
+                  }
+                  style={{
+                    padding: "6px 14px",
+                    borderRadius: 999,
+                    border: "1px solid var(--navy)",
+                    background: active ? "var(--navy)" : "transparent",
+                    color: active ? "#fff" : "var(--navy)",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    cursor: "pointer",
+                  }}
+                >
+                  {t(key === "france" ? "_fr_country.france" : "_fr_country.other")}
+                </button>
+              );
+            })}
+          </div>
+        )}
         <p
           style={{
             fontSize: 11,
@@ -90,7 +154,7 @@ function PrivacyPage() {
             marginBottom: 48,
           }}
         >
-          {t("last_updated")}
+          {t(france ? "_fr_country.last_updated" : "last_updated")}
         </p>
 
         {sections.map((section, idx) => (
@@ -101,6 +165,53 @@ function PrivacyPage() {
     </>
   );
 }
+
+function BlockView({ block }: { block: Block }) {
+  if (block.type === "h")
+    return <h3 style={{ fontSize: 15, fontWeight: 700, color: "var(--navy)", margin: "16px 0 4px" }}>{block.text}</h3>;
+  if (block.type === "list")
+    return (
+      <ul style={ulStyle}>
+        {block.items.map((it, i) => (
+          <li key={i}><Linkify text={it} /></li>
+        ))}
+      </ul>
+    );
+  if (block.type === "table")
+    return (
+      <div style={{ overflowX: "auto", margin: "10px 0" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
+          <thead>
+            <tr>
+              {block.head.map((h, i) => (
+                <th key={i} style={{ ...cellStyle, textAlign: "left", color: "var(--navy)" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {block.rows.map((r, i) => (
+              <tr key={i}>
+                <td style={cellStyle}>{r[0]}</td>
+                <td style={cellStyle}>{r[1]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  return (
+    <p style={{ margin: "10px 0 0" }}>
+      {block.label && <strong>{block.label} </strong>}
+      <Linkify text={block.text} />
+    </p>
+  );
+}
+
+const cellStyle: React.CSSProperties = {
+  border: "1px solid rgba(0,0,0,0.12)",
+  padding: "8px 10px",
+  verticalAlign: "top",
+};
 
 function SectionBlock({ section, lang }: { section: Section; lang: string }) {
   return (
