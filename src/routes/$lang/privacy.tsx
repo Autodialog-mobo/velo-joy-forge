@@ -235,6 +235,7 @@ function SectionBlock({ section, lang }: { section: Section; lang: string }) {
           lineHeight: 1.7,
         }}
       >
+        {section.blocks?.map((b, i) => <BlockView key={i} block={b} />)}
         {section.body && <p style={{ margin: 0 }}>{section.body}</p>}
         {section.intro && <p style={{ margin: 0 }}>{section.intro}</p>}
         {section.list && (
