@@ -77,5 +77,231 @@
       "intro_link": "formulaire de contact",
       "intro_suffix": "."
     }
-  ]
+  ],
+  "_fr_country": {
+    "label": "Pays",
+    "france": "France",
+    "other": "Autres pays",
+    "last_updated": "Dernière mise à jour : 12 octobre 2026",
+    "sections": [
+      {
+        "title": "1. Qui sommes-nous",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Velopass BV, Stokerijstraat 29 bus a1, 2110 Wijnegem, Belgique, numéro d'entreprise BE 0777.359.681, est le responsable du traitement de vos données à caractère personnel collectées via ce site web, l'application Velopass et les services Frame-ID."
+          },
+          {
+            "type": "p",
+            "text": "Velopass BV est opérateur d'identification des cycles agréé par le ministère chargé des transports. À ce titre, nous transmettons les données d'identification des cycles et de leurs propriétaires au Fichier national unique des cycles identifiés (FNUCI), géré par l'Association pour la promotion de l'identification des cycles (APIC), conformément à la loi n° 2019-1428 du 24 décembre 2019 d'orientation des mobilités (article 53), au décret n° 2020-1439 du 23 novembre 2020, aux arrêtés du 28 et du 29 décembre 2020 pris pour son application, et à la délibération de la CNIL n° 2020-102. Pour les données enregistrées dans le FNUCI, l'APIC est responsable du traitement du fichier lui-même ; Velopass est responsable de la collecte et de la transmission."
+          },
+          {
+            "type": "p",
+            "text": "Pour toute question relative à vos données : support@velopass.com."
+          }
+        ]
+      },
+      {
+        "title": "2. Quelles données traitons-nous",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Nous ne traitons que les données nécessaires au fonctionnement du service."
+          },
+          {
+            "type": "h",
+            "text": "Données que vous nous fournissez"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Identité et coordonnées : nom, prénom, adresse postale, adresse e-mail, numéro de téléphone.",
+              "Données de compte : identifiants de connexion, préférences, langue.",
+              "Données du cycle : identifiant Frame-ID, marque, modèle, couleur, type, numéro de cadre, photos, documents (facture, certificat), statut du cycle (en service, en vente, volé ou perdu, hors d'usage, recyclage ou réemploi)."
+            ]
+          },
+          {
+            "type": "p",
+            "label": "Données transmises par un professionnel",
+            "text": "Lorsqu'un vendeur de cycles ou un opérateur partenaire appose le Frame-ID et enregistre votre cycle, il nous transmet vos nom, prénom, coordonnées et les données du cycle. Vous en êtes informé par e-mail et pouvez vérifier et corriger ces données lors de l'activation de votre espace Velopass."
+          },
+          {
+            "type": "h",
+            "text": "Données générées par l'utilisation"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Historique des connexions, journal des actions sur votre compte (changements de statut, transferts, demandes).",
+              "Données techniques : adresse IP, type d'appareil et de navigateur, données de cookies (voir article 7)."
+            ]
+          },
+          {
+            "type": "p",
+            "label": "Données reçues du FNUCI",
+            "text": "Dans le cadre de la portabilité et de la recherche de propriétaire, nous recevons du FNUCI l'identifiant du cycle, l'opérateur actuel, le statut du cycle et, le cas échéant, un code de transfert. Nous ne recevons pas les coordonnées du propriétaire précédent."
+          }
+        ]
+      },
+      {
+        "title": "3. Pourquoi et sur quelle base",
+        "blocks": [
+          {
+            "type": "table",
+            "head": [
+              "Finalité",
+              "Base légale"
+            ],
+            "rows": [
+              [
+                "Identifier votre cycle et enregistrer son identifiant, ses caractéristiques, son statut et vos coordonnées de propriétaire dans le FNUCI ; mettre à jour ces données ; traiter les transferts de propriété et les recherches de propriétaire",
+                "Obligation légale (articles L. 1271-2 et R. 1271-1 et suivants du Code des transports)"
+              ],
+              [
+                "Créer et gérer votre espace Velopass et votre passeport numérique",
+                "Exécution du contrat"
+              ],
+              [
+                "Traiter vos commandes, paiements et livraisons",
+                "Exécution du contrat ; obligation légale (comptabilité)"
+              ],
+              [
+                "Service client et communications liées au service (confirmation d'enregistrement, certificat, demandes de transfert, alertes)",
+                "Exécution du contrat"
+              ],
+              [
+                "Partager vos coordonnées avec le magasin ou le professionnel qui a apposé votre Frame-ID, pour le suivi commercial ou l'entretien",
+                "Consentement, donné séparément et révocable à tout moment"
+              ],
+              [
+                "Communications commerciales de Velopass (nouveautés, offres de partenaires)",
+                "Consentement, donné séparément et révocable à tout moment"
+              ],
+              [
+                "Mesure d'audience et amélioration du service",
+                "Consentement (cookies d'analyse) ; intérêt légitime pour les statistiques agrégées et anonymisées"
+              ],
+              [
+                "Sécurité, prévention de la fraude, défense de nos droits",
+                "Intérêt légitime"
+              ]
+            ]
+          },
+          {
+            "type": "p",
+            "text": "Les données transmises au FNUCI sont utilisées exclusivement pour les finalités prévues à l'article R. 1271-19 du Code des transports : identifier le cycle et son propriétaire, lutter contre le vol, le recel et la revente illicite, et permettre la restitution d'un cycle retrouvé. Velopass ne les utilise à aucune autre fin sans votre accord explicite."
+          }
+        ]
+      },
+      {
+        "title": "4. Qui reçoit vos données",
+        "blocks": [
+          {
+            "type": "p",
+            "label": "Le FNUCI",
+            "text": "Les données listées à l'article 2 sous « identité et coordonnées » et « données du cycle » sont transmises au FNUCI. Elles y sont accessibles aux seules personnes habilitées par le décret n° 2020-1439, dans les limites de leurs missions : forces de l'ordre, opérateurs d'identification agréés, gestionnaires de fourrière, structures de réemploi, et toute personne consultant le statut d'un cycle à partir de son identifiant (sans accès aux coordonnées du propriétaire)."
+          },
+          {
+            "type": "p",
+            "label": "Les professionnels partenaires",
+            "text": "Le magasin ou le professionnel qui a apposé votre Frame-ID voit les données du cycle et le fait que celui-ci est enregistré. Il n'a accès à vos coordonnées que si vous y avez consenti séparément (voir article 3). Lors d'un transfert de propriété ou d'une recherche de propriétaire, le professionnel ou la structure de réemploi qui en fait la demande ne reçoit que l'identifiant, l'opérateur, le statut du cycle et le résultat de votre réponse."
+          },
+          {
+            "type": "p",
+            "label": "Nos sous-traitants",
+            "text": "Hébergement, envoi d'e-mails, paiement (Mollie), support client et outils d'analyse. Ils traitent vos données uniquement sur nos instructions et dans le cadre d'un contrat de sous-traitance conforme à l'article 28 du RGPD. La liste à jour est disponible sur demande."
+          },
+          {
+            "type": "p",
+            "label": "Autorités",
+            "text": "Lorsque la loi nous y oblige, notamment les forces de l'ordre dans le cadre d'une enquête."
+          },
+          {
+            "type": "p",
+            "label": "Transferts hors de l'Union européenne",
+            "text": "Vos données sont hébergées dans l'Union européenne. Si un sous-traitant traite des données hors de l'Union, nous nous assurons de garanties appropriées (décision d'adéquation ou clauses contractuelles types de la Commission européenne)."
+          }
+        ]
+      },
+      {
+        "title": "5. Combien de temps conservons-nous vos données",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              "Données d'identification du cycle et coordonnées du propriétaire transmises au FNUCI : tant que vous êtes propriétaire du cycle. Lorsque vous passez le cycle au statut « hors d'usage, recyclage ou réemploi » ou que vous transférez la propriété, nous demandons la suppression de vos données de propriétaire dans le FNUCI. Les durées de conservation propres au FNUCI sont fixées par l'APIC conformément au décret n° 2020-1439.",
+              "Espace Velopass et passeport numérique : tant que votre compte est actif, puis 12 mois après la dernière connexion, sauf si un cycle enregistré au FNUCI y est encore rattaché.",
+              "Commandes et factures : 10 ans (obligation comptable).",
+              "Journaux de connexion et de sécurité : 12 mois.",
+              "Données de prospection : 3 ans après le dernier contact, ou jusqu'au retrait de votre consentement."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "6. Vos droits",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Vous disposez des droits d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité, ainsi que du droit de retirer votre consentement à tout moment pour les traitements fondés sur celui-ci. Vous pouvez les exercer à support@velopass.com ou directement dans votre espace Velopass pour la plupart des données."
+          },
+          {
+            "type": "p",
+            "text": "Pour les données enregistrées dans le FNUCI, certains droits s'exercent dans les conditions prévues par le décret n° 2020-1439 : l'identifiant du cycle est définitif et ne peut pas être effacé ; vos données de propriétaire sont supprimées du FNUCI lorsque vous cessez d'être propriétaire (transfert, ou statut « hors d'usage, recyclage ou réemploi »). Vous pouvez aussi vous adresser directement à l'APIC."
+          },
+          {
+            "type": "p",
+            "text": "Vous pouvez introduire une réclamation auprès de la Commission nationale de l'informatique et des libertés (CNIL, cnil.fr). Pour les personnes résidant en Belgique, l'autorité compétente est l'Autorité de protection des données (autoriteprotectiondonnees.be)."
+          }
+        ]
+      },
+      {
+        "title": "7. Cookies",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Notre site web utilise des cookies :"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Cookies fonctionnels, indispensables au fonctionnement du site (par exemple la gestion des sessions). Ils ne requièrent pas votre consentement.",
+              "Cookies d'analyse, qui nous aident à comprendre comment les visiteurs utilisent le site. Ils ne sont déposés qu'après votre consentement."
+            ]
+          },
+          {
+            "type": "p",
+            "text": "Vous pouvez modifier vos préférences à tout moment via la bannière en bas de page."
+          }
+        ]
+      },
+      {
+        "title": "8. Sécurité",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Nous prenons les mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou vol, notamment par le chiffrement, le contrôle des accès et des audits de sécurité réguliers. Les échanges avec le FNUCI sont chiffrés et authentifiés."
+          }
+        ]
+      },
+      {
+        "title": "9. Modifications",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Nous pouvons adapter cette politique. La version en vigueur est toujours disponible sur velopass.com/fr/privacy. En cas de modification substantielle, nous vous en informons par e-mail ou dans votre espace Velopass."
+          }
+        ]
+      },
+      {
+        "title": "10. Contact",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Des questions sur cette politique ? Écrivez-nous à support@velopass.com ou utilisez notre formulaire de contact."
+          }
+        ]
+      }
+    ]
+  }
 }
