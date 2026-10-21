@@ -150,6 +150,7 @@
     "headline": "Jouw fiets is nooit alleen.",
     "subhead": "<0>{{count}}+ {{unit}}</0>, fietsers en politie maken deel uit van de Velopass Community. Scant iemand jouw Frame-ID? Dan krijg jij meteen een seintje.",
     "unit": "winkels",
+    "cluster_more": "+{count} meer",
     "stolen_link": "Fiets gestolen of vermist? Volg ons stappenplan →",
     "check_lead": "Wil je weten of een fiets geregistreerd is? Controleer elke fiets in het Velopass-register.",
     "check_cta": "Controleer een fiets →",

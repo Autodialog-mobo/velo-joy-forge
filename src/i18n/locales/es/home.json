@@ -150,6 +150,7 @@
     "headline": "Tu bici nunca está sola.",
     "subhead": "<0>{{count}}+ {{unit}}</0>, ciclistas y policía forman parte de la comunidad Velopass. ¿Alguien escanea tu Frame-ID? Te avisamos al instante.",
     "unit": "tiendas",
+    "cluster_more": "+{count} más",
     "stolen_link": "¿Bici robada o desaparecida? Sigue nuestros pasos →",
     "check_lead": "¿Quieres saber si una bici está registrada? Comprueba cualquier bici en el registro Velopass.",
     "check_cta": "Comprobar una bici →",
