@@ -15,7 +15,7 @@ import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
 import ogShareImage from "../assets/og-share.jpg?url";
 
-const SITE_URL = "https://velopass.com";
+const SITE_URL = "https://www.velopass.com";
 const OG_IMAGE_URL = `${SITE_URL}${ogShareImage}`;
 import { initAnalytics } from "../lib/analytics";
 
@@ -99,9 +99,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:title", content: "Velopass — Altijd op de fiets. Alles geregeld." },
       { name: "twitter:title", content: "Velopass — Altijd op de fiets. Alles geregeld." },
-      { name: "description", content: "VeloPass NextGen is a web application for ordering Frame-IDs with a shopping cart and integrated payment." },
-      { property: "og:description", content: "VeloPass NextGen is a web application for ordering Frame-IDs with a shopping cart and integrated payment." },
-      { name: "twitter:description", content: "VeloPass NextGen is a web application for ordering Frame-IDs with a shopping cart and integrated payment." },
+      { name: "description", content: "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort." },
+      { property: "og:description", content: "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort." },
+      { name: "twitter:description", content: "Eén Frame-ID op je fiets en je hebt altijd toegang tot diefstalprotectie, pechhulp, verzekering en je fietswinkel. Het digitale fietspaspoort." },
       { property: "og:image", content: OG_IMAGE_URL },
       { name: "twitter:image", content: OG_IMAGE_URL },
       { property: "og:type", content: "website" },

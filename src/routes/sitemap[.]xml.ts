@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { SUPPORTED_LANGS } from "@/i18n/config";
 
-const BASE_URL = "https://velo-joy-forge.lovable.app";
+const BASE_URL = "https://www.velopass.com";
 
 interface SitemapEntry {
   /** Path WITHOUT a language prefix (e.g. "/order", "/" for home). */
@@ -29,14 +29,9 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/terms", changefreq: "yearly", priority: "0.3" },
 ];
 
-/** Standalone (non-language-prefixed) routes to include in the sitemap. */
-const STANDALONE_PATHS: { path: string; changefreq?: SitemapEntry["changefreq"]; priority?: string }[] = [
-  { path: "/al-een-sticker", changefreq: "monthly", priority: "0.6" },
-  { path: "/bestellen", changefreq: "weekly", priority: "0.8" },
-  { path: "/bikesearch", changefreq: "weekly", priority: "0.7" },
-  { path: "/fiets-controleren", changefreq: "weekly", priority: "0.7" },
-  { path: "/gestolen", changefreq: "monthly", priority: "0.6" },
-  { path: "/professionals", changefreq: "monthly", priority: "0.6" },
+/** Language-specific pages that exist in one language only (no hreflang alternates). */
+const SINGLE_LANG_PATHS: { path: string; changefreq?: SitemapEntry["changefreq"]; priority?: string }[] = [
+  { path: "/fr/marquage-velo", changefreq: "monthly", priority: "0.9" },
 ];
 
 function entryUrl(lang: string, path: string): string {
@@ -66,7 +61,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             );
           }
         }
-        for (const s of STANDALONE_PATHS) {
+        for (const s of SINGLE_LANG_PATHS) {
           urls.push(
             `  <url>\n    <loc>${BASE_URL}${s.path}</loc>${
               s.changefreq ? `\n    <changefreq>${s.changefreq}</changefreq>` : ""

@@ -7,7 +7,7 @@ export const Route = createFileRoute("/fiets-controleren")({
       to: "/$lang/bike-check",
       params: { lang: "nl" },
       search: search as Record<string, unknown>,
-      replace: true,
+      replace: true, statusCode: 301,
     });
   },
   component: () => null,

@@ -6,7 +6,7 @@ export const Route = createFileRoute("/al-een-sticker")({
     throw redirect({
       to: "/$lang/already-have-one",
       params: { lang: "nl" },
-      replace: true,
+      replace: true, statusCode: 301,
     });
   },
   component: () => null,

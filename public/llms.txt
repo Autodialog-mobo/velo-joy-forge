@@ -1,29 +1,21 @@
 # Velopass
 
-> Velopass is a bike registration and anti-theft service that helps cyclists protect their bikes, verify second-hand purchases, and recover stolen bicycles.
+> Velopass is a bike registration and anti-theft service: one Frame-ID sticker on your bike gives access to theft protection, roadside assistance, insurance and your bike shop.
 
-Velopass provides Frame-ID stickers and an online registry so owners can prove ownership and report theft. Buyers can check any bike's status before purchase. The service works across the Netherlands, Belgium, and beyond, supporting Dutch, English, French, and German.
+Velopass provides Frame-ID stickers and an online registry so owners can prove ownership and report theft, and buyers can check a bike before buying second-hand. Frame-IDs are available across Europe; partner bike shops are active in Belgium, the Netherlands and France. In Belgium Velopass is linked to MyBike; in France Velopass is an approved APIC operator with registration in the national FNUCI file. The site is available in English, Dutch, French, German and Spanish (EN, NL, FR, DE, ES).
 
 ## Pages
 
-- [Home](/en): Register your bike, get a Frame-ID sticker, and protect against theft.
-- [Shop](/en/shop): Order Velopass Frame-ID stickers and registration kits.
-- [Bike Check](/en/bike-check): Verify if a bike is stolen or registered before buying second-hand.
-- [Report Stolen](/en/stolen): Report a stolen bike and alert the Velopass network.
-- [Already have a sticker?](/en/already-have-one): Activate or manage an existing Frame-ID sticker.
-- [Professionals](/en/pro): B2B solutions for bike shops, manufacturers, insurers, and leasing companies.
-- [Manufacturers](/en/manufacturer): Partnerships for OEM frame-number registration and theft prevention.
-- [Insurance](/en/insurance): How insurers use Velopass to reduce bike theft claims.
-- [Leasing](/en/leasing): Fleet registration and recovery services for bike leasing companies.
-- [Assistance](/en/assistance): Roadside assistance integration with bike registration.
-- [Contact](/en/contact): Get in touch with the Velopass team.
-- [Buying Second-Hand Guide](/en/guides/buying-second-hand): Checklist to safely buy a used bike and avoid stolen goods.
-
-## Standalone tools
-
-- [Bike Search](/bikesearch): Quick lookup tool to check a bike's registration or theft status by frame number.
-- [Fiets Controleren](/fiets-controleren): Dutch-language bike check for the Belgian and Dutch markets.
-- [Gestolen Melden](/gestolen): Dutch-language page to report a stolen bike.
-- [Al Een Sticker](/al-een-sticker): Dutch-language page for users who already own a Velopass sticker.
-- [Bestellen](/bestellen): Dutch-language direct order page.
-- [Professionals NL](/professionals): Dutch-language B2B overview for bike shops and fleet managers.
+- [Home](https://www.velopass.com/en): Order a Frame-ID sticker and protect your bike.
+- [Order](https://www.velopass.com/en/order): Order Frame-ID bundles (Solo, Duo, Family).
+- [Bike Check](https://www.velopass.com/en/bike-check): Check if a bike is registered or reported stolen before buying.
+- [Report Stolen](https://www.velopass.com/en/stolen): What to do when your bike is stolen, per country.
+- [For bike shops](https://www.velopass.com/en/shop): B2B page for bike shops: sign up for free, mark bikes with Frame-IDs and build lasting customer relationships.
+- [Professionals](https://www.velopass.com/en/pro): Overview for professional partners.
+- [Manufacturers](https://www.velopass.com/en/manufacturer): Partnerships for OEM frame registration.
+- [Insurance](https://www.velopass.com/en/insurance): How insurers use Velopass.
+- [Leasing](https://www.velopass.com/en/leasing): Fleet registration for bike leasing companies.
+- [Assistance](https://www.velopass.com/en/assistance): Roadside assistance linked to your Frame-ID.
+- [Contact](https://www.velopass.com/en/contact): Get in touch with the Velopass team.
+- [Buying Second-Hand Guide](https://www.velopass.com/en/guides/buying-second-hand): Checklist to safely buy a used bike.
+- [Marquage vélo (FR)](https://www.velopass.com/fr/marquage-velo): For French bike shops: become an approved bike-marking point (APIC/FNUCI, loi LOM).

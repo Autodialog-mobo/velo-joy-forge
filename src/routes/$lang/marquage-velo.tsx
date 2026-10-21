@@ -19,8 +19,8 @@ function buildOrgJsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Velopass",
-    url: "https://velopass.com/fr",
-    logo: "https://velopass.com/logo.png",
+    url: "https://www.velopass.com/fr",
+    logo: "https://www.velopass.com/email/velopass-logo.png",
     description:
       "Velopass est un opérateur d'identification de cycles agréé (FNUCI) qui protège les vélos contre le vol et transforme chaque vélo marqué en une relation client durable pour le vélociste.",
     areaServed: { "@type": "Place", name: "Europe" },
@@ -82,6 +82,8 @@ export const Route = createFileRoute("/$lang/marquage-velo")({
       { property: "og:title", content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
       { property: "og:description", content: "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable." },
       { property: "og:url", content: "https://www.velopass.com/fr/marquage-velo" },
+      { name: "twitter:title", content: "Devenir opérateur de marquage vélo agréé | Velopass pour vélocistes" },
+      { name: "twitter:description", content: "Opérateur d'identification de cycles agréé (FNUCI). Conformité loi LOM et chaque vélo marqué devient une relation client durable." },
       { property: "og:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
       { property: "twitter:card", content: "summary_large_image" },
       { property: "twitter:image", content: `https://www.velopass.com${heroMarquageImg.url}` },
@@ -216,11 +218,11 @@ function VelocistesLanding() {
 
       <nav className="vnav">
         <div className="nav-in">
-          <a className="brand" href="https://velopass.com/fr">
+          <a className="brand" href="https://www.velopass.com/fr">
             <LogoMark />
             <span>velopass</span>
           </a>
-          <a className="nav-cta" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_nav", "fr")}>
+          <a className="nav-cta" href="https://www.velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_nav", "fr")}>
             Devenir point de marquage
           </a>
         </div>
@@ -235,10 +237,10 @@ function VelocistesLanding() {
             <h1>Marquez les vélos. <em>Gardez les clients.</em></h1>
             <p className="lead">Velopass est un opérateur d'identification de cycles agréé. Chaque vélo que vous marquez est conforme à la loi LOM et enregistré au FNUCI — et devient une relation client durable pour votre magasin.</p>
             <div className="btns">
-              <a className="btn-p" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
+              <a className="btn-p" href="https://www.velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_hero", "fr")}>
                 Inscription vélociste — gratuite
               </a>
-              <a className="btn-s" href="https://velopass.com/fr/contact">Parler à un conseiller</a>
+              <a className="btn-s" href="https://www.velopass.com/fr/contact">Parler à un conseiller</a>
             </div>
             <div className="trust">
               <div><strong>Europe</strong>Opérateur international</div>
@@ -358,7 +360,7 @@ function VelocistesLanding() {
           <div className="cta">
             <h2>Prêt à devenir point de marquage agréé ?</h2>
             <p>Inscription gratuite, mise en route immédiate. Rejoignez les vélocistes qui transforment chaque vente en relation durable.</p>
-            <a className="btn-d" href="https://velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}>
+            <a className="btn-d" href="https://www.velopass.com/fr/shop#registreer" onClick={() => trackShopSignupCtaClick("marquage_velo_final", "fr")}>
               Créer mon compte vélociste
             </a>
             <p className="fine">Une question ? support@velopass.com · WhatsApp {getWhatsAppDisplayNumber()}</p>
@@ -378,13 +380,13 @@ function VelocistesLanding() {
             </div>
             <div>
               <h4>Vélocistes</h4>
-              <a href="https://velopass.com/fr/shop#registreer">Inscription</a>
-              <a href="https://velopass.com/fr/contact?type=shop">Nous contacter</a>
-              <a href="https://velopass.com/fr/bike-check">Vérifier un vélo</a>
+              <a href="https://www.velopass.com/fr/shop#registreer">Inscription</a>
+              <a href="https://www.velopass.com/fr/contact?type=shop">Nous contacter</a>
+              <a href="https://www.velopass.com/fr/bike-check">Vérifier un vélo</a>
             </div>
             <div>
               <h4>Velopass</h4>
-              <a href="https://velopass.com/fr">Découvrir Velopass</a>
+              <a href="https://www.velopass.com/fr">Découvrir Velopass</a>
               <a href="https://app.velopass.com">Plateforme de connexion</a>
               <a href="https://apic-asso.com/operateursdidentificationagrees/">Fiche APIC</a>
             </div>

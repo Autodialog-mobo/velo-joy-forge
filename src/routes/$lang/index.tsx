@@ -51,15 +51,27 @@ function buildHomeJsonLd(lang: Lang) {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Velopass",
-    url: SITE_URL,
+    url: `${SITE_URL}/${lang}`,
     inLanguage: lang,
   };
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "Velopass",
+    legalName: "Velopass BV",
     url: SITE_URL,
-    logo: `${SITE_URL}/favicon.svg`,
+    logo: `${SITE_URL}/email/velopass-logo.png`,
+    email: "support@velopass.com",
+    vatID: "BE0777359681",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Stokerijstraat 29/bus a1",
+      postalCode: "2110",
+      addressLocality: "Wijnegem",
+      addressCountry: "BE",
+    },
+    areaServed: ["BE", "NL", "FR"],
+    memberOf: { "@type": "Organization", name: "APIC", url: "https://apic-asso.com" },
     sameAs: ["https://app.velopass.com"],
   };
   const faqPage = {
@@ -80,9 +92,9 @@ function buildHomeJsonLd(lang: Lang) {
     brand: { "@type": "Brand", name: "Velopass" },
     url: `${SITE_URL}/${lang}/order`,
     offers: {
-      "@type": "Offer",
+      "@type": "AggregateOffer",
       priceCurrency: "EUR",
-      price: "12.95",
+      lowPrice: "12.95",
       availability: "https://schema.org/InStock",
       url: `${SITE_URL}/${lang}/order`,
     },

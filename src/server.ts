@@ -66,19 +66,20 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   return brandedErrorResponse();
 }
 
-// Permanent (301) redirects from old NL URLs to new EN URLs.
+// Permanent (301) redirects from legacy URLs to their language-prefixed canonical page (single hop).
 // Handled at the edge so search engines see a real HTTP 301.
 const PERMANENT_REDIRECTS: Record<string, string> = {
-  "/bestellen": "/order",
-  "/bestellen/bedankt": "/order/thanks",
-  "/gestolen": "/stolen",
-  "/bikesearch": "/bike-check",
-  "/fiets-controleren": "/bike-check",
-  "/al-een-sticker": "/#already-have-one",
+  "/bestellen": "/nl/order",
+  "/bestellen/bedankt": "/nl/order/thanks",
+  "/gestolen": "/nl/stolen",
+  "/bikesearch": "/en/bike-check",
+  "/fiets-controleren": "/nl/bike-check",
+  "/al-een-sticker": "/nl#already-have-one",
+  "/professionals": "/en/shop",
 };
 
 const SUPPORTED_DOCUMENT_LANGS = new Set(["en", "nl", "fr", "de", "es"]);
-const ROBOTS_TXT = "User-agent: *\nAllow: /\nSitemap: https://velopass.com/sitemap.xml\n";
+const ROBOTS_TXT = "User-agent: *\nAllow: /\nDisallow: /m/\nSitemap: https://www.velopass.com/sitemap.xml\n";
 
 function langFromRequest(request: Request): string {
   const pathname = new URL(request.url).pathname;

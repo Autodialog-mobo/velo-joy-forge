@@ -136,6 +136,7 @@ function FaqColumn({
               {faq.q}
             </AccordionTrigger>
             <AccordionContent
+              forceMount
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 400,
