@@ -119,12 +119,12 @@ function FaqColumn({
         className="w-full"
         value={value}
         onValueChange={(next) => {
-          // Answers are force-mounted (always in the server HTML). Radix only knows an
-          // item's height after it has been open once, so seed it for the first open animation.
+          // Answers are force-mounted (always in the server HTML). Radix measures an
+          // item's height too late for the open animation, so seed it on every open.
           for (const id of next) {
             if (value.includes(id)) continue;
             const region = document.querySelector<HTMLElement>(`#${id} [role="region"]`);
-            if (region && !region.style.getPropertyValue("--radix-collapsible-content-height")) {
+            if (region) {
               region.style.setProperty("--radix-collapsible-content-height", `${region.scrollHeight}px`);
             }
           }
