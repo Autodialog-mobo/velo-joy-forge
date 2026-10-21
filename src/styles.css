@@ -1161,5 +1161,8 @@ html { overflow-x: clip; }
 /* FAQ answers are force-mounted (always in server HTML for crawlers);
    collapse closed items once the close animation has finished. */
 #faq [role="region"][data-state="closed"] {
+  animation-fill-mode: forwards;
+}
+#faq [role="region"][data-state="closed"][style*="animation-name: none"] {
   height: 0;
 }
