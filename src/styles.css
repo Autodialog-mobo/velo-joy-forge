@@ -1157,3 +1157,12 @@ html { overflow-x: clip; }
 .wallet-dialog-content[data-state="closed"] {
   animation: wallet-content-out 350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* FAQ answers are force-mounted (always in server HTML for crawlers);
+   collapse closed items once the close animation has finished. */
+#faq [role="region"][data-state="closed"] {
+  animation-fill-mode: forwards;
+}
+#faq [role="region"][data-state="closed"][style*="animation-name: none"] {
+  height: 0;
+}
