@@ -1,6 +1,5 @@
-import { Fragment, useState, useEffect, type ReactNode } from "react";
+import { Fragment, useState, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
