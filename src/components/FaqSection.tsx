@@ -114,7 +114,23 @@ function FaqColumn({
         padding: "16px 20px",
       }}
     >
-      <Accordion type="multiple" className="w-full" value={value} onValueChange={onChange}>
+      <Accordion
+        type="multiple"
+        className="w-full"
+        value={value}
+        onValueChange={(next) => {
+          // Answers are force-mounted (always in the server HTML). Radix only knows an
+          // item's height after it has been open once, so seed it for the first open animation.
+          for (const id of next) {
+            if (value.includes(id)) continue;
+            const region = document.querySelector<HTMLElement>(`#${id} [role="region"]`);
+            if (region && !region.style.getPropertyValue("--radix-collapsible-content-height")) {
+              region.style.setProperty("--radix-collapsible-content-height", `${region.scrollHeight}px`);
+            }
+          }
+          onChange(next);
+        }}
+      >
         {faqs.map((faq, i) => (
           <AccordionItem
             key={`faq-${side}-${i}`}
