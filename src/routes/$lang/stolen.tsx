@@ -1,5 +1,7 @@
-import { Fragment, useState, type ReactNode } from "react";
+import { Fragment, useState, useEffect, useRef, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { getVisitorCountry } from "@/lib/visitor-country.functions";
 import { useTranslation } from "react-i18next";
 import {
   ArrowUpRight,
@@ -262,6 +264,23 @@ function GestolenPage() {
   const { t } = useTranslation(["stolen", "common"]);
   const [navOpen, setNavOpen] = useState(false);
   const [country, setCountry] = useState<CountryCode>(() => getDefaultCountry(lang));
+  // After hydration, refine with the visitor's IP country unless they already picked one.
+  const userPickedCountry = useRef(false);
+  const fetchVisitorCountry = useServerFn(getVisitorCountry);
+  useEffect(() => {
+    let cancelled = false;
+    fetchVisitorCountry()
+      .then((res) => {
+        if (cancelled || userPickedCountry.current) return;
+        if (res.country === "BE" || res.country === "NL" || res.country === "FR" || res.country === "DE") {
+          setCountry(res.country);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [fetchVisitorCountry]);
 
   const argRowsRaw = t("argument.rows", { returnObjects: true });
   const argRows: [string, string][] = Array.isArray(argRowsRaw) ? (argRowsRaw as [string, string][]) : [];
@@ -482,7 +501,10 @@ function GestolenPage() {
                   type="button"
                   role="tab"
                   aria-selected={active}
-                  onClick={() => setCountry(code)}
+                  onClick={() => {
+                    userPickedCountry.current = true;
+                    setCountry(code);
+                  }}
                   style={{
                     border: "none",
                     background: active ? "#FFFFFF" : "transparent",
