@@ -125,7 +125,11 @@ function FaqColumn({
             if (value.includes(id)) continue;
             const region = document.querySelector<HTMLElement>(`#${id} [role="region"]`);
             if (region) {
-              region.style.setProperty("--radix-collapsible-content-height", `${region.scrollHeight}px`);
+              const seed = () =>
+                region.style.setProperty("--radix-collapsible-content-height", `${region.scrollHeight}px`);
+              seed();
+              // React may clear the variable while committing the open state; set it again.
+              requestAnimationFrame(seed);
             }
           }
           onChange(next);
