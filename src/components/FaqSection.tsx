@@ -215,6 +215,16 @@ export function FaqSection() {
     };
   }, [routeHash, leftFAQs.length, rightFAQs.length]);
 
+  // Force-mounted closed answers have height 0, so Radix has no measured height
+  // for the first open animation. Seed the CSS variable from scrollHeight.
+  useEffect(() => {
+    document.querySelectorAll<HTMLElement>('#faq [role="region"]').forEach((el) => {
+      if (!el.style.getPropertyValue("--radix-collapsible-content-height")) {
+        el.style.setProperty("--radix-collapsible-content-height", `${el.scrollHeight}px`);
+      }
+    });
+  }, [leftFAQs.length, rightFAQs.length]);
+
   const syncHash = (val: string[]) => {
     const last = val[val.length - 1];
     if (last) {
