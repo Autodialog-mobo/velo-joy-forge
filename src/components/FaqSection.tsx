@@ -136,6 +136,8 @@ function FaqColumn({
               {faq.q}
             </AccordionTrigger>
             <AccordionContent
+              forceMount
+              className="data-[state=closed]:hidden"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 400,

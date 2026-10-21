@@ -127,10 +127,10 @@ function StatusBadge({ label, color }: { label: string; color: string }) {
 
 type CountryCode = "BE" | "NL" | "FR" | "DE" | "UK";
 
-function getBrowserCountry(): CountryCode {
-  // Default to BE on both server and client to avoid SSR hydration mismatch.
-  // The real visitor country is detected via cf-ipcountry in a useEffect.
-  return "BE";
+// Default country follows the page language (same on server and client).
+const LANG_DEFAULT_COUNTRY: Record<string, CountryCode> = { fr: "FR", nl: "BE", de: "DE", en: "BE", es: "BE" };
+function getDefaultCountry(lang: string): CountryCode {
+  return LANG_DEFAULT_COUNTRY[lang] ?? "BE";
 }
 
 
@@ -263,7 +263,7 @@ function GestolenPage() {
   const lang = useCurrentLang();
   const { t } = useTranslation(["stolen", "common"]);
   const [navOpen, setNavOpen] = useState(false);
-  const [country, setCountry] = useState<CountryCode>(getBrowserCountry);
+  const [country, setCountry] = useState<CountryCode>(() => getDefaultCountry(lang));
   const fetchVisitorCountry = useServerFn(getVisitorCountry);
   useEffect(() => {
     let cancelled = false;

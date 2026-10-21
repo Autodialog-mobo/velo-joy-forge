@@ -7,7 +7,7 @@ export const Route = createFileRoute("/bestellen")({
       to: "/$lang/order",
       params: { lang: "nl" },
       search: search as Record<string, unknown>,
-      replace: true,
+      replace: true, statusCode: 301,
     });
   },
   component: () => null,

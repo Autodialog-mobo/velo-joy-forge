@@ -1,6 +1,6 @@
 import { SUPPORTED_LANGS, isLang, DEFAULT_LANG, type Lang } from "./config";
 
-export const SITE_URL = "https://velopass.com";
+export const SITE_URL = "https://www.velopass.com";
 
 export type MetaEntry =
   | { title: string }
