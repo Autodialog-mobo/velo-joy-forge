@@ -120,9 +120,9 @@ export function setMarkerLabel(marker: L.Marker, label: string) {
   if (el) el.setAttribute("aria-label", label);
 }
 
-/** Leaflet's own `alt`/`title` handling only covers <img> icons. */
+/** Leaflet's own `alt` handling only covers <img> icons; aria-label is set on add. */
 export function markerLabelOptions(label: string) {
-  return { alt: label, title: label } as L.MarkerOptions;
+  return { alt: label } as L.MarkerOptions;
 }
 
 /** Remember the shop name on the marker so clusters can list it later. */

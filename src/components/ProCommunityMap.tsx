@@ -11,6 +11,17 @@ import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/
 import { useMemo } from "react";
 import { LeafletGestureSupport } from "./LeafletGestureSupport";
 import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from "@/lib/carto";
+import { useTranslation } from "react-i18next";
+import {
+  TIP_OPTIONS,
+  bindClusterTooltips,
+  clusterTipHtml,
+  markerLabelOptions,
+  rememberShopName,
+  setMarkerLabel,
+  shopAriaLabel,
+  shopTipHtml,
+} from "@/lib/map-tooltips";
 
 
 type Shop = {
@@ -28,6 +39,7 @@ const markerHtml = () =>
 
 function Clusters({ shops }: { shops: Shop[] }) {
   const map = useMap();
+  const { t } = useTranslation("home");
   const layerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -55,7 +67,12 @@ function Clusters({ shops }: { shops: Shop[] }) {
         iconAnchor: [14, 14],
         popupAnchor: [0, -14],
       });
-      const m = L.marker([s.lat, s.lng], { icon });
+      const line2 = [s.city, s.country?.toUpperCase()].filter(Boolean).join(", ");
+      const aria = shopAriaLabel({ name: s.name, line2 });
+      const m = L.marker([s.lat, s.lng], { icon, ...markerLabelOptions(aria) });
+      rememberShopName(m, s.name);
+      m.on("add", () => setMarkerLabel(m, aria));
+      m.bindTooltip(shopTipHtml({ name: s.name, line2 }), TIP_OPTIONS);
       m.bindPopup(
         `<div class="vp-pop"><div class="vp-pop-name">${s.name}</div><div class="vp-pop-city">${s.city}, ${s.country.toUpperCase()}</div><div class="vp-pop-badge">✓ Actief aangesloten</div></div>`,
         { className: "vp-popup" },
@@ -64,10 +81,23 @@ function Clusters({ shops }: { shops: Shop[] }) {
     });
 
     map.addLayer(cluster);
+
+    // Hovering a group of shops lists the shops inside it, not just a number.
+    const detachClusterTips = bindClusterTooltips(cluster as any, (names, count) => {
+      const shown = names.slice(0, 6);
+      const hidden = shown.length ? Math.max(0, count - shown.length) : 0;
+      return clusterTipHtml({
+        header: `${count} ${t("community.unit")}`,
+        names: shown,
+        more: hidden ? t("community.cluster_more", { count: hidden }) : undefined,
+      });
+    });
+
     return () => {
+      detachClusterTips();
       map.removeLayer(cluster);
     };
-  }, [map, shops]);
+  }, [map, shops, t]);
 
   return null;
 }
