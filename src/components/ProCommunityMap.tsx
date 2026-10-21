@@ -14,6 +14,7 @@ import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from "@/lib/carto";
 import { useTranslation } from "react-i18next";
 import {
   TIP_OPTIONS,
+  autoFlipTooltip,
   bindClusterTooltips,
   clusterTipHtml,
   labelClusterBubbles,
@@ -74,6 +75,7 @@ function Clusters({ shops }: { shops: Shop[] }) {
       rememberShopName(m, s.name);
       m.on("add", () => setMarkerLabel(m, aria));
       m.bindTooltip(shopTipHtml({ name: s.name, line2 }), TIP_OPTIONS);
+      autoFlipTooltip(m);
       m.bindPopup(
         `<div class="vp-pop"><div class="vp-pop-name">${s.name}</div><div class="vp-pop-city">${s.city}, ${s.country.toUpperCase()}</div><div class="vp-pop-badge">✓ Actief aangesloten</div></div>`,
         { className: "vp-popup" },

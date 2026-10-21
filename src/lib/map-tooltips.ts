@@ -28,8 +28,7 @@ export type TipParts = {
 };
 
 const TIP_OPTIONS: L.TooltipOptions = {
-  // "auto" keeps the label inside the map when a pin sits against an edge.
-  direction: "auto",
+  direction: "top",
   offset: [0, -10],
   opacity: 1,
   className: "vp-tooltip",
@@ -94,6 +93,7 @@ export function bindClusterTooltips(
     clusterMarker.bindTooltip(html, TIP_OPTIONS);
     (clusterMarker as any)._vpClusterTip = true;
     clusterMarker.openTooltip();
+    keepTipInsideMap(clusterMarker.getTooltip(), clusterMarker.getLatLng());
   };
 
   const onOut = (e: any) => {
@@ -150,6 +150,34 @@ export function labelClusterBubbles(container: HTMLElement, unitLabel: string) {
   const observer = new MutationObserver(apply);
   observer.observe(pane, { childList: true });
   return () => observer.disconnect();
+}
+
+/**
+ * Pins against the top edge of the map would have their label clipped, so those
+ * labels are shown below the pin instead.
+ */
+export function keepTipInsideMap(tooltip: any, latlng: L.LatLng) {
+  const map = tooltip?._map;
+  const node = tooltip?._container ?? tooltip?._tooltipNode;
+  if (!map || !node) return;
+  const point = map.latLngToContainerPoint(latlng);
+  const needed = node.offsetHeight + 26;
+  const direction = point.y < needed ? "bottom" : "top";
+  if (tooltip.options.direction !== direction) {
+    tooltip.options.direction = direction;
+    tooltip.options.offset = L.point(0, direction === "bottom" ? 12 : -10);
+    tooltip._update();
+  }
+}
+
+/** Flip a marker's label when it would otherwise be clipped by the map edge. */
+export function autoFlipTooltip(marker: L.Marker) {
+  const flip = () => {
+    const tooltip = marker.getTooltip() as any;
+    if (tooltip) keepTipInsideMap(tooltip, marker.getLatLng());
+  };
+  marker.on("mouseover", flip);
+  marker.on("focus", flip);
 }
 
 export { TIP_OPTIONS };

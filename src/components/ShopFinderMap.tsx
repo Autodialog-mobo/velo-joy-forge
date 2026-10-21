@@ -18,6 +18,7 @@ import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/
 import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from "@/lib/carto";
 import {
   TIP_OPTIONS,
+  autoFlipTooltip,
   bindClusterTooltips,
   clusterTipHtml,
   labelClusterBubbles,
@@ -120,6 +121,7 @@ function ClusterLayer({
       m.on("click", () => onSelect(i));
       m.on("add", () => setMarkerLabel(m, aria));
       m.bindTooltip(shopTipHtml({ name: s.name, line2, tag: autoScanLabel }), TIP_OPTIONS);
+      autoFlipTooltip(m);
       markerRefs.current[i] = m;
       allMarkers.push({ i, marker: m, lat: s.lat, lng: s.lng });
     });
