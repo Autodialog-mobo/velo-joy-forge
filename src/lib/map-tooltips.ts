@@ -32,7 +32,6 @@ const TIP_OPTIONS: L.TooltipOptions = {
   offset: [0, -10],
   opacity: 1,
   className: "vp-tooltip",
-  maxWidth: 280,
 };
 
 export function shopTipHtml({ name, line2, tag }: TipParts) {
