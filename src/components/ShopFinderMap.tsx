@@ -16,6 +16,16 @@ import { trackRegisterBikeClick, trackCheckBikeClick } from "@/lib/analytics";
 import { dedupeShopsByAddress } from "@/lib/dedupe-shops";
 import { useCustomShops, useHiddenShopAddressKeys, filterHiddenStatic } from "@/hooks/useCustomShops";
 import { CARTO_ATTRIBUTION, CARTO_LIGHT_TILE_URL } from "@/lib/carto";
+import {
+  TIP_OPTIONS,
+  bindClusterTooltips,
+  clusterTipHtml,
+  markerLabelOptions,
+  rememberShopName,
+  setMarkerLabel,
+  shopAriaLabel,
+  shopTipHtml,
+} from "@/lib/map-tooltips";
 
 
 type Shop = {
@@ -61,12 +71,18 @@ function ClusterLayer({
   onSelect,
   markerRefs,
   autoScanLabel,
+  unitLabel,
+  moreLabel,
 }: {
   shops: Shop[];
   activeIdx: number | null;
   onSelect: (i: number) => void;
   markerRefs: React.MutableRefObject<Record<number, L.Marker | null>>;
   autoScanLabel: string;
+  /** Plural shop word for the cluster label, e.g. "winkels". */
+  unitLabel: string;
+  /** Cluster overflow label containing {count}, e.g. "+{count} meer". */
+  moreLabel: string;
 }) {
   const map = useMap();
 
@@ -93,17 +109,32 @@ function ClusterLayer({
     const allMarkers: { i: number; marker: L.Marker; lat: number; lng: number }[] = [];
     shops.forEach((s, i) => {
       if (s.status !== "active") return;
-      const m = L.marker([s.lat, s.lng], { icon: makeIcon(activeIdx === i) });
+      const line2 = [s.city, s.country?.toUpperCase()].filter(Boolean).join(", ");
+      const aria = shopAriaLabel({ name: s.name, line2, tag: autoScanLabel });
+      const m = L.marker([s.lat, s.lng], {
+        icon: makeIcon(activeIdx === i),
+        ...markerLabelOptions(aria),
+      });
+      rememberShopName(m, s.name);
       m.on("click", () => onSelect(i));
-      m.bindTooltip(
-        `<div class="vp-tip"><div class="vp-tip-name">${s.name}</div><div class="vp-tip-city">${s.city}</div><div class="vp-tip-tag">● ${autoScanLabel}</div></div>`,
-        { direction: "top", offset: [0, -8], opacity: 1, className: "vp-tooltip" },
-      );
+      m.on("add", () => setMarkerLabel(m, aria));
+      m.bindTooltip(shopTipHtml({ name: s.name, line2, tag: autoScanLabel }), TIP_OPTIONS);
       markerRefs.current[i] = m;
       allMarkers.push({ i, marker: m, lat: s.lat, lng: s.lng });
     });
 
     map.addLayer(cluster);
+
+    // Hovering a group of shops lists the shops inside it, not just a number.
+    const detachClusterTips = bindClusterTooltips(cluster as any, (names, count) => {
+      const shown = names.slice(0, 6);
+      const hidden = shown.length ? Math.max(0, count - shown.length) : 0;
+      return clusterTipHtml({
+        header: `${count} ${unitLabel}`,
+        names: shown,
+        more: hidden ? moreLabel.replace("{count}", String(hidden)) : undefined,
+      });
+    });
 
     const inCluster = new Set<number>();
     const sync = () => {
@@ -129,12 +160,13 @@ function ClusterLayer({
     map.on("zoomend", sync);
 
     return () => {
+      detachClusterTips();
       map.off("moveend", sync);
       map.off("zoomend", sync);
       map.removeLayer(cluster);
       markerRefs.current = {};
     };
-  }, [shops, activeIdx, map, onSelect, markerRefs]);
+  }, [shops, activeIdx, map, onSelect, markerRefs, unitLabel, moreLabel]);
 
   return null;
 }
@@ -393,6 +425,8 @@ export default function ShopFinderMap() {
               onSelect={handleSelect}
               markerRefs={markerRefs}
               autoScanLabel={t("community.auto_scan_tag")}
+              unitLabel={t("community.unit")}
+              moreLabel={t("community.cluster_more")}
             />
           </MapContainer>
 
