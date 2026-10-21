@@ -28,7 +28,8 @@ export type TipParts = {
 };
 
 const TIP_OPTIONS: L.TooltipOptions = {
-  direction: "top",
+  // "auto" keeps the label inside the map when a pin sits against an edge.
+  direction: "auto",
   offset: [0, -10],
   opacity: 1,
   className: "vp-tooltip",

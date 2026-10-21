@@ -90,7 +90,7 @@ function Clusters({ shops }: { shops: Shop[] }) {
       return clusterTipHtml({
         header: `${count} ${t("community.unit")}`,
         names: shown,
-        more: hidden ? t("community.cluster_more", { count: hidden }) : undefined,
+        more: hidden ? t("community.cluster_more").replace("{count}", String(hidden)) : undefined,
       });
     });
 
