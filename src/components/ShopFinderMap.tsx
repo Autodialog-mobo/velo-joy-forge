@@ -20,6 +20,7 @@ import {
   TIP_OPTIONS,
   bindClusterTooltips,
   clusterTipHtml,
+  labelClusterBubbles,
   markerLabelOptions,
   rememberShopName,
   setMarkerLabel,
@@ -136,6 +137,9 @@ function ClusterLayer({
       });
     });
 
+    // Cluster bubbles also need a name for screen readers.
+    const detachClusterLabels = labelClusterBubbles(map.getContainer(), unitLabel);
+
     const inCluster = new Set<number>();
     const sync = () => {
       const bounds = map.getBounds().pad(0.25);
@@ -161,6 +165,7 @@ function ClusterLayer({
 
     return () => {
       detachClusterTips();
+      detachClusterLabels();
       map.off("moveend", sync);
       map.off("zoomend", sync);
       map.removeLayer(cluster);

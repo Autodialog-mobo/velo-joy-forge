@@ -129,4 +129,26 @@ export function rememberShopName(marker: L.Marker, name: string) {
   (marker.options as any).vpShopName = name;
 }
 
+/**
+ * Cluster bubbles are rendered by markercluster, so they arrive after the
+ * initial mount (and again on every re-cluster). Watch the marker pane and give
+ * each bubble an accessible name like "756 winkels".
+ */
+export function labelClusterBubbles(container: HTMLElement, unitLabel: string) {
+  const pane = container.querySelector(".leaflet-marker-pane");
+  if (!pane) return () => {};
+
+  const apply = () => {
+    pane.querySelectorAll<HTMLElement>(".vp-cluster-wrap").forEach((el) => {
+      const count = el.querySelector(".vp-cluster span")?.textContent?.trim();
+      if (count) el.setAttribute("aria-label", `${count} ${unitLabel}`);
+    });
+  };
+
+  apply();
+  const observer = new MutationObserver(apply);
+  observer.observe(pane, { childList: true });
+  return () => observer.disconnect();
+}
+
 export { TIP_OPTIONS };

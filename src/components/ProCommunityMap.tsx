@@ -16,6 +16,7 @@ import {
   TIP_OPTIONS,
   bindClusterTooltips,
   clusterTipHtml,
+  labelClusterBubbles,
   markerLabelOptions,
   rememberShopName,
   setMarkerLabel,
@@ -93,8 +94,12 @@ function Clusters({ shops }: { shops: Shop[] }) {
       });
     });
 
+    // Cluster bubbles also need a name for screen readers.
+    const detachClusterLabels = labelClusterBubbles(map.getContainer(), t("community.unit"));
+
     return () => {
       detachClusterTips();
+      detachClusterLabels();
       map.removeLayer(cluster);
     };
   }, [map, shops, t]);
