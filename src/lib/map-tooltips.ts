@@ -166,7 +166,8 @@ export function keepTipInsideMap(tooltip: any, latlng: L.LatLng) {
   if (tooltip.options.direction !== direction) {
     tooltip.options.direction = direction;
     tooltip.options.offset = L.point(0, direction === "bottom" ? 12 : -10);
-    tooltip._update();
+    // Public API: re-running setLatLng repositions the open label.
+    tooltip.setLatLng(latlng);
   }
 }
 
