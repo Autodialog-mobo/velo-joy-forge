@@ -16,6 +16,8 @@ import { createMolliePayment } from "@/utils/mollie.functions";
 import { SHIPPING_FEE_CENTS } from "@/lib/shipping";
 import { BUNDLES, type BundleKey } from "@/lib/bundles";
 import { resolveActiveShopId, resolveShop, type ShopBadge } from "@/lib/shop-attribution";
+import { Button } from "@/components/ui/button";
+import { isOnlineCheckoutAllowed } from "@/lib/order-checkout";
 
 
 
@@ -171,7 +173,8 @@ const [navOpen, setNavOpen] = useState(false);
   const referralChosen =
     referralAutoFromShop ||
     (referralSource !== "" && (referralSource !== "other" || referralOther.trim() !== ""));
-  const canCheckout = hasItems && emailValid && shippingValid && referralChosen;
+  const onlineCheckoutAllowed = isOnlineCheckoutAllowed(country);
+  const canCheckout = onlineCheckoutAllowed && hasItems && emailValid && shippingValid && referralChosen;
   // "Anders" carries the free text as "other:<text>"; the report folds it back
   // under "Anders" while the admin order detail shows the typed value.
   const referralValue = referralAutoFromShop
@@ -204,6 +207,7 @@ const [navOpen, setNavOpen] = useState(false);
   };
 
   const startCheckout = async () => {
+    if (!onlineCheckoutAllowed) return;
     setStage("checkout");
     setCheckoutError(null);
     try {
@@ -617,22 +621,6 @@ const [navOpen, setNavOpen] = useState(false);
                     <option value="DE">{t("cart.country_de")}</option>
                   </select>
                 </div>
-                {country === "FR" && (
-                  <div style={{ background: "#F9F8F5", borderLeft: "3px solid #2ECC8A", borderRadius: "0 10px 10px 0", padding: "14px 16px", display: "flex", gap: 12, alignItems: "flex-start" }}>
-                    <Info size={18} color="#2ECC8A" style={{ flexShrink: 0, marginTop: 2 }} />
-                    <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: "#0D1F3C", fontFamily: "DM Sans, sans-serif" }}>
-                    <>
-                      {t("cart.france_notice_p1_before_fnuci")}
-                      <a href="https://www.ecologie.gouv.fr/politiques-publiques/identification-cycles" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>FNUCI</a>
-                      {t("cart.france_notice_p1_after_fnuci_before_apic")}
-                      <a href="https://apic-asso.com/" target="_blank" rel="noopener noreferrer" style={{ color: "#0D6EFD", textDecoration: "underline" }}>APIC</a>
-                      {t("cart.france_notice_p1_after_apic")}
-                      <br /><br />
-                      {t("cart.france_notice_p2")}
-                    </>
-                    </p>
-                  </div>
-                )}
                 {!referralAutoFromShop && (
                 <div style={{ display: "grid", gap: 6 }}>
 
@@ -702,6 +690,39 @@ const [navOpen, setNavOpen] = useState(false);
                 </p>
               ) : null}
 
+              {!onlineCheckoutAllowed ? (
+                <div className="space-y-4 font-sans text-foreground">
+                  <div className="flex items-start gap-3 border-l-3 border-accent bg-background p-4 text-[13px] leading-relaxed">
+                    <Info size={18} className="mt-0.5 shrink-0 text-accent" />
+                    <div className="min-w-0 space-y-3 break-words">
+                      <h3 className="text-sm font-bold">{t("cart.france_notice_title")}</h3>
+                      <p>
+                        {t("cart.france_notice_p1").split(/(FNUCI|APIC)/).map((part, index) =>
+                          part === "FNUCI" || part === "APIC" ? (
+                            <a
+                              key={index}
+                              href={part === "FNUCI" ? "https://www.ecologie.gouv.fr/politiques-publiques/identification-cycles" : "https://apic-asso.com/"}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary underline underline-offset-2"
+                            >{part}</a>
+                          ) : <span key={index}>{part}</span>,
+                        )}
+                      </p>
+                      <p><strong>{t("cart.france_notice_p2_label")}</strong>{": "}{t("cart.france_notice_p2")}</p>
+                      <p><strong>{t("cart.france_notice_p3_label")}</strong>{": "}{t("cart.france_notice_p3")}</p>
+                      <p><strong>{t("cart.france_notice_p4_label")}</strong>{": "}{t("cart.france_notice_p4")}</p>
+                    </div>
+                  </div>
+                  <Button asChild className="h-auto min-h-12 w-full whitespace-normal bg-accent px-4 py-3 text-center text-[15px] font-bold text-accent-foreground shadow-none hover:bg-accent/90">
+                    <Link to="/$lang" params={{ lang }} hash="community" hashScrollIntoView={{ behavior: "smooth", block: "start" }}>
+                      {t("cart.france_notice_cta")}
+                      <ArrowUpRight aria-hidden="true" />
+                    </Link>
+                  </Button>
+                </div>
+              ) : (
+              <>
               <div style={{ position: "relative" }} className={`pay-btn-wrap${tooltipOpen ? " pay-btn-wrap--open" : ""}`}>
 
                 <button
@@ -777,6 +798,8 @@ const [navOpen, setNavOpen] = useState(false);
               <p style={{ fontSize: 11, color: "rgba(13,31,60,0.55)", margin: "8px 0 0", textAlign: "center" }}>
                 {t("cart.secure_note")}
               </p>
+              </>
+              )}
 
             </aside>
 
@@ -841,7 +864,7 @@ const [navOpen, setNavOpen] = useState(false);
         )}
       </div>
 
-      {stage === "select" && (
+      {stage === "select" && onlineCheckoutAllowed && (
         <div
           className="mobile-pay-bar"
           role="region"
