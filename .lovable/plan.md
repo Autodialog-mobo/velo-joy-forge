@@ -40,7 +40,7 @@ A bike shop links to velopass.com with `?shopID=<publicId>`. We remember that sh
 ## Open points to confirm
 - **30 days / last click wins:** the brief marks this as a proposal for Daniel. I'll use 30 days, replacing today's 60.
 - **Field name:** the name `affiliateShopPublicId` at the top level of the Orders-app payload still needs the Orders-app team's confirmation.
-- **Staging public ID:** needed from Daniel for an end-to-end test against the sandbox Orders app.
+- **Staging public ID:** no setting is needed. Share the ID from Daniel in chat. I'll test by opening the preview with `?shopID=<id>` and placing a sandbox order against the sandbox Orders app.
 
 ## Technical details
 - `src/lib/shop-attribution.ts`: new normaliser, `shopID` param, 30-day TTL, in-memory fallback, `captureShopFromUrl()` called in a `useEffect` in `__root.tsx`.
