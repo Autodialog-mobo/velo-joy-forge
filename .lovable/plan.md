@@ -13,7 +13,7 @@ A bike shop links to velopass.com with `?shopID=<publicId>`. We remember that sh
 1. **Capture on every page**
    - Read `shopID` once on any page (root layout), after the page has loaded.
    - Trim and lowercase it. Keep it only if it matches `^[a-z0-9]{1,64}$`. Otherwise ignore it silently.
-   - Keep accepting the old `?shop=` as a fallback so existing links keep working.
+   - Replace the old `?shop=` parameter entirely; only `shopID` is read.
 2. **Remember it**
    - Store it in the browser for 30 days with a timestamp. A new link replaces the old one (last click wins).
    - If browser storage isn't available, keep it in memory for the visit.
