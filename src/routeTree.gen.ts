@@ -61,6 +61,7 @@ import { Route as LangOrderThanksRouteImport } from './routes/$lang/order_.thank
 import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 import { Route as ApiPublicBrandsRouteImport } from './routes/api/public/brands'
+import { Route as ApiPublicShopBadgeRouteImport } from './routes/api/public/shop-badge'
 import { Route as ApiPublicShopSignupRouteImport } from './routes/api/public/shop-signup'
 import { Route as ApiPublicViesLookupRouteImport } from './routes/api/public/vies-lookup'
 import { Route as ApiPublicB2bSyncRouteImport } from './routes/api/public/b2b/sync'
@@ -329,6 +330,11 @@ const ApiPublicBrandsRoute = ApiPublicBrandsRouteImport.update({
   path: '/api/public/brands',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicShopBadgeRoute = ApiPublicShopBadgeRouteImport.update({
+  id: '/api/public/shop-badge',
+  path: '/api/public/shop-badge',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicShopSignupRoute = ApiPublicShopSignupRouteImport.update({
   id: '/api/public/shop-signup',
   path: '/api/public/shop-signup',
@@ -403,6 +409,7 @@ export interface FileRoutesByFullPath {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/brands': typeof ApiPublicBrandsRoute
+  '/api/public/shop-badge': typeof ApiPublicShopBadgeRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/b2b/sync': typeof ApiPublicB2bSyncRoute
@@ -459,6 +466,7 @@ export interface FileRoutesByTo {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/brands': typeof ApiPublicBrandsRoute
+  '/api/public/shop-badge': typeof ApiPublicShopBadgeRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/b2b/sync': typeof ApiPublicB2bSyncRoute
@@ -518,6 +526,7 @@ export interface FileRoutesById {
   '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/api/public/brands': typeof ApiPublicBrandsRoute
+  '/api/public/shop-badge': typeof ApiPublicShopBadgeRoute
   '/api/public/shop-signup': typeof ApiPublicShopSignupRoute
   '/api/public/vies-lookup': typeof ApiPublicViesLookupRoute
   '/api/public/b2b/sync': typeof ApiPublicB2bSyncRoute
@@ -577,6 +586,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/brands'
+    | '/api/public/shop-badge'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/b2b/sync'
@@ -633,6 +643,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/brands'
+    | '/api/public/shop-badge'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/b2b/sync'
@@ -691,6 +702,7 @@ export interface FileRouteTypes {
     | '/.lovable/oauth/consent'
     | '/.mcp/invoke-tool/$tool'
     | '/api/public/brands'
+    | '/api/public/shop-badge'
     | '/api/public/shop-signup'
     | '/api/public/vies-lookup'
     | '/api/public/b2b/sync'
@@ -720,6 +732,7 @@ export interface RootRouteChildren {
   DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
   Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
   ApiPublicBrandsRoute: typeof ApiPublicBrandsRoute
+  ApiPublicShopBadgeRoute: typeof ApiPublicShopBadgeRoute
   ApiPublicShopSignupRoute: typeof ApiPublicShopSignupRoute
   ApiPublicViesLookupRoute: typeof ApiPublicViesLookupRoute
   ApiPublicB2bSyncRoute: typeof ApiPublicB2bSyncRoute
@@ -1092,6 +1105,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicBrandsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/shop-badge': {
+      id: '/api/public/shop-badge'
+      path: '/api/public/shop-badge'
+      fullPath: '/api/public/shop-badge'
+      preLoaderRoute: typeof ApiPublicShopBadgeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/shop-signup': {
       id: '/api/public/shop-signup'
       path: '/api/public/shop-signup'
@@ -1237,6 +1257,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
   Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
   ApiPublicBrandsRoute: ApiPublicBrandsRoute,
+  ApiPublicShopBadgeRoute: ApiPublicShopBadgeRoute,
   ApiPublicShopSignupRoute: ApiPublicShopSignupRoute,
   ApiPublicViesLookupRoute: ApiPublicViesLookupRoute,
   ApiPublicB2bSyncRoute: ApiPublicB2bSyncRoute,

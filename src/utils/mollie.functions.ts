@@ -123,9 +123,10 @@ export const createMolliePayment = createServerFn({ method: "POST" })
         // Non-fatal: ignore a malformed marker rather than block checkout.
         data.experimentVariant = null;
       }
-      if (data.shopId != null && !/^[A-Za-z0-9_-]{1,64}$/.test(data.shopId)) {
-        // Non-fatal: ignore a malformed shop id rather than block checkout.
-        data.shopId = null;
+      if (data.shopId != null) {
+        // Non-fatal: normalise; ignore a malformed shop id rather than block checkout.
+        const sid = String(data.shopId).trim().toLowerCase();
+        data.shopId = /^[a-z0-9]{1,64}$/.test(sid) ? sid : null;
       }
       return data;
     },
@@ -222,6 +223,7 @@ export const createMolliePayment = createServerFn({ method: "POST" })
           shipping_country: shippingAddress.country,
           lang: data.lang,
           referral_source: data.referralSource && data.referralSource !== "" ? data.referralSource : null,
+          affiliate_shop_public_id: data.shopId ?? null,
           updated_at: new Date().toISOString(),
 
         },

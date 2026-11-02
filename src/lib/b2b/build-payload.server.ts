@@ -85,6 +85,9 @@ export function buildConsumerOrderPayload(
     },
     items,
     shipping_cost: euros(order.amount_shipping),
+    ...(typeof order.affiliate_shop_public_id === "string" && /^[a-z0-9]{1,64}$/.test(order.affiliate_shop_public_id)
+      ? { affiliateShopPublicId: order.affiliate_shop_public_id }
+      : {}),
     amount_total: euros(order.amount_total),
     payment: {
       status: "paid",

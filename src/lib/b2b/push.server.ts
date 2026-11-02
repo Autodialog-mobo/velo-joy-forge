@@ -5,7 +5,7 @@ import { b2bCredentials, fetchCatalog, postConsumerOrder } from "./consumer-orde
 import { buildConsumerOrderPayload } from "./build-payload.server";
 
 const ORDER_COLUMNS =
-  "id, created_at, updated_at, customer_email, lang, environment, status, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_line2, shipping_postal_code, shipping_city, shipping_country, mollie_payment_id, payment_method, payment_consumer_name, referral_source, b2b_order_id, b2b_pushed_at";
+  "id, created_at, updated_at, customer_email, lang, environment, status, amount_subtotal, amount_shipping, amount_total, amount_tax, shipping_name, shipping_line1, shipping_line2, shipping_postal_code, shipping_city, shipping_country, mollie_payment_id, payment_method, payment_consumer_name, referral_source, affiliate_shop_public_id, b2b_order_id, b2b_pushed_at";
 
 export function configuredB2BEnvironment(): string {
   return (process.env["VELOPASS_B2B_ENVIRONMENT"] || "live").toLowerCase();
