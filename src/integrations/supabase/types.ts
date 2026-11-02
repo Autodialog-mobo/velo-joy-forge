@@ -289,6 +289,7 @@ export type Database = {
       }
       orders: {
         Row: {
+          affiliate_shop_public_id: string | null
           amount_shipping: number
           amount_subtotal: number
           amount_tax: number
@@ -329,6 +330,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          affiliate_shop_public_id?: string | null
           amount_shipping?: number
           amount_subtotal: number
           amount_tax?: number
@@ -369,6 +371,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          affiliate_shop_public_id?: string | null
           amount_shipping?: number
           amount_subtotal?: number
           amount_tax?: number
