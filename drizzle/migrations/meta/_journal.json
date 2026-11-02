@@ -15,6 +15,13 @@
       "when": 1789573230327,
       "tag": "0001_b2b_sync_cron",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793631898979,
+      "tag": "0002_orders_affiliate_shop",
+      "breakpoints": true
     }
   ]
 }

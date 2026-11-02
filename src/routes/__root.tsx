@@ -10,6 +10,7 @@ import {
 import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestUrl } from "@tanstack/react-start/server";
 import { useEffect } from "react";
+import { captureShopFromUrl } from "@/lib/shop-attribution";
 
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
@@ -141,6 +142,7 @@ function RootComponent() {
 
   useEffect(() => {
     initAnalytics();
+    captureShopFromUrl();
   }, []);
 
   return (
