@@ -1786,6 +1786,11 @@ function AdminPage() {
                           className="px-6 py-4 align-middle hidden lg:table-cell text-[12px]"
                           onClick={(e) => e.stopPropagation()}
                         >
+                          {(o as any).affiliate_shop_public_id ? (
+                            <div style={{ color: TEXT_SEC, fontSize: 11, fontFamily: "ui-monospace, monospace" }} title="Affiliate-winkel (shopID)">
+                              🏪 {(o as any).affiliate_shop_public_id}
+                            </div>
+                          ) : null}
                           {o.b2b_order_id ? (
                             <span
                               style={{ color: TEXT_SEC, fontVariantNumeric: "tabular-nums" }}

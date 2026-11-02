@@ -167,7 +167,7 @@ const [navOpen, setNavOpen] = useState(false);
     postalCode.trim().length > 0 &&
     city.trim().length > 0 &&
     /^(BE|NL|FR|LU|DE)$/.test(country);
-  // When a shop is attributed (?shop= or stored id) we already know the referral
+  // When a shop is attributed (?shopID= or stored id) we already know the referral
   // source: that shop. Hide the question and answer it automatically.
   const referralAutoFromShop = shopId !== null;
   const referralChosen =
