@@ -77,6 +77,14 @@ function BestellenPage() {
   const [stage, setStage] = useState<"select" | "checkout">("select");
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [stickerZoom, setStickerZoom] = useState(false);
+  useEffect(() => {
+    if (!stickerZoom) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setStickerZoom(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [stickerZoom]);
 
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 const [navOpen, setNavOpen] = useState(false);
