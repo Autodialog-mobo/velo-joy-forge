@@ -50,6 +50,7 @@ import { Route as AdminAdminEmailLogRouteImport } from './routes/_admin/admin-em
 import { Route as AdminAdminMarginPollRouteImport } from './routes/_admin/admin-margin-poll'
 import { Route as AdminAdminRecoverRouteImport } from './routes/_admin/admin-recover'
 import { Route as AdminAdminReportRouteImport } from './routes/_admin/admin-report'
+import { Route as AdminAdminSeoRouteImport } from './routes/_admin/admin-seo'
 import { Route as AdminAdminShopSignupsRouteImport } from './routes/_admin/admin-shop-signups'
 import { Route as AdminAdminShopsRouteImport } from './routes/_admin/admin-shops'
 import { Route as AdminAdminUsersRouteImport } from './routes/_admin/admin-users'
@@ -273,6 +274,11 @@ const AdminAdminReportRoute = AdminAdminReportRouteImport.update({
   path: '/admin-report',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAdminSeoRoute = AdminAdminSeoRouteImport.update({
+  id: '/admin-seo',
+  path: '/admin-seo',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAdminShopSignupsRoute = AdminAdminShopSignupsRouteImport.update({
   id: '/admin-shop-signups',
   path: '/admin-shop-signups',
@@ -397,6 +403,7 @@ export interface FileRoutesByFullPath {
   '/admin-margin-poll': typeof AdminAdminMarginPollRoute
   '/admin-recover': typeof AdminAdminRecoverRoute
   '/admin-report': typeof AdminAdminReportRoute
+  '/admin-seo': typeof AdminAdminSeoRoute
   '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
   '/admin-shops': typeof AdminAdminShopsRoute
   '/admin-users': typeof AdminAdminUsersRoute
@@ -454,6 +461,7 @@ export interface FileRoutesByTo {
   '/admin-margin-poll': typeof AdminAdminMarginPollRoute
   '/admin-recover': typeof AdminAdminRecoverRoute
   '/admin-report': typeof AdminAdminReportRoute
+  '/admin-seo': typeof AdminAdminSeoRoute
   '/admin-shop-signups': typeof AdminAdminShopSignupsRoute
   '/admin-shops': typeof AdminAdminShopsRoute
   '/admin-users': typeof AdminAdminUsersRoute
@@ -514,6 +522,7 @@ export interface FileRoutesById {
   '/_admin/admin-margin-poll': typeof AdminAdminMarginPollRoute
   '/_admin/admin-recover': typeof AdminAdminRecoverRoute
   '/_admin/admin-report': typeof AdminAdminReportRoute
+  '/_admin/admin-seo': typeof AdminAdminSeoRoute
   '/_admin/admin-shop-signups': typeof AdminAdminShopSignupsRoute
   '/_admin/admin-shops': typeof AdminAdminShopsRoute
   '/_admin/admin-users': typeof AdminAdminUsersRoute
@@ -574,6 +583,7 @@ export interface FileRouteTypes {
     | '/admin-margin-poll'
     | '/admin-recover'
     | '/admin-report'
+    | '/admin-seo'
     | '/admin-shop-signups'
     | '/admin-shops'
     | '/admin-users'
@@ -631,6 +641,7 @@ export interface FileRouteTypes {
     | '/admin-margin-poll'
     | '/admin-recover'
     | '/admin-report'
+    | '/admin-seo'
     | '/admin-shop-signups'
     | '/admin-shops'
     | '/admin-users'
@@ -690,6 +701,7 @@ export interface FileRouteTypes {
     | '/_admin/admin-margin-poll'
     | '/_admin/admin-recover'
     | '/_admin/admin-report'
+    | '/_admin/admin-seo'
     | '/_admin/admin-shop-signups'
     | '/_admin/admin-shops'
     | '/_admin/admin-users'
@@ -1028,6 +1040,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminReportRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_admin/admin-seo': {
+      id: '/_admin/admin-seo'
+      path: '/admin-seo'
+      fullPath: '/admin-seo'
+      preLoaderRoute: typeof AdminAdminSeoRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_admin/admin-shop-signups': {
       id: '/_admin/admin-shop-signups'
       path: '/admin-shop-signups'
@@ -1197,6 +1216,7 @@ interface AdminRouteRouteChildren {
   AdminAdminMarginPollRoute: typeof AdminAdminMarginPollRoute
   AdminAdminRecoverRoute: typeof AdminAdminRecoverRoute
   AdminAdminReportRoute: typeof AdminAdminReportRoute
+  AdminAdminSeoRoute: typeof AdminAdminSeoRoute
   AdminAdminShopSignupsRoute: typeof AdminAdminShopSignupsRoute
   AdminAdminShopsRoute: typeof AdminAdminShopsRoute
   AdminAdminUsersRoute: typeof AdminAdminUsersRoute
@@ -1211,6 +1231,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminMarginPollRoute: AdminAdminMarginPollRoute,
   AdminAdminRecoverRoute: AdminAdminRecoverRoute,
   AdminAdminReportRoute: AdminAdminReportRoute,
+  AdminAdminSeoRoute: AdminAdminSeoRoute,
   AdminAdminShopSignupsRoute: AdminAdminShopSignupsRoute,
   AdminAdminShopsRoute: AdminAdminShopsRoute,
   AdminAdminUsersRoute: AdminAdminUsersRoute,
