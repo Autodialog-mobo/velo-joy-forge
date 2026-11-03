@@ -19,6 +19,7 @@
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID's",
     "artefact_caption": "This goes on your frame",
+    "artefact_zoom_hint": "Click to see it at actual size",
     "popular_badge": "Popular",
     "per_unit_template": "{{price}} each",
     "discount_15": "15% off",
