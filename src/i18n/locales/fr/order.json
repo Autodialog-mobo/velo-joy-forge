@@ -19,6 +19,7 @@
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID",
     "artefact_caption": "À coller sur le cadre",
+    "artefact_zoom_hint": "Clique pour voir la taille réelle",
     "popular_badge": "Populaire",
     "per_unit_template": "{{price}} chacun",
     "discount_15": "15% de remise",

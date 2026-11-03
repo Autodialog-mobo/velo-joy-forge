@@ -499,10 +499,23 @@ const [navOpen, setNavOpen] = useState(false);
                   width={56}
                   height={56}
                   loading="lazy"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={t("bundles.artefact_zoom_hint")}
+                  title={t("bundles.artefact_zoom_hint")}
                   onClick={() => setStickerZoom(true)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setStickerZoom(true);
+                    }
+                  }}
                   style={{ width: 56, height: "auto", aspectRatio: "1 / 1", borderRadius: 8, display: "block", cursor: "zoom-in" }}
                 />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C" }}>{t("bundles.artefact_caption")}</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: "#0D1F3C" }}>{t("bundles.artefact_caption")}</span>
+                  <span style={{ fontSize: 11, fontWeight: 400, color: "rgba(13,31,60,0.55)" }}>{t("bundles.artefact_zoom_hint")}</span>
+                </div>
               </div>
 
               {stickerZoom && (

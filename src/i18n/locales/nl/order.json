@@ -19,6 +19,7 @@
     "single_label": "Frame-ID",
     "plural_label": "Frame-ID's",
     "artefact_caption": "Dit plak je op het frame",
+    "artefact_zoom_hint": "Klik om op ware grootte te bekijken",
     "popular_badge": "Populair",
     "per_unit_template": "{{price}} per stuk",
     "discount_15": "15% korting",
