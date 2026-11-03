@@ -1156,6 +1156,13 @@ function AdminPage() {
                   </a>
                   {" · "}
                   <a
+                    href="/admin-seo"
+                    style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
+                  >
+                    SEO-advies
+                  </a>
+                  {" · "}
+                  <a
                     href="/admin-webhooks"
                     style={{ color: GREEN, textDecoration: "none", borderBottom: `1px dashed ${GREEN}` }}
                   >
