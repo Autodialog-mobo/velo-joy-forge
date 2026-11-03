@@ -99,8 +99,8 @@ export const getSeoAdvice = createServerFn({ method: "POST" })
       const result = streamText({
         model: provider.responses("openai/gpt-6-astra"),
         maxRetries: 0,
+        instructions: INSTRUCTIONS,
         messages: [
-          { role: "system", content: INSTRUCTIONS },
           {
             role: "user",
             content: `Periode ${base.startDate} t/m ${base.endDate}, eigenschap ${siteUrl}.\n\nTOP ZOEKOPDRACHTEN (query | klikken | vertoningen | CTR | positie):\n${table(queries)}\n\nTOP PAGINA'S (pagina | klikken | vertoningen | CTR | positie):\n${table(pages)}`,
