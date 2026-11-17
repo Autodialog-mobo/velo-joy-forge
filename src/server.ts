@@ -1,3 +1,4 @@
+import { langlessRedirectTarget } from "@/lib/lang-redirect";
 import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
@@ -126,6 +127,8 @@ async function ensureDocumentLang(request: Request, response: Response): Promise
 
 function maybeRedirect(request: Request): Response | null {
   const url = new URL(request.url);
+  const langless = langlessRedirectTarget(url, request.headers.get("cookie"), request.headers.get("accept-language"));
+  if (langless) return new Response(null, { status: 302, headers: { Location: langless, "cache-control": "no-store", Vary: "Accept-Language, Cookie" } });
   const target = PERMANENT_REDIRECTS[url.pathname];
   if (!target) return null;
   const [targetPath, targetHash] = target.split("#");

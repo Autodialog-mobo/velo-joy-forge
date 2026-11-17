@@ -12,7 +12,7 @@ export const TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 const PUBLIC_ID_RE = /^[a-z0-9]{1,64}$/;
 
 type Stored = { shopId: string; ts: number };
-export type ShopBadge = { name: string; logoUrl?: string };
+export type ShopBadge = { name: string; city?: string; logoUrl?: string };
 
 let memory: Stored | null = null;
 
@@ -111,7 +111,8 @@ export async function resolveShop(shopId: string): Promise<ShopBadge | null> {
     const name = typeof data?.name === "string" ? data.name.trim() : "";
     if (!name) return null;
     const logoUrl = typeof data?.logoUrl === "string" && /^https:\/\//.test(data.logoUrl) ? data.logoUrl : undefined;
-    return logoUrl ? { name, logoUrl } : { name };
+    const city = typeof data?.city === "string" && data.city.trim() ? data.city.trim() : undefined;
+    return { name, ...(city ? { city } : {}), ...(logoUrl ? { logoUrl } : {}) };
   } catch {
     return null;
   }

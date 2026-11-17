@@ -337,6 +337,7 @@ const [navOpen, setNavOpen] = useState(false);
               />
             ) : null}
             <strong style={{ color: "#0D1F3C", fontWeight: 700, fontSize: 15.5, minWidth: 0, overflowWrap: "anywhere" }}>{shopBadge.name}</strong>
+            {shopBadge.city ? <span style={{ fontSize: 13, color: "rgba(13,31,60,0.6)" }}>· {shopBadge.city}</span> : null}
 
           </div>
         </div>
