@@ -28,10 +28,9 @@
 - End-to-end with `tomsfrenchstoresoultzhautrhin7647`: link without language → `/nl/order`, shop name visible, test order carries the shop to the Velopass sandbox.
 
 ## Open points (needed before building)
-1. **Base URL** of the new API (live and staging) — e.g. `https://ordersapi.prod.velopass.com`?
+1. **Base URL** of the new API: live `https://thirdpartyapi.prod.velopass.com`; staging URL still to confirm.
 2. **Key header name** — `X-Api-Key`, or `Authorization: Bearer ...`?
 3. Is `tomsfrenchstoresoultzhautrhin7647` a live or staging shop?
-4. Note: this is a French shop; France can't check out online and is sent to the shop finder. With this shopID, should France still be redirected, or should French visitors be pointed to this shop?
 
 ## Technical details
 - `src/server.ts`: handle `/order` and `/order/thanks` before routing; language from `Accept-Language` (reuse logic of `detectLang`), 302 with original search string.
