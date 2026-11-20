@@ -333,6 +333,9 @@ const [navOpen, setNavOpen] = useState(false);
                 alt=""
                 width={20}
                 height={20}
+                onError={(e) => {
+                  e.currentTarget.style.display = "none";
+                }}
                 style={{ width: 20, height: 20, flexShrink: 0, objectFit: "contain", borderRadius: 4, display: "block" }}
               />
             ) : null}
