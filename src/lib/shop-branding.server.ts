@@ -3,7 +3,7 @@ export const BRANDING_BASE = "https://thirdpartyapi.prod.velopass.com";
 export type Branding = { name: string; city?: string; logoUrl?: string };
 
 export async function fetchBranding(publicId: string, apiKey: string, fetchImpl: typeof fetch = fetch): Promise<Branding | null> {
-  const res = await fetchImpl(`${BRANDING_BASE}/api/v1/organisations/${encodeURIComponent(publicId)}/branding`, {
+  const res = await fetchImpl(`${BRANDING_BASE}/api/v1/bike-shops/${encodeURIComponent(publicId)}/branding`, {
     headers: { "X-Api-Key": apiKey, Authorization: `Bearer ${apiKey}`, Accept: "application/json" },
     signal: AbortSignal.timeout(3000),
   });
