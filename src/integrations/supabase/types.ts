@@ -428,6 +428,8 @@ export type Database = {
           ip: string | null
           lang: string | null
           last_name: string | null
+          latitude: number | null
+          longitude: number | null
           phone: string | null
           pos_other: string | null
           pos_system: string | null
@@ -436,6 +438,8 @@ export type Database = {
           pushed_to_pro_by_email: string | null
           pushed_to_pro_by_name: string | null
           pushed_to_pro_management_id: string | null
+          pushed_to_pro_public_id: string | null
+          pushed_to_pro_user_id: string | null
           shop_name: string | null
           status: string
           status_updated_at: string | null
@@ -459,6 +463,8 @@ export type Database = {
           ip?: string | null
           lang?: string | null
           last_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
           phone?: string | null
           pos_other?: string | null
           pos_system?: string | null
@@ -467,6 +473,8 @@ export type Database = {
           pushed_to_pro_by_email?: string | null
           pushed_to_pro_by_name?: string | null
           pushed_to_pro_management_id?: string | null
+          pushed_to_pro_public_id?: string | null
+          pushed_to_pro_user_id?: string | null
           shop_name?: string | null
           status?: string
           status_updated_at?: string | null
@@ -490,6 +498,8 @@ export type Database = {
           ip?: string | null
           lang?: string | null
           last_name?: string | null
+          latitude?: number | null
+          longitude?: number | null
           phone?: string | null
           pos_other?: string | null
           pos_system?: string | null
@@ -498,6 +508,8 @@ export type Database = {
           pushed_to_pro_by_email?: string | null
           pushed_to_pro_by_name?: string | null
           pushed_to_pro_management_id?: string | null
+          pushed_to_pro_public_id?: string | null
+          pushed_to_pro_user_id?: string | null
           shop_name?: string | null
           status?: string
           status_updated_at?: string | null

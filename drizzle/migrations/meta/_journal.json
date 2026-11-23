@@ -22,6 +22,13 @@
       "when": 1793631898979,
       "tag": "0002_orders_affiliate_shop",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795436959466,
+      "tag": "0003_migration",
+      "breakpoints": true
     }
   ]
 }
