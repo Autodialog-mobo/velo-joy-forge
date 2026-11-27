@@ -166,6 +166,22 @@ export const Route = createFileRoute("/api/public/shop-signup")({
           }
         }
 
+        const { notifySlackShopSignup } = await import("@/lib/slack-notify.server");
+        await notifySlackShopSignup({
+          id: signupId,
+          shopName: data.shopName,
+          firstName: data.firstName || undefined,
+          lastName: data.lastName || undefined,
+          email: data.email,
+          phone: data.phone || undefined,
+          address: data.address || undefined,
+          country: data.country || undefined,
+          vat: data.vat || undefined,
+          posSystem: data.posSystem || undefined,
+          posOther: data.posOther || undefined,
+          lang,
+        });
+
         // Return ok even if the confirmation email failed — the signup is stored.
         return json({ ok: true, id: signupId, emailSent: emailRes.ok, reqId });
       },
